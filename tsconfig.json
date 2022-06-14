@@ -1,0 +1,15 @@
+{
+  "include": [
+    "sandbox/**/*",
+    "client/**/*",
+  ],
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "baseUrl": ".",
+    "paths": {
+
+    },
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}

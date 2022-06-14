@@ -1,0 +1,11 @@
+#ide
+/.idea
+
+#source
+/node_modules
+
+#project
+#config
+#/server/config/system.js
+#Данные создаваемые серверов.
+#/data
