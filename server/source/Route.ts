@@ -1,13 +1,13 @@
-import {Method} from './Http.js';
+import {HttpMethod} from './Http.js';
 import AppError from '../../core/source/AppError.js';
 
 export default class Route {
-    private readonly _methods: Array<string>;
+    private readonly _httpMethods: Array<string>;
     private readonly _pattern: string;
     private readonly _callback: (req, res) => void;
 
-    constructor(methods: Array<Method>, pattern: string, callback: (req, res) => void) {
-        if (!methods.length) {
+    constructor(httpMethods: Array<HttpMethod>, pattern: string, callback: (req, res) => void) {
+        if (!httpMethods.length) {
             throw new AppError('methods должен содержать хотя бы 1 метод.');
         }
 
@@ -15,7 +15,7 @@ export default class Route {
             throw new AppError('pattern не может быть пустым.');
         }
 
-        this._methods = methods;
+        this._httpMethods = httpMethods;
         this._pattern = pattern;
         this._callback = callback;
     }
@@ -24,17 +24,11 @@ export default class Route {
         this._callback(req, res);
     }
 
-    private _hasMethod(method: Method): boolean {
-        for (let i = 0; i < this._methods.length; i++) {
-            if (this._methods[i] === method) {
-                return true;
-            }
-        }
-
-        return false;
+    equal(httpMethod: HttpMethod, pattern: string) {
+        return this._hasHttpMethod(httpMethod) && this._pattern === pattern;
     }
 
-    equal(method: Method, pattern: string) {
-        return this._hasMethod(method) && this._pattern === pattern;
+    private _hasHttpMethod(httpMethod: HttpMethod): boolean {
+        return this._httpMethods.indexOf(httpMethod) !== -1;
     }
 }

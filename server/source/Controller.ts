@@ -1,6 +1,10 @@
-export default class Controller {
-    constructor() {
+import Container from '../../core/source/Container.js';
 
+export default abstract class Controller {
+    private _container: Container;
+
+    constructor(container: Container) {
+        this._container = container;
     }
 
     rawResponse(req, res, content: string): void {

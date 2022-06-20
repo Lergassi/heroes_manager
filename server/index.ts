@@ -10,17 +10,25 @@ import _ from 'lodash';
 import dotenv from 'dotenv';
 import config from './config/main.js';  //todo: Временно.
 import Router from './source/Router.js';
-import {Method} from './source/Http.js';
+import {HttpMethod} from './source/Http.js';
+import Container from '../core/source/Container.js';
+import path from 'path';
 
 console.log('SYSTEM', 'Server init start.');
 
 dotenv.config();
 
-let router = new Router();
-router.map([Method.GET], '/', (req, res) => {
+let container = new Container();
+
+let router = new Router(container, path.resolve(config.projectDir, 'server/app/Controllers'));
+
+router.get('/', 'SiteControllers/MainSiteController:homepage')
+router.get('/about', 'SiteControllers/MainSiteController:about');
+router.map([HttpMethod.GET], '/help', 'SiteControllers/MainSiteController:help');
+router.map([HttpMethod.GET], '/test/router/callback', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
-    res.end('this is router.map');
+    res.end('this is test router.map with callback');
 });
 
 const server = http.createServer((req, res) => {

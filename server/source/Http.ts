@@ -1,8 +1,4 @@
-export default class Http {
-
-}
-
-export enum Method {
+export enum HttpMethod {
     GET = 'GET',
     HEAD = 'HEAD',
     POST = 'POST',
