@@ -1,10 +1,14 @@
 {
   "include": [
-    "sandbox/**/*",
     "client/**/*",
+    "server/**/*",
+    "sandbox/**/*"
   ],
   "compilerOptions": {
+    "alwaysStrict": true,
     "moduleResolution": "Node",
+    "module": "ES6",
+    "target": "ES6",
     "baseUrl": ".",
     "paths": {
 

@@ -14,27 +14,27 @@ import finalhandler from "finalhandler";
 // const finalhandler = require('finalhandler');
 // const http = require('http');
 // const serveStatic = require('serve-static')
-var options = {
+let options = {
     host: 'heroes.sd44.ru',
-    port: 80
+    port: 80,
 };
-var publicDir = path.resolve('./client/public');
+let publicDir = path.resolve('./client/public');
 // console.log(publicDir);
 // console.log('serveStatic', serveStatic);
-var serve = serveStatic(publicDir, { index: ['index.html'] });
-var requestListener = function (req, res) {
+let serve = serveStatic(publicDir, { index: ['index.html'] });
+const requestListener = function (req, res) {
     // let done = finalhandler(req, res);
     // done('error');
     // serve(req, res, done);
-    serve(req, res, function () {
+    serve(req, res, () => {
         finalhandler(req, res);
     });
     // serve(req, res, (): void => {
     //
     // });
 };
-var server = http.createServer(requestListener);
-server.listen(options.port, options.host, function () {
+const server = http.createServer(requestListener);
+server.listen(options.port, options.host, () => {
     console.log('Server is running on http://' + options.host + ':' + options.port);
 });
 // res.statusCode = 200;

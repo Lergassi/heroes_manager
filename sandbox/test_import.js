@@ -14,13 +14,13 @@ testPath();
 testSprintf();
 testServeStatic();
 function testImportRun() {
-    var testImport = new TestImport();
-    var result = testImport.exp(32);
+    let testImport = new TestImport();
+    let result = testImport.exp(32);
     console.log('test import: ' + result);
 }
 function testSprintf() {
-    var pattern = 'test sprintf: Hello, %s!';
-    var result = sprintf(pattern, 'World');
+    let pattern = 'test sprintf: Hello, %s!';
+    let result = sprintf(pattern, 'World');
     // let result = sprintf.sprintf(pattern, 'World');
     console.log(result);
 }
@@ -30,7 +30,7 @@ function testPath() {
 function testServeStatic() {
     // console.log(serveStatic);
     // console.log('serveStatic', serveStatic);
-    var publicDir = path.resolve('./client/public');
-    var serve = serveStatic(publicDir, { index: ['index.html'] });
+    let publicDir = path.resolve('./client/public');
+    let serve = serveStatic(publicDir, { index: ['index.html'] });
     console.log('test serveStatic end');
 }
