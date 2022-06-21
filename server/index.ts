@@ -1,26 +1,32 @@
 //node modules
 import http from 'http';
+import path from 'path';
 
 //external modules
 import finalhandler from 'finalhandler';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
+import Bottle from 'bottlejs';
 
 //project modules
-import dotenv from 'dotenv';
 import config from './config/main.js';  //todo: Временно.
 import Router from './source/Router.js';
 import {HttpMethod} from './source/Http.js';
-import Container from '../core/source/Container.js';
-import path from 'path';
 
 console.log('SYSTEM', 'Server init start.');
 
-dotenv.config();
+let bottle = new Bottle();
 
-let container = new Container();
+//todo: Временно.
+bottle.factory('config', function (container) {
+    return config;
+})
 
-let router = new Router(container, path.resolve(config.projectDir, 'server/app/Controllers'));
+bottle.factory('router', function (container) {
+    return new Router(bottle, path.resolve(container.config.projectDir, 'server/app/Controllers'));
+});
+
+let router = bottle.container.router;
 
 router.get('/', 'SiteControllers/MainSiteController:homepage')
 router.get('/about', 'SiteControllers/MainSiteController:about');
@@ -33,7 +39,7 @@ router.map([HttpMethod.GET], '/test/router/callback', (req, res) => {
 
 const server = http.createServer((req, res) => {
     let done = finalhandler(req, res, {
-        env: process.env.APP_ENV,
+        env: bottle.container.config.env,
     });
 
     try {

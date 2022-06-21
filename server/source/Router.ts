@@ -6,22 +6,22 @@ import {sprintf, vsprintf} from 'sprintf-js';
 import AppError from '../../core/source/AppError.js';
 import url from 'url';
 import Controller from './Controller.js';
-import Container from '../../core/source/Container.js';
 import path from 'path';
 import fs from 'fs';
 import _, {method} from 'lodash';
+import Bottle from 'bottlejs';
 
 export default class Router {
-    private readonly _container: Container;
+    private readonly _bottle: Bottle;
     private readonly _controllersDir: string;
     private readonly _routes: Array<Route>;
     private readonly _controllers: Object;
     private readonly _controllerClasses: {};
 
-    constructor(container: Container, controllersDir: string) {
+    constructor(bottle: Bottle, controllersDir: string) {
         this._routes = [];
         this._controllersDir = controllersDir;
-        this._container = container;
+        this._bottle = bottle;
         this._controllerClasses = {};
         this._controllers = {};
     }
@@ -49,7 +49,7 @@ export default class Router {
 
                         if (!this._controllers[controllerName]) {
                             //todo: Надо чтото другое придумать, чтобы не передавать container в конструкторе Router.
-                            this._controllers[controllerName] = new this._controllerClasses[controllerName](this._container);
+                            this._controllers[controllerName] = new this._controllerClasses[controllerName](this._bottle);
                         }
 
                         if (!this._controllers[controllerName][methodName]) {

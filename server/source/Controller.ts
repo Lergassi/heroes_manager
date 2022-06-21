@@ -1,13 +1,17 @@
-import Container from '../../core/source/Container.js';
+import Bottle from 'bottlejs';
 
 export default abstract class Controller {
-    private _container: Container;
+    private readonly _bottle: Bottle;
 
-    constructor(container: Container) {
-        this._container = container;
+    get bottle(): Bottle {
+        return this._bottle;
     }
 
-    rawResponse(req, res, content: string): void {
+    constructor(bottle: Bottle) {
+        this._bottle = bottle;
+    }
+
+    response(req, res, content: string) {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');
         res.end(content);

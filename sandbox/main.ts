@@ -1,16 +1,16 @@
 /// <reference path="Point.ts" />
 /// <reference path="TestNamespace/ClassA.ts" />
-import ClassC from './ClassC.js';
+// import ClassC from './ClassC.js';
 import Route from '../server/source/Route.js';
 import {HttpMethod} from '../server/source/Http.js';
 import * as url from 'url';
 import {config} from 'dotenv';
-import Container from '../core/source/Container.js';
-import * as imports from '../server/imports.js';
 import MainSiteController from '../server/app/Controllers/SiteControllers/MainSiteController.js';
 import {lowerFirst} from 'lodash';
 import Controller from '../server/source/Controller.js';
 import AppError from '../core/source/AppError.js';
+import {stringify} from 'querystring';
+import Bottle from 'bottlejs';
 // import testNamespace = TestNamespace;
 // import * as testNamespace from './TestNamespace/ClassA.js';
 // import polygons = TestNamespace.Polygons;
@@ -55,6 +55,48 @@ namespace Test {
 //     console.log('this is callback');
 // });
 
+class Weapon {
+    private _name: string;
+    private _power: number;
+
+    // constructor(name, power) {
+    constructor() {
+        this._name = '';
+        this._power = 0;
+    }
+}
+
+class Hero {
+    private _id: number;
+    private _name: string;
+    private _heroClass: string;
+    private _weapon: Weapon;
+    private _level: number;
+
+    constructor(name: string, heroClass: string, weapon: Weapon, level: number = 1) {
+    // constructor(weapon: Weapon) {
+        this._id = Math.random();
+        this._name = name;
+        this._heroClass = heroClass;
+        this._weapon = weapon;
+        this._level = level;
+        // this._name = '';
+        // this._heroClass = '';
+        // this._weapon = weapon;
+        // this._level = 0;
+    }
+}
+
+// function Hero(name: string, heroClass: string, level: number = 1) {
+//     this._name = name;
+//     this._heroClass = heroClass;
+//     this._level = level;
+// }
+
+// function Hero(...any: any[]): any {
+//
+// }
+
 //includes
 // enum HttpMethod {
 //     GET = 'GET',
@@ -77,11 +119,12 @@ namespace Test {
 // testCreateControllers();
 // testDynamicInstance();
 // testNamespaceFunction();
+bottleGetStarted();
 
 function testTypeScriptClassesGetStarted() {
-    let classC = new ClassC('hello');
-    console.log(classC);
-    console.log(classC.name);
+    // let classC = new ClassC('hello');
+    // console.log(classC);
+    // console.log(classC.name);
 }
 
 function testTypes(name: string, callback: () => void) {
@@ -162,7 +205,7 @@ function testDotenv() {
 }
 
 function testCreateControllers() {
-    let container = new Container();
+    // let container = new Container();
     // let mainSiteController = new MainSiteController(container);
     // console.log(mainSiteController);
     // console.log(mainSiteController['homepage']);
@@ -170,12 +213,12 @@ function testCreateControllers() {
     // mainSiteController['homepage']();
     // mainSiteController.homepage();
 
-    console.log(imports);
+    // console.log(imports);
     // console.log(imports.a);
-    console.log(imports.modules['SiteControllers/MainSiteController']);
+    // console.log(imports.modules['SiteControllers/MainSiteController']);
 
-    let c = new imports.modules['SiteControllers/MainSiteController'](container);
-    console.log(c);
+    // let c = new imports.modules['SiteControllers/MainSiteController'](container);
+    // console.log(c);
     // c.homepage('asd');
 }
 
@@ -242,7 +285,7 @@ function map(httpMethods: Array<HttpMethod>, pattern: string, target: string | (
 // });
 // map([HttpMethod.GET], '/', MainSiteController, 'homepage');
 // map([HttpMethod.GET], '/', 'MainSiteController', 'homepage');
-map([HttpMethod.GET], '/', 'MainSiteController:homepage');
+// map([HttpMethod.GET], '/', 'MainSiteController:homepage');
 
 function testCallbackArgument(number): number;
 function testCallbackArgument(number: number, callback: (value: number) => number): number;
@@ -267,3 +310,48 @@ function testCallbackArgument(number: number, numberOrCallback?: (value: number)
 //     return value * value;
 // });
 // console.log(r);
+
+function bottleGetStarted() {
+    // let warrior = new Hero('warrior', 'warrior', 42);
+    // let warrior = new Hero();
+    // console.log(warrior);
+
+    let bottle = new Bottle();
+    bottle.service('Weapon', Weapon);
+    console.log(bottle.container);
+    // console.log(bottle.container.Weapon);
+    // bottle.service('Hero', Hero, 'Weapon');
+    // bottle.factory('Hero', function (container) {
+    //     let weapon = container.Weapon;
+    //
+    //     return new Hero('this is name', 'warrior', weapon, 1);
+    // });
+    // let tavernConstructor = function (container) {
+    //     console.log('inner bottle', bottle.container === container);
+    //     console.log('container', container);
+    //     return new Hero('name', 'warrior', container.Weapon, 1);
+    //     // return container;
+    // };
+    // bottle.instanceFactory('Hero.tavern', tavernConstructor);
+    bottle.instanceFactory('Hero.Tavern', function (container) {
+        console.log('inner container equal', bottle.container === container);
+        console.log('inner container', container);
+        return new Hero('name', 'warrior', container.Weapon, 1);
+        // return container;
+    });
+    console.log(bottle.container);
+
+    // let tavern = bottle.container.HeroTavern;
+    let tavern = bottle.container.Hero.Tavern;
+    console.log('tavern', tavern);
+    console.log(tavern.instance());
+    // console.log(tavern.instance());
+    // console.log(tavern.instance());
+    console.log(bottle.container);
+    let weapon = bottle.container.Weapon;
+    console.log(weapon);
+    // console.log(bottle.container.Weapon);
+    // console.log(bottle.container.Hero);
+    // let warrior = new bottle.container.Hero();
+    // console.log(warrior);
+}
