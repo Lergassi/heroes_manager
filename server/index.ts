@@ -9,7 +9,7 @@ import _ from 'lodash';
 import Bottle from 'bottlejs';
 
 //project modules
-import config from './config/main.js';  //todo: Временно.
+import config from './config/main.js';
 import Router from './source/Router.js';
 import {HttpMethod} from './source/Http.js';
 
@@ -17,10 +17,9 @@ console.log('SYSTEM', 'Server init start.');
 
 let bottle = new Bottle();
 
-//todo: Временно.
 bottle.factory('config', function (container) {
     return config;
-})
+});
 
 bottle.factory('router', function (container) {
     return new Router(bottle, path.resolve(container.config.projectDir, 'server/app/Controllers'));

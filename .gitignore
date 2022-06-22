@@ -11,15 +11,15 @@
 
 #client
 /client/**/*.js
-/client/config/*
+#/client/config/*
 
 #core
 /core/**/*.js
-/core/config/*
+#/core/config/*
 
 #server
 /server/**/*.js
-/server/config/*
+#/server/config/*
 
 #sandbox
 /sandbox/**/*.js

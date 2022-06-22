@@ -119,7 +119,8 @@ class Hero {
 // testCreateControllers();
 // testDynamicInstance();
 // testNamespaceFunction();
-bottleGetStarted();
+// bottleGetStarted();
+// bottleTestAccess();
 
 function testTypeScriptClassesGetStarted() {
     // let classC = new ClassC('hello');
@@ -318,6 +319,9 @@ function bottleGetStarted() {
 
     let bottle = new Bottle();
     bottle.service('Weapon', Weapon);
+    bottle.service('Weapon', Weapon);
+    bottle.service('Weapon', Weapon);
+    bottle.service('Weapon', Weapon);
     console.log(bottle.container);
     // console.log(bottle.container.Weapon);
     // bottle.service('Hero', Hero, 'Weapon');
@@ -341,6 +345,8 @@ function bottleGetStarted() {
     });
     console.log(bottle.container);
 
+    let container = bottle.container;
+
     // let tavern = bottle.container.HeroTavern;
     let tavern = bottle.container.Hero.Tavern;
     console.log('tavern', tavern);
@@ -354,4 +360,11 @@ function bottleGetStarted() {
     // console.log(bottle.container.Hero);
     // let warrior = new bottle.container.Hero();
     // console.log(warrior);
+}
+
+function bottleTestAccess() {
+    let bottle = new Bottle();
+
+    let container = bottle.container;
+    console.log(container);
 }
