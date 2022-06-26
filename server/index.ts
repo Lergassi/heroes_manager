@@ -25,12 +25,13 @@ bottle.factory('router', function (container) {
     return new Router(bottle, path.resolve(container.config.projectDir, 'server/app/Controllers'));
 });
 
-let router = bottle.container.router;
+let router: Router = bottle.container.router;
 
-router.get('/', 'SiteControllers/MainSiteController:homepage')
-router.get('/about', 'SiteControllers/MainSiteController:about');
-router.map([HttpMethod.GET], '/help', 'SiteControllers/MainSiteController:help');
-router.map([HttpMethod.GET], '/test/router/callback', (req, res) => {
+router.get('/game/', 'SiteControllers/MainSiteController:homepage')
+router.get('/game/about', 'SiteControllers/MainSiteController:about');
+router.map([HttpMethod.GET], '/game/help', 'SiteControllers/MainSiteController:help');
+router.get('/game/admin', 'AdminControllers/MainAdminController:homepage');
+router.map([HttpMethod.GET], '/game/test/router/callback', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
     res.end('this is test router.map with callback');
