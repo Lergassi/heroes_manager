@@ -1,16 +1,21 @@
 /// <reference path="Point.ts" />
 /// <reference path="TestNamespace/ClassA.ts" />
 // import ClassC from './ClassC.js';
+// import dotenv from 'dotenv';
+// import dotenv from 'dotenv/config.js';
+// dotenv.config();
+// dotenv;
+
 import Route from '../server/source/Route.js';
 import {HttpMethod} from '../server/source/Http.js';
 import * as url from 'url';
-import {config} from 'dotenv';
 import MainSiteController from '../server/app/Controllers/SiteControllers/MainSiteController.js';
 import {lowerFirst} from 'lodash';
 import Controller from '../server/source/Controller.js';
 import AppError from '../core/source/AppError.js';
 import {stringify} from 'querystring';
 import Bottle from 'bottlejs';
+import Container from '../core/source/Container.js';
 // import testNamespace = TestNamespace;
 // import * as testNamespace from './TestNamespace/ClassA.js';
 // import polygons = TestNamespace.Polygons;
@@ -19,6 +24,10 @@ import Bottle from 'bottlejs';
 // console.log(TestNamespace);
 // console.log(polygons);
 // import * as ClassA from './TestNamespace/ClassA.js';
+import debug from 'debug';
+// import createDebug from 'debug';
+
+// const debugHttp = debug('http');
 
 // raw
 
@@ -121,6 +130,8 @@ class Hero {
 // testNamespaceFunction();
 // bottleGetStarted();
 // bottleTestAccess();
+// containerGetStarted();
+debugGetStarted();
 
 function testTypeScriptClassesGetStarted() {
     // let classC = new ClassC('hello');
@@ -367,4 +378,112 @@ function bottleTestAccess() {
 
     let container = bottle.container;
     console.log(container);
+}
+
+
+function containerGetStarted() {
+    const container = new Container();
+
+    // container.set('test.foo', 'bar');
+    // container.set('test.hero', {name: 'Hero', heroClass: 'warrior', level: 42});
+    container.set('test.this_is_function_service', (container) => {
+    // container.set('test.this_is_function_service', (container) => {
+        return {
+            one: 'one',
+            two: 'two',
+            hero: container.get('test.hero'),
+        };
+    });
+    console.log(container);
+    // console.log(container.get('test.hero'));
+    // console.log(container.get('test.this_is_function_service'));
+    // container.get('test.hero').name = 'aaaa';
+    // console.log(container.get('test.hero'));
+    // console.log(container.get('test.this_is_function_service'));
+}
+
+type DescribableFunction = {
+    description: string;
+    // value: number;
+    (someArg: number): boolean;
+};
+
+// let a: DescribableFunction = (a: number): boolean => {
+//     return false;
+// };
+// let a: DescribableFunction = <DescribableFunction>function (n: number): boolean {
+//
+// }
+
+function doSomething(fn: DescribableFunction) {
+    // fn.
+    console.log(fn.description + " returned " + fn(6));
+    // console.log(fn.value);
+}
+
+// function f(n: number): boolean {
+//     this.description = 'asd';
+//     return false;
+// }
+
+const myFn = function (someArg: number): boolean {
+    return someArg > 5;
+};
+myFn.description = 'checks if arg is greater than 5';
+// console.log(myFn);
+// console.log(myFn(6));
+
+// const d: DescribableFunction = {
+//     description: 'asd',
+//     f: function (n: number): boolean {
+//         return false;
+//     }
+// };
+// doSomething(f);
+// doSomething(<DescribableFunction>myFn);
+// doSomething(myFn);
+
+// type GreetFunction = (a: string) => void;
+type GreetFunction = (a: string, a1: string) => void;
+// function greeter(fn: (a: string) => void) {
+function greeter(fn: GreetFunction) {
+    fn("Hello, World", 'a');
+    // fn("Hello, World", '');
+}
+
+function printToConsole(s: string) {
+// function printToConsole(s: string, a: string) {
+    console.log('#printToConsole#', s);
+    // console.log('#printToConsole#', s, s2);
+}
+
+// greeter(printToConsole);
+
+type Point = {
+    x: number;
+    y: number;
+    // (someArg: number): boolean;
+    (someArg: number): boolean;
+};
+
+// let p: Point = {x: 10, y: 10, fun: function (n: number): boolean {
+//         return false;
+//     }};
+
+function debugGetStarted() {
+    // console.log('DEBUG', process.env.DEBUG);
+    // debug.enable('app');
+    // console.log(debug.debug);
+    // console.log();
+    // debug.log(42)
+    // let d = debug('booting %o', 42);
+    // let debug = createDebug('foo');
+    // debug('booting %o', 42);
+
+    // let error = debug('app:error');
+    // error('goes to stderr!');
+
+    let app = debug('app');
+    app('booting %o', 42);
+    app(42);
 }

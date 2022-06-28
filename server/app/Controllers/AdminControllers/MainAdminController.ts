@@ -1,6 +1,6 @@
 import Controller from '../../../source/Controller.js';
 
-export default class MainSiteController extends Controller {
+export default class MainAdminController extends Controller {
     homepage(req, res) {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');

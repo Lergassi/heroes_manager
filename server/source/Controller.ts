@@ -1,14 +1,14 @@
-import Bottle from 'bottlejs';
+import Container from '../../core/source/Container.js';
 
 export default abstract class Controller {
-    private readonly _bottle: Bottle;
+    private readonly _container: Container;
 
-    get bottle(): Bottle {
-        return this._bottle;
+    get container(): Container {
+        return this._container;
     }
 
-    constructor(bottle: Bottle) {
-        this._bottle = bottle;
+    constructor(container: Container) {
+        this._container = container;
     }
 
     response(req, res, content: string) {

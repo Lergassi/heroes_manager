@@ -1,5 +1,6 @@
 import {HttpMethod} from './Http.js';
 import AppError from '../../core/source/AppError.js';
+import debug from 'debug';
 
 export default class Route {
     private readonly _httpMethods: Array<string>;
@@ -30,5 +31,9 @@ export default class Route {
 
     private _hasHttpMethod(httpMethod: HttpMethod): boolean {
         return this._httpMethods.indexOf(httpMethod) !== -1;
+    }
+
+    debug() {
+        debug('debug')(this._httpMethods.join(', ') + ': ' + this._pattern);
     }
 }

@@ -4,18 +4,18 @@ export default class MainSiteController extends Controller {
     homepage(req, res) {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');
-        res.end('homepage');
+        res.end('/game/');
     }
 
     about(req, res) {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');
-        res.end('about');
+        res.end('/game/about');
     }
 
     help(req, res) {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');
-        res.end('help');
+        res.end('/game/help');
     }
 }

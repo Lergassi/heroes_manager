@@ -9,19 +9,21 @@ import Controller from './Controller.js';
 import path from 'path';
 import fs from 'fs';
 import _, {method} from 'lodash';
-import Bottle from 'bottlejs';
+import Container from '../../core/source/Container.js';
+import RouterGroup from './RouterGroup.js';
+import debug from 'debug';
 
 export default class Router {
-    private readonly _bottle: Bottle;
+    private readonly _container: Container;
     private readonly _controllersDir: string;
     private readonly _routes: Array<Route>;
     private readonly _controllers: Object;
     private readonly _controllerClasses: {};
 
-    constructor(bottle: Bottle, controllersDir: string) {
+    constructor(container: Container, controllersDir: string) {
         this._routes = [];
         this._controllersDir = controllersDir;
-        this._bottle = bottle;
+        this._container = container;
         this._controllerClasses = {};
         this._controllers = {};
     }
@@ -49,7 +51,7 @@ export default class Router {
 
                         if (!this._controllers[controllerName]) {
                             //todo: Надо чтото другое придумать, чтобы не передавать container в конструкторе Router.
-                            this._controllers[controllerName] = new this._controllerClasses[controllerName](this._bottle);
+                            this._controllers[controllerName] = new this._controllerClasses[controllerName](this._container);
                         }
 
                         if (!this._controllers[controllerName][methodName]) {
@@ -79,7 +81,7 @@ export default class Router {
         let urlParsed = url.split('?');
 
         //todo: Убрать в другое место.
-        console.log('LOG', sprintf('%s: %s', req.method, urlParsed[0]));
+        debug('http')(sprintf('%s: %s', req.method, urlParsed[0]));
 
         let route = this._getRoute(req.method, urlParsed[0]);
         route.run(req, res);
@@ -93,5 +95,18 @@ export default class Router {
         }
 
         throw new AppError(sprintf('Route %s: %s не найден.', method, pattern));
+    }
+
+    prefix(value: string, callback: (group: RouterGroup) => void): void {
+        callback(new RouterGroup(this, {
+            prefix: value,
+        }));
+    }
+
+    debug() {
+        debug('debug')('routes.length', this._routes.length);
+        for (let i = 0; i < this._routes.length; i++) {
+            this._routes[i].debug();
+        }
     }
 }

@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
 import config from '../../core/config/main.js';
-
-dotenv.config();
 
 export default Object.assign(config, {
     env: process.env.APP_ENV || 'production',

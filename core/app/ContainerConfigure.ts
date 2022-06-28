@@ -1,7 +1,7 @@
-import Bottle from 'bottlejs';
+import Container from '../source/Container.js';
 
 export default class ContainerConfigure {
-    config(bottle: Bottle) {
+    config(container: Container) {
 
     }
 }
