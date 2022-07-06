@@ -12,22 +12,18 @@ define(["exports"], function (_exports) {
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-  var Client = /*#__PURE__*/function () {
-    function Client() {
-      _classCallCheck(this, Client);
+  var ContainerConfigure = /*#__PURE__*/function () {
+    function ContainerConfigure() {
+      _classCallCheck(this, ContainerConfigure);
     }
 
-    _createClass(Client, [{
-      key: "msg",
-      value: function msg() {
-        var _msg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default msg';
-
-        console.log(_msg);
-      }
+    _createClass(ContainerConfigure, [{
+      key: "configure",
+      value: function configure(container) {}
     }]);
 
-    return Client;
+    return ContainerConfigure;
   }();
 
-  _exports["default"] = Client;
+  _exports["default"] = ContainerConfigure;
 });

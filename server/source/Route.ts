@@ -26,10 +26,10 @@ export default class Route {
     }
 
     equal(httpMethod: HttpMethod, pattern: string) {
-        return this._hasHttpMethod(httpMethod) && this._pattern === pattern;
+        return this.hasHttpMethod(httpMethod) && this._pattern === pattern;
     }
 
-    private _hasHttpMethod(httpMethod: HttpMethod): boolean {
+    hasHttpMethod(httpMethod: HttpMethod): boolean {
         return this._httpMethods.indexOf(httpMethod) !== -1;
     }
 

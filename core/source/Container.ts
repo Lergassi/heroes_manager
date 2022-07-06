@@ -1,8 +1,7 @@
 import AppError from './AppError.js';
 import {sprintf} from 'sprintf-js';
 
-type serviceFunction = (container: Container) => any;
-
+//todo: Заменить any на Template.
 export default class Container {
     private readonly _services;
 
@@ -10,11 +9,6 @@ export default class Container {
         this._services = {};
     }
 
-    /**
-     *
-     * @param key
-     * @param value
-     */
     //Объявления функций нужны, чтобы работали подсказки в ide где 1 из аргументов указан как any.
     set(key: string, value: any): void;
     set(key: string, value: (container: Container) => any): void;
@@ -38,7 +32,7 @@ export default class Container {
         return this._services[key];
     }
 
-    has(key) {
+    has(key: string): boolean {
         return this._services.hasOwnProperty(key);
     }
 }

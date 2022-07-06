@@ -5,9 +5,9 @@ export default class RouterGroup {
     private readonly _router: Router;
     private readonly _prefix: string;
 
-    constructor(router: Router, params?: {
+    constructor(router: Router, params: {
         prefix?: string;
-    }) {
+    } = {}) {
         this._router = router;
         this._prefix = params.prefix || '';
     }

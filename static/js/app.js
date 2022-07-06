@@ -8,10 +8,10 @@ requirejs.config({
 
 require(
     [
-
+        'bundle'
     ],
     function(
-
+        bundle
         ) {
 
     }

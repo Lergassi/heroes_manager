@@ -1,13 +1,31 @@
 import config from '../../core/config/main.js';
+import path from 'path';
 
-export default Object.assign(config, {
-    env: process.env.APP_ENV || 'production',
-    projectDir: process.env.APP_PROJECT_DIR || process.cwd(),   //Учитывать, что process.cwd() вернет директорию запуска node, а не расположения server/index.js.
-    host: 'heroes.sd44.ru',
-    port: 8000,
+export default Object.assign({
+    type: 'server',
+    env: process.env.ENV || 'production',
+    /**
+     * Пока это путь до проекта, а не сервера.
+     * Учитывать, что process.cwd() вернет директорию запуска node, а не расположения server/index.js.
+     */
+    projectDir: process.env.PROJECT_DIR || process.cwd(),
 
-    db_host: process.env.DB_HOST,
-    db_user: process.env.DB_USER,
-    db_password: process.env.DB_PASSWORD,
-    db_database: process.env.DB_DATABASE,
-});
+    host: process.env.HOST || 'localhost',
+    port: process.env.PORT || 80,
+
+    //todo: Пока тут.
+    services: {
+        router: {
+            controllerDir: path.resolve(process.env.PROJECT_DIR, 'server/app/Controllers'),
+        },
+        database: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            name: process.env.DB_NAME,
+            pool: {
+                connectionLimit: 10,
+            },
+        },
+    },
+}, config);

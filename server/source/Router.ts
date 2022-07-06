@@ -20,6 +20,8 @@ export default class Router {
     private readonly _controllers: Object;
     private readonly _controllerClasses: {};
 
+    //todo: Убрать controllersDir и сделать абсолютный путь при указании target.
+    //todo: И выделить загрузку модуля в отдельный механизм. Вместе с save/load.
     constructor(container: Container, controllersDir: string) {
         this._routes = [];
         this._controllersDir = controllersDir;
