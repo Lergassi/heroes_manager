@@ -1,14 +1,19 @@
 import AppError from './AppError.js';
 import {sprintf} from 'sprintf-js';
+import Repository from './Repository.js';
 
 export default class RepositoryManager {
-    private _repositories;
+    private readonly _repositories;
 
-    addRepository() {
-
+    constructor() {
+        this._repositories = {};
     }
 
-    getRepository(entityClassname: string) {
+    addRepository<Entity>(entityClassName: string, repository: Repository<Entity>): void {
+        this._repositories[entityClassName] = repository;
+    }
+
+    getRepository<Entity>(entityClassname: string): Repository<Entity> {
         if (!this._repositories.hasOwnProperty(entityClassname)) {
             throw new AppError(sprintf('Репозиторий для сущности %s не найден.', entityClassname));
         }

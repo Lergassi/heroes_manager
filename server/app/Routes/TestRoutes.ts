@@ -14,6 +14,7 @@ export default class TestRoutes extends RouteRegistration {
                 res.setHeader('Content-Type', 'text/html');
                 res.end('this is test router.map with callback');
             });
+            group.get('/get_params', 'TestControllers/HttpTestController:getParams');
         });
 
         return router;

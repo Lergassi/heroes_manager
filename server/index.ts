@@ -18,17 +18,27 @@ import _ from 'lodash';
 import config from './config/main.js';
 import Router from './source/Router.js';
 import Container from '../core/source/Container.js';
-import ContainerConfigure from './app/ContainerConfigure.js';
+import ServerContainerConfigure from './app/ContainerConfigure.js';
+import CoreContainerConfigure from './../core/app/ContainerConfigure.js';
+import url from 'url';
 
 debug('http')('Server init start.');
 
-const container: Container = (new ContainerConfigure()).configure(new Container());
+const container = new Container();
+(new ServerContainerConfigure()).configure(container);
+(new CoreContainerConfigure()).configure(container);
+// debug('debug')(container);
+
 const router: Router = container.get('router');
 
 const server = http.createServer((req, res) => {
     let done = finalhandler(req, res, {
         env: container.get('config').env,
     });
+
+    // console.log(req.url);
+    req['getParams'] = url.parse(req.url, true).query;
+    // req['getParams'] = 42;
 
     try {
         router.run(req, res);

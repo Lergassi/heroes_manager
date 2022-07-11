@@ -2,22 +2,26 @@ import AppError from './AppError.js';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
 
-export default class Repository {
-    private readonly _items;
+export default class Repository<Entity> {
     private readonly _entityClassname: string;
+    private readonly _items;
 
-    constructor(entityClassname) {
+    get entityClassname(): string {
+        return this._entityClassname;
+    }
+
+    constructor(entityClassname: string) {
         this._entityClassname = entityClassname;
         this._items = [];
     }
 
-    add(item) {
+    add(item: Entity): void {
         if (!this._items.includes(item)) {
             this._items.push(item);
         }
     }
 
-    findOneById(id) {
+    findOneById(id): Entity | undefined {
         if (!id) {
             return undefined;
         }
@@ -31,7 +35,7 @@ export default class Repository {
         return undefined;
     }
 
-    findOneByAlias(alias: string) {
+    findOneByAlias(alias: string): Entity | undefined {
         if (!alias) {
             return undefined;
         }
@@ -45,7 +49,7 @@ export default class Repository {
         return undefined;
     }
 
-    findByAlias(alias: string) {
+    findByAlias(alias: string): Entity[] {
         if (!alias) {
             return [];
         }
@@ -60,7 +64,7 @@ export default class Repository {
         return result;
     }
 
-    getOneById(id) {
+    getOneById(id): Entity {
         let entity = this.findOneById(id);
 
         if (!entity) {
@@ -70,7 +74,7 @@ export default class Repository {
         return entity;
     }
 
-    getOneByAlias(alias: string) {
+    getOneByAlias(alias: string): Entity {
         let entity = this.findOneByAlias(alias);
         if (!entity) {
             throw new AppError(sprintf('Сущность типа %s alias(%s) не найдена.', this._entityClassname, alias));

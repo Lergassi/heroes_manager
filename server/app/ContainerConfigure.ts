@@ -47,7 +47,8 @@ export default class ContainerConfigure extends AbstractContainerConfigure {
             return new UserDBObjectFactory(container.get('database.pool'), container.get('passwordHasher'));
         });
         container.set('userDBObjectRepository', (container) => {
-            return new UserDBObjectRepository(UserDBObject.name, container.get('database.pool'));
+            // return new UserDBObjectRepository(UserDBObject.name, container.get('database.pool'));
+            return new UserDBObjectRepository<UserDBObject>(UserDBObject.name, container.get('database.pool'));
         });
 
         return container;

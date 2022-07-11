@@ -1,0 +1,30 @@
+import ArmorMaterial from '../Entities/ArmorMaterial.js';
+import RepositoryManager from '../../source/RepositoryManager.js';
+import HeroClass from '../Entities/HeroClass.js';
+import ItemCategory from '../Entities/ItemCategory.js';
+import HeroRole from '../Entities/HeroRole.js';
+import CharacterAttribute from '../Entities/CharacterAttribute.js';
+
+export default class HeroClassLoader {
+    load(data: object, repositoryManager: RepositoryManager) {
+        let heroClass = Object.create(HeroClass.prototype);
+
+        heroClass['_id'] = data['_id'];
+        heroClass['_name'] = data['_name'];
+        heroClass['_alias'] = data['_alias'];
+        heroClass['_description'] = data['_description'];
+        heroClass['_sort'] = data['_sort'];
+        heroClass['_heroRole'] = repositoryManager.getRepository<HeroRole>(HeroRole.name).getOneById(data['_heroRole']['id']);
+        heroClass['_availableWeaponItemCategories'] = data['_availableWeaponItemCategories'].map((item) => {
+            return repositoryManager.getRepository<ItemCategory>(ItemCategory.name).getOneById(item['id']);
+        });
+        heroClass['_availableArmorMaterials'] = data['_availableArmorMaterials'].map((item) => {
+            return repositoryManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneById(item['id']);
+        });
+        heroClass['_mainCharacterAttributes'] = data['_mainCharacterAttributes'].map((item) => {
+            return repositoryManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneById(item['id']);
+        });
+
+        return heroClass;
+    }
+}

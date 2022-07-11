@@ -1,6 +1,7 @@
 import {sprintf} from 'sprintf-js';
 
 export default class AppError extends Error {
+    //Сделано для работы ctrl+B.
     constructor(message?: string) {
         super(message);
     }
@@ -31,5 +32,9 @@ export default class AppError extends Error {
 
     static playerAlreadyLoaded() {
         return new AppError('Игрок уже загружен.');
+    }
+
+    static metadataNotFound(name: string) {
+        return new AppError(sprintf('Метаданные для %s не найдены.', name));
     }
 }

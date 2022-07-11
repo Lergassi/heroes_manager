@@ -6,7 +6,7 @@ import debug from 'debug';
 import dateFns from 'date-fns';
 import {DateFormat} from '../../../core/source/DateFormat.js';
 
-export default class UserDBObjectRepository extends Repository {
+export default class UserDBObjectRepository<Entity> extends Repository<Entity> {
     private _pool: Pool;
 
     constructor(entityName: string, pool: Pool) {
