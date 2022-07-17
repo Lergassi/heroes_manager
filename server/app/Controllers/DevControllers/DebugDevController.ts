@@ -2,6 +2,8 @@ import Controller from '../../../source/Controller.js';
 import {debugEntity, debugRepositoryManager, meta} from '../../../../core/debug/debug_functions.js';
 import _ from 'lodash';
 import AppError from '../../../../core/source/AppError.js';
+import debug from 'debug';
+import {sprintf} from 'sprintf-js';
 
 export default class DebugDevController extends Controller {
     entities(req, res) {
@@ -21,6 +23,16 @@ export default class DebugDevController extends Controller {
 
         let detailDebugFunction = meta.hasOwnProperty(classname) ? meta[classname]['detailDebugFunction'] : debugEntity;
         this.container.get('repositoryManager').getRepository(classname)['_items'].forEach(detailDebugFunction);
+
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.end('ok');
+    }
+
+    debugContainer(req, res) {
+        for (const serviceKey in this.container['_services']) {
+            debug('debug')('%O', sprintf('%s: ', serviceKey));
+        }
 
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');

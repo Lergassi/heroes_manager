@@ -1,10 +1,16 @@
-import * as sandbox from './include.js';
+import {
+    devCreateItemStorage,
+    devGameObjectStorage, devGameObjectStorage_newHeroScenario,
+    devGameObjectStorage_newPlayerScenario,
+    playerFactory_create,
+    userFactory_create,
+    walletFactory_create
+} from './include.js';
 
-// sandbox.entityGetStarted();
-// sandbox.testRepositoryManager();
-// sandbox.testRepositoryGeneric();
-// sandbox.devEntityLoader();
-// sandbox.testLiteralTypes();
-
-//tests
-sandbox.testItemCategoryLoader();
+// playerFactory_create();
+// userFactory_create();
+// walletFactory_create();
+// devGameObjectStorage();
+devGameObjectStorage_newPlayerScenario();
+// devGameObjectStorage_newHeroScenario();
+// devCreateItemStorage();

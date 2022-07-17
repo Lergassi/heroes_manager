@@ -15,9 +15,10 @@ import UserDBObjectFactory from './Factories/UserDBObjectFactory.js';
 
 export default class ContainerConfigure extends AbstractContainerConfigure {
     configure(container: Container): Container {
-        container.set('config', config);
+        container.set('config.server', config);
         container.set('router', (container) => {
-            let router = new Router(container, container.get('config').services.router.controllerDir);
+            console.log(container);
+            let router = new Router(container, container.get('config.server').services.router.controllerDir);
 
             (new SiteRoutes()).register(router);
             (new AdminRoutes()).register(router);
@@ -30,7 +31,7 @@ export default class ContainerConfigure extends AbstractContainerConfigure {
             return router;
         });
         container.set('database.pool', (container) => {
-            let config = container.get('config');
+            let config = container.get('config.server');
 
             return mysql.createPool({
                 connectionLimit : config.services.database.connectionLimit,

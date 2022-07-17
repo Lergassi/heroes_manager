@@ -1,129 +1,44 @@
-// Shape — суперкласс
-import ArmorMaterial from '../core/app/Entities/ArmorMaterial.js';
+import _ from 'lodash';
 
-function Shape() {
-    this.x = 0;
-    this.y = 0;
-}
-
-// метод суперкласса
-Shape.prototype.move = function(x, y) {
-    this.x += x;
-    this.y += y;
-    console.info('Фигура переместилась.');
-};
-
-// Rectangle — подкласс
-function Rectangle() {
-    Shape.call(this); // вызываем конструктор суперкласса
-}
-
-// подкласс расширяет суперкласс
-Rectangle.prototype = Object.create(Shape.prototype);
-Rectangle.prototype.constructor = Rectangle;
-
-let rect = new Rectangle();
-
-// console.log('Является ли rect экземпляром Rectangle? ' + (rect instanceof Rectangle)); // true
-// console.log('Является ли rect экземпляром Shape? ' + (rect instanceof Shape)); // true
-// rect.move(1, 1); // выведет 'Фигура переместилась.'
-
-// class ArmorMaterial {
-//     _id;
-//     _name;
-//     constructor(id, name) {
-//         this._id = id;
-//         this._name = name;
-//         console.log('this is ArmorMaterial.constructor() ' + {id: id, name: name}.toString());
-//     }
+// // const isBelowThreshold = (currentValue) => currentValue < 10;
+// const isBelowThreshold = (currentValue) => {
+//     return currentValue === true;
+// };
 //
-//     test() {
-//         console.log('this is ArmorMaterial.test() function');
-//     }
+// // const array1 = [1, 30, 39, 29, 10, 13];
+// const array1 = [true, true, true];
+// // const array1 = [true, true, true, false];
 //
-//     static create(id, name) {
-//         let armorMaterial = Object.create(ArmorMaterial.prototype);
-//
-//         armorMaterial._id = id;
-//         armorMaterial._name = name;
-//
-//         return armorMaterial;
-//     }
-// }
-//
-// let id = 1;
-// console.log('-'.repeat(32));
-// console.log('with constructor');
-// let plate1 = new ArmorMaterial(id++, 'Латы');
-// console.log('plate1', plate1);
-// console.log('plate1 instanceof ArmorMaterial', plate1 instanceof ArmorMaterial);
-// plate1.test();
-//
-// console.log('-'.repeat(32));
-// console.log('with Object.create');
-// let plate2 = Object.create(ArmorMaterial.prototype);
-// plate2['_id'] = id++;
-// plate2['_name'] = 'Латы';
-// console.log('plate3', plate2);
-// console.log('plate2 instanceof ArmorMaterial', plate2 instanceof ArmorMaterial);
-// plate2.test()
-//
-// console.log('-'.repeat(32));
-// console.log('with Object.create in static method');
-// let plate3 = ArmorMaterial.create(id++, 'Латы');
-// console.log('plate3', plate3);
-// console.log('plate3 instanceof ArmorMaterial', plate3 instanceof ArmorMaterial);
-// plate3.test();
+// console.log(array1.every(isBelowThreshold));
 
+// console.log(_.every([true, 1, null, 'yes'], Boolean));
+// console.log(_.every([true, 1, 'yes'], Boolean));
+// console.log(_.every([true, 1, 'yes', 'Hello, World!'], Boolean));
+// console.log(_.every([true, true, true], Boolean));
+// console.log(_.every([true, true, true, false], Boolean));
 
-let id = 1;
-let data = {
-    id: id++,
-    name: 'Латы',
-    alias: 'plate',
-    description: '',
-    sort: 500,
-};
+// let result = _.every([true, true, true], (a, b, c) => {
+let result = _.every([true, true, true, false], (a, b, c) => {
+    console.log(a, b, c);
+    return a === true;
+});
+console.log('result', result);
 
-// let plate1 = new ArmorMaterial(
-//     data.id,
-//     data.name,
-//     data.alias,
-//     data.description,
-//     data.sort,
-// );
-// testArmorMaterial('plate1', plate1);
+// => false
 
-// let plate2 = ArmorMaterial.testLoad(data);
-// testArmorMaterial('plate2', plate2)
+var users = [
+    { 'user': 'barney', 'age': 36, 'active': false },
+    { 'user': 'fred',   'age': 40, 'active': false }
+];
 
-function testArmorMaterial(name, armorMaterial) {
-    console.log('-'.repeat(32));
-    console.log('# test ' + name);
-    console.log(name, armorMaterial);
-    console.log(name + ' instanceof ArmorMaterial', armorMaterial instanceof ArmorMaterial);
-}
+// The `_.matches` iteratee shorthand.
+// _.every(users, { 'user': 'barney', 'active': false });
+// => false
 
-// let a = [
-//     {id: 100, name: 'this is name'},
-//     {id: 200, name: 'this is name'},
-//     {id: 300, name: 'this is name'},
-//     {id: 400, name: 'this is name'},
-//     {id: 500, name: 'this is name'},
-// ];
-// console.log(a.map((item) => {
-//     return {
-//         id: item.id,
-//     };
-// }));
+// The `_.matchesProperty` iteratee shorthand.
+// _.every(users, ['active', false]);
+// => true
 
-class TestClass {
-
-}
-
-console.log(TestClass.name);
-
-let o = {
-    // `TestClass.name`: 42,
-    // 'TestClass.name': 42,
-};
+// The `_.property` iteratee shorthand.
+// _.every(users, 'active');
+// => false

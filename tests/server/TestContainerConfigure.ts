@@ -13,8 +13,8 @@ export default class TestContainerConfigure {
         let container = (new ContainerConfigure()).configure(new Container());
 
         //Первым аргументов результат для удобства отображения в консоли.
-        debug('test:server')('%o', container.get('config') instanceof Object, 'config instanceof Object');
-        debug('test:server')('%o', container.get('config').hasOwnProperty('env'), 'config has env property');
+        debug('test:server')('%o', container.get('config.server') instanceof Object, 'config instanceof Object');
+        debug('test:server')('%o', container.get('config.server').hasOwnProperty('env'), 'config has env property');
 
         debug('test:server')('%o', container.get('router') instanceof Router, 'router instanceof Router');
     }

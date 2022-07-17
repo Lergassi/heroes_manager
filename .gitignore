@@ -7,7 +7,7 @@
 #project
 .env
 #*.js
-#**.js
+**.js
 
 #client
 /client/**/*.js
@@ -20,6 +20,9 @@
 #server
 /server/**/*.js
 #/server/config/*
+
+#static
+#/static/**/*.js
 
 #sandbox
 /sandbox/**/*.js

@@ -12,6 +12,7 @@ export default class DevRoutes extends RouteRegistration {
             });
             group.get('/entities', 'DevControllers/DebugDevController:entities');
             group.get('/entity', 'DevControllers/DebugDevController:entity');
+            group.get('/container', 'DevControllers/DebugDevController:debugContainer');
         });
 
         return router;

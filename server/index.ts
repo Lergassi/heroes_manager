@@ -33,7 +33,7 @@ const router: Router = container.get('router');
 
 const server = http.createServer((req, res) => {
     let done = finalhandler(req, res, {
-        env: container.get('config').env,
+        env: container.get('config.server').env,
     });
 
     // console.log(req.url);

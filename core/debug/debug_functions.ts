@@ -4,6 +4,15 @@ import ItemCategory from '../app/Entities/ItemCategory.js';
 import Item from '../app/Entities/Item.js';
 import ArmorMaterial from '../app/Entities/ArmorMaterial.js';
 import _ from 'lodash';
+import GameObject from '../source/GameObject.js';
+import CharacterAttributeComponent from '../app/Components/CharacterAttributeComponent.js';
+import EquipSlotComponent from '../app/Components/EquipSlotComponent.js';
+import HealthPointsComponent from '../app/Components/HealthPointsComponent.js';
+import AttackPowerComponent from '../app/Components/AttackPowerComponent.js';
+import MagicPointsComponent from '../app/Components/MagicPointsComponent.js';
+import HeroComponent from '../app/Components/HeroComponent.js';
+import ItemStack from '../app/RuntimeObjects/ItemStack.js';
+import ItemStorageSlotComponent from '../app/Components/ItemStorageSlotComponent.js';
 
 //todo: В отдельный класс. Сделать единый механизм метаданных для всего проекта.
 export let meta = {
@@ -20,7 +29,7 @@ export let meta = {
 
 export function debugEntity(entity) {
     debug('debug')('%j', {
-        name: entity.constructor.name,
+        classname: entity.constructor.name,
         _id: entity['_id'],
         _name: entity['_name'],
         _alias: entity['_alias'],
@@ -29,7 +38,7 @@ export function debugEntity(entity) {
 
 export function debugItem(item) {
     debug('debug')('%j', {
-        name: item.constructor.name,
+        classname: item.constructor.name,
         _id: item['_id'],
         _name: item['_name'],
         _alias: item['_alias'],
@@ -44,7 +53,7 @@ export function debugItem(item) {
 
 export function debugItemCategory(itemCategory) {
     debug('debug')('%j', {
-        name: itemCategory.constructor.name,
+        classname: itemCategory.constructor.name,
         _id: itemCategory['_id'],
         _name: itemCategory['_name'],
         _alias: itemCategory['_alias'],
@@ -58,7 +67,7 @@ export function debugItemCategory(itemCategory) {
 export function debugEquipSlot(equipSlot) {
     debug('debug')(_.repeat('-', 64));
     debug('debug')('%j', {
-        name: equipSlot.constructor.name,
+        classname: equipSlot.constructor.name,
         _id: equipSlot['_id'],
         _name: equipSlot['_name'],
         _alias: equipSlot['_alias'],
@@ -66,15 +75,15 @@ export function debugEquipSlot(equipSlot) {
 
     equipSlot['_rules'].forEach((equipSlotRule) => {
         debug('debug')('%j', {
-            name: equipSlotRule.constructor.name,
+            classname: equipSlotRule.constructor.name,
             _heroClass: {
                 id: equipSlotRule['_heroClass']['_id'],
-                name: equipSlotRule['_heroClass']['_name'],
+                classname: equipSlotRule['_heroClass']['_name'],
             },
             itemCategories: equipSlotRule['_itemCategories'].map((itemCategory) => {
                 return {
                     id: itemCategory['_id'],
-                    name: itemCategory['_name'],
+                    classname: itemCategory['_name'],
                 };
             }),
         });
@@ -95,4 +104,82 @@ export function debugRepositoryManager(repositoryManager) {
         ));
         debugRepository(repositoryManager['_repositories'][repositoryKey]);
     }
+}
+
+export function debugHero(hero: GameObject) {
+    let heroComponent: HeroComponent = <HeroComponent>hero.getComponentByName(HeroComponent.name);
+    debug('debug')(sprintf(
+        'heroClass: %s',
+        heroComponent['_heroClass']['_name'],
+    ));
+
+    let healthPointsComponent: HealthPointsComponent = <HealthPointsComponent>hero.getComponentByName(HealthPointsComponent.name);
+    debug('debug')(sprintf(
+        'health points: %s(%s), %s',
+        healthPointsComponent['_currentHealthPoints'],
+        healthPointsComponent['_maxHealthPoints'],
+        healthPointsComponent['_state'],
+    ));
+
+    let magicPointsComponent: MagicPointsComponent = <MagicPointsComponent>hero.getComponentByName(MagicPointsComponent.name);
+    debug('debug')(sprintf(
+        'magic points: %s(%s)',
+        magicPointsComponent['_currentMagicPoints'],
+        magicPointsComponent['_maxMagicPoints'],
+    ));
+
+    let attackPowerComponent: AttackPowerComponent = <AttackPowerComponent>hero.getComponentByName(AttackPowerComponent.name);
+    debug('debug')(sprintf(
+        'attack power: %s-%s',
+        attackPowerComponent['_baseMinAttackPower'],
+        attackPowerComponent['_baseMaxAttackPower'],
+    ));
+
+    debug('debug')('# characterAttribute: finalValue (_baseValue)');
+    hero.findComponentsByName(CharacterAttributeComponent.name).map((characterAttributeComponent) => {
+        debug('debug')(sprintf(
+            '%s: %s(%s)',
+            characterAttributeComponent['_characterAttribute']['_name'],
+            characterAttributeComponent['finalValue'],
+            characterAttributeComponent['_baseValue'],
+        ));
+    });
+
+    debug('debug')('# equip:');
+    hero.findComponentsByName(EquipSlotComponent.name).map((equipSlotComponent) => {
+        debug('debug')(sprintf(
+            '%s: %s',
+            equipSlotComponent['_equipSlot']['_name'],
+            equipSlotComponent['_itemStackSlot'].isFree() ? 'free' : equipSlotComponent['_itemStackSlot']['_itemStack']['_item']['_name'],
+        ));
+    });
+}
+
+export function debugItemStack(itemStack: ItemStack) {
+    if (itemStack !== undefined) {
+        debug('debug')(sprintf(
+            '%s(%s): %s',
+            itemStack['_item']['_name'],
+            itemStack['_item']['_name'],
+            itemStack['_item']['_alias'],
+            itemStack['_count'],
+        ));
+    } else {
+        debug('debug')(undefined);
+    }
+}
+
+export function debugItemStorage(itemStorage: GameObject) {
+    let itemStorageSlotComponents = itemStorage.findComponentsByName(ItemStorageSlotComponent.name);
+    itemStorageSlotComponents.map((itemStorageSlotComponent: ItemStorageSlotComponent) => {
+        let msg = itemStorageSlotComponent.isBusy() ?
+            sprintf(
+                '%s(%s): %s',
+                itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_item']['_name'],
+                itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_item']['_alias'],
+                itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_count'],
+            ) :
+            'free';
+        debug('debug')(msg);
+    });
 }

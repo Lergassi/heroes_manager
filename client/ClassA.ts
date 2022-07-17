@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+// import 'reflect-metadata';
 
 // function log(target, name, descriptor) {
 //     // console.log('this is decorator');
