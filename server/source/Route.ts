@@ -21,8 +21,10 @@ export default class Route {
         this._callback = callback;
     }
 
-    run(req, res) {
-        this._callback(req, res);
+    // run(req, res) {
+    async run(req, res) {
+        // throw new AppError('42');
+        await this._callback(req, res);
     }
 
     equal(httpMethod: HttpMethod, pattern: string) {

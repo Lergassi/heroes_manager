@@ -14,6 +14,7 @@ export default class ItemStackSlot {
         }
     }
 
+    //todo: Если будет ошибкашибки, то стек созданный в момент вызова метода потеряется. placeItemStack(new ItemStack(...)) Возможно стоит переделать на паттерти, а стек создавать уже внутри слота после всех проверок.
     placeItemStack(itemStack: ItemStack) {
         this.canPlaceItemStack(itemStack);  //todo: Если не знать, что метод проверяет возможность размещения, то будет вызываться лишний метод.
         this._itemStack = itemStack;

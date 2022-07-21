@@ -2,6 +2,7 @@ import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageSlotComponent from './ItemStorageSlotComponent.js';
 import AppError from '../../source/AppError.js';
+import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 
 export const ITEM_STORAGE_DEFAULT_SIZE = 20;
 
@@ -10,6 +11,20 @@ export default class ItemStorageComponent extends Component {
 
     get size(): number {
         return this._size;
+    }
+
+    get busyItemStorageSlotCount(): number {
+        let count = 0;
+        const itemStorageSlotComponents = this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        itemStorageSlotComponents.map((item: ItemStorageSlotComponent) => {
+            count += Number(item.isBusy());
+        });
+
+        return count;
+    }
+
+    get freeItemStorageSlotCount(): number {
+        return this._size - this.busyItemStorageSlotCount;
     }
 
     constructor(
@@ -38,9 +53,13 @@ export default class ItemStorageComponent extends Component {
     getFirstFreeItemStorageSlotComponent(): ItemStorageSlotComponent {
         let freeItemStorageSlot = this.findFirstFreeItemStorageSlotComponent();
         if (!freeItemStorageSlot) {
-            throw new AppError('Свободных слотов не найдено.');
+            throw AppError.freeItemStorageSlotNotFound();
         }
 
         return freeItemStorageSlot;
+    }
+
+    addItem(itemStackBuilder: ItemStackPattern) {
+        this.getFirstFreeItemStorageSlotComponent().placeItemStack(itemStackBuilder.build());
     }
 }

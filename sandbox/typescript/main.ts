@@ -1,3 +1,4 @@
-import {devConfigTypes} from './include.js';
+import {devConfigTypes, testBooleanIncrement} from './include.js';
 
-devConfigTypes();
+// devConfigTypes();
+testBooleanIncrement();

@@ -1,3 +1,64 @@
-body {
-    background: red;
+/*html,*/
+/*body,*/
+/*div*/
+/*{*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*}*/
+
+.basic-table {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.basic-table th {
+    text-align: left;
+}
+
+.basic-table th,
+.basic-table td {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    padding: 4px 8px;
+}
+
+.block {
+    /*padding: 15px;*/
+    margin-bottom: 15px;
+}
+
+.block__title {
+    margin-bottom: 5px;
+}
+
+.block__content {
+
+}
+
+.debug {
+
+}
+
+.debug_hide {
+    display: none;
+}
+
+/*GameConsole*/
+.game-console {
+
+}
+
+.game-console__input {
+    width: 500px;
+    height: 24px;
+}
+
+.list-without-types {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.game-console-autocomplete-list__selected {
+    text-decoration: underline;
 }

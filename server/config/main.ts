@@ -1,14 +1,17 @@
-import config from '../../core/config/main.js';
 import path from 'path';
 
-export default Object.assign({
-    type: 'server',
+export default {
     env: process.env.ENV || 'production',
     /**
      * Пока это путь до проекта, а не сервера.
      * Учитывать, что process.cwd() вернет директорию запуска node, а не расположения server/index.js.
      */
     projectDir: process.env.PROJECT_DIR || process.cwd(),
+    /**
+     * Все пути кроме projectDir должны быть относительные.
+     */
+    dataDir: 'server/data',
+    savesDir: 'saves',
 
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 80,
@@ -28,4 +31,4 @@ export default Object.assign({
             },
         },
     },
-}, config);
+};

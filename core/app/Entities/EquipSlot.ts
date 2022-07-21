@@ -1,4 +1,6 @@
 import EquipSlotRule from './EquipSlotRule.js';
+import ItemCategory from './ItemCategory.js';
+import Item from './Item.js';
 
 export default class EquipSlot {
     private readonly _id: number;
@@ -46,5 +48,15 @@ export default class EquipSlot {
         this._description = description;
         this._sort = sort;
         this._rules = rules;
+    }
+
+    availableItemForEquip(item: Item): boolean {
+        for (let i = 0; i < this.rules.length; i++) {
+            if (this.rules[i].availableItemForEquip(item)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

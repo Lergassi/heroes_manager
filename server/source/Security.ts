@@ -10,11 +10,11 @@ export default class Security {
 
     //todo: Только это не безопасность, а проверка технически загружены данные или нет. Данные нужно загружать один раз, "проверять" нормально ли загрузилось. Каждый раз проверять не надо.
     isUserLoaded(): boolean {
-        return this._container.has('userGameObject');
+        return this._container.has('user');
     }
 
     isPlayerLoaded(): boolean {
-        return this._container.has('playerGameObject');
+        return this._container.has('player');
     }
 
     assertIsUserLoaded() {

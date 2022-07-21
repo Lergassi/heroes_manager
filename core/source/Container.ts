@@ -35,4 +35,8 @@ export default class Container {
     has(key: string): boolean {
         return this._services.hasOwnProperty(key);
     }
+
+    remove(key: string): void {
+        delete this._services[key];
+    }
 }

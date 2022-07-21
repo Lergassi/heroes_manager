@@ -25,23 +25,21 @@ import url from 'url';
 debug('http')('Server init start.');
 
 const container = new Container();
-(new ServerContainerConfigure()).configure(container);
 (new CoreContainerConfigure()).configure(container);
+(new ServerContainerConfigure()).configure(container);
 // debug('debug')(container);
 
 const router: Router = container.get('router');
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     let done = finalhandler(req, res, {
         env: container.get('config.server').env,
     });
 
-    // console.log(req.url);
     req['getParams'] = url.parse(req.url, true).query;
-    // req['getParams'] = 42;
 
     try {
-        router.run(req, res);
+        await router.run(req, res);
     } catch (error) {
         debug('error')('requestListener', error);
         done(error);

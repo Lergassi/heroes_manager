@@ -78,7 +78,7 @@ export default class Router {
     }
 
     //todo: Переделать, чтобы path был уже задан выше.
-    run(req, res) {
+    async run(req, res) {
         let url = req.url;
         let urlParsed = url.split('?');
 
@@ -86,7 +86,7 @@ export default class Router {
         debug('http')(sprintf('%s: %s', req.method, urlParsed[0]));
 
         let route = this._getRoute(req.method, urlParsed[0]);
-        route.run(req, res);
+        await route.run(req, res);
     }
 
     private _getRoute(method: HttpMethod, pattern: string) {

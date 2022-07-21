@@ -11,7 +11,7 @@ export default class ItemCategoryLoader {
         itemCategory['_description'] = data['_description'];
         itemCategory['_sort'] = <number>data['_sort'];
         if (data['_parent']) {
-            itemCategory['_parent'] = repositoryManager.getRepository<ItemCategory>(ItemCategory.name).getOneById(data['_parent']['id']);
+            itemCategory['_parent'] = repositoryManager.getRepository<ItemCategory>(ItemCategory.name).getOneByID(data['_parent']['id']);
         } else {
             itemCategory['_parent'] = undefined;
         }

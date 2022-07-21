@@ -14,15 +14,15 @@ export default class HeroClassLoader {
         heroClass['_alias'] = data['_alias'];
         heroClass['_description'] = data['_description'];
         heroClass['_sort'] = data['_sort'];
-        heroClass['_heroRole'] = repositoryManager.getRepository<HeroRole>(HeroRole.name).getOneById(data['_heroRole']['id']);
+        heroClass['_heroRole'] = repositoryManager.getRepository<HeroRole>(HeroRole.name).getOneByID(data['_heroRole']['id']);
         heroClass['_availableWeaponItemCategories'] = data['_availableWeaponItemCategories'].map((item) => {
-            return repositoryManager.getRepository<ItemCategory>(ItemCategory.name).getOneById(item['id']);
+            return repositoryManager.getRepository<ItemCategory>(ItemCategory.name).getOneByID(item['id']);
         });
         heroClass['_availableArmorMaterials'] = data['_availableArmorMaterials'].map((item) => {
-            return repositoryManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneById(item['id']);
+            return repositoryManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByID(item['id']);
         });
         heroClass['_mainCharacterAttributes'] = data['_mainCharacterAttributes'].map((item) => {
-            return repositoryManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneById(item['id']);
+            return repositoryManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByID(item['id']);
         });
 
         return heroClass;

@@ -107,3 +107,16 @@ export function devConfigTypes() {
     // }
     console.log('---END---');
 }
+
+export function testBooleanIncrement() {
+    let length: number = 0;
+    let b = true;
+    // let b = false;
+    // length += <number>b;
+    // length += <number>b;
+    // length += Number(b);
+    // length += Number(b);
+    length += +b;
+    length += +b;
+    console.log(length);
+}

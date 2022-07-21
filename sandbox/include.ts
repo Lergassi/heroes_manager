@@ -3,6 +3,7 @@ import AutoIncrementIDGenerator from '../core/source/AutoIncrementIDGenerator.js
 import UserFactory from '../core/app/Factories/UserFactory.js';
 import Container from '../core/source/Container.js';
 import CoreContainerConfigure from '../core/app/ContainerConfigure.js';
+import ServerContainerConfigure from '../server/app/ContainerConfigure.js';
 import WalletFactory from '../core/app/Factories/WalletFactory.js';
 import RepositoryManager from '../core/source/RepositoryManager.js';
 import Currency from '../core/app/Entities/Currency.js';
@@ -12,15 +13,36 @@ import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
 import HeroClass from '../core/app/Entities/HeroClass.js';
-import {debugHero, debugItem, debugItemStack, debugItemStorage} from '../core/debug/debug_functions.js';
+import {
+    debugContainer,
+    debugHero,
+    debugItem,
+    debugItemStack,
+    debugItemStorage,
+    debugItemStorages
+} from '../core/debug/debug_functions.js';
 import debug from 'debug';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
 import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
 import ItemStack from '../core/app/RuntimeObjects/ItemStack.js';
 import Item from '../core/app/Entities/Item.js';
+import TestCommand from '../core/app/Commands/TestCommand.js';
+import Input from '../core/source/GameConsole/Input.js';
+import HelpCommand from '../core/app/Commands/HelpCommand.js';
+import GameConsole from '../core/source/GameConsole/GameConsole.js';
+import ListCommand from '../core/app/Commands/ListCommand.js';
+import {Pool} from 'mysql';
+import ItemStorageManager from '../core/app/Services/ItemStorageManager.js';
+import {runInThisContext} from 'vm';
+import ItemStackPattern from '../core/app/RuntimeObjects/ItemStackPattern.js';
+import ItemRepository from '../core/app/Repositories/ItemRepository.js';
+import chalk from 'chalk';
+import HeroPattern, {EquipSlotItemStackBuilder} from '../core/app/RuntimeObjects/HeroPattern.js';
+import EquipSlot from '../core/app/Entities/EquipSlot.js';
 
 let container = new Container();
-(new CoreContainerConfigure).configure(container);
+(new CoreContainerConfigure()).configure(container);
+(new ServerContainerConfigure()).configure(container);
 
 export function playerFactory_create() {
     let idGenerator: AutoIncrementIDGenerator = container.get('realtimeObjectIdGenerator');
@@ -119,10 +141,10 @@ export function devGameObjectStorage_newPlayerScenario() {
         container.get('repositoryManager').getRepository(Currency.name).getOneByAlias('currency_research_points'),
         10,
     ));
-    gameObjectStorage.add(heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_warrior'), 1));
-    gameObjectStorage.add(heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_warrior'), 1));
-    gameObjectStorage.add(heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_mage'), 1));
-    gameObjectStorage.add(heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_rogue'), 1));
+    gameObjectStorage.add(heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_warrior')));
+    gameObjectStorage.add(heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_warrior')));
+    gameObjectStorage.add(heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_mage')));
+    gameObjectStorage.add(heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_rogue')));
 
     gameObjectStorage.add(itemStorageFactory.create());
     gameObjectStorage.add(itemStorageFactory.create());
@@ -138,15 +160,13 @@ export function devGameObjectStorage_newHeroScenario() {
     // let gameObjectStorage: HeroFactory = container.get('heroFactory');
 
     let heroClassAlias = 'hero_class_warrior';
-    let level = 1;
     let heroClass = container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias(heroClassAlias);
 
     let heroes = [
-        heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_warrior'), level),
-        heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_warrior'), level),
-        heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_mage'), level),
-        heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_rogue'), level),
-        // heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_gunslinger'), level),
+        heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_warrior')),
+        heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_warrior')),
+        heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_mage')),
+        heroFactory.create(container.get('repositoryManager').getRepository(HeroClass.name).getOneByAlias('hero_class_rogue')),
     ];
 
     _.map(heroes, (value) => {
@@ -172,4 +192,158 @@ export function devCreateItemStorage() {
         freeItemStorageSlotComponent.placeItemStack(new ItemStack(container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_wood'), 20));
     }
     debugItemStorage(itemStorage);
+}
+
+export function devGameConsole() {
+    let gameConsole: GameConsole = container.get('gameConsole');
+
+    // gameConsole.register(new HelpCommand(container));
+    // gameConsole.register(new ListCommand(container));
+    // gameConsole.register(new HelpCommand(container));
+    // let name = 'help';
+    // let name = 'list';
+    // let name = 'create_user_env';
+    let name = 'create_user_env';
+    // gameConsole.run(name, ['user01@email.com', 'qweasdzxc']);
+    gameConsole.run(name, ['user01@email.com', 'qweasdzxc']);
+
+    // let command = new TestCommand(container);
+    // let command = new HelpCommand(container);
+    // command.run([]);
+}
+
+export function testTransaction() {
+    let pool: Pool = container.get('database.pool');
+    pool.getConnection((err, connection) => {
+        connection.beginTransaction();
+    });
+}
+
+export function devItemStorageManager() {
+    container.get('gameObjectStorage').add(container.get('itemStorageFactory').create());
+    container.get('gameObjectStorage').add(container.get('itemStorageFactory').create());
+    debugItemStorages(container);
+
+    const itemStorageManager = new ItemStorageManager(container.get('gameObjectStorage'));
+    itemStorageManager.addItem(new ItemStackPattern(
+        container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_wood'),
+        20,
+    ));
+    itemStorageManager.addItem(new ItemStackPattern(
+        container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_one_handed_sword_01'),
+        1,
+    ));
+    itemStorageManager.addItem(new ItemStackPattern(
+        container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_cloth_helmet_01'),
+        1,
+    ));
+    itemStorageManager.addItem(new ItemStackPattern(
+        container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_wood'),
+        10,
+    ));
+    itemStorageManager.addItem(new ItemStackPattern(
+        container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_wood'),
+        10,
+    ));
+
+    debugItemStorages(container);
+}
+
+export function testItemStorages() {
+    testItemStorageOverflow(
+        container.get('repositoryManager').getRepository(Item.name),
+        container.get('itemStorageFactory'),
+    );
+    testItemStoragesOverflow(
+        container.get('repositoryManager').getRepository(Item.name),
+        container.get('itemStorageFactory'),
+    );
+}
+
+function testItemStorageOverflow(
+    itemRepository: ItemRepository,
+    itemStorageFactory: ItemStorageFactory,
+) {
+    const itemStorage = itemStorageFactory.create();
+    const itemStorageComponent = <ItemStorageComponent>itemStorage.getComponentByName(ItemStorageComponent.name);
+    let i = 1;
+    let max = itemStorageComponent['_size'] + 1;
+    try {
+        while(i <= max) {
+            itemStorageComponent.addItem(new ItemStackPattern(
+                itemRepository.getOneByAlias('item_wood'),
+                20,
+            ));
+            i++;
+        }
+        debug('test')(chalk.red('fail') + ' testItemStorageOverflow. Исключение не сработало.');
+    } catch (e) {
+        if (
+            e.message === 'Свободных слотов не найдено.' &&
+            i === max
+        ) {
+            debug('test')(chalk.green('success') + ' testItemStorageOverflow. Исключение сработа правильно.');
+        } else {
+            debug('test')(chalk.red('fail') + ' testItemStorageOverflow. Исключение сработало не правильно.');
+        }
+    }
+}
+
+function testItemStoragesOverflow(
+    itemRepository: ItemRepository,
+    itemStorageFactory: ItemStorageFactory,
+) {
+    let size = 20;
+    const gameObjectStorage = new GameObjectStorage([
+        itemStorageFactory.create(size),
+        itemStorageFactory.create(size),
+    ]);
+    const itemStorageManager = new ItemStorageManager(gameObjectStorage);
+
+    let itemStorages = gameObjectStorage.findByTag('#item_storage');
+
+    let i = 1;
+    let max = 0;
+    itemStorages.map((item) => {
+        max += item.getComponentByName(ItemStorageComponent.name)['_size'];
+    });
+    max += 1;
+
+    try {
+        while(i <= max) {
+            itemStorageManager.addItem(new ItemStackPattern(
+                itemRepository.getOneByAlias('item_wood'),
+                20,
+            ));
+            i++;
+        }
+        debug('test')(chalk.red('fail') + ' testItemStoragesOverflow. Исключение не сработало.');
+    } catch (e) {
+        if (
+            e.message === 'Свободных слотов не найдено.' &&
+            i === max
+        ) {
+            debug('test')(chalk.green('success') + ' testItemStoragesOverflow. Исключение сработа правильно.');
+        } else {
+            debug('test')(chalk.red('fail') + ' testItemStoragesOverflow. Исключение сработало не правильно.');
+        }
+    }
+}
+
+export function devHeroPattern() {
+    // let heroBuilder = new HeroBuilder(
+    //     container.get('repositoryManager').getRepository(HeroClass.name),
+    //     1,
+    //     ,
+    // );
+    // testEquipSlotItemPatten();
+}
+
+export function testEquipSlotItemPatten() {
+    let equipSlotItemBuilder = new EquipSlotItemStackBuilder(
+        container.get('repositoryManager').getRepository(EquipSlot.name).getOneByAlias('equip_slot_head'),
+        // container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_wood'),
+        container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_plate_helmet_01'),
+        // container.get('repositoryManager').getRepository(Item.name).getOneByAlias('item_one_handed_sword_01'),
+    );
 }

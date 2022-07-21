@@ -13,6 +13,10 @@ import MagicPointsComponent from '../app/Components/MagicPointsComponent.js';
 import HeroComponent from '../app/Components/HeroComponent.js';
 import ItemStack from '../app/RuntimeObjects/ItemStack.js';
 import ItemStorageSlotComponent from '../app/Components/ItemStorageSlotComponent.js';
+import WalletComponent from '../app/Components/WalletComponent.js';
+import Container from '../source/Container.js';
+import ItemStorageComponent from '../app/Components/ItemStorageComponent.js';
+import GameObjectStorage from '../source/GameObjectStorage.js';
 
 //todo: В отдельный класс. Сделать единый механизм метаданных для всего проекта.
 export let meta = {
@@ -106,53 +110,80 @@ export function debugRepositoryManager(repositoryManager) {
     }
 }
 
+export function debugGameObject(gameObject: GameObject) {
+    debug('debug')('%j', {
+        gameObject: GameObject.name,
+        _id: gameObject['_id'],
+    });
+}
+
 export function debugHero(hero: GameObject) {
     let heroComponent: HeroComponent = <HeroComponent>hero.getComponentByName(HeroComponent.name);
-    debug('debug')(sprintf(
-        'heroClass: %s',
-        heroComponent['_heroClass']['_name'],
-    ));
+    debugGameObject(hero);
+
+    debug('debug')('%j', {
+        component: HeroComponent.name,
+        _id: heroComponent['_id'],
+        _heroClass: heroComponent['_heroClass']['_name'],
+    });
 
     let healthPointsComponent: HealthPointsComponent = <HealthPointsComponent>hero.getComponentByName(HealthPointsComponent.name);
-    debug('debug')(sprintf(
-        'health points: %s(%s), %s',
-        healthPointsComponent['_currentHealthPoints'],
-        healthPointsComponent['_maxHealthPoints'],
-        healthPointsComponent['_state'],
-    ));
+    debug('debug')('%j', {
+        component: HealthPointsComponent.name,
+        _id: healthPointsComponent['_id'],
+        _currentHealthPoints: healthPointsComponent['_currentHealthPoints'],
+        _maxHealthPoints: healthPointsComponent['_maxHealthPoints'],
+        _state: healthPointsComponent['_state'],
+    });
 
     let magicPointsComponent: MagicPointsComponent = <MagicPointsComponent>hero.getComponentByName(MagicPointsComponent.name);
-    debug('debug')(sprintf(
-        'magic points: %s(%s)',
-        magicPointsComponent['_currentMagicPoints'],
-        magicPointsComponent['_maxMagicPoints'],
-    ));
+    debug('debug')('%j', {
+        component: MagicPointsComponent.name,
+        _id: magicPointsComponent['_id'],
+        _currentMagicPoints: magicPointsComponent['_currentMagicPoints'],
+        _maxMagicPoints: magicPointsComponent['_maxMagicPoints'],
+    });
 
     let attackPowerComponent: AttackPowerComponent = <AttackPowerComponent>hero.getComponentByName(AttackPowerComponent.name);
-    debug('debug')(sprintf(
-        'attack power: %s-%s',
-        attackPowerComponent['_baseMinAttackPower'],
-        attackPowerComponent['_baseMaxAttackPower'],
-    ));
+    debug('debug')('%j', {
+        component: AttackPowerComponent.name,
+        _id: attackPowerComponent['_id'],
+        _baseMinAttackPower: attackPowerComponent['_baseMinAttackPower'],
+        _baseMaxAttackPower: attackPowerComponent['_baseMaxAttackPower'],
+    });
 
     debug('debug')('# characterAttribute: finalValue (_baseValue)');
     hero.findComponentsByName(CharacterAttributeComponent.name).map((characterAttributeComponent) => {
-        debug('debug')(sprintf(
-            '%s: %s(%s)',
-            characterAttributeComponent['_characterAttribute']['_name'],
-            characterAttributeComponent['finalValue'],
-            characterAttributeComponent['_baseValue'],
-        ));
+        debug('debug')('%j', {
+            component: CharacterAttributeComponent.name,
+            _id: characterAttributeComponent['_id'],
+            _characterAttribute: characterAttributeComponent['_characterAttribute']['_name'],
+            finalValue: characterAttributeComponent['finalValue'],
+            _baseValue: characterAttributeComponent['_baseValue'],
+        });
     });
 
     debug('debug')('# equip:');
     hero.findComponentsByName(EquipSlotComponent.name).map((equipSlotComponent) => {
-        debug('debug')(sprintf(
-            '%s: %s',
-            equipSlotComponent['_equipSlot']['_name'],
-            equipSlotComponent['_itemStackSlot'].isFree() ? 'free' : equipSlotComponent['_itemStackSlot']['_itemStack']['_item']['_name'],
-        ));
+        debug('debug')('%j', {
+            component: EquipSlotComponent.name,
+            _id: equipSlotComponent['_id'],
+            _equipSlot: equipSlotComponent['_equipSlot']['_name'],
+            itemStack: equipSlotComponent['_itemStackSlot'].isBusy() ?
+                equipSlotComponent['_itemStackSlot']['_itemStack']['_item']['_name'] :
+                'free'
+            ,
+        });
     });
+}
+
+export function debugHeroes(container: Container) {
+    debug('debug')('Heroes:');
+    container.get('gameObjectStorage')
+        .findByTag('#hero')
+        .map((wallet) => {
+            debugHero(wallet);
+        });
 }
 
 export function debugItemStack(itemStack: ItemStack) {
@@ -170,16 +201,82 @@ export function debugItemStack(itemStack: ItemStack) {
 }
 
 export function debugItemStorage(itemStorage: GameObject) {
+    const itemStorageComponent = itemStorage.getComponentByName(ItemStorageComponent.name);
+    debugGameObject(itemStorage);
+    debug('debug')('%j', {
+        component: ItemStorageComponent.name,
+        _id: itemStorageComponent['_id'],
+        count: itemStorageComponent['busyItemStorageSlotCount'],
+        size: itemStorageComponent['_size'],
+    });
+
     let itemStorageSlotComponents = itemStorage.findComponentsByName(ItemStorageSlotComponent.name);
     itemStorageSlotComponents.map((itemStorageSlotComponent: ItemStorageSlotComponent) => {
-        let msg = itemStorageSlotComponent.isBusy() ?
-            sprintf(
-                '%s(%s): %s',
-                itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_item']['_name'],
-                itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_item']['_alias'],
-                itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_count'],
-            ) :
-            'free';
-        debug('debug')(msg);
+        debug('debug')('%j', {
+            component: ItemStorageSlotComponent.name,
+            _id: itemStorageSlotComponent['_id'],
+            itemStack: itemStorageSlotComponent.isBusy() ? {
+                item: {
+                    name: itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_item']['_name'],
+                    alias: itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_item']['_alias'],
+                },
+                count: itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_count'],
+            } : 'free',
+        });
     });
 }
+
+export function debugItemStorages(container: Container) {
+    debug('debug')('Item storages:');
+    container.get('gameObjectStorage')
+        .findByTag('#item_storage')
+        .map((itemStorage) => {
+            debugItemStorage(itemStorage);
+        });
+}
+
+export function debugWallet(wallet: GameObject) {
+    debugGameObject(wallet);
+    let walletComponent = wallet.getComponentByName(WalletComponent.name);
+    debug('debug')('%j', {
+        component: WalletComponent.name,
+        _id: walletComponent['_id'],
+        name: walletComponent['_currency']['_name'],
+        value: walletComponent['_value'],
+    });
+}
+
+export function debugWallets(container: Container) {
+    debug('debug')('Wallets:');
+    container.get('gameObjectStorage')
+        .findByTag('#wallet')
+        .map((wallet) => {
+            debugWallet(wallet);
+        });
+}
+
+export function debugPlayerEnv(container: Container) {
+    debugWallets(container);
+    debugItemStorages(container);
+}
+
+export function debugContainer(container: Container) {
+    for (const serviceKey in container['_services']) {
+        debug('debug')(sprintf(
+            '%s',
+            serviceKey,
+        ));
+    }
+}
+
+// export function debugGameObjectStorage(gameObjectStorage: GameObjectStorage) {
+//     debug('debug')('%j', {
+//         name: GameObjectStorage.name,
+//         length: gameObjectStorage['_gameObjects'].length,
+//     });
+//     for (let i = 0; i < gameObjectStorage['_gameObjects'].length; i++) {
+//         debug('debug')('%j', {
+//
+//         });
+//     }
+// }

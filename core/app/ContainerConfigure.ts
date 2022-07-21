@@ -10,10 +10,23 @@ import GameObjectStorage from '../source/GameObjectStorage.js';
 import HeroFactory from './Factories/HeroFactory.js';
 import config from '../config/main.js';
 import ItemStorageFactory from './Factories/ItemStorageFactory.js';
+import GameConsole from '../source/GameConsole/GameConsole.js';
+import HelpCommand from './Commands/HelpCommand.js';
+import ListCommand from './Commands/ListCommand.js';
+import ItemStorageManager from './Services/ItemStorageManager.js';
 
 export default class ContainerConfigure extends AbstractContainerConfigure {
     configure(container: Container): Container {
         container.set('config.core', config);
+
+        container.set('gameConsole', (container) => {
+            let gameConsole = new GameConsole();
+
+            gameConsole.register(new HelpCommand(container));
+            gameConsole.register(new ListCommand(container));
+
+            return gameConsole;
+        });
         // container.set('dataObjectIdGenerator', new AutoIncrementIdGenerator(1));      //todo: save
         container.set('realtimeObjectIdGenerator', new AutoIncrementIDGenerator(1));  //todo: save
         container.set('repositoryManager', (container) => {
@@ -45,6 +58,9 @@ export default class ContainerConfigure extends AbstractContainerConfigure {
             return new ItemStorageFactory(
                 container.get('realtimeObjectIdGenerator'),
             );
+        });
+        container.set('itemStorageManager', (container) => {
+            return new ItemStorageManager(container.get('gameObjectStorage'));
         });
 
         return container;

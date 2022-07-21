@@ -5,8 +5,8 @@ import AppError from './AppError.js';
 export default class GameObjectStorage {
     private readonly _gameObjects: GameObject[];
 
-    constructor() {
-        this._gameObjects = [];
+    constructor(gameObjects = []) {
+        this._gameObjects = gameObjects;
     }
 
     add(gameObject: GameObject): void {
@@ -65,5 +65,9 @@ export default class GameObjectStorage {
         }
 
         throw AppError.gameObjectNotFound(tag);
+    }
+
+    clear() {
+        _.remove(this._gameObjects);
     }
 }

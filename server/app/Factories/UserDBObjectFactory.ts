@@ -12,7 +12,6 @@ export default class UserDBObjectFactory {
         this._passwordHasher = passwordHasher;
     }
 
-    //todo: Сделать проверку данных. email, id, etc...
     create(email, password) {
         let id = v4();
         let salt = this._passwordHasher.salt();

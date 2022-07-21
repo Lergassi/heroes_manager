@@ -1,6 +1,3 @@
-/**
- * Не использовать самостоятельно, а объединять с конфигом клиента или сервера.
- */
 export default {
     // date_format_mysql: 'yyyy-MM-dd hh:mm:ss',
     // date_format_save_filename: 'dd.MM.yyyy_hh:mm:ss',
@@ -52,6 +49,28 @@ export default {
                 character_attribute_luck: 0
             }
         },
-        // hero_class_archer:
+        hero_class_gunslinger: {
+            max_level: 100,
+            max_health_points: 80,
+            max_magic_points: 100,
+            min_attack_power: 50,
+            max_attack_power: 60,
+            character_attributes: {
+                character_attribute_strength: 4,
+                character_attribute_agility: 10,
+                character_attribute_intelligence: 7,
+                character_attribute_stamina: 5,
+                character_attribute_critical_strike: 5,
+                character_attribute_luck: 0
+            }
+        },
+    },
+    start_wallet_values: {
+        currency_gold: {
+            value: 1000
+        },
+        currency_research_points: {
+            value: 10
+        }
     }
 };

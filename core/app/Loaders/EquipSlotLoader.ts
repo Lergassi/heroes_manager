@@ -16,9 +16,9 @@ export default class EquipSlotLoader {
         equipSlot['_rules'] = data['_rules'].map((equipSlotRuleData) => {
             let equipSlotRule = Object.create(EquipSlotRule.prototype);
 
-            equipSlotRule['_heroClass'] = repositoryManager.getRepository(HeroClass.name).getOneById(equipSlotRuleData['_heroClass']['id']);
+            equipSlotRule['_heroClass'] = repositoryManager.getRepository(HeroClass.name).getOneByID(equipSlotRuleData['_heroClass']['id']);
             equipSlotRule['_itemCategories'] = equipSlotRuleData['_itemCategories'].map((itemCategoryData) => {
-                return repositoryManager.getRepository(ItemCategory.name).getOneById(itemCategoryData['id']);
+                return repositoryManager.getRepository(ItemCategory.name).getOneByID(itemCategoryData['id']);
             });
 
             return equipSlotRule;

@@ -29,8 +29,9 @@ export default class HeroFactory {
         this._config = config;
     }
 
-    create(heroClass: HeroClass, level: number = 1): GameObject {
-        //todo: Временно.
+    create(heroClass: HeroClass): GameObject {
+        //todo: Временно. ЧТО ВРЕМЕННО? Переименовать и убрать вообще в другое место.
+        //todo: Что значит начальные настройки? Не понятно при срабатывании исключения.
         if(!this._config['start_hero_values'].hasOwnProperty(heroClass.alias)) {
             throw new AppError(sprintf('Начальные настройки для класса "%s" не найдены.', heroClass.name));
         }
@@ -50,8 +51,7 @@ export default class HeroFactory {
         hero.addComponent(new LevelComponent(
             this._idGenerator.generateID(),
             hero,
-            level,
-            // this._config.maxLevel,
+            1,
             this._config['max_level'],
             0,
         ));
@@ -81,11 +81,6 @@ export default class HeroFactory {
             ));
         });
 
-        // heroGameObject.addComponent(EquipComponent.create(
-        //     this._idGenerator.generateId(),
-        //     heroGameObject,
-        // ));
-
         let heroAttributes = [
             'character_attribute_strength',
             'character_attribute_agility',
@@ -104,7 +99,6 @@ export default class HeroFactory {
             ));
         });
 
-        //todo: Сделать настройку для каждого героя.
         hero.addComponent(new HealthPointsComponent(
             this._idGenerator.generateID(),
             hero,

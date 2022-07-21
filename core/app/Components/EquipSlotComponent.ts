@@ -23,7 +23,8 @@ export default class EquipSlotComponent extends Component {
     constructor(
         id: number,
         gameObject: GameObject,
-        equipSlot: EquipSlot) {
+        equipSlot: EquipSlot,
+    ) {
         super(id, gameObject);
         this._equipSlot = equipSlot;
         this._itemStackSlot = new ItemStackSlot();

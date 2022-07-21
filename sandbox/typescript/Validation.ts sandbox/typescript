@@ -1,0 +1,51 @@
+"use strict";
+{
+    "foo": "bar"
+}
+/// <reference path="Validation.ts" />
+var Validation;
+(function (Validation) {
+    const lettersRegexp = /^[A-Za-z]+$/;
+    class LettersOnlyValidator {
+        isAcceptable(s) {
+            return lettersRegexp.test(s);
+        }
+    }
+    Validation.LettersOnlyValidator = LettersOnlyValidator;
+})(Validation || (Validation = {}));
+var TestNamespace;
+(function (TestNamespace) {
+    class ClassA {
+        constructor() {
+            this.var1 = 'var1';
+        }
+    }
+    ClassA.foo = 'bar';
+    TestNamespace.ClassA = ClassA;
+})(TestNamespace || (TestNamespace = {}));
+/// <reference path="Validation.ts" />
+var Validation;
+(function (Validation) {
+    const numberRegexp = /^[0-9]+$/;
+    class ZipCodeValidator {
+        isAcceptable(s) {
+            return s.length === 5 && numberRegexp.test(s);
+        }
+    }
+    Validation.ZipCodeValidator = ZipCodeValidator;
+})(Validation || (Validation = {}));
+/// <reference path="Validation.ts" />
+/// <reference path="LettersOnlyValidator.ts" />
+/// <reference path="ZipCodeValidator.ts" />
+// Some samples to try
+let strings = ["Hello", "98052", "101"];
+// Validators to use
+let validators = {};
+validators["ZIP code"] = new Validation.ZipCodeValidator();
+validators["Letters only"] = new Validation.LettersOnlyValidator();
+// Show whether each string passed each validator
+for (let s of strings) {
+    for (let name in validators) {
+        console.log(`"${s}" - ${validators[name].isAcceptable(s) ? "matches" : "does not match"} ${name}`);
+    }
+}

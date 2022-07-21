@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GameConsole</title>
+
+    <!-- GAME RESOURCES -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- EXTERNAL LIBRARIES -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin></script>
+
+    <!-- GAME LIBRARIES -->
+    <script src="/js/raw/GameConsole.js" type="text/babel"></script>
+</head>
+<body>
+    <div id="root">root</div>
+    <script type="text/babel">
+        const domContainer = document.getElementById('root');
+        const root = ReactDOM.createRoot(domContainer);
+        root.render(
+            <GameConsole
+                executeUrl={'http://api.heroes.sd44.ru/game_console/execute'}
+                maxHistoryLength={100}
+                commands={['help', 'list']}
+            />
+        );
+    </script>
+</body>
+</html>

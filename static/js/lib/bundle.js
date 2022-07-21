@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*************************/
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
-eval("var _core_data_test_json__WEBPACK_IMPORTED_MODULE_0___namespace_cache;\n__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _core_data_test_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/data/test.json */ \"./core/data/test.json\");\n/* harmony import */ var _ClassA_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClassA.js */ \"./client/ClassA.js\");\n\n\nconsole.log('Hello, World! (#client#/index.js)');\nconsole.log(/*#__PURE__*/ (_core_data_test_json__WEBPACK_IMPORTED_MODULE_0___namespace_cache || (_core_data_test_json__WEBPACK_IMPORTED_MODULE_0___namespace_cache = __webpack_require__.t(_core_data_test_json__WEBPACK_IMPORTED_MODULE_0__))));\nvar classA = new _ClassA_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nconsole.log('classA', classA);\n\n//# sourceURL=webpack://heroes_ts/./client/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _core_data_test_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/data/test.json */ \"./core/data/test.json\");\n/* harmony import */ var _ClassA_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClassA.js */ \"./client/ClassA.js\");\n// import {default} from '../core/data/test.json';\n\n\nconsole.log('Hello, World! (#client#/index.js)'); // console.log(data.default.foo);\n\nconsole.log(_core_data_test_json__WEBPACK_IMPORTED_MODULE_0__.foo);\nvar classA = new _ClassA_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nconsole.log('classA', classA);\n\n//# sourceURL=webpack://heroes_ts/./client/index.js?");
 
 /***/ }),
 
@@ -67,36 +67,6 @@ eval("module.exports = {\"foo\":\"bar\"};\n\n//# sourceURL=webpack://heroes_ts/.
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/create fake namespace object */
-/******/ 	!function() {
-/******/ 		var getProto = Object.getPrototypeOf ? function(obj) { return Object.getPrototypeOf(obj); } : function(obj) { return obj.__proto__; };
-/******/ 		var leafPrototypes;
-/******/ 		// create a fake namespace object
-/******/ 		// mode & 1: value is a module id, require it
-/******/ 		// mode & 2: merge all properties of value into the ns
-/******/ 		// mode & 4: return value when already ns object
-/******/ 		// mode & 16: return value when it's Promise-like
-/******/ 		// mode & 8|1: behave like require
-/******/ 		__webpack_require__.t = function(value, mode) {
-/******/ 			if(mode & 1) value = this(value);
-/******/ 			if(mode & 8) return value;
-/******/ 			if(typeof value === 'object' && value) {
-/******/ 				if((mode & 4) && value.__esModule) return value;
-/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
-/******/ 			}
-/******/ 			var ns = Object.create(null);
-/******/ 			__webpack_require__.r(ns);
-/******/ 			var def = {};
-/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
-/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
-/******/ 				Object.getOwnPropertyNames(current).forEach(function(key) { def[key] = function() { return value[key]; }; });
-/******/ 			}
-/******/ 			def['default'] = function() { return value; };
-/******/ 			__webpack_require__.d(ns, def);
-/******/ 			return ns;
-/******/ 		};
-/******/ 	}();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	!function() {
 /******/ 		// define getter functions for harmony exports

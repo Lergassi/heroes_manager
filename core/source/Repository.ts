@@ -64,7 +64,7 @@ export default class Repository<Entity> {
         return result;
     }
 
-    getOneById(id): Entity {
+    getOneByID(id): Entity {
         let entity = this.findOneById(id);
 
         if (!entity) {
