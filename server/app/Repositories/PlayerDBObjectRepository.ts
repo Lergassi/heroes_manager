@@ -30,7 +30,7 @@ export default class PlayerDBObjectRepository<Entity> extends Repository<Entity>
         return this._selectQuery(query, [name, userDBObject['_id']]);
     }
 
-    private async _selectQuery(query, values, callback = undefined) {
+    private async _selectQuery(query, values) {
         return new Promise((resolve, reject) => {
             this._pool.query(query, values, function (error, results, fields) {
                 if (error) {

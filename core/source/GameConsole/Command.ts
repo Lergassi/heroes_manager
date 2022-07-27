@@ -12,12 +12,12 @@ export default abstract class Command {
 
     abstract get name(): string;
 
-    get container(): ContainerInterface {
-        return this._container;
-    }
-
     get description(): string {
         return this._description;
+    }
+
+    get container(): ContainerInterface {
+        return this._container;
     }
 
     constructor(container: ContainerInterface) {
@@ -28,7 +28,7 @@ export default abstract class Command {
         this.configure();
     }
 
-    async execute(input: Input, callback = undefined) {
+    async execute(input: Input) {
         // throw new AppError('Метод execute не переопределен.');
     };
 
@@ -62,7 +62,7 @@ export default abstract class Command {
         this._requireArgumentsLength += +isRequire;
     }
 
-    async run(commandArguments = [], callback = undefined) {
+    async run(commandArguments = []) {
         //todo: Убрать в другой объект, чтобы не код не был в каждом классе команды.
         if (commandArguments.length < this._requireArgumentsLength) {
             //todo: Тут нужно выводить информацию про аргументы.
@@ -93,6 +93,6 @@ export default abstract class Command {
             inputCommandArguments,
         );
 
-        await this.execute(input, callback);
+        await this.execute(input);
     }
 }

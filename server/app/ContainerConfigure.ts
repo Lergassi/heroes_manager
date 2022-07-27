@@ -53,6 +53,7 @@ import PlayerDBObjectRepository from './Repositories/PlayerDBObjectRepository.js
 import PlayerDBObject from './DBObjects/PlayerDBObject.js';
 import PlayerDBObjectFactory from './Factories/PlayerDBObjectFactory.js';
 import CreateUserEnvironmentSyncCommand from './Commands/CreateUserEnvironmentSyncCommand.js';
+import LoadFullEnvironmentCommand from './Commands/LoadFullEnvironmentCommand.js';
 
 export default class ContainerConfigure extends AbstractContainerConfigure {
     configure(container: ContainerInterface): ContainerInterface {
@@ -378,10 +379,11 @@ export default class ContainerConfigure extends AbstractContainerConfigure {
         gameConsole.register(new ExitCommand(container));
 
         gameConsole.register(new CreatePlayerEnvironmentCommand(container));
-        gameConsole.register(new UnloadPlayerEnvironmentCommand(container));
-
         gameConsole.register(new SavePlayerEnvironmentCommand(container));
         gameConsole.register(new LoadPlayerEnvironmentCommand(container));
+        gameConsole.register(new UnloadPlayerEnvironmentCommand(container));
+
+        gameConsole.register(new LoadFullEnvironmentCommand(container));
 
         /* DEBUG */
         gameConsole.register(new DebugUserEnvironmentCommand(container));

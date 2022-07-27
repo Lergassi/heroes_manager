@@ -15,10 +15,6 @@ export default class ExitCommand extends Command {
     async execute(input: Input) {
         this.container.get<Security>('server.security').assertIsUserLoaded();
 
-        // if (this.container.get<Security>('server.security').isPlayerLoaded()) {
-        //     await this.container.get<GameConsole>('server.gameConsole').run('unload_player_env');
-        // }
-        // await this.container.get<GameConsole>('server.gameConsole').run('unload_user_env');
         await this.container.get<GameConsole>('server.gameConsole').run('unload_user_env');
     }
 }

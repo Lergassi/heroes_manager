@@ -760,11 +760,7 @@ export function devAutoSaveLoad_services() {
 
 //Весь сценарий создания пользователя и игрока.
 export async function createUserAndPlayer() {
-    await container.get<GameConsole>('server.gameConsole').run('create_user_env', ['user01@email.com', 'qweasdzxc'], async () => {
-        console.log('This is command callback!');
-        await container.get<GameConsole>('server.gameConsole').run('create_player_env');
-        await container.get<GameConsole>('server.gameConsole').run('save_player_env');
-    });
+    await container.get<GameConsole>('server.gameConsole').run('create_user_env', ['user01@email.com', 'qweasdzxc']);
     await container.get<GameConsole>('server.gameConsole').run('create_user_env', ['user01@email.com', 'qweasdzxc']);
     await container.get<GameConsole>('server.gameConsole').run('create_player_env');
     await container.get<GameConsole>('server.gameConsole').run('save_player_env');

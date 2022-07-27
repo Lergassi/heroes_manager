@@ -25,7 +25,7 @@ export default class CreateUserEnvironmentCommand extends Command {
         this.addArgument('password', '', true);
     }
 
-    async execute(input: Input, callback = undefined) {
+    async execute(input: Input) {
         this.container.get<Security>('server.security').assertIsUserAlreadyLoaded();
 
         let email = input.getArgument('email').trim();
@@ -68,15 +68,11 @@ export default class CreateUserEnvironmentCommand extends Command {
                     // fileSystemFacade.writeFileSync(file, JSON.stringify(userSaveObject));
 
                     connection.commit();
-                    // connection.rollback();
 
                     //todo: Заменить на GameObject.
                     // this.container.set('server.userDBObject', userGameObject);
                     // this.container.set('server.userDBObject', userDBObject);
                     this.container.get<Security>('server.security').loginUser(userDBObject);
-                    // if (callback) {
-                    //     callback();
-                    // }
                 })
                 .catch((error) => {
                     debug('error')(error);

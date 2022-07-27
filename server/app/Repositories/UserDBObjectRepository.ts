@@ -21,12 +21,12 @@ export default class UserDBObjectRepository<Entity> extends Repository<Entity> {
         return this._selectQuery(query, [id]);
     }
 
-    async loadOneByEmail(email, callback = undefined) {
+    async loadOneByEmail(email) {
         let query = 'select * from users where email = ?';
-        return this._selectQuery(query, [email], callback);
+        return this._selectQuery(query, [email]);
     }
 
-    private async _selectQuery(query, values, callback = undefined) {
+    private async _selectQuery(query, values) {
         return new Promise((resolve, reject) => {
             this._pool.query(query, values, function (error, results, fields) {
                 if (error) {
@@ -34,8 +34,6 @@ export default class UserDBObjectRepository<Entity> extends Repository<Entity> {
                 }
 
                 if (!results.length) {
-                    console.log(values);
-                    console.log(results);
                     return reject(new AppError(sprintf('Пользователь с id(%s) не найден.', values[0])));
                 }
 

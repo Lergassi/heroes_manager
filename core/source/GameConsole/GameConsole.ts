@@ -1,7 +1,6 @@
 import Command from './Command.js';
 import AppError from '../AppError.js';
 import {sprintf} from 'sprintf-js';
-import Foo from '../../../sandbox/Foo.js';
 import chalk from 'chalk';
 import debug from 'debug';
 import _ from 'lodash';
@@ -27,21 +26,21 @@ export default class GameConsole {
         this._commands[command.name] = command;
     }
 
-    hasCommandByName(name: string) {
+    hasCommand(name: string) {
         return this._commands.hasOwnProperty(name);
     }
 
-    getCommandByName(name: string) {
-        if (this.hasCommandByName(name)) {
+    getCommand(name: string) {
+        if (this.hasCommand(name)) {
             return this._commands[name];
         }
 
         throw new AppError(sprintf('Команда %s не найдена.', name));
     }
 
-    async run(name: string, commandArguments = [], callback = undefined) {
-        let command = this.getCommandByName(name);
+    async run(name: string, commandArguments = []) {
+        let command = this.getCommand(name);
         debug('info')('GameConsole command:', chalk.yellow(name)); //todo: Сделать отдельно в виде логера.
-        await command.run(commandArguments, callback);
+        await command.run(commandArguments);
     }
 }
