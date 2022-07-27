@@ -9,9 +9,10 @@ import ItemRepository from '../Repositories/ItemRepository.js';
 import {debugEquipSlot, debugRepositoryManager} from '../../debug/debug_functions.js';
 import save_load_meta from '../../meta/save_load.js';
 import EquipSlot from '../Entities/EquipSlot.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
 
 export default class RepositoryManagerFileLoader {
-    load(pathData: string, container: Container): RepositoryManager {
+    load(pathData: string, container: ContainerInterface): RepositoryManager {
         let meta = save_load_meta;
         let repositoryManager = new RepositoryManager();
 

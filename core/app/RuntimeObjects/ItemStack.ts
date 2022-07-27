@@ -1,9 +1,11 @@
 import Item from '../Entities/Item.js';
+import AppError from '../../source/AppError.js';
 
 export const DEFAULT_STACK_SIZE = 20;
 
 //todo: id пока убран.
 export default class ItemStack {
+    private readonly _id: number;
     private readonly _item: Item;
     private _count: number;
 
@@ -19,8 +21,14 @@ export default class ItemStack {
         this._count = value;
     }
 
-    constructor(item: Item, count: number = DEFAULT_STACK_SIZE) {
+    constructor(id: number, item: Item, count: number = 1) {
+        if (count > item.stackSize) {
+            throw AppError.itemStackSizeOverflow(item.stackSize);
+        }
+
         //todo: validate
+
+        this._id = id;
         this._item = item;
         this._count = count;
     }

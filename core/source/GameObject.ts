@@ -2,11 +2,14 @@ import Component from './Component.js';
 import _ from 'lodash';
 import AppError from './AppError.js';
 import {sprintf} from 'sprintf-js';
+import ComponentInterface from './ComponentInterface.js';
 
 export default class GameObject {
     private readonly _id: number;
     private _name: string;
-    private readonly _components: Component[];
+    // private readonly _components: Component[];
+    private readonly _components: ComponentInterface[];
+    // private readonly _components;
     private readonly _tags: string[];
 
     get name(): string {
@@ -36,17 +39,17 @@ export default class GameObject {
         }
     }
 
-    findComponentByName(name: string): Component {
+    findComponentByName<T>(name: string): T {
         for (let i = 0; i < this._components.length; i++) {
             if (this._components[i].constructor.name === name) {
-                return this._components[i];
+                return <T>this._components[i];
             }
         }
 
         return undefined;
     }
 
-    findComponentsByName(name: string): Component[] {
+    findComponentsByName<T>(name: string): T[] {
         let result = [];
         for (let i = 0; i < this._components.length; i++) {
             if (this._components[i].constructor.name === name) {
@@ -57,23 +60,23 @@ export default class GameObject {
         return result;
     }
 
-    getComponentByID(id: number): Component {
+    getComponentByID<T>(id: number): T {
         for (let i = 0; i < this._components.length; i++) {
             if (this._components[i]['_id'] === id) {
-                return this._components[i];
+                return <T>this._components[i];
             }
         }
 
         throw new AppError(sprintf('Component с id=%s не найден.', id));
     }
 
-    getComponentByName(name: string): Component {
+    getComponentByName<T>(name: string): T {
         let component = this.findComponentByName(name);
         if (!component) {
             throw new AppError(sprintf('Component с name %s не найден.', name));
         }
 
-        return component;
+        return <T>component;
     }
 
     /**

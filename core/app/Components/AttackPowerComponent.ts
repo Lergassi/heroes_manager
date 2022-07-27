@@ -37,6 +37,12 @@ export default class AttackPowerComponent extends Component {
         return this._dependentCharacterAttributeComponents;
     }
 
+    get dependents() {
+        return [
+            CharacterAttributeComponent.name,
+        ];
+    }
+
     constructor(
         id: number,
         gameObject: GameObject,
@@ -48,7 +54,7 @@ export default class AttackPowerComponent extends Component {
         this._baseMinAttackPower = baseMinAttackPower;
         this._baseMaxAttackPower = baseMaxAttackPower;
 
-        //todo: В зависимости.
+        //todo: В зависимости. Зависимости должны быть указаны отдельно для сохранения и загрузки.
         //todo: В GameObjectStorage.
         // this._dependentCharacterAttributeComponents = gameObject
         //     .findComponentsByName(CharacterAttributeComponent.name)

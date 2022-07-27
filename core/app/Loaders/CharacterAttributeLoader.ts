@@ -1,4 +1,5 @@
 import CharacterAttribute from '../Entities/CharacterAttribute.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
 import RepositoryManager from '../../source/RepositoryManager.js';
 
 export default class CharacterAttributeLoader {

@@ -4,10 +4,11 @@ import _ from 'lodash';
 import AppError from '../../../../core/source/AppError.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import RepositoryManager from '../../../../core/source/RepositoryManager.js';
 
 export default class DebugDevController extends Controller {
     entities(req, res) {
-        let repositoryManager = this.container.get('repositoryManager');
+        let repositoryManager = this.container.get<RepositoryManager>('core.repositoryManager');
         debugRepositoryManager(repositoryManager);
 
         res.statusCode = 200;
@@ -22,7 +23,7 @@ export default class DebugDevController extends Controller {
         }
 
         let detailDebugFunction = meta.hasOwnProperty(classname) ? meta[classname]['detailDebugFunction'] : debugEntity;
-        this.container.get('repositoryManager').getRepository(classname)['_items'].forEach(detailDebugFunction);
+        this.container.get<RepositoryManager>('core.repositoryManager').getRepository(classname)['_items'].forEach(detailDebugFunction);
 
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');

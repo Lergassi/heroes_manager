@@ -1,4 +1,5 @@
 import Currency from '../Entities/Currency.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
 import RepositoryManager from '../../source/RepositoryManager.js';
 
 export default class CurrencyLoader {

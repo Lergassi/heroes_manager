@@ -4,6 +4,7 @@ import {sprintf} from 'sprintf-js';
 import Foo from '../../../sandbox/Foo.js';
 import chalk from 'chalk';
 import debug from 'debug';
+import _ from 'lodash';
 
 export default class GameConsole {
     private readonly _commands: {
@@ -11,7 +12,7 @@ export default class GameConsole {
     };
 
     get commands(): { [name: string]: Command } {
-        return this._commands;
+        return _.clone(this._commands);
     }
 
     constructor() {
@@ -38,9 +39,9 @@ export default class GameConsole {
         throw new AppError(sprintf('Команда %s не найдена.', name));
     }
 
-    async run(name: string, commandArguments = []) {
+    async run(name: string, commandArguments = [], callback = undefined) {
         let command = this.getCommandByName(name);
         debug('info')('GameConsole command:', chalk.yellow(name)); //todo: Сделать отдельно в виде логера.
-        await command.run(commandArguments);
+        await command.run(commandArguments, callback);
     }
 }

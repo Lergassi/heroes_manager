@@ -52,7 +52,7 @@ export default class HeroFactory {
             this._idGenerator.generateID(),
             hero,
             1,
-            this._config['max_level'],
+            this._config['start_hero_values'][heroClass.alias]['max_level'],
             0,
         ));
 

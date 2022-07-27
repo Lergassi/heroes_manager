@@ -1,9 +1,10 @@
-import Input from '../../source/GameConsole/Input.js';
-import Command from '../../source/GameConsole/Command.js';
-import GameConsole from '../../source/GameConsole/GameConsole.js';
+import Input from '../../../core/source/GameConsole/Input.js';
+import Command from '../../../core/source/GameConsole/Command.js';
+import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import chalk from 'chalk';
 import {sprintf} from 'sprintf-js';
 import debug from 'debug';
+import _ from 'lodash';
 
 export default class ListCommand extends Command {
     get name(): string {
@@ -16,8 +17,8 @@ export default class ListCommand extends Command {
 
     async execute(input: Input) {
         debug('info')('GameConsole. Все доступные команды.');
-        let gameConsole: GameConsole = this.container.get('gameConsole');
-        let commands = gameConsole.commands;
+        const gameConsole = this.container.get<GameConsole>('server.gameConsole');
+        const commands = _.sortBy(gameConsole.commands, ['name']);
         for (const commandName in commands) {
             console.log(
                 sprintf(

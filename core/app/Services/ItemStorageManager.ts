@@ -36,8 +36,13 @@ export default class ItemStorageManager {
         return freeItemStorageSlot;
     }
 
-    addItem(itemStackBuilder: ItemStackPattern) {
+    addItemStack(itemStack: ItemStack) {
         const freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
-        freeItemStorageSlotComponent.placeItemStack(itemStackBuilder.build());
+        freeItemStorageSlotComponent.placeItemStack(itemStack);
+    }
+
+    addItem(itemStackPattern: ItemStackPattern) {
+        const freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
+        freeItemStorageSlotComponent.placeItemStack(itemStackPattern.build());
     }
 }

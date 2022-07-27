@@ -29,7 +29,7 @@ export default class GameConsoleSiteController extends Controller {
         let commandName = commandQuerySplitted[0];
         let commandArguments = _.slice(commandQuerySplitted, 1);
 
-        let gameConsole: GameConsole = this.container.get('gameConsole');
+        let gameConsole: GameConsole = this.container.get<GameConsole>('server.gameConsole');
         try {
             await gameConsole.run(commandName, commandArguments);
 

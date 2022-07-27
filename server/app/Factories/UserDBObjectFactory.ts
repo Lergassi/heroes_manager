@@ -16,13 +16,13 @@ export default class UserDBObjectFactory {
         let id = v4();
         let salt = this._passwordHasher.salt();
 
-        return UserDBObject.create(
+        return new UserDBObject(
             id,
             new Date(),
             email,
             salt,
             this._passwordHasher.hash(password, salt),
-            UserDBObjectState.ACTIVE,
+            UserDBObjectState.Active,
             false,
         );
     }

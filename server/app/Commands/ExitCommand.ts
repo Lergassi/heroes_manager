@@ -1,5 +1,7 @@
 import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
+import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
+import Security from '../../source/Security.js';
 
 export default class ExitCommand extends Command {
     get name(): string {
@@ -11,11 +13,12 @@ export default class ExitCommand extends Command {
     }
 
     async execute(input: Input) {
-        this.container.get('security').assertIsUserLoaded();
+        this.container.get<Security>('server.security').assertIsUserLoaded();
 
-        if (this.container.get('security').isPlayerLoaded()) {
-            await this.container.get('gameConsole').getCommandByName('unload_player_env').run();
-        }
-        await this.container.get('gameConsole').getCommandByName('unload_user_env').run();
+        // if (this.container.get<Security>('server.security').isPlayerLoaded()) {
+        //     await this.container.get<GameConsole>('server.gameConsole').run('unload_player_env');
+        // }
+        // await this.container.get<GameConsole>('server.gameConsole').run('unload_user_env');
+        await this.container.get<GameConsole>('server.gameConsole').run('unload_user_env');
     }
 }

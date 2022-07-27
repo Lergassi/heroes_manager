@@ -29,11 +29,6 @@ export default class ItemStorageFactory {
             ));
         }
 
-        // itemStorage.addComponent(ItemStorageController.create(
-        //     this._realtimeObjectIdGenerator.generateId(),
-        //     itemStorage,
-        // ));
-
         return itemStorage;
     }
 }

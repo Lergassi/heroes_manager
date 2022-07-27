@@ -4,10 +4,11 @@ import GameObject from '../../source/GameObject.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import AppError from '../../source/AppError.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
+import GameObjectStorage from '../../source/GameObjectStorage.js';
 
 export default class EquipCommand extends Command {
     get name(): string {
-        return 'equip';
+        return 'equip_from_item_storage';
     }
 
     configure() {
@@ -28,16 +29,16 @@ export default class EquipCommand extends Command {
         let heroID = parseInt(input.getArgument('hero_id'));
         let equipSlotComponentID = parseInt(input.getArgument('equip_slot_component_id'));
 
-        let itemStorage: GameObject = this.container.get('gameObjectStorage').getOneByID(itemStorageID);
+        let itemStorage: GameObject = this.container.get<GameObjectStorage>('core.gameObjectStorage').getOneByID(itemStorageID);
         let itemStorageSlotComponent: ItemStorageSlotComponent = <ItemStorageSlotComponent>itemStorage.getComponentByID(itemStorageSlotID);
         if (itemStorageSlotComponent.isFree()) {
             throw new AppError('Исходный ItemStorageSlotComponent пустой.');
         }
 
-        let hero: GameObject = this.container.get('gameObjectStorage').getOneByID(heroID);
+        let hero: GameObject = this.container.get<GameObjectStorage>('core.gameObjectStorage').getOneByID(heroID);
         let equipSlotComponent: EquipSlotComponent = <EquipSlotComponent>hero.getComponentByID(equipSlotComponentID);
 
-        equipSlotComponent.equip(itemStorageSlotComponent.itemStack);
+        equipSlotComponent.equipItemStack(itemStorageSlotComponent.itemStack);
         itemStorageSlotComponent.clear();
     }
 }

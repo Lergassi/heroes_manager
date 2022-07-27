@@ -1,9 +1,10 @@
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import RepositoryManager from '../../source/RepositoryManager.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
 import HeroClass from '../Entities/HeroClass.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import HeroRole from '../Entities/HeroRole.js';
 import CharacterAttribute from '../Entities/CharacterAttribute.js';
+import RepositoryManager from '../../source/RepositoryManager.js';
 
 export default class HeroClassLoader {
     load(data: object, repositoryManager: RepositoryManager) {

@@ -1,5 +1,7 @@
 import Command from '../../../../core/source/GameConsole/Command.js';
 import Input from '../../../../core/source/GameConsole/Input.js';
+import UserDBObject from '../../DBObjects/UserDBObject.js';
+import Security from '../../../source/Security.js';
 
 export default class DebugUserEnvironmentCommand extends Command {
     get name(): string {
@@ -7,8 +9,9 @@ export default class DebugUserEnvironmentCommand extends Command {
     }
 
     async execute(input: Input) {
-        this.container.get('security').assertIsUserLoaded();
+        this.container.get<Security>('server.security').assertIsUserLoaded();
 
-        console.log('Загруженный пользователь: ' + this.container.get('user')['_id']);
+        // console.log('Загруженный пользователь: ' + this.container.get<UserDBObject>('server.userDBObject')['_id']);
+        console.log('Загруженный пользователь: ' + this.container.get<Security>('server.security').user.id);
     }
 }

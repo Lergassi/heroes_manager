@@ -8,6 +8,7 @@ import fs from 'fs';
 import {Pool} from 'mysql';
 import debug from 'debug';
 import path from 'path';
+import Security from '../../source/Security.js';
 
 export default class CreateUserEnvironmentCommand extends Command {
     get name(): string {
@@ -24,33 +25,32 @@ export default class CreateUserEnvironmentCommand extends Command {
         this.addArgument('password', '', true);
     }
 
-    async execute(input: Input) {
-        // this.container.get('security').assertIsUserAlreadyLoaded();
+    async execute(input: Input, callback = undefined) {
+        this.container.get<Security>('server.security').assertIsUserAlreadyLoaded();
 
         let email = input.getArgument('email').trim();
         let password = input.getArgument('password');
 
-        let userDBObjectFactory: UserDBObjectFactory = this.container.get('userDBObjectFactory');
+        let userDBObjectFactory: UserDBObjectFactory = this.container.get<UserDBObjectFactory>('server.userDBObjectFactory');
         let userDBObject = userDBObjectFactory.create(email, password);
 
-        let pool: Pool = this.container.get('database.pool');
+        let pool: Pool = this.container.get<Pool>('server.database.pool');
 
-        let userDBObjectRepository: UserDBObjectRepository<UserDBObject> = this.container.get('userDBObjectRepository');
+        let userDBObjectRepository = this.container.get<UserDBObjectRepository<UserDBObject>>('server.userDBObjectRepository');
 
         pool.getConnection((err, connection) => {
             new Promise((resolve, reject) => {
                 connection.beginTransaction((error) => {
                     userDBObjectRepository.save(connection, userDBObject, resolve, reject);
-                    debug('info')('Пользователь создан: ', userDBObject['_id']);
-                    this.container.set('userDBObject', userDBObject);
+
                 });//beginTransaction
             })
                 .then(() => {
                     //todo: Делать проверки перед всеми операциями и только в конце их выполнять. canCreateUserSaveDir(), etc.
+                    debug('info')('Пользователь создан: ', userDBObject['_id']);
+
                     let userSaveDir = path.resolve(
-                        this.container.get('config.server').projectDir,
-                        this.container.get('config.server').dataDir,
-                        this.container.get('config.server').savesDir,
+                        this.container.get<object>('server.config')['savesDir'],
                         userDBObject['_id'],
                     );
                     fs.mkdirSync(userSaveDir);
@@ -68,16 +68,21 @@ export default class CreateUserEnvironmentCommand extends Command {
                     // fileSystemFacade.writeFileSync(file, JSON.stringify(userSaveObject));
 
                     connection.commit();
+                    // connection.rollback();
 
                     //todo: Заменить на GameObject.
-                    // this.container.set('user', userGameObject);
-                    this.container.set('user', userDBObject);
+                    // this.container.set('server.userDBObject', userGameObject);
+                    // this.container.set('server.userDBObject', userDBObject);
+                    this.container.get<Security>('server.security').loginUser(userDBObject);
+                    // if (callback) {
+                    //     callback();
+                    // }
                 })
                 .catch((error) => {
                     debug('error')(error);
                     connection.rollback();
                 })
             ;
-        });//getConnection
+        });//end Promise connection.beginTransaction
     }
 }

@@ -8,6 +8,10 @@ export default class ItemStackSlot {
         return this._itemStack;
     }
 
+    constructor() {
+        this._itemStack = undefined;
+    }
+
     canPlaceItemStack(itemStack: ItemStack) {
         if (this.isBusy()) {
             throw new AppError('ItemStackSlot занят. Сначала его нужно освободить.');

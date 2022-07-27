@@ -16,6 +16,8 @@ import HeroClass from '../app/Entities/HeroClass.js';
 import HeroClassLoader from '../app/Loaders/HeroClassLoader.js';
 import EquipSlot from '../app/Entities/EquipSlot.js';
 import EquipSlotLoader from '../app/Loaders/EquipSlotLoader.js';
+import AutoIncrementIDGenerator from '../source/AutoIncrementIDGenerator.js';
+import AutoIncrementIDGeneratorLoader from '../app/Loaders/Services/AutoIncrementIDGeneratorLoader.js';
 
 export default [
     {
@@ -63,4 +65,9 @@ export default [
         prototype: EquipSlot.prototype,
         loader: EquipSlotLoader,
     },
+    // {
+    //     classname: AutoIncrementIDGenerator.name,
+    //     prototype: AutoIncrementIDGenerator.prototype,
+    //     loader: AutoIncrementIDGeneratorLoader,
+    // }
 ];

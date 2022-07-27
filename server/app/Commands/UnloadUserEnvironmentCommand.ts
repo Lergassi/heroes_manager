@@ -2,6 +2,8 @@ import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
 import AppError from '../../../core/source/AppError.js';
 import debug from 'debug';
+import Security from '../../source/Security.js';
+import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 
 export default class UnloadUserEnvironmentCommand extends Command {
     get name(): string {
@@ -9,13 +11,13 @@ export default class UnloadUserEnvironmentCommand extends Command {
     }
 
     async execute(input: Input) {
-        this.container.get('security').assertIsUserLoaded();
+        this.container.get<Security>('server.security').assertIsUserLoaded();
 
-        if (this.container.get('security').isPlayerLoaded()) {
-            throw new AppError('Нельзя выгрузить окружение пользователя без предварительной выгрузки окружения игрока.');
+        if (this.container.get<Security>('server.security').isPlayerLoaded()) {
+            await this.container.get<GameConsole>('server.gameConsole').run('unload_player_env');
         }
+        this.container.get<Security>('server.security').logoutUser();
 
-        this.container.remove('user');
         debug('info')('Окружение пользователя выгружено.');
     }
 }

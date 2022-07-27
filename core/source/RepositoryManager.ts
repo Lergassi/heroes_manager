@@ -20,4 +20,8 @@ export default class RepositoryManager {
 
         return this._repositories[entityClassname];
     }
+
+    testRepositoryManagerMethod() {
+        console.log('testRepositoryManagerMethod');
+    }
 }

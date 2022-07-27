@@ -9,3 +9,5 @@ export default class AutoIncrementIDGenerator {
         return this._currentId++;
     }
 }
+
+// export

@@ -1,4 +1,5 @@
 import ItemCategory from '../Entities/ItemCategory.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
 import RepositoryManager from '../../source/RepositoryManager.js';
 
 export default class ItemCategoryLoader {

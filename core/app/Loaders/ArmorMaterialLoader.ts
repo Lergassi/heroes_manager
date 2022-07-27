@@ -1,4 +1,5 @@
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
 import RepositoryManager from '../../source/RepositoryManager.js';
 
 export default class ArmorMaterialLoader {

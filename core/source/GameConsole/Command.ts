@@ -2,16 +2,17 @@ import Container from '../Container.js';
 import AppError from '../AppError.js';
 import {sprintf} from 'sprintf-js';
 import Input from './Input.js';
+import ContainerInterface from '../ContainerInterface.js';
 
 export default abstract class Command {
     private readonly _description: string;
-    private readonly _container: Container;
+    private readonly _container: ContainerInterface;
     private readonly _commandArguments;
     private _requireArgumentsLength: number;
 
     abstract get name(): string;
 
-    get container(): Container {
+    get container(): ContainerInterface {
         return this._container;
     }
 
@@ -19,7 +20,7 @@ export default abstract class Command {
         return this._description;
     }
 
-    constructor(container: Container) {
+    constructor(container: ContainerInterface) {
         this._description = '';
         this._container = container;
         this._commandArguments = [];
@@ -27,7 +28,7 @@ export default abstract class Command {
         this.configure();
     }
 
-    async execute(input: Input) {
+    async execute(input: Input, callback = undefined) {
         // throw new AppError('Метод execute не переопределен.');
     };
 
@@ -61,7 +62,8 @@ export default abstract class Command {
         this._requireArgumentsLength += +isRequire;
     }
 
-    async run(commandArguments = []) {
+    async run(commandArguments = [], callback = undefined) {
+        //todo: Убрать в другой объект, чтобы не код не был в каждом классе команды.
         if (commandArguments.length < this._requireArgumentsLength) {
             //todo: Тут нужно выводить информацию про аргументы.
             throw new AppError(sprintf('Неверно указаны аргументы. Количество обязательных аргументов должно быть: %s.', this._requireArgumentsLength));
@@ -91,6 +93,6 @@ export default abstract class Command {
             inputCommandArguments,
         );
 
-        await this.execute(input);
+        await this.execute(input, callback);
     }
 }

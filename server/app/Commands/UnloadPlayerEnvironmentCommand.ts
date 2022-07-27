@@ -1,6 +1,8 @@
 import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
 import debug from 'debug';
+import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
+import Security from '../../source/Security.js';
 
 export default class UnloadPlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -12,10 +14,11 @@ export default class UnloadPlayerEnvironmentCommand extends Command {
     }
 
     async execute(input: Input) {
-        this.container.get('security').assertIsPlayerLoaded();
+        this.container.get<Security>('server.security').assertIsPlayerLoaded();
 
-        this.container.remove('player');
-        this.container.get('gameObjectStorage').clear();
+        this.container.get<Security>('server.security').logoutPlayer();
+        this.container.remove('core.*');
+
         debug('info')('Окружение игрока выгружено.');
     }
 }

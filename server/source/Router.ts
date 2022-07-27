@@ -12,9 +12,10 @@ import _, {method} from 'lodash';
 import Container from '../../core/source/Container.js';
 import RouterGroup from './RouterGroup.js';
 import debug from 'debug';
+import ContainerInterface from '../../core/source/ContainerInterface.js';
 
 export default class Router {
-    private readonly _container: Container;
+    private readonly _container: ContainerInterface;
     private readonly _controllersDir: string;
     private readonly _routes: Array<Route>;
     private readonly _controllers: Object;
@@ -22,7 +23,7 @@ export default class Router {
 
     //todo: Убрать controllersDir и сделать абсолютный путь при указании target.
     //todo: И выделить загрузку модуля в отдельный механизм. Вместе с save/load.
-    constructor(container: Container, controllersDir: string) {
+    constructor(container: ContainerInterface, controllersDir: string) {
         this._routes = [];
         this._controllersDir = controllersDir;
         this._container = container;

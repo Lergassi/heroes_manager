@@ -1,11 +1,9 @@
-// import {default} from '../core/data/test.json';
-import data from '../core/data/test.json';
-import ClassA from './ClassA.js';
+import ClientContainerConfigure from './app/ContainerConfigure.js';
+import CoreContainerConfigure from '../core/app/ContainerConfigure.js';
+import Container from '../core/source/Container.js';
 
-console.log('Hello, World! (#client#/index.js)');
+const container = new Container();
+(new ClientContainerConfigure()).configure(container);
 
-// console.log(data.default.foo);
-console.log(data.foo);
-
-let classA = new ClassA();
-console.log('classA', classA);
+// const coreContainer = new CoreContainerConfigure();
+// coreContainer.configure(container);

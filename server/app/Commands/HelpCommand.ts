@@ -1,5 +1,5 @@
-import Command from '../../source/GameConsole/Command.js';
-import Input from '../../source/GameConsole/Input.js';
+import Command from '../../../core/source/GameConsole/Command.js';
+import Input from '../../../core/source/GameConsole/Input.js';
 import chalk from 'chalk';
 
 export default class HelpCommand extends Command {

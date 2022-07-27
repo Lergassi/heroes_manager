@@ -7,11 +7,8 @@ export default {
      * Учитывать, что process.cwd() вернет директорию запуска node, а не расположения server/index.js.
      */
     projectDir: process.env.PROJECT_DIR || process.cwd(),
-    /**
-     * Все пути кроме projectDir должны быть относительные.
-     */
-    dataDir: 'server/data',
-    savesDir: 'saves',
+    dataDir: path.resolve(process.env.PROJECT_DIR, 'server/data'),
+    savesDir: path.resolve(process.env.PROJECT_DIR, 'server/data/saves'),
 
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 80,

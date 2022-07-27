@@ -30,7 +30,7 @@ export default class EquipSlotComponent extends Component {
         this._itemStackSlot = new ItemStackSlot();
     }
 
-    equip(itemStack: ItemStack) {
+    equipItemStack(itemStack: ItemStack) {
         // this._equipSlot.canEquipItem(itemStack.item, this.gameObject);
         this._itemStackSlot.placeItemStack(itemStack);
     }

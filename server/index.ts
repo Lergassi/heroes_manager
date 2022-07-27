@@ -21,19 +21,17 @@ import Container from '../core/source/Container.js';
 import ServerContainerConfigure from './app/ContainerConfigure.js';
 import CoreContainerConfigure from './../core/app/ContainerConfigure.js';
 import url from 'url';
+import GameConsole from '../core/source/GameConsole/GameConsole.js';
 
 debug('http')('Server init start.');
 
-const container = new Container();
-(new CoreContainerConfigure()).configure(container);
-(new ServerContainerConfigure()).configure(container);
-// debug('debug')(container);
+let container = (new ServerContainerConfigure()).configure(new Container());
 
-const router: Router = container.get('router');
+const router = container.get<Router>('server.router');
 
 const server = http.createServer(async (req, res) => {
     let done = finalhandler(req, res, {
-        env: container.get('config.server').env,
+        env: container.get<object>('server.config')['env'],
     });
 
     req['getParams'] = url.parse(req.url, true).query;

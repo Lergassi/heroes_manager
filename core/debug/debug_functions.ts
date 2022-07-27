@@ -17,6 +17,8 @@ import WalletComponent from '../app/Components/WalletComponent.js';
 import Container from '../source/Container.js';
 import ItemStorageComponent from '../app/Components/ItemStorageComponent.js';
 import GameObjectStorage from '../source/GameObjectStorage.js';
+import ContainerInterface from '../source/ContainerInterface.js';
+import LevelComponent from '../app/Components/LevelComponent.js';
 
 //todo: В отдельный класс. Сделать единый механизм метаданных для всего проекта.
 export let meta = {
@@ -114,6 +116,17 @@ export function debugGameObject(gameObject: GameObject) {
     debug('debug')('%j', {
         gameObject: GameObject.name,
         _id: gameObject['_id'],
+        _tags: _.join(gameObject['_tags'], ', '),
+    });
+}
+
+export function debugLevelComponent(levelComponent: LevelComponent) {
+    debug('debug')('%j', {
+        component: LevelComponent.name,
+        _id: levelComponent['_id'],
+        _level: levelComponent['_level'],
+        _maxLevel: levelComponent['_maxLevel'],
+        _exp: levelComponent['_exp'],
     });
 }
 
@@ -126,6 +139,8 @@ export function debugHero(hero: GameObject) {
         _id: heroComponent['_id'],
         _heroClass: heroComponent['_heroClass']['_name'],
     });
+
+    debugLevelComponent(hero.getComponentByName<LevelComponent>(LevelComponent.name));
 
     let healthPointsComponent: HealthPointsComponent = <HealthPointsComponent>hero.getComponentByName(HealthPointsComponent.name);
     debug('debug')('%j', {
@@ -163,7 +178,7 @@ export function debugHero(hero: GameObject) {
         });
     });
 
-    debug('debug')('# equip:');
+    debug('debug')('# equip');
     hero.findComponentsByName(EquipSlotComponent.name).map((equipSlotComponent) => {
         debug('debug')('%j', {
             component: EquipSlotComponent.name,
@@ -177,9 +192,9 @@ export function debugHero(hero: GameObject) {
     });
 }
 
-export function debugHeroes(container: Container) {
-    debug('debug')('Heroes:');
-    container.get('gameObjectStorage')
+export function debugHeroes(container: ContainerInterface) {
+    debug('debug')('# heroes');
+    container.get<GameObjectStorage>('core.gameObjectStorage')
         .findByTag('#hero')
         .map((wallet) => {
             debugHero(wallet);
@@ -206,7 +221,7 @@ export function debugItemStorage(itemStorage: GameObject) {
     debug('debug')('%j', {
         component: ItemStorageComponent.name,
         _id: itemStorageComponent['_id'],
-        count: itemStorageComponent['busyItemStorageSlotCount'],
+        busy: itemStorageComponent['busyItemStorageSlotCount'],
         size: itemStorageComponent['_size'],
     });
 
@@ -226,9 +241,9 @@ export function debugItemStorage(itemStorage: GameObject) {
     });
 }
 
-export function debugItemStorages(container: Container) {
-    debug('debug')('Item storages:');
-    container.get('gameObjectStorage')
+export function debugItemStorages(container: ContainerInterface) {
+    debug('debug')('# item storages');
+    container.get<GameObjectStorage>('core.gameObjectStorage')
         .findByTag('#item_storage')
         .map((itemStorage) => {
             debugItemStorage(itemStorage);
@@ -246,21 +261,21 @@ export function debugWallet(wallet: GameObject) {
     });
 }
 
-export function debugWallets(container: Container) {
-    debug('debug')('Wallets:');
-    container.get('gameObjectStorage')
+export function debugWallets(container: ContainerInterface) {
+    debug('debug')('# wallets');
+    container.get<GameObjectStorage>('core.gameObjectStorage')
         .findByTag('#wallet')
         .map((wallet) => {
             debugWallet(wallet);
         });
 }
 
-export function debugPlayerEnv(container: Container) {
+export function debugPlayerEnv(container: ContainerInterface) {
     debugWallets(container);
     debugItemStorages(container);
 }
 
-export function debugContainer(container: Container) {
+export function debugContainer(container: ContainerInterface) {
     for (const serviceKey in container['_services']) {
         debug('debug')(sprintf(
             '%s',
@@ -280,3 +295,10 @@ export function debugContainer(container: Container) {
 //         });
 //     }
 // }
+
+export function debugPlayerGameObject(container: ContainerInterface) {
+    let playerGameObject = container.get<GameObjectStorage>('core.gameObjectStorage').getOneByTag('#player');
+    debug('debug')('# player');
+    debugGameObject(playerGameObject);
+    debugLevelComponent(playerGameObject.getComponentByName(LevelComponent.name));
+}

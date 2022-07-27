@@ -1,8 +1,9 @@
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import RepositoryManager from '../../source/RepositoryManager.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
 import Item from '../Entities/Item.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import Quality from '../Entities/Quality.js';
+import RepositoryManager from '../../source/RepositoryManager.js';
 
 export default class ItemLoader {
     load(data: object, repositoryManager: RepositoryManager) {

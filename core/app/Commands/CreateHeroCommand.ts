@@ -3,6 +3,9 @@ import Input from '../../source/GameConsole/Input.js';
 import HeroClass from '../Entities/HeroClass.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import GameObject from '../../source/GameObject.js';
+import GameObjectStorage from '../../source/GameObjectStorage.js';
+import RepositoryManager from '../../source/RepositoryManager.js';
+import Security from '../../../server/source/Security.js';
 
 export default class CreateHeroCommand extends Command {
     get name(): string {
@@ -15,14 +18,14 @@ export default class CreateHeroCommand extends Command {
     }
 
     async execute(input: Input) {
-        this.container.get('security').assertIsPlayerLoaded();
+        this.container.get<Security>('server.security').assertIsPlayerLoaded();
 
         let heroClassAlias: string = input.getArgument('hero_class_alias');
-        let heroClass: HeroClass = this.container.get('repositoryManager').getRepository('HeroClass').getOneByAlias(heroClassAlias);
+        let heroClass: HeroClass = this.container.get<RepositoryManager>('core.repositoryManager').getRepository<HeroClass>('HeroClass').getOneByAlias(heroClassAlias);
 
-        let heroFactory: HeroFactory = this.container.get('heroFactory');
+        let heroFactory: HeroFactory = this.container.get<HeroFactory>('core.heroFactory');
 
         let hero: GameObject = heroFactory.create(heroClass);
-        this.container.get('gameObjectStorage').add(hero);
+        this.container.get<GameObjectStorage>('core.gameObjectStorage').add(hero);
     }
 }
