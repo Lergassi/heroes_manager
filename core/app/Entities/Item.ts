@@ -1,4 +1,3 @@
-import Container from '../../source/Container.js';
 import ItemCategory from './ItemCategory.js';
 import Quality from './Quality.js';
 import ArmorMaterial from './ArmorMaterial.js';

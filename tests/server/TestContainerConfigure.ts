@@ -1,4 +1,4 @@
-import ContainerConfigure from '../../server/app/ContainerConfigure.js';
+import ServerContainerConfigure from '../../server/app/ServerContainerConfigure.js';
 import Container from '../../core/source/Container.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
@@ -10,7 +10,7 @@ export default class TestContainerConfigure {
     run() {
         debug('test:server')(sprintf('Run test: %s', this._name));
 
-        let container = (new ContainerConfigure()).configure(new Container());
+        let container = (new ServerContainerConfigure()).configure(new Container());
 
         //Первым аргументов результат для удобства отображения в консоли.
         debug('test:server')('%o', container.get<object>('server.config') instanceof Object, 'config instanceof Object');

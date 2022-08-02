@@ -18,14 +18,17 @@ import _ from 'lodash';
 import config from './config/main.js';
 import Router from './source/Router.js';
 import Container from '../core/source/Container.js';
-import ServerContainerConfigure from './app/ContainerConfigure.js';
-import CoreContainerConfigure from './../core/app/ContainerConfigure.js';
+import ServerContainerConfigure from './app/ServerContainerConfigure.js';
+import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
 import url from 'url';
 import GameConsole from '../core/source/GameConsole/GameConsole.js';
 
 debug('http')('Server init start.');
 
-let container = (new ServerContainerConfigure()).configure(new Container());
+let container = new Container();
+
+(new ServerContainerConfigure()).configure(container);
+(new CoreContainerConfigure()).configure(container);
 
 const router = container.get<Router>('server.router');
 

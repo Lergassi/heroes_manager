@@ -1,4 +1,3 @@
-import Container from '../../source/Container.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import Item from '../Entities/Item.js';
 import path from 'path';

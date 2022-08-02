@@ -23,9 +23,9 @@ export default class CreateHeroCommand extends Command {
         let heroClassAlias: string = input.getArgument('hero_class_alias');
         let heroClass: HeroClass = this.container.get<RepositoryManager>('core.repositoryManager').getRepository<HeroClass>('HeroClass').getOneByAlias(heroClassAlias);
 
-        let heroFactory: HeroFactory = this.container.get<HeroFactory>('core.heroFactory');
+        let heroFactory: HeroFactory = this.container.get<HeroFactory>('player.heroFactory');
 
         let hero: GameObject = heroFactory.create(heroClass);
-        this.container.get<GameObjectStorage>('core.gameObjectStorage').add(hero);
+        this.container.get<GameObjectStorage>('player.gameObjectStorage').add(hero);
     }
 }

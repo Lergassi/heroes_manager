@@ -23,7 +23,7 @@ export default class InspectGameObjectCommand extends Command {
             showHidden: input.getArgument('showHidden') === '1',
         };
 
-        let gameObject = <GameObject>this.container.get<GameObjectStorage>('core.gameObjectStorage').getOneByID(id);
+        let gameObject = <GameObject>this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(id);
         console.log(util.inspect(gameObject, options));
     }
 }

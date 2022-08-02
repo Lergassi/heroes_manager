@@ -14,7 +14,6 @@ import HeroComponent from '../app/Components/HeroComponent.js';
 import ItemStack from '../app/RuntimeObjects/ItemStack.js';
 import ItemStorageSlotComponent from '../app/Components/ItemStorageSlotComponent.js';
 import WalletComponent from '../app/Components/WalletComponent.js';
-import Container from '../source/Container.js';
 import ItemStorageComponent from '../app/Components/ItemStorageComponent.js';
 import GameObjectStorage from '../source/GameObjectStorage.js';
 import ContainerInterface from '../source/ContainerInterface.js';
@@ -194,7 +193,7 @@ export function debugHero(hero: GameObject) {
 
 export function debugHeroes(container: ContainerInterface) {
     debug('debug')('# heroes');
-    container.get<GameObjectStorage>('core.gameObjectStorage')
+    container.get<GameObjectStorage>('player.gameObjectStorage')
         .findByTag('#hero')
         .map((wallet) => {
             debugHero(wallet);
@@ -243,7 +242,7 @@ export function debugItemStorage(itemStorage: GameObject) {
 
 export function debugItemStorages(container: ContainerInterface) {
     debug('debug')('# item storages');
-    container.get<GameObjectStorage>('core.gameObjectStorage')
+    container.get<GameObjectStorage>('player.gameObjectStorage')
         .findByTag('#item_storage')
         .map((itemStorage) => {
             debugItemStorage(itemStorage);
@@ -263,7 +262,7 @@ export function debugWallet(wallet: GameObject) {
 
 export function debugWallets(container: ContainerInterface) {
     debug('debug')('# wallets');
-    container.get<GameObjectStorage>('core.gameObjectStorage')
+    container.get<GameObjectStorage>('player.gameObjectStorage')
         .findByTag('#wallet')
         .map((wallet) => {
             debugWallet(wallet);
@@ -297,7 +296,7 @@ export function debugContainer(container: ContainerInterface) {
 // }
 
 export function debugPlayerGameObject(container: ContainerInterface) {
-    let playerGameObject = container.get<GameObjectStorage>('core.gameObjectStorage').getOneByTag('#player');
+    let playerGameObject = container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag('#player');
     debug('debug')('# player');
     debugGameObject(playerGameObject);
     debugLevelComponent(playerGameObject.getComponentByName(LevelComponent.name));

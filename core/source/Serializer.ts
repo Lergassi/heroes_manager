@@ -29,7 +29,7 @@ export enum SerializeType {
 export default class Serializer {
     private readonly _metadata: object;
     private readonly _container: ContainerInterface;
-    private _links: {};
+    private readonly _links: {};
 
     constructor(metadata: object, container: ContainerInterface) {
         this._metadata = metadata;
@@ -95,8 +95,8 @@ export default class Serializer {
                 default:
                     throw new AppError(sprintf('Тип "%s" не поддерживается системой сериализации.', objectMetadata.mapping[fieldKey].type));
                     break;
-            }
-        }
+            }//end switch (objectMetadata.mapping[fieldKey].type)
+        }//end for (const fieldKey in objectMetadata.mapping)
 
         return serializeObject;
     }

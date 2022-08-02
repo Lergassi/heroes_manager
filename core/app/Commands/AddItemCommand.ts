@@ -25,9 +25,9 @@ export default class AddItemCommand extends Command {
         let count: number = parseInt(input.getArgument('count'));
 
         const item: Item = this.container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias(alias);
-        this.container.get<ItemStorageManager>('core.itemStorageManager').addItem(
+        this.container.get<ItemStorageManager>('player.itemStorageManager').addItem(
             new ItemStackPattern(
-                this.container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'),
+                this.container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
                 item,
                 count,
             ),

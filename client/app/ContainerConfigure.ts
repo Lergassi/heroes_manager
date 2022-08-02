@@ -1,10 +1,9 @@
-import Container from '../../core/source/Container.js';
-import AbstractContainerConfigure from '../../core/source/AbstractContainerConfigure.js';
+import ContainerConfigureInterface from '../../core/source/ContainerConfigureInterface.js';
 import GameConsole from '../../core/source/GameConsole/GameConsole.js';
 import config from '../config/main.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 
-export default class ContainerConfigure extends AbstractContainerConfigure {
+export default class ContainerConfigure extends ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
         container.set<object>('config.client', config);
         // container.set('config.client', (container) => {
@@ -15,7 +14,8 @@ export default class ContainerConfigure extends AbstractContainerConfigure {
         });
         container.set('gameConsole', container.get<GameConsole>('client.gameConsole'));    //alias
 
-        console.log('Создание ContainerConfigure на клиенте завершено.');
+        //todo: logger
+        console.log('Client: Создание ContainerConfigure завершено.');
 
         return container;
     }

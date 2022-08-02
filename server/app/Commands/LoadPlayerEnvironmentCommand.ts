@@ -1,8 +1,7 @@
 import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
-import CoreContainerConfigure from '../../../core/app/ContainerConfigure.js';
+import CoreContainerConfigure from '../../../core/app/CoreContainerConfigure.js';
 import SaveInjectContainerDecorator from '../../../core/source/SaveInjectContainerDecorator.js';
-import Container from '../../../core/source/Container.js';
 import AutoIncrementIDGenerator from '../../../core/source/AutoIncrementIDGenerator.js';
 import path from 'path';
 import UserDBObject from '../DBObjects/UserDBObject.js';
@@ -23,6 +22,7 @@ import {
 import PlayerDBObjectRepository from '../Repositories/PlayerDBObjectRepository.js';
 import PlayerDBObject from '../DBObjects/PlayerDBObject.js';
 import _ from 'lodash';
+import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure.js';
 
 export default class LoadPlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -49,8 +49,9 @@ export default class LoadPlayerEnvironmentCommand extends Command {
             this.container.get<Security>('server.security').player.id,
             'save.json',
         );
+        //todo: Все проверки делать заранее, чтобы не делать откат действий на подобии loginPlayer().
         if (!fs.existsSync(saveFilePath)) {
-            throw new AppError(sprintf('Игрок с id:%s не найден.', name));
+            throw new AppError(sprintf('Файл сохранений игрока id:%s не найден.', name));
         }
 
         let serializer = this.container.get<Serializer>('server.serializer');
@@ -59,20 +60,12 @@ export default class LoadPlayerEnvironmentCommand extends Command {
         let stringData = fs.readFileSync(saveFilePath);
         let objectData = JSON.parse(stringData.toString());
 
-        // (new CoreContainerConfigure()).configure(this.container);
-        (new CoreContainerConfigure()).configure(new SaveInjectContainerDecorator(serializer, this.container, objectData['data']['services']));
-        // console.log(this.container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'));
-        // console.log(this.name);
+        (new PlayerContainerConfigure()).configure(new SaveInjectContainerDecorator(serializer, this.container, objectData['data']['services']));
 
-        let gameObjectStorage = this.container.get<GameObjectStorage>('core.gameObjectStorage');
+        let gameObjectStorage = this.container.get<GameObjectStorage>('player.gameObjectStorage');
         for (let i = 0; i < objectData['data']['gameObjects'].length; i++) {
             gameObjectStorage.add(serializer.unserialize(objectData['data']['gameObjects'][i]));
         }
-
-        // debugPlayerGameObject(this.container);
-        // debugItemStorages(this.container);
-        // debugWallets(this.container);
-        // debugHeroes(this.container);
 
         debug('info')(sprintf('Окружение игрока загружено, ID: %s загружено.', name));
     }

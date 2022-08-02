@@ -1,4 +1,3 @@
-import Container from '../Container.js';
 import AppError from '../AppError.js';
 import {sprintf} from 'sprintf-js';
 import Input from './Input.js';

@@ -10,14 +10,14 @@ export default class UnloadPlayerEnvironmentCommand extends Command {
     }
 
     get description(): string {
-        return 'Выгружает окружение игрока без сохранения.';
+        return 'Выгружает окружение игрока БЕЗ сохранения.';
     }
 
     async execute(input: Input) {
         this.container.get<Security>('server.security').assertIsPlayerLoaded();
 
         this.container.get<Security>('server.security').logoutPlayer();
-        this.container.remove('core.*');
+        this.container.remove('player.*');
 
         debug('info')('Окружение игрока выгружено.');
     }

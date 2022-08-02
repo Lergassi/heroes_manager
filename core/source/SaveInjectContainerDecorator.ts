@@ -5,13 +5,11 @@ import _ from 'lodash';
 export default class SaveInjectContainerDecorator implements ContainerInterface {
     private readonly _container: ContainerInterface;
     private readonly _serializer: Serializer;
-    private readonly _metadata;
     private readonly _data;
 
     constructor(serializer: Serializer, container: ContainerInterface, data = {}) {
         this._serializer = serializer;
         this._container = container;
-        // this._metadata = metadata;
         this._data = data;
     }
 
@@ -23,16 +21,14 @@ export default class SaveInjectContainerDecorator implements ContainerInterface 
         });
 
         if (data) {
-            // console.log('Save inject work!');
-            // this._container.set(key, this._data[key]);
-            // this._container.set(key, value);
+            //todo: logger
             this._container.set(key, this._serializer.unserialize(data));
         } else {
             this._container.set(key, value);
         }
     }
 
-    get(key: string): any {
+    get<T>(key: string): T {
         return this._container.get(key);
     }
 

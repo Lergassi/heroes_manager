@@ -29,8 +29,8 @@ import {
 } from './include.js';
 import path from 'path';
 import Container from '../core/source/Container.js';
-import CoreContainerConfigure from '../core/app/ContainerConfigure.js';
-import ServerContainerConfigure from '../server/app/ContainerConfigure.js';
+import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
+import ServerContainerConfigure from '../server/app/ServerContainerConfigure.js';
 
 // let container = new Container();
 // (new CoreContainerConfigure()).configure(container);

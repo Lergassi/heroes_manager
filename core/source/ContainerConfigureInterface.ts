@@ -1,6 +1,5 @@
-import Container from './Container.js';
 import ContainerInterface from './ContainerInterface.js';
 
-export default abstract class AbstractContainerConfigure {
+export default abstract class ContainerConfigureInterface {
     abstract configure(container: ContainerInterface): ContainerInterface;
 }

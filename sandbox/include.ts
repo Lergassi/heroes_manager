@@ -2,7 +2,7 @@ import PlayerFactory from '../core/app/Factories/PlayerFactory.js';
 import AutoIncrementIDGenerator from '../core/source/AutoIncrementIDGenerator.js';
 import UserFactory from '../core/app/Factories/UserFactory.js';
 import Container from '../core/source/Container.js';
-import ServerContainerConfigure from '../server/app/ContainerConfigure.js';
+import ServerContainerConfigure from '../server/app/ServerContainerConfigure.js';
 import WalletFactory from '../core/app/Factories/WalletFactory.js';
 import RepositoryManager from '../core/source/RepositoryManager.js';
 import Currency from '../core/app/Entities/Currency.js';
@@ -47,7 +47,7 @@ let container = new Container();
 // (new CoreContainerConfigure()).configure(container);
 
 export function playerFactory_create() {
-    let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator');
+    let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator');
 
     let playerFactory = new PlayerFactory(idGenerator, {
         maxLevel: 100,
@@ -58,7 +58,7 @@ export function playerFactory_create() {
 }
 
 export function userFactory_create() {
-    let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator');
+    let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator');
 
     let userFactory = new UserFactory(idGenerator);
 
@@ -67,7 +67,7 @@ export function userFactory_create() {
 }
 
 export function walletFactory_create() {
-    let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator');
+    let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator');
 
     let walletFactory = new WalletFactory(idGenerator);
 
@@ -86,7 +86,7 @@ export function walletFactory_create() {
 }
 
 export function devGameObjectStorage() {
-    let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator');
+    let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator');
 
     let gameObjectStorage = new GameObjectStorage();
 
@@ -126,12 +126,12 @@ export function devGameObjectStorage() {
 
 export function devGameObjectStorage_newPlayerScenario() {
     let userFactory: UserFactory = container.get<UserFactory>('core.userFactory');
-    let playerFactory: PlayerFactory = container.get<PlayerFactory>('core.playerFactory');
-    let walletFactory: WalletFactory = container.get<WalletFactory>('core.walletFactory');
-    let heroFactory: HeroFactory = container.get<HeroFactory>('core.heroFactory');
-    let itemStorageFactory: ItemStorageFactory = container.get<ItemStorageFactory>('core.itemStorageFactory');
+    let playerFactory: PlayerFactory = container.get<PlayerFactory>('player.playerFactory');
+    let walletFactory: WalletFactory = container.get<WalletFactory>('player.walletFactory');
+    let heroFactory: HeroFactory = container.get<HeroFactory>('player.heroFactory');
+    let itemStorageFactory: ItemStorageFactory = container.get<ItemStorageFactory>('player.itemStorageFactory');
 
-    let gameObjectStorage: GameObjectStorage = container.get<GameObjectStorage>('core.gameObjectStorage');
+    let gameObjectStorage: GameObjectStorage = container.get<GameObjectStorage>('player.gameObjectStorage');
 
     gameObjectStorage.add(userFactory.create());
     gameObjectStorage.add(playerFactory.create());
@@ -158,8 +158,8 @@ export function devGameObjectStorage_newPlayerScenario() {
 }
 
 export function devGameObjectStorage_newHeroScenario() {
-    let heroFactory: HeroFactory = container.get<HeroFactory>('core.heroFactory');
-    // let gameObjectStorage: HeroFactory = container.get('core.heroFactory');
+    let heroFactory: HeroFactory = container.get<HeroFactory>('player.heroFactory');
+    // let gameObjectStorage: HeroFactory = container.get('player.heroFactory');
 
     let heroClassAlias = 'hero_class_warrior';
     let heroClass = container.get<RepositoryManager>('core.repositoryManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(heroClassAlias);
@@ -178,7 +178,7 @@ export function devGameObjectStorage_newHeroScenario() {
 }
 
 export function devCreateItemStorage() {
-    let itemStorageFactory: ItemStorageFactory = container.get<ItemStorageFactory>('core.itemStorageFactory');
+    let itemStorageFactory: ItemStorageFactory = container.get<ItemStorageFactory>('player.itemStorageFactory');
 
     // let itemStorage = itemStorageFactory.create(100);
     let itemStorage = itemStorageFactory.create();
@@ -191,7 +191,7 @@ export function devCreateItemStorage() {
     let freeItemStorageSlotComponent = undefined;
     while (freeItemStorageSlotComponent = itemStorageComponent.findFirstFreeItemStorageSlotComponent()) {
     // while (freeItemStorageSlotComponent = itemStorageComponent.getFirstFreeItemStorageSlotComponent()) {
-        freeItemStorageSlotComponent.placeItemStack(new ItemStack(container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator').generateID(), container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias('item_wood'), 20));
+        freeItemStorageSlotComponent.placeItemStack(new ItemStack(container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator').generateID(), container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias('item_wood'), 20));
     }
     debugItemStorage(itemStorage);
 }
@@ -222,33 +222,33 @@ export function testTransaction() {
 }
 
 export function devItemStorageManager() {
-    container.get<GameObjectStorage>('core.gameObjectStorage').add(container.get<ItemStorageFactory>('core.itemStorageFactory').create());
-    container.get<GameObjectStorage>('core.gameObjectStorage').add(container.get<ItemStorageFactory>('core.itemStorageFactory').create());
+    container.get<GameObjectStorage>('player.gameObjectStorage').add(container.get<ItemStorageFactory>('player.itemStorageFactory').create());
+    container.get<GameObjectStorage>('player.gameObjectStorage').add(container.get<ItemStorageFactory>('player.itemStorageFactory').create());
     debugItemStorages(container);
 
-    const itemStorageManager = new ItemStorageManager(container.get<GameObjectStorage>('core.gameObjectStorage'));
+    const itemStorageManager = new ItemStorageManager(container.get<GameObjectStorage>('player.gameObjectStorage'));
     itemStorageManager.addItem(new ItemStackPattern(
-        container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'),
+        container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
         container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias('item_wood'),
         20,
     ));
     itemStorageManager.addItem(new ItemStackPattern(
-        container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'),
+        container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
         container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias('item_one_handed_sword_01'),
         1,
     ));
     itemStorageManager.addItem(new ItemStackPattern(
-        container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'),
+        container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
         container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias('item_cloth_helmet_01'),
         1,
     ));
     itemStorageManager.addItem(new ItemStackPattern(
-        container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'),
+        container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
         container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias('item_wood'),
         10,
     ));
     itemStorageManager.addItem(new ItemStackPattern(
-        container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'),
+        container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
         container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias('item_wood'),
         10,
     ));
@@ -259,11 +259,11 @@ export function devItemStorageManager() {
 export function testItemStorages() {
     testItemStorageOverflow(
         container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name),
-        container.get<ItemStorageFactory>('core.itemStorageFactory'),
+        container.get<ItemStorageFactory>('player.itemStorageFactory'),
     );
     testItemStoragesOverflow(
         container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name),
-        container.get<ItemStorageFactory>('core.itemStorageFactory'),
+        container.get<ItemStorageFactory>('player.itemStorageFactory'),
     );
 }
 
@@ -278,7 +278,7 @@ function testItemStorageOverflow(
     try {
         while(i <= max) {
             itemStorageComponent.addItemStack((new ItemStackPattern(
-                container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'),
+                container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
                 itemRepository.getOneByAlias('item_wood'),
                 20,
             )).build());
@@ -320,7 +320,7 @@ function testItemStoragesOverflow(
     try {
         while(i <= max) {
             itemStorageManager.addItem(new ItemStackPattern(
-                container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'),
+                container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
                 itemRepository.getOneByAlias('item_wood'),
                 20,
             ));
@@ -349,7 +349,7 @@ export function devHeroPattern() {
 }
 
 export function devManualSaveLoad() {
-    const itemStorage = <GameObject>container.get<ItemStorageFactory>('core.itemStorageFactory').create();
+    const itemStorage = <GameObject>container.get<ItemStorageFactory>('player.itemStorageFactory').create();
     _.map([
         {alias: 'item_wood', count: 20},
         {alias: 'item_wood', count: 20},
@@ -446,7 +446,7 @@ class TestSaveWithCollection {
         this._name = 'This is name.';
         // this._tags = [1,2,3,4,5];
         this._tags = [1,2,3,4,5,
-            container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 10),
+            container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 10),
             // {foo: 'bar'},
         ];
     }
@@ -454,51 +454,51 @@ class TestSaveWithCollection {
 
 function createTestItemStorage(container: ContainerInterface) {
     let size = 20;
-    let itemStorageFactory = container.get<ItemStorageFactory>('core.itemStorageFactory');
+    let itemStorageFactory = container.get<ItemStorageFactory>('player.itemStorageFactory');
     let itemStorage = itemStorageFactory.create(20);
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 20)
+        container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 20)
     );
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_iron_ore', 20)
+        container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_iron_ore', 20)
     );
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_one_handed_sword_01', 1)
+        container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_one_handed_sword_01', 1)
     );
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_shield_01', 1)
+        container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_shield_01', 1)
     );
 
     return itemStorage;
 }
 
 function createTestWallet(container: ContainerInterface) {
-    let wallet = container.get<WalletFactory>('core.walletFactory').create(container.get<RepositoryManager>('core.repositoryManager').getRepository<Currency>(Currency.name).getOneByAlias('currency_gold'));
+    let wallet = container.get<WalletFactory>('player.walletFactory').create(container.get<RepositoryManager>('core.repositoryManager').getRepository<Currency>(Currency.name).getOneByAlias('currency_gold'));
 
     return wallet;
 }
 
 function createTestHero(continer: ContainerInterface) {
-    let equipManager = continer.get<EquipManager>('core.equipManager');
+    let equipManager = continer.get<EquipManager>('player.equipManager');
 
-    let hero = continer.get<HeroFactory>('core.heroFactory').create(
+    let hero = continer.get<HeroFactory>('player.heroFactory').create(
         continer.get<RepositoryManager>('core.repositoryManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_warrior'),
     );
 
     equipManager.equipNewItemStack(
         hero,
         continer.get<RepositoryManager>('core.repositoryManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias('equip_slot_head'),
-        continer.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_helmet_01'),
+        continer.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_plate_helmet_01'),
         );
     equipManager.equipNewItemStack(
         hero,
         continer.get<RepositoryManager>('core.repositoryManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias('equip_slot_right_hand'),
-        continer.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_one_handed_sword_01'),
+        continer.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_one_handed_sword_01'),
     );
     equipManager.equipNewItemStack(
         hero,
         continer.get<RepositoryManager>('core.repositoryManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias('equip_slot_left_hand'),
-        continer.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_shield_01'),
+        continer.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_shield_01'),
     );
 
     // hero.getComponentByName<E>()
@@ -516,12 +516,12 @@ export function devAutoSaveLoad_serialize() {
     // let serializeObject = serializer.serialize(testSaveWithCollection);
     // console.log(serializeObject);
 
-    // let itemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 10);
+    // let itemStack = container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 10);
     // let serializeObject = serializer.serialize(itemStack);
     // console.log(serializeObject);
 
     // let itemStackSlot = new ItemStackSlot();
-    // itemStackSlot.placeItemStack(container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 10));
+    // itemStackSlot.placeItemStack(container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 10));
     // let serializeObject = serializer.serialize(itemStackSlot);
     // console.log(serializeObject);
 
@@ -715,13 +715,13 @@ function testEqualSerializeObjects(name, serializer, object) {
 export async function devAutoSaveLoad_main() {
     await container.get<GameConsole>('server.gameConsole').run('load_user_env', ['user03@email.com']);
     await container.get<GameConsole>('server.gameConsole').run('load_player_env', ['1']);
-    // console.log(container.get<AutoIncrementIDGenerator>('realtimeObjectIdGenerator'));
+    // console.log(container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'));
     // await container.get<GameConsole>('server.gameConsole').run('save_player_env');
     await container.get<GameConsole>('server.gameConsole').run('debug_player_env');
 
     // let itemStorageID = 8;
     // _.map([17, 18, 19, 20, 21], (componentID) => {
-    //     container.get<GameObjectStorage>('core.gameObjectStorage')
+    //     container.get<GameObjectStorage>('player.gameObjectStorage')
     //         .getOneByID(itemStorageID)
     //         .getComponentByID<ItemStorageSlotComponent>(componentID)
     //         .clear()
@@ -729,20 +729,20 @@ export async function devAutoSaveLoad_main() {
     // });
     // await container.get<GameConsole>('server.gameConsole').run('debug_player_env');
 
-    // container.get<ItemStorageManager>('core.itemStorageManager').addItemStack(
-    //     container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 20),
+    // container.get<ItemStorageManager>('player.itemStorageManager').addItemStack(
+    //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 20),
     // );
-    // container.get<ItemStorageManager>('core.itemStorageManager').addItemStack(
-    //     container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 20),
+    // container.get<ItemStorageManager>('player.itemStorageManager').addItemStack(
+    //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 20),
     // );
-    // container.get<ItemStorageManager>('core.itemStorageManager').addItemStack(
-    //     container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 20),
+    // container.get<ItemStorageManager>('player.itemStorageManager').addItemStack(
+    //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 20),
     // );
-    // container.get<ItemStorageManager>('core.itemStorageManager').addItemStack(
-    //     container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 20),
+    // container.get<ItemStorageManager>('player.itemStorageManager').addItemStack(
+    //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 20),
     // );
-    // container.get<ItemStorageManager>('core.itemStorageManager').addItemStack(
-    //     container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 20),
+    // container.get<ItemStorageManager>('player.itemStorageManager').addItemStack(
+    //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 20),
     // );
     // await container.get<GameConsole>('server.gameConsole').run('save_player_env');
 }

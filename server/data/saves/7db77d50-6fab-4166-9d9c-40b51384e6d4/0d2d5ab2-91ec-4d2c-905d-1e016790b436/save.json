@@ -1,0 +1,2938 @@
+{
+  "date": "2022-08-02T05:40:06.999Z",
+  "data": {
+    "services": [
+      {
+        "classname": "AutoIncrementIDGenerator",
+        "data": {
+          "_currentId": 190
+        },
+        "serviceName": "core.realtimeObjectIdGenerator"
+      }
+    ],
+    "gameObjects": [
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 1,
+          "_name": "Player",
+          "_tags": [
+            "#player"
+          ],
+          "_components": [
+            {
+              "classname": "PlayerComponent",
+              "data": {
+                "_id": 2,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 1
+                }
+              }
+            },
+            {
+              "classname": "LevelComponent",
+              "data": {
+                "_id": 3,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 1
+                },
+                "_level": 1,
+                "_maxLevel": 100,
+                "_exp": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 4,
+          "_name": "Wallet",
+          "_tags": [
+            "#wallet",
+            "#wallet.currency_gold"
+          ],
+          "_components": [
+            {
+              "classname": "WalletComponent",
+              "data": {
+                "_id": 5,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 4
+                },
+                "_currency": {
+                  "classname": "Currency",
+                  "id": 46
+                },
+                "_value": 1000
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 6,
+          "_name": "Wallet",
+          "_tags": [
+            "#wallet",
+            "#wallet.currency_research_points"
+          ],
+          "_components": [
+            {
+              "classname": "WalletComponent",
+              "data": {
+                "_id": 7,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 6
+                },
+                "_currency": {
+                  "classname": "Currency",
+                  "id": 47
+                },
+                "_value": 10
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 8,
+          "_name": "ItemStorage",
+          "_tags": [
+            "#item_storage"
+          ],
+          "_components": [
+            {
+              "classname": "ItemStorageComponent",
+              "data": {
+                "_id": 9,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_size": 20
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 10,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {
+                    "_itemStack": {
+                      "classname": "ItemStack",
+                      "data": {
+                        "_id": 52,
+                        "_item": {
+                          "classname": "Item",
+                          "id": 48
+                        },
+                        "_count": 10
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 11,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {
+                    "_itemStack": {
+                      "classname": "ItemStack",
+                      "data": {
+                        "_id": 53,
+                        "_item": {
+                          "classname": "Item",
+                          "id": 49
+                        },
+                        "_count": 10
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 12,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {
+                    "_itemStack": {
+                      "classname": "ItemStack",
+                      "data": {
+                        "_id": 54,
+                        "_item": {
+                          "classname": "Item",
+                          "id": 51
+                        },
+                        "_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 13,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {
+                    "_itemStack": {
+                      "classname": "ItemStack",
+                      "data": {
+                        "_id": 55,
+                        "_item": {
+                          "classname": "Item",
+                          "id": 51
+                        },
+                        "_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 14,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {
+                    "_itemStack": {
+                      "classname": "ItemStack",
+                      "data": {
+                        "_id": 56,
+                        "_item": {
+                          "classname": "Item",
+                          "id": 79
+                        },
+                        "_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 15,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {
+                    "_itemStack": {
+                      "classname": "ItemStack",
+                      "data": {
+                        "_id": 57,
+                        "_item": {
+                          "classname": "Item",
+                          "id": 86
+                        },
+                        "_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 16,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {
+                    "_itemStack": {
+                      "classname": "ItemStack",
+                      "data": {
+                        "_id": 58,
+                        "_item": {
+                          "classname": "Item",
+                          "id": 62
+                        },
+                        "_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 17,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {
+                    "_itemStack": {
+                      "classname": "ItemStack",
+                      "data": {
+                        "_id": 163,
+                        "_item": {
+                          "classname": "Item",
+                          "id": 48
+                        },
+                        "_count": 4
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 18,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 19,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 20,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 21,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 22,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 23,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 24,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 25,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 26,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 27,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 28,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 29,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 8
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 30,
+          "_name": "ItemStorage",
+          "_tags": [
+            "#item_storage"
+          ],
+          "_components": [
+            {
+              "classname": "ItemStorageComponent",
+              "data": {
+                "_id": 31,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_size": 20
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 32,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 33,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 34,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 35,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 36,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 37,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 38,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 39,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 40,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 41,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 42,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 43,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 44,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 45,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 46,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 47,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 48,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 49,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 50,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "ItemStorageSlotComponent",
+              "data": {
+                "_id": 51,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 30
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 59,
+          "_name": "Hero",
+          "_tags": [
+            "#hero"
+          ],
+          "_components": [
+            {
+              "classname": "HeroComponent",
+              "data": {
+                "_id": 60,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_name": "Hero",
+                "_heroClass": {
+                  "classname": "HeroClass",
+                  "id": 87
+                }
+              }
+            },
+            {
+              "classname": "LevelComponent",
+              "data": {
+                "_id": 61,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_level": 1,
+                "_maxLevel": 100,
+                "_exp": 0
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 62,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 97
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 63,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 98
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 64,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 99
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 65,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 100
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 66,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 101
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 67,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 102
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 68,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 103
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 69,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 104
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 70,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 105
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 71,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 106
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 72,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 107
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 73,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 108
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 74,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 109
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 75,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 110
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 76,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 39
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 77,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 40
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 78,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 41
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 79,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 44
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 80,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 43
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 81,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 45
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "HealthPointsComponent",
+              "data": {
+                "_id": 82,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_currentHealthPoints": 120,
+                "_maxHealthPoints": 120,
+                "_state": "LIFE"
+              }
+            },
+            {
+              "classname": "MagicPointsComponent",
+              "data": {
+                "_id": 83,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_currentMagicPoints": 100,
+                "_maxMagicPoints": 100
+              }
+            },
+            {
+              "classname": "AttackPowerComponent",
+              "data": {
+                "_id": 84,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 59
+                },
+                "_baseMinAttackPower": 30,
+                "_baseMaxAttackPower": 40,
+                "_dependentCharacterAttributeComponents": [
+                  {
+                    "classname": "CharacterAttributeComponent",
+                    "id": 76
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 85,
+          "_name": "Hero",
+          "_tags": [
+            "#hero"
+          ],
+          "_components": [
+            {
+              "classname": "HeroComponent",
+              "data": {
+                "_id": 86,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_name": "Hero",
+                "_heroClass": {
+                  "classname": "HeroClass",
+                  "id": 89
+                }
+              }
+            },
+            {
+              "classname": "LevelComponent",
+              "data": {
+                "_id": 87,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_level": 1,
+                "_maxLevel": 100,
+                "_exp": 0
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 88,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 97
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 89,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 98
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 90,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 99
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 91,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 100
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 92,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 101
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 93,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 102
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 94,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 103
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 95,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 104
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 96,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 105
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 97,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 106
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 98,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 107
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 99,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 108
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 100,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 109
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 101,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 110
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 102,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 39
+                },
+                "_baseValue": 100
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 103,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 40
+                },
+                "_baseValue": 100
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 104,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 41
+                },
+                "_baseValue": 100
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 105,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 44
+                },
+                "_baseValue": 100
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 106,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 43
+                },
+                "_baseValue": 100
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 107,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 45
+                },
+                "_baseValue": 100
+              }
+            },
+            {
+              "classname": "HealthPointsComponent",
+              "data": {
+                "_id": 108,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_currentHealthPoints": 100,
+                "_maxHealthPoints": 100,
+                "_state": "LIFE"
+              }
+            },
+            {
+              "classname": "MagicPointsComponent",
+              "data": {
+                "_id": 109,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_currentMagicPoints": 100,
+                "_maxMagicPoints": 100
+              }
+            },
+            {
+              "classname": "AttackPowerComponent",
+              "data": {
+                "_id": 110,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 85
+                },
+                "_baseMinAttackPower": 40,
+                "_baseMaxAttackPower": 50,
+                "_dependentCharacterAttributeComponents": [
+                  {
+                    "classname": "CharacterAttributeComponent",
+                    "id": 103
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 111,
+          "_name": "Hero",
+          "_tags": [
+            "#hero"
+          ],
+          "_components": [
+            {
+              "classname": "HeroComponent",
+              "data": {
+                "_id": 112,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_name": "Hero",
+                "_heroClass": {
+                  "classname": "HeroClass",
+                  "id": 93
+                }
+              }
+            },
+            {
+              "classname": "LevelComponent",
+              "data": {
+                "_id": 113,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_level": 1,
+                "_maxLevel": 100,
+                "_exp": 0
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 114,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 97
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 115,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 98
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 116,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 99
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 117,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 100
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 118,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 101
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 119,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 102
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 120,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 103
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 121,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 104
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 122,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 105
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 123,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 106
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 124,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 107
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 125,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 108
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 126,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 109
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 127,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 110
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 128,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 39
+                },
+                "_baseValue": 70
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 129,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 40
+                },
+                "_baseValue": 70
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 130,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 41
+                },
+                "_baseValue": 70
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 131,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 44
+                },
+                "_baseValue": 70
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 132,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 43
+                },
+                "_baseValue": 70
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 133,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 45
+                },
+                "_baseValue": 70
+              }
+            },
+            {
+              "classname": "HealthPointsComponent",
+              "data": {
+                "_id": 134,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_currentHealthPoints": 70,
+                "_maxHealthPoints": 70,
+                "_state": "LIFE"
+              }
+            },
+            {
+              "classname": "MagicPointsComponent",
+              "data": {
+                "_id": 135,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_currentMagicPoints": 100,
+                "_maxMagicPoints": 100
+              }
+            },
+            {
+              "classname": "AttackPowerComponent",
+              "data": {
+                "_id": 136,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 111
+                },
+                "_baseMinAttackPower": 60,
+                "_baseMaxAttackPower": 70,
+                "_dependentCharacterAttributeComponents": [
+                  {
+                    "classname": "CharacterAttributeComponent",
+                    "id": 130
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 137,
+          "_name": "Hero",
+          "_tags": [
+            "#hero"
+          ],
+          "_components": [
+            {
+              "classname": "HeroComponent",
+              "data": {
+                "_id": 138,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_name": "Hero",
+                "_heroClass": {
+                  "classname": "HeroClass",
+                  "id": 92
+                }
+              }
+            },
+            {
+              "classname": "LevelComponent",
+              "data": {
+                "_id": 139,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_level": 1,
+                "_maxLevel": 100,
+                "_exp": 0
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 140,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 97
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 141,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 98
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 142,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 99
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 143,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 100
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 144,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 101
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 145,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 102
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 146,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 103
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 147,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 104
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 148,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 105
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 149,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 106
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 150,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 107
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 151,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 108
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 152,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 109
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 153,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 110
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 154,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 39
+                },
+                "_baseValue": 80
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 155,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 40
+                },
+                "_baseValue": 80
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 156,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 41
+                },
+                "_baseValue": 80
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 157,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 44
+                },
+                "_baseValue": 80
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 158,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 43
+                },
+                "_baseValue": 80
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 159,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 45
+                },
+                "_baseValue": 80
+              }
+            },
+            {
+              "classname": "HealthPointsComponent",
+              "data": {
+                "_id": 160,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_currentHealthPoints": 80,
+                "_maxHealthPoints": 80,
+                "_state": "LIFE"
+              }
+            },
+            {
+              "classname": "MagicPointsComponent",
+              "data": {
+                "_id": 161,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_currentMagicPoints": 100,
+                "_maxMagicPoints": 100
+              }
+            },
+            {
+              "classname": "AttackPowerComponent",
+              "data": {
+                "_id": 162,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 137
+                },
+                "_baseMinAttackPower": 50,
+                "_baseMaxAttackPower": 60,
+                "_dependentCharacterAttributeComponents": [
+                  {
+                    "classname": "CharacterAttributeComponent",
+                    "id": 155
+                  },
+                  {
+                    "classname": "CharacterAttributeComponent",
+                    "id": 156
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "classname": "GameObject",
+        "data": {
+          "_id": 164,
+          "_name": "Hero",
+          "_tags": [
+            "#hero"
+          ],
+          "_components": [
+            {
+              "classname": "HeroComponent",
+              "data": {
+                "_id": 165,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_name": "Hero",
+                "_heroClass": {
+                  "classname": "HeroClass",
+                  "id": 87
+                }
+              }
+            },
+            {
+              "classname": "LevelComponent",
+              "data": {
+                "_id": 166,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_level": 1,
+                "_maxLevel": 100,
+                "_exp": 0
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 167,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 97
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 168,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 98
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 169,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 99
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 170,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 100
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 171,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 101
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 172,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 102
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 173,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 103
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 174,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 104
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 175,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 105
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 176,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 106
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 177,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 107
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 178,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 108
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 179,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 109
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "EquipSlotComponent",
+              "data": {
+                "_id": 180,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_equipSlot": {
+                  "classname": "EquipSlot",
+                  "id": 110
+                },
+                "_itemStackSlot": {
+                  "classname": "ItemStackSlot",
+                  "data": {}
+                }
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 181,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 39
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 182,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 40
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 183,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 41
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 184,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 44
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 185,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 43
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "CharacterAttributeComponent",
+              "data": {
+                "_id": 186,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_characterAttribute": {
+                  "classname": "CharacterAttribute",
+                  "id": 45
+                },
+                "_baseValue": 120
+              }
+            },
+            {
+              "classname": "HealthPointsComponent",
+              "data": {
+                "_id": 187,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_currentHealthPoints": 120,
+                "_maxHealthPoints": 120,
+                "_state": "LIFE"
+              }
+            },
+            {
+              "classname": "MagicPointsComponent",
+              "data": {
+                "_id": 188,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_currentMagicPoints": 100,
+                "_maxMagicPoints": 100
+              }
+            },
+            {
+              "classname": "AttackPowerComponent",
+              "data": {
+                "_id": 189,
+                "_gameObject": {
+                  "classname": "GameObject",
+                  "id": 164
+                },
+                "_baseMinAttackPower": 30,
+                "_baseMaxAttackPower": 40,
+                "_dependentCharacterAttributeComponents": [
+                  {
+                    "classname": "CharacterAttributeComponent",
+                    "id": 181
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

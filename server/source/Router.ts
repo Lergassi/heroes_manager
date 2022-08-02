@@ -9,7 +9,6 @@ import Controller from './Controller.js';
 import path from 'path';
 import fs from 'fs';
 import _, {method} from 'lodash';
-import Container from '../../core/source/Container.js';
 import RouterGroup from './RouterGroup.js';
 import debug from 'debug';
 import ContainerInterface from '../../core/source/ContainerInterface.js';

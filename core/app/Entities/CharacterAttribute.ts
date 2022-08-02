@@ -1,4 +1,4 @@
-import Container from '../../source/Container.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
 
 export default class CharacterAttribute {
     private readonly _id: number;
@@ -41,7 +41,7 @@ export default class CharacterAttribute {
         this._sort = sort;
     }
 
-    static load(data: object, container: Container) {
+    static load(data: object, container: ContainerInterface) {
         let characterAttribute = Object.create(CharacterAttribute.prototype);
 
         characterAttribute._id = <number>data['_id'];

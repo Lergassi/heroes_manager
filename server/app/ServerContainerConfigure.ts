@@ -1,6 +1,5 @@
 import config from '../config/main.js';
-import Container from '../../core/source/Container.js';
-import AbstractContainerConfigure from '../../core/source/AbstractContainerConfigure.js';
+import ContainerConfigureInterface from '../../core/source/ContainerConfigureInterface.js';
 import Router from '../source/Router.js';
 import SiteRoutes from './Routes/SiteRoutes.js';
 import AdminRoutes from './Routes/AdminRoutes.js';
@@ -52,10 +51,13 @@ import AutoIncrementIDGenerator from '../../core/source/AutoIncrementIDGenerator
 import PlayerDBObjectRepository from './Repositories/PlayerDBObjectRepository.js';
 import PlayerDBObject from './DBObjects/PlayerDBObject.js';
 import PlayerDBObjectFactory from './Factories/PlayerDBObjectFactory.js';
-import CreateUserEnvironmentSyncCommand from './Commands/CreateUserEnvironmentSyncCommand.js';
 import LoadFullEnvironmentCommand from './Commands/LoadFullEnvironmentCommand.js';
+import StatusServerCommand from './Commands/StatusServerCommand.js';
+import DebugContainerCommand from './Commands/DebugCommands/DebugContainerCommand.js';
+import SecurityStatusCommand from './Commands/SecurityStatusCommand.js';
+import UnloadFullEnvironmentCommand from './Commands/UnloadFullEnvironmentCommand.js';
 
-export default class ContainerConfigure extends AbstractContainerConfigure {
+export default class ServerContainerConfigure extends ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
         container.set<object>('server.config', config);
         container.set<GameConsole>('server.gameConsole', (container) => {
@@ -114,7 +116,7 @@ export default class ContainerConfigure extends AbstractContainerConfigure {
             metadata[AutoIncrementIDGenerator.name] = {
                 classname: AutoIncrementIDGenerator.name,
                 prototype: AutoIncrementIDGenerator.prototype,
-                serviceName: 'realtimeObjectIdGenerator',
+                serviceName: 'player.realtimeObjectIdGenerator',
                 mapping: {
                     _currentId: {
                         type: SerializeType.Number,
@@ -384,8 +386,12 @@ export default class ContainerConfigure extends AbstractContainerConfigure {
         gameConsole.register(new UnloadPlayerEnvironmentCommand(container));
 
         gameConsole.register(new LoadFullEnvironmentCommand(container));
+        gameConsole.register(new UnloadFullEnvironmentCommand(container));
 
         /* DEBUG */
+        // gameConsole.register(new StatusServerCommand(container));
+        gameConsole.register(new SecurityStatusCommand(container));
+        gameConsole.register(new DebugContainerCommand(container));
         gameConsole.register(new DebugUserEnvironmentCommand(container));
         gameConsole.register(new DebugPlayerEnvironmentCommand(container));
         gameConsole.register(new InspectGameObjectCommand(container));

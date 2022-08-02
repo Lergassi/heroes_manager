@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {inspect} from 'util';
 
 // // const isBelowThreshold = (currentValue) => currentValue < 10;
 // const isBelowThreshold = (currentValue) => {
@@ -42,3 +43,5 @@ var users = [
 // The `_.property` iteratee shorthand.
 // _.every(users, 'active');
 // => false
+
+inspect();

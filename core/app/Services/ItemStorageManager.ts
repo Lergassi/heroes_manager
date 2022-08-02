@@ -1,6 +1,5 @@
 import AppError from '../../source/AppError.js';
 import Item from '../Entities/Item.js';
-import Container from '../../source/Container.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';

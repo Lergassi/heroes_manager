@@ -29,13 +29,13 @@ export default class RemoveEquipCommand extends Command {
         let itemStorageID: number = parseInt(input.getArgument('item_storage_id'));
         let itemStorageSlotComponentID: number = parseInt(input.getArgument('item_storage_slot_component_id'));
 
-        let hero = <GameObject>this.container.get<GameObjectStorage>('core.gameObjectStorage').getOneByID(heroID);
+        let hero = <GameObject>this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(heroID);
         let equipSlotComponent = <EquipSlotComponent>hero.getComponentByID(equipSlotComponentID);
         if (equipSlotComponent.isFree()) {
             throw new AppError('EquipSlotComponent пустой.');
         }
 
-        let itemStorage = <GameObject>this.container.get<GameObjectStorage>('core.gameObjectStorage').getOneByID(itemStorageID);
+        let itemStorage = <GameObject>this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(itemStorageID);
         let itemStorageSlotComponent = <ItemStorageSlotComponent>itemStorage.getComponentByID(itemStorageSlotComponentID);
 
         itemStorageSlotComponent.placeItemStack(equipSlotComponent.itemStack);

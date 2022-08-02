@@ -17,7 +17,7 @@ export default class CreateItemStorageCommand extends Command {
     async execute(input: Input) {
         let size: number = parseInt(input.getArgument('size'));
 
-        let itemStorageFactory: ItemStorageFactory = this.container.get<ItemStorageFactory>('core.itemStorageFactory');
-        this.container.get<GameObjectStorage>('core.gameObjectStorage').add(itemStorageFactory.create(size));
+        let itemStorageFactory: ItemStorageFactory = this.container.get<ItemStorageFactory>('player.itemStorageFactory');
+        this.container.get<GameObjectStorage>('player.gameObjectStorage').add(itemStorageFactory.create(size));
     }
 }

@@ -1,5 +1,3 @@
-import Container from '../../source/Container.js';
-
 export default class ArmorMaterial {
     private readonly _id: number;
     private readonly _name: string;

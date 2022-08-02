@@ -11,8 +11,8 @@ export default class TestContainerConfigure {
         debug('test:server')(sprintf('Run test: %s', this._name));
         let container = (new ContainerConfigure()).configure(new Container());
         //Первым аргументов результат для удобства отображения в консоли.
-        debug('test:server')('%o', container.get('config.server') instanceof Object, 'config instanceof Object');
-        debug('test:server')('%o', container.get('config.server').hasOwnProperty('env'), 'config has env property');
-        debug('test:server')('%o', container.get('router') instanceof Router, 'router instanceof Router');
+        debug('test:server')('%o', container.get('server.config') instanceof Object, 'config instanceof Object');
+        debug('test:server')('%o', container.get('server.config').hasOwnProperty('env'), 'config has env property');
+        debug('test:server')('%o', container.get('server.router') instanceof Router, 'router instanceof Router');
     }
 }

@@ -29,13 +29,13 @@ export default class EquipCommand extends Command {
         let heroID = parseInt(input.getArgument('hero_id'));
         let equipSlotComponentID = parseInt(input.getArgument('equip_slot_component_id'));
 
-        let itemStorage: GameObject = this.container.get<GameObjectStorage>('core.gameObjectStorage').getOneByID(itemStorageID);
+        let itemStorage: GameObject = this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(itemStorageID);
         let itemStorageSlotComponent: ItemStorageSlotComponent = <ItemStorageSlotComponent>itemStorage.getComponentByID(itemStorageSlotID);
         if (itemStorageSlotComponent.isFree()) {
             throw new AppError('Исходный ItemStorageSlotComponent пустой.');
         }
 
-        let hero: GameObject = this.container.get<GameObjectStorage>('core.gameObjectStorage').getOneByID(heroID);
+        let hero: GameObject = this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(heroID);
         let equipSlotComponent: EquipSlotComponent = <EquipSlotComponent>hero.getComponentByID(equipSlotComponentID);
 
         equipSlotComponent.equipItemStack(itemStorageSlotComponent.itemStack);

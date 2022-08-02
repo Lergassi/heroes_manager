@@ -7,11 +7,15 @@ import AppError from '../../../../core/source/AppError.js';
 
 export default class GameConsoleSiteController extends Controller {
     async execute(req, res) {
+        // res.setHeader('Content-Type', 'text/');
+
         let params = req.getParams;
         if (!params.command) {
             this.response(req, res, JSON.stringify({
                 error: 'Параметр "command" не может быть пустым.',
-            }));
+            }), {
+                contentType: 'application/json',
+            });
 
             return;
         }
@@ -20,7 +24,9 @@ export default class GameConsoleSiteController extends Controller {
         if (!commandQuery) {
             this.response(req, res, JSON.stringify({
                 error: 'Команда не может быть пустым.',
-            }));
+            }), {
+                contentType: 'application/json',
+            });
 
             return;
         }
@@ -35,12 +41,16 @@ export default class GameConsoleSiteController extends Controller {
 
             this.response(req, res, JSON.stringify({
                 data: 'ok',
-            }));
+            }), {
+                contentType: 'application/json',
+            });
         } catch (e) {
             debug('error')(e);
             this.response(req, res, JSON.stringify({
                 error: e.message,
-            }));
+            }), {
+                contentType: 'application/json',
+            });
         }
     }
 }
