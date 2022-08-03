@@ -123,6 +123,7 @@ export default {
 
   // The root directory that Jest should scan for tests and modules within
   // rootDir: undefined,
+  rootDir: './tests',
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -175,7 +176,7 @@ export default {
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,  //default было закоментировано
-  transform: {"\\.[jt]sx?$": "babel-jest"},
+  // transform: {"\\.[jt]sx?$": "babel-jest"},
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
@@ -188,6 +189,7 @@ export default {
 
   // Indicates whether each individual test should be reported during the run
   // verbose: undefined,
+  // verbose: './tests',
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],

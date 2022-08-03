@@ -196,6 +196,10 @@ export default class Serializer {
     }
 
     private _serializeLinkObject(object) {
+        if (!object) {
+            return undefined;
+        }
+
         let idGetMethodNames = [
             '_id',
             'id',

@@ -7,8 +7,6 @@ import AppError from '../../../../core/source/AppError.js';
 
 export default class GameConsoleSiteController extends Controller {
     async execute(req, res) {
-        // res.setHeader('Content-Type', 'text/');
-
         let params = req.getParams;
         if (!params.command) {
             this.response(req, res, JSON.stringify({

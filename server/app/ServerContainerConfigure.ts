@@ -56,6 +56,18 @@ import StatusServerCommand from './Commands/StatusServerCommand.js';
 import DebugContainerCommand from './Commands/DebugCommands/DebugContainerCommand.js';
 import SecurityStatusCommand from './Commands/SecurityStatusCommand.js';
 import UnloadFullEnvironmentCommand from './Commands/UnloadFullEnvironmentCommand.js';
+import ArmorMaterial from '../../core/app/Entities/ArmorMaterial.js';
+import Quality from '../../core/app/Entities/Quality.js';
+import CharacterAttribute from '../../core/app/Entities/CharacterAttribute.js';
+import Currency from '../../core/app/Entities/Currency.js';
+import HeroRole from '../../core/app/Entities/HeroRole.js';
+import ItemCategory from '../../core/app/Entities/ItemCategory.js';
+import debug from 'debug';
+import {sprintf} from 'sprintf-js';
+import Item from '../../core/app/Entities/Item.js';
+import HeroClass from '../../core/app/Entities/HeroClass.js';
+import EquipSlot from '../../core/app/Entities/EquipSlot.js';
+import EquipSlotRule from '../../core/app/Entities/EquipSlotRule.js';
 
 export default class ServerContainerConfigure extends ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -110,261 +122,10 @@ export default class ServerContainerConfigure extends ContainerConfigureInterfac
         container.set<Security>('server.security', (container) => {
             return new Security(container);
         });
-        //todo: Serializer должен быть доступен до загрузки ядра на клиенте и сервере.
-        container.set<Serializer>('server.serializer', (container) => {
-            let metadata = {};
-            metadata[AutoIncrementIDGenerator.name] = {
-                classname: AutoIncrementIDGenerator.name,
-                prototype: AutoIncrementIDGenerator.prototype,
-                serviceName: 'player.realtimeObjectIdGenerator',
-                mapping: {
-                    _currentId: {
-                        type: SerializeType.Number,
-                    },
-                },
-            };
-            metadata[GameObject.name] = {
-                classname: GameObject.name,
-                prototype: GameObject.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _name: {
-                        type: SerializeType.String,
-                    },
-                    _tags: {
-                        type: SerializeType.Collection,
-                    },
-                    _components: {
-                        type: SerializeType.Collection,
-                    },
-                },
-            };
-            metadata[ItemStorageComponent.name] = {
-                classname: ItemStorageComponent.name,
-                prototype: ItemStorageComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _size: {
-                        type: SerializeType.Number,
-                    },
-                },
-            };
-            metadata[ItemStorageSlotComponent.name] = {
-                classname: ItemStorageSlotComponent.name,
-                prototype: ItemStorageSlotComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _itemStackSlot: {
-                        type: SerializeType.Object,
-                    },
-                },
-            };
-            metadata[ItemStackSlot.name] = {
-                classname: ItemStackSlot.name,
-                prototype: ItemStackSlot.prototype,
-                mapping: {
-                    _itemStack: {
-                        type: SerializeType.Object,
-                    },
-                },
-            };
-            metadata[ItemStack.name] = {
-                classname: ItemStack.name,
-                prototype: ItemStack.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _item: {
-                        type: SerializeType.Link,
-                    },
-                    _count: {
-                        type: SerializeType.Number,
-                    },
-                },
-            };
-            metadata[WalletComponent.name] = {
-                classname: WalletComponent.name,
-                prototype: WalletComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _currency: {
-                        type: SerializeType.Link,
-                    },
-                    _value: {
-                        type: SerializeType.Number,
-                    },
-                },
-            };
-            metadata[HeroComponent.name] = {
-                classname: HeroComponent.name,
-                prototype: HeroComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _name: {
-                        type: SerializeType.String,
-                    },
-                    _heroClass: {
-                        type: SerializeType.Link,
-                    },
-                },
-            };
-            metadata[LevelComponent.name] = {
-                classname: LevelComponent.name,
-                prototype: LevelComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _level: {
-                        type: SerializeType.Number,
-                    },
-                    _maxLevel: {
-                        type: SerializeType.Number,
-                    },
-                    _exp: {
-                        type: SerializeType.Number,
-                    },
-                },
-            };
-            metadata[EquipSlotComponent.name] = {
-                classname: EquipSlotComponent.name,
-                prototype: EquipSlotComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _equipSlot: {
-                        type: SerializeType.Link,
-                    },
-                    _itemStackSlot: {
-                        type: SerializeType.Object,
-                    },
-                },
-            };
-            metadata[CharacterAttributeComponent.name] = {
-                classname: CharacterAttributeComponent.name,
-                prototype: CharacterAttributeComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _characterAttribute: {
-                        type: SerializeType.Link,
-                    },
-                    _baseValue: {
-                        type: SerializeType.Number,
-                    },
-                },
-            };
-            metadata[HealthPointsComponent.name] = {
-                classname: HealthPointsComponent.name,
-                prototype: HealthPointsComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _currentHealthPoints: {
-                        type: SerializeType.Number,
-                    },
-                    _maxHealthPoints: {
-                        type: SerializeType.Number,
-                    },
-                    _state: {
-                        type: SerializeType.String,
-                    },
-                },
-            };
-            metadata[MagicPointsComponent.name] = {
-                classname: MagicPointsComponent.name,
-                prototype: MagicPointsComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _currentMagicPoints: {
-                        type: SerializeType.Number,
-                    },
-                    _maxMagicPoints: {
-                        type: SerializeType.Number,
-                    },
-                },
-            };
-            metadata[AttackPowerComponent.name] = {
-                classname: AttackPowerComponent.name,
-                prototype: AttackPowerComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                    _baseMinAttackPower: {
-                        type: SerializeType.Number,
-                    },
-                    _baseMaxAttackPower: {
-                        type: SerializeType.Number,
-                    },
-                    _dependentCharacterAttributeComponents: {
-                        type: SerializeType.LinkCollection,
-                    },
-                },
-            };
-            metadata[PlayerComponent.name] = {
-                classname: PlayerComponent.name,
-                prototype: PlayerComponent.prototype,
-                mapping: {
-                    _id: {
-                        type: SerializeType.Number,
-                    },
-                    _gameObject: {
-                        type: SerializeType.Link,
-                    },
-                },
-            };
-
-            return new Serializer(metadata, container);
-        });//end set serializer
 
         this._gameConsoleConfigure(container);
+
+        debug('server:log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
     }

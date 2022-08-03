@@ -41,10 +41,17 @@ import UserDBObject from '../server/app/DBObjects/UserDBObject.js';
 import UserDBObjectFactory from '../server/app/Factories/UserDBObjectFactory.js';
 import {v4} from 'uuid';
 import PlayerDBObjectFactory from '../server/app/Factories/PlayerDBObjectFactory.js';
+import EntityDatabase from '../core/source/EntityDatabase.js';
+import ArmorMaterial from '../core/app/Entities/ArmorMaterial.js';
+import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
+import Quality from '../core/app/Entities/Quality.js';
+import CharacterAttribute from '../core/app/Entities/CharacterAttribute.js';
+import HeroRole from '../core/app/Entities/HeroRole.js';
+import ItemCategory from '../core/app/Entities/ItemCategory.js';
 
 let container = new Container();
 (new ServerContainerConfigure()).configure(container);
-// (new CoreContainerConfigure()).configure(container);
+(new CoreContainerConfigure()).configure(container);
 
 export function playerFactory_create() {
     let idGenerator: AutoIncrementIDGenerator = container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator');
@@ -510,7 +517,7 @@ export function devAutoSaveLoad_serialize() {
     // console.log(metadata);
 
     // let serializer = new Serializer(metadata, container);
-    let serializer = container.get<Serializer>('server.serializer');
+    let serializer = container.get<Serializer>('core.serializer');
 
     // let testSaveWithCollection = new TestSaveWithCollection();
     // let serializeObject = serializer.serialize(testSaveWithCollection);
@@ -678,7 +685,7 @@ export function devAutoSaveLoad_unserialize() {
     let data = JSON.parse(fs.readFileSync(savePath).toString());
     // console.log(data);
 
-    let serializer = container.get<Serializer>('server.serializer');
+    let serializer = container.get<Serializer>('core.serializer');
     let object = serializer.unserialize(data);
     // console.log(object);
     console.log(inspect(object, {
@@ -687,7 +694,7 @@ export function devAutoSaveLoad_unserialize() {
 }
 
 export function devAutoSaveLoad_testEquial() {
-    let serializer = container.get<Serializer>('server.serializer');
+    let serializer = container.get<Serializer>('core.serializer');
 
     testEqualSerializeObjects('ItemStorage', serializer, createTestItemStorage(container));
     testEqualSerializeObjects('Wallet', serializer, createTestWallet(container));
@@ -750,7 +757,7 @@ export async function devAutoSaveLoad_main() {
 export function devAutoSaveLoad_services() {
     let IDGenerator = new AutoIncrementIDGenerator(100);
 
-    let serializer = container.get<Serializer>('server.serializer');
+    let serializer = container.get<Serializer>('core.serializer');
     let serializeObject = serializer.serialize(IDGenerator);
     console.log(serializeObject);
 
@@ -821,4 +828,95 @@ export async function devSyncCreateUserAndPlayer() {
     // await container.get<GameConsole>('server.gameConsole').run('create_player_env', ['user03_player01']);
     // await container.get<GameConsole>('server.gameConsole').run('debug_player_env');
     // await container.get<GameConsole>('server.gameConsole').run('save_player_env');
+}
+
+export function devEntityDatabase() {
+    let entityDatabase = new EntityDatabase();
+
+    let id = 1;
+    let wood = new Item(
+        id++,
+        'Дерево',
+        'item_wood',
+        '',
+        20,
+        1,
+        500,
+        false,
+        undefined,
+        undefined,
+        undefined,
+    );
+
+    entityDatabase.add<Item>(wood);
+    // entityDatabase.add<Item>(wood);
+    // entityDatabase.add<Item>(wood);
+    // entityDatabase.add<Item>(wood);
+    // console.log(entityDatabase['_items']);
+    // console.log(entityDatabase.findOneByID<Item>(Item.name, 1));
+    // console.log(entityDatabase.findOneByID<Item>(Item.name, 10000));
+    // console.log(entityDatabase.getOneByID<Item>(Item.name, 1));
+    // console.log(entityDatabase.getOneByID<Item>(Item.name, 10000));
+    // console.log(entityDatabase.getOneByAlias<Item>(Item.name, 'item_wood'));
+    // console.log(entityDatabase.getOneByAlias<Item>(Item.name, 'item_wood12'));
+}
+
+export function devLoadEntityDatabase() {
+    let serializer = container.get<Serializer>('core.serializer');
+    // console.log(serializer.hasMetadata(ArmorMaterial.name));
+    // let data = {
+    //     // _id
+    // };
+    let plate = container.get<RepositoryManager>('core.repositoryManager').getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate');
+    // console.log(plate);
+    // let plateSerializeObject = serializer.serialize(plate);
+    // console.log(plateSerializeObject);
+
+    let data = {
+        classname: 'ArmorMaterial',
+            data: {
+            _id: 33,
+            _name: 'Латы',
+            _alias: 'armor_material_plate',
+            _description: undefined,
+            _sort: 500
+        }
+    };
+    let unserializePlate = serializer.unserialize(data);
+    console.log('unserializePlate', unserializePlate);
+}
+
+export function devSaveEntityDatabase() {
+    let serializer = container.get<Serializer>('core.serializer');
+
+    let data = {
+        date: new Date(),
+        data: {
+            entities: [],
+        },
+    };
+
+    let items = [];
+    // items = _.concat(items, (container.get<RepositoryManager>('core.repositoryManager').getRepository<ArmorMaterial>(ArmorMaterial.name)['_items']);
+    // items = _.concat(items, (container.get<RepositoryManager>('core.repositoryManager').getRepository<ArmorMaterial>(ArmorMaterial.name)['_items']);
+
+    // items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][ArmorMaterial.name]['_items']);
+    // items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][Quality.name]['_items']);
+    // items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][CharacterAttribute.name]['_items']);
+    // items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][HeroRole.name]['_items']);
+    // items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][Currency.name]['_items']);
+
+    // items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][ItemCategory.name]['_items']);
+    // items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][Item.name]['_items']);
+    // items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][HeroClass.name]['_items']);
+    items = _.concat(items, container.get<RepositoryManager>('core.repositoryManager')['_repositories'][EquipSlot.name]['_items']);
+    // console.log(items);
+
+    for (let i = 0; i < items.length; i++) {
+        data.data.entities.push(serializer.serialize(items[i]));
+    }
+    // console.log('data', inspect(data, {
+    //     depth: 10,
+    // }));
+    console.log('json', JSON.stringify(data));
 }

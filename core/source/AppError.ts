@@ -8,8 +8,8 @@ export default class AppError extends Error {
         super(message);
     }
 
-    static entityNotFound(entityClass, id) {
-        return new AppError(sprintf('Сущность типа %s id(%s) не найдена.', entityClass, id));
+    static entityNotFound(entityName, id, key = 'id') {
+        return new AppError(sprintf('Сущность "%s" %s(%s) не найдена.', entityName, key, id));
     }
 
     static gameObjectNotFound(id) {

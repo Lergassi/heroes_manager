@@ -16,20 +16,21 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin></script>
 
     <!-- GAME LIBRARIES -->
-    <script src="/js/raw/GameConsole.js" type="text/babel"></script>
+<!--    <script src="/js/raw/GameConsole.js" type="text/babel"></script>-->
+    <script data-main="/js/app" src="/js/lib/require.js"></script>
 </head>
 <body>
     <div id="root">root</div>
-    <script type="text/babel">
-        const domContainer = document.getElementById('root');
-        const root = ReactDOM.createRoot(domContainer);
-        root.render(
-            <GameConsole
-                executeUrl={'http://api.heroes.sd44.ru/game_console/execute'}
-                maxHistoryLength={100}
-                commands={['help', 'list']}
-            />
-        );
-    </script>
+<!--    <script type="text/babel">-->
+<!--        const domContainer = document.getElementById('root');-->
+<!--        const root = ReactDOM.createRoot(domContainer);-->
+<!--        root.render(-->
+<!--            <GameConsole-->
+<!--                executeUrl={'http://api.heroes.sd44.ru/game_console/execute'}-->
+<!--                maxHistoryLength={100}-->
+<!--                commands={['help', 'list']}-->
+<!--            />-->
+<!--        );-->
+<!--    </script>-->
 </body>
 </html>

@@ -54,7 +54,7 @@ export default class LoadPlayerEnvironmentCommand extends Command {
             throw new AppError(sprintf('Файл сохранений игрока id:%s не найден.', name));
         }
 
-        let serializer = this.container.get<Serializer>('server.serializer');
+        let serializer = this.container.get<Serializer>('core.serializer');
 
         //todo: Проверка входных данных.
         let stringData = fs.readFileSync(saveFilePath);

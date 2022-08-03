@@ -1,5 +1,3 @@
-import ContainerInterface from '../../source/ContainerInterface.js';
-
 export default class CharacterAttribute {
     private readonly _id: number;
     private readonly _name: string;
@@ -39,17 +37,5 @@ export default class CharacterAttribute {
         this._alias = alias;
         this._description = description;
         this._sort = sort;
-    }
-
-    static load(data: object, container: ContainerInterface) {
-        let characterAttribute = Object.create(CharacterAttribute.prototype);
-
-        characterAttribute._id = <number>data['_id'];
-        characterAttribute._name = data['_name'];
-        characterAttribute._alias = data['_alias'];
-        characterAttribute._description = data['_description'];
-        characterAttribute._sort = <number>data['_sort'];
-
-        return characterAttribute;
     }
 }

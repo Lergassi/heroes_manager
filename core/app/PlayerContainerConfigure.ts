@@ -22,6 +22,7 @@ import RemoveEquipCommand from './Commands/RemoveEquipCommand.js';
 import DebugEntitiesCommand from './Commands/DebugCommands/DebugEntitiesCommand.js';
 // import config from '../config/main.js';
 import debug from 'debug';
+import {sprintf} from 'sprintf-js';
 
 export default class PlayerContainerConfigure extends ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -72,6 +73,8 @@ export default class PlayerContainerConfigure extends ContainerConfigureInterfac
         });
 
         this._gameConsoleConfigure(container);
+
+        debug('core:log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
     }

@@ -9,14 +9,14 @@
     "start_sandbox": "sudo node -r dotenv/config sandbox/main.mjs",
     "sandbox": "sudo node -r dotenv/config sandbox/main.js",
     "start_sandbox_nodemon": "sudo node_modules/nodemon/bin/nodemon.js -r dotenv/config sandbox/main.js",
-    "build_babel": "babel client -d client_lib",
-    "build_and_watch_babel": "babel client -d client_lib --watch",
     "build_ts": "tsc --jsx react-jsx",
     "build_and_watch_ts": "tsc --watch --jsx react-jsx",
+    "build_babel": "babel client -d client_lib",
+    "build_and_watch_babel": "babel client -d client_lib --watch",
     "build_webpack": "webpack --config webpack.config.cjs",
     "build_and_watch_webpack": "webpack --config webpack.config.cjs --watch",
     "test_raw": "sudo node -r dotenv/config tests/main.js",
-    "test": "jest"
+    "test": "jest --config=jest.config.js"
   },
   "author": "",
   "license": "ISC",

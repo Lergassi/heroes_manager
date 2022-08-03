@@ -1,6 +1,7 @@
 import React from 'react';
 import AppError from '../../core/source/AppError.js';
 import debug from 'debug';
+import {sprintf} from 'sprintf-js';
 
 export interface GameConsoleOptions {
     executeUrl: string;
@@ -9,17 +10,17 @@ export interface GameConsoleOptions {
 }
 
 export default class GameConsoleComponent extends React.Component<any, any>{
-    _executeUrl;
+    private readonly _executeUrl;
 
-    _commands;
+    private readonly _commands;
 
-    _autoCompleteList;
-    _isAutoCompleteHandling;
-    _autoCompletePosition;
+    private _autoCompleteList;
+    private _isAutoCompleteHandling;
+    private _autoCompletePosition;
 
-    _history;
-    _currentHistoryPosition;
-    _maxHistoryLength;
+    private readonly _history;
+    private _currentHistoryPosition;
+    private readonly _maxHistoryLength;
 
     _defaults = {
         commands: [],
@@ -53,14 +54,7 @@ export default class GameConsoleComponent extends React.Component<any, any>{
         this.keyPressHandler = this.keyPressHandler.bind(this);
         this.keyDownHandler = this.keyDownHandler.bind(this);
 
-        //todo: logger
-        console.log('Client: GameConsoleComponent created.');
-
-        // debug.enable('*');
-        console.log(1, debug.enabled('*'));
-        debug('info')('this is debug info');
-        debug('debug')('this is debug debug');
-        console.log('this is log');
+        debug('client:log')(sprintf('GameConsole создана.'));
     }
 
     handleChange(event) {
@@ -110,6 +104,8 @@ export default class GameConsoleComponent extends React.Component<any, any>{
                     this._history.push(commandString);
                 }
                 this.resetHistoryPosition();
+
+                debug('log')(resultUrl);
 
                 fetch(resultUrl)
                     .then((response) => {
@@ -198,10 +194,6 @@ export default class GameConsoleComponent extends React.Component<any, any>{
         this._currentHistoryPosition = this._history.length;
     }
 
-    debug() {
-        console.log(this._history);
-    }
-
     clearAutoCompleteList() {
         this._autoCompleteList = [];
     }
@@ -217,28 +209,27 @@ export default class GameConsoleComponent extends React.Component<any, any>{
             <div
                 className={'game-console'}
             >
-            <input
-                className={'game-console__input'}
-        autoFocus
-        type="text"
-        placeholder="Enter command..."
-        onKeyPress={this.keyPressHandler}
-        onChange={this.handleChange}
-        onKeyDown={this.keyDownHandler}
-        value={this.state.value}
-        />
-        <div
-        className={'game-console-autocomplete-list-wrapper'}
-
-            >
-            {/*todo: Сделать в виде отдельного компонента. Только рендер.*/}
-            <ul className={'game-console-autocomplete-list list-without-types'}>
-            {this._autoCompleteList.map(command => (
-                    <li className={this._isAutoCompleteHandling && (command === this.state.value) ? 'game-console-autocomplete-list__selected' : ''} key={command}>{command}</li>
-    ))}
-        </ul>
-        </div>
-        </div>
-    );
+                <input
+                    className={'game-console__input'}
+                    autoFocus
+                    type="text"
+                    placeholder="Enter command..."
+                    onKeyPress={this.keyPressHandler}
+                    onChange={this.handleChange}
+                    onKeyDown={this.keyDownHandler}
+                    value={this.state.value}
+                />
+                <div
+                    className={'game-console-autocomplete-list-wrapper'}
+                >
+                    {/*todo: Сделать в виде отдельного компонента. Только рендер.*/}
+                    <ul className={'game-console-autocomplete-list list-without-types'}>
+                    {this._autoCompleteList.map(command => (
+                            <li className={this._isAutoCompleteHandling && (command === this.state.value) ? 'game-console-autocomplete-list__selected' : ''} key={command}>{command}</li>
+                    ))}
+                    </ul>
+                </div>
+            </div>
+        );
     }
 }

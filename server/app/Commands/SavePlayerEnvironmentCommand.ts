@@ -20,7 +20,7 @@ export default class SavePlayerEnvironmentCommand extends Command {
         this.container.get<Security>('server.security').assertIsUserLoaded();
         this.container.get<Security>('server.security').assertIsPlayerLoaded();
 
-        let serializer = this.container.get<Serializer>('server.serializer');
+        let serializer = this.container.get<Serializer>('core.serializer');
         let gameObjects = this.container.get<GameObjectStorage>('player.gameObjectStorage')['_gameObjects'];
         let services = this.container['_services'];
 

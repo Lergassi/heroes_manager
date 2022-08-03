@@ -5,16 +5,16 @@ import {
     devAutoSaveLoad_services,
     devAutoSaveLoad_testEquial,
     devAutoSaveLoad_unserialize,
-    devCreateItemStorage,
+    devCreateItemStorage, devEntityDatabase,
     devGameConsole,
     devGameObjectStorage,
     devGameObjectStorage_newHeroScenario,
     devGameObjectStorage_newPlayerScenario,
     devHeroPattern,
-    devItemStorageManager,
+    devItemStorageManager, devLoadEntityDatabase,
     devManualSaveLoad,
     devPlayerDBObject,
-    devRemoveServicesByStringPattern,
+    devRemoveServicesByStringPattern, devSaveEntityDatabase,
     devSyncCreateUserAndPlayer,
     loadUserAndPlayer,
     playerFactory_create,
@@ -31,6 +31,7 @@ import path from 'path';
 import Container from '../core/source/Container.js';
 import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
 import ServerContainerConfigure from '../server/app/ServerContainerConfigure.js';
+import sum from '../test_objects/sum.js';
 
 // let container = new Container();
 // (new CoreContainerConfigure()).configure(container);
@@ -63,7 +64,10 @@ import ServerContainerConfigure from '../server/app/ServerContainerConfigure.js'
 
 // devPlayerDBObject();
 // devRemoveServicesByStringPattern();
-devSyncCreateUserAndPlayer();
+// devSyncCreateUserAndPlayer();
+// devEntityDatabase();
+// devLoadEntityDatabase();
+// devSaveEntityDatabase();
 
 // testLodashClone();
 
@@ -80,3 +84,5 @@ devSyncCreateUserAndPlayer();
 //     count += value % 2 ? 1 : 0
 // });
 // console.log(count);
+
+// console.log('sum', sum(1, 2) === 3);
