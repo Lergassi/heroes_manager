@@ -3,7 +3,7 @@ import Quality from './Quality.js';
 import ArmorMaterial from './ArmorMaterial.js';
 
 export default class Item {
-    private readonly _id: number;
+    private readonly _id: string;
     private readonly _name: string;
     private readonly _alias: string;
     private readonly _description: string;
@@ -15,7 +15,7 @@ export default class Item {
     private readonly _quality: Quality;
     private readonly _armorMaterial: ArmorMaterial; //todo: Временно. Необязательные параметры перенести в другое место.
 
-    get id(): number {
+    get id(): string {
         return this._id;
     }
 
@@ -60,7 +60,7 @@ export default class Item {
     }
 
     constructor (
-        id: number,
+        id: string,
         name: string,
         alias: string,
         description: string,

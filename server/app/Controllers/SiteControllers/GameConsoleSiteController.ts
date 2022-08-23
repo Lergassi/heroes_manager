@@ -1,9 +1,7 @@
 import Controller from '../../../source/Controller.js';
 import _ from 'lodash';
 import debug from 'debug';
-import chalk from 'chalk';
 import GameConsole from '../../../../core/source/GameConsole/GameConsole.js';
-import AppError from '../../../../core/source/AppError.js';
 
 export default class GameConsoleSiteController extends Controller {
     async execute(req, res) {
@@ -33,7 +31,7 @@ export default class GameConsoleSiteController extends Controller {
         let commandName = commandQuerySplitted[0];
         let commandArguments = _.slice(commandQuerySplitted, 1);
 
-        let gameConsole: GameConsole = this.container.get<GameConsole>('server.gameConsole');
+        let gameConsole: GameConsole = this.container.get<GameConsole>('gameConsole');
         try {
             await gameConsole.run(commandName, commandArguments);
 

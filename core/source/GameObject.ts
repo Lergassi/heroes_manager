@@ -5,12 +5,10 @@ import {sprintf} from 'sprintf-js';
 import ComponentInterface from './ComponentInterface.js';
 
 export default class GameObject {
-    private readonly _id: number;
+    private readonly _id: string;
     private _name: string;
-    // private readonly _components: Component[];
-    private readonly _components: ComponentInterface[];
-    // private readonly _components;
     private readonly _tags: string[];
+    private readonly _components: ComponentInterface[];
 
     get name(): string {
         return this._name;
@@ -25,7 +23,7 @@ export default class GameObject {
     }
 
     constructor(
-        id: number,
+        id: string,
     ) {
         this._id = id;
         this._name = GameObject.name;
@@ -33,6 +31,7 @@ export default class GameObject {
         this._tags = [];
     }
 
+    //todo: Переделать на дженерик. Убрать класс из типов.
     addComponent(component: Component): void {
         if (!_.includes(this._components, component)) {
             this._components.push(component);
@@ -60,7 +59,7 @@ export default class GameObject {
         return result;
     }
 
-    getComponentByID<T>(id: number): T {
+    getComponentByID<T>(id: string): T {
         for (let i = 0; i < this._components.length; i++) {
             if (this._components[i]['_id'] === id) {
                 return <T>this._components[i];

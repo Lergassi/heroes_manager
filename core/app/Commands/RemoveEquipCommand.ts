@@ -23,11 +23,11 @@ export default class RemoveEquipCommand extends Command {
     }
 
     async execute(input: Input) {
-        let heroID: number = parseInt(input.getArgument('hero_id'));
-        let equipSlotComponentID: number = parseInt(input.getArgument('equip_slot_component_id'));
+        let heroID: string = input.getArgument('hero_id');
+        let equipSlotComponentID: string = input.getArgument('equip_slot_component_id');
 
-        let itemStorageID: number = parseInt(input.getArgument('item_storage_id'));
-        let itemStorageSlotComponentID: number = parseInt(input.getArgument('item_storage_slot_component_id'));
+        let itemStorageID: string = input.getArgument('item_storage_id');
+        let itemStorageSlotComponentID: string = input.getArgument('item_storage_slot_component_id');
 
         let hero = <GameObject>this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(heroID);
         let equipSlotComponent = <EquipSlotComponent>hero.getComponentByID(equipSlotComponentID);

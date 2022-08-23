@@ -1,8 +1,7 @@
 import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
-import RepositoryManager from '../../../source/RepositoryManager.js';
-import {debugRepository, debugRepositoryManager} from '../../../debug/debug_functions.js';
-import Security from '../../../../server/source/Security.js';
+import EntityManager from '../../../source/EntityManager.js';
+import {debugEntityManager, debugRepository} from '../../../debug/debug_functions.js';
 
 export default class DebugEntitiesCommand extends Command {
     get name(): string {
@@ -17,9 +16,9 @@ export default class DebugEntitiesCommand extends Command {
     async execute(input: Input) {
         let entityName = input.getArgument('entity');
         if (entityName) {
-            debugRepository(this.container.get<RepositoryManager>('core.repositoryManager').getRepository(entityName));
+            debugRepository(this.container.get<EntityManager>('core.entityManager').getRepository(entityName));
         } else {
-            debugRepositoryManager(this.container.get<RepositoryManager>('core.repositoryManager'));
+            debugEntityManager(this.container.get<EntityManager>('core.entityManager'));
         }
     }
 }

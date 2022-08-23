@@ -1,9 +1,8 @@
 import Quality from '../Entities/Quality.js';
-import ContainerInterface from '../../source/ContainerInterface.js';
-import RepositoryManager from '../../source/RepositoryManager.js';
+import EntityManager from '../../source/EntityManager.js';
 
 export default class QualityLoader {
-    load(data: object, repositoryManager: RepositoryManager) {
+    load(data: object, entityManager: EntityManager) {
         let quality = Object.create(Quality.prototype);
 
         quality['_id'] = <number>data['_id'];

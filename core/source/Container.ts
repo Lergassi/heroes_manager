@@ -38,15 +38,31 @@ export default class Container implements ContainerInterface {
         return this._services[key];
     }
 
+    getByPattern(pattern: string) {
+        let result = [];
+        let keySplitted = this._splitPattern(pattern);
+        if (!this._validatePattern(keySplitted)) {
+            throw new AppError('Неверный формат keyOrPattern.');
+        }
+
+        for (const servicesKey in this._services) {
+            if (_.startsWith(servicesKey, keySplitted[0] + '.')) {
+                result.push(this._services[servicesKey]);
+            }
+        }
+
+        return result;
+    }
+
     has(key: string): boolean {
         return this._services.hasOwnProperty(key);
     }
 
     remove(keyOrPattern: string): void {
-        let keySplitted = _.split(keyOrPattern, '.');
+        let keySplitted = this._splitPattern(keyOrPattern);
         if (keySplitted.length === 1) {
             delete this._services[keyOrPattern];
-        } else if (keySplitted.length === 2 && keySplitted[1] === '*') {
+        } else if (this._validatePattern(keySplitted)) {
             for (const servicesKey in this._services) {
                 if (_.startsWith(servicesKey, keySplitted[0] + '.')) {
                     delete this._services[servicesKey];
@@ -55,5 +71,13 @@ export default class Container implements ContainerInterface {
         } else {
             throw new AppError('Неверный формат keyOrPattern.');
         }
+    }
+
+    private _splitPattern(pattern: string) {
+        return _.split(pattern, '.');
+    }
+
+    private _validatePattern(pattern: string[]) {
+        return pattern.length === 2 && pattern[1] === '*';
     }
 }

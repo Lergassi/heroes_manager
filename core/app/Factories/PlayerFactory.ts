@@ -1,20 +1,20 @@
 /**
  * Создается объект GameObject. Не путать с объектом из базы данных.
  */
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
 import GameObject from '../../source/GameObject.js';
 import PlayerComponent from '../Components/PlayerComponent.js';
 import LevelComponent from '../Components/LevelComponent.js';
+import UUIDGenerator from '../../source/UUIDGenerator.js';
 
 export type PlayerFactoryConfig = {
     maxLevel: number;
 };
 
 export default class PlayerFactory {
-    private readonly _idGenerator: AutoIncrementIDGenerator;
+    private readonly _idGenerator: UUIDGenerator;
     private readonly _config: PlayerFactoryConfig;
 
-    constructor(idGenerator: AutoIncrementIDGenerator, config: PlayerFactoryConfig) {
+    constructor(idGenerator: UUIDGenerator, config: PlayerFactoryConfig) {
         this._idGenerator = idGenerator;
         this._config = config;
     }

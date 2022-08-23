@@ -1,12 +1,11 @@
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
-import PasswordHasher from '../../../server/source/PasswordHasher.js';
 import GameObject from '../../source/GameObject.js';
 import UserComponent from '../Components/UserComponent.js';
+import UUIDGenerator from '../../source/UUIDGenerator.js';
 
 export default class UserFactory {
-    private readonly _idGenerator: AutoIncrementIDGenerator;
+    private readonly _idGenerator: UUIDGenerator;
 
-    constructor(idGenerator: AutoIncrementIDGenerator) {
+    constructor(idGenerator: UUIDGenerator) {
         this._idGenerator = idGenerator;
     }
 

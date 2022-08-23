@@ -1,15 +1,15 @@
 import AppError from './AppError.js';
 import {sprintf} from 'sprintf-js';
 import ContainerInterface from './ContainerInterface.js';
-import _, {setWith} from 'lodash';
-import RepositoryManager from './RepositoryManager.js';
+import _ from 'lodash';
+import MetadataManager from './MetadataManager.js';
 
 export enum PrimitiveType {
     undefined = 'undefined',
     boolean = 'boolean',
     number = 'number',
     string = 'string',
-    bigint = 'bigint',
+    // bigint = 'bigint',
     symbol = 'symbol',
 }
 
@@ -18,150 +18,194 @@ export enum SerializeType {
     Boolean = 'Boolean',
     Number = 'Number',
     String = 'String',
-    Bigint = 'Bigint',
-    Symbol = 'Symbol',
-    Object = 'Object',
-    Collection = 'Collection',
-    Link = 'link',
+    // Bigint = 'Bigint',
+    // Symbol = 'Symbol',
+    Object = 'Object',          //Объект, на который нет ссылок.
+    Collection = 'Collection',  //
+    Link = 'Link',              //Объект существует в единочном экземляре.
     LinkCollection = 'LinkCollection',
 }
 
+export interface DataInterface {
+    classname: string;
+    data: object;
+}
+
+export class ProxyLink {
+    public object;
+    public property: string;
+    public classname: string;
+    public id: number;
+
+    constructor(object, property: string, classname: string, id: number) {
+        this.object = object;
+        this.property = property;
+        this.classname = classname;
+        this.id = id;
+    }
+}
+
+interface SerializeData {
+    classname: string;
+    data: object;
+}
+
+interface SerializedObject {
+    classname: string;
+    data: object;
+}
+
 export default class Serializer {
-    private readonly _metadata: object;
+    private readonly _metadataManager: MetadataManager;
     private readonly _container: ContainerInterface;
     private readonly _links: {};
+    private readonly _objects: {[key: string]: any};
+    private readonly _linkRequests: any[];
 
-    constructor(metadata: object, container: ContainerInterface) {
-        this._metadata = metadata;
+    constructor(container: ContainerInterface, metadataManager: MetadataManager) {
         this._container = container;
+        this._metadataManager = metadataManager;
         this._links = {};
+        this._objects = [];
+        this._linkRequests = [];
     }
 
-    hasMetadata(name: string): boolean {
-        return this._metadata.hasOwnProperty(name);
-    }
+    serialize<T>(object: T): SerializedObject {
+        let objectMetadata = this._metadataManager.getMetadata(object.constructor.name);
 
-    getMetadata(name: string) {
-        return this._metadata[name];
-    }
-
-    serialize(object) {
-        let objectMetadata = this.getMetadata(object.constructor.name);
-        if (!objectMetadata) {
-            return undefined;
-        }
-
-        let serializeObject = {
+        let serializedObject: SerializedObject = {
             classname: object.constructor.name,
             data: {},
         };
+
         //todo: Убрать в класс.
         if (objectMetadata.hasOwnProperty('serviceName')) {
-            serializeObject['serviceName'] = objectMetadata['serviceName'];
+            serializedObject['serviceName'] = objectMetadata['serviceName'];
         }
         for (const fieldKey in objectMetadata.mapping) {
             if (!object.hasOwnProperty(fieldKey)) {
                 throw new AppError(sprintf('Поле "%s" не найдено в объекте "%s".', fieldKey, object.constructor.name));
             }
 
-            // if (objectMetadata.mapping[fieldKey].hasOwnProperty('serializeCallback')) {
-            //     serializeObject[fieldKey] = objectMetadata.mapping[fieldKey]['serializeCallback'](this, object);
-            //     continue;
-            // }
-
             switch (objectMetadata.mapping[fieldKey].type) {
                 case SerializeType.Boolean:
                 case SerializeType.Number:
                 case SerializeType.String:
-                case SerializeType.Bigint:
-                    serializeObject.data[fieldKey] = object[fieldKey];
+                    serializedObject.data[fieldKey] = object[fieldKey];
                     break;
                 case SerializeType.Object:
-                    if (typeof object[fieldKey] !== 'undefined') {
-                        serializeObject.data[fieldKey] = this.serialize(object[fieldKey]);
-                    } else {
-                        serializeObject.data[fieldKey] = undefined;
-                    }
-                    break;
-                case SerializeType.Collection:
-                    serializeObject.data[fieldKey] = this._serializeCollection(object[fieldKey])
+                    serializedObject.data[fieldKey] = object[fieldKey] === null ?
+                        serializedObject.data[fieldKey] = null :
+                        serializedObject.data[fieldKey] = this.serialize(object[fieldKey]);
                     break;
                 case SerializeType.Link:
-                    serializeObject.data[fieldKey] = this._serializeLinkObject(object[fieldKey]);
+                    serializedObject.data[fieldKey] = this._serializeLinkObject(object[fieldKey]);
+                    break;
+                case SerializeType.Collection:
+                    serializedObject.data[fieldKey] = this._serializeCollection(object[fieldKey])
                     break;
                 case SerializeType.LinkCollection:
-                    serializeObject.data[fieldKey] = this._serializeLinkCollection(object[fieldKey]);
+                    serializedObject.data[fieldKey] = this._serializeLinkCollection(object[fieldKey]);
                     break;
                 default:
                     throw new AppError(sprintf('Тип "%s" не поддерживается системой сериализации.', objectMetadata.mapping[fieldKey].type));
                     break;
             }//end switch (objectMetadata.mapping[fieldKey].type)
+
+            this._checkUndefined(serializedObject.data[fieldKey]);
         }//end for (const fieldKey in objectMetadata.mapping)
 
-        return serializeObject;
+        return serializedObject;
     }
 
-    unserialize(data) {
-        let objectMetadata = this.getMetadata(data['classname']);
-        if (!objectMetadata) {
-            throw AppError.metadataNotFound(data['classname']);
-        }
-        // console.log('data', data);
+    // unserialize<T>(data: object): T {
+    unserialize<T>(data: DataInterface): T {
+        // console.log('data:');
+        // console.dir(data, {depth: 10});
+        let objectMetadata = this._metadataManager.getMetadata(data['classname']);
         // console.log('objectMetadata', objectMetadata);
 
-        let object = Object.create(objectMetadata['prototype']);
+        let object = Object.create(objectMetadata.module.prototype);
 
-        // if (!this._links.hasOwnProperty(object.constructor.name)) {
-        //     this._links[object.constructor.name] = {};
-        // }
-        // this._links[object.constructor.name][object['_id']] = object;
-
-        let mapping = objectMetadata['mapping'];
+        let mapping = objectMetadata.mapping;
         for (const fieldKey in mapping) {
-            // console.log(mapping[fieldKey].type);
             switch (mapping[fieldKey].type) {
                 case SerializeType.Boolean:
+                    object[fieldKey] = Boolean(data['data'][fieldKey]);
+                    break;
                 case SerializeType.Number:
+                    object[fieldKey] = Number(data['data'][fieldKey]);
+                    break;
                 case SerializeType.String:
-                case SerializeType.Bigint:
                     object[fieldKey] = data['data'][fieldKey];
                     break;
                 case SerializeType.Object:
-                    if (data['data'][fieldKey] !== undefined) {
+                    if (data['data'][fieldKey] !== null) {
                         object[fieldKey] = this.unserialize(data['data'][fieldKey]);
                     } else {
-                        object[fieldKey] = undefined;
+                        object[fieldKey] = null;
                     }
                     break;
                 case SerializeType.Collection:
                     object[fieldKey] = this._unserializeCollection(data['data'][fieldKey])
                     break;
                 case SerializeType.Link:
-                    object[fieldKey] = this._unserializeLinkObject(data['data'][fieldKey]);
+                    if (data['data'][fieldKey] !== null) {
+                        object[fieldKey] = this._unserializeLinkObject(data['data'][fieldKey]);
+                        if (object[fieldKey] === null || object[fieldKey] === undefined) {
+                            this._linkRequests.push({
+                                // object: object,
+                                // property: fieldKey,
+                                link: data['data'][fieldKey],
+                                callback: (linkInstance) => {
+                                    object[fieldKey] = linkInstance;
+                                },
+                            });
+                        }
+                    } else {
+                        object[fieldKey] = null;
+                    }
                     break;
                 case SerializeType.LinkCollection:
+                    //todo: Тут нужна установка запроса на Link.
                     object[fieldKey] = this._userializeLinkCollection(data['data'][fieldKey]);
                     break;
                 default:
                     throw new AppError(sprintf('Тип "%s" не поддерживается системой сериализации.', objectMetadata.mapping[fieldKey].type));
                     break;
             }//end switch
+        }//end for (const fieldKey in mapping)
 
-            if (fieldKey === '_id') {
-                this._addLink(object);
+        /**
+         * Предполагается пока, что Link может быть только на объекты у которых есть id. Пока id есть не у всех.
+         * todo: Позже будет единый контейнер для хранения всех объектов.
+         */
+        if (object.constructor.name && object.hasOwnProperty('_id')) {
+            if (!this._objects.hasOwnProperty(object.constructor.name)) {
+                this._objects[object.constructor.name] = {};
             }
-        }//end forin
+            this._objects[object.constructor.name][object['_id']] = object;
+        }
 
         return object;
     }
 
+    /**
+     * Примеры примитивных типов: tags.
+     *
+     * @param collection
+     * @private
+     */
     private _serializeCollection(collection) {
         let result = [];
         for (let i = 0; i < collection.length; i++) {
-            if (PrimitiveType[typeof collection[i]]) {
+            this._checkUndefined(collection[i]);
+            if (PrimitiveType[typeof collection[i]] || collection[i] === null) {
                 result.push(collection[i]);
-            } else if (this.hasMetadata(collection[i].constructor.name)) {
+            } else if (this._metadataManager.hasMetadata(collection[i].constructor.name)) {
                 result.push(this.serialize(collection[i]));
+            } else {
+                throw new AppError(sprintf('SerializeType.Collection содержит не поддерживаемый тип %s или для объекта не указаны метаданные.', collection[i]?.constructor?.name ?? typeof collection[i]));
             }
             //else: Объекты для которых нет метаданные не сериализуются.
         }
@@ -172,8 +216,7 @@ export default class Serializer {
     private _unserializeCollection(data) {
         let result = [];
         for (let i = 0; i < data.length; i++) {
-            // console.log(data[i]);
-            if (PrimitiveType[typeof data[i]]) {
+            if (PrimitiveType[typeof data[i]] || data[i] === null) {
                 result.push(data[i]);
             } else {
                 result.push(this.unserialize(data[i]));
@@ -183,21 +226,9 @@ export default class Serializer {
         return result;
     }
 
-    private _serializeLinkCollection(collection) {
-        return _.map(collection, (item) => {
-            return this._serializeLinkObject(item);
-        });
-    }
-
-    private _userializeLinkCollection(data) {
-        return _.map(data, (item) => {
-            return this._unserializeLinkObject(item);
-        });
-    }
-
     private _serializeLinkObject(object) {
         if (!object) {
-            return undefined;
+            return null;
         }
 
         let idGetMethodNames = [
@@ -209,7 +240,7 @@ export default class Serializer {
             return object.hasOwnProperty(idGetMethodName);
         })[0].toString();
         if (!idGetMethodName) {
-            throw new AppError(sprintf('У объекта "%s" не найден ни один из методов доступа "(%s)".',
+            throw new AppError(sprintf('У объекта "%s" не найден ни один из методов доступа к "(%s)".',
                 object.constructor.name,
                 _.join(idGetMethodNames, ', '),
             ));
@@ -221,19 +252,74 @@ export default class Serializer {
         };
     }
 
+    //todo: Может целевой объект сюда передавать?
     private _unserializeLinkObject(data) {
-        //todo: Временно. Место поиска Link объектов надо указывать в метаданных.
-        if (this._links.hasOwnProperty(data['classname'])) {
-            return this._links[data['classname']][data['id'].toString()];
-        } else {
-            return this._container.get<RepositoryManager>('core.repositoryManager').getRepository(data['classname']).getOneByID(data['id']);
+        let linkObject;
+        let callback = this._metadataManager.getMetadata(data['classname']).finderCallback;
+        if (callback) {
+            linkObject = callback(this._container, data['classname'], data['id']);
         }
+
+        // if (linkObject === undefined) {
+        //     this._linkRequests.push({
+        //         object: object,
+        //         property: fieldKey,
+        //         link: data,
+        //     });
+        // }
+
+        return linkObject;
     }
 
-    private _addLink(object) {
-        if (!this._links.hasOwnProperty(object.constructor.name)) {
-            this._links[object.constructor.name] = {};
+    private _serializeLinkCollection(collection) {
+        return _.map(collection, (item) => {
+            this._checkUndefined(item);
+            return this._serializeLinkObject(item);
+        });
+    }
+
+    private _userializeLinkCollection(data) {
+        let result = [];
+        for (let i = 0; i < data.length; i++) {
+            let object = this._unserializeLinkObject(data[i]);
+            result.push(object);
+            if (object === null || object === undefined) {
+                //length нужно сохранить, чтобы в замыкании было текущее значение, а не последнее (maxLength).
+                let length = result.length;
+                this._linkRequests.push({
+                    link: data[i],
+                    callback: (linkInstance) => {
+                        result[length - 1] = linkInstance;
+                    },
+                });
+            }
         }
-        this._links[object.constructor.name][object['_id']] = object;
+
+        return result;
+    }
+
+    /**
+     * todo: Временно. Вызывается вручную после обработки всех данных. Также finish нужен только для десериализации.
+     */
+    finish() {
+        for (let i = 0; i < this._linkRequests.length; i++) {
+            let link = this
+                ?._objects[this._linkRequests[i]['link']['classname']]
+                ?.[this._linkRequests[i]['link']['id']];
+            if (link) {
+                this._linkRequests[i]['callback'](link);
+            } else {
+                throw new AppError(sprintf('Finish: Объект Link %s(%s) не найден.', this._linkRequests[i]['link']['classname'], this._linkRequests[i]['link']['id']));
+            }
+        }
+
+        this._linkRequests.splice(0, this._linkRequests.length);
+    }
+
+    //todo: Временное тестовое решение.
+    private _checkUndefined(value) {
+        if (typeof value === 'undefined') {
+            throw new AppError('Значение не должно быть undefined.');
+        }
     }
 }

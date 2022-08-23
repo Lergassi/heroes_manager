@@ -1,16 +1,16 @@
 import GameObject from '../../source/GameObject.js';
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
 import WalletComponent from '../Components/WalletComponent.js';
+import UUIDGenerator from '../../source/UUIDGenerator.js';
 
 export type WalletFactoryConfig = {
 
 };
 
 export default class WalletFactory {
-    private readonly _idGenerator: AutoIncrementIDGenerator;
+    private readonly _idGenerator: UUIDGenerator;
     private _config: WalletFactoryConfig;
 
-    constructor(idGenerator: AutoIncrementIDGenerator, config: WalletFactoryConfig = {}) {
+    constructor(idGenerator: UUIDGenerator, config: WalletFactoryConfig = {}) {
         this._idGenerator = idGenerator;
         this._config = config;
     }

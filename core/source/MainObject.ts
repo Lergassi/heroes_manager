@@ -1,5 +1,3 @@
-import debug from 'debug';
-
 export default abstract class MainObject {
     get toStringObject(): object {
         return {

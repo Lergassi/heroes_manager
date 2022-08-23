@@ -1,5 +1,5 @@
 import Command from '../../../source/GameConsole/Command.js';
-import util, {InspectOptions} from 'util';
+import util from 'util';
 import Input from '../../../source/GameConsole/Input.js';
 import GameObject from '../../../source/GameObject.js';
 import GameObjectStorage from '../../../source/GameObjectStorage.js';
@@ -17,7 +17,7 @@ export default class InspectGameObjectCommand extends Command {
     }
 
     async execute(input: Input) {
-        let id: number = parseInt(input.getArgument('id'));
+        let id: string = input.getArgument('id');
         let options = {
             depth: parseInt(input.getArgument('depth')),
             showHidden: input.getArgument('showHidden') === '1',

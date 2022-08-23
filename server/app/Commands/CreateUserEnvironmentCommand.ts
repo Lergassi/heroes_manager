@@ -3,12 +3,11 @@ import Command from '../../../core/source/GameConsole/Command.js';
 import UserDBObjectFactory from '../Factories/UserDBObjectFactory.js';
 import UserDBObjectRepository from '../Repositories/UserDBObjectRepository.js';
 import UserDBObject from '../DBObjects/UserDBObject.js';
-import {v4} from 'uuid';
 import fs from 'fs';
 import {Pool} from 'mysql';
 import debug from 'debug';
-import path from 'path';
 import Security from '../../source/Security.js';
+import PathResolver from '../../source/PathResolver.js';
 
 export default class CreateUserEnvironmentCommand extends Command {
     get name(): string {
@@ -42,16 +41,16 @@ export default class CreateUserEnvironmentCommand extends Command {
             new Promise((resolve, reject) => {
                 connection.beginTransaction((error) => {
                     userDBObjectRepository.save(connection, userDBObject, resolve, reject);
-
                 });//beginTransaction
             })
                 .then(() => {
                     //todo: Делать проверки перед всеми операциями и только в конце их выполнять. canCreateUserSaveDir(), etc.
                     debug('info')('Пользователь создан: ', userDBObject['_id']);
 
-                    let userSaveDir = path.resolve(
-                        this.container.get<object>('server.config')['savesDir'],
-                        userDBObject['_id'],
+                    //todo: Сделать все доступные пути. test
+                    let userSaveDir = this.container.get<PathResolver>('server.pathResolver').resolve(
+                        'server/data/saves',
+                        userDBObject['_id'].toString(),
                     );
                     fs.mkdirSync(userSaveDir);
                     fs.chownSync(userSaveDir, 1001, 1001);

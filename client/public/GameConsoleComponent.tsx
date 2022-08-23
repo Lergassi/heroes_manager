@@ -54,7 +54,7 @@ export default class GameConsoleComponent extends React.Component<any, any>{
         this.keyPressHandler = this.keyPressHandler.bind(this);
         this.keyDownHandler = this.keyDownHandler.bind(this);
 
-        debug('client:log')(sprintf('GameConsole создана.'));
+        debug('log')(sprintf('GameConsole создана.'));
     }
 
     handleChange(event) {

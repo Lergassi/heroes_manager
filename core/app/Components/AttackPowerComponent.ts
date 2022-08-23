@@ -44,7 +44,7 @@ export default class AttackPowerComponent extends Component {
     }
 
     constructor(
-        id: number,
+        id: string,
         gameObject: GameObject,
         baseMinAttackPower: number,
         baseMaxAttackPower: number,

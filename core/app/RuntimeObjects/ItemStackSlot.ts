@@ -9,7 +9,7 @@ export default class ItemStackSlot {
     }
 
     constructor() {
-        this._itemStack = undefined;
+        this._itemStack = null;
     }
 
     canPlaceItemStack(itemStack: ItemStack) {
@@ -25,14 +25,14 @@ export default class ItemStackSlot {
     }
 
     clear() {
-        this._itemStack = undefined;
+        this._itemStack = null;
     }
 
     isBusy(): boolean {
-        return this._itemStack !== undefined;
+        return this._itemStack !== null;
     }
 
     isFree(): boolean {
-        return this._itemStack === undefined;
+        return this._itemStack === null;
     }
 }

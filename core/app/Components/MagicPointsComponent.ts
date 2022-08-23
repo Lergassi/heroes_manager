@@ -14,7 +14,7 @@ export default class MagicPointsComponent extends Component {
     }
 
     constructor(
-        id: number,
+        id: string,
         gameObject: GameObject,
         currentMagicPoints: number,
         maxMagicPoints: number

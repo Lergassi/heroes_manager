@@ -1,7 +1,6 @@
 import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
 import debug from 'debug';
-import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
 import Security from '../../source/Security.js';
 
 export default class UnloadPlayerEnvironmentCommand extends Command {

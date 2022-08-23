@@ -23,7 +23,7 @@ export default class CharacterAttributeComponent extends Component {
     }
 
     constructor(
-        id: number,
+        id: string,
         gameObject: GameObject,
         characterAttribute: CharacterAttribute,
         baseValue: number = 0,

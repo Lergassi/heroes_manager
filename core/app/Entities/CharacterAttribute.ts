@@ -1,11 +1,11 @@
 export default class CharacterAttribute {
-    private readonly _id: number;
+    private readonly _id: string;
     private readonly _name: string;
     private readonly _alias: string;
     private readonly _description: string;
     private readonly _sort: number;
 
-    get id(): number {
+    get id(): string {
         return this._id;
     }
 
@@ -26,7 +26,7 @@ export default class CharacterAttribute {
     }
 
     constructor(
-        id: number,
+        id: string,
         name: string,
         alias: string,
         description: string,

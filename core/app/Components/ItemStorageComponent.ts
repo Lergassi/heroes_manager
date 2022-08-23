@@ -2,8 +2,6 @@ import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageSlotComponent from './ItemStorageSlotComponent.js';
 import AppError from '../../source/AppError.js';
-import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
-import Item from '../Entities/Item.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 
 export const ITEM_STORAGE_DEFAULT_SIZE = 20;
@@ -30,7 +28,7 @@ export default class ItemStorageComponent extends Component {
     }
 
     constructor(
-        id: number,
+        id: string,
         gameObject: GameObject,
         size: number
     ) {
@@ -39,7 +37,7 @@ export default class ItemStorageComponent extends Component {
     }
 
     findFirstFreeItemStorageSlotComponent(): ItemStorageSlotComponent {
-        let freeItemStorageSlotComponent = undefined;
+        let freeItemStorageSlotComponent = null;
 
         let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
         for (let i = 0; i < itemStorageSlotComponents.length; i++) {
@@ -61,12 +59,7 @@ export default class ItemStorageComponent extends Component {
         return freeItemStorageSlot;
     }
 
-    // addItem(item: Item, count: number = 1) {
-    //     this.getFirstFreeItemStorageSlotComponent().placeItemStack(new ItemStack(item, count));
-    // }
-
     addItemStack(itemStack: ItemStack) {
         this.getFirstFreeItemStorageSlotComponent().placeItemStack(itemStack);
     }
-    //addItemStackByItemStackPattern
 }

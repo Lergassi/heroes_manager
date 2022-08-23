@@ -1,7 +1,6 @@
 import AppError from '../core/source/AppError.js';
 import TestThrowCommand from '../server/app/Commands/TestCommands/TestThrowCommand.js';
 import Container from '../core/source/Container.js';
-import Input from '../core/source/GameConsole/Input.js';
 
 let i = 1;
 

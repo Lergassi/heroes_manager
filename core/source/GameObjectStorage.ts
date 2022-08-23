@@ -19,7 +19,7 @@ export default class GameObjectStorage {
         _.pull(this._gameObjects, gameObject);
     }
 
-    findOneByID(id: number): GameObject {
+    findOneByID(id: string): GameObject {
         for (let i = 0; i < this._gameObjects.length; i++) {
             if (this._gameObjects[i]['_id'] === id) {
                 return this._gameObjects[i];
@@ -29,7 +29,7 @@ export default class GameObjectStorage {
         return undefined;
     }
 
-    getOneByID(id: number): GameObject {
+    getOneByID(id: string): GameObject {
         let gameObject = this.findOneByID(id);
         if (gameObject) {
             return gameObject;

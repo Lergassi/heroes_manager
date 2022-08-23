@@ -21,7 +21,7 @@ export default class EquipSlotComponent extends Component {
     }
 
     constructor(
-        id: number,
+        id: string,
         gameObject: GameObject,
         equipSlot: EquipSlot,
     ) {

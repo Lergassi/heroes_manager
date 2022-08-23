@@ -4,9 +4,8 @@ import _ from 'lodash';
 import UserDBObjectRepository from '../Repositories/UserDBObjectRepository.js';
 import UserDBObject from '../DBObjects/UserDBObject.js';
 import debug from 'debug';
-import AppError from '../../../core/source/AppError.js';
-import finalhandler from 'finalhandler';
 import Security from '../../source/Security.js';
+import {sprintf} from 'sprintf-js';
 
 export default class LoadUserEnvironmentCommand extends Command {
     get name(): string {
@@ -70,6 +69,6 @@ export default class LoadUserEnvironmentCommand extends Command {
         // this.container.set('server.userDBObject', () => {
         //     return userDBObject;
         // });
-        debug('info')('окружение пользователя загружено, ID: ' + userDBObject['_id']);
+        debug('info')(sprintf('окружение пользователя загружено, %s(%s).', userDBObject['_id'], userDBObject['_email']));
     }
 }

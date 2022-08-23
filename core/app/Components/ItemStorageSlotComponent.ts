@@ -10,7 +10,7 @@ export default class ItemStorageSlotComponent extends Component {
         return this._itemStackSlot.itemStack;
     }
 
-    constructor(id: number, gameObject: GameObject) {
+    constructor(id: string, gameObject: GameObject) {
         super(id, gameObject);
         this._itemStackSlot = new ItemStackSlot();
     }

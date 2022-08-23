@@ -17,7 +17,7 @@ export default class ListCommand extends Command {
 
     async execute(input: Input) {
         debug('info')('GameConsole. Все доступные команды.');
-        const gameConsole = this.container.get<GameConsole>('server.gameConsole');
+        const gameConsole = this.container.get<GameConsole>('gameConsole');
         const commands = _.sortBy(gameConsole.commands, ['name']);
         for (const commandName in commands) {
             console.log(

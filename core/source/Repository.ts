@@ -1,6 +1,5 @@
 import AppError from './AppError.js';
 import {sprintf} from 'sprintf-js';
-import _ from 'lodash';
 
 export default class Repository<Entity> {
     private readonly _entityClassname: string;
@@ -15,24 +14,24 @@ export default class Repository<Entity> {
         this._items = [];
     }
 
-    add(item: Entity): void {
-        if (!this._items.includes(item)) {
-            this._items.push(item);
+    add(entity: Entity): void {
+        if (!this._items.includes(entity)) {
+            this._items.push(entity);
         }
     }
 
-    findOneById(id): Entity | undefined {
+    findOneByID(id): Entity | null {
         if (!id) {
-            return undefined;
+            return null;
         }
 
         for (let i = 0; i < this._items.length; i++) {
-            if (this._items[i].id === id) {
+            if (this._items[i]['_id'] === id) {
                 return this._items[i];
             }
         }
 
-        return undefined;
+        return null;
     }
 
     findOneByAlias(alias: string): Entity | undefined {
@@ -41,7 +40,7 @@ export default class Repository<Entity> {
         }
 
         for (let i = 0; i < this._items.length; i++) {
-            if (this._items[i].alias === alias) {
+            if (this._items[i]['_alias'] === alias) {
                 return this._items[i];
             }
         }
@@ -56,7 +55,7 @@ export default class Repository<Entity> {
 
         let result = [];
         for (let i = 0; i < this._items.length; i++) {
-            if (this._items[i].alias === alias) {
+            if (this._items[i]['_alias'] === alias) {
                 result.push(this._items[i]);
             }
         }
@@ -65,7 +64,7 @@ export default class Repository<Entity> {
     }
 
     getOneByID(id): Entity {
-        let entity = this.findOneById(id);
+        let entity = this.findOneByID(id);
 
         if (!entity) {
             throw new AppError(sprintf('Сущность типа %s id(%s) не найдена.', this._entityClassname, id));
@@ -85,42 +84,5 @@ export default class Repository<Entity> {
 
     findAll() {
         return this._items.concat();
-    }
-
-    // debug(objectDebugger) {
-    //     // console.log('DEBUG', this.constructor.name);
-    //     // console.log('DEBUG', 'length', this._items.length);
-    //     objectDebugger[sprintf('repository %s length', this.constructor.name)] = this._items.length;
-    //     for (let i = 0; i < this._items.length; i++) {
-    //         let itemDebugger = {};
-    //         if (this._items[i].debug) {
-    //             // this._items[i].debug();
-    //             this._items[i].debug(itemDebugger);
-    //         } else {
-    //             // objectDebugger[]
-    //             console.log(this._items[i].toString());
-    //         }
-    //         itemDebugger = {};
-    //     }
-    // }
-
-    debug(debugContainer) {
-        // console.log('DEBUG', this.constructor.name);
-        // console.log('DEBUG', 'length', this._items.length);
-        // debugContainer[sprintf('repository %s length', this.constructor.name)] = this._items.length;
-        debugContainer.add(sprintf('repository %s length: %s', this.constructor.name, this._items.length));
-        for (let i = 0; i < this._items.length; i++) {
-            // let itemDebugger = {};
-            if (this._items[i].debug) {
-                // this._items[i].debug();
-                // this._items[i].debug(debugContainer.appDebugger.createContainer());
-                this._items[i].debug(debugContainer);
-            } else {
-                // debugContainer[]
-                console.log(this._items[i].toString());
-            }
-            // debugContainer[i] = itemDebugger;
-            // itemDebugger = {};
-        }
     }
 }

@@ -1,18 +1,14 @@
 import GameObject from './GameObject.js';
 
 export default class Component {
-    private readonly _id: number;
+    private readonly _id: string;
     private readonly _gameObject: GameObject;
-
-    get id(): number {
-        return this._id;
-    }
 
     get gameObject(): GameObject {
         return this._gameObject;
     }
 
-    constructor(id: number, gameObject: GameObject) {
+    constructor(id: string, gameObject: GameObject) {
         this._id = id;
         this._gameObject = gameObject;
     }

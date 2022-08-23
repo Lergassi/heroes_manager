@@ -2,7 +2,6 @@
  * node modules
  */
 import http from 'http';
-import path from 'path';
 
 /**
  * external modules
@@ -21,12 +20,13 @@ import Container from '../core/source/Container.js';
 import ServerContainerConfigure from './app/ServerContainerConfigure.js';
 import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
 import url from 'url';
-import GameConsole from '../core/source/GameConsole/GameConsole.js';
+import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
 
-debug('http')('Server init start.');
+debug('log')('Запуск инициализации сервера.');
 
 let container = new Container();
 
+(new DefaultContainerConfigure()).configure(container);
 (new ServerContainerConfigure()).configure(container);
 (new CoreContainerConfigure()).configure(container);
 
@@ -48,8 +48,8 @@ const server = http.createServer(async (req, res) => {
 })//end http.createServer
 
 server.listen(config.port, () => {
-    debug('http')(sprintf('Server running at port %s', config.port));
-    debug('http')(_.repeat('-', 32));
+    debug('log')(sprintf('Сервер запущен на порте %s.', config.port));
+    debug('log')(_.repeat('-', 32));
 });//end listen
 
-debug('http')('Server init end.');
+debug('log')('Завершение инициализации сервера.');

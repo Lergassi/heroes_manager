@@ -10,7 +10,7 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "moduleResolution": "Node",
-    "module": "esnext",
+    "module": "CommonJS",
     "target": "ES6",
     "baseUrl": ".",
     "paths": {

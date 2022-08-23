@@ -18,7 +18,7 @@ export default class HeroComponent extends Component {
         return this._heroClass;
     }
 
-    constructor(id: number, gameObject: GameObject, name: string, heroClass: HeroClass) {
+    constructor(id: string, gameObject: GameObject, name: string, heroClass: HeroClass) {
         super(id, gameObject);
         this._name = name;
         this._heroClass = heroClass;

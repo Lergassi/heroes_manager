@@ -4,7 +4,7 @@ import ArmorMaterial from './ArmorMaterial.js';
 import CharacterAttribute from './CharacterAttribute.js';
 
 export default class HeroClass {
-    private readonly _id: number;
+    private readonly _id: string;
     private readonly _name: string;
     private readonly _alias: string;
     private readonly _description: string;
@@ -14,7 +14,7 @@ export default class HeroClass {
     private readonly _availableArmorMaterials: ArmorMaterial[];
     private readonly _mainCharacterAttributes: CharacterAttribute[];
 
-    get id(): number {
+    get id(): string {
         return this._id;
     }
 
@@ -51,7 +51,7 @@ export default class HeroClass {
     }
 
     constructor(
-        id: number,
+        id: string,
         name: string,
         alias: string,
         description: string,

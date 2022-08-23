@@ -55,4 +55,8 @@ export default class AppError extends Error {
     static itemNotAvailableForEquip(item: Item, equipSlot: EquipSlot) {
         return new AppError(sprintf('Предмет "%s" нельзя экипировать в слот "%s".', item.name,equipSlot.name));
     }
+
+    static pathNotExists(target: string) {
+        return new AppError(sprintf('Путь %s не существует.', target));
+    }
 }

@@ -3,9 +3,9 @@ import Input from '../../source/GameConsole/Input.js';
 import Item from '../Entities/Item.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
-import RepositoryManager from '../../source/RepositoryManager.js';
+import EntityManager from '../../source/EntityManager.js';
 import Security from '../../../server/source/Security.js';
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
+import UUIDGenerator from '../../source/UUIDGenerator.js';
 
 export default class AddItemCommand extends Command {
     get name(): string {
@@ -24,10 +24,10 @@ export default class AddItemCommand extends Command {
         let alias: string = input.getArgument('item_alias');
         let count: number = parseInt(input.getArgument('count'));
 
-        const item: Item = this.container.get<RepositoryManager>('core.repositoryManager').getRepository<Item>(Item.name).getOneByAlias(alias);
+        const item: Item = this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(alias);
         this.container.get<ItemStorageManager>('player.itemStorageManager').addItem(
             new ItemStackPattern(
-                this.container.get<AutoIncrementIDGenerator>('player.realtimeObjectIdGenerator'),
+                this.container.get<UUIDGenerator>('player.realtimeObjectIdGenerator'),
                 item,
                 count,
             ),

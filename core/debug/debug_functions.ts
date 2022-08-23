@@ -1,8 +1,5 @@
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
-import ItemCategory from '../app/Entities/ItemCategory.js';
-import Item from '../app/Entities/Item.js';
-import ArmorMaterial from '../app/Entities/ArmorMaterial.js';
 import _ from 'lodash';
 import GameObject from '../source/GameObject.js';
 import CharacterAttributeComponent from '../app/Components/CharacterAttributeComponent.js';
@@ -18,19 +15,7 @@ import ItemStorageComponent from '../app/Components/ItemStorageComponent.js';
 import GameObjectStorage from '../source/GameObjectStorage.js';
 import ContainerInterface from '../source/ContainerInterface.js';
 import LevelComponent from '../app/Components/LevelComponent.js';
-
-//todo: В отдельный класс. Сделать единый механизм метаданных для всего проекта.
-export let meta = {
-    'Item': {
-        detailDebugFunction: debugItem,
-    },
-    'ItemCategory': {
-        detailDebugFunction: debugItemCategory,
-    },
-    'EquipSlot': {
-        detailDebugFunction: debugEquipSlot,
-    }
-};
+import EntityManager from '../source/EntityManager.js';
 
 export function debugEntity(entity) {
     debug('debug')('%j', {
@@ -101,13 +86,14 @@ export function debugRepository(repository) {
     }
 }
 
-export function debugRepositoryManager(repositoryManager) {
-    for (const repositoryKey in repositoryManager['_repositories']) {
+export function debugEntityManager(entityManager: EntityManager) {
+    debug('debug')(EntityManager.name);
+    for (const repositoryKey in entityManager['_repositories']) {
         debug('debug')(sprintf('%sRepository.length: %s',
             repositoryKey,
-            repositoryManager['_repositories'][repositoryKey]['_items'].length,
+            entityManager['_repositories'][repositoryKey]['_items'].length,
         ));
-        debugRepository(repositoryManager['_repositories'][repositoryKey]);
+        debugRepository(entityManager['_repositories'][repositoryKey]);
     }
 }
 
@@ -275,11 +261,15 @@ export function debugPlayerEnv(container: ContainerInterface) {
 }
 
 export function debugContainer(container: ContainerInterface) {
-    for (const serviceKey in container['_services']) {
-        debug('debug')(sprintf(
-            '%s',
-            serviceKey,
-        ));
+    if (Object.keys(container['_services']).length) {
+        for (const serviceKey in container['_services']) {
+            debug('debug')(sprintf(
+                '%s',
+                serviceKey,
+            ));
+        }
+    } else {
+        debug('debug')('Контейнер пустой.');
     }
 }
 

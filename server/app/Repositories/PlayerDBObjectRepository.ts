@@ -1,11 +1,9 @@
 import Repository from '../../../core/source/Repository.js';
-import {Connection, Pool} from 'mysql';
+import {Pool} from 'mysql';
 import AppError from '../../../core/source/AppError.js';
-import UserDBObject, {UserDBObjectState} from '../DBObjects/UserDBObject.js';
-import debug from 'debug';
-import dateFns from 'date-fns';
+import UserDBObject from '../DBObjects/UserDBObject.js';
+import * as dateFns from 'date-fns';
 import {DateFormat} from '../../../core/source/DateFormat.js';
-import fns from 'date-fns';
 import PlayerDBObject, {PlayerState} from '../DBObjects/PlayerDBObject.js';
 import UserDBObjectRepository from './UserDBObjectRepository.js';
 import {sprintf} from 'sprintf-js';

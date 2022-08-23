@@ -1,12 +1,6 @@
 import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
-import {
-    debugHeroes,
-    debugItemStorages,
-    debugPlayerGameObject,
-    debugWallet,
-    debugWallets
-} from '../../../debug/debug_functions.js';
+import {debugHeroes, debugItemStorages, debugPlayerGameObject, debugWallets} from '../../../debug/debug_functions.js';
 import Security from '../../../../server/source/Security.js';
 
 export default class DebugPlayerEnvironmentCommand extends Command {

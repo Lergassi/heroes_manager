@@ -1,6 +1,7 @@
 import ContainerInterface from './ContainerInterface.js';
-import Serializer from './Serializer.js';
+import Serializer, {DataInterface} from './Serializer.js';
 import _ from 'lodash';
+import debug from 'debug';
 
 export default class SaveInjectContainerDecorator implements ContainerInterface {
     private readonly _container: ContainerInterface;
@@ -16,12 +17,12 @@ export default class SaveInjectContainerDecorator implements ContainerInterface 
     set<T>(key: string, value: (container: ContainerInterface) => T): void;
     set<T>(key: string, value: T): void;
     set<T>(key: string, value: T | ((container: ContainerInterface) => T)): void {
-        let data = _.find(this._data, (item) => {
+        let data = <DataInterface>_.find(this._data, (item) => {
             return item['serviceName'] === key;
         });
 
         if (data) {
-            //todo: logger
+            debug('log')('Контейнер установлен из сохранений %s.', data.classname);
             this._container.set(key, this._serializer.unserialize(data));
         } else {
             this._container.set(key, value);

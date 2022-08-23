@@ -4,7 +4,7 @@ import HeroClass from '../Entities/HeroClass.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import GameObject from '../../source/GameObject.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import RepositoryManager from '../../source/RepositoryManager.js';
+import EntityManager from '../../source/EntityManager.js';
 import Security from '../../../server/source/Security.js';
 
 export default class CreateHeroCommand extends Command {
@@ -21,7 +21,7 @@ export default class CreateHeroCommand extends Command {
         this.container.get<Security>('server.security').assertIsPlayerLoaded();
 
         let heroClassAlias: string = input.getArgument('hero_class_alias');
-        let heroClass: HeroClass = this.container.get<RepositoryManager>('core.repositoryManager').getRepository<HeroClass>('HeroClass').getOneByAlias(heroClassAlias);
+        let heroClass: HeroClass = this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>('HeroClass').getOneByAlias(heroClassAlias);
 
         let heroFactory: HeroFactory = this.container.get<HeroFactory>('player.heroFactory');
 

@@ -1,12 +1,12 @@
 import ItemStorageComponent, {ITEM_STORAGE_DEFAULT_SIZE} from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
+import UUIDGenerator from '../../source/UUIDGenerator.js';
 
 export default class ItemStorageFactory {
-    private _idGenerator: AutoIncrementIDGenerator;
+    private _idGenerator: UUIDGenerator;
 
-    constructor(idGenerator: AutoIncrementIDGenerator) {
+    constructor(idGenerator: UUIDGenerator) {
         this._idGenerator = idGenerator;
     }
 

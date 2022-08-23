@@ -1,4 +1,10 @@
-import {devConfigTypes, testBooleanIncrement} from './include.js';
+import {testGenericsRelations} from './include.js';
 
 // devConfigTypes();
-testBooleanIncrement();
+// testBooleanIncrement();
+// testGenerics1();
+// testInstanceOfInterface();
+// testOptionalChaining();
+// testArrayTypes();
+// testFunctionType();
+testGenericsRelations();

@@ -1,13 +1,13 @@
 import Item from '../Entities/Item.js';
 import ItemRepository from '../Repositories/ItemRepository.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
+import UUIDGenerator from '../../source/UUIDGenerator.js';
 
 export default class ItemStackFactory {
-    private readonly _idGenerator: AutoIncrementIDGenerator;
+    private readonly _idGenerator: UUIDGenerator;
     private readonly _itemRepository: ItemRepository;
 
-    constructor(idGenerator: AutoIncrementIDGenerator, itemRepository: ItemRepository) {
+    constructor(idGenerator: UUIDGenerator, itemRepository: ItemRepository) {
         this._idGenerator = idGenerator;
         this._itemRepository = itemRepository;
     }

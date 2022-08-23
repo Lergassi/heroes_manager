@@ -1,6 +1,5 @@
 import Command from '../../../../core/source/GameConsole/Command.js';
 import Input from '../../../../core/source/GameConsole/Input.js';
-import UserDBObject from '../../DBObjects/UserDBObject.js';
 import Security from '../../../source/Security.js';
 import debug from 'debug';
 import {inspect} from 'util';

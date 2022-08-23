@@ -1,9 +1,8 @@
 import CharacterAttribute from '../Entities/CharacterAttribute.js';
-import ContainerInterface from '../../source/ContainerInterface.js';
-import RepositoryManager from '../../source/RepositoryManager.js';
+import EntityManager from '../../source/EntityManager.js';
 
 export default class CharacterAttributeLoader {
-    load(data: object, repositoryManager: RepositoryManager) {
+    load(data: object, entityManager: EntityManager) {
         let characterAttribute = Object.create(CharacterAttribute.prototype);
 
         characterAttribute['_id'] = <number>data['_id'];

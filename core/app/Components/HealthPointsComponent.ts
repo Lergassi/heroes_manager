@@ -32,7 +32,7 @@ export default class HealthPointsComponent extends Component {
     }
 
     constructor(
-        id: number,
+        id: string,
         gameObject: GameObject,
         currentHealthPoints: number,
         maxHealthPoints: number,

@@ -1,10 +1,6 @@
 import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
-import CoreContainerConfigure from '../../../core/app/CoreContainerConfigure.js';
 import SaveInjectContainerDecorator from '../../../core/source/SaveInjectContainerDecorator.js';
-import AutoIncrementIDGenerator from '../../../core/source/AutoIncrementIDGenerator.js';
-import path from 'path';
-import UserDBObject from '../DBObjects/UserDBObject.js';
 import Security from '../../source/Security.js';
 import fs from 'fs';
 import AppError from '../../../core/source/AppError.js';
@@ -12,17 +8,13 @@ import {sprintf} from 'sprintf-js';
 import Serializer from '../../../core/source/Serializer.js';
 import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
 import debug from 'debug';
-import {
-    debugHeroes,
-    debugItemStorages,
-    debugPlayerEnv,
-    debugPlayerGameObject,
-    debugWallets
-} from '../../../core/debug/debug_functions.js';
 import PlayerDBObjectRepository from '../Repositories/PlayerDBObjectRepository.js';
 import PlayerDBObject from '../DBObjects/PlayerDBObject.js';
 import _ from 'lodash';
 import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure.js';
+import PathResolver from '../../source/PathResolver.js';
+import JsonSerializer from '../../../core/source/JsonSerializer.js';
+import UUIDGenerator from '../../../core/source/UUIDGenerator.js';
 
 export default class LoadPlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -43,10 +35,10 @@ export default class LoadPlayerEnvironmentCommand extends Command {
         let playerDBObject = await this.container.get<PlayerDBObjectRepository<PlayerDBObject>>('server.playerDBObjectRepository').loadOneByName(this.container.get<Security>('server.security').user, name);
         this.container.get<Security>('server.security').loginPlayer(<PlayerDBObject>playerDBObject);
 
-        let saveFilePath = path.resolve(
-            this.container.get<object>('server.config')['savesDir'],
-            this.container.get<Security>('server.security').user.id,
-            this.container.get<Security>('server.security').player.id,
+        let saveFilePath = this.container.get<PathResolver>('server.pathResolver').resolve(
+            'server/data/saves',
+            this.container.get<Security>('server.security').user.id.toString(),
+            this.container.get<Security>('server.security').player.id.toString(),
             'save.json',
         );
         //todo: Все проверки делать заранее, чтобы не делать откат действий на подобии loginPlayer().
@@ -55,18 +47,23 @@ export default class LoadPlayerEnvironmentCommand extends Command {
         }
 
         let serializer = this.container.get<Serializer>('core.serializer');
+        let jsonSerializer = this.container.get<JsonSerializer>('core.jsonSerializer');
 
         //todo: Проверка входных данных.
         let stringData = fs.readFileSync(saveFilePath);
-        let objectData = JSON.parse(stringData.toString());
+        let objectData = jsonSerializer.parse(stringData.toString());
 
-        (new PlayerContainerConfigure()).configure(new SaveInjectContainerDecorator(serializer, this.container, objectData['data']['services']));
+        // (new PlayerContainerConfigure()).configure(new SaveInjectContainerDecorator(serializer, this.container, objectData['data']['services']));
+        //todo: Пока сохранений данных нет - будет создаваться стартовый контейнер.
+        (new PlayerContainerConfigure()).configure(this.container);
 
         let gameObjectStorage = this.container.get<GameObjectStorage>('player.gameObjectStorage');
         for (let i = 0; i < objectData['data']['gameObjects'].length; i++) {
             gameObjectStorage.add(serializer.unserialize(objectData['data']['gameObjects'][i]));
         }
 
-        debug('info')(sprintf('Окружение игрока загружено, ID: %s загружено.', name));
+        serializer.finish();
+
+        debug('info')(sprintf('Окружение игрока загружено, %s(%s) загружено.', playerDBObject['_id'], playerDBObject['_name']));
     }
 }

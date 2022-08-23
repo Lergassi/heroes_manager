@@ -5,7 +5,7 @@ import ContainerInterface from '../../core/source/ContainerInterface.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 
-export default class ClientContainerConfigure extends ContainerConfigureInterface {
+export default class ClientContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
         container.set<object>('config.client', config);
         // container.set('config.client', (container) => {
@@ -16,7 +16,7 @@ export default class ClientContainerConfigure extends ContainerConfigureInterfac
         });
         container.set('gameConsole', container.get<GameConsole>('client.gameConsole'));    //alias
 
-        debug('client:log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
+        debug('log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
     }

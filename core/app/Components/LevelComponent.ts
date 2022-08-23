@@ -27,7 +27,7 @@ export default class LevelComponent extends Component {
     }
 
     constructor(
-        id: number,
+        id: string,
         gameObject: GameObject,
         level: number,
         maxLevel: number,

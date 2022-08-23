@@ -9,6 +9,6 @@ export default class UnloadFullEnvironmentCommand extends Command {
     }
 
     async execute(input: Input) {
-        await this.container.get<GameConsole>('server.gameConsole').run('unload_user_env');
+        await this.container.get<GameConsole>('gameConsole').run('unload_user_env');
     }
 }

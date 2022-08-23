@@ -1,15 +1,13 @@
 import Item from '../Entities/Item.js';
 import ItemStack from './ItemStack.js';
-import AppError from '../../source/AppError.js';
-import {sprintf} from 'sprintf-js';
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
+import UUIDGenerator from '../../source/UUIDGenerator.js';
 
 export default class ItemStackPattern {
     private readonly _item: Item;
     private readonly _count: number;
-    private readonly _idGenerator: AutoIncrementIDGenerator;
+    private readonly _idGenerator: UUIDGenerator;
 
-    constructor(idGenerator: AutoIncrementIDGenerator, item: Item, count: number = 1) {
+    constructor(idGenerator: UUIDGenerator, item: Item, count: number = 1) {
         //todo: validate
         this._idGenerator = idGenerator;
         this._item = item;

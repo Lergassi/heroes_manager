@@ -1,9 +1,8 @@
 import HeroRole from '../Entities/HeroRole.js';
-import ContainerInterface from '../../source/ContainerInterface.js';
-import RepositoryManager from '../../source/RepositoryManager.js';
+import EntityManager from '../../source/EntityManager.js';
 
 export default class HeroRoleLoader {
-    load(data: object, repositoryManager: RepositoryManager) {
+    load(data: object, entityManager: EntityManager) {
         let heroRole = Object.create(HeroRole.prototype);
 
         heroRole['_id'] = <number>data['_id'];

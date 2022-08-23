@@ -1,31 +1,27 @@
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
-import {PlayerFactoryConfig} from './PlayerFactory.js';
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
 import LevelComponent from '../Components/LevelComponent.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
-import RepositoryManager from '../../source/RepositoryManager.js';
+import EntityManager from '../../source/EntityManager.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import CharacterAttributeComponent from '../Components/CharacterAttributeComponent.js';
 import CharacterAttribute from '../Entities/CharacterAttribute.js';
-import {debugHero} from '../../debug/debug_functions.js';
-import ItemStack from '../RuntimeObjects/ItemStack.js';
-import Item from '../Entities/Item.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
 import AttackPowerComponent from '../Components/AttackPowerComponent.js';
 import AppError from '../../source/AppError.js';
 import {sprintf} from 'sprintf-js';
+import UUIDGenerator from '../../source/UUIDGenerator.js';
 
 export default class HeroFactory {
-    private readonly _idGenerator: AutoIncrementIDGenerator;
-    private readonly _repositoryManager: RepositoryManager;
+    private readonly _idGenerator: UUIDGenerator;
+    private readonly _repositoryManager: EntityManager;
     private readonly _config: object;
 
-    constructor(idGenerator: AutoIncrementIDGenerator, repositoryManager: RepositoryManager, config: object) {
+    constructor(idGenerator: UUIDGenerator, entityManager: EntityManager, config: object) {
         this._idGenerator = idGenerator;
-        this._repositoryManager = repositoryManager;
+        this._repositoryManager = entityManager;
         this._config = config;
     }
 
