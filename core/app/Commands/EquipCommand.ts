@@ -18,16 +18,16 @@ export default class EquipCommand extends Command {
         this.addArgument('item_storage_slot_id', '', true);
 
         //to
-        this.addArgument('hero_id', '', true)
+        this.addArgument('hero_id', '', true);
         this.addArgument('equip_slot_component_id', '', true);
     }
 
     async execute(input: Input) {
-        let itemStorageID: string = input.getArgument('item_storage_id');
-        let itemStorageSlotID: string = input.getArgument('item_storage_slot_id');
+        let itemStorageID = parseInt(input.getArgument('item_storage_id'));
+        let itemStorageSlotID = parseInt(input.getArgument('item_storage_slot_id'));
 
-        let heroID: string = input.getArgument('hero_id');
-        let equipSlotComponentID: string = input.getArgument('equip_slot_component_id');
+        let heroID = parseInt(input.getArgument('hero_id'));
+        let equipSlotComponentID = parseInt(input.getArgument('equip_slot_component_id'));
 
         let itemStorage: GameObject = this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(itemStorageID);
         let itemStorageSlotComponent: ItemStorageSlotComponent = <ItemStorageSlotComponent>itemStorage.getComponentByID(itemStorageSlotID);
@@ -38,7 +38,7 @@ export default class EquipCommand extends Command {
         let hero: GameObject = this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(heroID);
         let equipSlotComponent: EquipSlotComponent = <EquipSlotComponent>hero.getComponentByID(equipSlotComponentID);
 
-        equipSlotComponent.equipItemStack(itemStorageSlotComponent.itemStack);
+        equipSlotComponent.placeItemStack(itemStorageSlotComponent.itemStack);
         itemStorageSlotComponent.clear();
     }
 }

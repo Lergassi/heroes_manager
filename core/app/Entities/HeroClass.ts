@@ -2,6 +2,7 @@ import HeroRole from './HeroRole.js';
 import ItemCategory from './ItemCategory.js';
 import ArmorMaterial from './ArmorMaterial.js';
 import CharacterAttribute from './CharacterAttribute.js';
+import _ from 'lodash';
 
 export default class HeroClass {
     private readonly _id: string;
@@ -70,5 +71,11 @@ export default class HeroClass {
         this._availableWeaponItemCategories = availableWeaponItemCategories;
         this._availableArmorMaterials = availableArmorMaterials;
         this._mainCharacterAttributes = mainCharacterAttributes;
+    }
+
+    availableArmorMaterial(armorMaterial: ArmorMaterial): boolean {
+        // console.log(armorMaterial, this._availableArmorMaterials);
+        // console.log(_.includes(this._availableArmorMaterials, armorMaterial));
+        return _.includes(this._availableArmorMaterials, armorMaterial);
     }
 }

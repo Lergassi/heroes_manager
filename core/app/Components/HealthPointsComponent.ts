@@ -1,15 +1,10 @@
 import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 
-export enum HeroState {
-    LIFE = 'LIFE',
-    DEAD = 'DEAD',
-}
-
 export default class HealthPointsComponent extends Component {
     private _currentHealthPoints: number;
     private _maxHealthPoints: number;
-    private _state: HeroState;    //Может ли быть живым или мертвым герой без компонента здоровья? А враг?
+    private _isDead: boolean;    //todo: Может ли герой быть живым или мертвым без компонента здоровья? А враг?
 
     get currentHealthPoints(): number {
         return this._currentHealthPoints;
@@ -19,7 +14,7 @@ export default class HealthPointsComponent extends Component {
         this._currentHealthPoints = value;
     }
 
-    get maxHealthPoints(): number {
+    get maxHealthPoints(): number { //todo: final? Сделать отдельный класс для показателей, которые могут иметь базовое значение и усиления.
         return this._maxHealthPoints;
     }
 
@@ -27,12 +22,12 @@ export default class HealthPointsComponent extends Component {
         this._maxHealthPoints = value;
     }
 
-    get state(): HeroState {
-        return this._state;
+    get isDead(): boolean {
+        return this._isDead;
     }
 
     constructor(
-        id: string,
+        id: number,
         gameObject: GameObject,
         currentHealthPoints: number,
         maxHealthPoints: number,
@@ -40,6 +35,6 @@ export default class HealthPointsComponent extends Component {
         super(id, gameObject);
         this._currentHealthPoints = currentHealthPoints;
         this._maxHealthPoints = maxHealthPoints;
-        this._state = HeroState.LIFE;
+        this._isDead = false;
     }
 }

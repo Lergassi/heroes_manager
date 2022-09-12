@@ -2,48 +2,57 @@ import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import ItemStackSlot from '../RuntimeObjects/ItemStackSlot.js';
-import ItemStack from '../RuntimeObjects/ItemStack.js';
+import ItemStack, {ItemStackPlaceInterface} from '../RuntimeObjects/ItemStack.js';
+import Item from '../Entities/Item.js';
+import AppError from '../../source/AppError.js';
+import _ from 'lodash';
+import HeroComponent from './HeroComponent.js';
 
-export default class EquipSlotComponent extends Component {
+export default class EquipSlotComponent extends Component implements ItemStackPlaceInterface {
     private readonly _equipSlot: EquipSlot;
-    private readonly _itemStackSlot: ItemStackSlot;
+    private _itemStack: ItemStack;
 
     get equipSlot(): EquipSlot {
         return this._equipSlot;
     }
 
-    // get itemStackSlot(): ItemStackSlot {
-    //     return this._itemStackSlot;
-    // }
-
     get itemStack(): ItemStack {
-        return this._itemStackSlot.isFree() ? undefined : this._itemStackSlot.itemStack;
+        return this._itemStack;
     }
 
     constructor(
-        id: string,
+        id: number,
         gameObject: GameObject,
         equipSlot: EquipSlot,
     ) {
         super(id, gameObject);
         this._equipSlot = equipSlot;
-        this._itemStackSlot = new ItemStackSlot();
+        this._itemStack = null;
     }
 
-    equipItemStack(itemStack: ItemStack) {
-        // this._equipSlot.canEquipItem(itemStack.item, this.gameObject);
-        this._itemStackSlot.placeItemStack(itemStack);
+    canPlaceItem(item: Item): boolean {
+        this._equipSlot.canEquipItem(item, this.gameObject.getComponentByName<HeroComponent>(HeroComponent.name))
+        if (!this.isFree()) {
+            throw new AppError('Слот занят. Сначала его нужно освободить.');
+        }
+
+        return true;
     }
 
-    clear() {
-        this._itemStackSlot.clear();
+    placeItemStack(itemStack: ItemStack): void {
+        this.canPlaceItem(itemStack.item);
+        this._itemStack = itemStack;
+
+        this.update();
     }
 
-    isBusy(): boolean {
-        return this._itemStackSlot.isBusy();
+    clear(): void {
+        this._itemStack = null;
+
+        this.update();
     }
 
     isFree(): boolean {
-        return this._itemStackSlot.isFree();
+        return _.isNil(this._itemStack);
     }
 }

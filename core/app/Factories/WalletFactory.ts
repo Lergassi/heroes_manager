@@ -1,16 +1,17 @@
 import GameObject from '../../source/GameObject.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
+import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 
 export type WalletFactoryConfig = {
 
 };
 
 export default class WalletFactory {
-    private readonly _idGenerator: UUIDGenerator;
+    private readonly _idGenerator: IDGeneratorInterface;
     private _config: WalletFactoryConfig;
 
-    constructor(idGenerator: UUIDGenerator, config: WalletFactoryConfig = {}) {
+    constructor(idGenerator: IDGeneratorInterface, config: WalletFactoryConfig = {}) {
         this._idGenerator = idGenerator;
         this._config = config;
     }

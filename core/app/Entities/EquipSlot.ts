@@ -1,5 +1,7 @@
 import EquipSlotRule from './EquipSlotRule.js';
 import Item from './Item.js';
+import AppError from '../../source/AppError.js';
+import HeroComponent from '../Components/HeroComponent.js';
 
 export default class EquipSlot {
     private readonly _id: string;
@@ -49,13 +51,23 @@ export default class EquipSlot {
         this._rules = rules;
     }
 
-    availableItemForEquip(item: Item): boolean {
-        for (let i = 0; i < this.rules.length; i++) {
-            if (this.rules[i].availableItemForEquip(item)) {
-                return true;
-            }
+    canEquipItem(item: Item, heroComponent: HeroComponent): boolean {
+        //todo: Переделать. У оружия нет материала.
+        if (item.armorMaterial && !heroComponent.heroClass.availableArmorMaterial(item.armorMaterial)) {
+            throw AppError.equipNotAvailableByArmorMaterial(item.armorMaterial, heroComponent.heroClass);
         }
 
-        return false;
+        let availableItemCategory = false;
+        for (let i = 0; i < this.rules.length; i++) {
+            if (this.rules[i].availableItemForEquip(item)) {
+                availableItemCategory = true;
+                break;
+            }
+        }
+        if (!availableItemCategory) {
+            throw AppError.itemCategoryNotAvailable(item, this);
+        }
+
+        return true;
     }
 }

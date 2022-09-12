@@ -265,7 +265,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.LinkCollection,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         //GameObject, Component
         metadataManager.addMetadata({
@@ -284,7 +283,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Collection,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: ItemStorageComponent,
@@ -299,7 +297,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Number,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: ItemStorageSlotComponent,
@@ -310,11 +307,10 @@ export default class MetadataManagerCreator {
                 _gameObject: {
                     type: SerializeType.Link,
                 },
-                _itemStackSlot: {
+                _itemStack: {
                     type: SerializeType.Object,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: ItemStackSlot,
@@ -323,7 +319,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Object,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: ItemStack,
@@ -338,7 +333,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Number,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: HeroComponent,
@@ -356,7 +350,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Link,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: LevelComponent,
@@ -377,7 +370,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Number,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: EquipSlotComponent,
@@ -395,7 +387,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Object,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: ItemStackSlot,
@@ -404,7 +395,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Object,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: CharacterAttributeComponent,
@@ -422,7 +412,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Number,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: HealthPointsComponent,
@@ -443,7 +432,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.String,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: MagicPointsComponent,
@@ -461,7 +449,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.Number,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: AttackPowerComponent,
@@ -482,7 +469,6 @@ export default class MetadataManagerCreator {
                     type: SerializeType.LinkCollection,
                 },
             },
-            // finderCallback: repositoryManagerFinderCallback,
         });
         metadataManager.addMetadata({
             module: PlayerComponent,

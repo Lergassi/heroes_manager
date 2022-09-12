@@ -2,6 +2,7 @@ import Controller from '../../../source/Controller.js';
 import _ from 'lodash';
 import debug from 'debug';
 import GameConsole from '../../../../core/source/GameConsole/GameConsole.js';
+import chalk from 'chalk';
 
 export default class GameConsoleSiteController extends Controller {
     async execute(req, res) {
@@ -19,7 +20,7 @@ export default class GameConsoleSiteController extends Controller {
         let commandQuery = _.trim(params['command']);
         if (!commandQuery) {
             this.response(req, res, JSON.stringify({
-                error: 'Команда не может быть пустым.',
+                error: 'Команда не может быть пустой.',
             }), {
                 contentType: 'application/json',
             });
@@ -27,13 +28,13 @@ export default class GameConsoleSiteController extends Controller {
             return;
         }
 
-        let commandQuerySplitted = _.split(commandQuery, ' ');
-        let commandName = commandQuerySplitted[0];
-        let commandArguments = _.slice(commandQuerySplitted, 1);
-
-        let gameConsole: GameConsole = this.container.get<GameConsole>('gameConsole');
+        let gameConsole = this.container.get<GameConsole>('gameConsole');
         try {
-            await gameConsole.run(commandName, commandArguments);
+            // let commandParams = gameConsole.parse(commandQuery);
+            // let command = gameConsole.getCommand(commandParams.name);
+            // debug('info')('GameConsole command:', chalk.yellow(commandParams.name));
+            // await command.run(commandParams.arguments);
+            await gameConsole.runByQuery(commandQuery);
 
             this.response(req, res, JSON.stringify({
                 data: 'ok',

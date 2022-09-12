@@ -6,10 +6,11 @@ import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import EntityManager from '../../source/EntityManager.js';
 import Security from '../../../server/source/Security.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
+import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 
 export default class AddItemCommand extends Command {
     get name(): string {
-        return 'add_item';
+        return 'create_item';
     }
 
     configure() {
@@ -19,15 +20,13 @@ export default class AddItemCommand extends Command {
     }
 
     async execute(input: Input) {
-        this.container.get<Security>('server.security').assertIsPlayerLoaded();
-
         let alias: string = input.getArgument('item_alias');
         let count: number = parseInt(input.getArgument('count'));
 
-        const item: Item = this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(alias);
+        let item = this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(alias);
         this.container.get<ItemStorageManager>('player.itemStorageManager').addItem(
             new ItemStackPattern(
-                this.container.get<UUIDGenerator>('player.realtimeObjectIdGenerator'),
+                this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
                 item,
                 count,
             ),

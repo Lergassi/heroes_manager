@@ -9,6 +9,6 @@ export default class EquipManager {
         let equipSlotComponent = <EquipSlotComponent>_.find(hero.findComponentsByName(EquipSlotComponent.name), (obj: EquipSlotComponent) => {
             return obj.equipSlot === equipSlot;
         });
-        equipSlotComponent.equipItemStack(itemStack);
+        equipSlotComponent.placeItemStack(itemStack);
     }
 }

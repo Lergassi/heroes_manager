@@ -164,14 +164,14 @@ export function debugHero(hero: GameObject) {
     });
 
     debug('debug')('# equip');
-    hero.findComponentsByName(EquipSlotComponent.name).map((equipSlotComponent) => {
+    hero.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name).map((equipSlotComponent) => {
         debug('debug')('%j', {
             component: EquipSlotComponent.name,
             _id: equipSlotComponent['_id'],
             _equipSlot: equipSlotComponent['_equipSlot']['_name'],
-            itemStack: equipSlotComponent['_itemStackSlot'].isBusy() ?
-                equipSlotComponent['_itemStackSlot']['_itemStack']['_item']['_name'] :
-                'free'
+            itemStack: equipSlotComponent.isFree() ?
+                'free' :
+                equipSlotComponent['_itemStack']['_item']['_name']
             ,
         });
     });
@@ -215,13 +215,13 @@ export function debugItemStorage(itemStorage: GameObject) {
         debug('debug')('%j', {
             component: ItemStorageSlotComponent.name,
             _id: itemStorageSlotComponent['_id'],
-            itemStack: itemStorageSlotComponent.isBusy() ? {
+            itemStack: itemStorageSlotComponent.isFree() ? 'free' : {
                 item: {
-                    name: itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_item']['_name'],
-                    alias: itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_item']['_alias'],
+                    name: itemStorageSlotComponent['_itemStack']['_item']['_name'],
+                    alias: itemStorageSlotComponent['_itemStack']['_item']['_alias'],
                 },
-                count: itemStorageSlotComponent['_itemStackSlot']['_itemStack']['_count'],
-            } : 'free',
+                count: itemStorageSlotComponent['_itemStack']['_count'],
+            },
         });
     });
 }
@@ -258,6 +258,7 @@ export function debugWallets(container: ContainerInterface) {
 export function debugPlayerEnv(container: ContainerInterface) {
     debugWallets(container);
     debugItemStorages(container);
+    debugHeroes(container);
 }
 
 export function debugContainer(container: ContainerInterface) {
@@ -290,4 +291,11 @@ export function debugPlayerGameObject(container: ContainerInterface) {
     debug('debug')('# player');
     debugGameObject(playerGameObject);
     debugLevelComponent(playerGameObject.getComponentByName(LevelComponent.name));
+}
+
+export function debugGameObjectStorage(gameObjectStorage: GameObjectStorage) {
+    debug('debug')('GameObjectStorage.length: ' + gameObjectStorage['_gameObjects'].length);
+    for (let i = 0; i < gameObjectStorage['_gameObjects'].length; i++) {
+        debug('debug')(sprintf('_id: %s, _name: %s', gameObjectStorage['_gameObjects'][i]['_id'], gameObjectStorage['_gameObjects'][i]['_name']));
+    }
 }

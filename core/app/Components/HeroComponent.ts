@@ -2,9 +2,15 @@ import Component from '../../source/Component.js';
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 
+export enum HeroState {
+    Free = 'Free',
+    Busy = 'Busy',  //В локации или подземелье и тд.
+}
+
 export default class HeroComponent extends Component {
     private _name: string;
-    private readonly _heroClass;
+    private readonly _heroClass: HeroClass;
+    private _state: HeroState;
 
     get name(): string {
         return this._name;
@@ -14,13 +20,18 @@ export default class HeroComponent extends Component {
         this._name = value;
     }
 
-    get heroClass() {
+    get heroClass(): HeroClass {
         return this._heroClass;
     }
 
-    constructor(id: string, gameObject: GameObject, name: string, heroClass: HeroClass) {
+    get state(): HeroState {
+        return this._state;
+    }
+
+    constructor(id: number, gameObject: GameObject, name: string, heroClass: HeroClass) {
         super(id, gameObject);
         this._name = name;
         this._heroClass = heroClass;
+        this._state = HeroState.Free;
     }
 }

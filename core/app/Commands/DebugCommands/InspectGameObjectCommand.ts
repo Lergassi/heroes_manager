@@ -1,5 +1,4 @@
 import Command from '../../../source/GameConsole/Command.js';
-import util from 'util';
 import Input from '../../../source/GameConsole/Input.js';
 import GameObject from '../../../source/GameObject.js';
 import GameObjectStorage from '../../../source/GameObjectStorage.js';
@@ -17,13 +16,13 @@ export default class InspectGameObjectCommand extends Command {
     }
 
     async execute(input: Input) {
-        let id: string = input.getArgument('id');
+        let id = parseInt(input.getArgument('id'));
         let options = {
             depth: parseInt(input.getArgument('depth')),
             showHidden: input.getArgument('showHidden') === '1',
         };
 
         let gameObject = <GameObject>this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(id);
-        console.log(util.inspect(gameObject, options));
+        console.dir(gameObject, options);
     }
 }

@@ -16,24 +16,37 @@ import TestObjectWithLinkCollections from '../test/Serialize/TestObjectWithLinkC
 import Container from '../core/source/Container.js';
 import EntityManager from '../core/source/EntityManager.js';
 import ContainerInterface from '../core/source/ContainerInterface.js';
-import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
-import {debugEntityManager, debugHero, debugItemStorage} from '../core/debug/debug_functions.js';
+import CoreContainerConfigure, {ContainerKey} from '../core/app/CoreContainerConfigure.js';
+import {debugContainer, debugEntityManager, debugHero, debugItemStorage} from '../core/debug/debug_functions.js';
 import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
 import fs from 'fs';
 import PathResolver from '../server/source/PathResolver.js';
 import ServerContainerConfigure from '../server/app/ServerContainerConfigure.js';
 import HeroClass from '../core/app/Entities/HeroClass.js';
-import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
+import BasicItemStorageFactory from '../core/app/Factories/BasicItemStorageFactory.js';
 import PlayerContainerConfigure from '../core/app/PlayerContainerConfigure.js';
-import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
+import ItemStorageComponent, {DEFAULT_ITEM_STORAGE_SIZE} from '../core/app/Components/ItemStorageComponent.js';
 import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
 import GameObject from '../core/source/GameObject.js';
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
+import UUIDGenerator from '../core/source/UUIDGenerator.js';
+import PlayerItemStorageFactory from '../core/app/Factories/PlayerItemStorageFactory.js';
+import ItemStorageListComponent from '../core/app/Components/ItemStorageListComponent.js';
+import TechItemStorageFactory from '../core/app/Factories/TechItemStorageFactory.js';
+import GameObjectStorage from '../core/source/GameObjectStorage.js';
+import ItemStorageFactoryInterface from '../core/app/Factories/ItemStorageFactoryInterface.js';
+import GameObjectFactory from '../core/app/Factories/GameObjectFactory.js';
+import HeroListComponent from '../core/app/Components/HeroListComponent.js';
+import Item from '../core/app/Entities/Item.js';
+import EntityManagerFacade from '../core/source/Facades/EntityManagerFacade.js';
+import AppError from '../core/source/AppError.js';
+import IDGeneratorInterface from '../core/source/IDGeneratorInterface.js';
+import AutoIncrementIDGenerator from '../core/source/AutoIncrementIDGenerator.js';
 
 function createEndPlayerContainer() {
     let container = new Container();
     (new DefaultContainerConfigure()).configure(container);
-    (new ServerContainerConfigure()).configure(container);
+    // (new ServerContainerConfigure()).configure(container);
     (new CoreContainerConfigure()).configure(container);
     (new PlayerContainerConfigure()).configure(container);
 
@@ -568,7 +581,7 @@ export function testSerializeEntityManager() {
 }
 
 export function testSerializeItemStorage(container: ContainerInterface, serializer: Serializer, jsonSerializer: JsonSerializer) {
-    let itemStorage = container.get<ItemStorageFactory>('player.itemStorageFactory').create();
+    let itemStorage = container.get<ItemStorageFactoryInterface>('player.ItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
 
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
         container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('wood', 20),
@@ -712,8 +725,273 @@ export function testContainerGetByPattern() {
 export function testUUIDGenerator() {
     let container = createEndPlayerContainer();
 
-    let itemStorageFactory = container.get<ItemStorageFactory>('player.itemStorageFactory');
+    let itemStorageFactory = container.get<ItemStorageFactoryInterface>('player.itemStorageFactory');
 
-    let itemStorage = itemStorageFactory.create();
+    let itemStorage = itemStorageFactory.create(20);
     debugItemStorage(itemStorage);
+}
+
+export function testItemStorageFactories() {
+    let container = new Container();
+    // let idGenerator = new UUIDGenerator();
+    let idGenerator = new AutoIncrementIDGenerator(1);
+    let gameObjectStorage = new GameObjectStorage();
+
+    container.set('player.gameObjectStorage', gameObjectStorage);
+    container.set('player.realtimeObjectIdGenerator', idGenerator);
+
+    let basicItemStorageFactory = new BasicItemStorageFactory(
+        container,
+        idGenerator,
+    );
+    // debugItemStorage(basicItemStorageFactory.create());
+
+    let techItemStorageFactory = new TechItemStorageFactory(
+        basicItemStorageFactory,
+        container,
+    );
+
+    let itemStorageCollectionGameObject = new GameObject(idGenerator.generateID());
+    let itemStorageCollectionComponent = <ItemStorageListComponent>itemStorageCollectionGameObject.addComponent(new ItemStorageListComponent(
+        idGenerator.generateID(),
+        itemStorageCollectionGameObject,
+        // 1,
+        0,
+        4,
+        [
+            // techItemStorageFactory.create(),
+        ],
+    ));
+    container.get<GameObjectStorage>('player.gameObjectStorage').add(itemStorageCollectionGameObject);
+
+    let playerItemStorageFactory = new PlayerItemStorageFactory(
+        techItemStorageFactory,
+        container,
+        itemStorageCollectionComponent,
+    );
+
+    // let itemStorageFactory = basicItemStorageFactory;
+    // let itemStorageFactory = techItemStorageFactory;
+    let itemStorageFactory = playerItemStorageFactory;
+    debugItemStorage(itemStorageFactory.create(20));
+    console.log(gameObjectStorage);
+    console.log(itemStorageCollectionComponent);
+}
+
+export function testInherit() {
+    // function ID(ID) {
+    //     this.ID = ID;
+    // }
+    //
+    // function Person(firstName, lastName) {
+    //     this.firstName = firstName
+    //     this.lastName = lastName
+    // }
+    // Person.prototype.getFullName = function () {
+    //     return this.firstName + ' ' + this.lastName
+    // }
+    //
+    // let person = new Person('Dan', 'Abramov')
+    // // console.log(Person.prototype); //> Dan Abramov
+    // // console.log(person); //> Dan Abramov
+    // // console.log(person.prototype); //> Dan Abramov
+    // // console.log(person.getFullName()); //> Dan Abramov
+    // // console.log(Object.create(Person.prototype));
+    //
+    // function User(firstName, lastName, email, password) {
+    //     // call super constructor:
+    //     Person.call(this, firstName, lastName)
+    //     this.email = email
+    //     this.password = password
+    // }
+    // User.prototype = Object.create(Person.prototype);
+    // User.prototype.setEmail = function(email) {
+    //     this.email = email
+    // }
+    // User.prototype.getEmail = function() {
+    //     return this.email
+    // }
+    // User.prototype.getFullName = function () {
+    //     return 'User Name: ' +
+    //         this.firstName + ' ' +
+    //         this.lastName
+    // }
+    // let user = new User('firstName', 'lasName', 'email', 'password');
+    // // user.setEmail('dan@abramov.com')
+    // // console.log(User.prototype);
+    // console.log(user);
+    // console.log(user.getFullName());
+    // console.log(person.getFullName());
+
+    // interface ComponentInterface {
+    //
+    // }
+    //
+    // class IDComponentDecorator implements ComponentInterface {
+    //     private _ID: number;
+    //     private _component;
+    //
+    //     constructor(component, ID: number) {
+    //         this._ID = ID;
+    //         this._component = component;
+    //     }
+    // }
+    //
+    // class HealthComponent implements ComponentInterface {
+    //     private _min: number;
+    //     private _max: number;
+    //     private _current: number;
+    //     private _isDead: boolean;
+    //
+    //     constructor(max: number, current: number) {
+    //         this._min = 0;
+    //         this._max = max;
+    //         this._current = current;
+    //         this._isDead = false;
+    //     }
+    // }
+    //
+    // // let component = new ComponentInterface();
+    // // component = new IDComponentDecorator(component, 42);
+    // // component = new HealthComponent(component, 42);
+    //
+    // let healthComponent = new HealthComponent(100, 100);
+    // console.log(healthComponent);
+    //
+    // let finalHealthComponent = new IDComponentDecorator(healthComponent, 42);
+    // console.log(finalHealthComponent);
+
+    //---
+    interface Service {
+
+    }
+
+    class ServiceIDDecorator {
+        id: number;
+
+        constructor(id: number) {
+            this.id = id;
+        }
+    }
+
+    //---
+
+    // interface CharacterAttributeInterface {
+    //     get value(): number;
+    // }
+    //
+    // /*
+    //     сила_атаки = базовая_характеристика + бафф_1 + бафф_2 + ... + бафф_n
+    //  */
+}
+
+export function testHeroController() {
+    let container = createEndPlayerContainer();
+
+    let heroControllerGameObject = container.get<GameObjectFactory>('player.gameObjectFactory').create();
+
+    let heroController = heroControllerGameObject.addComponent<HeroListComponent>(new HeroListComponent(
+        container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator').generateID(),
+        heroControllerGameObject,
+    ));
+
+    let warrior = container.get<HeroFactory>('player.heroFactory').create(
+        container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_warrior'),
+    );
+    let mage = container.get<HeroFactory>('player.heroFactory').create(
+        container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_mage'),
+    );
+    heroController.addHero(warrior);
+    heroController.addHero(warrior);
+    heroController.addHero(mage);
+    console.log(heroController);
+    heroController.removeHero(warrior);
+    console.log(heroController);
+}
+
+export function testEntityManagerFacade() {
+    interface Module {
+        name: string;
+        prototype: object;
+    }
+
+    let container = createEndPlayerContainer();
+    // let entity = function<Entity>(target: Entity, alias: string): Entity {
+    //     //@ts-ignore
+    //     return container.get<EntityManager>('core.entityManager').getRepository<Entity>(target.name).getOneByAlias(alias);
+    // };
+    let facade = container.get<EntityManagerFacade>(ContainerKey.EntityManagerFacade);
+
+    // let entity = facade.entity(Item, 'item_wood1');
+    let entity = facade.entity(ArmorMaterial, 'armor_material_plate');
+    console.log(entity);
+}
+
+export function testEquipSlotDecorators() {
+    /*
+    Правила:
+        Предмет экипируем?
+        Подходит ли предмет для класса? (постоянные_ограничения) Материал брони, ограничение у предмета (например: "только для мага"), доступность оружия, разбойники - только дагеры.
+            Проверка на оружие есть только у рук.
+        Подходит ли предмет для слота? Можно сделать так, чтобы не было зависимости от класса. Голова - шлемы, грудь - нагрудник, правая рука: [большой список ВСЕХ оружий], левая рука: [ВСЁ ОДНОРУЧНОЕ ОРУЖИЕ, щиты, сферы (D3)] - двуручное оружие не доступно, а также блокируется при экипировке двуручника в правой руке.
+        Подходит ли предмет для героя? (временные_ограничения) Уровень, прокачка навыка.
+     */
+
+    function constantRule(item) {
+        if (item.isEquipable) {
+            throw new AppError('Предмет нельзя экипировать.');
+        }
+
+        if (!this.categories.include(item.category)) {  //Категории заданы строго в коде и изменить нельзя.
+            throw new AppError('Предмет не подходит для слота.');
+        }
+    }
+
+    function tempRule(item) {
+        if (
+            this.hero.level < item.requireLevel ||
+            !this.hero.hasSkill(item.requireSkill.skill) ||
+            this.hero.hasSkill(item.requireSkill.skill) && this.hero.getSkill('название_скилла').value < item.requireSkill.value
+        ) {
+            throw new AppError('Предмет ПОКА нельзя экипировать для данного героя.');
+        }
+    }
+
+    //Только для слотов брони. Не для шеи, пальцев, тринкетов, обеих рук.
+    function armorMaterialRule(item) {
+        if (
+            // item.armorMaterial ??    //Нужна ли данная проверка? Если код будет идти после проверки доступности на слот, то значит проверка не нужна. Декоратор будет добавляться только в слоты брони.
+            item.armorMaterial !== this.hero.armorMaterial
+            // item.armorMaterial !== this.hero.armorMaterial ||
+            // !this.heroClass.availableItem(item) //Проверка всего: материал, класса, оружие и тд. Не зависит от слота.
+        ) {
+            throw new AppError('Предмет не доступен для героя.');
+        }
+    }
+
+    function rightHandRuleDecorator(item) {
+        if (!this.heroClass.availableWeaponCategory(item.category)) {
+            throw new AppError('Герою не доступен данный вид оружия.');
+        }
+    }
+
+    function leftHandRuleDecorator(item) {
+        if (!this.heroClass.availableWeaponCategory(item.category)) {
+            throw new AppError('Герою не доступен данный вид оружия.');
+        }
+    }
+}
+
+export function testJSLinks() {
+    let a1 = {foo1: 'bar1'};
+    let a2 = a1;
+    console.log(a1);
+    console.log(a2);
+    a1['foo2'] = 'bar2';
+    a2['foo3'] = 'bar3';
+    console.log(a1);
+    console.log(a2);
+    a1 = null;
+    console.log(a1);
+    console.log(a2);
 }

@@ -22,6 +22,10 @@
     padding: 4px 8px;
 }
 
+.basic-table__full-width {
+    width: 100%;
+}
+
 .block {
     /*padding: 15px;*/
     margin-bottom: 15px;
@@ -61,4 +65,8 @@
 
 .game-console-autocomplete-list__selected {
     text-decoration: underline;
+}
+
+.hide {
+    display: none;
 }

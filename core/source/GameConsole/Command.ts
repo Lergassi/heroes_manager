@@ -61,7 +61,7 @@ export default abstract class Command {
         this._requireArgumentsLength += +isRequire;
     }
 
-    async run(commandArguments = []) {
+    async run(commandArguments: string[] = []) {
         //todo: Убрать в другой объект, чтобы не код не был в каждом классе команды.
         if (commandArguments.length < this._requireArgumentsLength) {
             //todo: Тут нужно выводить информацию про аргументы.

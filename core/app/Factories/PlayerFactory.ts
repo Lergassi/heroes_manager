@@ -5,16 +5,17 @@ import GameObject from '../../source/GameObject.js';
 import PlayerComponent from '../Components/PlayerComponent.js';
 import LevelComponent from '../Components/LevelComponent.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
+import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 
 export type PlayerFactoryConfig = {
     maxLevel: number;
 };
 
 export default class PlayerFactory {
-    private readonly _idGenerator: UUIDGenerator;
+    private readonly _idGenerator: IDGeneratorInterface;
     private readonly _config: PlayerFactoryConfig;
 
-    constructor(idGenerator: UUIDGenerator, config: PlayerFactoryConfig) {
+    constructor(idGenerator: IDGeneratorInterface, config: PlayerFactoryConfig) {
         this._idGenerator = idGenerator;
         this._config = config;
     }

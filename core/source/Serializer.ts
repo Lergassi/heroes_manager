@@ -32,13 +32,13 @@ export interface DataInterface {
 }
 
 export class ProxyLink {
-    public object;
+    public o;
     public property: string;
     public classname: string;
     public id: number;
 
-    constructor(object, property: string, classname: string, id: number) {
-        this.object = object;
+    constructor(o, property: string, classname: string, id: number) {
+        this.o = o;
         this.property = property;
         this.classname = classname;
         this.id = id;
@@ -70,11 +70,11 @@ export default class Serializer {
         this._linkRequests = [];
     }
 
-    serialize<T>(object: T): SerializedObject {
-        let objectMetadata = this._metadataManager.getMetadata(object.constructor.name);
+    serialize<T>(o: T): SerializedObject {
+        let objectMetadata = this._metadataManager.getMetadata(o.constructor.name);
 
         let serializedObject: SerializedObject = {
-            classname: object.constructor.name,
+            classname: o.constructor.name,
             data: {},
         };
 
@@ -83,29 +83,29 @@ export default class Serializer {
             serializedObject['serviceName'] = objectMetadata['serviceName'];
         }
         for (const fieldKey in objectMetadata.mapping) {
-            if (!object.hasOwnProperty(fieldKey)) {
-                throw new AppError(sprintf('Поле "%s" не найдено в объекте "%s".', fieldKey, object.constructor.name));
+            if (!o.hasOwnProperty(fieldKey)) {
+                throw new AppError(sprintf('Поле "%s" не найдено в объекте "%s".', fieldKey, o.constructor.name));
             }
 
             switch (objectMetadata.mapping[fieldKey].type) {
                 case SerializeType.Boolean:
                 case SerializeType.Number:
                 case SerializeType.String:
-                    serializedObject.data[fieldKey] = object[fieldKey];
+                    serializedObject.data[fieldKey] = o[fieldKey];
                     break;
                 case SerializeType.Object:
-                    serializedObject.data[fieldKey] = object[fieldKey] === null ?
+                    serializedObject.data[fieldKey] = o[fieldKey] === null ?
                         serializedObject.data[fieldKey] = null :
-                        serializedObject.data[fieldKey] = this.serialize(object[fieldKey]);
+                        serializedObject.data[fieldKey] = this.serialize(o[fieldKey]);
                     break;
                 case SerializeType.Link:
-                    serializedObject.data[fieldKey] = this._serializeLinkObject(object[fieldKey]);
+                    serializedObject.data[fieldKey] = this._serializeLinkObject(o[fieldKey]);
                     break;
                 case SerializeType.Collection:
-                    serializedObject.data[fieldKey] = this._serializeCollection(object[fieldKey])
+                    serializedObject.data[fieldKey] = this._serializeCollection(o[fieldKey])
                     break;
                 case SerializeType.LinkCollection:
-                    serializedObject.data[fieldKey] = this._serializeLinkCollection(object[fieldKey]);
+                    serializedObject.data[fieldKey] = this._serializeLinkCollection(o[fieldKey]);
                     break;
                 default:
                     throw new AppError(sprintf('Тип "%s" не поддерживается системой сериализации.', objectMetadata.mapping[fieldKey].type));

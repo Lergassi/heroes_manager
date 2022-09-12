@@ -17,16 +17,10 @@ export default class ListCommand extends Command {
 
     async execute(input: Input) {
         debug('info')('GameConsole. Все доступные команды.');
-        const gameConsole = this.container.get<GameConsole>('gameConsole');
-        const commands = _.sortBy(gameConsole.commands, ['name']);
-        for (const commandName in commands) {
-            console.log(
-                sprintf(
-                    '%s%s',
-                    chalk.yellow(commands[commandName].name),
-                    commands[commandName].description ? ' - ' + commands[commandName].description : '',
-                )
-            );
+        let gameConsole = this.container.get<GameConsole>('gameConsole');
+        let names = gameConsole.names;
+        for (let i = 0; i < names.length; i++) {
+            console.log(chalk.yellow(names[i]));
         }
     }
 }

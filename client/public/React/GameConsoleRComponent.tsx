@@ -1,18 +1,24 @@
 import React from 'react';
-import AppError from '../../core/source/AppError.js';
+import AppError from '../../../core/source/AppError.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import ContainerInterface from '../../../core/source/ContainerInterface.js';
+import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
+import {debugPlayerEnv} from '../../../core/debug/debug_functions.js';
 
-export interface GameConsoleOptions {
+export interface GameConsoleProps {
+    container: ContainerInterface;
     executeUrl: string;
-    commands: string[] | undefined;
+    commandNames: string[] | undefined;
     maxHistoryLength: number | undefined;
 }
 
-export default class GameConsoleComponent extends React.Component<any, any>{
+export default class GameConsoleRComponent extends React.Component<any, any>{
+    private readonly _container: ContainerInterface;
+
     private readonly _executeUrl;
 
-    private readonly _commands;
+    private readonly _commandNames;
 
     private _autoCompleteList;
     private _isAutoCompleteHandling;
@@ -22,13 +28,14 @@ export default class GameConsoleComponent extends React.Component<any, any>{
     private _currentHistoryPosition;
     private readonly _maxHistoryLength;
 
-    _defaults = {
-        commands: [],
+    private _defaults = {
         maxHistoryLength: 100,
     };
 
-    constructor(props: GameConsoleOptions) {
+    constructor(props: GameConsoleProps) {
         super(props);
+
+        this._container = props.container;
 
         if (!props.executeUrl) {
             throw new AppError('executeUrl не может быть пустым.');
@@ -36,7 +43,7 @@ export default class GameConsoleComponent extends React.Component<any, any>{
 
         this._executeUrl = props.executeUrl;
 
-        this._commands = props.commands || this._defaults.commands;
+        this._commandNames = props.commandNames || [];
 
         this._autoCompleteList = [];
         this._isAutoCompleteHandling = false;
@@ -53,8 +60,6 @@ export default class GameConsoleComponent extends React.Component<any, any>{
         this.handleChange = this.handleChange.bind(this);
         this.keyPressHandler = this.keyPressHandler.bind(this);
         this.keyDownHandler = this.keyDownHandler.bind(this);
-
-        debug('log')(sprintf('GameConsole создана.'));
     }
 
     handleChange(event) {
@@ -66,9 +71,9 @@ export default class GameConsoleComponent extends React.Component<any, any>{
     updateAutoCompleteList(value) {
         this.clearAutoCompleteList();
         this.autoCompleteHandlingDisable();
-        for (let i = 0; i < this._commands.length; i++) {
-            if (value && this._commands[i].indexOf(value) === 0) {
-                this._autoCompleteList.push(this._commands[i]);
+        for (let i = 0; i < this._commandNames.length; i++) {
+            if (value && this._commandNames[i].indexOf(value) === 0) {
+                this._autoCompleteList.push(this._commandNames[i]);
             }
         }
     }
@@ -85,10 +90,16 @@ export default class GameConsoleComponent extends React.Component<any, any>{
         this._isAutoCompleteHandling = false;
     }
 
-    keyPressHandler(e) {
+    /**
+     * Только для Enter.
+     * @param e
+     */
+    async keyPressHandler(e) {
         switch(e.code) {
             case 'Enter':
             case 'NumpadEnter':
+                this.resetAutoComplete();
+
                 let commandString = e.target.value.trim();
                 this.setState({value: ''});
 
@@ -105,38 +116,39 @@ export default class GameConsoleComponent extends React.Component<any, any>{
                 }
                 this.resetHistoryPosition();
 
-                debug('log')(resultUrl);
+                debug('debug')(resultUrl);
 
-                fetch(resultUrl)
-                    .then((response) => {
-                        if (response.ok) {
-                            if (response.headers.get('content-type')?.includes('application/json')) {
-                                return response.json();
-                            } else {
-                                throw new Error('Ошибка при обработки response. Неверный формат данных. Ожидался json.');
-                            }
-                        } else {
-                            console.log('DEBUG', 'http error', response);
-                            throw new Error('Ошибка HTTP: ' + response.status);
-                        }
-                    })
-                    .then((json) => {
-                        if (json.error) {
-                            // console.log('DEBUG', 'json.error', json.error);
-                            throw new Error(json.error);
-                        }
+                await this._container.get<GameConsole>('gameConsole').runByQuery(commandString);
 
-                        console.log('DEBUG', 'data', json);
-                        // console.log(json.json);
-                    })
-                    .catch((error) => {
-                        console.log('DEBUG', 'fetch catch error', error);
-                    })
-                ;
+                // fetch(resultUrl)
+                //     .then((response) => {
+                //         if (response.ok) {
+                //             if (response.headers.get('content-type')?.includes('application/json')) {
+                //                 return response.json();
+                //             } else {
+                //                 throw new Error('Ошибка при обработки response. Неверный формат данных. Ожидался json.');
+                //             }
+                //         } else {
+                //             console.log('DEBUG', 'http error', response);
+                //             throw new Error('Ошибка HTTP: ' + response.status);
+                //         }
+                //     })
+                //     .then((json) => {
+                //         if (json.error) {
+                //             // console.log('DEBUG', 'json.error', json.error);
+                //             throw new Error(json.error);
+                //         }
+                //
+                //         console.log('DEBUG', 'data', json);
+                //         // console.log(json.json);
+                //     })
+                //     .catch((error) => {
+                //         console.log('DEBUG', 'fetch catch error', error);
+                //     })
+                // ;//end fetch
 
-                this.resetAutoComplete();
                 break;  //Enter, NumpadEnter
-        }
+        }//end switch(e.code)
     }
 
     keyDownHandler(e) {

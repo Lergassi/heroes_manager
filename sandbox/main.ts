@@ -1,5 +1,11 @@
 import UUIDGenerator from '../core/source/UUIDGenerator.js';
-import {testUUIDGenerator} from './include.js';
+import {
+    testEntityManagerFacade, testEquipSlotDecorators,
+    testHeroController,
+    testInherit,
+    testItemStorageFactories, testJSLinks,
+    testUUIDGenerator
+} from './include.js';
 // import {format} from 'date-fns';
 
 //js, node
@@ -17,7 +23,13 @@ import {testUUIDGenerator} from './include.js';
 // testSerializeItemStorage();
 // testSerializeGameObject();
 // testContainerGetByPattern();
-testUUIDGenerator();
+// testUUIDGenerator();
+// testItemStorageFactories();
+// testInherit();
+// testHeroController();
+// testEntityManagerFacade();
+// testEquipSlotDecorators();
+testJSLinks();
 
 //simple
 //test date-fns

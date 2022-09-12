@@ -1,5 +1,6 @@
 import ItemStack from './ItemStack.js';
 import AppError from '../../source/AppError.js';
+import _ from 'lodash';
 
 export default class ItemStackSlot {
     private _itemStack: ItemStack;
@@ -13,12 +14,13 @@ export default class ItemStackSlot {
     }
 
     canPlaceItemStack(itemStack: ItemStack) {
-        if (this.isBusy()) {
+        if (!this.isFree()) {
             throw new AppError('ItemStackSlot занят. Сначала его нужно освободить.');
         }
     }
 
-    //todo: Если будет ошибкашибки, то стек созданный в момент вызова метода потеряется. placeItemStack(new ItemStack(...)) Возможно стоит переделать на паттерти, а стек создавать уже внутри слота после всех проверок.
+    //todo: Если будет ошибка, то стек созданный в момент вызова метода потеряется. placeItemStack(new ItemStack(...)) Возможно стоит переделать на паттерти, а стек создавать уже внутри слота после всех проверок.
+    //todo: А зачем нужна проверка если есть метод clear?
     placeItemStack(itemStack: ItemStack) {
         this.canPlaceItemStack(itemStack);  //todo: Если не знать, что метод проверяет возможность размещения, то будет вызываться лишний метод.
         this._itemStack = itemStack;
@@ -28,11 +30,7 @@ export default class ItemStackSlot {
         this._itemStack = null;
     }
 
-    isBusy(): boolean {
-        return this._itemStack !== null;
-    }
-
     isFree(): boolean {
-        return this._itemStack === null;
+        return _.isNil(this._itemStack);
     }
 }

@@ -3,12 +3,21 @@ import _ from 'lodash';
 import AppError from './AppError.js';
 import {sprintf} from 'sprintf-js';
 import ComponentInterface from './ComponentInterface.js';
+import RComponentBridge, {
+    AssignRComponentInterface,
+    RComponentUpdateInterface
+} from '../../client/source/RComponentBridge.js';
 
-export default class GameObject {
-    private readonly _id: string;
+export default class GameObject implements AssignRComponentInterface {
+    private readonly _id: number;
     private _name: string;
     private readonly _tags: string[];
-    private readonly _components: ComponentInterface[];
+    private readonly _components: ComponentInterface[]; //todo: У компонентов не будет интерфейсов.
+    // private readonly _componentNames: {[name: string]: ComponentInterface};
+    private readonly _componentNames: {[name: string]: ComponentInterface};
+    // private _rComponentBridge: RComponentBridge;
+    private _rComponentBridges: RComponentBridge[];
+    private _assignedRComponents: RComponentUpdateInterface[];
 
     get name(): string {
         return this._name;
@@ -23,19 +32,25 @@ export default class GameObject {
     }
 
     constructor(
-        id: string,
+        id: number,
     ) {
         this._id = id;
-        this._name = GameObject.name;
+        this._name = GameObject.name + ': ' + id;
         this._components = [];
+        this._componentNames = {};
         this._tags = [];
+        // this._rComponentBridge = new RComponentBridge();
+        // this._rComponentBridge.update(this);
+        this._rComponentBridges = [];
+        this._assignedRComponents = [];
     }
 
-    //todo: Переделать на дженерик. Убрать класс из типов.
-    addComponent(component: Component): void {
+    addComponent<T>(component: T): T {
         if (!_.includes(this._components, component)) {
             this._components.push(component);
         }
+
+        return component;
     }
 
     findComponentByName<T>(name: string): T {
@@ -59,7 +74,7 @@ export default class GameObject {
         return result;
     }
 
-    getComponentByID<T>(id: string): T {
+    getComponentByID<T>(id: number): T {
         for (let i = 0; i < this._components.length; i++) {
             if (this._components[i]['_id'] === id) {
                 return <T>this._components[i];
@@ -95,5 +110,50 @@ export default class GameObject {
 
     hasTag(tag: string): boolean {
         return _.includes(this._tags, tag);
+    }
+
+    assignRComponent(rComponent: RComponentUpdateInterface): void {
+        // this._rComponentBridge.rComponent = rComponent;
+        // this._rComponentBridges.push(new RComponentBridge(rComponent));
+        this._assignedRComponents.push(rComponent);
+    }
+
+    removeRComponent(rComponent): void {
+
+    }
+
+    update() {
+        // this._rComponentBridge.update(this);
+        // for (let i = 0; i < this._rComponentBridges.length; i++) {
+        //     this._rComponentBridges[i].update(this);
+        // }
+        for (let i = 0; i < this._assignedRComponents.length; i++) {
+            this._assignedRComponents[i].update(this);
+        }
+        // for (let i = 0; i < this._components.length; i++) {
+        //     if (typeof this._components[i]['update'] === 'function') {
+        //         this._components[i]['update']();
+        //     }
+        // }
+    }
+
+    /**
+     * @dev
+     */
+    setComponent<Component>(name: string, component: Component): Component {
+        this._componentNames[name] = <ComponentInterface>component; //todo: Убрать ComponentInterface.
+
+        return component;
+    }
+
+    /**
+     * @dev
+     */
+    getComponent<Component>(name: string): Component {
+        if (!this._componentNames.hasOwnProperty(name)) {
+            throw new AppError(sprintf('Компонент "%s" не найден в GameObject.', name));
+        }
+
+        return <Component>this._componentNames[name];
     }
 }

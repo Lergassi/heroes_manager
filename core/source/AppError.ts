@@ -1,6 +1,8 @@
 import {sprintf} from 'sprintf-js';
 import Item from '../app/Entities/Item.js';
 import EquipSlot from '../app/Entities/EquipSlot.js';
+import HeroClass from '../app/Entities/HeroClass.js';
+import ArmorMaterial from '../app/Entities/ArmorMaterial.js';
 
 export default class AppError extends Error {
     //Сделано для работы ctrl+B.
@@ -40,8 +42,8 @@ export default class AppError extends Error {
         return new AppError(sprintf('Метаданные для %s не найдены.', name));
     }
 
-    static itemStackSizeOverflow(stackSize) {
-        return new AppError(sprintf('Размер стека предметов не может быть больше %s.', stackSize));
+    static itemStackSizeOverflow(item: Item) {
+        return new AppError(sprintf('Размер стека для предмета "%s" не может быть больше %s.', item.name, item.stackSize));
     }
 
     static freeItemStorageSlotNotFound() {
@@ -58,5 +60,21 @@ export default class AppError extends Error {
 
     static pathNotExists(target: string) {
         return new AppError(sprintf('Путь %s не существует.', target));
+    }
+
+    static itemCategoryNotAvailable(item: Item, equipSlot: EquipSlot) {
+        return new AppError(sprintf('Предмет категории "%s" нельзя экипировать в слот "%s"', item.name, equipSlot.name));
+    }
+
+    static equipNotAvailableByArmorMaterial(armorMaterial: ArmorMaterial, heroClass: HeroClass) {
+        return new AppError(sprintf('Предмет с материалом "%s" не доступен для класса "%s".', armorMaterial.name, heroClass.name));
+    }
+
+    static itemStorageRangeOverflow(min: number, max: number) {
+        return new AppError(sprintf('Кол-во ItemStorage у игрока должно быть в диапазоне %s-%s.', min, max));
+    }
+
+    static heroNotContainsEquipSlot(name: string) {
+        return new AppError(sprintf('У героя нет слота "%s"', name));
     }
 }

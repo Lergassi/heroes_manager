@@ -1,14 +1,15 @@
 import AutoIncrementIDGenerator from '../../core/source/AutoIncrementIDGenerator.js';
-import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
+import BasicItemStorageFactory from '../../core/app/Factories/BasicItemStorageFactory.js';
 import GameObject from '../../core/source/GameObject.js';
 import {sprintf} from 'sprintf-js';
 import ItemStorageSlotComponent from '../../core/app/Components/ItemStorageSlotComponent.js';
 import _ from 'lodash';
 import ItemStorageComponent from '../../core/app/Components/ItemStorageComponent.js';
 import UUIDGenerator from '../../core/source/UUIDGenerator.js';
+import Container from '../../core/source/Container.js';
 
 // let itemStorageFactory = new ItemStorageFactory(new AutoIncrementIDGenerator(1));
-let itemStorageFactory = new ItemStorageFactory(new UUIDGenerator());
+let itemStorageFactory = new BasicItemStorageFactory(new Container(), new UUIDGenerator());
 
 let size = 10;
 let itemStorage = itemStorageFactory.create(size);

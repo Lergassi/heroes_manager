@@ -19,7 +19,7 @@ export default class WalletComponent extends Component {
     }
 
     constructor(
-        id: string,
+        id: number,
         gameObject: GameObject,
         currency: Currency,
         value: number = 0,

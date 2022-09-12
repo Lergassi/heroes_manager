@@ -449,21 +449,21 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_weapons'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_one_handed_swords'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '7e294428-7448-43d0-aff0-23f86511fdf2',
-            'Двуурчный меч (01)',
+            'Двуручный меч (01)',
             'item_two_handed_sword_01',
             '',
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_weapons'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_two_handed_swords'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -475,8 +475,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_weapons'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_daggers'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -488,8 +488,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_weapons'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_one_handed_axes'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -501,8 +501,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_weapons'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_two_handed_axes'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -514,8 +514,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_weapons'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_staffs'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -527,8 +527,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_weapons'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_wands'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -540,8 +540,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_weapons'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_revolvers'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -553,8 +553,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_rings'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -566,8 +566,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_amulets'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -579,8 +579,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_trinkets'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -592,8 +592,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_shields'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             null,
         ));
@@ -605,10 +605,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_helmets'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             'd54c9ab6-faac-4ef9-a2f1-407e71304a24',
@@ -618,10 +618,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_shoulders'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             'b18f9675-20f1-49b0-939a-f9d5ec4a199d',
@@ -631,10 +631,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_breastplates'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '30630466-c3b2-4a0e-a347-93b919dd3102',
@@ -644,10 +644,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_bracers'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '0de0097c-9d4a-4094-b800-d37196ac3207',
@@ -657,10 +657,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_gloves'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             'f65240d0-5c4f-47b7-ae18-91d2714cd715',
@@ -670,10 +670,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_belts'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '6547cc56-741c-4a17-ba44-6368298c6dd2',
@@ -683,10 +683,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_pants'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '604677b5-e285-4c04-9ee3-537746621f5a',
@@ -696,10 +696,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_boots'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_plate'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '4de1e1bc-5842-4e78-a956-6b43735293c3',
@@ -709,10 +709,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_helmets'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_leather'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             'f30905f4-e924-4ad2-bbaf-5099a99eaf10',
@@ -722,10 +722,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_shoulders'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_leather'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             'ada53cb7-244c-4a31-9649-c558bbd7800b',
@@ -735,10 +735,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_breastplates'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_leather'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '4dc33853-057f-441d-95ac-94aad1211c61',
@@ -748,10 +748,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_bracers'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_leather'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '07ec4b03-30d9-482a-8f97-4a3f016cce0c',
@@ -761,10 +761,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_gloves'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_leather'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '0e7a301c-918d-4565-9de1-cb2edab327aa',
@@ -774,10 +774,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_belts'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_leather'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             '9eb09be0-7c1d-4fba-bb11-b6745449978c',
@@ -787,10 +787,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_pants'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_leather'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             'e1d91749-5c45-47b4-bb31-9053e33a576d',
@@ -800,10 +800,10 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_boots'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
-            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
+            entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_leather'),
         ));
         entityManager.getRepository<Item>(Item.name).add(new Item(
             'f4bac01f-0d07-4948-b235-631f7e63d83e',
@@ -813,8 +813,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_helmets'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
         ));
@@ -826,8 +826,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_shoulders'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
         ));
@@ -839,8 +839,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_breastplates'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
         ));
@@ -852,8 +852,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_bracers'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
         ));
@@ -865,8 +865,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_gloves'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
         ));
@@ -878,8 +878,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_belts'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
         ));
@@ -891,8 +891,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_pants'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
         ));
@@ -904,8 +904,8 @@ export default class EntityManagerCreator {
             1,
             1,
             500,
-            false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_armor'),
+            true,
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_boots'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('quality_common'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('armor_material_cloth'),
         ));
@@ -1125,6 +1125,18 @@ export default class EntityManagerCreator {
                     ],
                 ),
                 new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_helmets'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_helmets'),
+                    ],
+                ),
+                new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_mage'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_helmets'),
@@ -1177,6 +1189,18 @@ export default class EntityManagerCreator {
                 ),
                 new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gladiator'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_shoulders'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_shoulders'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_shoulders'),
                     ],
@@ -1239,6 +1263,18 @@ export default class EntityManagerCreator {
                     ],
                 ),
                 new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_breastplates'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_breastplates'),
+                    ],
+                ),
+                new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_mage'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_breastplates'),
@@ -1291,6 +1327,18 @@ export default class EntityManagerCreator {
                 ),
                 new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gladiator'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_bracers'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_bracers'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_bracers'),
                     ],
@@ -1353,6 +1401,18 @@ export default class EntityManagerCreator {
                     ],
                 ),
                 new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_gloves'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_gloves'),
+                    ],
+                ),
+                new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_mage'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_gloves'),
@@ -1405,6 +1465,18 @@ export default class EntityManagerCreator {
                 ),
                 new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gladiator'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_belts'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_belts'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_belts'),
                     ],
@@ -1467,6 +1539,18 @@ export default class EntityManagerCreator {
                     ],
                 ),
                 new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_pants'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_pants'),
+                    ],
+                ),
+                new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_mage'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_pants'),
@@ -1519,6 +1603,18 @@ export default class EntityManagerCreator {
                 ),
                 new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gladiator'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_boots'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_boots'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_boots'),
                     ],
@@ -1581,6 +1677,18 @@ export default class EntityManagerCreator {
                     ],
                 ),
                 new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_amulets'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_amulets'),
+                    ],
+                ),
+                new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_mage'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_amulets'),
@@ -1633,6 +1741,18 @@ export default class EntityManagerCreator {
                 ),
                 new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gladiator'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_rings'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_rings'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_rings'),
                     ],
@@ -1695,6 +1815,18 @@ export default class EntityManagerCreator {
                     ],
                 ),
                 new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_rings'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_rings'),
+                    ],
+                ),
+                new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_mage'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_rings'),
@@ -1747,6 +1879,18 @@ export default class EntityManagerCreator {
                 ),
                 new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gladiator'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_trinkets'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_trinkets'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_trinkets'),
                     ],
@@ -1811,6 +1955,19 @@ export default class EntityManagerCreator {
                     ],
                 ),
                 new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_bows'),
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_crossbows'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_revolvers'),
+                    ],
+                ),
+                new EquipSlotRule(
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_mage'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_staffs'),
@@ -1869,6 +2026,19 @@ export default class EntityManagerCreator {
                     entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gladiator'),
                     [
                         entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_one_handed_swords'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_archer'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_bows'),
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_crossbows'),
+                    ],
+                ),
+                new EquipSlotRule(
+                    entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_gunslinger'),
+                    [
+                        entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('item_category_revolvers'),
                     ],
                 ),
                 new EquipSlotRule(

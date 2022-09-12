@@ -1,16 +1,22 @@
-import ItemStorageComponent, {ITEM_STORAGE_DEFAULT_SIZE} from '../Components/ItemStorageComponent.js';
+import ItemStorageComponent, {DEFAULT_ITEM_STORAGE_SIZE} from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
+import ContainerInterface from '../../source/ContainerInterface.js';
+import GameObjectStorage from '../../source/GameObjectStorage.js';
+import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
+import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 
-export default class ItemStorageFactory {
-    private _idGenerator: UUIDGenerator;
+export default class BasicItemStorageFactory implements ItemStorageFactoryInterface {
+    private _container: ContainerInterface;
+    private _idGenerator: IDGeneratorInterface;
 
-    constructor(idGenerator: UUIDGenerator) {
+    constructor(container: ContainerInterface, idGenerator: IDGeneratorInterface) {
+        this._container = container;
         this._idGenerator = idGenerator;
     }
 
-    create(size: number = ITEM_STORAGE_DEFAULT_SIZE): GameObject {
+    create(size: number = DEFAULT_ITEM_STORAGE_SIZE): GameObject {
         let itemStorage = new GameObject(this._idGenerator.generateID());
 
         itemStorage.name = 'ItemStorage';

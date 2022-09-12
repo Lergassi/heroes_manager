@@ -3,6 +3,12 @@ import AppError from '../../source/AppError.js';
 
 export const DEFAULT_STACK_SIZE = 20;
 
+export interface ItemStackPlaceInterface {
+    get itemStack(): ItemStack;
+    placeItemStack(itemStack: ItemStack): void;
+    clear(): void;
+}
+
 export default class ItemStack {
     private readonly _id: string;
     private readonly _item: Item;
@@ -22,7 +28,7 @@ export default class ItemStack {
 
     constructor(id: string, item: Item, count: number = 1) {
         if (count > item.stackSize) {
-            throw AppError.itemStackSizeOverflow(item.stackSize);
+            throw AppError.itemStackSizeOverflow(item);
         }
 
         //todo: validate

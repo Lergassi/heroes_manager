@@ -6,11 +6,13 @@ import GameObject from '../../source/GameObject.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import EntityManager from '../../source/EntityManager.js';
 import Security from '../../../server/source/Security.js';
+import HeroListComponent from '../Components/HeroListComponent.js';
 
 export default class CreateHeroCommand extends Command {
     get name(): string {
         return 'create_hero';
     }
+
     configure() {
         super.configure();
         this.addArgument('hero_class_alias', '', true);
@@ -18,14 +20,13 @@ export default class CreateHeroCommand extends Command {
     }
 
     async execute(input: Input) {
-        this.container.get<Security>('server.security').assertIsPlayerLoaded();
-
         let heroClassAlias: string = input.getArgument('hero_class_alias');
         let heroClass: HeroClass = this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>('HeroClass').getOneByAlias(heroClassAlias);
 
         let heroFactory: HeroFactory = this.container.get<HeroFactory>('player.heroFactory');
 
-        let hero: GameObject = heroFactory.create(heroClass);
-        this.container.get<GameObjectStorage>('player.gameObjectStorage').add(hero);
+        let hero = heroFactory.create(heroClass);
+        // this.container.get<GameObjectStorage>('player.gameObjectStorage').add(hero);
+        this.container.get<HeroListComponent>('player.heroesListComponent').addHero(hero);
     }
 }

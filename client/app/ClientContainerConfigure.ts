@@ -4,6 +4,7 @@ import config from '../config/main.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import Kernel from '../../core/source/Kernel.js';
 
 export default class ClientContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -11,10 +12,10 @@ export default class ClientContainerConfigure implements ContainerConfigureInter
         // container.set('config.client', (container) => {
         //     return config;
         // });
-        container.set<GameConsole>('client.gameConsole', (container) => {
-            return new GameConsole();
-        });
-        container.set('gameConsole', container.get<GameConsole>('client.gameConsole'));    //alias
+        // container.set<GameConsole>('client.gameConsole', (container) => {
+        //     return new GameConsole();
+        // });
+        // container.set('gameConsole', container.get<GameConsole>('client.gameConsole'));    //alias
 
         debug('log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
 

@@ -1,11 +1,12 @@
 import GameObject from '../../source/GameObject.js';
 import UserComponent from '../Components/UserComponent.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
+import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 
 export default class UserFactory {
-    private readonly _idGenerator: UUIDGenerator;
+    private readonly _idGenerator: IDGeneratorInterface;
 
-    constructor(idGenerator: UUIDGenerator) {
+    constructor(idGenerator: IDGeneratorInterface) {
         this._idGenerator = idGenerator;
     }
 

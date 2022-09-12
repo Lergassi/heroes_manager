@@ -13,45 +13,94 @@ import JsonSerializer from '../source/JsonSerializer.js';
 import MetadataManager from '../source/MetadataManager.js';
 import MetadataManagerCreator from './Services/MetadataManagerCreator.js';
 import EntityManagerCreator from './Services/EntityManagerCreator.js';
+import AddItemCommand from './Commands/AddItemCommand.js';
+import CreateHeroCommand from './Commands/CreateHeroCommand.js';
+import CreateItemStorageCommand from './Commands/CreateItemStorageCommand.js';
+import EquipCommand from './Commands/EquipCommand.js';
+import RemoveEquipCommand from './Commands/RemoveEquipCommand.js';
+import IDGeneratorInterface from '../source/IDGeneratorInterface.js';
+import UUIDGenerator from '../source/UUIDGenerator.js';
+import GameObjectStorage from '../source/GameObjectStorage.js';
+import PlayerFactory from './Factories/PlayerFactory.js';
+import WalletFactory from './Factories/WalletFactory.js';
+import HeroFactory from './Factories/HeroFactory.js';
+import ItemStackFactory from './Factories/ItemStackFactory.js';
+import Item from './Entities/Item.js';
+import BasicItemStorageFactory from './Factories/BasicItemStorageFactory.js';
+import ItemStorageManager from './Services/ItemStorageManager.js';
+import EquipManager from './Services/EquipManager.js';
+import NewGameCommand from './Commands/NewGameCommand.js';
+import CreateStartPlayerObjectsCommand from './Commands/CreateStartPlayerObjectsCommand.js';
+import DebugContainerCommand from '../../server/app/Commands/DebugCommands/DebugContainerCommand.js';
+import DebugUserEnvironmentCommand from '../../server/app/Commands/DebugCommands/DebugUserEnvironmentCommand.js';
+import DebugPlayerEnvironmentCommand from './Commands/DebugCommands/DebugPlayerEnvironmentCommand.js';
+import InspectGameObjectCommand from './Commands/DebugCommands/InspectGameObjectCommand.js';
+import ArmorMaterial from './Entities/ArmorMaterial.js';
+import EntityManagerFacade from '../source/Facades/EntityManagerFacade.js';
+
+export enum ContainerKey {
+    EntityManager = 'core.entityManager',
+    EntityManagerFacade = 'core.facade.entityManager',
+}
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
         container.set<object>('core.config', config);
         //Тут не save_inject, а просто загрузка данных из файла. На сервере из файла, на клиенте через import и webpack.
-        container.set<EntityManager>('core.entityManager', (container) => {
-            // return (new RepositoryManagerFileLoader()).load(path.resolve(process.env.PROJECT_DIR, 'core/data/entities.json'), container);
-            // return new EntityManager();
-            return (new EntityManagerCreator()).create();
-        });
-        container.set<JsonSerializer>('core.jsonSerializer', (container) => {
-            return new JsonSerializer();
-        });
         container.set<MetadataManager>('core.metadataManager', (container) => {
             return (new MetadataManagerCreator()).create();
+        });
+        container.set<EntityManager>(ContainerKey.EntityManager, (container) => {
+            return (new EntityManagerCreator()).create();
+        });
+        container.set<EntityManagerFacade>(ContainerKey.EntityManagerFacade, (container) => {
+            return new EntityManagerFacade(container.get<EntityManager>(ContainerKey.EntityManager));
         });
         container.set<Serializer>('core.serializer', (container) => {
             return new Serializer(container, container.get<MetadataManager>('core.metadataManager'));
         });
+        container.set<JsonSerializer>('core.jsonSerializer', (container) => {
+            return new JsonSerializer();
+        });
 
-        this._gameConsoleConfigure(container);
+        // container.set<IDGeneratorInterface>('core.realtimeObjectIdGenerator', (container: ContainerInterface) => {
+        //     return new UUIDGenerator();
+        // });
+        // container.set<GameObjectStorage>('core.gameObjectStorage', (container) => {
+        //     return new GameObjectStorage();
+        // });
 
-        debug('log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
+        // //Фабрики
+        // container.set<PlayerFactory>('core.playerFactory', (container) => {
+        //     return new PlayerFactory(container.get<IDGeneratorInterface>('core.realtimeObjectIdGenerator'), {
+        //         maxLevel: container.get<object>('core.config')['max_player_level'] ?? 100,
+        //     });
+        // });
+        // container.set<WalletFactory>('core.walletFactory', (container) => {
+        //     return new WalletFactory(container.get<IDGeneratorInterface>('core.realtimeObjectIdGenerator'));
+        // });
+        // container.set<HeroFactory>('core.heroFactory', (container) => {
+        //     return new HeroFactory(
+        //         container.get<IDGeneratorInterface>('core.realtimeObjectIdGenerator'),
+        //         container.get<EntityManager>('core.entityManager'),
+        //         container.get<object>('core.config'),
+        //     );
+        // });
+        // container.set<ItemStackFactory>('core.itemStackFactory', (container) => {
+        //     return new ItemStackFactory(
+        //         container.get<IDGeneratorInterface>('core.realtimeObjectIdGenerator'),
+        //         container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name),
+        //     );
+        // });
+        // container.set<ItemStorageFactory>('core.itemStorageFactory', (container) => {
+        //     return new ItemStorageFactory(
+        //         container,
+        //         container.get<IDGeneratorInterface>('core.realtimeObjectIdGenerator'),
+        //     );
+        // });
+
+        debug('log')(sprintf('Конфигурация %s завершена.', 'CoreContainerConfigure'));
 
         return container;
-    }
-
-    private _gameConsoleConfigure(container: ContainerInterface) {
-        let gameConsole: GameConsole = container.get<GameConsole>('gameConsole');
-
-        gameConsole.register(new HelpCommand(container));
-        gameConsole.register(new ListCommand(container));
-
-        //add_item
-        //create_hero
-        //kill_hero
-        //...
-
-        /* DEBUG */
-        gameConsole.register(new DebugEntitiesCommand(container));
     }
 }

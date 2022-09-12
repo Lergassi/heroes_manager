@@ -3,14 +3,23 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    entry: [
-        // './client/public/src/index.js',
-        // './client/public/src/test.js',
-        // './client_lib/index.js',
-        './client/index.js',
-    ],
+    // mode: 'production',
+    // entry: [
+    //     // './client/public/src/index.js',
+    //     // './client/public/src/test.js',
+    //     // './client_lib/index.js',
+    //     './client/index.js',
+    // ],
+    // devtool: "eval-source-map",
+    // devtool: "source-map",
+    // devtool: "eval-cheap-module-source-map",
+    entry: {
+        client: './client/index.js',
+        sandbox: './client/sandbox.js',
+    },
     output: {
-        filename: 'bundle.js',
+        // filename: 'bundle.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'static/js/lib'),
         libraryTarget: 'amd',
     },

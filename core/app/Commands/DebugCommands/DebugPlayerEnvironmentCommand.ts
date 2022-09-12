@@ -9,8 +9,6 @@ export default class DebugPlayerEnvironmentCommand extends Command {
     }
 
     async execute(input: Input) {
-        this.container.get<Security>('server.security').assertIsPlayerLoaded();
-
         debugPlayerGameObject(this.container);
         debugWallets(this.container);
         debugItemStorages(this.container)

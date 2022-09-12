@@ -1,5 +1,3 @@
-import {loadAllEntities} from './__include.js';
-
 // let container = new Container();
 // (new CoreContainerConfigure()).configure(container);
 // (new ServerContainerConfigure()).configure(container);
@@ -41,7 +39,7 @@ import {loadAllEntities} from './__include.js';
 // testLodashClone();
 
 // testSaveAllEntities();
-loadAllEntities();
+// loadAllEntities();
 
 // devPaths();
 

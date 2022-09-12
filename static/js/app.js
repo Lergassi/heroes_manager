@@ -8,14 +8,15 @@ requirejs.config({
 
 require(
     [
-        'bundle',
-        // 'app/core',
+        // 'bundle',
+        'client.bundle',
+        // 'sandbox.bundle',
     ],
     function(
-        bundle,
-        // core,
+        // bundle,
+        clientBundle,
+        // sandboxBundle,
         ) {
-        // console.log('bundle', bundle);
-        // console.log('core', core());
+        // console.log(sandboxBundle);
     }
 );

@@ -1,33 +1,56 @@
 import Component from '../../source/Component.js';
 import ItemStackSlot from '../RuntimeObjects/ItemStackSlot.js';
-import ItemStack from '../RuntimeObjects/ItemStack.js';
+import ItemStack, {ItemStackPlaceInterface} from '../RuntimeObjects/ItemStack.js';
 import GameObject from '../../source/GameObject.js';
+import Item from '../Entities/Item.js';
+import _ from 'lodash';
+import AppError from '../../source/AppError.js';
+import RComponentBridge, {AssignRComponentInterface} from '../../../client/source/RComponentBridge.js';
+import ItemStorageComponent from './ItemStorageComponent.js';
 
-export default class ItemStorageSlotComponent extends Component {
-    private readonly _itemStackSlot: ItemStackSlot;
+export default class ItemStorageSlotComponent extends Component implements ItemStackPlaceInterface, AssignRComponentInterface {
+    private _itemStack: ItemStack;
 
     get itemStack(): ItemStack {
-        return this._itemStackSlot.itemStack;
+        return this._itemStack;
     }
 
-    constructor(id: string, gameObject: GameObject) {
+    constructor(id: number, gameObject: GameObject) {
         super(id, gameObject);
-        this._itemStackSlot = new ItemStackSlot();
+        this._itemStack = null;
     }
 
-    placeItemStack(itemStack): void {
-        this._itemStackSlot.placeItemStack(itemStack);
+    canPlaceItem(item: Item): boolean {
+        if (!this.isFree()) {
+            throw new AppError('Слот занят. Сначала его нужно освободить.');
+        }
+
+        return true;
     }
 
-    isBusy(): boolean {
-        return this._itemStackSlot.isBusy();
+    placeItemStack(itemStack: ItemStack): void {
+        this.canPlaceItem(itemStack.item);
+        this._itemStack = itemStack;
+
+        this.gameObject.update();
     }
 
     isFree(): boolean {
-        return this._itemStackSlot.isFree();
+        return _.isNil(this._itemStack);
     }
 
     clear(): void {
-        this._itemStackSlot.clear();
+        this._itemStack = null;
+
+        // this.gameObject.update();
+        this.update();
     }
+
+    // assignRComponent(rComponent): void {
+    //     this._rComponentBridge.rComponent = rComponent;
+    // }
+    //
+    // update() {
+    //     this._rComponentBridge.update(this);
+    // }
 }

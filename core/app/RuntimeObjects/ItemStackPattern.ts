@@ -1,13 +1,14 @@
 import Item from '../Entities/Item.js';
 import ItemStack from './ItemStack.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
+import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 
 export default class ItemStackPattern {
     private readonly _item: Item;
     private readonly _count: number;
-    private readonly _idGenerator: UUIDGenerator;
+    private readonly _idGenerator: IDGeneratorInterface;
 
-    constructor(idGenerator: UUIDGenerator, item: Item, count: number = 1) {
+    constructor(idGenerator: IDGeneratorInterface, item: Item, count: number = 1) {
         //todo: validate
         this._idGenerator = idGenerator;
         this._item = item;

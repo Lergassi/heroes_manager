@@ -1,12 +1,4 @@
 {
-  "include": [
-    "core/**/*",
-    "client/**/*",
-    "server/**/*",
-    "sandbox/**/*",
-    "tests/**/*",
-    "jest.config.ts"
-  ],
   "compilerOptions": {
     "alwaysStrict": true,
     "moduleResolution": "Node",
@@ -22,5 +14,13 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "jsx": "react-jsx"
-  }
+  },
+  "include": [
+    "core/**/*",
+    "client/**/*",
+    "server/**/*",
+    "sandbox/**/*",
+    "tests/**/*",
+    "jest.config.ts"
+  ]
 }

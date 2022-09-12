@@ -37,6 +37,7 @@ import UnloadFullEnvironmentCommand from './Commands/UnloadFullEnvironmentComman
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import PathResolver from '../source/PathResolver.js';
+import DebugGameObjectStorageCommand from '../../core/app/Commands/DebugCommands/DebugGameObjectStorageCommand.js';
 
 export default class ServerContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -135,7 +136,6 @@ export default class ServerContainerConfigure implements ContainerConfigureInter
         gameConsole.register(new UnloadFullEnvironmentCommand(container));
 
         /* DEBUG */
-        // gameConsole.register(new StatusServerCommand(container));
         gameConsole.register(new SecurityStatusCommand(container));
         gameConsole.register(new DebugContainerCommand(container));
         gameConsole.register(new DebugUserEnvironmentCommand(container));

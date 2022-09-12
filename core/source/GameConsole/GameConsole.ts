@@ -4,14 +4,25 @@ import {sprintf} from 'sprintf-js';
 import chalk from 'chalk';
 import debug from 'debug';
 import _ from 'lodash';
+import ValidationError from '../Errors/ValidationError.js';
+
+export interface CommandOptions {
+    name: string;
+    arguments: string[];
+}
 
 export default class GameConsole {
     private readonly _commands: {
         [name: string]: Command,
     };
 
-    get commands(): { [name: string]: Command } {
-        return _.clone(this._commands);
+    get names(): string[] {
+        let names = [];
+        for (const commandsKey in this._commands) {
+            names.push(this._commands[commandsKey].name);
+        }
+
+        return _.sortBy(names);
     }
 
     constructor() {
@@ -19,10 +30,6 @@ export default class GameConsole {
     }
 
     register(command: Command) {
-        // if (this.hasCommandByName(command.name)) {
-        //     throw new AppError(sprintf('Команда с названием "%s" уже зарегистрирована.', command.name));
-        // }
-
         this._commands[command.name] = command;
     }
 
@@ -38,9 +45,28 @@ export default class GameConsole {
         throw new AppError(sprintf('Команда %s не найдена.', name));
     }
 
-    async run(name: string, commandArguments = []) {
+    async run(name: string, commandArguments: string[] = []) {
         let command = this.getCommand(name);
-        debug('info')('GameConsole command:', chalk.yellow(name)); //todo: Сделать отдельно в виде логера.
+        debug('log:game_console')(sprintf('Command: %s', chalk.yellow(name)));
         await command.run(commandArguments);
+    }
+
+    async runByQuery(query: string) {
+        let commandParams = this.parse(query);
+        await this.run(commandParams.name, commandParams.arguments);
+    }
+
+    parse(query: string): CommandOptions {
+        query = _.trim(query);
+        if (!query) {
+            throw ValidationError.notEmpty();
+        }
+
+        let commandQuerySplitted = _.split(query, ' ');
+
+        return {
+            name: commandQuerySplitted[0],
+            arguments: _.slice(commandQuerySplitted, 1),
+        };
     }
 }

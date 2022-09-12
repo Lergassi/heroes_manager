@@ -1,8 +1,10 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {DEFAULT_STACK_SIZE} from '../RuntimeObjects/ItemStack.js';
-import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
+import BasicItemStorageFactory from '../Factories/BasicItemStorageFactory.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
+import ItemStorageListComponent from '../Components/ItemStorageListComponent.js';
+import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 
 export default class CreateItemStorageCommand extends Command {
     get name(): string {
@@ -17,7 +19,6 @@ export default class CreateItemStorageCommand extends Command {
     async execute(input: Input) {
         let size: number = parseInt(input.getArgument('size'));
 
-        let itemStorageFactory: ItemStorageFactory = this.container.get<ItemStorageFactory>('player.itemStorageFactory');
-        this.container.get<GameObjectStorage>('player.gameObjectStorage').add(itemStorageFactory.create(size));
+        this.container.get<ItemStorageFactoryInterface>('player.playerItemStorageFactory').create(size);
     }
 }
