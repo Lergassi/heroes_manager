@@ -24,6 +24,7 @@ export default class Component implements AssignRComponentInterface {
         // this._rComponentBridges.update(this);
         // this._rComponentBridges = [];
         this._assignedRComponents = [];
+        this._listeners = {};
     }
 
     // assignRComponent(rComponent): void {
@@ -47,5 +48,19 @@ export default class Component implements AssignRComponentInterface {
         for (let i = 0; i < this._assignedRComponents.length; i++) {
             this._assignedRComponents[i].update(this);
         }
+        this.gameObject.update();
+        for (let i = 0; i < this._listeners.length; i++) {
+            this._listeners[i].update();
+        }
+    }
+
+    private readonly _listeners;
+
+    addListener(key: string, listener) {
+        this._listeners[key] = listener;
+    }
+
+    removeListener() {
+
     }
 }

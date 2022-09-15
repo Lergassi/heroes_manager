@@ -120,7 +120,7 @@ var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const RepositoryManager_js_1 = __importDefault(require("../core/source/RepositoryManager.js"));
 const ArmorMaterial_js_1 = __importDefault(require("../core/app/Entities/ArmorMaterial.js"));
-const Quality_js_1 = __importDefault(require("../core/app/Entities/Quality.js"));
+const js_1 = __importDefault(require("../core/app/Entities/Quality.js"));
 const Currency_js_1 = __importDefault(require("../core/app/Entities/Currency.js"));
 const ItemCategory_js_1 = __importDefault(require("../core/app/Entities/ItemCategory.js"));
 class TestFactory {
@@ -129,7 +129,7 @@ class TestFactory {
         //Без зависимостей.
         entityManager.getRepository(ArmorMaterial_js_1.default.name).add(new ArmorMaterial_js_1.default(100, 'test ArmorMaterial', //todo: Возможно стоит использовать случайно сгенерированные данные, чтобы не придумывать каждый раз значения.
         'test_armor_material', '', 500));
-        entityManager.getRepository(Quality_js_1.default.name).add(new Quality_js_1.default(101, 'test Quality', 'test_quality', '', 500));
+        entityManager.getRepository(js_1.default.name).add(new js_1.default(101, 'test Quality', 'test_quality', '', 500));
         entityManager.getRepository(Currency_js_1.default.name).add(new Currency_js_1.default(102, 'test Currency', 'test_currency', '', 500));
         // //С зависимостями.
         entityManager.getRepository(ItemCategory_js_1.default.name).add(new ItemCategory_js_1.default(103, 'test ItemCategory1', 'test_item_category1', '', 500, undefined));

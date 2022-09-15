@@ -9,7 +9,7 @@ import {
     ItemStackRComponent,
     ItemStorageCollectionRComponentProps,
     ItemStorageCollectionRComponentState
-} from './ItemStorageRComponent.js';
+} from './ItemStorageUI.js';
 import ItemStorageListComponent from '../../../core/app/Components/ItemStorageListComponent.js';
 import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorageSlotComponent.js';
 import CharacterAttributeComponent from '../../../core/app/Components/CharacterAttributeComponent.js';
@@ -20,59 +20,6 @@ import GameObject from '../../../core/source/GameObject.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import AppError from '../../../core/source/AppError.js';
-
-interface EquipSlotComponentRComponentProps {
-    equipSlotComponent: EquipSlotComponent;
-    itemStorageCollection: ItemStorageListComponent;
-}
-
-interface EquipSlotComponentRComponentState {
-    equipSlotComponent: EquipSlotComponent;
-    itemStorageCollection: ItemStorageListComponent;
-}
-
-export class EquipSlotComponentRComponent extends React.Component<EquipSlotComponentRComponentProps, EquipSlotComponentRComponentState> implements RComponentUpdateInterface {
-    constructor(props: EquipSlotComponentRComponentProps) {
-        super(props);
-
-        this.state = {
-            equipSlotComponent: props.equipSlotComponent,
-            itemStorageCollection: props.itemStorageCollection,
-        };
-
-        this.state.equipSlotComponent.assignRComponent(this);
-        this.state.itemStorageCollection.assignRComponent(this);
-
-        this.clearHandler = this.clearHandler.bind(this);
-    }
-
-    update(target): void {
-        this.setState(state => ({
-            equipSlotComponent: target,
-        }));
-    }
-
-    clearHandler() {
-        this.state.equipSlotComponent.clear();
-    }
-
-    render() {
-        return (<tr>
-            <td>{this.state.equipSlotComponent.equipSlot.name}: </td>
-            <td>
-                {this.state.equipSlotComponent.isFree() ? 'free' : <span>
-                    {this.state.equipSlotComponent.itemStack.item.name}
-                </span>}
-            </td>
-            <td>
-                <button onClick={this.clearHandler}>Очистить</button>
-            </td>
-            <td>
-
-            </td>
-        </tr>);
-    }
-}
 
 interface HeroListRComponentProps {
     container: ContainerInterface;
@@ -87,8 +34,6 @@ interface HeroListRComponentState {
 }
 
 export class HeroListRComponent extends React.Component<HeroListRComponentProps, HeroListRComponentState> implements RComponentUpdateInterface {
-// export class HeroListRComponent extends React.Component<HeroListRComponentProps, HeroListRComponentState> {
-// export class HeroListRComponent {
     private readonly _container: ContainerInterface;
 
     constructor(props: HeroListRComponentProps) {
@@ -106,6 +51,15 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
         this.state.heroListComponent.assignRComponent(this);
 
         this.delete = this.delete.bind(this);
+        this.updateHandler = this.updateHandler.bind(this);
+
+        window['sandbox']['heroListUpdate'] = this.refresh.bind(this); //Работает.
+    }
+
+    refresh() {
+        this.setState((state) => ({
+            heroListComponent: state.heroListComponent,
+        }));
     }
 
     delete(hero: GameObject) {
@@ -122,6 +76,13 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
         this.setState((state) => ({
             selectedHero: hero,
         }));
+        window['sandbox']['showHero']();
+    }
+
+    updateHandler() {
+        this.setState((state) => ({
+            heroListComponent: state.heroListComponent,
+        }));
     }
 
     render() {
@@ -131,17 +92,33 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
                     key={hero['_id']}
                 >
                     <td>{hero['_id']}</td>
-                    <td>{hero.getComponent<HeroComponent>('heroComponent').heroClass.name}</td>
-                    <td>{hero.getComponent<LevelComponent>('levelComponent').level} ({hero.getComponent<LevelComponent>('levelComponent').exp})</td>
-                    <td>{hero.getComponent<HealthPointsComponent>('healthPointsComponent').currentHealthPoints}/{hero.getComponent<HealthPointsComponent>('healthPointsComponent').maxHealthPoints}</td>
-                    <td>{hero.getComponent<MagicPointsComponent>('magicPointsComponent').currentMagicPoints}/{hero.getComponent<MagicPointsComponent>('magicPointsComponent').maxMagicPoints}</td>
-                    <td>{hero.getComponent<AttackPowerComponent>('attackPowerComponent').baseMinAttackPower}-{hero.getComponent<AttackPowerComponent>('attackPowerComponent').baseMaxAttackPower}</td>
-                    <td>{hero.getComponent<CharacterAttributeComponent>('character_attribute_strength').finalValue}/{hero.getComponent<CharacterAttributeComponent>('character_attribute_agility').finalValue}/{hero.getComponent<CharacterAttributeComponent>('character_attribute_intelligence').finalValue}</td>
+                    <td>{hero.get<HeroComponent>('heroComponent').heroClass.name}</td>
+                    <td>{hero.get<LevelComponent>('levelComponent').level} ({hero.get<LevelComponent>('levelComponent').exp})</td>
+                    <td>{hero.get<HealthPointsComponent>('healthPointsComponent').currentHealthPoints}/{hero.get<HealthPointsComponent>('healthPointsComponent').maxHealthPoints}</td>
+                    <td>{hero.get<MagicPointsComponent>('magicPointsComponent').currentMagicPoints}/{hero.get<MagicPointsComponent>('magicPointsComponent').maxMagicPoints}</td>
+                    <td>{hero.get<AttackPowerComponent>('attackPowerComponent').baseMinAttackPower}-{hero.get<AttackPowerComponent>('attackPowerComponent').baseMaxAttackPower}</td>
+                    {/*<td>*/}
+                    {/*    {hero.get<CharacterAttributeComponent>('strength').finalValue}/{hero.get<CharacterAttributeComponent>('agility').finalValue}/{hero.get<CharacterAttributeComponent>('intelligence').finalValue}*/}
+                    {/*</td>*/}
                     <td>
-                        <button onClick={() => {
-                            window['sandbox']['setHero'](hero);
-                            window['sandbox']['showHero']();
-                        }}>showHero</button>
+                        <CharacterAttributeValueRComponent
+                            characterAttributeComponent={hero.get<CharacterAttributeComponent>('strength')}
+                        />
+                        /
+                        <CharacterAttributeValueRComponent
+                            characterAttributeComponent={hero.get<CharacterAttributeComponent>('agility')}
+                        />
+                        /
+                        <CharacterAttributeValueRComponent
+                            characterAttributeComponent={hero.get<CharacterAttributeComponent>('intelligence')}
+                        />
+                    </td>
+                    <td>
+                        {/*<button onClick={() => {*/}
+                        {/*    window['sandbox']['setHero'](hero);*/}
+                        {/*    window['sandbox']['showHero']();*/}
+                        {/*}}>showHero</button>*/}
+                        <button onClick={this.selectHero.bind(this, hero)}>showHero</button>
                         <button onClick={this.delete.bind(this, hero)}>Удалить</button>
                     </td>
                 </tr>
@@ -167,6 +144,8 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
                 </table>
                 <HeroRComponent
                     container={this._container}
+                    // updateHandler={this.updateHandler}
+                    hero={this.state.selectedHero}
                 />
             </div>
         );
@@ -175,7 +154,9 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
 
 export interface HeroRComponentProps {
     container: ContainerInterface,
+    // updateHandler: () => void,
     // hero: GameObject,
+    hero?: GameObject,
 }
 
 export interface HeroRComponentState {
@@ -233,7 +214,7 @@ export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRCo
 
     setHero(hero: GameObject) {
         this.setState(function () {
-            // hero.assignRComponent(this);
+            hero.assignRComponent(this);
             return {
                 hero: hero,
             };
@@ -249,7 +230,8 @@ export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRCo
     render() {
         if (!this.state.visible) return null;
 
-        if (!this.state.hero) {
+        let hero = this.props.hero; //todo: Это можно сделать в виде отдельного компонента. Например выбор кнопкой мыши.
+        if (!hero) {
             return (<div>Герой не выбран.</div>);
         }
 
@@ -261,11 +243,19 @@ export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRCo
                     <tbody>
                         <tr>
                             <td>id</td>
-                            <td>{this.state.hero['_id']}</td>
+                            <td>{hero['_id']}</td>
                         </tr>
                         <tr>
-                            <td>level</td>
-                            <td>{this.state.hero.getComponent<LevelComponent>('levelComponent').level} ({this.state.hero.getComponent<LevelComponent>('levelComponent').exp})</td>
+                            <td>Уровень</td>
+                            <td>{hero.get<LevelComponent>('levelComponent').level}</td>
+                        </tr>
+                        <tr>
+                            <td>Опыт</td>
+                            <td>{hero.get<LevelComponent>('levelComponent').exp}</td>
+                        </tr>
+                        <tr>
+                            <td>Класс</td>
+                            <td>{hero.get<HeroComponent>('heroComponent').heroClass.name}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -273,59 +263,59 @@ export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRCo
                 <table className={'basic-table'}>
                     <tbody>
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_right_hand')}
+                            equipSlotComponent={hero.get('right_hand')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_left_hand')}
+                            equipSlotComponent={hero.get('left_hand')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_head')}
+                            equipSlotComponent={hero.get('head')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_neck')}
+                            equipSlotComponent={hero.get('neck')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_shoulders')}
+                            equipSlotComponent={hero.get('shoulders')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_chest')}
+                            equipSlotComponent={hero.get('chest')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_wrist')}
+                            equipSlotComponent={hero.get('wrist')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_hands')}
+                            equipSlotComponent={hero.get('hands')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_waist')}
+                            equipSlotComponent={hero.get('waist')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_legs')}
+                            equipSlotComponent={hero.get('legs')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_foots')}
+                            equipSlotComponent={hero.get('foots')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_finger_1')}
+                            equipSlotComponent={hero.get('finger_1')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_finger_2')}
+                            equipSlotComponent={hero.get('finger_2')}
                             updateHandler={this.updateHandler}
                         />
                         <EquipSlotRComponent
-                            equipSlotComponent={this.state.hero.getComponent('equip_slot_trinket')}
+                            equipSlotComponent={hero.get('trinket')}
                             updateHandler={this.updateHandler}
                         />
                     </tbody>
@@ -386,20 +376,25 @@ export class EquipSlotRComponent extends React.Component<EquipSlotRComponentProp
     }
 }
 
-// export class CharacterAttributeListRComponent extends React.Component<any, any> {
-//
-// }
-//
-// export interface CharacterAttributeRComponent {
-//
-// }
-//
-// export class CharacterAttributeRComponent extends React.Component<any, any> {
-//     render() {
-//         return (
-//             <div>
-//                 {}
-//             </div>
-//         );
-//     }
-// }
+export interface CharacterAttributeValueRComponentProps {
+    characterAttributeComponent: CharacterAttributeComponent;
+}
+
+export interface CharacterAttributeValueRComponentState {
+
+}
+
+/**
+ * Выводит только финальное значение атрибута. По текущей логике компонент должен зависить от всех слотов.
+ */
+export class CharacterAttributeValueRComponent extends React.Component<CharacterAttributeValueRComponentProps, CharacterAttributeValueRComponentState> {
+    render() {
+        let characterAttributeComponent = this.props.characterAttributeComponent;
+
+        return (
+            <span>
+                {characterAttributeComponent.finalValue}
+            </span>
+        );
+    }
+}

@@ -7,34 +7,6 @@ import {debugItemStorage} from '../../../core/debug/debug_functions.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStorageListComponent from '../../../core/app/Components/ItemStorageListComponent.js';
 
-export interface ItemStorageRComponentProps {
-    itemStorage: GameObject;
-}
-
-export interface ItemStorageRComponentState {
-    itemStorage: GameObject;
-}
-
-export interface ItemStorageCollectionRComponentProps {
-    itemStorageCollection: ItemStorageListComponent;
-}
-
-export interface ItemStorageCollectionRComponentState {
-    itemStorageCollection: ItemStorageListComponent;
-}
-
-export interface ItemStorageSlotRComponentProps {
-    itemStorageSlotComponent: ItemStorageSlotComponent;
-}
-
-export interface ItemStorageSlotRComponentState {
-    itemStorageSlotComponent: ItemStorageSlotComponent;
-}
-
-// export interface ItemStackPlaceRComponentProps {
-//     itemStackPlace: ItemStackPlaceInterface;
-// }
-
 export interface ItemStackRComponentProps {
     itemStack: ItemStack;
 }
@@ -53,7 +25,7 @@ export class ItemStackRComponent extends React.Component<ItemStackRComponentProp
         let element;
         if (itemStack) {
             element = <span>
-                {itemStack.item.name} ({itemStack.count})
+                {this._renderItemStack(itemStack)}
             </span>;
         } else {
             element = <span>free</span>
@@ -65,9 +37,27 @@ export class ItemStackRComponent extends React.Component<ItemStackRComponentProp
             </span>
         );
     }
+
+    _renderItemStack(itemStack: ItemStack) {
+        let element;
+        if (itemStack.item.isEquipable) {
+            element = <span>{itemStack.item.name}</span>
+        } else {
+            element = <span>{itemStack.item.name} ({itemStack.count})</span>
+        }
+
+        return element;
+    }
 }
 
-// export default class ItemStorageRComponent extends React.Component<ItemStorageRComponentProps, any> {
+export interface ItemStorageRComponentProps {
+    itemStorage: GameObject;
+}
+
+export interface ItemStorageRComponentState {
+    itemStorage: GameObject;
+}
+
 export default class ItemStorageRComponent extends React.Component<ItemStorageRComponentProps, ItemStorageRComponentState> implements RComponentUpdateInterface {
     private _itemStorage: GameObject;
 
@@ -78,20 +68,7 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
             itemStorage: props.itemStorage,
         };
         this._itemStorage = props.itemStorage;
-        // this.state.itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).assignRComponent(this);
         this.state.itemStorage.assignRComponent(this);
-
-        //Только для последнего.
-        window['clear'] = () => {
-            // debugItemStorage(this.state.itemStorage);
-            this.state.itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).clear();
-            // this._itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).clear();
-            // debugItemStorage(this.state.itemStorage);
-            // this.setState(state => ({
-            //     itemStorage: state.itemStorage,
-            //     // itemStorage: null,
-            // }));
-        };
     }
 
     render() {
@@ -99,7 +76,7 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
         let itemStorageSlotComponents = itemStorage.findComponentsByName<ItemStorageSlotComponent>(ItemStorageSlotComponent.name);
         return (
             <div>
-                <div>id: {this.state.itemStorage['_id']}, {this.state.itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).busyItemStorageSlotCount}/{this.state.itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).size}</div>
+                <div>id: {this.state.itemStorage['_id']}, {this.state.itemStorage.getComponent<ItemStorageComponent>(ItemStorageComponent).busyItemStorageSlotCount}/{this.state.itemStorage.getComponent<ItemStorageComponent>(ItemStorageComponent).size}</div>
                 <table className={'basic-table'}>
                     <tbody>
                         {itemStorageSlotComponents.map((itemStorageSlotComponent) => (
@@ -114,15 +91,19 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
         );
     }
 
-    test() {
-        console.log('42424');
-    }
-
     update(target): void {
         this.setState(state => ({
             itemStorage: target,
         }));
     }
+}
+
+export interface ItemStorageSlotRComponentProps {
+    itemStorageSlotComponent: ItemStorageSlotComponent;
+}
+
+export interface ItemStorageSlotRComponentState {
+    itemStorageSlotComponent: ItemStorageSlotComponent;
 }
 
 export class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRComponentProps, ItemStorageSlotRComponentState> implements RComponentUpdateInterface {
@@ -141,7 +122,6 @@ export class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRC
         this.setState(state => ({
             itemStorageSlotComponent: target,
         }));
-        // this.state.itemStorageSlotComponent.gameObject.update();
     }
 
     clearHandler() {
@@ -161,6 +141,14 @@ export class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRC
             </tr>
         );
     }
+}
+
+export interface ItemStorageCollectionRComponentProps {
+    itemStorageCollection: ItemStorageListComponent;
+}
+
+export interface ItemStorageCollectionRComponentState {
+    itemStorageCollection: ItemStorageListComponent;
 }
 
 export class ItemStorageCollectionRComponent extends React.Component<ItemStorageCollectionRComponentProps, ItemStorageCollectionRComponentState> implements RComponentUpdateInterface {

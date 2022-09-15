@@ -16,6 +16,7 @@ import UUIDGenerator from '../../source/UUIDGenerator.js';
 import EquipSlotComponentControllerComponent from '../Components/EquipSlotComponentControllerComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
+import EquipSlotComponents from '../Components/EquipSlotComponents.js';
 
 export default class HeroFactory {
     private readonly _gameObjectStorage: GameObjectStorage;
@@ -48,7 +49,7 @@ export default class HeroFactory {
             'Hero',
             heroClass,
         ));
-        hero.setComponent<HeroComponent>('heroComponent', heroComponent);
+        hero.set<HeroComponent>('heroComponent', heroComponent);
 
         let levelComponent = hero.addComponent(new LevelComponent(
             this._idGenerator.generateID(),
@@ -57,25 +58,26 @@ export default class HeroFactory {
             this._config['start_hero_values'][heroClass.alias]['max_level'],
             0,
         ));
-        hero.setComponent<LevelComponent>('levelComponent', levelComponent);
+        hero.set<LevelComponent>('levelComponent', levelComponent);
 
         let equipSlotAliases = [
-            'equip_slot_head',
-            'equip_slot_shoulders',
-            'equip_slot_chest',
-            'equip_slot_wrist',
-            'equip_slot_hands',
-            'equip_slot_waist',
-            'equip_slot_legs',
-            'equip_slot_foots',
-            'equip_slot_neck',
-            'equip_slot_finger_1',
-            'equip_slot_finger_2',
-            'equip_slot_trinket',   //todo: А если два и более слотов под тринкет будет?
-            'equip_slot_right_hand',
-            'equip_slot_left_hand',
+            'head',
+            'shoulders',
+            'chest',
+            'wrist',
+            'hands',
+            'waist',
+            'legs',
+            'foots',
+            'neck',
+            'finger_1',
+            'finger_2',
+            'trinket',   //todo: А если два и более слотов под тринкет будет?
+            'right_hand',
+            'left_hand',
         ];
 
+        hero.set<EquipSlotComponent[]>('equipSlots', []);
         equipSlotAliases.forEach((equipSlotAlias) => {
             let equipSlotComponent = new EquipSlotComponent(
                 this._idGenerator.generateID(),
@@ -83,16 +85,23 @@ export default class HeroFactory {
                 this._repositoryManager.getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(equipSlotAlias),
             );
             hero.addComponent(equipSlotComponent);
-            hero.setComponent<EquipSlotComponent>(equipSlotAlias, equipSlotComponent);
+            hero.set<EquipSlotComponent>(equipSlotAlias, equipSlotComponent);   //todo: Потом можно через перезагрузку сделать.
+            //или
+            // hero.get<EquipSlotComponent[]>('equipSlots').push(equipSlotComponent);
+            // hero.getComponent('equipSlotManager').addEquipSlot(equipSlotComponent);
+            // this.gameObject.addComponent(equipSlotComponent);
+            //или
+            // let equipSlotComponents = hero.addComponent<EquipSlotComponents>(new EquipSlotComponents(42, hero));
+            // equipSlotComponents.set(equipSlotAlias, equipSlotComponent);
         });
 
         let heroAttributes = [
-            'character_attribute_strength',
-            'character_attribute_agility',
-            'character_attribute_intelligence',
-            'character_attribute_stamina',
-            'character_attribute_critical_strike',
-            'character_attribute_luck',
+            'strength',
+            'agility',
+            'intelligence',
+            'stamina',
+            'critical_strike',
+            'luck',
         ];
 
         heroAttributes.forEach((heroAttributeAlias) => {
@@ -102,7 +111,7 @@ export default class HeroFactory {
                 this._repositoryManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(heroAttributeAlias),
                 this._config['start_hero_values'][heroClass.alias]['max_health_points'],
             ));
-            hero.setComponent<CharacterAttributeComponent>(heroAttributeAlias, characterAttributeComponent);    //todo: Только наверное нужно сделать через attributes. Хотя это такой же принцип как и с getComponentByName().
+            hero.set<CharacterAttributeComponent>(heroAttributeAlias, characterAttributeComponent);
         });
 
         let healthPointsComponent = hero.addComponent(new HealthPointsComponent(
@@ -111,7 +120,7 @@ export default class HeroFactory {
             this._config['start_hero_values'][heroClass.alias]['max_health_points'],
             this._config['start_hero_values'][heroClass.alias]['max_health_points'],
         ));
-        hero.setComponent<HealthPointsComponent>('healthPointsComponent', healthPointsComponent);
+        hero.set<HealthPointsComponent>('healthPointsComponent', healthPointsComponent);
 
         //todo: Очки магии добавляются только для магов. Магов надо помечать или настраивать для каждого класса по отдельности.
         /*
@@ -127,7 +136,7 @@ export default class HeroFactory {
             this._config['start_hero_values'][heroClass.alias]['max_magic_points'],
             this._config['start_hero_values'][heroClass.alias]['max_magic_points'],
         ));
-        hero.setComponent('magicPointsComponent', magicPointsComponent);
+        hero.set('magicPointsComponent', magicPointsComponent);
 
         let attackPowerComponent = hero.addComponent(new AttackPowerComponent(
             this._idGenerator.generateID(),
@@ -136,14 +145,14 @@ export default class HeroFactory {
             this._config['start_hero_values'][heroClass.alias]['max_attack_power'],
             heroClass.mainCharacterAttributes,
         ));
-        hero.setComponent('attackPowerComponent', attackPowerComponent);
+        hero.set('attackPowerComponent', attackPowerComponent);
 
         //Controllers
         let equipSlotComponentControllerComponent = hero.addComponent<EquipSlotComponentControllerComponent>(new EquipSlotComponentControllerComponent(
             this._idGenerator.generateID(),
             hero,
         ));
-        hero.setComponent('equipSlotComponentControllerComponent', equipSlotComponentControllerComponent);
+        hero.set('equipSlotComponentControllerComponent', equipSlotComponentControllerComponent);
 
         this._gameObjectStorage.add(hero);
 

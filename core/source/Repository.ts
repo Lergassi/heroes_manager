@@ -20,6 +20,10 @@ export default class Repository<Entity> {
         }
     }
 
+    /**
+     * @deprecated
+     * @param id
+     */
     findOneByID(id): Entity | null {
         if (!id) {
             return null;
@@ -34,6 +38,10 @@ export default class Repository<Entity> {
         return null;
     }
 
+    /**
+     * @deprecated
+     * @param alias
+     */
     findOneByAlias(alias: string): Entity | undefined {
         if (!alias) {
             return undefined;
@@ -48,6 +56,10 @@ export default class Repository<Entity> {
         return undefined;
     }
 
+    /**
+     * @deprecated
+     * @param alias
+     */
     findByAlias(alias: string): Entity[] {
         if (!alias) {
             return [];

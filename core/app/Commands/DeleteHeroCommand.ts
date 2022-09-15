@@ -18,7 +18,6 @@ export default class DeleteHeroCommand extends Command {
         let heroId = parseInt(input.getArgument('hero_id'));
 
         let hero = this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(heroId);
-        // let hero = this.container.get<HeroListComponent>('player.heroListComponent').getOneByID(heroId);
 
         this.container.get<HeroListComponent>('player.heroesListComponent').removeHero(hero);
         this.container.get<GameObjectStorage>('player.gameObjectStorage').remove(hero);

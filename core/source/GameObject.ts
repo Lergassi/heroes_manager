@@ -13,8 +13,10 @@ export default class GameObject implements AssignRComponentInterface {
     private _name: string;
     private readonly _tags: string[];
     private readonly _components: ComponentInterface[]; //todo: У компонентов не будет интерфейсов.
+    // private readonly _components: [];
+    // private readonly _components: any[];
     // private readonly _componentNames: {[name: string]: ComponentInterface};
-    private readonly _componentNames: {[name: string]: ComponentInterface};
+    private readonly _componentNames: {[name: string]: Object};
     // private _rComponentBridge: RComponentBridge;
     private _rComponentBridges: RComponentBridge[];
     private _assignedRComponents: RComponentUpdateInterface[];
@@ -53,6 +55,32 @@ export default class GameObject implements AssignRComponentInterface {
         return component;
     }
 
+    getComponent<T>(Module: Function): T {
+        for (let i = 0; i < this._components.length; i++) {
+            if (this._components[i] instanceof Module) {
+                return <T>this._components[i];
+                // return this._components[i];
+            }
+        }
+
+        return undefined;
+    }
+
+    getComponents<T>(Module: Function): T[] {
+        let result: T[] = [];
+        for (let i = 0; i < this._components.length; i++) {
+            if (this._components[i] instanceof Module) {
+                result.push(<T>this._components[i]);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * @deprecated
+     * @param name
+     */
     findComponentByName<T>(name: string): T {
         for (let i = 0; i < this._components.length; i++) {
             if (this._components[i].constructor.name === name) {
@@ -63,6 +91,10 @@ export default class GameObject implements AssignRComponentInterface {
         return undefined;
     }
 
+    /**
+     * @deprecated Использовать getComponents
+     * @param name
+     */
     findComponentsByName<T>(name: string): T[] {
         let result = [];
         for (let i = 0; i < this._components.length; i++) {
@@ -74,6 +106,10 @@ export default class GameObject implements AssignRComponentInterface {
         return result;
     }
 
+    /**
+     * @deprecated
+     * @param id
+     */
     getComponentByID<T>(id: number): T {
         for (let i = 0; i < this._components.length; i++) {
             if (this._components[i]['_id'] === id) {
@@ -84,6 +120,10 @@ export default class GameObject implements AssignRComponentInterface {
         throw new AppError(sprintf('Component с id=%s не найден.', id));
     }
 
+    /**
+     * @deprecated
+     * @param name
+     */
     getComponentByName<T>(name: string): T {
         let component = this.findComponentByName(name);
         if (!component) {
@@ -140,8 +180,9 @@ export default class GameObject implements AssignRComponentInterface {
     /**
      * @dev
      */
-    setComponent<Component>(name: string, component: Component): Component {
-        this._componentNames[name] = <ComponentInterface>component; //todo: Убрать ComponentInterface.
+    set<Component>(name: string, component: Component): Component {
+        // this._componentNames[name] = <ComponentInterface>component; //todo: Убрать ComponentInterface.
+        this._componentNames[name] = component;
 
         return component;
     }
@@ -149,10 +190,10 @@ export default class GameObject implements AssignRComponentInterface {
     /**
      * @dev
      */
-    getComponent<Component>(name: string): Component {
-        if (!this._componentNames.hasOwnProperty(name)) {
-            throw new AppError(sprintf('Компонент "%s" не найден в GameObject.', name));
-        }
+    get<Component>(name: string): Component {
+        // if (!this._componentNames.hasOwnProperty(name)) {
+        //     throw new AppError(sprintf('Компонент "%s" не найден в GameObject.', name));
+        // }
 
         return <Component>this._componentNames[name];
     }

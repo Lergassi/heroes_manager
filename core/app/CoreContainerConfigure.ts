@@ -12,7 +12,7 @@ import Serializer from '../source/Serializer.js';
 import JsonSerializer from '../source/JsonSerializer.js';
 import MetadataManager from '../source/MetadataManager.js';
 import MetadataManagerCreator from './Services/MetadataManagerCreator.js';
-import EntityManagerCreator from './Services/EntityManagerCreator.js';
+import EntityManagerBuilder from './Services/EntityManagerBuilder.js';
 import AddItemCommand from './Commands/AddItemCommand.js';
 import CreateHeroCommand from './Commands/CreateHeroCommand.js';
 import CreateItemStorageCommand from './Commands/CreateItemStorageCommand.js';
@@ -51,7 +51,7 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
             return (new MetadataManagerCreator()).create();
         });
         container.set<EntityManager>(ContainerKey.EntityManager, (container) => {
-            return (new EntityManagerCreator()).create();
+            return (new EntityManagerBuilder(container)).build();
         });
         container.set<EntityManagerFacade>(ContainerKey.EntityManagerFacade, (container) => {
             return new EntityManagerFacade(container.get<EntityManager>(ContainerKey.EntityManager));

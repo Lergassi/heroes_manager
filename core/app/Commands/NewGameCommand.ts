@@ -17,7 +17,7 @@ import CoreContainerConfigure from '../CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../PlayerContainerConfigure.js';
 import GameConsole from '../../source/GameConsole/GameConsole.js';
 import ReactDOM from 'react-dom/client';
-import ItemStorageRComponent from '../../../client/public/React/ItemStorageRComponent.js';
+import ItemStorageUI from '../../../client/public/React/ItemStorageRComponent.js';
 import ClientRender from '../../../client/public/React/ClientRender.js';
 import AppError from '../../source/AppError.js';
 import {sprintf} from 'sprintf-js';

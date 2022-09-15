@@ -63,7 +63,7 @@ export default class AppError extends Error {
     }
 
     static itemCategoryNotAvailable(item: Item, equipSlot: EquipSlot) {
-        return new AppError(sprintf('Предмет категории "%s" нельзя экипировать в слот "%s"', item.name, equipSlot.name));
+        return new AppError(sprintf('Предмет категории "%s" нельзя экипировать в слот "%s"', item.itemCategory.name, equipSlot.name));
     }
 
     static equipNotAvailableByArmorMaterial(armorMaterial: ArmorMaterial, heroClass: HeroClass) {

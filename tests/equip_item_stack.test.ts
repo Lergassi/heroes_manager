@@ -20,9 +20,9 @@ let container = new Container();
 (new DefaultContainerConfigure()).configure(container);
 (new CoreContainerConfigure()).configure(container);
 
-let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('hero_class_warrior');
-let equipSlot = container.get<EntityManager>('core.entityManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias('equip_slot_head');
-let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_helmet_01');
+let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('warrior');
+let equipSlot = container.get<EntityManager>('core.entityManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias('head');
+let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_helmet_01');
 
 let hero = container.get<HeroFactory>('core.heroFactory').create(heroClass);
 let equipSlotComponent = _.filter(hero.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name), (equipSlotComponent) => {
@@ -38,13 +38,13 @@ describe('Test available item category.', () => {
 
 
 describe.each([
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_breastplate_01')],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_belt_01')],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_bracer_01')],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_gloves_01')],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_shoulders_01')],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_boots_01')],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_pants_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_breastplate_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_belt_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_bracer_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_gloves_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_shoulders_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_boots_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_pants_01')],
 ])('Test not available item category.', (a) => {
     test(sprintf('ItemStack with item "%s" not available for equip slot "%s".', a.item.name, equipSlotComponent.equipSlot.name), () => {
         expect(() => {
@@ -54,8 +54,8 @@ describe.each([
 });
 
 describe.each([
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_helmet_01')],
-    // [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_leather_helmet_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_helmet_01')],
+    // [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('leather_helmet_01')],
 ])('Test available armor material.', (a) => {
     test(sprintf('ItemStack with armor material "%s" available for hero class "%s".', a.item.armorMaterial.name, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClass.name), () => {
         expect(equipSlotComponent.placeItemStack(a)).toBeTruthy();
@@ -66,9 +66,9 @@ describe.each([
 
 
 describe.each([
-    // [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_helmet_01')],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_leather_helmet_01')],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_cloth_helmet_01')],
+    // [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_helmet_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('leather_helmet_01')],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('cloth_helmet_01')],
 ])('Test not available armor material.', (a) => {
     test(sprintf('ItemStack with armor material "%s" not available for hero class "%s".', a.item.armorMaterial.name, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClass.name), () => {
         expect(() => {

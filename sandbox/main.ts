@@ -2,8 +2,8 @@ import UUIDGenerator from '../core/source/UUIDGenerator.js';
 import {
     testEntityManagerFacade, testEquipSlotDecorators,
     testHeroController,
-    testInherit,
-    testItemStorageFactories, testJSLinks,
+    testInherit, testItemBuilder,
+    testItemStorageFactories, testJSLinks, testLodashFind,
     testUUIDGenerator
 } from './include.js';
 // import {format} from 'date-fns';
@@ -29,7 +29,9 @@ import {
 // testHeroController();
 // testEntityManagerFacade();
 // testEquipSlotDecorators();
-testJSLinks();
+// testJSLinks();
+// testLodashFind();
+testItemBuilder();
 
 //simple
 //test date-fns

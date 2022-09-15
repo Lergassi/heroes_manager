@@ -1,19 +1,37 @@
 import ItemCategory from './ItemCategory.js';
 import Quality from './Quality.js';
 import ArmorMaterial from './ArmorMaterial.js';
+import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
+import CharacterAttribute, {CharacterAttributeEnum} from './CharacterAttribute.js';
+import _ from 'lodash';
+
+export type CharacterAttributeIncreaseObject = {[alias: string]: CharacterAttributeIncrease};
+// export type CharacterAttributeIncreaseObject = {[alias: CharacterAttributeEnum]: CharacterAttributeIncrease};
 
 export default class Item {
     private readonly _id: string;
     private readonly _name: string;
     private readonly _alias: string;
     private readonly _description: string;
-    private readonly _stackSize: number;
     private readonly _itemLevel: number;
     private readonly _sort: number;
-    private readonly _isEquipable: boolean;
     private readonly _itemCategory: ItemCategory;
     private readonly _quality: Quality;
-    private readonly _armorMaterial: ArmorMaterial; //todo: Временно. Необязательные параметры перенести в другое место.
+
+    private readonly _stackSize: number;    //Нет у экипировки.
+    private readonly _isEquipable: boolean; //Только у экипировки.
+    private readonly _armorMaterial: ArmorMaterial; //Только у брони. todo: Временно. Необязательные параметры перенести в другое место.
+
+    private readonly _strengthIncrease: number;
+    private readonly _agilityIncrease: number;
+    private readonly _intelligenceIncrease: number;
+    private readonly _healthPointsIncrease: number; //Отдельно от выносливости.
+    private readonly _magicPointsIncrease: number;
+    private readonly _attackPowerIncrease: number;
+    //и тд. Допустим всего атрибутов в игре 30.
+
+    // private readonly _increase: {[alias: string]: CharacterAttributeIncrease};
+    private readonly _increase: CharacterAttributeIncreaseObject;
 
     get id(): string {
         return this._id;
@@ -70,7 +88,9 @@ export default class Item {
         isEquipable: boolean,
         itemCategory: ItemCategory,
         quality: Quality,
-        armorMaterial: ArmorMaterial,
+        armorMaterial: ArmorMaterial = null,
+        // increase: {[alias: string]: CharacterAttributeIncrease} = {},
+        increase: CharacterAttributeIncreaseObject = {},
     ) {
         this._id = id;
         this._name = name;
@@ -83,5 +103,10 @@ export default class Item {
         this._itemCategory = itemCategory;
         this._quality = quality;
         this._armorMaterial = armorMaterial;
+        this._increase = increase;
+    }
+
+    increase(characterAttribute: CharacterAttribute) {
+        return this._increase.hasOwnProperty(characterAttribute.alias) ? this._increase[characterAttribute.alias].value : 0;
     }
 }

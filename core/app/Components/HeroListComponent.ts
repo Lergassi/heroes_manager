@@ -25,7 +25,7 @@ export default class HeroListComponent extends Component {
     }
 
     removeHero(hero: GameObject): void {
-        if (hero.getComponent<HeroComponent>('heroComponent').state !== HeroState.Free) {
+        if (hero.get<HeroComponent>('heroComponent').state !== HeroState.Free) {
             throw new AppError('Нельзя удалить героя пока он занят.');
         }
 

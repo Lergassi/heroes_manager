@@ -2,14 +2,13 @@ import GameConsoleRComponent from './GameConsoleRComponent.js';
 import ReactDOM from 'react-dom/client';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import ItemStorageRComponent, {ItemStorageCollectionRComponent} from './ItemStorageRComponent.js';
+import ItemStorageUI, {ItemStorageCollectionRComponent} from './ItemStorageRComponent.js';
 import BasicItemStorageFactory from '../../../core/app/Factories/BasicItemStorageFactory.js';
 import ItemStorageComponent, {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/Components/ItemStorageComponent.js';
 import ItemStackFactory from '../../../core/app/Factories/ItemStackFactory.js';
 import {debugItemStorage} from '../../../core/debug/debug_functions.js';
 import EntityManager from '../../../core/source/EntityManager.js';
 import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
-import Span from './Span.js';
 import ItemStorageListComponent from '../../../core/app/Components/ItemStorageListComponent.js';
 import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorageFactoryInterface.js';
 import {HeroListRComponent, HeroRComponent} from './HeroUI.js';
@@ -58,19 +57,19 @@ export default class ClientRender {
         let itemStorage = this._container.get<ItemStorageFactoryInterface>('core.ItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
         this._container.get<GameObjectStorage>('core.gameObjectStorage').add(itemStorage);
         itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 20),
+            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('wood', 20),
         );
         itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_wood', 20),
+            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('wood', 20),
         );
         itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_iron_ore', 20),
+            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('iron_ore', 20),
         );
         itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_one_handed_sword_01', 1),
+            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('one_handed_sword_01', 1),
         );
         itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('item_plate_breastplate_01', 1),
+            this._container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_breastplate_01', 1),
         );
         // debugItemStorage(itemStorage);
 
@@ -81,7 +80,7 @@ export default class ClientRender {
             debugItemStorage(itemStorage);
         };
 
-        let itemStorageElement = <ItemStorageRComponent
+        let itemStorageElement = <ItemStorageUI
             itemStorage={itemStorage}
         />;
         // console.log(itemStorageElement);

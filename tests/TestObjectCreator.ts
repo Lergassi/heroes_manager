@@ -73,7 +73,7 @@ export default class TestObjectCreator {
         entityManager.getRepository<ItemCategory>(ItemCategory.name).add(new ItemCategory(
             '108',
             'test Ресурсы',
-            'test_item_category_resources',
+            'test_resources',
             '',
             500,
             undefined,
@@ -87,7 +87,7 @@ export default class TestObjectCreator {
             1,
             500,
             false,
-            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('test_item_category_resources'),
+            entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('test_resources'),
             entityManager.getRepository<Quality>(Quality.name).getOneByAlias('test_quality'),
             entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('test_armor_material'),
         ));

@@ -251,7 +251,7 @@ var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ArmorMaterial_js_1 = __importDefault(require("../../core/app/Entities/ArmorMaterial.js"));
-const Quality_js_1 = __importDefault(require("../../core/app/Entities/Quality.js"));
+const js_1 = __importDefault(require("../../core/app/Entities/Quality.js"));
 const Currency_js_1 = __importDefault(require("../../core/app/Entities/Currency.js"));
 const JsonSerializer_js_1 = __importDefault(require("../../core/source/JsonSerializer.js"));
 const ItemCategory_js_1 = __importDefault(require("../../core/app/Entities/ItemCategory.js"));
@@ -271,7 +271,7 @@ exports.default = {
         },
     }),
     test_quality: jsonSerializer.toJson({
-        classname: Quality_js_1.default.name,
+        classname: js_1.default.name,
         data: {
             _id: 101,
             _name: 'test Quality',

@@ -15,12 +15,12 @@ export default class CreateHeroCommand extends Command {
 
     configure() {
         super.configure();
-        this.addArgument('hero_class_alias', '', true);
+        this.addArgument('alias', '', true);
         this.addArgument('level', '', false, 1);
     }
 
     async execute(input: Input) {
-        let heroClassAlias: string = input.getArgument('hero_class_alias');
+        let heroClassAlias: string = input.getArgument('alias');
         let heroClass: HeroClass = this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>('HeroClass').getOneByAlias(heroClassAlias);
 
         let heroFactory: HeroFactory = this.container.get<HeroFactory>('player.heroFactory');

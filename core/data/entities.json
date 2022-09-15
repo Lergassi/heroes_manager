@@ -6,7 +6,7 @@
       "data": {
         "_id": 33,
         "_name": "Латы",
-        "_alias": "armor_material_plate",
+        "_alias": "plate",
         "_sort": 500
       }
     },
@@ -15,7 +15,7 @@
       "data": {
         "_id": 34,
         "_name": "Кожа",
-        "_alias": "armor_material_leather",
+        "_alias": "leather",
         "_sort": 510
       }
     },
@@ -24,7 +24,7 @@
       "data": {
         "_id": 35,
         "_name": "Ткань",
-        "_alias": "armor_material_cloth",
+        "_alias": "cloth",
         "_sort": 520
       }
     },
@@ -33,7 +33,7 @@
       "data": {
         "_id": 39,
         "_name": "Сила",
-        "_alias": "character_attribute_strength",
+        "_alias": "strength",
         "_description": "Увеличивает силу атаки у классов с главной характеристикой \"Сила\".",
         "_sort": 500
       }
@@ -43,7 +43,7 @@
       "data": {
         "_id": 40,
         "_name": "Ловкость",
-        "_alias": "character_attribute_agility",
+        "_alias": "agility",
         "_description": "Увеличивает силу атаки у классов с главной характеристикой \"Ловкость\".",
         "_sort": 510
       }
@@ -53,7 +53,7 @@
       "data": {
         "_id": 41,
         "_name": "Интеллект",
-        "_alias": "character_attribute_intelligence",
+        "_alias": "intelligence",
         "_description": "Увеличивает силу атаки и кол-во очков магии у классов с главной характеристикой \"Интеллект\".",
         "_sort": 520
       }
@@ -63,7 +63,7 @@
       "data": {
         "_id": 42,
         "_name": "Скорость атаки",
-        "_alias": "character_attribute_attack_speed",
+        "_alias": "attack_speed",
         "_description": "",
         "_sort": 530
       }
@@ -73,7 +73,7 @@
       "data": {
         "_id": 43,
         "_name": "Критический удар",
-        "_alias": "character_attribute_critical_strike",
+        "_alias": "critical_strike",
         "_description": "",
         "_sort": 540
       }
@@ -83,7 +83,7 @@
       "data": {
         "_id": 44,
         "_name": "Выносливость",
-        "_alias": "character_attribute_stamina",
+        "_alias": "stamina",
         "_description": "Увеличивает кол-во очков здоровья.",
         "_sort": 550
       }
@@ -93,7 +93,7 @@
       "data": {
         "_id": 45,
         "_name": "Удача",
-        "_alias": "character_attribute_luck",
+        "_alias": "luck",
         "_description": "Влияет на многие характеристики.",
         "_sort": 560
       }
@@ -123,7 +123,7 @@
       "data": {
         "_id": 36,
         "_name": "Танк",
-        "_alias": "hero_role_tank",
+        "_alias": "tank",
         "_sort": 500
       }
     },
@@ -132,7 +132,7 @@
       "data": {
         "_id": 37,
         "_name": "Поддержка",
-        "_alias": "hero_role_support",
+        "_alias": "support",
         "_sort": 510
       }
     },
@@ -141,7 +141,7 @@
       "data": {
         "_id": 38,
         "_name": "Боец",
-        "_alias": "hero_role_damage_dealer",
+        "_alias": "damage_dealer",
         "_sort": 520
       }
     },
@@ -150,7 +150,7 @@
       "data": {
         "_id": 1,
         "_name": "Poor",
-        "_alias": "quality_poor",
+        "_alias": "poor",
         "_description": "Серые вещи. Мусор для продажи.",
         "_sort": 500
       }
@@ -160,7 +160,7 @@
       "data": {
         "_id": 2,
         "_name": "Common",
-        "_alias": "quality_common",
+        "_alias": "common",
         "_description": "Белые вещи.",
         "_sort": 510
       }
@@ -170,7 +170,7 @@
       "data": {
         "_id": 3,
         "_name": "Uncommon",
-        "_alias": "quality_uncommon",
+        "_alias": "uncommon",
         "_description": "Зеленые вещи.",
         "_sort": 520
       }
@@ -180,7 +180,7 @@
       "data": {
         "_id": 4,
         "_name": "Rare",
-        "_alias": "quality_rare",
+        "_alias": "rare",
         "_description": "Синие вещи.",
         "_sort": 530
       }
@@ -190,7 +190,7 @@
       "data": {
         "_id": 5,
         "_name": "Epic",
-        "_alias": "quality_epic",
+        "_alias": "epic",
         "_description": "Фиолетовые вещи.",
         "_sort": 540
       }
@@ -200,7 +200,7 @@
       "data": {
         "_id": 6,
         "_name": "Legendary",
-        "_alias": "quality_legendary",
+        "_alias": "legendary",
         "_description": "Оранжевые вещи.",
         "_sort": 550
       }
@@ -210,7 +210,7 @@
       "data": {
         "_id": 7,
         "_name": "Оружие",
-        "_alias": "item_category_weapons",
+        "_alias": "weapons",
         "_sort": 500,
         "_parent": null
       }
@@ -220,7 +220,7 @@
       "data": {
         "_id": 8,
         "_name": "Одноручные мечи",
-        "_alias": "item_category_one_handed_swords",
+        "_alias": "one_handed_swords",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -233,7 +233,7 @@
       "data": {
         "_id": 9,
         "_name": "Двуручные мечи",
-        "_alias": "item_category_two_handed_swords",
+        "_alias": "two_handed_swords",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -246,7 +246,7 @@
       "data": {
         "_id": 10,
         "_name": "Одноручные топоры",
-        "_alias": "item_category_one_handed_axes",
+        "_alias": "one_handed_axes",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -259,7 +259,7 @@
       "data": {
         "_id": 11,
         "_name": "Двуручные топоры",
-        "_alias": "item_category_two_handed_axes",
+        "_alias": "two_handed_axes",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -272,7 +272,7 @@
       "data": {
         "_id": 12,
         "_name": "Посохи",
-        "_alias": "item_category_staffs",
+        "_alias": "staffs",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -285,7 +285,7 @@
       "data": {
         "_id": 13,
         "_name": "Жезлы",
-        "_alias": "item_category_wands",
+        "_alias": "wands",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -298,7 +298,7 @@
       "data": {
         "_id": 14,
         "_name": "Кинжалы",
-        "_alias": "item_category_daggers",
+        "_alias": "daggers",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -311,7 +311,7 @@
       "data": {
         "_id": 15,
         "_name": "Луки",
-        "_alias": "item_category_bows",
+        "_alias": "bows",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -324,7 +324,7 @@
       "data": {
         "_id": 16,
         "_name": "Арбалеты",
-        "_alias": "item_category_crossbows",
+        "_alias": "crossbows",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -337,7 +337,7 @@
       "data": {
         "_id": 17,
         "_name": "Револьверы",
-        "_alias": "item_category_revolvers",
+        "_alias": "revolvers",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -350,7 +350,7 @@
       "data": {
         "_id": 18,
         "_name": "Броня",
-        "_alias": "item_category_armor",
+        "_alias": "armor",
         "_sort": 500,
         "_parent": null
       }
@@ -360,7 +360,7 @@
       "data": {
         "_id": 19,
         "_name": "Шлемы",
-        "_alias": "item_category_helmets",
+        "_alias": "helmets",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -373,7 +373,7 @@
       "data": {
         "_id": 20,
         "_name": "Нагрудники",
-        "_alias": "item_category_breastplates",
+        "_alias": "breastplates",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -386,7 +386,7 @@
       "data": {
         "_id": 21,
         "_name": "Сапоги",
-        "_alias": "item_category_boots",
+        "_alias": "boots",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -399,7 +399,7 @@
       "data": {
         "_id": 22,
         "_name": "Перчатки",
-        "_alias": "item_category_gloves",
+        "_alias": "gloves",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -412,7 +412,7 @@
       "data": {
         "_id": 23,
         "_name": "Штаны",
-        "_alias": "item_category_pants",
+        "_alias": "pants",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -425,7 +425,7 @@
       "data": {
         "_id": 24,
         "_name": "Наплечники",
-        "_alias": "item_category_shoulders",
+        "_alias": "shoulders",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -438,7 +438,7 @@
       "data": {
         "_id": 25,
         "_name": "Поясы",
-        "_alias": "item_category_belts",
+        "_alias": "belts",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -451,7 +451,7 @@
       "data": {
         "_id": 26,
         "_name": "Браслеты",
-        "_alias": "item_category_bracers",
+        "_alias": "bracers",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -464,7 +464,7 @@
       "data": {
         "_id": 27,
         "_name": "Амулеты",
-        "_alias": "item_category_amulets",
+        "_alias": "amulets",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -477,7 +477,7 @@
       "data": {
         "_id": 28,
         "_name": "Кольца",
-        "_alias": "item_category_rings",
+        "_alias": "rings",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -490,7 +490,7 @@
       "data": {
         "_id": 29,
         "_name": "Аксессуары",
-        "_alias": "item_category_trinkets",
+        "_alias": "trinkets",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -503,7 +503,7 @@
       "data": {
         "_id": 30,
         "_name": "Щиты",
-        "_alias": "item_category_shields",
+        "_alias": "shields",
         "_sort": 500,
         "_parent": {
           "classname": "ItemCategory",
@@ -516,7 +516,7 @@
       "data": {
         "_id": 31,
         "_name": "Ресурсы",
-        "_alias": "item_category_resources",
+        "_alias": "resources",
         "_sort": 500,
         "_parent": null
       }
@@ -526,7 +526,7 @@
       "data": {
         "_id": 32,
         "_name": "Материалы",
-        "_alias": "item_category_materials",
+        "_alias": "materials",
         "_sort": 500,
         "_parent": null
       }
@@ -1466,7 +1466,7 @@
       "data": {
         "_id": 87,
         "_name": "Воин",
-        "_alias": "hero_class_warrior",
+        "_alias": "warrior",
         "_description": "",
         "_sort": 500,
         "_heroRole": {
@@ -1502,7 +1502,7 @@
       "data": {
         "_id": 88,
         "_name": "Паладинн",
-        "_alias": "hero_class_paladin",
+        "_alias": "paladin",
         "_description": "",
         "_sort": 510,
         "_heroRole": {
@@ -1538,7 +1538,7 @@
       "data": {
         "_id": 89,
         "_name": "Разбойник",
-        "_alias": "hero_class_rogue",
+        "_alias": "rogue",
         "_description": "",
         "_sort": 520,
         "_heroRole": {
@@ -1570,7 +1570,7 @@
       "data": {
         "_id": 90,
         "_name": "Гладиатор",
-        "_alias": "hero_class_gladiator",
+        "_alias": "gladiator",
         "_description": "",
         "_sort": 530,
         "_heroRole": {
@@ -1602,7 +1602,7 @@
       "data": {
         "_id": 91,
         "_name": "Лучник",
-        "_alias": "hero_class_archer",
+        "_alias": "archer",
         "_description": "",
         "_sort": 540,
         "_heroRole": {
@@ -1638,7 +1638,7 @@
       "data": {
         "_id": 92,
         "_name": "Стрелок",
-        "_alias": "hero_class_gunslinger",
+        "_alias": "gunslinger",
         "_description": "Использует револьверы и манию.",
         "_sort": 550,
         "_heroRole": {
@@ -1674,7 +1674,7 @@
       "data": {
         "_id": 93,
         "_name": "Маг",
-        "_alias": "hero_class_mage",
+        "_alias": "mage",
         "_description": "",
         "_sort": 560,
         "_heroRole": {
@@ -1710,7 +1710,7 @@
       "data": {
         "_id": 94,
         "_name": "Чернокнижник",
-        "_alias": "hero_class_warlock",
+        "_alias": "warlock",
         "_description": "",
         "_sort": 570,
         "_heroRole": {
@@ -1746,7 +1746,7 @@
       "data": {
         "_id": 95,
         "_name": "Священик",
-        "_alias": "hero_class_priest",
+        "_alias": "priest",
         "_description": "",
         "_sort": 580,
         "_heroRole": {
@@ -1782,7 +1782,7 @@
       "data": {
         "_id": 96,
         "_name": "Друид",
-        "_alias": "hero_class_druid",
+        "_alias": "druid",
         "_description": "",
         "_sort": 590,
         "_heroRole": {
@@ -1818,7 +1818,7 @@
       "data": {
         "_id": 97,
         "_name": "Голова",
-        "_alias": "equip_slot_head",
+        "_alias": "head",
         "_sort": 500,
         "_rules": [
           {
@@ -1979,7 +1979,7 @@
       "data": {
         "_id": 98,
         "_name": "Плечи",
-        "_alias": "equip_slot_shoulders",
+        "_alias": "shoulders",
         "_sort": 510,
         "_rules": [
           {
@@ -2140,7 +2140,7 @@
       "data": {
         "_id": 99,
         "_name": "Грудь",
-        "_alias": "equip_slot_chest",
+        "_alias": "chest",
         "_sort": 520,
         "_rules": [
           {
@@ -2301,7 +2301,7 @@
       "data": {
         "_id": 100,
         "_name": "Запястье",
-        "_alias": "equip_slot_wrist",
+        "_alias": "wrist",
         "_sort": 530,
         "_rules": [
           {
@@ -2462,7 +2462,7 @@
       "data": {
         "_id": 101,
         "_name": "Руки",
-        "_alias": "equip_slot_hands",
+        "_alias": "hands",
         "_sort": 540,
         "_rules": [
           {
@@ -2623,7 +2623,7 @@
       "data": {
         "_id": 102,
         "_name": "Талия",
-        "_alias": "equip_slot_waist",
+        "_alias": "waist",
         "_sort": 550,
         "_rules": [
           {
@@ -2784,7 +2784,7 @@
       "data": {
         "_id": 103,
         "_name": "Ноги",
-        "_alias": "equip_slot_legs",
+        "_alias": "legs",
         "_sort": 560,
         "_rules": [
           {
@@ -2945,7 +2945,7 @@
       "data": {
         "_id": 104,
         "_name": "Ступни",
-        "_alias": "equip_slot_foots",
+        "_alias": "foots",
         "_sort": 570,
         "_rules": [
           {
@@ -3106,7 +3106,7 @@
       "data": {
         "_id": 105,
         "_name": "Шея",
-        "_alias": "equip_slot_neck",
+        "_alias": "neck",
         "_sort": 580,
         "_rules": [
           {
@@ -3267,7 +3267,7 @@
       "data": {
         "_id": 106,
         "_name": "Палец 1",
-        "_alias": "equip_slot_finger_1",
+        "_alias": "finger_1",
         "_sort": 590,
         "_rules": [
           {
@@ -3428,7 +3428,7 @@
       "data": {
         "_id": 107,
         "_name": "Палец 2",
-        "_alias": "equip_slot_finger_2",
+        "_alias": "finger_2",
         "_sort": 600,
         "_rules": [
           {
@@ -3589,7 +3589,7 @@
       "data": {
         "_id": 108,
         "_name": "Аксессуар",
-        "_alias": "equip_slot_trinket",
+        "_alias": "trinket",
         "_sort": 610,
         "_rules": [
           {
@@ -3750,7 +3750,7 @@
       "data": {
         "_id": 109,
         "_name": "Правая рука",
-        "_alias": "equip_slot_right_hand",
+        "_alias": "right_hand",
         "_sort": 620,
         "_rules": [
           {
@@ -3939,7 +3939,7 @@
       "data": {
         "_id": 110,
         "_name": "Левая рука",
-        "_alias": "equip_slot_left_hand",
+        "_alias": "left_hand",
         "_sort": 630,
         "_rules": [
           {

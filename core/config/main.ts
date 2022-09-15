@@ -4,37 +4,37 @@ export default {
     // date_format_ru: 'hh:mm:ss dd.MM.yyyy',
     max_player_level: 100,
     start_hero_values: {
-        hero_class_warrior: {
+        warrior: {
             max_level: 100,
             max_health_points: 120,
             max_magic_points: 100,
             min_attack_power: 30,
             max_attack_power: 40,
             character_attributes: {
-                character_attribute_strength: 10,
-                character_attribute_agility: 5,
-                character_attribute_intelligence: 5,
-                character_attribute_stamina: 10,
-                character_attribute_critical_strike: 5,
-                character_attribute_luck: 0
+                strength: 10,
+                agility: 5,
+                intelligence: 5,
+                stamina: 10,
+                critical_strike: 5,
+                luck: 0
             }
         },
-        hero_class_rogue: {
+        rogue: {
             max_level: 100,
             max_health_points: 100,
             max_magic_points: 100,
             min_attack_power: 40,
             max_attack_power: 50,
             character_attributes: {
-                character_attribute_strength: 5,
-                character_attribute_agility: 10,
-                character_attribute_intelligence: 5,
-                character_attribute_stamina: 7,
-                character_attribute_critical_strike: 5,
-                character_attribute_luck: 0
+                strength: 5,
+                agility: 10,
+                intelligence: 5,
+                stamina: 7,
+                critical_strike: 5,
+                luck: 0
             }
         },
-        hero_class_mage: {
+        mage: {
             max_level: 100,
             max_health_points: 70,
             max_magic_points: 100,
@@ -42,27 +42,27 @@ export default {
             min_attack_power: 60,
             max_attack_power: 70,
             character_attributes: {
-                character_attribute_strength: 5,
-                character_attribute_agility: 5,
-                character_attribute_intelligence: 12,
-                character_attribute_stamina: 4,
-                character_attribute_critical_strike: 5,
-                character_attribute_luck: 0
+                strength: 5,
+                agility: 5,
+                intelligence: 12,
+                stamina: 4,
+                critical_strike: 5,
+                luck: 0
             }
         },
-        hero_class_gunslinger: {
+        gunslinger: {
             max_level: 100,
             max_health_points: 80,
             max_magic_points: 100,
             min_attack_power: 50,
             max_attack_power: 60,
             character_attributes: {
-                character_attribute_strength: 4,
-                character_attribute_agility: 10,
-                character_attribute_intelligence: 7,
-                character_attribute_stamina: 5,
-                character_attribute_critical_strike: 5,
-                character_attribute_luck: 0
+                strength: 4,
+                agility: 10,
+                intelligence: 7,
+                stamina: 5,
+                critical_strike: 5,
+                luck: 0
             }
         },
     },

@@ -13,9 +13,13 @@ module.exports = {
     // devtool: "eval-source-map",
     // devtool: "source-map",
     // devtool: "eval-cheap-module-source-map",
+    // entry: {
+    //     client: './client/index.js',
+    //     sandbox: './client/sandbox.js',
+    // },
     entry: {
-        client: './client/index.js',
-        sandbox: './client/sandbox.js',
+        client: './dist/client/index.js',
+        // sandbox: './dist/client/sandbox.js',
     },
     output: {
         // filename: 'bundle.js',

@@ -15,7 +15,7 @@ export default class RemoveEquipCommand extends Command {
         super.configure();
         //from
         this.addArgument('hero_id', '', true)
-        this.addArgument('equip_slot_component_id', '', true);
+        this.addArgument('component_id', '', true);
 
         //to
         this.addArgument('item_storage_id',  '', true);
@@ -24,7 +24,7 @@ export default class RemoveEquipCommand extends Command {
 
     async execute(input: Input) {
         let heroID = parseInt(input.getArgument('hero_id'));
-        let equipSlotComponentID = parseInt(input.getArgument('equip_slot_component_id'));
+        let equipSlotComponentID = parseInt(input.getArgument('component_id'));
 
         let itemStorageID = parseInt(input.getArgument('item_storage_id'));
         let itemStorageSlotComponentID = parseInt(input.getArgument('item_storage_slot_component_id'));

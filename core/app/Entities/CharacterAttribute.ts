@@ -1,3 +1,10 @@
+export enum CharacterAttributeEnum {
+    strength = 'strength',
+    agility = 'agility',
+    intelligence = 'intelligence',
+    //...
+}
+
 export default class CharacterAttribute {
     private readonly _id: string;
     private readonly _name: string;

@@ -31,13 +31,13 @@ export default class Client {
         // // console.log(itemStorage);
         //
         // itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 20),
+        //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('wood', 20),
         // );
         // itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_wood', 20),
+        //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('wood', 20),
         // );
         // itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('item_one_handed_sword_01', 1),
+        //     container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('one_handed_sword_01', 1),
         // );
         // debugItemStorage(itemStorage);
 

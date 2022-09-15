@@ -19,7 +19,7 @@ export default class EquipCommand extends Command {
 
         //to
         this.addArgument('hero_id', '', true);
-        this.addArgument('equip_slot_component_id', '', true);
+        this.addArgument('component_id', '', true);
     }
 
     async execute(input: Input) {
@@ -27,7 +27,7 @@ export default class EquipCommand extends Command {
         let itemStorageSlotID = parseInt(input.getArgument('item_storage_slot_id'));
 
         let heroID = parseInt(input.getArgument('hero_id'));
-        let equipSlotComponentID = parseInt(input.getArgument('equip_slot_component_id'));
+        let equipSlotComponentID = parseInt(input.getArgument('component_id'));
 
         let itemStorage: GameObject = this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(itemStorageID);
         let itemStorageSlotComponent: ItemStorageSlotComponent = <ItemStorageSlotComponent>itemStorage.getComponentByID(itemStorageSlotID);
