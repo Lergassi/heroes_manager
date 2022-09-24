@@ -7,8 +7,12 @@ import RComponentBridge, {
     AssignRComponentInterface,
     RComponentUpdateInterface
 } from '../../client/source/RComponentBridge.js';
+import ItemStack from '../app/RuntimeObjects/ItemStack.js';
 
 export default class GameObject implements AssignRComponentInterface {
+    /**
+     * @deprecated
+     */
     private readonly _id: number;
     private _name: string;
     private readonly _tags: string[];
@@ -47,7 +51,7 @@ export default class GameObject implements AssignRComponentInterface {
         this._assignedRComponents = [];
     }
 
-    addComponent<T>(component: T): T {
+    addComponent<Component>(component: Component): Component {
         if (!_.includes(this._components, component)) {
             this._components.push(component);
         }
@@ -55,22 +59,27 @@ export default class GameObject implements AssignRComponentInterface {
         return component;
     }
 
-    getComponent<T>(Module: Function): T {
-        for (let i = 0; i < this._components.length; i++) {
-            if (this._components[i] instanceof Module) {
-                return <T>this._components[i];
-                // return this._components[i];
+    getComponent<Component>(name: string): Component;
+    getComponent<Component>(Module: Function): Component;
+    getComponent<Component>(nameOrModule: string | Function): Component {
+        if (typeof nameOrModule === 'string') {
+            return <Component>this._componentNames[nameOrModule];
+        } else {
+            for (let i = 0; i < this._components.length; i++) {
+                if (this._components[i] instanceof nameOrModule) {
+                    return <Component>this._components[i];
+                }
             }
         }
 
         return undefined;
     }
 
-    getComponents<T>(Module: Function): T[] {
-        let result: T[] = [];
+    getComponents<Component>(Module: Function): Component[] {
+        let result: Component[] = [];
         for (let i = 0; i < this._components.length; i++) {
             if (this._components[i] instanceof Module) {
-                result.push(<T>this._components[i]);
+                result.push(<Component>this._components[i]);
             }
         }
 
@@ -168,7 +177,8 @@ export default class GameObject implements AssignRComponentInterface {
         //     this._rComponentBridges[i].update(this);
         // }
         for (let i = 0; i < this._assignedRComponents.length; i++) {
-            this._assignedRComponents[i].update(this);
+            // this._assignedRComponents[i].update(this);
+            this._assignedRComponents[i].update();
         }
         // for (let i = 0; i < this._components.length; i++) {
         //     if (typeof this._components[i]['update'] === 'function') {
@@ -178,10 +188,11 @@ export default class GameObject implements AssignRComponentInterface {
     }
 
     /**
+     * Также вызывается метод addComponent.
      * @dev
      */
     set<Component>(name: string, component: Component): Component {
-        // this._componentNames[name] = <ComponentInterface>component; //todo: Убрать ComponentInterface.
+        this.addComponent(component);
         this._componentNames[name] = component;
 
         return component;

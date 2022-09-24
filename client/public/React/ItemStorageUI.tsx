@@ -39,12 +39,12 @@ export class ItemStackRComponent extends React.Component<ItemStackRComponentProp
     }
 
     _renderItemStack(itemStack: ItemStack) {
-        let element;
-        if (itemStack.item.isEquipable) {
-            element = <span>{itemStack.item.name}</span>
-        } else {
-            element = <span>{itemStack.item.name} ({itemStack.count})</span>
-        }
+        let element = <span>{itemStack.item.name} ({itemStack.count})</span>;
+        // if (itemStack.item.isEquipable) {
+        //     element = <span>{itemStack.item.name}</span>
+        // } else {
+        //     element = <span>{itemStack.item.name} ({itemStack.count})</span>
+        // }
 
         return element;
     }
@@ -73,9 +73,10 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
 
     render() {
         let itemStorage: GameObject = this.state.itemStorage;
-        let itemStorageSlotComponents = itemStorage.findComponentsByName<ItemStorageSlotComponent>(ItemStorageSlotComponent.name);
+        let itemStorageSlotComponents = itemStorage.getComponents<ItemStorageSlotComponent>(ItemStorageSlotComponent);
         return (
-            <div>
+            <div className={'block'}>
+                <div>ItemStorage</div>
                 <div>id: {this.state.itemStorage['_id']}, {this.state.itemStorage.getComponent<ItemStorageComponent>(ItemStorageComponent).busyItemStorageSlotCount}/{this.state.itemStorage.getComponent<ItemStorageComponent>(ItemStorageComponent).size}</div>
                 <table className={'basic-table'}>
                     <tbody>
@@ -91,9 +92,11 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
         );
     }
 
-    update(target): void {
+    // update(target): void {
+    update(): void {
         this.setState(state => ({
-            itemStorage: target,
+            // itemStorage: target,
+            itemStorage: state.itemStorage,
         }));
     }
 }
@@ -118,9 +121,11 @@ export class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRC
         this.clearHandler = this.clearHandler.bind(this);
     }
 
-    update(target): void {
+    // update(target): void {
+    update(): void {
         this.setState(state => ({
-            itemStorageSlotComponent: target,
+            // itemStorageSlotComponent: target,
+            itemStorageSlotComponent: state.itemStorageSlotComponent,
         }));
     }
 
@@ -172,9 +177,11 @@ export class ItemStorageCollectionRComponent extends React.Component<ItemStorage
         </div>);
     }
 
-    update(target): void {
+    // update(target): void {
+    update(): void {
         this.setState(state => ({
-            itemStorageCollection: target,
+            // itemStorageCollection: target,
+            itemStorageCollection: state.itemStorageCollection,
         }));
     }
 }

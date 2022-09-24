@@ -67,10 +67,10 @@ export default {
         },
     },
     start_wallet_values: {
-        currency_gold: {
+        gold_currency: {
             value: 1000
         },
-        currency_research_points: {
+        research_points: {
             value: 10
         }
     }

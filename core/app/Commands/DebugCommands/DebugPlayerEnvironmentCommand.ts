@@ -11,7 +11,7 @@ export default class DebugPlayerEnvironmentCommand extends Command {
     async execute(input: Input) {
         debugPlayerGameObject(this.container);
         debugWallets(this.container);
-        debugItemStorages(this.container)
+        // debugItemStorages(this.container);
         debugHeroes(this.container)
     }
 }

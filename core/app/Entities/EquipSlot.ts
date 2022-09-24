@@ -52,9 +52,9 @@ export default class EquipSlot {
     }
 
     canEquipItem(item: Item, heroComponent: HeroComponent): boolean {
-        //todo: Переделать. У оружия нет материала.
-        if (item.armorMaterial && !heroComponent.heroClass.availableArmorMaterial(item.armorMaterial)) {
-            throw AppError.equipNotAvailableByArmorMaterial(item.armorMaterial, heroComponent.heroClass);
+        //todo: Переделать на ооп. Проверка материала должна зависить от слота. Руки, пальцы, шея, тринкет не должны содержать проверку на материал. Пока за материал отвественность на создание объекта.
+        if (item.properties.armorMaterial && !heroComponent.heroClass.availableArmorMaterial(item.properties.armorMaterial)) {
+            throw AppError.equipNotAvailableByArmorMaterial(item.properties.armorMaterial, heroComponent.heroClass);
         }
 
         let availableItemCategory = false;

@@ -2,7 +2,8 @@
  * Интерфейс для React компонентов.
  */
 export interface RComponentUpdateInterface {
-    update(target): void;
+    // update(target): void;
+    update(): void;
     // assignRComponent(rComponent): void;
 }
 
@@ -32,7 +33,8 @@ export default class RComponentBridge {
 
     update(target): void {
         if (this._rComponent) {
-            this._rComponent.update(target);
+            // this._rComponent.update(target);
+            this._rComponent.update();
         }
     }
 }

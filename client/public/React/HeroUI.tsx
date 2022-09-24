@@ -49,26 +49,20 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
 
         //todo: Шаблонный метод?
         this.state.heroListComponent.assignRComponent(this);
+        for (let i = 0; i < props.heroListComponent.heroes.length; i++) {
+            props.heroListComponent.heroes[i].assignRComponent(this);
+        }
 
-        this.delete = this.delete.bind(this);
-        this.updateHandler = this.updateHandler.bind(this);
-
-        window['sandbox']['heroListUpdate'] = this.refresh.bind(this); //Работает.
+        this.deleteHero = this.deleteHero.bind(this);
     }
 
-    refresh() {
-        this.setState((state) => ({
-            heroListComponent: state.heroListComponent,
-        }));
+    async deleteHero(hero: GameObject) {
+        await this._container.get<GameConsole>('gameConsole').run('delete_hero', [hero['_id'].toString()]);
     }
 
-    delete(hero: GameObject) {
-        this._container.get<GameConsole>('gameConsole').run('delete_hero', [hero['_id'].toString()]);
-    }
-
-    update(target): void {
+    update(): void {
         this.setState(state => ({
-            heroListComponent: target,
+            heroListComponent: state.heroListComponent,
         }));
     }
 
@@ -76,13 +70,7 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
         this.setState((state) => ({
             selectedHero: hero,
         }));
-        window['sandbox']['showHero']();
-    }
-
-    updateHandler() {
-        this.setState((state) => ({
-            heroListComponent: state.heroListComponent,
-        }));
+        window['sandbox']['showHero']();    //todo: Пока так. От чего будет зависеть окно отображение героя пока не ясно.
     }
 
     render() {
@@ -97,9 +85,6 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
                     <td>{hero.get<HealthPointsComponent>('healthPointsComponent').currentHealthPoints}/{hero.get<HealthPointsComponent>('healthPointsComponent').maxHealthPoints}</td>
                     <td>{hero.get<MagicPointsComponent>('magicPointsComponent').currentMagicPoints}/{hero.get<MagicPointsComponent>('magicPointsComponent').maxMagicPoints}</td>
                     <td>{hero.get<AttackPowerComponent>('attackPowerComponent').baseMinAttackPower}-{hero.get<AttackPowerComponent>('attackPowerComponent').baseMaxAttackPower}</td>
-                    {/*<td>*/}
-                    {/*    {hero.get<CharacterAttributeComponent>('strength').finalValue}/{hero.get<CharacterAttributeComponent>('agility').finalValue}/{hero.get<CharacterAttributeComponent>('intelligence').finalValue}*/}
-                    {/*</td>*/}
                     <td>
                         <CharacterAttributeValueRComponent
                             characterAttributeComponent={hero.get<CharacterAttributeComponent>('strength')}
@@ -114,12 +99,11 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
                         />
                     </td>
                     <td>
-                        {/*<button onClick={() => {*/}
-                        {/*    window['sandbox']['setHero'](hero);*/}
-                        {/*    window['sandbox']['showHero']();*/}
-                        {/*}}>showHero</button>*/}
+                        {hero.get<HeroComponent>('heroComponent').state}
+                    </td>
+                    <td>
                         <button onClick={this.selectHero.bind(this, hero)}>showHero</button>
-                        <button onClick={this.delete.bind(this, hero)}>Удалить</button>
+                        <button onClick={this.deleteHero.bind(this, hero)}>Удалить</button>
                     </td>
                 </tr>
             );
@@ -144,7 +128,6 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
                 </table>
                 <HeroRComponent
                     container={this._container}
-                    // updateHandler={this.updateHandler}
                     hero={this.state.selectedHero}
                 />
             </div>
@@ -175,7 +158,8 @@ export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRCo
         this._container = props.container;
         this.state = {
             hero: null,
-            visible: false,
+            // visible: false,
+            visible: true,
         };
 
         this.setHero = this.setHero.bind(this);
@@ -183,14 +167,13 @@ export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRCo
         this.hide = this.hide.bind(this);
         this.updateHandler = this.updateHandler.bind(this);
 
-        window['sandbox']['setHero'] = this.setHero;
         window['sandbox']['showHero'] = this.show;
         window['sandbox']['hideHero'] = this.hide;
     }
 
-    update(target): void {
+    update(): void {
         this.setState((state) => ({
-            hero: target,
+            hero: state.hero,
             visible: state.visible,
         }));
     }
@@ -347,9 +330,11 @@ export class EquipSlotRComponent extends React.Component<EquipSlotRComponentProp
         this.clearHandler = this.clearHandler.bind(this);
     }
 
-    update(target) {
+    // update(target) {
+    update() {
         this.setState((state) => ({
-            equipSlotComponent: target,
+            // equipSlotComponent: target,
+            equipSlotComponent: state.equipSlotComponent,
         }));
     }
 

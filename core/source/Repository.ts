@@ -14,10 +14,12 @@ export default class Repository<Entity> {
         this._items = [];
     }
 
-    add(entity: Entity): void {
+    add(entity: Entity): Entity {
         if (!this._items.includes(entity)) {
             this._items.push(entity);
         }
+
+        return entity;
     }
 
     /**
@@ -86,6 +88,7 @@ export default class Repository<Entity> {
     }
 
     getOneByAlias(alias: string): Entity {
+        //todo: Это не здесь надо проверять, а в объектах при валидации.
         let entity = this.findOneByAlias(alias);
         if (!entity) {
             throw new AppError(sprintf('Сущность типа %s alias(%s) не найдена.', this._entityClassname, alias));

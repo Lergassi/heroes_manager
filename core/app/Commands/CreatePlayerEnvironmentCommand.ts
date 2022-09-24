@@ -7,6 +7,7 @@ import Currency from '../Entities/Currency.js';
 import PlayerFactory from '../Factories/PlayerFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../Components/ItemStorageComponent.js';
+import ItemStorageListComponent from '../Components/ItemStorageListComponent.js';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.
@@ -22,15 +23,16 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     private _createItemStorages() {
-        this.container.get<ItemStorageFactoryInterface>('player.playerItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+        let itemStorage = this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+        this.container.get<ItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);
     }
 
     private _createWallets() {
         let config = this.container.get<object>('core.config');
 
         let currencies = [
-            'currency_gold',
-            'currency_research_points',
+            'gold_currency',
+            'research_points',
         ];
 
         currencies.forEach((currencyAlias) => {

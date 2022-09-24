@@ -5,7 +5,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import WalletFactory from '../Factories/WalletFactory.js';
 import EntityManager from '../../source/EntityManager.js';
 import Currency from '../Entities/Currency.js';
-import BasicItemStorageFactory from '../Factories/BasicItemStorageFactory.js';
+import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
 import Item from '../Entities/Item.js';
@@ -17,10 +17,11 @@ import CoreContainerConfigure from '../CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../PlayerContainerConfigure.js';
 import GameConsole from '../../source/GameConsole/GameConsole.js';
 import ReactDOM from 'react-dom/client';
-import ItemStorageUI from '../../../client/public/React/ItemStorageRComponent.js';
 import ClientRender from '../../../client/public/React/ClientRender.js';
 import AppError from '../../source/AppError.js';
 import {sprintf} from 'sprintf-js';
+import LocationFactory from '../Factories/LocationFactory.js';
+import {LevelRange} from '../Components/LevelComponent.js';
 
 export default class NewGameCommand extends Command {
     private readonly _scenarios = {
@@ -33,8 +34,8 @@ export default class NewGameCommand extends Command {
 
     configure() {
         super.configure();
-        // this.addArgument('scenario', '', false, null);
-        this.addArgument('scenario', '', false, 'basic');
+        this.addArgument('scenario', '', false, null);
+        // this.addArgument('scenario', '', false, 'basic');
     }
 
     async execute(input: Input) {
@@ -49,6 +50,10 @@ export default class NewGameCommand extends Command {
         if (scenario) {
             await this.container.get<GameConsole>('gameConsole').getCommand(this._scenarios[scenario]).run();
         }
+
+        window['gameLocation'] = this.container.get<LocationFactory>('player.locationFactory').create({
+            level: new LevelRange(1, 5),
+        });
 
         this.container.get<ClientRender>('client.clientRender').buildGameUI();
     }

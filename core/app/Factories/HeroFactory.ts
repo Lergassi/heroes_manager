@@ -17,22 +17,35 @@ import EquipSlotComponentControllerComponent from '../Components/EquipSlotCompon
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import EquipSlotComponents from '../Components/EquipSlotComponents.js';
+import GameObjectFactory from './GameObjectFactory.js';
+import HeroGroupComponent from '../Components/HeroGroupComponent.js';
+import LocationComponent from '../Components/LocationComponent.js';
+import {ItemCount} from '../RuntimeObjects/ItemStack.js';
+import Item from '../Entities/Item.js';
 
 export default class HeroFactory {
     private readonly _gameObjectStorage: GameObjectStorage;
     private readonly _idGenerator: IDGeneratorInterface;
-    private readonly _repositoryManager: EntityManager;
+    private readonly _entityManager: EntityManager;
     private readonly _config: object;
 
-    constructor(gameObjectStorage: GameObjectStorage, idGenerator: IDGeneratorInterface, entityManager: EntityManager, config: object) {
+    constructor(
+        gameObjectStorage: GameObjectStorage,
+        idGenerator: IDGeneratorInterface,
+        entityManager: EntityManager,
+        config: object
+    ) {
         this._gameObjectStorage = gameObjectStorage;
         this._idGenerator = idGenerator;
-        this._repositoryManager = entityManager;
+        this._entityManager = entityManager;
         this._config = config;
     }
 
-    create(heroClass: HeroClass): GameObject {
-        //todo: Временно. ЧТО ВРЕМЕННО? Переименовать и убрать вообще в другое место.
+    create(heroClass: HeroClass | string, level: number = 1): GameObject {
+        if (typeof heroClass === 'string') {
+            heroClass = this._entityManager.get<HeroClass>(HeroClass, heroClass) as HeroClass;
+        }
+
         //todo: Что значит начальные настройки? Не понятно при срабатывании исключения.
         if(!this._config['start_hero_values'].hasOwnProperty(heroClass.alias)) {
             throw new AppError(sprintf('Начальные настройки для класса "%s" не найдены.', heroClass.name));
@@ -40,12 +53,11 @@ export default class HeroFactory {
         
         let hero = new GameObject(this._idGenerator.generateID());
 
-        hero.name = 'Hero';
+        hero.name = heroClass.name;
         hero.addTags('#hero');
 
         let heroComponent = hero.addComponent(new HeroComponent(
             this._idGenerator.generateID(),
-            hero,
             'Hero',
             heroClass,
         ));
@@ -54,7 +66,7 @@ export default class HeroFactory {
         let levelComponent = hero.addComponent(new LevelComponent(
             this._idGenerator.generateID(),
             hero,
-            1,
+            level,
             this._config['start_hero_values'][heroClass.alias]['max_level'],
             0,
         ));
@@ -82,7 +94,7 @@ export default class HeroFactory {
             let equipSlotComponent = new EquipSlotComponent(
                 this._idGenerator.generateID(),
                 hero,
-                this._repositoryManager.getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(equipSlotAlias),
+                this._entityManager.getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(equipSlotAlias),
             );
             hero.addComponent(equipSlotComponent);
             hero.set<EquipSlotComponent>(equipSlotAlias, equipSlotComponent);   //todo: Потом можно через перезагрузку сделать.
@@ -104,15 +116,15 @@ export default class HeroFactory {
             'luck',
         ];
 
-        heroAttributes.forEach((heroAttributeAlias) => {
+        for (let i = 0; i < heroAttributes.length; i++) {
             let characterAttributeComponent = hero.addComponent(new CharacterAttributeComponent(
                 this._idGenerator.generateID(),
                 hero,
-                this._repositoryManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(heroAttributeAlias),
+                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(heroAttributes[i]),
                 this._config['start_hero_values'][heroClass.alias]['max_health_points'],
             ));
-            hero.set<CharacterAttributeComponent>(heroAttributeAlias, characterAttributeComponent);
-        });
+            hero.set<CharacterAttributeComponent>(heroAttributes[i], characterAttributeComponent);
+        }
 
         let healthPointsComponent = hero.addComponent(new HealthPointsComponent(
             this._idGenerator.generateID(),

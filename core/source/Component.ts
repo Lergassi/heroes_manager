@@ -7,24 +7,46 @@ import _ from 'lodash';
 
 // export default class Component {
 export default class Component implements AssignRComponentInterface {
+    /**
+     * @deprecated
+     */
     private readonly _id: number;
+
+    /**
+     * @deprecated
+     */
     private readonly _gameObject: GameObject;
     // private _rComponentBridges: RComponentBridge;
     // private _rComponentBridges: RComponentBridge[];
     private _assignedRComponents: RComponentUpdateInterface[];
 
+    /**
+     * @deprecated
+     */
     get gameObject(): GameObject {
         return this._gameObject;
     }
 
-    constructor(id: number, gameObject: GameObject) {
+    constructor(id: number, gameObject?: GameObject) {
+    // constructor(id: number, gameObject: GameObject) {
+        // this._id = id;
+        // this._assignedRComponents = [];
+        // if (gameObject !== undefined) {
+        // // if (arguments.length === 1) {
+        // // if (gameObject === undefined) {
+        //     this._gameObject = gameObject;
+        //     // this._rComponentBridges = new RComponentBridge();
+        //     // this._rComponentBridges.update(this);
+        //     // this._rComponentBridges = [];
+        // } else {
+        //
+        // }
         this._id = id;
         this._gameObject = gameObject;
         // this._rComponentBridges = new RComponentBridge();
         // this._rComponentBridges.update(this);
         // this._rComponentBridges = [];
         this._assignedRComponents = [];
-        this._listeners = {};
     }
 
     // assignRComponent(rComponent): void {
@@ -46,21 +68,13 @@ export default class Component implements AssignRComponentInterface {
         // }
 
         for (let i = 0; i < this._assignedRComponents.length; i++) {
-            this._assignedRComponents[i].update(this);
+            // this._assignedRComponents[i].update(this);
+            this._assignedRComponents[i].update();
         }
         this.gameObject.update();
-        for (let i = 0; i < this._listeners.length; i++) {
-            this._listeners[i].update();
-        }
-    }
 
-    private readonly _listeners;
-
-    addListener(key: string, listener) {
-        this._listeners[key] = listener;
-    }
-
-    removeListener() {
-
+        // for (let i = 0; i < this._listeners.length; i++) {
+        //     this._listeners[i].update();
+        // }
     }
 }

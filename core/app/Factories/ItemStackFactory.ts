@@ -1,23 +1,58 @@
 import Item from '../Entities/Item.js';
-import ItemRepository from '../Repositories/ItemRepository.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
-import UUIDGenerator from '../../source/UUIDGenerator.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
+import EntityManager from '../../source/EntityManager.js';
+import _ from 'lodash';
 
 export default class ItemStackFactory {
     private readonly _idGenerator: IDGeneratorInterface;
-    private readonly _itemRepository: ItemRepository;
+    private readonly _entityManager: EntityManager;
 
-    constructor(idGenerator: IDGeneratorInterface, itemRepository: ItemRepository) {
+    constructor(idGenerator: IDGeneratorInterface, entityManager: EntityManager) {
         this._idGenerator = idGenerator;
-        this._itemRepository = itemRepository;
+        this._entityManager = entityManager;
     }
 
-    create(item: Item, count = 1): ItemStack {
+    /**
+     * Создает только 1 стек если count <= item.stackSize.
+     * @param item
+     * @param count
+     */
+    create(item: Item, count: number = 1): ItemStack {
         return new ItemStack(this._idGenerator.generateID(), item, count);
     }
 
+    /**
+     * Создает несколько стеков разделяя count между стеками.
+     * @param item
+     * @param count
+     */
+    createSome(item: Item, count: number = 1): ItemStack[] {
+        let itemStacks: ItemStack[] = [];
+        if (count <= item.stackSize) {
+            itemStacks.push(this.create(item, count));
+        } else {
+            let stacksCount = _.round(count / item.stackSize);
+            let stacksRemainder = count % item.stackSize;
+            let i = 0;
+            while (i < stacksCount) {
+                itemStacks.push(this.create(item, item.stackSize));
+                ++i;
+            }
+            if (stacksRemainder) {
+                itemStacks.push(this.create(item, stacksRemainder));
+            }
+        }
+
+        return itemStacks;
+    }
+
+    /**
+     * @deprecated Предметы по alias можно получить только из бд и в местах где это необходмо: консольная команда, строители и тд.
+     * @param alias
+     * @param count
+     */
     createByItemAlias(alias: string, count = 1): ItemStack {
-        return this.create(this._itemRepository.getOneByAlias(alias), count);
+        return this.create(this._entityManager.get<Item>(Item, alias), count);
     }
 }

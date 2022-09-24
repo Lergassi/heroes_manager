@@ -4,7 +4,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import WalletFactory from '../Factories/WalletFactory.js';
 import EntityManager from '../../source/EntityManager.js';
 import Currency from '../Entities/Currency.js';
-import BasicItemStorageFactory from '../Factories/BasicItemStorageFactory.js';
+import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
 import Item from '../Entities/Item.js';
@@ -19,6 +19,8 @@ import EntityManagerFacade from '../../source/Facades/EntityManagerFacade.js';
 import {ContainerKey} from '../CoreContainerConfigure.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
+import LocationFactory from '../Factories/LocationFactory.js';
+import {LevelRange} from '../Components/LevelComponent.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -31,7 +33,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
 
     async execute(input: Input) {
         // this._createItemStorages();
-        this._createItems();
+        // this._createItems();
         this._createHeroes();
     }
 

@@ -31,6 +31,7 @@ export default class Container implements ContainerInterface {
             throw new AppError('key не может быть пустым.');
         }
 
+        //todo: Убрать.
         if (!this.has(key)) {
             throw new AppError(sprintf('Сервис с ключом %s не найден в контейнере.', key));
         }
@@ -38,6 +39,7 @@ export default class Container implements ContainerInterface {
         return this._services[key];
     }
 
+    //todo: Убрать.
     getByPattern(pattern: string) {
         let result = [];
         let keySplitted = this._splitPattern(pattern);

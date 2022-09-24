@@ -1,45 +1,5 @@
-import UUIDGenerator from '../core/source/UUIDGenerator.js';
-import {
-    testEntityManagerFacade, testEquipSlotDecorators,
-    testHeroController,
-    testInherit, testItemBuilder,
-    testItemStorageFactories, testJSLinks, testLodashFind,
-    testUUIDGenerator
-} from './include.js';
-// import {format} from 'date-fns';
+import {SandboxController} from './SandboxController.js';
 
-//js, node
-// symbolGetStarted();
-// testLinker();
-// devJsonSerializer();
-// javascriptSerializerGetStarted();
-// testClosure();
-// testClearArray();
-
-//game
-// testMetadata();
-// devSerializer();
-// testSerializeEntityManager();
-// testSerializeItemStorage();
-// testSerializeGameObject();
-// testContainerGetByPattern();
-// testUUIDGenerator();
-// testItemStorageFactories();
-// testInherit();
-// testHeroController();
-// testEntityManagerFacade();
-// testEquipSlotDecorators();
-// testJSLinks();
-// testLodashFind();
-testItemBuilder();
-
-//simple
-//test date-fns
-// console.log(dateFns.format);
-// console.log(format);
-
-// let uuidGenerator = new UUIDGenerator();
-// console.log(uuidGenerator.generateID());
-// console.log(uuidGenerator.generateID());
-// console.log(uuidGenerator.generateID());
-// console.log(uuidGenerator.generateID());
+let sandbox = new SandboxController();
+sandbox.init();
+// sandbox.run();

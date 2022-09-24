@@ -16,6 +16,8 @@ import GameObjectStorage from '../source/GameObjectStorage.js';
 import ContainerInterface from '../source/ContainerInterface.js';
 import LevelComponent from '../app/Components/LevelComponent.js';
 import EntityManager from '../source/EntityManager.js';
+import ItemStorageManager from '../app/Services/ItemStorageManager.js';
+import Item from '../app/Entities/Item.js';
 
 export function debugEntity(entity) {
     debug('debug')('%j', {
@@ -200,9 +202,45 @@ export function debugItemStack(itemStack: ItemStack) {
     }
 }
 
-export function debugItemStorage(itemStorage: GameObject) {
-    const itemStorageComponent = itemStorage.getComponentByName(ItemStorageComponent.name);
-    debugGameObject(itemStorage);
+// export function debugItemStorage(itemStorage: GameObject) {
+//     const itemStorageComponent = itemStorage.getComponentByName(ItemStorageComponent.name);
+//     debugGameObject(itemStorage);
+//     debug('debug')('%j', {
+//         component: ItemStorageComponent.name,
+//         _id: itemStorageComponent['_id'],
+//         busy: itemStorageComponent['busyItemStorageSlotCount'],
+//         size: itemStorageComponent['_size'],
+//     });
+//
+//     // let itemStorageSlotComponents = itemStorage.findComponentsByName(ItemStorageSlotComponent.name);
+//     let itemStorageSlotComponents = itemStorage.getComponents<ItemStorageSlotComponent>(ItemStorageSlotComponent);
+//     itemStorageSlotComponents.map((itemStorageSlotComponent: ItemStorageSlotComponent) => {
+//         debug('debug')('%j', {
+//             component: ItemStorageSlotComponent.name,
+//             _id: itemStorageSlotComponent['_id'],
+//             itemStack: itemStorageSlotComponent.isFree() ? 'free' : {
+//                 item: {
+//                     name: itemStorageSlotComponent['_itemStack']['_item']['_name'],
+//                     alias: itemStorageSlotComponent['_itemStack']['_item']['_alias'],
+//                 },
+//                 count: itemStorageSlotComponent['_itemStack']['_count'],
+//             },
+//         });
+//     });
+// }
+
+export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent) {
+    let itemStorageComponent;
+    let itemStorageSlotComponents;
+    if (itemStorage instanceof GameObject) {
+        itemStorageComponent = itemStorage.getComponentByName(ItemStorageComponent.name);
+        itemStorageSlotComponents = itemStorage.getComponents<ItemStorageSlotComponent>(ItemStorageSlotComponent);
+    } else {
+        itemStorageComponent = itemStorage;
+        itemStorageSlotComponents = itemStorageComponent.itemStorageSlotComponents;
+    }
+
+    // debugGameObject(itemStorage);
     debug('debug')('%j', {
         component: ItemStorageComponent.name,
         _id: itemStorageComponent['_id'],
@@ -210,7 +248,8 @@ export function debugItemStorage(itemStorage: GameObject) {
         size: itemStorageComponent['_size'],
     });
 
-    let itemStorageSlotComponents = itemStorage.findComponentsByName(ItemStorageSlotComponent.name);
+    // let itemStorageSlotComponents = itemStorage.findComponentsByName(ItemStorageSlotComponent.name);
+
     itemStorageSlotComponents.map((itemStorageSlotComponent: ItemStorageSlotComponent) => {
         debug('debug')('%j', {
             component: ItemStorageSlotComponent.name,
@@ -226,14 +265,29 @@ export function debugItemStorage(itemStorage: GameObject) {
     });
 }
 
-export function debugItemStorages(container: ContainerInterface) {
+// export function debugItemStorageComponent(itemStorageComponent: ItemStorageComponent) {
+//
+// }
+
+// export function debugItemStorages(container: ContainerInterface) {
+export function debugItemStorages(itemStorages: GameObject[]) {
     debug('debug')('# item storages');
-    container.get<GameObjectStorage>('player.gameObjectStorage')
-        .findByTag('#item_storage')
+    // container.get<GameObjectStorage>('player.gameObjectStorage')
+    //     .findByTag('#item_storage')
+    itemStorages
         .map((itemStorage) => {
             debugItemStorage(itemStorage);
         });
 }
+
+// export function debugItemStorageManager(itemStorageManager: ItemStorageManager) {
+//     debug('debug')('# itemStorageManager');
+//     container.get<GameObjectStorage>('player.gameObjectStorage')
+//         .findByTag('#item_storage')
+//         .map((itemStorage) => {
+//             debugItemStorage(itemStorage);
+//         });
+// }
 
 export function debugWallet(wallet: GameObject) {
     debugGameObject(wallet);
@@ -257,7 +311,7 @@ export function debugWallets(container: ContainerInterface) {
 
 export function debugPlayerEnv(container: ContainerInterface) {
     debugWallets(container);
-    debugItemStorages(container);
+    // debugItemStorages(container);
     debugHeroes(container);
 }
 
@@ -298,4 +352,18 @@ export function debugGameObjectStorage(gameObjectStorage: GameObjectStorage) {
     for (let i = 0; i < gameObjectStorage['_gameObjects'].length; i++) {
         debug('debug')(sprintf('_id: %s, _name: %s', gameObjectStorage['_gameObjects'][i]['_id'], gameObjectStorage['_gameObjects'][i]['_name']));
     }
+}
+
+export function debugItemList(items: Item[]) {
+    for (let i = 0; i < items.length; i++) {
+        debug('debug')('%j', {
+            name: items[i].name,
+            alias: items[i].alias,
+        });
+    }
+    separator();
+}
+
+function separator() {
+    console.log(_.repeat('-', 64));
 }

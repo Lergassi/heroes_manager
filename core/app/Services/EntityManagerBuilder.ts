@@ -1,46 +1,57 @@
 import EntityManager from '../../source/EntityManager.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import CharacterAttribute, {CharacterAttributeEnum} from '../Entities/CharacterAttribute.js';
+import CharacterAttribute from '../Entities/CharacterAttribute.js';
 import Currency from '../Entities/Currency.js';
 import Quality from '../Entities/Quality.js';
 import HeroRole from '../Entities/HeroRole.js';
 import ItemCategory from '../Entities/ItemCategory.js';
-import Item from '../Entities/Item.js';
+import Item, {ItemGetType} from '../Entities/Item.js';
 import HeroClass from '../Entities/HeroClass.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import EquipSlotRule from '../Entities/EquipSlotRule.js';
-import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
 import ContainerInterface from '../../source/ContainerInterface.js';
 import CharacterAttributeIncreaseBuilder from './CharacterAttributeIncreaseBuilder.js';
 import ItemBuilder from './ItemBuilder.js';
+import Recipe from '../Entities/Recipe.js';
+import {DEFAULT_STACK_SIZE} from '../RuntimeObjects/ItemStack.js';
+import ItemDatabaseBuilder from './ItemDatabaseBuilder.js';
+import ItemFactory from '../Factories/ItemFactory.js';
 
 export default class EntityManagerBuilder {
-    private readonly _container: ContainerInterface;
     private readonly _entityManager: EntityManager;
     private readonly _characterAttributeIncreaseBuilder: CharacterAttributeIncreaseBuilder;
+    private readonly _itemFactory: ItemFactory;
 
-    constructor(container: ContainerInterface) {
-        this._container = container;
-        this._entityManager = new EntityManager();
+    constructor(
+        entityManager: EntityManager,
+        itemFactory: ItemFactory,
+    ) {
+        this._itemFactory = itemFactory;
+        // this._entityManager = new EntityManager();
+        this._entityManager = entityManager;
         this._characterAttributeIncreaseBuilder = new CharacterAttributeIncreaseBuilder(this._entityManager);
     }
 
-    build() {
-        this._createArmorMaterial();
-        this._createCharacterAttribute();
-        this._createCurrency();
-        this._createQuality();
-        this._createHeroRole();
-
-        this._createItemCategory();
-        this._createItem();
-        this._createHeroClass();
-        this._createEquipSlot();
+    build(): EntityManager {
+        this._createArmorMaterials();
+        this._createCharacterAttributes();
+        this._createCurrencies();
+        this._createQualities();
+        this._createHeroRoles();
+        this._createItemCategories();
+        this._createItems();
+        this._createRecipes();
+        this._createHeroClasses();
+        this._createEquipSlots();
 
         return this._entityManager;
     }
 
-    private _createArmorMaterial() {
+    private _createItems() {
+        (new ItemDatabaseBuilder(this._entityManager, this._itemFactory)).build();
+    }
+
+    private _createArmorMaterials() {
         this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).add(new ArmorMaterial(
             'a86d1e86-1768-47c0-a630-2eb8c49ef029',
             'Латы',
@@ -50,7 +61,7 @@ export default class EntityManagerBuilder {
         ));
         this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).add(new ArmorMaterial(
             '7e9daae3-eb9d-41c6-8589-d5830edc10d0',
-            'Кожа',
+            'Кожа 1',
             'leather',
             '',
             510,
@@ -64,7 +75,7 @@ export default class EntityManagerBuilder {
         ));
     }
 
-    private _createCharacterAttribute() {
+    private _createCharacterAttributes() {
         this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
             'a06e6ef0-b0b2-43b2-a162-e16f40f1446b',
             'Очки здоровья',
@@ -145,24 +156,24 @@ export default class EntityManagerBuilder {
         ));
     }
 
-    private _createCurrency() {
+    private _createCurrencies() {
         this._entityManager.getRepository<Currency>(Currency.name).add(new Currency(
             '998495f3-567b-4dc8-af87-70916e96f50a',
             'Золото',
-            'currency_gold',
+            'gold_currency',
             '',
             500,
         ));
         this._entityManager.getRepository<Currency>(Currency.name).add(new Currency(
             '3a4b5a8a-68e3-4f4c-86b0-5dbd6b161f3c',
             'Очки исследования',
-            'currency_research_points',
+            'research_points',
             '',
             510,
         ));
     }
 
-    private _createQuality() {
+    private _createQualities() {
         this._entityManager.getRepository<Quality>(Quality.name).add(new Quality(
             '363b5284-5638-417b-b53c-edd2d90d5a42',
             'Poor',
@@ -207,7 +218,7 @@ export default class EntityManagerBuilder {
         ));
     }
 
-    private _createHeroRole() {
+    private _createHeroRoles() {
         this._entityManager.getRepository<HeroRole>(HeroRole.name).add(new HeroRole(
             '8317f2cf-5ec0-4ec8-81e3-9ae0c308c7c8',
             'Танк',
@@ -231,7 +242,7 @@ export default class EntityManagerBuilder {
         ));
     }
 
-    private _createItemCategory() {
+    private _createItemCategories() {
         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).add(new ItemCategory(
             '611abe4d-86fc-4107-baab-54a95e1ae2fd',
             'Оружие',
@@ -442,551 +453,7 @@ export default class EntityManagerBuilder {
         ));
     }
 
-    private _createItem() {
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '09954f0a-3291-4569-b288-02d073bc826f',
-            'Древесина',
-            'wood',
-            '',
-            20,
-            1,
-            500,
-            false,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('resources'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'd2423253-3eff-4715-b2a8-228f78cd1968',
-            'Железная руда',
-            'iron_ore',
-            '',
-            20,
-            1,
-            500,
-            false,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('resources'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '83eea98a-21f9-48ed-b2a9-88b2638ac03b',
-            'Железный слиток',
-            'iron_bar',
-            '',
-            20,
-            1,
-            500,
-            false,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('resources'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'a5492c54-9a4d-42b7-8ec3-a8ccaa787854',
-            'Одноручный меч 01',
-            'one_handed_sword_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('one_handed_swords'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '7e294428-7448-43d0-aff0-23f86511fdf2',
-            'Двуручный меч 01',
-            'two_handed_sword_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('two_handed_swords'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'f01594a0-efdc-418d-98e9-fe4128a5bc63',
-            'Кинжал 01',
-            'dagger_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('daggers'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '1efc1c84-bc42-49c6-ba6a-87615a5308ea',
-            'Одноручный топор 01',
-            'one_handed_axe_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('one_handed_axes'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '2c6e3f0f-0f64-45d3-a9d5-68775b938d36',
-            'Двуручный топор 01',
-            'two_handed_axe_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('two_handed_axes'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '5d67d7e2-76f5-435c-a0e0-e76cc5c23564',
-            'Посох 01',
-            'staff_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('staffs'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '6dead4cd-91cd-4f48-b103-0a7e7f652b3c',
-            'Жезл 01',
-            'wand_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('wands'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '7a00f9f6-d6a7-471c-b95f-a48533cfdeb8',
-            'Револьвер 01',
-            'revolver_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('revolvers'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'b0ccfb06-588e-4ea8-bac4-25d57f18cc29',
-            'Кольцо 01',
-            'ring_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('rings'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'fe4042e6-43fd-468f-9e64-9c661cec4cb9',
-            'Амулет 01',
-            'amulet_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('amulets'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '9d2775b7-7700-4ab6-9b4c-2cd03d7b98fc',
-            'Тринкет 01',
-            'trinket_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('trinkets'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'f2d58c88-a439-46b7-a4ef-e849963356b9',
-            'Щит 01',
-            'shield_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('shields'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            null,
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '51a2a98c-584b-47ca-a2aa-fe4d32b323df',
-            'Латный шлем 01',
-            'plate_helmet_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('helmets'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),
-            // {
-            //     strength: new CharacterAttributeIncrease(this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('strength'), 1000),
-            //     stamina: new CharacterAttributeIncrease(this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('stamina'), 1000),
-            //     protection: new CharacterAttributeIncrease(this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('protection'), 1000),
-            // },
-            // [
-            //     new CharacterAttributeIncrease(this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('strength'), 100),
-            //     new CharacterAttributeIncrease(this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('stamina'), 100),
-            //     new CharacterAttributeIncrease(this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('protection'), 100),
-            // ],
-            this._characterAttributeIncreaseBuilder.build({
-                strength: 100,
-                agility: 100,
-                intelligence: 100,
-            }),
-        ));
-        // set({
-        //     strength: 10,
-        //     agility: 10,
-        // });
-        this._entityManager.getRepository<Item>(Item.name).add((new ItemBuilder(this._entityManager).default(
-            '74699b5c-231d-45dc-847c-c54b090ac37e',
-            'Латный шлем 02',
-            'plate_helmet_02',
-            'helmets',
-            {
-                increase: {
-                    strength: 1000,
-                    agility: 1000,
-                    intelligence: 1000,
-                },
-            },
-        )
-            .armor('plate')
-            .build()));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'd54c9ab6-faac-4ef9-a2f1-407e71304a24',
-            'Латные наплечники 01',
-            'plate_shoulders_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('shoulders'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'b18f9675-20f1-49b0-939a-f9d5ec4a199d',
-            'Латный нагрудник 01',
-            'plate_breastplate_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('breastplates'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '30630466-c3b2-4a0e-a347-93b919dd3102',
-            'Латный браслет 01',
-            'plate_bracer_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('bracers'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '0de0097c-9d4a-4094-b800-d37196ac3207',
-            'Латные перчатки 01',
-            'plate_gloves_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('gloves'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'f65240d0-5c4f-47b7-ae18-91d2714cd715',
-            'Латный пояс 01',
-            'plate_belt_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('belts'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '6547cc56-741c-4a17-ba44-6368298c6dd2',
-            'Латный штаны 01',
-            'plate_pants_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('pants'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '604677b5-e285-4c04-9ee3-537746621f5a',
-            'Латный сапоги 01',
-            'plate_boots_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('boots'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '4de1e1bc-5842-4e78-a956-6b43735293c3',
-            'Кожанный шлем 01',
-            'leather_helmet_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('helmets'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('leather'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'f30905f4-e924-4ad2-bbaf-5099a99eaf10',
-            'Кожанные наплечники 01',
-            'leather_shoulders_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('shoulders'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('leather'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'ada53cb7-244c-4a31-9649-c558bbd7800b',
-            'Кожанный нагрудник 01',
-            'leather_breastplate_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('breastplates'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('leather'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '4dc33853-057f-441d-95ac-94aad1211c61',
-            'Кожанный браслет 01',
-            'leather_bracer_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('bracers'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('leather'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '07ec4b03-30d9-482a-8f97-4a3f016cce0c',
-            'Кожанные перчатки 01',
-            'leather_gloves_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('gloves'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('leather'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '0e7a301c-918d-4565-9de1-cb2edab327aa',
-            'Кожанный пояс 01',
-            'leather_belt_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('belts'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('leather'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '9eb09be0-7c1d-4fba-bb11-b6745449978c',
-            'Кожанный штаны 01',
-            'leather_pants_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('pants'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('leather'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'e1d91749-5c45-47b4-bb31-9053e33a576d',
-            'Кожанный сапоги 01',
-            'leather_boots_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('boots'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('leather'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'f4bac01f-0d07-4948-b235-631f7e63d83e',
-            'Тканевый шлем 01',
-            'cloth_helmet_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('helmets'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('cloth'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'a92dfe24-68c9-44a9-ad5c-45a392e60850',
-            'Тканевые наплечники 01',
-            'cloth_shoulders_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('shoulders'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('cloth'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '6b7a9104-6f81-4f24-8403-a6d9577011a6',
-            'Тканевый нагрудник 01',
-            'cloth_breastplate_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('breastplates'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('cloth'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'd5e4b73a-68bd-4ddf-954f-e70d4e367d2b',
-            'Тканевый браслет 01',
-            'cloth_bracer_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('bracers'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('cloth'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'f9aaca7a-4acd-448e-a0d1-ea1a1c916d9f',
-            'Тканевые перчатки 01',
-            'cloth_gloves_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('gloves'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('cloth'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            '61847221-ee77-4e81-809c-3d980aecdfd9',
-            'Тканевый пояс 01',
-            'cloth_belt_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('belts'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('cloth'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'fa9dc8a9-c74b-4c55-9a2b-4d5c1e045f29',
-            'Тканевый штаны 01',
-            'cloth_pants_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('pants'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('cloth'),
-        ));
-        this._entityManager.getRepository<Item>(Item.name).add(new Item(
-            'c4ea5041-7709-402a-8bbd-f43e82735902',
-            'Тканевый сапоги 01',
-            'cloth_boots_01',
-            '',
-            1,
-            1,
-            500,
-            true,
-            this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias('boots'),
-            this._entityManager.getRepository<Quality>(Quality.name).getOneByAlias('common'),
-            this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('cloth'),
-        ));
-    }
-
-    private _createHeroClass() {
+    private _createHeroClasses() {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             'bc0c6967-f35b-47eb-b71b-f9270a9b296b',
             'Воин',
@@ -1167,7 +634,7 @@ export default class EntityManagerBuilder {
         ));
     }
 
-    private _createEquipSlot() {
+    private _createEquipSlots() {
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             '4223fda7-b0b3-4cda-8cbf-073246cb9df6',
             'Голова',
@@ -2146,5 +1613,86 @@ export default class EntityManagerBuilder {
                 ),
             ],
         ));
+    }
+
+    private _createRecipes() {
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                '572bb85a-5046-4366-bd8b-5ee494fc362b',
+                this._entityManager.get<Item>(Item, 'wood_boards'),
+                'wood_board_recipe',
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, 'wood'), count: 1},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                '572bb85a-5046-4366-bd8b-5ee494fc362b',
+                this._entityManager.get<Item>(Item, 'leather_1'),
+                'leather_rabbit_skin_recipe',
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, 'rabbit_skin'), count: 5},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                'd3f50597-1607-4971-b2ea-c8c15960ffc8',
+                this._entityManager.get<Item>(Item, 'leather_1'),
+                'leather_fox_skin_recipe',
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, 'fox_skin'), count: 1},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                '1e7c2421-3c8a-41ce-a68f-24d994f4280c',
+                this._entityManager.get<Item>(Item, 'leather_1'),
+                'leather_deer_skin_recipe',
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, 'deer_skin'), count: 1},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                '50cc0d46-4759-4fab-99da-71aa98d582bb',
+                this._entityManager.get<Item>(Item, 'leather_1'),
+                'leather_wolf_skin_recipe',
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, 'wolf_skin'), count: 1},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                '7a9a2b93-43bf-4495-abf5-c4ea3231db62',
+                this._entityManager.get<Item>(Item, 'leather_1'),
+                'leather_bear_skin_recipe',
+                500,
+                5,
+                [
+                    {item: this._entityManager.get<Item>(Item, 'bear_skin'), count: 1},
+                ],
+            )
+        );
     }
 }

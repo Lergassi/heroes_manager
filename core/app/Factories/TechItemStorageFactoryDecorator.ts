@@ -5,21 +5,21 @@ import ContainerInterface from '../../source/ContainerInterface.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 
 /**
- * decorator
+ * @decorator
  */
-export default class TechItemStorageFactory implements ItemStorageFactoryInterface {
+export default class TechItemStorageFactoryDecorator implements ItemStorageFactoryInterface {
     private _itemStorageFactory: ItemStorageFactoryInterface;
-    private _container: ContainerInterface;
+    private _gameObjectStorage: GameObjectStorage;
 
-    constructor(itemStorageFactory: ItemStorageFactoryInterface, container: ContainerInterface) {
+    // constructor(itemStorageFactory: ItemStorageFactoryInterface, container: ContainerInterface) {
+    constructor(itemStorageFactory: ItemStorageFactoryInterface, gameObjectStorage: GameObjectStorage) {
         this._itemStorageFactory = itemStorageFactory;
-        this._container = container;
+        this._gameObjectStorage = gameObjectStorage;
     }
 
     create(size: number = DEFAULT_ITEM_STORAGE_SIZE): GameObject {
         let itemStorage = this._itemStorageFactory.create(size);
-
-        this._container.get<GameObjectStorage>('player.gameObjectStorage').add(itemStorage);
+        this._gameObjectStorage.add(itemStorage);
 
         return itemStorage;
     }

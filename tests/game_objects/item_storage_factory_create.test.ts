@@ -1,5 +1,5 @@
 import AutoIncrementIDGenerator from '../../core/source/AutoIncrementIDGenerator.js';
-import BasicItemStorageFactory from '../../core/app/Factories/BasicItemStorageFactory.js';
+import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import GameObject from '../../core/source/GameObject.js';
 import {sprintf} from 'sprintf-js';
 import ItemStorageSlotComponent from '../../core/app/Components/ItemStorageSlotComponent.js';
@@ -7,9 +7,21 @@ import _ from 'lodash';
 import ItemStorageComponent from '../../core/app/Components/ItemStorageComponent.js';
 import UUIDGenerator from '../../core/source/UUIDGenerator.js';
 import Container from '../../core/source/Container.js';
+import ItemStackFactory from '../../core/app/Factories/ItemStackFactory.js';
+import EntityManager from '../../core/source/EntityManager.js';
+import GameObjectStorage from '../../core/source/GameObjectStorage.js';
 
 // let itemStorageFactory = new ItemStorageFactory(new AutoIncrementIDGenerator(1));
-let itemStorageFactory = new BasicItemStorageFactory(new Container(), new UUIDGenerator());
+let IDGenerator = new UUIDGenerator();
+let itemStackFactory = new ItemStackFactory(
+    IDGenerator,
+    new EntityManager(),
+);
+let itemStorageFactory = new ItemStorageFactory(
+    new GameObjectStorage(),
+    itemStackFactory,
+    IDGenerator,
+);
 
 let size = 10;
 let itemStorage = itemStorageFactory.create(size);

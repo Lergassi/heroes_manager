@@ -26,7 +26,7 @@ import WalletFactory from './Factories/WalletFactory.js';
 import HeroFactory from './Factories/HeroFactory.js';
 import ItemStackFactory from './Factories/ItemStackFactory.js';
 import Item from './Entities/Item.js';
-import BasicItemStorageFactory from './Factories/BasicItemStorageFactory.js';
+import ItemStorageFactory from './Factories/ItemStorageFactory.js';
 import ItemStorageManager from './Services/ItemStorageManager.js';
 import EquipManager from './Services/EquipManager.js';
 import NewGameCommand from './Commands/NewGameCommand.js';
@@ -37,10 +37,15 @@ import DebugPlayerEnvironmentCommand from './Commands/DebugCommands/DebugPlayerE
 import InspectGameObjectCommand from './Commands/DebugCommands/InspectGameObjectCommand.js';
 import ArmorMaterial from './Entities/ArmorMaterial.js';
 import EntityManagerFacade from '../source/Facades/EntityManagerFacade.js';
+import ItemFactory from './Factories/ItemFactory.js';
+import ItemDatabase from './ItemDatabase.js';
+import {extractItems} from './indev.js';
+import Random from './Services/Random.js';
 
 export enum ContainerKey {
     EntityManager = 'core.entityManager',
     EntityManagerFacade = 'core.facade.entityManager',
+    ItemFactory = 'core.itemFactory',
 }
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
@@ -51,7 +56,17 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
             return (new MetadataManagerCreator()).create();
         });
         container.set<EntityManager>(ContainerKey.EntityManager, (container) => {
-            return (new EntityManagerBuilder(container)).build();
+            return new EntityManager();
+        });
+        container.set<ItemFactory>(ContainerKey.ItemFactory, (container) => {
+            return new ItemFactory(container.get<EntityManager>(ContainerKey.EntityManager));
+        });
+        (new EntityManagerBuilder(
+            container.get<EntityManager>(ContainerKey.EntityManager),
+            container.get<ItemFactory>(ContainerKey.ItemFactory),
+        )).build();
+        container.set<ItemDatabase>('core.itemDatabase', (container) => {
+            return new ItemDatabase(extractItems(container.get<EntityManager>(ContainerKey.EntityManager)));
         });
         container.set<EntityManagerFacade>(ContainerKey.EntityManagerFacade, (container) => {
             return new EntityManagerFacade(container.get<EntityManager>(ContainerKey.EntityManager));
@@ -61,6 +76,9 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         });
         container.set<JsonSerializer>('core.jsonSerializer', (container) => {
             return new JsonSerializer();
+        });
+        container.set<Random>('core.random', (container) => {
+            return new Random();
         });
 
         // container.set<IDGeneratorInterface>('core.realtimeObjectIdGenerator', (container: ContainerInterface) => {

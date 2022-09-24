@@ -53,4 +53,7 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
     // update() {
     //     this._rComponentBridge.update(this);
     // }
+    containsItem(item: Item): boolean {
+        return this._itemStack && this._itemStack.containsItem(item);
+    }
 }

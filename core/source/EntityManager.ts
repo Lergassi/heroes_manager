@@ -1,4 +1,5 @@
 import Repository from './Repository.js';
+import ItemBuilder from '../app/Services/ItemBuilder.js';
 
 export interface ModuleInterface {
     name: string;
@@ -11,6 +12,10 @@ export default class EntityManager {
         this._repositories = {};
     }
 
+    /**
+     * @deprecated
+     * @param classname
+     */
     getRepository<Entity>(classname: string): Repository<Entity> {
         if (!this._repositories.hasOwnProperty(classname)) {
             this._repositories[classname] = new Repository<Entity>(classname);
@@ -19,7 +24,11 @@ export default class EntityManager {
         return this._repositories[classname];
     }
 
-    // add<T>(module: ModuleInterface, entity: T) {
-    //     this.getRepository<T>(module).add(entity);
-    // }
+    add<Entity>(module: Function, entity: Entity): Entity {
+        return this.getRepository<Entity>(module.name).add(entity);
+    }
+
+    get<Entity>(module: Function, alias: string/*todo: По ID или фильтру.*/): Entity {
+        return this.getRepository<Entity>(module.name).getOneByAlias(alias);
+    }
 }

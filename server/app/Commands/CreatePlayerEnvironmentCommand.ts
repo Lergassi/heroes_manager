@@ -11,7 +11,7 @@ import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
 import HeroFactory from '../../../core/app/Factories/HeroFactory.js';
 import EntityManager from '../../../core/source/EntityManager.js';
 import ItemStorageManager from '../../../core/app/Services/ItemStorageManager.js';
-import BasicItemStorageFactory from '../../../core/app/Factories/BasicItemStorageFactory.js';
+import ItemStorageFactory from '../../../core/app/Factories/ItemStorageFactory.js';
 import WalletFactory from '../../../core/app/Factories/WalletFactory.js';
 import Security from '../../source/Security.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
@@ -103,8 +103,8 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         let config = this.container.get<object>('core.config');
 
         let currencies = [
-            'currency_gold',
-            'currency_research_points',
+            'gold_currency',
+            'research_points',
         ];
 
         currencies.forEach((currencyAlias) => {
@@ -116,8 +116,8 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     private _createStartItemStorages() {
-        this.container.get<ItemStorageFactoryInterface>('player.playerItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-        this.container.get<ItemStorageFactoryInterface>('player.playerItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+        this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+        this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
     }
 
     private _createStartItems() {

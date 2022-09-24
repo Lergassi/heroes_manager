@@ -42,8 +42,9 @@ export default class AppError extends Error {
         return new AppError(sprintf('Метаданные для %s не найдены.', name));
     }
 
-    static itemStackSizeOverflow(item: Item) {
-        return new AppError(sprintf('Размер стека для предмета "%s" не может быть больше %s.', item.name, item.stackSize));
+    static itemStackSizeWrong(item: Item) {
+        return new AppError(sprintf('Размер стека для предмета "%s" должен быть в диапазоне %s-%s', item.name, 0, item.stackSize));
+        // return new AppError(sprintf('Размер стека для предмета "%s" не может быть больше %s.', item.name, item.properties.stackSize));
     }
 
     static freeItemStorageSlotNotFound() {
@@ -76,5 +77,17 @@ export default class AppError extends Error {
 
     static heroNotContainsEquipSlot(name: string) {
         return new AppError(sprintf('У героя нет слота "%s"', name));
+    }
+
+    static itemsNotEnoughForRandomSelection() {
+        return new AppError('Кол-во элементов не достаточно для уникальной выборки.');
+    }
+
+    static stateOwnerNotAuthorized() {
+        return new AppError('Изменить статус объекта может только объект его установивший.');
+    }
+
+    static rootElementNotFound() {
+        return new AppError('Корневой элемент не найден.');
     }
 }
