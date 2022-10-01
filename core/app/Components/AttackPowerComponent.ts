@@ -44,13 +44,14 @@ export default class AttackPowerComponent extends Component {
     }
 
     constructor(
-        id: number,
-        gameObject: GameObject,
+        // id: number,
+        // gameObject: GameObject,
         baseMinAttackPower: number,
         baseMaxAttackPower: number,
         dependentCharacterAttributes: CharacterAttribute[]
     ) {
-        super(id, gameObject);
+        // super(id, gameObject);
+        super();
         this._baseMinAttackPower = baseMinAttackPower;
         this._baseMaxAttackPower = baseMaxAttackPower;
 
@@ -64,13 +65,13 @@ export default class AttackPowerComponent extends Component {
         //         });
         //     });
 
-        this._dependentCharacterAttributeComponents = <CharacterAttributeComponent[]>gameObject
-            .findComponentsByName(CharacterAttributeComponent.name)
-            .filter((characterAttributeComponentFound: CharacterAttributeComponent) => {
-                return dependentCharacterAttributes.some((characterAttributeComponent) => {
-                    return characterAttributeComponent === characterAttributeComponentFound.characterAttribute;
-                });
-            })
-        ;
+        // this._dependentCharacterAttributeComponents = <CharacterAttributeComponent[]>gameObject
+        //     .findComponentsByName(CharacterAttributeComponent.name)
+        //     .filter((characterAttributeComponentFound: CharacterAttributeComponent) => {
+        //         return dependentCharacterAttributes.some((characterAttributeComponent) => {
+        //             return characterAttributeComponent === characterAttributeComponentFound.characterAttribute;
+        //         });
+        //     })
+        // ;
     }
 }

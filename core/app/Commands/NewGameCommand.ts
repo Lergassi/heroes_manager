@@ -54,6 +54,7 @@ export default class NewGameCommand extends Command {
         window['gameLocation'] = this.container.get<LocationFactory>('player.locationFactory').create({
             level: new LevelRange(1, 5),
         });
+        console.log('gameLocation', window['gameLocation']);
 
         this.container.get<ClientRender>('client.clientRender').buildGameUI();
     }

@@ -15,7 +15,7 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
         return this._itemStack;
     }
 
-    constructor(id: number, gameObject: GameObject) {
+    constructor(id?: number, gameObject?: GameObject) {
         super(id, gameObject);
         this._itemStack = null;
     }
@@ -31,12 +31,17 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
     placeItemStack(itemStack: ItemStack): void {
         this.canPlaceItem(itemStack.item);
         this._itemStack = itemStack;
+        this.update();
 
-        this.gameObject.update();
+        // this.gameObject.update();
+    }
+
+    isBusy(): boolean {
+        return !_.isNil(this._itemStack);
     }
 
     isFree(): boolean {
-        return _.isNil(this._itemStack);
+        return !this.isBusy();
     }
 
     clear(): void {
@@ -55,5 +60,13 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
     // }
     containsItem(item: Item): boolean {
         return this._itemStack && this._itemStack.containsItem(item);
+    }
+
+    render(callback: (values: {
+        itemStack: ItemStack,
+    }) => void) {
+        callback({
+            itemStack: this._itemStack,
+        });
     }
 }

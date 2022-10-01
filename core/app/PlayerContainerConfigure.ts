@@ -33,6 +33,8 @@ import AutoIncrementIDGenerator from '../source/AutoIncrementIDGenerator.js';
 import LocationFactory from './Factories/LocationFactory.js';
 import ItemDatabase from './ItemDatabase.js';
 import Random from './Services/Random.js';
+import Component from '../source/Component.js';
+import EventSystem from '../source/EventSystem.js';
 
 /**
  * todo: Временно не актуально.
@@ -47,6 +49,17 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         container.set<IDGeneratorInterface>('player.realtimeObjectIdGenerator', (container: ContainerInterface) => {
             return new AutoIncrementIDGenerator(1);
         });
+        //region dev
+        /**
+         * @indev
+         */
+        //Ну допустим...
+        Object.defineProperty(Object.prototype, '_generateID', {
+            get: () => {
+                return container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator').generateID();
+            }
+        });
+        //endregion dev
         container.set<GameObjectStorage>('player.gameObjectStorage', (container) => {
             return new GameObjectStorage();
         });
@@ -56,7 +69,10 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
         //Фабрики
         container.set('player.gameObjectFactory', (container) => {
-            return new GameObjectFactory(container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'));
+            return new GameObjectFactory(
+                container.get<GameObjectStorage>('player.gameObjectStorage'),
+                container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
+            );
         });
         container.set<PlayerFactory>('player.playerFactory', (container) => {
             return new PlayerFactory(container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'), {
@@ -135,18 +151,20 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new ItemStorageFactory(
                 container.get<GameObjectStorage>('player.gameObjectStorage'),
                 container.get<ItemStackFactory>('player.itemStackFactory'),
-                container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
+                container.get<GameObjectFactory>('player.gameObjectFactory'),
             );
         });
         container.set<LocationFactory>('player.locationFactory', (container) => {
-            return new LocationFactory(
-                container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                container.get<GameObjectFactory>('player.gameObjectFactory'),
-                container.get<ItemStackFactory>('player.itemStackFactory'),
-                container.get<EntityManager>('core.entityManager'),
-                container.get<ItemDatabase>('core.itemDatabase'),
-                container.get<Random>('core.random'),
-            );
+            return new LocationFactory({
+                IDGenerator: container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
+                entityManager: container.get<EntityManager>('core.entityManager'),
+                gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
+                itemDatabase: container.get<ItemDatabase>('core.itemDatabase'),
+                itemStackFactory: container.get<ItemStackFactory>('player.itemStackFactory'),
+                random: container.get<Random>('core.random'),
+                itemStorageFactory: container.get<ItemStorageFactory>('player.itemStorageFactory'),
+                eventSystem: container.get<EventSystem>('core.eventSystem'),
+            });
         });
 
         //Фасады

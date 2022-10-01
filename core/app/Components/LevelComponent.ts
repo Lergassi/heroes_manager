@@ -3,10 +3,10 @@ import GameObject from '../../source/GameObject.js';
 import _ from 'lodash';
 
 export class LevelRange {
-    // private readonly _min: number;
-    // private readonly _max: number;
-    private _min: number;
-    private _max: number;
+    private readonly _min: number;
+    private readonly _max: number;
+    // private _min: number;
+    // private _max: number;
 
     constructor(min: number, max: number) {
         this._min = min;
@@ -105,17 +105,27 @@ export class LevelRange {
         return getter;
     }
 
-    setMax(max: number) {
-        this['_max'] = max;
-        console.log('max установлен: ' + max);
-        this.update();
-    }
+    // setMax(max: number) {
+    //     this['_max'] = max;
+    //     console.log('max установлен: ' + max);
+    //     this.update();
+    // }
 
     update() {
         console.log(this['_attaches']);
         for (let i = 0; i < this['_attaches'].length; i++) {
             this['_attaches'][i].update();
         }
+    }
+
+    render(callback: (values: Readonly<{
+        min: number,
+        max: number,
+    }>) => void) {
+        callback({
+            min: this._min,
+            max: this._max,
+        });
     }
 }
 

@@ -7,6 +7,7 @@ import _ from 'lodash';
 export default class CharacterAttributeComponent extends Component {
     private readonly _characterAttribute: CharacterAttribute;
     private _baseValue: number;
+    private readonly _equipSlotComponents: EquipSlotComponent[];
 
     get characterAttribute(): CharacterAttribute {
         return this._characterAttribute;
@@ -35,7 +36,10 @@ export default class CharacterAttributeComponent extends Component {
                 //     return equipSlotComponent.itemStack.item.increase(this._characterAttribute);
                 // })
 
-                _.sumBy(this.gameObject.getComponents<EquipSlotComponent>(EquipSlotComponent), (equipSlotComponent) => {
+                // _.sumBy(this.gameObject.getComponents<EquipSlotComponent>(EquipSlotComponent), (equipSlotComponent) => {
+                //     return !equipSlotComponent.isFree() ? equipSlotComponent.itemStack.item.increase(this._characterAttribute) : 0;
+                // })
+                _.sumBy(this._equipSlotComponents, (equipSlotComponent) => {
                     return !equipSlotComponent.isFree() ? equipSlotComponent.itemStack.item.increase(this._characterAttribute) : 0;
                 })
             ;
@@ -44,13 +48,16 @@ export default class CharacterAttributeComponent extends Component {
     }
 
     constructor(
-        id: number,
-        gameObject: GameObject,
+        // id: number,
+        // gameObject: GameObject,
         characterAttribute: CharacterAttribute,
+        equipSlotComponents: EquipSlotComponent[],
         baseValue: number = 0,
     ) {
-        super(id, gameObject);
+        // super(id, gameObject);
+        super();
         this._characterAttribute = characterAttribute;
         this._baseValue = baseValue;
+        this._equipSlotComponents = equipSlotComponents;
     }
 }

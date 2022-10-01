@@ -7,46 +7,74 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
+import GameObjectFactory from './GameObjectFactory.js';
 
 export default class ItemStorageFactory implements ItemStorageFactoryInterface {
     private readonly _gameObjectStorage: GameObjectStorage;
     private readonly _itemStackFactory: ItemStackFactory;
-    private readonly _idGenerator: IDGeneratorInterface;
+    private readonly _gameObjectFactory: GameObjectFactory;
 
     constructor(
         gameObjectStorage: GameObjectStorage,
         itemStackFactory: ItemStackFactory, //todo: Наверное фабрика для стеков тут не нужна.
-        idGenerator: IDGeneratorInterface,
+        gameObjectFactory: GameObjectFactory,
     ) {
         this._gameObjectStorage = gameObjectStorage;
         this._itemStackFactory = itemStackFactory;
-        this._idGenerator = idGenerator;
+        this._gameObjectFactory = gameObjectFactory;
     }
 
     create(size: number = DEFAULT_ITEM_STORAGE_SIZE): GameObject {
-        let itemStorage = new GameObject(this._idGenerator.generateID());
+        let itemStorage = this._gameObjectFactory.create();
 
         itemStorage.name = 'ItemStorage';
         itemStorage.addTags('#item_storage');
 
-        itemStorage.set<ItemStorageComponent>('itemStorageComponent', new ItemStorageComponent(
-            this._idGenerator.generateID(),
-            itemStorage,
-            size,
-            this._idGenerator,
-            this._itemStackFactory,
-        ));
+        this.createIn(size, itemStorage);
+        // let slots = [];
+        // for (let i = 0; i < size; i++) {
+        //     slots.push(new ItemStorageSlotComponent());
+        // }
+        //
+        // itemStorage.set<ItemStorageComponent>('itemStorageComponent', new ItemStorageComponent(
+        //     // itemStorage,
+        //     // size,
+        //     slots,
+        //     this._itemStackFactory,
+        // ));
 
         //todo: ItemStorageComponent не имеет смысла без слотов.
         // for (let i = 0; i < size; i++) {
-        //     itemStorage.addComponent(new ItemStorageSlotComponent(
-        //         this._idGenerator.generateID(),
-        //         itemStorage,
-        //     ));
+        //     let itemStorageSlot = this._gameObjectFactory.create();
+        //
+        //     let itemStorageSlotComponent = itemStorageSlot.addComponent(new ItemStorageSlotComponent());
+        //     // itemStorage.addComponent<ItemStorageSlotComponent>(itemStorageSlotComponent);
+        //     itemStorage.addComponent<GameObject>(itemStorageSlot);
+        //
+        //     // itemStorage.addComponent(new ItemStorageSlotComponent(
+        //     //     this._idGenerator.generateID(),
+        //     //     itemStorage,
+        //     // ));
         // }
 
-        this._gameObjectStorage.add(itemStorage);
+        // this._gameObjectStorage.add(itemStorage);
 
         return itemStorage;
+    }
+
+    createIn(size: number, gameObject: GameObject) {
+        let slots = [];
+        for (let i = 0; i < size; i++) {
+            let slot = new ItemStorageSlotComponent();
+            slots.push(slot);
+            gameObject.addComponent(slot);
+        }
+
+        let itemStorageComponent = gameObject.set<ItemStorageComponent>('itemStorageComponent', new ItemStorageComponent(
+            slots,
+            this._itemStackFactory,
+        ));
+
+        return itemStorageComponent;    //todo: Тут будет контроллер.
     }
 }

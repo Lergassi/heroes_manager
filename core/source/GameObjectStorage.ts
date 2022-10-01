@@ -19,6 +19,10 @@ export default class GameObjectStorage {
         _.pull(this._gameObjects, gameObject);
     }
 
+    /**
+     * @deprecated
+     * @param id
+     */
     findOneByID(id: number): GameObject {
         for (let i = 0; i < this._gameObjects.length; i++) {
             if (this._gameObjects[i]['_id'] === id) {
@@ -38,6 +42,10 @@ export default class GameObjectStorage {
         throw AppError.gameObjectNotFound(id);
     }
 
+    /**
+     * @deprecated
+     * @param tag
+     */
     findByTag(tag: string): GameObject[] {
         let result = [];
         for (let i = 0; i < this._gameObjects.length; i++) {
@@ -49,6 +57,10 @@ export default class GameObjectStorage {
         return result;
     }
 
+    /**
+     * @deprecated
+     * @param tag
+     */
     findOneByTag(tag: string): GameObject {
         let gameObjects = this.findByTag(tag);
         if (gameObjects.length) {
@@ -67,6 +79,9 @@ export default class GameObjectStorage {
         throw AppError.gameObjectNotFound(tag);
     }
 
+    /**
+     * @deprecated Полностью уничтожать объект.
+     */
     clear() {
         _.remove(this._gameObjects);
     }

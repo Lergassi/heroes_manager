@@ -10,28 +10,34 @@ import ItemStackFactory from '../Factories/ItemStackFactory.js';
 
 export const DEFAULT_ITEM_STORAGE_SIZE = 20;
 
+/**
+ * Это контроллер.
+ */
 export default class ItemStorageComponent extends Component {
     private readonly _size: number;
-    private _itemStackFactory: ItemStackFactory;
+    private readonly _slots: ItemStorageSlotComponent[];
+    private readonly _itemStackFactory: ItemStackFactory;
 
     constructor(
-        id: number,
-        gameObject: GameObject,
-        size: number,
-        IDGenerator: IDGeneratorInterface,
+        // id: number,
+        // gameObject: GameObject,
+        // size: number,
+        // IDGenerator: IDGeneratorInterface,
+        slots: ItemStorageSlotComponent[],
         itemStackFactory: ItemStackFactory,
     ) {
-        super(id, gameObject);
-        this._size = size;
+        super();
+        this._size = slots.length;
+        this._slots = slots;
         this._itemStackFactory = itemStackFactory;
 
         //todo: Слоты надо либо скрыть, либо передавать из вне. Тогда логика ItemStorageComponent измениться и будет зависить от переданного кол-ва слотов. Сколько передали - такой и размер.
-        for (let i = 0; i < size; i++) {
-            this.gameObject.addComponent(new ItemStorageSlotComponent(
-                IDGenerator.generateID(),
-                this.gameObject,
-            ));
-        }
+        // for (let i = 0; i < size; i++) {
+        //     this.gameObject.addComponent(new ItemStorageSlotComponent(
+        //         IDGenerator.generateID(),
+        //         this.gameObject,
+        //     ));
+        // }
     }
 
     /**
@@ -41,13 +47,18 @@ export default class ItemStorageComponent extends Component {
         return this._size;
     }
 
+    /**
+     * @deprecated
+     */
     get itemStorageSlotComponents(): ItemStorageSlotComponent[] {
-        return this.gameObject.getComponents<ItemStorageSlotComponent>(ItemStorageSlotComponent);
+        // return this.gameObject.getComponents<ItemStorageSlotComponent>(ItemStorageSlotComponent);
+        return this._slots;
     }
 
     get busyItemStorageSlotCount(): number {
         let count = 0;
-        const itemStorageSlotComponents = this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        // const itemStorageSlotComponents = this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        const itemStorageSlotComponents = this._slots;
         itemStorageSlotComponents.map((itemStorageSlotComponent: ItemStorageSlotComponent) => {
             count += Number(!itemStorageSlotComponent.isFree());
         });
@@ -60,12 +71,13 @@ export default class ItemStorageComponent extends Component {
     }
 
     /**
-     * @deprecated
+     * @deprecated Использовать getFirstFreeItemStorageSlotComponent()
      */
     findFirstFreeItemStorageSlotComponent(): ItemStorageSlotComponent {
         let freeItemStorageSlotComponent = null;
 
-        let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        // let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        let itemStorageSlotComponents = this._slots;
         for (let i = 0; i < itemStorageSlotComponents.length; i++) {
             if (itemStorageSlotComponents[i].isFree()) {
                 freeItemStorageSlotComponent = itemStorageSlotComponents[i];
@@ -78,7 +90,8 @@ export default class ItemStorageComponent extends Component {
 
     getFreeItemStorageSlotComponents(): ItemStorageSlotComponent[] {
         let freeItemStorageSlotComponents: ItemStorageSlotComponent[] = [];
-        let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        // let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        let itemStorageSlotComponents = this._slots;
         for (let i = 0; i < itemStorageSlotComponents.length; i++) {
             if (itemStorageSlotComponents[i].isFree()) {
                 freeItemStorageSlotComponents.push(itemStorageSlotComponents[i]);
@@ -96,7 +109,8 @@ export default class ItemStorageComponent extends Component {
         //
         // return freeItemStorageSlot;
         let freeItemStorageSlotComponent;
-        let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        // let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        let itemStorageSlotComponents = this._slots;
         for (let i = 0; i < itemStorageSlotComponents.length; i++) {
             if (itemStorageSlotComponents[i].isFree()) {
                 freeItemStorageSlotComponent = itemStorageSlotComponents[i];
@@ -109,7 +123,8 @@ export default class ItemStorageComponent extends Component {
 
     getItemStorageSlotComponentsWithItem(item: Item): ItemStorageSlotComponent[] {
         let itemStorageSlotComponentsWithItem = [];
-        let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        // let itemStorageSlotComponents = <ItemStorageSlotComponent[]>this.gameObject.findComponentsByName(ItemStorageSlotComponent.name);
+        let itemStorageSlotComponents = this._slots;
         for (let i = 0; i < itemStorageSlotComponents.length; i++) {
             if (itemStorageSlotComponents[i].containsItem(item)) {
                 itemStorageSlotComponentsWithItem.push(itemStorageSlotComponents[i]);
@@ -120,7 +135,7 @@ export default class ItemStorageComponent extends Component {
     }
 
     /**
-     *
+     * todo: Может только itemStack?
      * @param item
      * @param count
      * @return Остаток.
@@ -144,16 +159,20 @@ export default class ItemStorageComponent extends Component {
         while (currentCount > 0) {
             // console.log('slotsWithItem.length', slotsWithItem.length);
             for (let i = 0; i < slotsWithItem.length; i++) {
-                if (slotsWithItem[i].itemStack.count >= item.stackSize) {
+                // if (slotsWithItem[i].itemStack.count >= item.stackSize) {
+                if (slotsWithItem[i].itemStack.isFull()) {
                     continue;
                 }
 
-                let flawCount = slotsWithItem[i].itemStack.item.stackSize - slotsWithItem[i].itemStack.count;
+                // let flawCount = slotsWithItem[i].itemStack.item.stackSize - slotsWithItem[i].itemStack.count;
+                let flawCount = slotsWithItem[i].itemStack.flawCount();
                 if (currentCount <= flawCount) {
-                    slotsWithItem[i].itemStack.count += currentCount;
+                    // slotsWithItem[i].itemStack.count += currentCount;
+                    slotsWithItem[i].itemStack.add(currentCount);
                     currentCount = 0;
                 } else {
-                    slotsWithItem[i].itemStack.count += flawCount;
+                    // slotsWithItem[i].itemStack.count += flawCount;
+                    slotsWithItem[i].itemStack.add(flawCount);
                     currentCount -= flawCount;
                 }
                 // currentCount -= flawCount;
@@ -191,9 +210,18 @@ export default class ItemStorageComponent extends Component {
     }
 
     clear() {
-        let itemStorageSlotComponents = this.gameObject.findComponentsByName<ItemStorageSlotComponent>(ItemStorageSlotComponent.name);
+        // let itemStorageSlotComponents = this.gameObject.findComponentsByName<ItemStorageSlotComponent>(ItemStorageSlotComponent.name);
+        let itemStorageSlotComponents = this._slots;
         for (let i = 0; i < itemStorageSlotComponents.length; i++) {
             itemStorageSlotComponents[i].clear();
         }
+    }
+
+    render(callback: (values: {
+        slots: ItemStorageSlotComponent[],
+    }) => void) {
+        callback({
+            slots: this._slots,
+        });
     }
 }

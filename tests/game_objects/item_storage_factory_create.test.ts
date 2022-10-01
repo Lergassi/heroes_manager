@@ -14,13 +14,15 @@ import GameObjectStorage from '../../core/source/GameObjectStorage.js';
 // let itemStorageFactory = new ItemStorageFactory(new AutoIncrementIDGenerator(1));
 let IDGenerator = new UUIDGenerator();
 let itemStackFactory = new ItemStackFactory(
-    IDGenerator,
+    // IDGenerator,
+    null,
     new EntityManager(),
 );
 let itemStorageFactory = new ItemStorageFactory(
     new GameObjectStorage(),
     itemStackFactory,
-    IDGenerator,
+    // IDGenerator,
+    null,
 );
 
 let size = 10;

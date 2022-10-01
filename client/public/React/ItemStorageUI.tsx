@@ -6,49 +6,7 @@ import ItemStorageComponent from '../../../core/app/Components/ItemStorageCompon
 import {debugItemStorage} from '../../../core/debug/debug_functions.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStorageListComponent from '../../../core/app/Components/ItemStorageListComponent.js';
-
-export interface ItemStackRComponentProps {
-    itemStack: ItemStack;
-}
-
-export interface ItemStackRComponentState {
-
-}
-
-export class ItemStackRComponent extends React.Component<ItemStackRComponentProps, ItemStackRComponentState>{
-    constructor(props: ItemStackRComponentProps) {
-        super(props);
-    }
-
-    render() {
-        let itemStack = this.props.itemStack;
-        let element;
-        if (itemStack) {
-            element = <span>
-                {this._renderItemStack(itemStack)}
-            </span>;
-        } else {
-            element = <span>free</span>
-        }
-
-        return (
-            <span>
-                {element}
-            </span>
-        );
-    }
-
-    _renderItemStack(itemStack: ItemStack) {
-        let element = <span>{itemStack.item.name} ({itemStack.count})</span>;
-        // if (itemStack.item.isEquipable) {
-        //     element = <span>{itemStack.item.name}</span>
-        // } else {
-        //     element = <span>{itemStack.item.name} ({itemStack.count})</span>
-        // }
-
-        return element;
-    }
-}
+import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 
 export interface ItemStorageRComponentProps {
     itemStorage: GameObject;
@@ -72,7 +30,7 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
     }
 
     render() {
-        let itemStorage: GameObject = this.state.itemStorage;
+        let itemStorage = this.state.itemStorage;
         let itemStorageSlotComponents = itemStorage.getComponents<ItemStorageSlotComponent>(ItemStorageSlotComponent);
         return (
             <div className={'block'}>
@@ -109,6 +67,9 @@ export interface ItemStorageSlotRComponentState {
     itemStorageSlotComponent: ItemStorageSlotComponent;
 }
 
+/**
+ * Только для слота в сумках. todo: Для других случаях нужен другой компонент.
+ */
 export class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRComponentProps, ItemStorageSlotRComponentState> implements RComponentUpdateInterface {
     constructor(props: ItemStorageSlotRComponentProps) {
         super(props);
@@ -138,7 +99,7 @@ export class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRC
             <tr>
                 <td>{this.state.itemStorageSlotComponent['_id']}</td>
                 <td>
-                    <ItemStackRComponent
+                    <ItemStackTextRComponent
                         itemStack={this.state.itemStorageSlotComponent.itemStack}
                     />
                 </td>

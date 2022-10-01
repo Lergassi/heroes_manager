@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {LevelRange} from '../../../core/app/Components/LevelComponent.js';
-import {LocationRComponent} from './LocationRComponent.js';
+import {LocationContainerRComponent} from './LocationContainerRComponent.js';
 
 function FancyBorder(props) {
     return (
@@ -51,7 +51,7 @@ export default class SandboxRComponent extends React.Component<any, any>{
 
     render() {
         // let values = this['getter']();
-        let values = this._getter();
+        // let values = this._getter();
         // let min = levelRange.render().min;
         // let max = levelRange.render().max;
         //
@@ -93,9 +93,9 @@ export default class SandboxRComponent extends React.Component<any, any>{
                 */}
                 {/*<div>level: {values.min}-{values.max}</div>*/}
                 {/*<WelcomeDialog></WelcomeDialog>*/}
-                <LocationRComponent
-                    locationComponent={window['gameLocation']}
-                />
+                {/*<LocationRComponent*/}
+                {/*    locationComponent={window['gameLocation']}*/}
+                {/*/>*/}
             </div>
         );
     }

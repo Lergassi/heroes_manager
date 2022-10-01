@@ -27,12 +27,13 @@ export default class HealthPointsComponent extends Component {
     }
 
     constructor(
-        id: number,
-        gameObject: GameObject,
+        // id: number,
+        // gameObject: GameObject,
         currentHealthPoints: number,
         maxHealthPoints: number,
     ) {
-        super(id, gameObject);
+        // super(id, gameObject);
+        super();
         this._currentHealthPoints = currentHealthPoints;
         this._maxHealthPoints = maxHealthPoints;
         this._isDead = false;

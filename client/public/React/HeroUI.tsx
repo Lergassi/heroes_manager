@@ -6,7 +6,6 @@ import HeroComponent from '../../../core/app/Components/HeroComponent.js';
 import LevelComponent from '../../../core/app/Components/LevelComponent.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import {
-    ItemStackRComponent,
     ItemStorageCollectionRComponentProps,
     ItemStorageCollectionRComponentState
 } from './ItemStorageUI.js';
@@ -20,6 +19,7 @@ import GameObject from '../../../core/source/GameObject.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import AppError from '../../../core/source/AppError.js';
+import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 
 interface HeroListRComponentProps {
     container: ContainerInterface;
@@ -351,7 +351,7 @@ export class EquipSlotRComponent extends React.Component<EquipSlotRComponentProp
                 <td>{equipSlotComponent['_id']}</td>
                 <td>{equipSlotComponent.equipSlot.name}</td>
                 <td>
-                    <ItemStackRComponent
+                    <ItemStackTextRComponent
                         itemStack={equipSlotComponent.itemStack}
                     />
                 </td>

@@ -15,6 +15,7 @@ import {MILLISECONDS_IN_SECOND} from '../consts.js';
 import {Minutes, Seconds} from '../types.js';
 import {sprintf} from 'sprintf-js';
 import {PlacementControllerInterface, PlacementInterface} from './HeroListComponent.js';
+import EventSystem from '../../source/EventSystem.js';
 
 export class AvailableGatherItem {
     private readonly _item: Item;
@@ -109,11 +110,21 @@ export type GatheringItemPoint = {
 //     }
 // }
 
+// type LocationComponentRenderSignature
+
+export enum LocationComponentEventCode {
+    Start = 'location_component.start',
+    Stop = 'location_component.stop',
+    AddHero = 'location_component.add_hero',
+    RemoveHero = 'location_component.remove_hero',
+    ItemsGenerated = 'location_component.items_generated',
+}
+
 // export default class LocationComponent extends Component implements PlacementInterface {
 // export default class LocationComponent extends Component {
-export default class LocationComponent extends Component implements PlacementControllerInterface {
+export default class LocationComponent extends Component {
     private readonly _created: Date;
-    private readonly _level: LevelRange;
+    private readonly _levelRange: LevelRange;
     private readonly _gatheringItemPoints: GatheringItemPoint[];
     private readonly _heroGroupComponent: HeroGroupComponent;               //Каждый компонент, который использует группу сам решает как его отобразить.
     private readonly _internalItemStorageComponent: ItemStorageComponent;   //Визуально может никак не быть связанным с сумками.
@@ -123,36 +134,32 @@ export default class LocationComponent extends Component implements PlacementCon
     private _state: LocationState;
     private _intervalID: NodeJS.Timer;
     private readonly _intervalPeriod: Seconds;
+    private readonly _eventSystem: EventSystem;
 
     //todo: Не многовато зависимостей?
-    constructor(
-        id: number,
+
+    constructor(options: {
         created: Date,
-        level: LevelRange,
+        levelRange: LevelRange,
         gatheringItemPoints: GatheringItemPoint[],
         heroGroupComponent: HeroGroupComponent,
         internalItemStorageComponent: ItemStorageComponent,
         itemStackFactory: ItemStackFactory,
-    ) {
-        super(id);
-        this._created = created;
-        this._level = level;
-        this._gatheringItemPoints = gatheringItemPoints;
-        this._heroGroupComponent = heroGroupComponent;
-        this._internalItemStorageComponent = internalItemStorageComponent;
-        this._itemStackFactory = itemStackFactory;
+        eventSystem: EventSystem,
+    }) {
+        super();
+        this._created = options.created;
+        this._levelRange = options.levelRange;
+        this._gatheringItemPoints = options.gatheringItemPoints;
+        this._heroGroupComponent = options.heroGroupComponent;
+        this._internalItemStorageComponent = options.internalItemStorageComponent;
+        this._itemStackFactory = options.itemStackFactory;
+        this._eventSystem = options.eventSystem;
 
         this._state = LocationState.Waiting;
-        // this._intervalPeriod = 60;
-        this._intervalPeriod = 1;
+        this._intervalPeriod = 1;   //todo: В будущем настраиваемый игрой.
     }
 
-    //Дублирование интерфейса? Если объект будет в GameObject, то им можно управлять из вне. Сделать закрытыми? Или пометку у компонента, что он не доступен из вне.
-    // setHero() {}
-    // addHero() {}
-    // clearPosition(position: number) {}
-
-    //Надо подумать как редактировать группу. В этот момент происходит добыча ресурсов или нет?
     start(): void {
         if (this._state !== LocationState.Waiting) {
             return;
@@ -166,10 +173,11 @@ export default class LocationComponent extends Component implements PlacementCon
         this._heroGroupComponent.block(this);
         //todo: Тут будет дальше единый механизм на всю игру. С учетом онлайн игры.
         this._intervalID = setInterval(() => {
-            this.generateItems();
+            this._generateItems();
             //И другие действия...
         }, this._intervalPeriod * MILLISECONDS_IN_SECOND);
         debug('log')('Охота запущена.');
+        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.Start, this);
     }
 
     stop() {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
@@ -181,24 +189,21 @@ export default class LocationComponent extends Component implements PlacementCon
         this._heroGroupComponent.unblock(this);
         clearInterval(this._intervalID);
         debug('log')('Охота остановлена.');
+        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.Stop, this);
     }
 
-    // private _timeIsOver(): boolean {
-    //     return new Date() >= (new Date(this._created).setSeconds(this._created.getSeconds() + 5));
-    // }
-    // end() {} //Охота начинается сразу при добавлении героя. При удалении героев охота не происходит.
+    /**
+     * Перемещает объекты в сумки. Если слотов не хватает, остатки остаются в локации. Технически: перемещение между сумками.
+     * @param itemStorageManager
+     */
+    moveItems(itemStorageManager: ItemStorageManager) {
+        this._canModify();
 
-    //Перемещает объекты в сумки. Если слотов не хватает, остатки остаются в локации. Технически: перемещение между сумками.
-    takeItems(itemStorageManager: ItemStorageManager) {
         itemStorageManager.moveFrom(this._internalItemStorageComponent);
         debug('log')('Предметы собраны.');
-        debugItemStorage(this.gameObject);
-        debugItemStorages(itemStorageManager.itemStorages);
     }
 
-    generateItems() {
-        // debug('log')('Сбор предметов.');
-        // let partOfMaxPeriodGathering = this._heroGroupComponent.heroesCount / this._heroGroupComponent.size /*todo: И как это без геттера слелать? */;
+    private _generateItems() {
         let partOfMaxPeriodGathering = this._heroGroupComponent.partOfMaxHeroesCount /*todo: так чтоли? */;
         for (let i = 0; i < this._gatheringItemPoints.length; i++) {
             let count = _.ceil(this._gatheringItemPoints[i].value.value / this._gatheringItemPoints[i].value.period * this._intervalPeriod * partOfMaxPeriodGathering);
@@ -206,39 +211,70 @@ export default class LocationComponent extends Component implements PlacementCon
                 debug('log')(sprintf('Собран предмет: %s (%s). Эффективность сбора: %s', this._gatheringItemPoints[i].item.name, count, partOfMaxPeriodGathering));
             }
         }
-        debugItemStorage(this._internalItemStorageComponent);
+        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.ItemsGenerated, this);
     }
 
     addHero(hero: GameObject) {
         this._canAddHero(hero);
 
         this._heroGroupComponent.addHero(hero);
+        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.AddHero, this);
     }
 
     removeHero(hero: GameObject) {
+        this._canRemoveHero();
 
+        this._heroGroupComponent.removeHero(hero);
+        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.RemoveHero, this);
     }
 
-    _canAddHero(hero: GameObject): void {
+    private _canModify(): void {
         if (this._state !== LocationState.Waiting) {
             throw new AppError('Нельзя редактировать локацию во время охоты.');
         }
-
-        if (this._level.lessMin(hero.getComponent<LevelComponent>(LevelComponent).level, {strong: true})) {
-            throw new AppError('Уровень героя слишком низкий для данной локации.');
-        }
     }
 
-    render(callback) {
+    // _canManipulation() {
+    //     if (this._state !== LocationState.Waiting) {
+    //         throw new AppError('Нельзя редактировать локацию во время охоты.');
+    //     }
+    // }
+
+    private _canAddHero(hero: GameObject): void {
+        this._canModify();
+
+        if (this._levelRange.lessMin(hero.getComponent<LevelComponent>(LevelComponent).level, {strong: true})) {
+            throw new AppError('Уровень героя слишком низкий для данной локации.');
+        }
+
+        // if (this._heroGroupComponent.heroesCount >= this._heroGroupComponent.size) {
+        //     throw new AppError('Уровень героя слишком низкий для данной локации.');
+        // }
+    }
+
+    private _canRemoveHero(): void {
+        this._canModify();
+    }
+
+    render(callback: ({}: Readonly<{
+        level: LevelRange,
+        gatheringItemPoints: GatheringItemPoint[],
+        internalItemStorageComponent: ItemStorageComponent,
+        heroGroupComponent: HeroGroupComponent,
+    }>) => void) {
         callback({
-            level: this._level,
+            level: this._levelRange,
             gatheringItemPoints: this._gatheringItemPoints,
             internalItemStorageComponent: this._internalItemStorageComponent,
             heroGroupComponent: this._heroGroupComponent,
         });
     }
 
-    attach(rComponent) {
-        // rComponent
-    }
+    // render2(o) {
+    //     let o = <asdasd>o;
+    //     o.set({
+    //         a: 1,
+    //         //...
+    //     });
+    // }
 }

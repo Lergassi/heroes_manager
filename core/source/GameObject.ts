@@ -13,7 +13,8 @@ export default class GameObject implements AssignRComponentInterface {
     /**
      * @deprecated
      */
-    private readonly _id: number;
+    private readonly _id: number = this['_generateID'];
+    // private readonly _id: number;
     private _name: string;
     private readonly _tags: string[];
     private readonly _components: ComponentInterface[]; //todo: У компонентов не будет интерфейсов.
@@ -38,10 +39,16 @@ export default class GameObject implements AssignRComponentInterface {
     }
 
     constructor(
-        id: number,
+        id?: number,
     ) {
-        this._id = id;
-        this._name = GameObject.name + ': ' + id;
+        // console.log('_id', this._id);
+        // console.log('_ID1', this['_ID']);
+        // console.log('_ID2', this['_ID']);
+        // console.log('_ID3', this['_ID']);
+        // this._id = id;
+        // this['_id'] = GameObject['generateID']();
+        // this._name = GameObject.name + ': ' + this._id;
+        this._name = GameObject.name + ': ' + this['_id'];
         this._components = [];
         this._componentNames = {};
         this._tags = [];

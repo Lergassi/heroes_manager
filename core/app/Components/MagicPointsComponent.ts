@@ -14,12 +14,13 @@ export default class MagicPointsComponent extends Component {
     }
 
     constructor(
-        id: number,
-        gameObject: GameObject,
+        // id: number,
+        // gameObject: GameObject,
         currentMagicPoints: number,
         maxMagicPoints: number
     ) {
-        super(id, gameObject);
+        // super(id, gameObject);
+        super();
         this._currentMagicPoints = currentMagicPoints;
         this._maxMagicPoints = maxMagicPoints;
     }

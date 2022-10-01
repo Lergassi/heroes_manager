@@ -758,7 +758,8 @@ export function testItemStorageFactories() {
     let basicItemStorageFactory = new ItemStorageFactory(
         gameObjectStorage,
         container.get<ItemStackFactory>('player.itemStackFactory'),
-        idGenerator,
+        // idGenerator,
+        null,
     );
     // debugItemStorage(basicItemStorageFactory.create());
 

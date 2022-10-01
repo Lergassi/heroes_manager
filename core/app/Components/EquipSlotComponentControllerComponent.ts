@@ -8,13 +8,21 @@ import ItemStack from '../RuntimeObjects/ItemStack.js';
 //todo: Придумать другое название. 2 раза Component.
 export default class EquipSlotComponentControllerComponent extends Component {
     // private _equipSlots;
+    private readonly _equipSlotComponents: EquipSlotComponent[];
 
     get equipSlotComponents(): EquipSlotComponent[] {
-        return this.gameObject.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name);
+        // return this.gameObject.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name);
+        return this._equipSlotComponents;
     }
 
-    constructor(id: number, gameObject: GameObject) {
-        super(id, gameObject);
+    // constructor(id: number, gameObject: GameObject) {
+    constructor(
+        equipSlotComponents: EquipSlotComponent[],
+    ) {
+        // super(id, gameObject);
+        super();
+
+        this._equipSlotComponents = equipSlotComponents;
 
         // this._equipSlots = {
         //     head: {},
@@ -24,7 +32,8 @@ export default class EquipSlotComponentControllerComponent extends Component {
     }
 
     getEquipSlotComponent(equipSlot: EquipSlot) {
-        let equipSlotComponents = this.gameObject.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name);
+        // let equipSlotComponents = this.gameObject.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name);
+        let equipSlotComponents = this._equipSlotComponents;
         for (let i = 0; i < equipSlotComponents.length; i++) {
             if (equipSlotComponents[i].equipSlot === equipSlot) {
                 return equipSlotComponents[i];

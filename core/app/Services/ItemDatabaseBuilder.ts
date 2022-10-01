@@ -450,11 +450,11 @@ export default class ItemDatabaseBuilder {
                         properties: {
                             armorMaterial: 'plate',
                         },
-                        // increase: {
-                        //     strength: 1000,
-                        //     agility: 1000,
-                        //     intelligence: 1000,
-                        // },
+                        increase: {
+                            strength: 1000,
+                            agility: 1000,
+                            intelligence: 1000,
+                        },
                     },
                 )
                 .build()

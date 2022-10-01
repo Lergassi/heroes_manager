@@ -10,14 +10,12 @@ export default class Component implements AssignRComponentInterface {
     /**
      * @deprecated
      */
-    private readonly _id: number;
+    private readonly _id: number = this['_generateID'];
 
     /**
      * @deprecated
      */
     private readonly _gameObject: GameObject;
-    // private _rComponentBridges: RComponentBridge;
-    // private _rComponentBridges: RComponentBridge[];
     private _assignedRComponents: RComponentUpdateInterface[];
 
     /**
@@ -27,7 +25,27 @@ export default class Component implements AssignRComponentInterface {
         return this._gameObject;
     }
 
-    constructor(id: number, gameObject?: GameObject) {
+    /**
+     * @deprecated id и gameObject не актуальны.
+     * @param id
+     * @param gameObject
+     */
+    constructor(id?: number, gameObject?: GameObject) {
+        // console.log(this._id);
+        // console.log(Component[Symbol('idGenerator')]);
+        // console.log(Component['idGenerator']);
+        // console.log(Component['idGenerator']());
+        // console.log('Component[\'generateID2\']', Component['generateID2']);
+        // console.log('this[\'generateID2\']', this['generateID2']);
+        // console.log('this[\'generateID2\']', this['generateID2']);
+        // console.log('generateID3', this['generateID3']);
+        // console.log(Component['ID']);
+        // console.log('this', this['ID']);
+        // this['_id'] = Component['generateID']();
+        // this['_id'] = this['ID'];
+        // console.log(Component['idGenerator'].generateID());
+        // this._id = 42;
+    // constructor() {
     // constructor(id: number, gameObject: GameObject) {
         // this._id = id;
         // this._assignedRComponents = [];
@@ -41,8 +59,8 @@ export default class Component implements AssignRComponentInterface {
         // } else {
         //
         // }
-        this._id = id;
-        this._gameObject = gameObject;
+        // this._id = id;
+        // this._gameObject = gameObject;
         // this._rComponentBridges = new RComponentBridge();
         // this._rComponentBridges.update(this);
         // this._rComponentBridges = [];
@@ -71,7 +89,7 @@ export default class Component implements AssignRComponentInterface {
             // this._assignedRComponents[i].update(this);
             this._assignedRComponents[i].update();
         }
-        this.gameObject.update();
+        // this.gameObject.update();
 
         // for (let i = 0; i < this._listeners.length; i++) {
         //     this._listeners[i].update();

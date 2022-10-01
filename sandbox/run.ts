@@ -21,12 +21,15 @@ type Command = {
 
 let commands: Command[] = [
     {name: 'main',},
-    {name: 'locationFactory',},
+    {name: 'devLocationFactory',},
     {name: 'randomItemGenerator',},
     {name: 'itemDatabaseFilter',},
     {name: 'chanceGetStarted',},
     {name: 'testItemStackSeparate',},
     {name: 'testItemStorageComponentWithSeparate',},
+    {name: 'testHeroFactory',},
+    {name: 'testLocationFactory',},
+    {name: 'devHeroGroup',},
 ];
 
 for (let i = 0; i < commands.length; i++) {

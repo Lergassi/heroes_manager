@@ -13,7 +13,7 @@ import ItemStorageListComponent from '../../../core/app/Components/ItemStorageLi
 import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorageFactoryInterface.js';
 import {HeroListRComponent, HeroRComponent} from './HeroUI.js';
 import HeroListComponent from '../../../core/app/Components/HeroListComponent.js';
-import {LocationRComponent} from './LocationRComponent.js';
+import {LocationContainerRComponent} from './LocationContainerRComponent.js';
 import AppError from '../../../core/source/AppError.js';
 import SandboxRComponent from './SandboxRComponent.js';
 
@@ -73,8 +73,9 @@ export default class ClientRender {
                     itemStorageCollection={this._container.get<ItemStorageListComponent>('player.itemStorageCollection')}
                     container={this._container}
                 />
-                <LocationRComponent
-                    locationComponent={window['gameLocation']}
+                <LocationContainerRComponent
+                    container={this._container}
+                    location={window['gameLocation']}
                 />
                 <ItemStorageCollectionRComponent
                     itemStorageCollection={this._container.get<ItemStorageListComponent>('player.itemStorageCollection')}

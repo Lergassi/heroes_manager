@@ -133,25 +133,25 @@ export function testHeroGroup() {
     let heroGroup = gameObjectFactory.create();
 
     let heroes = [
-        heroFactory.create('warrior'),
-        heroFactory.create('rogue'),
-        heroFactory.create('gunslinger'),
-        heroFactory.create('mage'),
-        heroFactory.create('mage'),
-        heroFactory.create('warrior'),
+        // heroFactory.create('warrior'),
+        // heroFactory.create('rogue'),
+        // heroFactory.create('gunslinger'),
+        // heroFactory.create('mage'),
+        // heroFactory.create('mage'),
+        // heroFactory.create('warrior'),
     ];
     // console.log(heroes);
 
     let heroGroupComponent = new HeroGroupComponent(
-        idGenerator.generateID(),
+        // idGenerator.generateID(),
         // heroGroup,
         5,
     );
     // console.log(heroGroupComponent);
 
-    heroGroupComponent.setHero(2, heroes[0]);
-    heroGroupComponent.setHero(4, heroes[0]);
-    heroGroupComponent.setHero(100, heroes[0]);
+    // heroGroupComponent.setHero(2, heroes[0]);
+    // heroGroupComponent.setHero(4, heroes[0]);
+    // heroGroupComponent.setHero(100, heroes[0]);
     heroGroupComponent.addHero(heroes[0]);
     heroGroupComponent.addHero(heroes[1]);
     heroGroupComponent.addHero(heroes[2]);
@@ -179,12 +179,12 @@ export function testLocation() {
     // debugItemStorages(itemStorageManager.itemStorages);
 
     let heroes = [
-        heroFactory.create('warrior'),
-        heroFactory.create('rogue'),
-        heroFactory.create('gunslinger'),
-        heroFactory.create('mage'),
-        heroFactory.create('mage'),
-        heroFactory.create('warrior'),
+        // heroFactory.create('warrior'),
+        // heroFactory.create('rogue'),
+        // heroFactory.create('gunslinger'),
+        // heroFactory.create('mage'),
+        // heroFactory.create('mage'),
+        // heroFactory.create('warrior'),
     ];
 
     // locationComponent.start();

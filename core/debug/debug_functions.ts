@@ -18,6 +18,8 @@ import LevelComponent from '../app/Components/LevelComponent.js';
 import EntityManager from '../source/EntityManager.js';
 import ItemStorageManager from '../app/Services/ItemStorageManager.js';
 import Item from '../app/Entities/Item.js';
+import GameContainer from '../source/GameContainer.js';
+import ItemSlot from '../app/Components_v2/ItemSlot.js';
 
 export function debugEntity(entity) {
     debug('debug')('%j', {
@@ -260,6 +262,24 @@ export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent)
                     alias: itemStorageSlotComponent['_itemStack']['_item']['_alias'],
                 },
                 count: itemStorageSlotComponent['_itemStack']['_count'],
+            },
+        });
+    });
+}
+
+export function debugNewItemStorage(itemStorage: GameContainer) {
+    let slots = itemStorage.getComponents<ItemSlot>('itemSlots');
+    _.map(slots, (slot) => {
+        // let slot = slotContainer.get<ItemSlot>('itemSlot');
+        debug('debug')('%j', {
+            // component: ItemStorageSlotComponent.name,
+            // _id: slotContainer['_id'],
+            itemStack: slot.isFree() ? 'free' : {
+                item: {
+                    name: slot['_itemStack']['_item']['_name'],
+                    alias: slot['_itemStack']['_item']['_alias'],
+                },
+                count: slot['_itemStack']['_count'],
             },
         });
     });

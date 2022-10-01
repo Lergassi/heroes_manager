@@ -16,9 +16,9 @@ export default class ItemStackFactory {
     /**
      * Создает только 1 стек если count <= item.stackSize.
      * @param item
-     * @param count
+     * @param count В пределах диапазона 1 - stackSize.
      */
-    create(item: Item, count: number = 1): ItemStack {
+    create(item: Item, count: number): ItemStack {
         return new ItemStack(this._idGenerator.generateID(), item, count);
     }
 

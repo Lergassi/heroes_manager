@@ -41,6 +41,7 @@ import ItemFactory from './Factories/ItemFactory.js';
 import ItemDatabase from './ItemDatabase.js';
 import {extractItems} from './indev.js';
 import Random from './Services/Random.js';
+import EventSystem from '../source/EventSystem.js';
 
 export enum ContainerKey {
     EntityManager = 'core.entityManager',
@@ -79,6 +80,9 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         });
         container.set<Random>('core.random', (container) => {
             return new Random();
+        });
+        container.set<EventSystem>('core.eventSystem', (container) => {
+            return new EventSystem();
         });
 
         // container.set<IDGeneratorInterface>('core.realtimeObjectIdGenerator', (container: ContainerInterface) => {

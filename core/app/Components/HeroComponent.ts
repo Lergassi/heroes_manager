@@ -9,15 +9,24 @@ export enum HeroState {
     Busy = 'Busy',  //В локации или подземелье и тд. А также если просто добавлен в группе при настроке локации.
 }
 
+export enum HeroComponentEventCode {
+    ChangeState = 'heroComponent.change_state',
+}
+
 // export default class HeroComponent extends Component {
 // export default class HeroComponent extends Component implements PlacementInterface<> {
+//todo: Убрать. Получается, что это класс только для хранения HeroClass.
 export default class HeroComponent extends Component {
     private readonly _name: string;
     private readonly _heroClass: HeroClass;
     private _state: HeroState;
     private _stateOwner;
 
-    //todo: Удалить.
+    get name(): string {
+        return this._name;
+    }
+
+//todo: Удалить.
     /**
      * @deprecated
      */
@@ -39,12 +48,22 @@ export default class HeroComponent extends Component {
 //         this.update();
 //     }
 
-    constructor(id: number, name: string, heroClass: HeroClass) {
-        super(id);
+    // constructor(id: number, name: string, heroClass: HeroClass) {
+    constructor(
+        name: string,
+        heroClass: HeroClass,
+        // eventSystem: HeroClass,
+    ) {
+        // super(id);
+        super();
         this._name = name;
         this._heroClass = heroClass;
         this._state = HeroState.Free;
         this._stateOwner = null;
+    }
+
+    isBusy(): boolean {
+        return this._state !== HeroState.Free;
     }
 
     isFree(): boolean {
@@ -52,27 +71,27 @@ export default class HeroComponent extends Component {
     }
 
     //todo: Поменять на "состояние" и придумать кто может изменять статус объекта (интерфейс).
-    take(stateOwner): void {
+    take(stateOwner?): void {
     // place(stateOwner: PlacementControllerInterface): void {
-        if (!this.isFree()) {
-            throw new AppError('Герой уже занят.');
-        }
+    //     if (!this.isFree()) {
+    //         throw new AppError('Герой уже занят.');
+    //     }
 
         this._state = HeroState.Busy;
-        this._stateOwner = stateOwner;
+        // this._stateOwner = stateOwner;
+        // this._eventSystem.event(HeroComponentEventCode.ChangeState);
     }
 
-    release(stateOwner): void {
+    release(stateOwner?): void {
     // removePlacement(stateOwner: PlacementControllerInterface): void {
     // free(stateOwner: PlacementInterface): void {
         //todo: Если не делать такой логики получается что управлять может любой объект и это превратиться в обычный сеттер. Например если ктото осободит героя пока он в локации игра будет сломана. Герой освобождается только тогда когда локация останавливается и герой удаляется из списка локации.
-        if (this._stateOwner !== stateOwner) {
-        // if (!stateOwner.equal(this._stateOwner)) {
-            throw new AppError('Осовободить героя может только объект его занимавший.');
-        }
+        // if (this._stateOwner !== stateOwner) {
+        //     throw new AppError('Осовободить героя может только объект его занимавший.');
+        // }
 
         this._state = HeroState.Free;
-        this._stateOwner = null;
+        // this._stateOwner = null;
     }
 
     // delete() {

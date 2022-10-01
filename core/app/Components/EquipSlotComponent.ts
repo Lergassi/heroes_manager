@@ -10,6 +10,7 @@ import HeroComponent from './HeroComponent.js';
 
 export default class EquipSlotComponent extends Component implements ItemStackPlaceInterface {
     private readonly _equipSlot: EquipSlot;
+    private readonly _heroComponent: HeroComponent;
     private _itemStack: ItemStack;
 
     get equipSlot(): EquipSlot {
@@ -21,17 +22,21 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     }
 
     constructor(
-        id: number,
-        gameObject: GameObject,
+        // id: number,
+        // gameObject: GameObject,
         equipSlot: EquipSlot,
+        heroComponent: HeroComponent,
     ) {
-        super(id, gameObject);
+        // super(id, gameObject);
+        super();
         this._equipSlot = equipSlot;
+        this._heroComponent = heroComponent;
         this._itemStack = null;
     }
 
     canPlaceItem(item: Item): boolean {
-        this._equipSlot.canEquipItem(item, this.gameObject.getComponentByName<HeroComponent>(HeroComponent.name))
+        // this._equipSlot.canEquipItem(item, this.gameObject.getComponentByName<HeroComponent>(HeroComponent.name))
+        this._equipSlot.canEquipItem(item, this._heroComponent)
         if (!this.isFree()) {
             throw new AppError('Слот занят. Сначала его нужно освободить.');
         }

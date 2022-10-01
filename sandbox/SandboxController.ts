@@ -1,7 +1,7 @@
 import ContainerInterface from '../core/source/ContainerInterface.js';
 import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
 import Container from '../core/source/Container.js';
-import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
+import CoreContainerConfigure, {ContainerKey} from '../core/app/CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../core/app/PlayerContainerConfigure.js';
 import LocationFactory from '../core/app/Factories/LocationFactory.js';
 import GameObjectFactory from '../core/app/Factories/GameObjectFactory.js';
@@ -21,10 +21,17 @@ import Quality from '../core/app/Entities/Quality.js';
 import Random from '../core/app/Services/Random.js';
 import {extractItems} from '../core/app/indev.js';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
-import {debugItemStorage} from '../core/debug/debug_functions.js';
+import {debugHero, debugItemStorage, debugNewItemStorage} from '../core/debug/debug_functions.js';
 import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
 import {cpus} from 'os';
 import GameObjectAsReact, {LocationProps, LocationType} from '../core/source/GameObjectAsReact.js';
+import GameContainer from '../core/source/GameContainer.js';
+import ItemSlot from '../core/app/Components_v2/ItemSlot.js';
+import ItemStorageController from '../core/app/Components_v2/ItemStorageController.js';
+import HeroClass, {HeroClassAlias} from '../core/app/Entities/HeroClass.js';
+import GameObject from '../core/source/GameObject.js';
+import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
+import EventSystem from '../core/source/EventSystem.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -41,30 +48,37 @@ export class SandboxController {
     // }
 
     main() {
-        this.testDateDiffs();
+        // this.testDateDiffs();
+        // this.testNewComponents();
+        // this.gameContainerGetStarted();
+        this.testReadonly();
     }
 
-    locationFactory() {
+    devLocationFactory() {
         let idGenerator = this._container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator');
         let heroFactory = this._container.get<HeroFactory>('player.heroFactory');
+        let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
 
         let heroes = [
-            heroFactory.create('warrior', 9),
-            heroFactory.create('rogue', 42),
-            heroFactory.create('gunslinger'),
-            heroFactory.create('mage'),
-            heroFactory.create('mage'),
-            heroFactory.create('warrior'),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior), 9),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue), 42),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger)),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior)),
         ];
 
-        let locationFactory = new LocationFactory(
-            idGenerator,
-            this._container.get<GameObjectFactory>('player.gameObjectFactory'),
-            this._container.get<ItemStackFactory>('player.itemStackFactory'),
-            this._container.get<EntityManager>('core.entityManager'),
-            this._container.get<ItemDatabase>('core.itemDatabase'),
-            this._container.get<Random>('core.random'),
-        );
+        let locationFactory = new LocationFactory({
+            IDGenerator: idGenerator,
+            entityManager: this._container.get<EntityManager>('core.entityManager'),
+            gameObjectFactory: this._container.get<GameObjectFactory>('player.gameObjectFactory'),
+            itemDatabase: this._container.get<ItemDatabase>('core.itemDatabase'),
+            itemStackFactory: this._container.get<ItemStackFactory>('player.itemStackFactory'),
+            itemStorageFactory: this._container.get<ItemStorageFactory>('player.itemStorageFactory'),
+            // options: undefined,
+            random: this._container.get<Random>('core.random'),
+            eventSystem: this._container.get<EventSystem>('core.eventSystem'),
+        });
 
         let location = locationFactory.create({
             level: new LevelRange(1, 5),
@@ -75,11 +89,12 @@ export class SandboxController {
         locationComponent.addHero(heroes[0]);
         locationComponent.addHero(heroes[1]);
         locationComponent.addHero(heroes[2]);
-        // locationComponent.addHero(heroes[3]);
+        locationComponent.addHero(heroes[2]);
+        // // locationComponent.addHero(heroes[3]);
         // locationComponent.addHero(heroes[4]);
-        // console.log(locationComponent);
-        locationComponent.start();
-        locationComponent.stop();
+        console.log(locationComponent['_heroGroupComponent']);
+        // locationComponent.start();
+        // locationComponent.stop();
     }
 
     randomItemGenerator() {
@@ -246,5 +261,173 @@ export class SandboxController {
         // let a: LocationType;
         let hero = new GameObjectAsReact<LocationType>(undefined);
         // let n = hero.foo;
+    }
+
+    private testNewComponents() {
+        let itemStorageFactory = this._container.get<ItemStorageFactory>('player.itemStorageFactory');
+
+        let itemStorage = itemStorageFactory.create(20);
+        // console.log(itemStorage);
+        // debugNewItemStorage(itemStorage);
+        let controller = itemStorage.getComponent<ItemStorageComponent>('itemStorageComponent');
+        controller.addItem(this._container.get<ItemDatabase>('core.itemDatabase').get('wood'), 24);
+        debugItemStorage(itemStorage);
+        // let itemStorage = new ItemStorageComponent();
+    }
+
+    gameContainerGetStarted() {
+        let itemStackFactory = this._container.get<ItemStackFactory>('player.itemStackFactory');
+        let db = this._container.get<ItemDatabase>('core.itemDatabase');
+
+        // let itemStorage = new GameContainer();
+        // console.log(itemStorage);
+        // console.log(new GameContainer());
+
+        // let itemSlot1 = new ItemSlotComponent();
+        // let itemSlot2 = new ItemSlotComponent();
+        // // console.log(itemSlot1);
+        // itemSlot1.place(itemStackFactory.create(db.get('wood'), 10));
+        // itemSlot2.place(itemStackFactory.create(db.get('wood'), 20));
+        // console.log(itemSlot1);
+        // console.log(itemSlot2);
+        // itemSlot1.replace(itemSlot2);
+        // console.log(itemSlot1);
+        // console.log(itemSlot2);
+
+        // let itemSlotContainer = new GameContainer();
+        // itemSlotContainer.set('itemSlot', new ItemSlot());
+        // console.log(itemSlotContainer);
+        // let itemSlot = itemSlotContainer.get<ItemSlot>('itemSlot');
+        // // console.log(itemSlot);
+        // // let itemStack = itemSlot.place(itemStackFactory.create(db.get('wood'), 10));
+        // let itemStack = itemSlot.place(itemStackFactory.create(db.get('wood'), 20));
+        // console.log(itemStack);
+        // console.log(itemStack.add(4));
+        // console.log(itemStack.add(40));
+        // console.log(itemStack.add(41));
+        // console.log(itemStack.add(91));
+        // console.log(itemStack.changeCount(4));
+        // console.log(itemStack.add(-12));
+        // console.log(itemStack.remove(8));
+        // console.log(itemStack.remove(0));
+        // console.log(itemStack.remove(2122));
+        // console.log(itemStack);
+
+        let itemStorage = new GameContainer();
+        let size = 10;
+        let itemSlots = [];
+        for (let i = 0; i < size; i++) {
+            // let itemSlot = new GameContainer();
+            // itemSlot.set('itemSlot', new ItemSlot());
+            // itemSlots.push(itemSlot);
+            let itemSlot = itemStorage.setComponent('slot_' + i, new ItemSlot());
+            itemSlots.push(itemSlot);
+        }
+        // itemStorage.set<GameContainer[]>('itemSlots', itemSlots);
+        let itemStorageController = itemStorage.setComponent<ItemStorageController>('controller', new ItemStorageController({
+            itemSlots: itemSlots,
+            itemStackFactory: itemStackFactory,
+        }));
+
+        // console.dir(itemStorage, {depth: 4});
+        // itemStorage.get<GameContainer[]>('itemSlots')[0].get<ItemSlot>('itemSlot').place(itemStackFactory.create(db.get('wood'), 10));
+        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get('wood'), 12);
+        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get('wood'), 12);
+        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get('wood'), 12);
+        // console.log(itemStorage.get<GameContainer[]>('itemSlots')[0]['_components']['itemSlot']);
+        debugNewItemStorage(itemStorage);
+
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.dir(itemStorage, {depth: 5});
+    }
+
+    testHeroFactory() {
+        let heroClass = this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassAlias.Warrior);
+        let hero = this._container.get<HeroFactory>('player.heroFactory').create(heroClass);
+        debugHero(hero);
+    }
+
+    testLocationFactory() {
+        let location = this._container.get<LocationFactory>('player.locationFactory').create({
+            level: new LevelRange(1, 5),
+        });
+        console.log(location);
+    }
+
+    // devLocation() {
+    //
+    // }
+
+    devHeroGroup() {
+        let heroFactory = this._container.get<HeroFactory>('player.heroFactory');
+        let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
+
+        let heroes = [
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior), 9),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue), 42),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger)),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
+            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior)),
+        ];
+
+        let heroGroup = new GameObject();
+
+        let size = 5;
+        let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroupComponent(size));
+        // console.log(heroGroup);
+
+        // heroGroupComponent.setHero(heroes[0]);
+        heroGroupComponent.addHero(heroes[0]);
+        heroGroupComponent.addHero(heroes[1]);
+        heroGroupComponent.addHero(heroes[2]);
+        heroGroupComponent.addHero(heroes[3]);
+        heroGroupComponent.addHero(heroes[4]);
+        heroGroupComponent.addHero(heroes[5]);
+        console.log(heroGroup['_components'][0]);
+        heroGroupComponent.removeHero(heroes[3]);
+        heroGroupComponent.removeHero(heroes[3]);
+        heroGroupComponent.partOfMaxHeroesCount;
+        console.log(heroGroup['_components'][0]);
+    }
+
+    private testReadonly() {
+        type _ItemType = {
+            name: string;
+            stackSize: number;
+        };
+
+        let wood: _ItemType = {
+            name: 'wood',
+            stackSize: 20,
+        };
+        let sword: _ItemType = {
+            name: 'sword',
+            stackSize: 1,
+        };
+
+        let itemStack: Readonly<{
+        // let itemStack: Deep<{
+            item: _ItemType,
+            count: number,
+        }> = {
+            item: wood,
+            count: 42,
+        };
+        // itemStack.count = 42;
+        // itemStack.item = sword;
+        itemStack.item.name = 'asd';
+
+        console.log(itemStack);
     }
 }

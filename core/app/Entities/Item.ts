@@ -2,7 +2,7 @@ import ItemCategory from './ItemCategory.js';
 import Quality from './Quality.js';
 import ArmorMaterial from './ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
-import CharacterAttribute, {CharacterAttributeEnum} from './CharacterAttribute.js';
+import CharacterAttribute, {CharacterAttributeAlias} from './CharacterAttribute.js';
 import _ from 'lodash';
 import AppError from '../../source/AppError.js';
 import {LevelRange} from '../Components/LevelComponent.js';

@@ -7,9 +7,13 @@ import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
 import {debugGameObjectStorage} from '../../debug/debug_functions.js';
 
+//todo: Переименовать и переделать. Сделать класс для простого объединения нескольких ItemStorage.
 export default class ItemStorageManager {
     private _gameObjectStorage: GameObjectStorage;
 
+    /**
+     * @deprecated
+     */
     get itemStorages(): GameObject[] {
         return this._gameObjectStorage.findByTag('#item_storage');
     }
