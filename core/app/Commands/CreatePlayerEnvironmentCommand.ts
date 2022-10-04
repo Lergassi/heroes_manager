@@ -6,8 +6,8 @@ import EntityManager from '../../source/EntityManager.js';
 import Currency from '../Entities/Currency.js';
 import PlayerFactory from '../Factories/PlayerFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../Components/ItemStorageComponent.js';
-import ItemStorageListComponent from '../Components/ItemStorageListComponent.js';
+import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
+import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.
@@ -23,8 +23,12 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     private _createItemStorages() {
-        let itemStorage = this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-        this.container.get<ItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);
+        // let itemStorage = this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+        // this.container.get<ItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);
+        this.container.get<MainItemStorageListComponent>('player.itemStorageCollection').create(
+            DEFAULT_ITEM_STORAGE_SIZE,
+            this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory'),
+        );
     }
 
     private _createWallets() {

@@ -9,6 +9,7 @@ import ItemStorageComponent from '../../../core/app/Components/ItemStorageCompon
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
+import {ContainerKey} from '../../../core/app/consts.js';
 
 export interface LocationRComponentProps {
     container: ContainerInterface;
@@ -35,7 +36,7 @@ export class LocationContainerRComponent extends React.Component<LocationRCompon
             });
         };
 
-        props.container.get<EventSystem>('core.eventSystem').addListener([
+        props.container.get<EventSystem>(ContainerKey.EventSystem).addListener([
             LocationComponentEventCode.AddHero,
             LocationComponentEventCode.RemoveHero,
             LocationComponentEventCode.Start,

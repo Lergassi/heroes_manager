@@ -42,12 +42,7 @@ import ItemDatabase from './ItemDatabase.js';
 import {extractItems} from './indev.js';
 import Random from './Services/Random.js';
 import EventSystem from '../source/EventSystem.js';
-
-export enum ContainerKey {
-    EntityManager = 'core.entityManager',
-    EntityManagerFacade = 'core.facade.entityManager',
-    ItemFactory = 'core.itemFactory',
-}
+import {ContainerKey} from './consts.js';
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -81,7 +76,8 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         container.set<Random>('core.random', (container) => {
             return new Random();
         });
-        container.set<EventSystem>('core.eventSystem', (container) => {
+        // container.set<EventSystem>('core.eventSystem', (container) => {
+        container.set<EventSystem>(ContainerKey.EventSystem, (container) => {
             return new EventSystem();
         });
 

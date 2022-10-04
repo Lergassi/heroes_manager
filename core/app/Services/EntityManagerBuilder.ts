@@ -13,7 +13,6 @@ import ContainerInterface from '../../source/ContainerInterface.js';
 import CharacterAttributeIncreaseBuilder from './CharacterAttributeIncreaseBuilder.js';
 import ItemBuilder from './ItemBuilder.js';
 import Recipe from '../Entities/Recipe.js';
-import {DEFAULT_STACK_SIZE} from '../RuntimeObjects/ItemStack.js';
 import ItemDatabaseBuilder from './ItemDatabaseBuilder.js';
 import ItemFactory from '../Factories/ItemFactory.js';
 

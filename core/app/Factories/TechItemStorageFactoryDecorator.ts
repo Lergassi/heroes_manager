@@ -1,6 +1,5 @@
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import GameObject from '../../source/GameObject.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../Components/ItemStorageComponent.js';
 import ContainerInterface from '../../source/ContainerInterface.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 
@@ -17,7 +16,7 @@ export default class TechItemStorageFactoryDecorator implements ItemStorageFacto
         this._gameObjectStorage = gameObjectStorage;
     }
 
-    create(size: number = DEFAULT_ITEM_STORAGE_SIZE): GameObject {
+    create(size: number): GameObject {
         let itemStorage = this._itemStorageFactory.create(size);
         this._gameObjectStorage.add(itemStorage);
 

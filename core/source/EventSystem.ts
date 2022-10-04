@@ -1,3 +1,6 @@
+import debug from 'debug';
+import {sprintf} from 'sprintf-js';
+
 export type ListenerType = Readonly<{
     // code: string;
     callback: (target) => void;
@@ -10,6 +13,7 @@ export default class EventSystem {
         this._listeners = {};
     }
 
+    //todo: Сделать removeListener при уничтожении объекта.
     addListener(codes: string | string[], listener: ListenerType): void {
         if (typeof codes === 'string') {
             codes = [codes];
@@ -25,6 +29,7 @@ export default class EventSystem {
     }
 
     event<T>(code: string, target: T): void {
+        debug('log')(sprintf('Сработало событие: %s', code));
         if (!this._listeners.hasOwnProperty(code)) {
             return;
         }

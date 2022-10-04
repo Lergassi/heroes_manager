@@ -20,52 +20,60 @@ import EquipSlotComponents from '../Components/EquipSlotComponents.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import HeroGroupComponent from '../Components/HeroGroupComponent.js';
 import LocationComponent from '../Components/LocationComponent.js';
-import {ItemCount} from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';
+import {unsigned} from '../types.js';
+
+export type HeroFactoryCreateOptions = {
+    heroClass: HeroClass;
+    level: unsigned;
+};
 
 export default class HeroFactory {
     private readonly _gameObjectStorage: GameObjectStorage;
     private readonly _idGenerator: IDGeneratorInterface;
     private readonly _entityManager: EntityManager;
+    private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _config: object;
 
     constructor(
-        gameObjectStorage: GameObjectStorage,
         idGenerator: IDGeneratorInterface,
         entityManager: EntityManager,
+        gameObjectFactory: GameObjectFactory,
         config: object
     ) {
-        this._gameObjectStorage = gameObjectStorage;
         this._idGenerator = idGenerator;
         this._entityManager = entityManager;
+        this._gameObjectFactory = gameObjectFactory;
         this._config = config;
     }
 
-    // create(heroClass: HeroClass | string, level: number = 1): GameObject {
-    create(heroClass: HeroClass, level: number = 1): GameObject {
+    // create(heroClass: HeroClass, level: number = 1): GameObject {
+    create(options: HeroFactoryCreateOptions): GameObject {
         //todo: Что значит начальные настройки? Не понятно при срабатывании исключения.
-        if(!this._config['start_hero_values'].hasOwnProperty(heroClass.alias)) {
-            throw new AppError(sprintf('Начальные настройки для класса "%s" не найдены.', heroClass.name));
+        // if(!this._config['start_hero_values'].hasOwnProperty(heroClass.alias)) {
+        if(!this._config['start_hero_values'].hasOwnProperty(options.heroClass.alias)) {
+            throw new AppError(sprintf('Начальные настройки для класса "%s" не найдены.', options.heroClass.name));
         }
         
         // let hero = new GameObject(this._idGenerator.generateID());
-        let hero = new GameObject();
+        // let hero = new GameObject();
+        let hero = this._gameObjectFactory.create();
 
-        hero.name = heroClass.name;
+        hero.name = options.heroClass.name;
         hero.addTags('#hero');
 
         let heroComponent = hero.addComponent(new HeroComponent(
             // this._idGenerator.generateID(),
             'Hero',
-            heroClass,
+            options.heroClass,
         ));
         hero.set<HeroComponent>('heroComponent', heroComponent);
 
         let levelComponent = hero.addComponent(new LevelComponent(
             this._idGenerator.generateID(),
             hero,
-            level,
-            this._config['start_hero_values'][heroClass.alias]['max_level'],
+            options.level,
+            this._config['start_hero_values'][options.heroClass.alias]['max_level'],
             0,
         ));
         hero.set<LevelComponent>('levelComponent', levelComponent);
@@ -123,7 +131,7 @@ export default class HeroFactory {
                 // hero,
                 this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(heroAttributes[i]),
                 equipSlotComponents,
-                this._config['start_hero_values'][heroClass.alias]['max_health_points'],
+                this._config['start_hero_values'][options.heroClass.alias]['max_health_points'],
             ));
             hero.set<CharacterAttributeComponent>(heroAttributes[i], characterAttributeComponent);
         }
@@ -131,8 +139,8 @@ export default class HeroFactory {
         let healthPointsComponent = hero.addComponent(new HealthPointsComponent(
             // this._idGenerator.generateID(),
             // hero,
-            this._config['start_hero_values'][heroClass.alias]['max_health_points'],
-            this._config['start_hero_values'][heroClass.alias]['max_health_points'],
+            this._config['start_hero_values'][options.heroClass.alias]['max_health_points'],
+            this._config['start_hero_values'][options.heroClass.alias]['max_health_points'],
         ));
         hero.set<HealthPointsComponent>('healthPointsComponent', healthPointsComponent);
 
@@ -147,17 +155,17 @@ export default class HeroFactory {
         let magicPointsComponent = hero.addComponent(new MagicPointsComponent(
             // this._idGenerator.generateID(),
             // hero,
-            this._config['start_hero_values'][heroClass.alias]['max_magic_points'],
-            this._config['start_hero_values'][heroClass.alias]['max_magic_points'],
+            this._config['start_hero_values'][options.heroClass.alias]['max_magic_points'],
+            this._config['start_hero_values'][options.heroClass.alias]['max_magic_points'],
         ));
         hero.set('magicPointsComponent', magicPointsComponent);
 
         let attackPowerComponent = hero.addComponent(new AttackPowerComponent(
             // this._idGenerator.generateID(),
             // hero,
-            this._config['start_hero_values'][heroClass.alias]['min_attack_power'],
-            this._config['start_hero_values'][heroClass.alias]['max_attack_power'],
-            heroClass.mainCharacterAttributes,
+            this._config['start_hero_values'][options.heroClass.alias]['min_attack_power'],
+            this._config['start_hero_values'][options.heroClass.alias]['max_attack_power'],
+            options.heroClass.mainCharacterAttributes,
         ));
         hero.set('attackPowerComponent', attackPowerComponent);
 
@@ -169,7 +177,7 @@ export default class HeroFactory {
         ));
         hero.set('equipSlotComponentControllerComponent', equipSlotComponentControllerComponent);
 
-        this._gameObjectStorage.add(hero);
+        // this._gameObjectStorage.add(hero);
 
         return hero;
     }

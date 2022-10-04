@@ -2,7 +2,7 @@ import Component from '../../source/Component.js';
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 import AppError from '../../source/AppError.js';
-import {PlacementControllerInterface, PlacementInterface} from './HeroListComponent.js';
+import {PlacementControllerInterface, PlacementInterface} from './MainHeroListComponent.js';
 
 export enum HeroState {
     Free = 'Free',
@@ -26,7 +26,6 @@ export default class HeroComponent extends Component {
         return this._name;
     }
 
-//todo: Удалить.
     /**
      * @deprecated
      */
@@ -92,6 +91,10 @@ export default class HeroComponent extends Component {
 
         this._state = HeroState.Free;
         // this._stateOwner = null;
+    }
+
+    canManipulate(): boolean {
+        return this._state === HeroState.Free;
     }
 
     // delete() {

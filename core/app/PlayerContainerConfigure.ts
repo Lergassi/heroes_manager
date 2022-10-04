@@ -22,19 +22,21 @@ import {sprintf} from 'sprintf-js';
 import IDGeneratorInterface from '../source/IDGeneratorInterface.js';
 import UUIDGenerator from '../source/UUIDGenerator.js';
 import GameObject from '../source/GameObject.js';
-import ItemStorageListComponent from './Components/ItemStorageListComponent.js';
+import MainItemStorageListComponent from './Components/MainItemStorageListComponent.js';
 import PlayerItemStorageFactory from './Factories/PlayerItemStorageFactory.js';
 import ItemStorageFactoryInterface from './Factories/ItemStorageFactoryInterface.js';
 import TechItemStorageFactoryDecorator from './Factories/TechItemStorageFactoryDecorator.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from './Components/ItemStorageComponent.js';
 import GameObjectFactory from './Factories/GameObjectFactory.js';
-import HeroListComponent from './Components/HeroListComponent.js';
+import MainHeroListComponent from './Components/MainHeroListComponent.js';
 import AutoIncrementIDGenerator from '../source/AutoIncrementIDGenerator.js';
 import LocationFactory from './Factories/LocationFactory.js';
 import ItemDatabase from './ItemDatabase.js';
 import Random from './Services/Random.js';
 import Component from '../source/Component.js';
 import EventSystem from '../source/EventSystem.js';
+import MainLocationListComponent from './Components/MainLocationListComponent.js';
+import {ContainerKey} from './consts.js';
+import CreateLocationCommand from './Commands/CreateLocationCommand.js';
 
 /**
  * todo: Временно не актуально.
@@ -84,9 +86,9 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<HeroFactory>('player.heroFactory', (container) => {
             return new HeroFactory(
-                container.get<GameObjectStorage>('player.gameObjectStorage'),
                 container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
                 container.get<EntityManager>('core.entityManager'),
+                container.get<GameObjectFactory>('player.gameObjectFactory'),
                 container.get<object>('core.config'),
             );
         });
@@ -109,14 +111,12 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //         container,
         //     );
         // });
-        container.set<ItemStorageListComponent>('player.itemStorageCollection', (container) => {
+        container.set<MainItemStorageListComponent>('player.itemStorageCollection', (container) => {
             let idGenerator = container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator');
             let itemStorageCollectionGameObject = new GameObject(idGenerator.generateID());
 
             //todo: Не удобно. Игровые обязательные объекты должны быть вынесены в другое место.
-            let itemStorageCollectionComponent = itemStorageCollectionGameObject.addComponent<ItemStorageListComponent>(new ItemStorageListComponent(
-                idGenerator.generateID(),
-                itemStorageCollectionGameObject,
+            let itemStorageCollectionComponent = itemStorageCollectionGameObject.addComponent<MainItemStorageListComponent>(new MainItemStorageListComponent(
                 // 1,
                 0,
                 4,
@@ -154,7 +154,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<GameObjectFactory>('player.gameObjectFactory'),
             );
         });
-        container.set<LocationFactory>('player.locationFactory', (container) => {
+        // container.set<LocationFactory>('player.locationFactory', (container) => {
+        container.set<LocationFactory>(ContainerKey.LocationFactory, (container) => {
             return new LocationFactory({
                 IDGenerator: container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
                 entityManager: container.get<EntityManager>('core.entityManager'),
@@ -163,7 +164,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 itemStackFactory: container.get<ItemStackFactory>('player.itemStackFactory'),
                 random: container.get<Random>('core.random'),
                 itemStorageFactory: container.get<ItemStorageFactory>('player.itemStorageFactory'),
-                eventSystem: container.get<EventSystem>('core.eventSystem'),
+                eventSystem: container.get<EventSystem>(ContainerKey.EventSystem),
             });
         });
 
@@ -175,15 +176,27 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new EquipManager();
         });
 
-        container.set<HeroListComponent>('player.heroesListComponent', (container) => {
-            let heroControllerGameObject = container.get<GameObjectFactory>('player.gameObjectFactory').create();
+        container.set<MainHeroListComponent>('player.heroesListComponent', (container) => {
+            let heroListControllerGameObject = container.get<GameObjectFactory>('player.gameObjectFactory').create();
 
-            let heroController = heroControllerGameObject.addComponent(new HeroListComponent(
-                container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator').generateID(),
-                heroControllerGameObject
+            let mainHeroListComponent = heroListControllerGameObject.addComponent(new MainHeroListComponent(
+                0,
+                10,
             ));
 
-            return heroController;
+            return mainHeroListComponent;
+        });
+
+        container.set<MainLocationListComponent>(ContainerKey.MainLocationListComponent, (container) => {
+            let mainLocationList = container.get<GameObjectFactory>('player.gameObjectFactory').create();
+
+            let mainLocationListComponent = mainLocationList.addComponent(new MainLocationListComponent(
+                0,
+                10,
+                container.get<EventSystem>(ContainerKey.EventSystem),
+            ));
+
+            return mainLocationListComponent;
         });
 
         container.get<GameObjectStorage>('player.gameObjectStorage').add(container.get<PlayerFactory>('player.playerFactory').create());
@@ -193,17 +206,5 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         debug('log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
-    }
-
-    private _gameConsoleConfigure(container: ContainerInterface) {
-        let gameConsole: GameConsole = container.get<GameConsole>('gameConsole');
-
-        gameConsole.register(new AddItemCommand(container));
-        gameConsole.register(new CreateHeroCommand(container));
-        gameConsole.register(new CreateItemStorageCommand(container));
-        gameConsole.register(new EquipCommand(container));
-        gameConsole.register(new RemoveEquipCommand(container));
-
-        /* DEBUG */
     }
 }

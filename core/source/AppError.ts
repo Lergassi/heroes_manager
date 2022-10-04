@@ -90,4 +90,8 @@ export default class AppError extends Error {
     static rootElementNotFound() {
         return new AppError('Корневой элемент не найден.');
     }
+
+    static playerHasMaxHeroes() {
+        return new AppError('Нельзя создать нового героя. У игрока максимальное кол-во героев.');
+    }
 }

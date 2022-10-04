@@ -2,7 +2,6 @@ import Component from '../../source/Component.js';
 import Item from '../Entities/Item.js';
 import HeroGroupComponent from './HeroGroupComponent.js';
 import GameObject from '../../source/GameObject.js';
-import {ItemCountInterface, ItemCountReadonlyInterface} from '../RuntimeObjects/ItemStack.js';
 import ItemStorageComponent from './ItemStorageComponent.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import _ from 'lodash';
@@ -11,10 +10,10 @@ import AppError from '../../source/AppError.js';
 import LevelComponent, {LevelRange} from './LevelComponent.js';
 import debug from 'debug';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
-import {MILLISECONDS_IN_SECOND} from '../consts.js';
+import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
 import {Minutes, Seconds} from '../types.js';
 import {sprintf} from 'sprintf-js';
-import {PlacementControllerInterface, PlacementInterface} from './HeroListComponent.js';
+import {PlacementControllerInterface, PlacementInterface} from './MainHeroListComponent.js';
 import EventSystem from '../../source/EventSystem.js';
 
 export class AvailableGatherItem {
@@ -175,7 +174,7 @@ export default class LocationComponent extends Component {
         this._intervalID = setInterval(() => {
             this._generateItems();
             //И другие действия...
-        }, this._intervalPeriod * MILLISECONDS_IN_SECOND);
+        }, this._intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
         debug('log')('Охота запущена.');
         this._eventSystem.event<LocationComponent>(LocationComponentEventCode.Start, this);
     }
@@ -197,7 +196,7 @@ export default class LocationComponent extends Component {
      * @param itemStorageManager
      */
     moveItems(itemStorageManager: ItemStorageManager) {
-        this._canModify();
+        this.canModify();
 
         itemStorageManager.moveFrom(this._internalItemStorageComponent);
         debug('log')('Предметы собраны.');
@@ -228,20 +227,20 @@ export default class LocationComponent extends Component {
         this._eventSystem.event<LocationComponent>(LocationComponentEventCode.RemoveHero, this);
     }
 
-    private _canModify(): void {
+    canModify(): void {
         if (this._state !== LocationState.Waiting) {
             throw new AppError('Нельзя редактировать локацию во время охоты.');
         }
     }
 
-    // _canManipulation() {
-    //     if (this._state !== LocationState.Waiting) {
-    //         throw new AppError('Нельзя редактировать локацию во время охоты.');
-    //     }
-    // }
+    canDelete(): void {
+        if (this._state !== LocationState.Waiting) {
+            throw new AppError('Нельзя удалить локацию во время охоты.');
+        }
+    }
 
     private _canAddHero(hero: GameObject): void {
-        this._canModify();
+        this.canModify();
 
         if (this._levelRange.lessMin(hero.getComponent<LevelComponent>(LevelComponent).level, {strong: true})) {
             throw new AppError('Уровень героя слишком низкий для данной локации.');
@@ -253,7 +252,7 @@ export default class LocationComponent extends Component {
     }
 
     private _canRemoveHero(): void {
-        this._canModify();
+        this.canModify();
     }
 
     render(callback: ({}: Readonly<{

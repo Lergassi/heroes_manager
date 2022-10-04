@@ -19,33 +19,29 @@ export default class ItemStorageManager {
     }
 
     constructor(gameObjectStorage: GameObjectStorage) {
+    // constructor() {
         this._gameObjectStorage = gameObjectStorage;
     }
 
-    /**
-     * @deprecated
-     */
-    findFirstFreeItemStorageSlot() {
-        const itemStorages = this._gameObjectStorage.findByTag('#item_storage');
-        for (let i = 0; i < itemStorages.length; i++) {
-            const itemStorageSlotComponents = <ItemStorageSlotComponent[]>itemStorages[i].findComponentsByName(ItemStorageSlotComponent.name);
-            for (let j = 0; j < itemStorageSlotComponents.length; j++) {
-                if (itemStorageSlotComponents[j].isFree()) {
-                    return itemStorageSlotComponents[j];
-                }
-            }
-        }
-
-        return undefined;
-    }
+    // /**
+    //  * @deprecated
+    //  */
+    // findFirstFreeItemStorageSlot() {
+    //     const itemStorages = this._gameObjectStorage.findByTag('#item_storage');
+    //     for (let i = 0; i < itemStorages.length; i++) {
+    //         const itemStorageSlotComponents = <ItemStorageSlotComponent[]>itemStorages[i].findComponentsByName(ItemStorageSlotComponent.name);
+    //         for (let j = 0; j < itemStorageSlotComponents.length; j++) {
+    //             if (itemStorageSlotComponents[j].isFree()) {
+    //                 return itemStorageSlotComponents[j];
+    //             }
+    //         }
+    //     }
+    //
+    //     return undefined;
+    // }
 
     getFirstFreeItemStorageSlot() {
-        // let freeItemStorageSlot = this.findFirstFreeItemStorageSlot();
-        // if (!freeItemStorageSlot) {
-        //     throw new AppError('Свободных слотов не найдено.');
-        // }
-        //
-        // return freeItemStorageSlot;
+    // getFirstFreeItemStorageSlot(itemStorages: GameObject[]) {
         let itemStorages = this._gameObjectStorage.findByTag('#item_storage');
         for (let i = 0; i < itemStorages.length; i++) {
             // const itemStorageSlotComponents = <ItemStorageSlotComponent[]>itemStorages[i].findComponentsByName(ItemStorageSlotComponent.name);
@@ -61,21 +57,28 @@ export default class ItemStorageManager {
     }
 
     addItemStack(itemStack: ItemStack) {
+    // addItemStack(itemStorages: GameObject[], itemStack: ItemStack) {
         let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
+        // let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot(itemStorages);
         if (!freeItemStorageSlotComponent) {
             throw AppError.freeItemStorageSlotNotFound();
         }
+
         freeItemStorageSlotComponent.placeItemStack(itemStack);
     }
 
     addItem(itemStackPattern: ItemStackPattern) {
+    // addItem(itemStorages: GameObject[], itemStackPattern: ItemStackPattern) {
         let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
+        // let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot(itemStorages);
         if (!freeItemStorageSlotComponent) {
             throw AppError.freeItemStorageSlotNotFound();
         }
+
         freeItemStorageSlotComponent.placeItemStack(itemStackPattern.build());
     }
 
+    // moveFrom(itemStorageComponent: ItemStorageComponent): void {
     moveFrom(itemStorageComponent: ItemStorageComponent): void {
         let slots = itemStorageComponent.itemStorageSlotComponents;
         for (let i = 0; i < slots.length; i++) {

@@ -1,13 +1,13 @@
 import EntityManager from '../../source/EntityManager.js';
 import Item, {ItemGetType} from '../Entities/Item.js';
 import ItemBuilder from './ItemBuilder.js';
-import {DEFAULT_STACK_SIZE} from '../RuntimeObjects/ItemStack.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import Quality from '../Entities/Quality.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
 import CharacterAttribute from '../Entities/CharacterAttribute.js';
 import ItemFactory from '../Factories/ItemFactory.js';
+import {DEFAULT_STACK_SIZE} from '../consts.js';
 
 export default class ItemDatabaseBuilder {
     private readonly _em: EntityManager;

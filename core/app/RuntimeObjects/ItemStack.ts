@@ -4,9 +4,6 @@ import {sprintf} from 'sprintf-js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {floor} from 'lodash';
 
-// export const DEFAULT_STACK_SIZE = 20;
-export const DEFAULT_STACK_SIZE = 50;
-
 export interface ItemStackPlaceInterface {
     /**
      * @deprecated

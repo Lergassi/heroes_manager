@@ -7,7 +7,7 @@ import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
 import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
 import ItemStorageManager from '../core/app/Services/ItemStorageManager.js';
 import ItemStorageFactoryInterface from '../core/app/Factories/ItemStorageFactoryInterface.js';
-import ItemStorageListComponent from '../core/app/Components/ItemStorageListComponent.js';
+import MainItemStorageListComponent from '../core/app/Components/MainItemStorageListComponent.js';
 import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
 import LocationComponent, {
     AvailableGatherItem,
@@ -175,7 +175,7 @@ export function testLocation() {
     // let itemStorageFactory = container.get<BasicItemStorageFactory>('player.heroFactory');
     let itemStorageManager = container.get<ItemStorageManager>('player.itemStorageManager');
     let itemStorage = container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(2);
-    container.get<ItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);
+    container.get<MainItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);
     // debugItemStorages(itemStorageManager.itemStorages);
 
     let heroes = [

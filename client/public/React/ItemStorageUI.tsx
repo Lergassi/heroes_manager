@@ -5,7 +5,7 @@ import ItemStack, {ItemStackPlaceInterface} from '../../../core/app/RuntimeObjec
 import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
 import {debugItemStorage} from '../../../core/debug/debug_functions.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
-import ItemStorageListComponent from '../../../core/app/Components/ItemStorageListComponent.js';
+import MainItemStorageListComponent from '../../../core/app/Components/MainItemStorageListComponent.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 
 export interface ItemStorageRComponentProps {
@@ -110,11 +110,11 @@ export class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRC
 }
 
 export interface ItemStorageCollectionRComponentProps {
-    itemStorageCollection: ItemStorageListComponent;
+    itemStorageCollection: MainItemStorageListComponent;
 }
 
 export interface ItemStorageCollectionRComponentState {
-    itemStorageCollection: ItemStorageListComponent;
+    itemStorageCollection: MainItemStorageListComponent;
 }
 
 export class ItemStorageCollectionRComponent extends React.Component<ItemStorageCollectionRComponentProps, ItemStorageCollectionRComponentState> implements RComponentUpdateInterface {

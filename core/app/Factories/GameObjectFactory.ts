@@ -16,9 +16,9 @@ export default class GameObjectFactory {
     }
 
     create(): GameObject {
-        let go = new GameObject(this._idGenerator.generateID());
-        this._gameObjectStorage.add(go);
+        let gameObject = new GameObject(this._idGenerator.generateID());
+        this._gameObjectStorage.add(gameObject);
 
-        return go;
+        return gameObject;
     }
 }

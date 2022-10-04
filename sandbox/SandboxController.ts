@@ -1,7 +1,10 @@
+// noinspection TypeScriptCheckImport
+
 import ContainerInterface from '../core/source/ContainerInterface.js';
 import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
 import Container from '../core/source/Container.js';
-import CoreContainerConfigure, {ContainerKey} from '../core/app/CoreContainerConfigure.js';
+// noinspection TypeScriptCheckImport
+import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../core/app/PlayerContainerConfigure.js';
 import LocationFactory from '../core/app/Factories/LocationFactory.js';
 import GameObjectFactory from '../core/app/Factories/GameObjectFactory.js';
@@ -32,6 +35,7 @@ import HeroClass, {HeroClassAlias} from '../core/app/Entities/HeroClass.js';
 import GameObject from '../core/source/GameObject.js';
 import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
 import EventSystem from '../core/source/EventSystem.js';
+import {ContainerKey} from '../core/app/consts.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -60,12 +64,12 @@ export class SandboxController {
         let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
 
         let heroes = [
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior), 9),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue), 42),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger)),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior)),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior), 9),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue), 42),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger)),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior)),
         ];
 
         let locationFactory = new LocationFactory({
@@ -77,7 +81,8 @@ export class SandboxController {
             itemStorageFactory: this._container.get<ItemStorageFactory>('player.itemStorageFactory'),
             // options: undefined,
             random: this._container.get<Random>('core.random'),
-            eventSystem: this._container.get<EventSystem>('core.eventSystem'),
+            // eventSystem: this._container.get<EventSystem>('core.eventSystem'),
+            eventSystem: this._container.get<EventSystem>(ContainerKey.EventSystem),
         });
 
         let location = locationFactory.create({
@@ -353,12 +358,15 @@ export class SandboxController {
 
     testHeroFactory() {
         let heroClass = this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassAlias.Warrior);
-        let hero = this._container.get<HeroFactory>('player.heroFactory').create(heroClass);
+        let hero = this._container.get<HeroFactory>('player.heroFactory').create({
+            heroClass: heroClass,
+            level: 1,
+        });
         debugHero(hero);
     }
 
     testLocationFactory() {
-        let location = this._container.get<LocationFactory>('player.locationFactory').create({
+        let location = this._container.get<LocationFactory>(ContainerKey.LocationFactory).create({
             level: new LevelRange(1, 5),
         });
         console.log(location);
@@ -373,15 +381,16 @@ export class SandboxController {
         let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
 
         let heroes = [
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior), 9),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue), 42),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger)),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
-            heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior)),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior), 9),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue), 42),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger)),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
+            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior)),
         ];
 
-        let heroGroup = new GameObject();
+        // let heroGroup = new GameObject();
+        let heroGroup = this._container.get<GameObjectFactory>('player.gameObjectFactory').create();
 
         let size = 5;
         let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroupComponent(size));

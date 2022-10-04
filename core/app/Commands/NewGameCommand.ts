@@ -22,6 +22,7 @@ import AppError from '../../source/AppError.js';
 import {sprintf} from 'sprintf-js';
 import LocationFactory from '../Factories/LocationFactory.js';
 import {LevelRange} from '../Components/LevelComponent.js';
+import {ContainerKey} from '../consts.js';
 
 export default class NewGameCommand extends Command {
     private readonly _scenarios = {
@@ -51,10 +52,10 @@ export default class NewGameCommand extends Command {
             await this.container.get<GameConsole>('gameConsole').getCommand(this._scenarios[scenario]).run();
         }
 
-        window['gameLocation'] = this.container.get<LocationFactory>('player.locationFactory').create({
-            level: new LevelRange(1, 5),
-        });
-        console.log('gameLocation', window['gameLocation']);
+        // window['gameLocation'] = this.container.get<LocationFactory>(ContainerKey.LocationFactory).create({
+        //     level: new LevelRange(1, 5),
+        // });
+        // console.log('gameLocation', window['gameLocation']);
 
         this.container.get<ClientRender>('client.clientRender').buildGameUI();
     }

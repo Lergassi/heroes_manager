@@ -8,7 +8,7 @@ import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import Item from '../Entities/Item.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 
-export const DEFAULT_ITEM_STORAGE_SIZE = 20;
+// export const DEFAULT_ITEM_STORAGE_SIZE = 20;
 
 /**
  * Это контроллер.

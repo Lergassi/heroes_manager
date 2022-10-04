@@ -19,6 +19,7 @@ import DebugPlayerEnvironmentCommand from './Commands/DebugCommands/DebugPlayerE
 import DebugGameObjectStorageCommand from './Commands/DebugCommands/DebugGameObjectStorageCommand.js';
 import DeleteHeroCommand from './Commands/DeleteHeroCommand.js';
 import CreatePlayerEnvironmentCommand from './Commands/CreatePlayerEnvironmentCommand.js';
+import CreateLocationCommand from './Commands/CreateLocationCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -51,6 +52,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new CreateItemStorageCommand(container));
         gameConsole.register(new EquipCommand(container));
         gameConsole.register(new RemoveEquipCommand(container));
+        gameConsole.register(new CreateLocationCommand(container));
 
         /* DEBUG */
         gameConsole.register(new DebugEntitiesCommand(container));

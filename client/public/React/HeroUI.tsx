@@ -1,5 +1,5 @@
 import React from 'react';
-import HeroListComponent from '../../../core/app/Components/HeroListComponent.js';
+import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
 import EquipSlotComponentControllerComponent from '../../../core/app/Components/EquipSlotComponentControllerComponent.js';
 import EquipSlotComponent from '../../../core/app/Components/EquipSlotComponent.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
@@ -9,7 +9,7 @@ import {
     ItemStorageCollectionRComponentProps,
     ItemStorageCollectionRComponentState
 } from './ItemStorageUI.js';
-import ItemStorageListComponent from '../../../core/app/Components/ItemStorageListComponent.js';
+import MainItemStorageListComponent from '../../../core/app/Components/MainItemStorageListComponent.js';
 import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorageSlotComponent.js';
 import CharacterAttributeComponent from '../../../core/app/Components/CharacterAttributeComponent.js';
 import HealthPointsComponent from '../../../core/app/Components/HealthPointsComponent.js';
@@ -23,13 +23,11 @@ import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 
 interface HeroListRComponentProps {
     container: ContainerInterface;
-    heroListComponent: HeroListComponent;
-    itemStorageCollection: ItemStorageListComponent;
+    heroListComponent: MainHeroListComponent;
 }
 
 interface HeroListRComponentState {
-    heroListComponent: HeroListComponent;
-    itemStorageCollection: ItemStorageListComponent;
+    heroListComponent: MainHeroListComponent;
     selectedHero: GameObject;
 }
 
@@ -43,7 +41,6 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
 
         this.state = {
             heroListComponent: props.heroListComponent,
-            itemStorageCollection: props.itemStorageCollection,
             selectedHero: null,
         };
 

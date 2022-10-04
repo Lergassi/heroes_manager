@@ -24,7 +24,10 @@ let heroClass = container.get<EntityManager>('core.entityManager').getRepository
 let equipSlot = container.get<EntityManager>('core.entityManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias('head');
 let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_helmet_01');
 
-let hero = container.get<HeroFactory>('core.heroFactory').create(heroClass);
+let hero = container.get<HeroFactory>('core.heroFactory').create({
+    heroClass: heroClass,
+    level: 1,
+});
 let equipSlotComponent = _.filter(hero.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name), (equipSlotComponent) => {
     return equipSlotComponent.equipSlot === equipSlot;
 })[0];

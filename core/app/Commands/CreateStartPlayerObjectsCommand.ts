@@ -12,15 +12,15 @@ import ItemStorageManager from '../Services/ItemStorageManager.js';
 import HeroClass from '../Entities/HeroClass.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../Components/ItemStorageComponent.js';
-import HeroListComponent from '../Components/HeroListComponent.js';
+import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 import EquipSlotComponentControllerComponent from '../Components/EquipSlotComponentControllerComponent.js';
 import EntityManagerFacade from '../../source/Facades/EntityManagerFacade.js';
-import {ContainerKey} from '../CoreContainerConfigure.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import LocationFactory from '../Factories/LocationFactory.js';
 import {LevelRange} from '../Components/LevelComponent.js';
+import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
+import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -32,15 +32,23 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     }
 
     async execute(input: Input) {
-        // this._createItemStorages();
+        this._createItemStorages();
         // this._createItems();
         this._createHeroes();
     }
 
-    // private _createItemStorages() {
-    //     this.container.get<ItemStorageFactoryInterface>('player.playerItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-    //     // this.container.get<ItemStorageFactoryInterface>('player.playerItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-    // }
+    private _createItemStorages() {
+        // this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+        // this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+        this.container.get<MainItemStorageListComponent>('player.itemStorageCollection').create(
+            DEFAULT_ITEM_STORAGE_SIZE,
+            this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory'),
+        );
+        this.container.get<MainItemStorageListComponent>('player.itemStorageCollection').create(
+            DEFAULT_ITEM_STORAGE_SIZE,
+            this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory'),
+        );
+    }
 
     private _createItems() {
         let itemStackBuilders = [
@@ -199,12 +207,12 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         ];
 
         heroPatterns.forEach((datum) => {
-            let hero = this.container.get<HeroFactory>('player.heroFactory').create(
-                datum['heroClass'],
-            );
-            // this.container.get<GameObjectStorage>('player.gameObjectStorage').add(hero);
-            this.container.get<HeroListComponent>('player.heroesListComponent').addHero(hero);
+            let hero = this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+                heroClass: datum['heroClass'],
+                level: 1,
+            }, this.container.get<HeroFactory>('player.heroFactory'));
 
+            //Начальная экипировка.
             for (const datumElementKey in datum['equip']) {
                 hero.getComponentByName<EquipSlotComponentControllerComponent>(EquipSlotComponentControllerComponent.name).equipItemStack(
                     this.container.get<EntityManagerFacade>(ContainerKey.EntityManagerFacade).entity<EquipSlot>(EquipSlot, datumElementKey),

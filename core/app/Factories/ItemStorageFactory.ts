@@ -1,4 +1,4 @@
-import ItemStorageComponent, {DEFAULT_ITEM_STORAGE_SIZE} from '../Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
@@ -8,6 +8,7 @@ import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
+import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 
 export default class ItemStorageFactory implements ItemStorageFactoryInterface {
     private readonly _gameObjectStorage: GameObjectStorage;
@@ -24,7 +25,10 @@ export default class ItemStorageFactory implements ItemStorageFactoryInterface {
         this._gameObjectFactory = gameObjectFactory;
     }
 
-    create(size: number = DEFAULT_ITEM_STORAGE_SIZE): GameObject {
+    create(size: number): GameObject {
+    // create(size: number, options: Partial<{
+    //     itemStorageList: ItemStorageListComponent,
+    // }> = undefined): GameObject {
         let itemStorage = this._gameObjectFactory.create();
 
         itemStorage.name = 'ItemStorage';
@@ -57,7 +61,9 @@ export default class ItemStorageFactory implements ItemStorageFactoryInterface {
         //     // ));
         // }
 
-        // this._gameObjectStorage.add(itemStorage);
+        // if (options.itemStorageList) {
+        //     options.itemStorageList.add(itemStorage);
+        // }
 
         return itemStorage;
     }

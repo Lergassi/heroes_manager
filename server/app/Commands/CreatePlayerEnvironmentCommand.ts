@@ -24,8 +24,9 @@ import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure
 import PathResolver from '../../source/PathResolver.js';
 import UUIDGenerator from '../../../core/source/UUIDGenerator.js';
 import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorageFactoryInterface.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/Components/ItemStorageComponent.js';
 import IDGeneratorInterface from '../../../core/source/IDGeneratorInterface.js';
+import {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
+import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
 
 export default class CreatePlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -271,12 +272,10 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         heroPatterns.forEach((datum) => {
-            this.container.get<GameObjectStorage>('player.gameObjectStorage').add(this.container.get<HeroFactory>('player.heroFactory').create(
-                    datum['heroClass'],
-                    // datum['level'],
-                    // datum['equip'],
-                ),
-            );
+            this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+                heroClass: datum['heroClass'],
+                level: datum['level'],
+            }, this.container.get<HeroFactory>('player.heroFactory'));
         });
     }
 }

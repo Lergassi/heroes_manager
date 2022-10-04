@@ -1,7 +1,7 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import HeroListComponent from '../Components/HeroListComponent.js';
+import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 
 export default class DeleteHeroCommand extends Command {
     get name(): string {
@@ -19,7 +19,7 @@ export default class DeleteHeroCommand extends Command {
 
         let hero = this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(heroId);
 
-        this.container.get<HeroListComponent>('player.heroesListComponent').removeHero(hero);
-        this.container.get<GameObjectStorage>('player.gameObjectStorage').remove(hero);
+        this.container.get<MainHeroListComponent>('player.heroesListComponent').deleteHero(hero, this.container.get<GameObjectStorage>('player.gameObjectStorage'));
+        // this.container.get<GameObjectStorage>('player.gameObjectStorage').remove(hero);
     }
 }

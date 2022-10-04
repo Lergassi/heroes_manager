@@ -23,7 +23,7 @@ import {debugItemList} from '../../debug/debug_functions.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
 import EventSystem from '../../source/EventSystem.js';
 
-export type LocationFactoryOptions = {
+export type LocationFactoryCreateOptions = {
     level: LevelRange;
 }
 
@@ -84,7 +84,7 @@ export default class LocationFactory {
         this._gatheringItemTypesCount = 3;
     }
 
-    create(options: LocationFactoryOptions): GameObject {
+    create(options: LocationFactoryCreateOptions): GameObject {
         let locationPeriodInMinutes = 1;
         let location = this._gameObjectFactory.create();
 
