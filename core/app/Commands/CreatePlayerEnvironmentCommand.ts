@@ -8,6 +8,7 @@ import PlayerFactory from '../Factories/PlayerFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
+import {CurrencyAlias} from '../types.js';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.
@@ -19,7 +20,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
 
     async execute(input: Input) {
         this._createItemStorages(); //todo: Игра может работать без контейнера, но это не удобно. Придётся его каждый раз создавать вручную. Еще 1 команда?
-        this._createWallets();
+        // this._createWallets();
     }
 
     private _createItemStorages() {
@@ -35,15 +36,15 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         let config = this.container.get<object>('core.config');
 
         let currencies = [
-            'gold_currency',
-            'research_points',
+            CurrencyAlias.Gold,
+            CurrencyAlias.ResearchPoints,
         ];
 
         currencies.forEach((currencyAlias) => {
-            this.container.get<GameObjectStorage>('player.gameObjectStorage').add(this.container.get<WalletFactory>('player.walletFactory').create(
-                this.container.get<EntityManager>('core.entityManager').getRepository<Currency>(Currency.name).getOneByAlias(currencyAlias),
-                config['start_wallet_values'][currencyAlias]['value'],
-            ));
+            this.container.get<GameObjectStorage>('player.gameObjectStorage').add(this.container.get<WalletFactory>('player.walletFactory').create({
+                currency: this.container.get<EntityManager>('core.entityManager').getRepository<Currency>(Currency.name).getOneByAlias(currencyAlias),
+                value: config['start_wallet_values'][currencyAlias]['value'],
+            }));
         });
     }
 }

@@ -6,15 +6,17 @@ import ItemStorageComponent from './ItemStorageComponent.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import _ from 'lodash';
 import {debugItemStorage, debugItemStorages} from '../../debug/debug_functions.js';
-import AppError from '../../source/AppError.js';
-import LevelComponent, {LevelRange} from './LevelComponent.js';
+import AppError from '../../source/Errors/AppError.js';
 import debug from 'debug';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
-import {Minutes, Seconds} from '../types.js';
+import {Minutes, Seconds, unsigned} from '../types.js';
 import {sprintf} from 'sprintf-js';
 import {PlacementControllerInterface, PlacementInterface} from './MainHeroListComponent.js';
 import EventSystem from '../../source/EventSystem.js';
+import LevelRange from '../LevelRange.js';
+import ExperienceComponent from './ExperienceComponent.js';
+import {assert} from '../../source/functions.js';
 
 export class AvailableGatherItem {
     private readonly _item: Item;
@@ -66,7 +68,6 @@ export enum GatheringItemPointType {
 }
 
 export type GatheringItemPointTypeValues = {
-    // readonly [key in GatheringItemPointType]: number;
     readonly [key in GatheringItemPointType]: GatheringItemValue;
 };
 
@@ -123,7 +124,7 @@ export enum LocationComponentEventCode {
 // export default class LocationComponent extends Component {
 export default class LocationComponent extends Component {
     private readonly _created: Date;
-    private readonly _levelRange: LevelRange;
+    private readonly _level: unsigned;
     private readonly _gatheringItemPoints: GatheringItemPoint[];
     private readonly _heroGroupComponent: HeroGroupComponent;               //Каждый компонент, который использует группу сам решает как его отобразить.
     private readonly _internalItemStorageComponent: ItemStorageComponent;   //Визуально может никак не быть связанным с сумками.
@@ -133,27 +134,23 @@ export default class LocationComponent extends Component {
     private _state: LocationState;
     private _intervalID: NodeJS.Timer;
     private readonly _intervalPeriod: Seconds;
-    private readonly _eventSystem: EventSystem;
 
     //todo: Не многовато зависимостей?
-
     constructor(options: {
         created: Date,
-        levelRange: LevelRange,
+        level: unsigned,
         gatheringItemPoints: GatheringItemPoint[],
         heroGroupComponent: HeroGroupComponent,
         internalItemStorageComponent: ItemStorageComponent,
         itemStackFactory: ItemStackFactory,
-        eventSystem: EventSystem,
     }) {
         super();
         this._created = options.created;
-        this._levelRange = options.levelRange;
+        this._level = options.level;
         this._gatheringItemPoints = options.gatheringItemPoints;
         this._heroGroupComponent = options.heroGroupComponent;
         this._internalItemStorageComponent = options.internalItemStorageComponent;
         this._itemStackFactory = options.itemStackFactory;
-        this._eventSystem = options.eventSystem;
 
         this._state = LocationState.Waiting;
         this._intervalPeriod = 1;   //todo: В будущем настраиваемый игрой.
@@ -176,7 +173,7 @@ export default class LocationComponent extends Component {
             //И другие действия...
         }, this._intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
         debug('log')('Охота запущена.');
-        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.Start, this);
+        EventSystem.event(LocationComponentEventCode.Start, this);
     }
 
     stop() {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
@@ -188,7 +185,7 @@ export default class LocationComponent extends Component {
         this._heroGroupComponent.unblock(this);
         clearInterval(this._intervalID);
         debug('log')('Охота остановлена.');
-        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.Stop, this);
+        EventSystem.event(LocationComponentEventCode.Stop, this);
     }
 
     /**
@@ -199,32 +196,34 @@ export default class LocationComponent extends Component {
         this.canModify();
 
         itemStorageManager.moveFrom(this._internalItemStorageComponent);
-        debug('log')('Предметы собраны.');
+        // debug('log')('Предметы перемещены.');
     }
 
     private _generateItems() {
-        let partOfMaxPeriodGathering = this._heroGroupComponent.partOfMaxHeroesCount /*todo: так чтоли? */;
+        let partOfMaxPeriodGathering = this._heroGroupComponent.partOfMaxHeroesCount /*todo: Так чтоли? */;
         for (let i = 0; i < this._gatheringItemPoints.length; i++) {
             let count = _.ceil(this._gatheringItemPoints[i].value.value / this._gatheringItemPoints[i].value.period * this._intervalPeriod * partOfMaxPeriodGathering);
             if (this._internalItemStorageComponent.addItem(this._gatheringItemPoints[i].item, count) !== count) {   //todo: Не удобно.
                 debug('log')(sprintf('Собран предмет: %s (%s). Эффективность сбора: %s', this._gatheringItemPoints[i].item.name, count, partOfMaxPeriodGathering));
             }
         }
-        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.ItemsGenerated, this);
+        EventSystem.event(LocationComponentEventCode.ItemsGenerated, this);
     }
 
     addHero(hero: GameObject) {
+        assert(!_.isNil(hero));
+        assert(hero instanceof GameObject);
         this._canAddHero(hero);
 
         this._heroGroupComponent.addHero(hero);
-        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.AddHero, this);
+        EventSystem.event(LocationComponentEventCode.AddHero, this);
     }
 
     removeHero(hero: GameObject) {
         this._canRemoveHero();
 
         this._heroGroupComponent.removeHero(hero);
-        this._eventSystem.event<LocationComponent>(LocationComponentEventCode.RemoveHero, this);
+        EventSystem.event(LocationComponentEventCode.RemoveHero, this);
     }
 
     canModify(): void {
@@ -242,13 +241,9 @@ export default class LocationComponent extends Component {
     private _canAddHero(hero: GameObject): void {
         this.canModify();
 
-        if (this._levelRange.lessMin(hero.getComponent<LevelComponent>(LevelComponent).level, {strong: true})) {
+        if (hero.getComponent<ExperienceComponent>(ExperienceComponent.name).level < this._level) {
             throw new AppError('Уровень героя слишком низкий для данной локации.');
         }
-
-        // if (this._heroGroupComponent.heroesCount >= this._heroGroupComponent.size) {
-        //     throw new AppError('Уровень героя слишком низкий для данной локации.');
-        // }
     }
 
     private _canRemoveHero(): void {
@@ -256,13 +251,13 @@ export default class LocationComponent extends Component {
     }
 
     render(callback: ({}: Readonly<{
-        level: LevelRange,
+        level: unsigned,
         gatheringItemPoints: GatheringItemPoint[],
         internalItemStorageComponent: ItemStorageComponent,
         heroGroupComponent: HeroGroupComponent,
     }>) => void) {
         callback({
-            level: this._levelRange,
+            level: this._level,
             gatheringItemPoints: this._gatheringItemPoints,
             internalItemStorageComponent: this._internalItemStorageComponent,
             heroGroupComponent: this._heroGroupComponent,

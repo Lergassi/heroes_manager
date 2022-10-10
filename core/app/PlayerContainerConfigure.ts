@@ -37,6 +37,14 @@ import EventSystem from '../source/EventSystem.js';
 import MainLocationListComponent from './Components/MainLocationListComponent.js';
 import {ContainerKey} from './consts.js';
 import CreateLocationCommand from './Commands/CreateLocationCommand.js';
+import ExperienceComponentFactory from './Factories/ExperienceComponentFactory.js';
+import Container from '../source/Container.js';
+import EnemyFactory from './Factories/EnemyFactory.js';
+import ExperienceComponent from './Components/ExperienceComponent.js';
+import {CurrencyAlias, CurrencyWalletAlias} from './types.js';
+import WalletComponent from './Components/WalletComponent.js';
+import Currency from './Entities/Currency.js';
+import _ from 'lodash';
 
 /**
  * todo: Временно не актуально.
@@ -76,21 +84,53 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
             );
         });
-        container.set<PlayerFactory>('player.playerFactory', (container) => {
-            return new PlayerFactory(container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'), {
+        //region Фабрики компонентов.
+        container.set<ExperienceComponentFactory>(ContainerKey.ExperienceComponentFactory, (container) => {
+            return new ExperienceComponentFactory({
                 maxLevel: 100,
             });
         });
+        //endregion Фабрики компонентов.
+        container.set<PlayerFactory>('player.playerFactory', (container) => {
+            let playerFactory = new PlayerFactory({
+                gameObjectFactory: container.get<GameObjectFactory>(ContainerKey.GameObjectFactory),
+                experienceComponentFactory: container.get<ExperienceComponentFactory>(ContainerKey.ExperienceComponentFactory),
+                maxLevel: 100,
+            });
+
+            //todo: player_env_indev
+            container.get<GameObjectStorage>('player.gameObjectStorage').add(playerFactory.create());
+
+            return playerFactory;
+        });
         container.set<WalletFactory>('player.walletFactory', (container) => {
-            return new WalletFactory(container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'));
+            let walletFactory = new WalletFactory({
+                gameObjectFactory: container.get<GameObjectFactory>(ContainerKey.GameObjectFactory)
+            });
+
+            //todo: player_env_indev
+            let currencies = [
+                CurrencyAlias.Gold,
+                CurrencyAlias.ResearchPoints,
+            ];
+
+            _.map(currencies, (currencyAlias) => {
+                container.get<GameObjectStorage>('player.gameObjectStorage').add(walletFactory.create({
+                    currency: container.get<EntityManager>(ContainerKey.EntityManager).get<Currency>(Currency, currencyAlias),
+                    value: 1000,
+                }));
+            });
+
+            return walletFactory;
         });
         container.set<HeroFactory>('player.heroFactory', (container) => {
-            return new HeroFactory(
-                container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                container.get<EntityManager>('core.entityManager'),
-                container.get<GameObjectFactory>('player.gameObjectFactory'),
-                container.get<object>('core.config'),
-            );
+            return new HeroFactory({
+                config: container.get<object>('core.config'),
+                entityManager: container.get<EntityManager>('core.entityManager'),
+                gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
+                idGenerator: container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
+                experienceComponentFactory: container.get<ExperienceComponentFactory>(ContainerKey.ExperienceComponentFactory),
+            });
         });
         container.set<ItemStackFactory>('player.itemStackFactory', (container) => {
             return new ItemStackFactory(
@@ -154,17 +194,22 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<GameObjectFactory>('player.gameObjectFactory'),
             );
         });
-        // container.set<LocationFactory>('player.locationFactory', (container) => {
         container.set<LocationFactory>(ContainerKey.LocationFactory, (container) => {
             return new LocationFactory({
-                IDGenerator: container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
                 entityManager: container.get<EntityManager>('core.entityManager'),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
                 itemDatabase: container.get<ItemDatabase>('core.itemDatabase'),
                 itemStackFactory: container.get<ItemStackFactory>('player.itemStackFactory'),
-                random: container.get<Random>('core.random'),
                 itemStorageFactory: container.get<ItemStorageFactory>('player.itemStorageFactory'),
-                eventSystem: container.get<EventSystem>(ContainerKey.EventSystem),
+            });
+        });
+        container.set<EnemyFactory>(ContainerKey.EnemyFactory, (container) => {
+            return new EnemyFactory({
+                entityManager: container.get<EntityManager>('core.entityManager'),
+                gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
+                playerExperienceComponent: container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag('#player').getComponent<ExperienceComponent>(ExperienceComponent.name),
+                // playerWalletComponent: container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag('#wallet.' + CurrencyAlias.Gold).getComponent<WalletComponent>(WalletComponent.name),
+                playerWalletComponent: container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag(CurrencyWalletAlias.Gold).getComponent<WalletComponent>(WalletComponent.name),
             });
         });
 
@@ -187,19 +232,17 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return mainHeroListComponent;
         });
 
+        //todo: Надо както сделать по другому такую логику.
         container.set<MainLocationListComponent>(ContainerKey.MainLocationListComponent, (container) => {
             let mainLocationList = container.get<GameObjectFactory>('player.gameObjectFactory').create();
 
             let mainLocationListComponent = mainLocationList.addComponent(new MainLocationListComponent(
                 0,
                 10,
-                container.get<EventSystem>(ContainerKey.EventSystem),
             ));
 
             return mainLocationListComponent;
         });
-
-        container.get<GameObjectStorage>('player.gameObjectStorage').add(container.get<PlayerFactory>('player.playerFactory').create());
 
         // this._gameConsoleConfigure(container);
 

@@ -1,54 +1,72 @@
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
-import LevelComponent from '../Components/LevelComponent.js';
+import LevelRange from '../Components/ExperienceComponent.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import EntityManager from '../../source/EntityManager.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import CharacterAttributeComponent from '../Components/CharacterAttributeComponent.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
 import AttackPowerComponent from '../Components/AttackPowerComponent.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
-import UUIDGenerator from '../../source/UUIDGenerator.js';
 import EquipSlotComponentControllerComponent from '../Components/EquipSlotComponentControllerComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
-import EquipSlotComponents from '../Components/EquipSlotComponents.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import HeroGroupComponent from '../Components/HeroGroupComponent.js';
-import LocationComponent from '../Components/LocationComponent.js';
-import Item from '../Entities/Item.js';
-import {unsigned} from '../types.js';
+import {CharacterAttributeID, unsigned} from '../types.js';
+import ExperienceComponentFactory from './ExperienceComponentFactory.js';
+import ItemAttributeCollectorComponent from '../Components/ItemAttributeCollectorComponent.js';
+import ExperienceComponent from '../Components/ExperienceComponent.js';
+
+// export type HeroFactoryOptions = {
+//     idGenerator: IDGeneratorInterface;
+//     entityManager: EntityManager;
+//     gameObjectFactory: GameObjectFactory;
+//     levelComponentFactory: ExperienceComponentFactory;
+//     config: {}; //todo: Убрать.
+// }
 
 export type HeroFactoryCreateOptions = {
     heroClass: HeroClass;
     level: unsigned;
-};
+}
 
 export default class HeroFactory {
     private readonly _gameObjectStorage: GameObjectStorage;
     private readonly _idGenerator: IDGeneratorInterface;
     private readonly _entityManager: EntityManager;
     private readonly _gameObjectFactory: GameObjectFactory;
+    private readonly _experienceComponentFactory: ExperienceComponentFactory;
     private readonly _config: object;
 
     constructor(
-        idGenerator: IDGeneratorInterface,
-        entityManager: EntityManager,
-        gameObjectFactory: GameObjectFactory,
-        config: object
+        options: {
+            idGenerator: IDGeneratorInterface;
+            entityManager: EntityManager;
+            gameObjectFactory: GameObjectFactory;
+            experienceComponentFactory: ExperienceComponentFactory;
+            config: {}; //todo: Убрать.
+        },
+        // idGenerator: IDGeneratorInterface,
+        // entityManager: EntityManager,
+        // gameObjectFactory: GameObjectFactory,
+        // config: object
     ) {
-        this._idGenerator = idGenerator;
-        this._entityManager = entityManager;
-        this._gameObjectFactory = gameObjectFactory;
-        this._config = config;
+        this._idGenerator = options.idGenerator;
+        this._entityManager = options.entityManager;
+        this._gameObjectFactory = options.gameObjectFactory;
+        this._gameObjectFactory = options.gameObjectFactory;
+        this._experienceComponentFactory = options.experienceComponentFactory;
+        this._config = options.config;
     }
 
     // create(heroClass: HeroClass, level: number = 1): GameObject {
-    create(options: HeroFactoryCreateOptions): GameObject {
+    create(options: {
+        heroClass: HeroClass;
+        level: unsigned;
+    }): GameObject {
         //todo: Что значит начальные настройки? Не понятно при срабатывании исключения.
         // if(!this._config['start_hero_values'].hasOwnProperty(heroClass.alias)) {
         if(!this._config['start_hero_values'].hasOwnProperty(options.heroClass.alias)) {
@@ -62,21 +80,14 @@ export default class HeroFactory {
         hero.name = options.heroClass.name;
         hero.addTags('#hero');
 
-        let heroComponent = hero.addComponent(new HeroComponent(
-            // this._idGenerator.generateID(),
+        let heroComponent = hero.set('heroComponent', new HeroComponent(
             'Hero',
             options.heroClass,
         ));
-        hero.set<HeroComponent>('heroComponent', heroComponent);
 
-        let levelComponent = hero.addComponent(new LevelComponent(
-            this._idGenerator.generateID(),
-            hero,
-            options.level,
-            this._config['start_hero_values'][options.heroClass.alias]['max_level'],
-            0,
-        ));
-        hero.set<LevelComponent>('levelComponent', levelComponent);
+        hero.set<ExperienceComponent>(ExperienceComponent.name, this._experienceComponentFactory.create({
+            level: options.level,
+        }));
 
         let equipSlotAliases = [
             'head',
@@ -95,15 +106,14 @@ export default class HeroFactory {
             'left_hand',
         ];
 
-        // hero.set<EquipSlotComponent[]>('equipSlots', []);
+        let increaseItemCollectorComponent = new ItemAttributeCollectorComponent();
         let equipSlotComponents = [];
         equipSlotAliases.forEach((equipSlotAlias) => {
-            let equipSlotComponent = new EquipSlotComponent(
-                // this._idGenerator.generateID(),
-                // hero,
-                this._entityManager.getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(equipSlotAlias),
-                heroComponent,
-            );
+            let equipSlotComponent = new EquipSlotComponent({
+                equipSlot: this._entityManager.getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(equipSlotAlias),
+                heroComponent: heroComponent,
+                increaseItemCollectorComponent: increaseItemCollectorComponent,
+            });
             hero.addComponent(equipSlotComponent);
             hero.set<EquipSlotComponent>(equipSlotAlias, equipSlotComponent);
             equipSlotComponents.push(equipSlotComponent);
@@ -116,25 +126,40 @@ export default class HeroFactory {
             // equipSlotComponents.set(equipSlotAlias, equipSlotComponent);
         });
 
-        let heroAttributes = [
-            'strength',
-            'agility',
-            'intelligence',
-            'stamina',
-            'critical_strike',
-            'luck',
+        let heroAttributeAliases = [
+            CharacterAttributeID.Strength,
+            CharacterAttributeID.Agility,
+            CharacterAttributeID.Intelligence,
+            // 'stamina',
+            // 'critical_strike',
+            // 'luck',
         ];
 
-        for (let i = 0; i < heroAttributes.length; i++) {
-            let characterAttributeComponent = hero.addComponent(new CharacterAttributeComponent(
-                // this._idGenerator.generateID(),
-                // hero,
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(heroAttributes[i]),
-                equipSlotComponents,
-                this._config['start_hero_values'][options.heroClass.alias]['max_health_points'],
-            ));
-            hero.set<CharacterAttributeComponent>(heroAttributes[i], characterAttributeComponent);
-        }
+        //todo: Настройки.
+        hero.set(CharacterAttributeID.Strength, new CharacterAttributeComponent({
+            characterAttributeID: CharacterAttributeID.Strength,
+            baseValue: 10,
+            increaseItemCollector: increaseItemCollectorComponent,
+        }));
+        hero.set(CharacterAttributeID.Agility, new CharacterAttributeComponent({
+            characterAttributeID: CharacterAttributeID.Agility,
+            baseValue: 10,
+            increaseItemCollector: increaseItemCollectorComponent,
+        }));
+        hero.set(CharacterAttributeID.Intelligence, new CharacterAttributeComponent({
+            characterAttributeID: CharacterAttributeID.Intelligence,
+            baseValue: 10,
+            increaseItemCollector: increaseItemCollectorComponent,
+        }));
+
+        // for (let i = 0; i < heroAttributeAliases.length; i++) {
+        //     let characterAttributeComponent = hero.addComponent(new CharacterAttributeComponent(
+        //         this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(heroAttributeAliases[i]),
+        //         equipSlotComponents,
+        //         this._config['start_hero_values'][options.heroClass.alias]['max_health_points'],
+        //     ));
+        //     hero.set<CharacterAttributeComponent>(heroAttributeAliases[i], characterAttributeComponent);
+        // }
 
         let healthPointsComponent = hero.addComponent(new HealthPointsComponent(
             // this._idGenerator.generateID(),
@@ -152,32 +177,21 @@ export default class HeroFactory {
          */
 
         //todo: Сделать настройку для каждого героя.
-        let magicPointsComponent = hero.addComponent(new MagicPointsComponent(
-            // this._idGenerator.generateID(),
-            // hero,
+        let magicPointsComponent = hero.set('magicPointsComponent', new MagicPointsComponent(
             this._config['start_hero_values'][options.heroClass.alias]['max_magic_points'],
             this._config['start_hero_values'][options.heroClass.alias]['max_magic_points'],
         ));
-        hero.set('magicPointsComponent', magicPointsComponent);
 
-        let attackPowerComponent = hero.addComponent(new AttackPowerComponent(
-            // this._idGenerator.generateID(),
-            // hero,
+        let attackPowerComponent = hero.set('attackPowerComponent', new AttackPowerComponent(
             this._config['start_hero_values'][options.heroClass.alias]['min_attack_power'],
             this._config['start_hero_values'][options.heroClass.alias]['max_attack_power'],
             options.heroClass.mainCharacterAttributes,
         ));
-        hero.set('attackPowerComponent', attackPowerComponent);
 
         //Controllers
-        let equipSlotComponentControllerComponent = hero.addComponent<EquipSlotComponentControllerComponent>(new EquipSlotComponentControllerComponent(
+        let equipSlotComponentControllerComponent = hero.set('equipSlotComponentControllerComponent',new EquipSlotComponentControllerComponent(
             equipSlotComponents,
-            // this._idGenerator.generateID(),
-            // hero,
         ));
-        hero.set('equipSlotComponentControllerComponent', equipSlotComponentControllerComponent);
-
-        // this._gameObjectStorage.add(hero);
 
         return hero;
     }

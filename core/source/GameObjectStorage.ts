@@ -1,6 +1,6 @@
 import GameObject from './GameObject.js';
 import _ from 'lodash';
-import AppError from './AppError.js';
+import AppError from './Errors/AppError.js';
 
 export default class GameObjectStorage {
     private readonly _gameObjects: GameObject[];

@@ -1,7 +1,7 @@
 import Component from '../../source/Component.js';
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import {PlacementControllerInterface, PlacementInterface} from './MainHeroListComponent.js';
 
 export enum HeroState {
@@ -78,7 +78,7 @@ export default class HeroComponent extends Component {
 
         this._state = HeroState.Busy;
         // this._stateOwner = stateOwner;
-        // this._eventSystem.event(HeroComponentEventCode.ChangeState);
+        // EventSystem.event(HeroComponentEventCode.ChangeState);
     }
 
     release(stateOwner?): void {

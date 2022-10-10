@@ -1,5 +1,5 @@
 // import {Metadata, MetadataCollection} from '../config/metadata.js';
-import AppError from './AppError.js';
+import AppError from './Errors/AppError.js';
 import {SerializeType} from './Serializer.js';
 import ContainerInterface from './ContainerInterface.js';
 import EntityManager from './EntityManager.js';

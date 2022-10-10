@@ -1,4 +1,4 @@
-import AppError from './AppError.js';
+import AppError from './Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import ContainerInterface from './ContainerInterface.js';
 import _ from 'lodash';

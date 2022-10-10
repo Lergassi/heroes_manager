@@ -1,6 +1,6 @@
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import _ from 'lodash';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import Item from '../Entities/Item.js';
 
 // export interface PlaceInterface {

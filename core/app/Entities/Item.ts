@@ -2,10 +2,11 @@ import ItemCategory from './ItemCategory.js';
 import Quality from './Quality.js';
 import ArmorMaterial from './ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
-import CharacterAttribute, {CharacterAttributeAlias} from './CharacterAttribute.js';
+import CharacterAttribute from './CharacterAttribute.js';
 import _ from 'lodash';
-import AppError from '../../source/AppError.js';
-import {LevelRange} from '../Components/LevelComponent.js';
+import AppError from '../../source/Errors/AppError.js';
+import ExperienceComponent from '../Components/ExperienceComponent.js';
+import {CharacterAttributeID} from '../types.js';
 
 // export enum ItemType {
 //     Stackable = 'Stackable',
@@ -82,6 +83,7 @@ export type ItemProperty = keyof ItemProperties;
 // a.stackSize = 42;
 
 export type CharacterAttributeIncreaseObject = {[alias: string]: CharacterAttributeIncrease};
+export type CharacterAttributeRecord = {[characterAttributeID in CharacterAttributeID]: number};
 
 export interface ItemOptions {
     getTypes: ItemGetType[];
@@ -111,6 +113,7 @@ export default class Item {
 
     // private readonly _increase: {[alias: string]: CharacterAttributeIncrease};
     private readonly _increase: CharacterAttributeIncreaseObject;
+    private readonly _characterAttributes: Partial<CharacterAttributeRecord>;
     private readonly _properties: Readonly<ItemProperties>;
 
     //Логические значения будут заданы явно. Иначе сначала придется проверять наличие переменой в properties.
@@ -123,30 +126,51 @@ export default class Item {
     //@deprecated
     private readonly _armorMaterial: ArmorMaterial; //Только у брони. todo: Временно. Необязательные параметры перенести в другое место.
 
+    /**
+     * @deprecated
+     */
     get id(): string {
         return this._id;
     }
 
+    /**
+     * @deprecated
+     */
     get name(): string {
         return this._name;
     }
 
+    /**
+     * @deprecated
+     */
     get alias(): string {
         return this._alias;
     }
 
+    /**
+     * @deprecated
+     */
     get description(): string {
         return this._description;
     }
 
+    /**
+     * @deprecated
+     */
     get stackSize(): number {
         return this._stackSize;
     }
 
+    /**
+     * @deprecated
+     */
     get itemLevel(): number {
         return this._itemLevel;
     }
 
+    /**
+     * @deprecated
+     */
     get sort(): number {
         return this._sort;
     }
@@ -167,12 +191,15 @@ export default class Item {
     }
 
     /**
-     * @deprecated Использовать properties.
+     * @deprecated
      */
     get armorMaterial(): ArmorMaterial {
         return this._armorMaterial;
     }
 
+    /**
+     * @deprecated
+     */
     get properties(): Readonly<ItemProperties> {
         return this._properties;
     }
@@ -190,6 +217,7 @@ export default class Item {
         increase: CharacterAttributeIncreaseObject = {},
         properties: ItemProperties = {},
         options: Partial<ItemOptions> = {},
+        characterAttributes: Partial<CharacterAttributeRecord>,
     ) {
         this._id = id;
         this._name = name;
@@ -201,6 +229,7 @@ export default class Item {
         this._quality = quality;
         this._stackSize = stackSize;
         this._increase = increase;
+        this._characterAttributes = characterAttributes;
         this._properties = properties;
 
         //Не путать с логикой из строителя. Тут всегда пустые значения.
@@ -208,17 +237,9 @@ export default class Item {
         // this.properties.increase.strength;
     }
 
-    /**
-     * @deprecated
-     * @param characterAttribute
-     */
-    increase(characterAttribute: CharacterAttribute) {
-        return this._increase.hasOwnProperty(characterAttribute.alias) ? this._increase[characterAttribute.alias].value : 0;
+    increaseCharacterAttribute(ID: CharacterAttributeID): number {
+        return this._characterAttributes[ID] ?? 0;
     }
-
-    // equal(item: Item) {
-    //
-    // }
 
     filter(condition: ItemFilterCondition) {
         return condition.alias && _.includes(condition.alias, this._alias) ||

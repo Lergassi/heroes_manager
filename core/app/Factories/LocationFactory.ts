@@ -11,20 +11,26 @@ import GameObjectFactory from './GameObjectFactory.js';
 import GameObject from '../../source/GameObject.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
-import {LevelRange} from '../Components/LevelComponent.js';
+import ExperienceComponent from '../Components/ExperienceComponent.js';
 import ItemDatabase from '../ItemDatabase.js';
 import Random from '../Services/Random.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import _ from 'lodash';
-import {Seconds} from '../types.js';
+import {CurrencyAlias, CurrencyWalletAlias, ItemCategoryAlias, Seconds, unsigned} from '../types.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import {debugItemList} from '../../debug/debug_functions.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
 import EventSystem from '../../source/EventSystem.js';
+import LevelRange from '../LevelRange.js';
+import WalletComponent from '../Components/WalletComponent.js';
+import Currency from '../Entities/Currency.js';
 
 export type LocationFactoryCreateOptions = {
-    level: LevelRange;
+    // level: LevelRange;
+    level: unsigned;
+    internalItemStorageSize?: unsigned;
+    heroGroupSize?: unsigned;
 }
 
 // interface HeroGroupComponentFactoryInterface {
@@ -50,72 +56,51 @@ export type GatheringItemPointPattern = {
 }
 
 export default class LocationFactory {
-    private readonly _IDGenerator: IDGeneratorInterface;
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _itemStackFactory: ItemStackFactory;
     private readonly _entityManager: EntityManager;
     private readonly _itemDatabase: ItemDatabase;
-    private readonly _random: Random;
     private readonly _itemStorageFactory: ItemStorageFactory;
 
-    private readonly _gatheringItemTypesCount: number;
-    private readonly _eventSystem: EventSystem;
+    private readonly _gatheringItemPointsCount: number;
+
+    private readonly _defaultOptions: Partial<LocationFactoryCreateOptions> = {
+        internalItemStorageSize: 5,
+        heroGroupSize: 5,
+    };
 
     constructor(options: {
-        IDGenerator: IDGeneratorInterface;
         gameObjectFactory: GameObjectFactory;
         itemStackFactory: ItemStackFactory;
         entityManager: EntityManager;
         itemDatabase: ItemDatabase;
-        random: Random;
         itemStorageFactory: ItemStorageFactory;
-        eventSystem: EventSystem;
-        // options: Partial<LocationFactoryOptions>;
     }) {
-        this._IDGenerator = options.IDGenerator;
         this._gameObjectFactory = options.gameObjectFactory;
         this._itemStackFactory = options.itemStackFactory;
         this._entityManager = options.entityManager;
         this._itemDatabase = options.itemDatabase;
-        this._random = options.random;
         this._itemStorageFactory = options.itemStorageFactory;
-        this._eventSystem = options.eventSystem;
 
-        this._gatheringItemTypesCount = 3;
+        this._gatheringItemPointsCount = 3;
     }
 
     create(options: LocationFactoryCreateOptions): GameObject {
-        let locationPeriodInMinutes = 1;
+        let internalItemStorageSize = options.internalItemStorageSize ?? this._defaultOptions.internalItemStorageSize;
+        let heroGroupSize = options.heroGroupSize ?? this._defaultOptions.heroGroupSize;
+
         let location = this._gameObjectFactory.create();
 
-        let heroGroupComponent = location.set<HeroGroupComponent>('heroGroupComponent', new HeroGroupComponent(
-            // this._IDGenerator.generateID(),
-            5,
-        ));
-        location.addComponent<HeroGroupComponent>(heroGroupComponent);
+        location.set<WalletComponent>(CurrencyWalletAlias.Gold, new WalletComponent({
+            currency: this._entityManager.get<Currency>(Currency, CurrencyAlias.Gold),
+            value: 0,
+        }));
+        let heroGroupComponent = location.set<HeroGroupComponent>('heroGroupComponent', new HeroGroupComponent({
+            size: 5,
+        }));
 
-        let itemStorageSize = 10;
-        // let itemStorageSize = 5;
-        // let itemStorageComponent = location.set<ItemStorageComponent>('internalItemStorageComponent', new ItemStorageComponent(
-        //     this._IDGenerator.generateID(),
-        //     location,
-        //     itemStorageSize,
-        //     this._IDGenerator,
-        //     this._itemStackFactory,
-        // ));
-        let itemStorageComponent = this._itemStorageFactory.createIn(itemStorageSize, location);
+        let itemStorageComponent = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(internalItemStorageSize, location));
 
-        let gatheringItemPointCount = 3;
-        // let gatheringItemPointTypeValues: GatheringItemPointTypeValues = {
-        //     [GatheringItemPointType.low]: {value: 16, period: ONE_HOUR},
-        //     [GatheringItemPointType.normal]: {value: 32, period: ONE_HOUR},
-        //     [GatheringItemPointType.high]: {value: 64, period: ONE_HOUR},
-        // };
-        // let gatheringItemPointTypeValues: Readonly<GatheringItemPointTypeValues> = {
-        //     [GatheringItemPointType.low]: {value: 3600 /*todo: Можно указать период и логику определения ед/период переложить на класс.*/, period: ONE_HOUR},
-        //     [GatheringItemPointType.normal]: {value: 3600, period: ONE_HOUR},
-        //     [GatheringItemPointType.high]: {value: 3600, period: ONE_HOUR},
-        // };
         let gatheringItemPointTypeValues: Readonly<GatheringItemPointTypeValues> = {
             [GatheringItemPointType.low]: {value: 2 * 3600, period: ONE_HOUR_IN_SECONDS},
             [GatheringItemPointType.normal]: {value: 4 * 3600, period: ONE_HOUR_IN_SECONDS},
@@ -127,26 +112,18 @@ export default class LocationFactory {
             {[GatheringItemPointType.low]: 1, [GatheringItemPointType.normal]: 2, [GatheringItemPointType.high]: 0},
         ];
 
-        //todo: Предметы должны устаналиваться более строго. А вдруг в бд не будет предметов категории? Надо чтобы items всегда был в рабочев состоянии.
+        //todo: Предметы должны устаналиваться более строго. А вдруг в бд не будет предметов категории? Надо чтобы items всегда был в рабочем состоянии.
         let items = this._itemDatabase.filter({
             itemCategory: [
-                this._entityManager.get<ItemCategory>(ItemCategory, 'resources'),
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryAlias.Resources),
             ],
         });
-        if (items.length < this._gatheringItemTypesCount) {
+        if (items.length < this._gatheringItemPointsCount) {
             throw new AppError('indev: Предметов не достаточно для создании локации.');
         }
-        items = this._random.some(items, gatheringItemPointCount, {unique: true});
-        let selectedGatheringItemPointPattern = this._random.one(gatheringItemPointPatterns);
-        // let selectedGatheringItemPointPattern = gatheringItemPointPatterns[0];
-        // console.log(selectedGatheringItemPointPattern);
-        let sum = _.sum([
-            selectedGatheringItemPointPattern['low'],
-            selectedGatheringItemPointPattern['normal'],
-            selectedGatheringItemPointPattern['high'],
-        ]);
-        // console.log('sum', sum);
-        let _sum = 0;
+        items = Random.some(items, this._gatheringItemPointsCount, {unique: true});
+        let selectedGatheringItemPointPattern = Random.one(gatheringItemPointPatterns);
+
         let gatheringItemPoints: GatheringItemPoint[] = [];
         let index = 0;
         for (const selectedGatheringItemPointPatternKey in selectedGatheringItemPointPattern) {
@@ -157,23 +134,18 @@ export default class LocationFactory {
                     value: gatheringItemPointTypeValues[selectedGatheringItemPointPatternKey],
                     type: <GatheringItemPointType>selectedGatheringItemPointPatternKey,
                 });
-                ++_sum;
                 ++i;
                 ++index;
             }
         }
-        // console.log('_sum', _sum);
-        // console.log('sum === sum', sum === _sum);
-        // console.log(gatheringItemPoints);
 
         let locationComponent = location.set<LocationComponent>('locationComponent', new LocationComponent({
             created: new Date(),
-            eventSystem: this._eventSystem,
             gatheringItemPoints: gatheringItemPoints,
             heroGroupComponent: heroGroupComponent,
             internalItemStorageComponent: itemStorageComponent,
             itemStackFactory: this._itemStackFactory,
-            levelRange: options.level,
+            level: options.level,
         }));
 
         return location;

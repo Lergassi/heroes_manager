@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {LevelRange} from '../../../core/app/Components/LevelComponent.js';
 import {LocationContainerRComponent} from './LocationContainerRComponent.js';
 
 function FancyBorder(props) {

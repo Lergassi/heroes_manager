@@ -4,14 +4,22 @@ import EquipSlot from '../Entities/EquipSlot.js';
 import ItemStackSlot from '../RuntimeObjects/ItemStackSlot.js';
 import ItemStack, {ItemStackPlaceInterface} from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
+import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
+import EventSystem from '../../source/EventSystem.js';
+
+export enum EquipSlotComponentEventCode {
+    PlaceItemStack = 'EquipSlotComponent.placeItemStack',
+    Clear = 'EquipSlotComponent.Clear',
+}
 
 export default class EquipSlotComponent extends Component implements ItemStackPlaceInterface {
     private readonly _equipSlot: EquipSlot;
     private readonly _heroComponent: HeroComponent;
     private _itemStack: ItemStack;
+    private _increaseItemCollectorComponent: ItemAttributeCollectorComponent;
 
     get equipSlot(): EquipSlot {
         return this._equipSlot;
@@ -21,17 +29,16 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
         return this._itemStack;
     }
 
-    constructor(
-        // id: number,
-        // gameObject: GameObject,
+    constructor(options: {
         equipSlot: EquipSlot,
         heroComponent: HeroComponent,
-    ) {
-        // super(id, gameObject);
+        increaseItemCollectorComponent: ItemAttributeCollectorComponent,
+    }) {
         super();
-        this._equipSlot = equipSlot;
-        this._heroComponent = heroComponent;
+        this._equipSlot = options.equipSlot;
+        this._heroComponent = options.heroComponent;
         this._itemStack = null;
+        this._increaseItemCollectorComponent = options.increaseItemCollectorComponent;
     }
 
     canPlaceItem(item: Item): boolean {
@@ -47,17 +54,26 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     placeItemStack(itemStack: ItemStack): void {
         this.canPlaceItem(itemStack.item);
         this._itemStack = itemStack;
+        this._increaseItemCollectorComponent.addItem(itemStack.item);
 
         this.update();
     }
 
-    clear(): void {
-        this._itemStack = null;
+    clear(): void { //todo: Переименовать в destroy.
+        if (this.isBusy()) {
+            this._increaseItemCollectorComponent.remoteItem(this._itemStack.item);
+            this._itemStack = null;
+        }
 
         this.update();
+        EventSystem.event(EquipSlotComponentEventCode.Clear, this);
+    }
+
+    isBusy(): boolean {
+        return !_.isNil(this._itemStack);
     }
 
     isFree(): boolean {
-        return _.isNil(this._itemStack);
+        return !this.isBusy();
     }
 }

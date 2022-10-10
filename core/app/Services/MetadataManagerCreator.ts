@@ -16,7 +16,7 @@ import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js'
 import ItemStackSlot from '../RuntimeObjects/ItemStackSlot.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import HeroComponent from '../Components/HeroComponent.js';
-import LevelComponent from '../Components/LevelComponent.js';
+import LevelRange from '../Components/ExperienceComponent.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import CharacterAttributeComponent from '../Components/CharacterAttributeComponent.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
@@ -352,7 +352,7 @@ export default class MetadataManagerCreator {
             },
         });
         metadataManager.addMetadata({
-            module: LevelComponent,
+            module: LevelRange,
             mapping: {
                 _id: {
                     type: SerializeType.String,
@@ -482,7 +482,7 @@ export default class MetadataManagerCreator {
             },
         });
         metadataManager.addMetadata({
-            module: LevelComponent,
+            module: LevelRange,
             mapping: {
                 _id: {
                     type: SerializeType.String,

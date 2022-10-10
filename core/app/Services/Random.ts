@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 
 export type RandomSomeOptions = {
@@ -7,7 +7,9 @@ export type RandomSomeOptions = {
 }
 
 export default class Random {
-    one<T>(items: T[]): T {
+    private constructor() {}
+
+    static one<T>(items: T[]): T {
         return items[_.random(0, items.length - 1)];
     }
 
@@ -15,23 +17,23 @@ export default class Random {
         options:
             уникальные. todo: Если count больше items.length то не получиться "выбрать" уникальные значения. Наверное как-по другому нужно сделать и название другое.
      */
-    some<T>(items: T[], count: number, options: Partial<RandomSomeOptions> = {}): T[] {
+    static some<T>(items: T[], count: number, options: Partial<RandomSomeOptions> = {}): T[] {
         if (options.unique && items.length < count) {
             throw AppError.itemsNotEnoughForRandomSelection();
         }
 
         let i = 0;
         let result = [];
-        items = [...items];
+        let copyItems = [...items];
         while (i < count) {
-            if (!items.length) {
+            if (!copyItems.length) {
                 throw AppError.itemsNotEnoughForRandomSelection();
             }
 
-            let item = this.one(items)
+            let item = this.one(copyItems)
             result.push(item);
             if (options.unique) {
-                _.pull(items, item);
+                _.pull(copyItems, item);
             }
             ++i;
         }
@@ -39,11 +41,7 @@ export default class Random {
         return result;
     }
 
-    /**
-     *
-     * @param chance
-     */
-    chance(chance: number) {
+    static oneFromRange(min: number, max: number) {
 
     }
 }

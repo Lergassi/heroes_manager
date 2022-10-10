@@ -12,13 +12,12 @@ import IDGeneratorInterface from '../core/source/IDGeneratorInterface.js';
 import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
 import LocationComponent from '../core/app/Components/LocationComponent.js';
-import {LevelRange} from '../core/app/Components/LevelComponent.js';
 import RandomItemGenerator from '../core/app/RandomItemGenerator.js';
 import EntityManager from '../core/source/EntityManager.js';
 import ItemDatabase from '../core/app/ItemDatabase.js';
-import _, {result} from 'lodash';
+import _, {entries, result} from 'lodash';
 import Item from '../core/app/Entities/Item.js';
-import AppError from '../core/source/AppError.js';
+import AppError from '../core/source/Errors/AppError.js';
 import ItemCategory from '../core/app/Entities/ItemCategory.js';
 import Quality from '../core/app/Entities/Quality.js';
 import Random from '../core/app/Services/Random.js';
@@ -36,6 +35,21 @@ import GameObject from '../core/source/GameObject.js';
 import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
 import EventSystem from '../core/source/EventSystem.js';
 import {ContainerKey} from '../core/app/consts.js';
+import EnemyFactory from '../core/app/Factories/EnemyFactory.js';
+import LevelRange from '../core/app/LevelRange.js';
+import GoldLootGeneratorComponent from '../core/app/Components/GoldLootGeneratorComponent.js';
+import {
+    Loot,
+    ItemCount,
+    ItemCountRange,
+    unsigned,
+    EnemyTypes,
+    EntityManagerKey,
+    EnemyTypeAlias, ItemCategoryAlias, EnemyTypeRecord
+} from '../core/app/types.js';
+import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponentFactory.js';
+import EnemyType from '../core/app/Entities/EnemyType.js';
+import HealthPointsComponent, {HealthPointsComponentEventCode} from '../core/app/Components/HealthPointsComponent.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -52,10 +66,28 @@ export class SandboxController {
     // }
 
     main() {
+        // this.testRound();
+
         // this.testDateDiffs();
         // this.testNewComponents();
         // this.gameContainerGetStarted();
-        this.testReadonly();
+        // this.testReadonly();
+        // this.testRandom_oneFromRange();
+
+        this.devLocation();
+        // this.devGoldLootGeneratorComponent();
+        // this.devLevelComponent();
+        // this.devLootGenerator();
+        // this.devFight();
+    }
+
+    devLocation() {
+        let locationFactory = this._container.get<LocationFactory>(ContainerKey.LocationFactory);
+
+        let location = locationFactory.create({
+            level: 1,
+        });
+        console.log(location);
     }
 
     devLocationFactory() {
@@ -64,42 +96,55 @@ export class SandboxController {
         let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
 
         let heroes = [
-            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior), 9),
-            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue), 42),
-            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger)),
-            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
-            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Mage)),
-            // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior)),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Mage),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Mage),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior),
+                level: 1,
+            }),
         ];
 
         let locationFactory = new LocationFactory({
-            IDGenerator: idGenerator,
             entityManager: this._container.get<EntityManager>('core.entityManager'),
             gameObjectFactory: this._container.get<GameObjectFactory>('player.gameObjectFactory'),
             itemDatabase: this._container.get<ItemDatabase>('core.itemDatabase'),
             itemStackFactory: this._container.get<ItemStackFactory>('player.itemStackFactory'),
             itemStorageFactory: this._container.get<ItemStorageFactory>('player.itemStorageFactory'),
-            // options: undefined,
-            random: this._container.get<Random>('core.random'),
-            // eventSystem: this._container.get<EventSystem>('core.eventSystem'),
-            eventSystem: this._container.get<EventSystem>(ContainerKey.EventSystem),
         });
 
         let location = locationFactory.create({
-            level: new LevelRange(1, 5),
-            // level: new LevelRange(10, 20),
+            level: 1,
         });
         // console.log(location);
+
         let locationComponent = location.getComponent<LocationComponent>('locationComponent');
+        // console.log(locationComponent);
+        // console.log(heroes[0]);
         locationComponent.addHero(heroes[0]);
         locationComponent.addHero(heroes[1]);
-        locationComponent.addHero(heroes[2]);
-        locationComponent.addHero(heroes[2]);
-        // // locationComponent.addHero(heroes[3]);
-        // locationComponent.addHero(heroes[4]);
-        console.log(locationComponent['_heroGroupComponent']);
-        // locationComponent.start();
-        // locationComponent.stop();
+        // locationComponent.addHero(heroes[2]);
+        // locationComponent.addHero(heroes[2]);
+        // console.log(locationComponent['_heroGroupComponent']);
+        // // locationComponent.start();
+        // // locationComponent.stop();
     }
 
     randomItemGenerator() {
@@ -146,7 +191,7 @@ export class SandboxController {
 
     itemDatabaseFilter() {
         let em = this._container.get<EntityManager>('core.entityManager');
-        let random = new Random();
+        // let random = new Random();
 
         let itemDatabase = new ItemDatabase(
             extractItems(em),
@@ -155,12 +200,12 @@ export class SandboxController {
         let resources = itemDatabase.filter({
             // itemCategory: [],
             itemCategory: [
-                em.get<ItemCategory>(ItemCategory, 'resources'),
-                em.get<ItemCategory>(ItemCategory, 'one_handed_swords'),
-                em.get<ItemCategory>(ItemCategory, 'helmets'),
+                em.get<ItemCategory>(ItemCategory, ItemCategoryAlias.Resources),
+                em.get<ItemCategory>(ItemCategory, ItemCategoryAlias.OneHandedSwords),
+                em.get<ItemCategory>(ItemCategory, ItemCategoryAlias.Helmets),
                 // {itemCategory: null, includeChildren: false},
-                // {itemCategory: em.get<ItemCategory>(ItemCategory, 'resources'), includeChildren: false},
-                // {itemCategory: em.get<ItemCategory>(ItemCategory, 'resources')},
+                // {itemCategory: em.get<ItemCategory>(ItemCategory, ItemCategoryAlias.Resources), includeChildren: false},
+                // {itemCategory: em.get<ItemCategory>(ItemCategory, ItemCategoryAlias.Resources)},
             ],
             // quality: [em.get<Quality>(Quality, 'epic')],
         });
@@ -170,11 +215,11 @@ export class SandboxController {
             itemDatabase.get('iron_bar'),
             itemDatabase.get('copper_ore'),
         ];
-        // console.log('resources', resources);
+        // console.log(ItemCategoryAlias.Resources, resources);
         console.log(_.map(resources, item => [item.itemCategory.name, item.name]));
         // console.log(random.one(resources).name);
         // console.log(random.some(resources, 3, {unique: true}));
-        console.log(_.map(random.some(resources, 3, {unique: true}), item => [item.itemCategory.name, item.name]));
+        console.log(_.map(Random.some(resources, 3, {unique: true}), item => [item.itemCategory.name, item.name]));
     }
 
     testDateDiffs() {
@@ -367,7 +412,8 @@ export class SandboxController {
 
     testLocationFactory() {
         let location = this._container.get<LocationFactory>(ContainerKey.LocationFactory).create({
-            level: new LevelRange(1, 5),
+            // level: new LevelRange(1, 5),
+            level: 1,
         });
         console.log(location);
     }
@@ -393,7 +439,9 @@ export class SandboxController {
         let heroGroup = this._container.get<GameObjectFactory>('player.gameObjectFactory').create();
 
         let size = 5;
-        let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroupComponent(size));
+        let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroupComponent({
+            size: 5,
+        }));
         // console.log(heroGroup);
 
         // heroGroupComponent.setHero(heroes[0]);
@@ -438,5 +486,191 @@ export class SandboxController {
         itemStack.item.name = 'asd';
 
         console.log(itemStack);
+    }
+
+    devEnemyFactory() {
+        let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
+        let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
+
+        // let enemyFactory = new EnemyFactory({
+        //     gameObjectFactory: this._container.get<GameObjectFactory>(ContainerKey.GameObjectFactory),
+        //     entityManager: this._container.get<EntityManager>(ContainerKey.EntityManager),
+        // });
+
+        // console.log(em.entity<EnemyTypeRecord>(EntityManagerKey.EnemyType)[EnemyTypeAlias.Boar]);
+        // let enemyType = em.entity<EnemyTypes>(EntityManagerKey.EnemyTypes)[EnemyTypeAlias.Boar];
+        // let enemyType = em.entity<EnemyTypeRecord>(EntityManagerKey.EnemyType)[EnemyTypeAlias.Boar];
+        // let enemyType = em.entity<EnemyTypeRecord>(EntityManagerKey.EnemyType)[EnemyTypeAlias.Fox];
+        // let enemyType = em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Fox);
+        let enemyType = em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Boar);
+        // console.log(enemyType);
+        // console.log(enemyType.alias);
+        let enemy = enemyFactory.create({
+            level: 1,
+            type: enemyType,
+        });
+        console.log(enemy);
+    }
+
+    testRandom_oneFromRange() {
+        console.log(_.random(1, 2));
+        // console.log(Random.oneFromRange(1, 10));
+    }
+
+    devGoldLootGeneratorComponent() {
+        // let goldLootGeneratorComponent = new GoldLootGeneratorComponent(20, 40);
+        // console.log(goldLootGeneratorComponent.generate(20));
+        // console.log(goldLootGeneratorComponent.generate(20));
+        // console.log(goldLootGeneratorComponent.generate(20));
+        // console.log(goldLootGeneratorComponent.generate(20));
+        // console.log(goldLootGeneratorComponent.generate(20));
+        // console.log(goldLootGeneratorComponent.generate(20));
+        // console.log(goldLootGeneratorComponent.generate(20));
+    }
+
+    devLevelComponent() {
+        let levelComponent = this._container.get<ExperienceComponentFactory>(ContainerKey.ExperienceComponentFactory).create({
+            level: 1,
+        });
+        let exp = 444444444;
+        // let exp = 4444;
+        console.log(levelComponent);
+        levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // levelComponent.addExp(exp);
+        // console.log(levelComponent);
+        // levelComponent.addExp(exp);
+        // console.log(levelComponent);
+        // levelComponent.addExp(exp);
+        // console.log(levelComponent);
+        // levelComponent.addExp(exp);
+        // console.log(levelComponent);
+        // levelComponent.addExp(exp);
+        // console.log(levelComponent);
+    }
+
+    devLootGenerator() {
+        let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
+        let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
+
+        let enemies: GameObject[] = [];
+        enemies.push(enemyFactory.create({
+            type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Boar),
+            level: 1,
+        }));
+        enemies.push(enemyFactory.create({
+            type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Boar),
+            level: 1,
+        }));
+        enemies.push(enemyFactory.create({
+            type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Boar),
+            level: 1,
+        }));
+        console.log(_.map(enemies, (enemy) => {
+            return enemy['_id'];
+        }));
+
+        // EventSystem.addListener(HealthPointsComponentEventCode.Died, (target) => {
+        //     console.log('УРА!!!');
+        // });
+
+        // console.log(enemy);
+        // console.log(enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name));
+        // enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).kill();
+        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).damage(42);
+        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).damage(42);
+        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).damage(42);
+        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).damage(42);
+        enemies[1].getComponent<HealthPointsComponent>(HealthPointsComponent.name).kill();
+        // enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name).resurrect();
+    }
+
+    private testRound() {
+        let values = [
+            1,
+            1.0,
+            1.23,
+            1.4,
+            1.5,
+            1.5,
+            1.9,
+        ];
+        _.map(values, (value) => {
+            console.log([value, _.round(value, 0)]);
+        });
+    }
+
+    devFight() {
+        let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
+        let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
+        let heroFactory = this._container.get<HeroFactory>('player.heroFactory');
+
+        let enemies = [];
+        enemies.push(enemyFactory.create({
+            type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Boar),
+            level: 1,
+        }));
+        enemies.push(enemyFactory.create({
+            type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Boar),
+            level: 1,
+        }));
+        enemies.push(enemyFactory.create({
+            type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Boar),
+            level: 1,
+        }));
+
+        let heroes = [
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Mage),
+                level: 1,
+            }),
+            heroFactory.create({
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Mage),
+                level: 1,
+            }),
+            // heroFactory.create({
+            //     heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior),
+            //     level: 1,
+            // }),
+        ];
+
+        let heroGroupComponent = new HeroGroupComponent({
+            size: 5,
+        });
+        _.map(heroes, (hero) => {
+            heroGroupComponent.addHero(hero);
+        });
     }
 }

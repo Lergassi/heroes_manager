@@ -1,6 +1,6 @@
 import EquipSlotRule from './EquipSlotRule.js';
 import Item from './Item.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import HeroComponent from '../Components/HeroComponent.js';
 
 export default class EquipSlot {

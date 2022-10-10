@@ -4,7 +4,7 @@ import debug from 'debug';
 import yargs from 'yargs/yargs';
 import {hideBin} from 'yargs/helpers';
 import ServerAndCoreSandbox from './ServerAndCoreSandbox.js';
-import AppError from '../core/source/AppError.js';
+import AppError from '../core/source/Errors/AppError.js';
 
 dotenv.config();
 

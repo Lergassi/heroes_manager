@@ -19,6 +19,9 @@ type Command = {
     target?: string,
 };
 
+/**
+ * Названия команд нужны для регистрации.
+ */
 let commands: Command[] = [
     {name: 'main',},
     {name: 'devLocationFactory',},
@@ -30,6 +33,7 @@ let commands: Command[] = [
     {name: 'testHeroFactory',},
     {name: 'testLocationFactory',},
     {name: 'devHeroGroup',},
+    {name: 'devEnemyFactory',},
 ];
 
 for (let i = 0; i < commands.length; i++) {

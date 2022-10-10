@@ -1,5 +1,5 @@
 import Item, {
-    CharacterAttributeIncreaseObject,
+    CharacterAttributeIncreaseObject, CharacterAttributeRecord,
     ItemGetType,
     ItemOptions,
     ItemProperties,
@@ -47,6 +47,7 @@ export interface ItemBuilderOptions {
     //todo: options и другие свойства в Item это не обязательные параметры. Тут пока объединены в ItemBuilderOptions.
     // armorMaterial: alias;
     increase: CharacterAttributeIncreaseObjectBuilder;
+    characterAttributes: Partial<CharacterAttributeRecord>;
     // options: Partial<ItemOptions>;
 }
 
@@ -104,6 +105,7 @@ export default class ItemBuilder {
     private _armorMaterial: ArmorMaterial;
 
     private _increase: CharacterAttributeIncreaseObject;
+    private _characterAttributes: Partial<CharacterAttributeRecord>;
     private _properties: ItemProperties;
 
     private _default: Partial<ItemBuilderOptions> = {
@@ -146,6 +148,7 @@ export default class ItemBuilder {
             let characterAttribute = this._entityManager.get<CharacterAttribute>(CharacterAttribute, alias);
             this._increase[alias] = new CharacterAttributeIncrease(characterAttribute, characterAttributeIncreaseObjectBuilder[alias]);
         }
+        this._characterAttributes = options.characterAttributes || {};
 
         this._options = {};
         this._options.getTypes = options.getTypes ?? [];
@@ -208,6 +211,7 @@ export default class ItemBuilder {
             this._increase,
             this._properties,
             this._options,
+            this._characterAttributes,
         );
     }
 

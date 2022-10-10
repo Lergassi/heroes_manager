@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import AppError from './AppError.js';
+import AppError from './Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 
 export default class EntityDatabase {

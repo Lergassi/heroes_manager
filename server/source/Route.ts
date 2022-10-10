@@ -1,5 +1,5 @@
 import {HttpMethod} from './Http.js';
-import AppError from '../../core/source/AppError.js';
+import AppError from '../../core/source/Errors/AppError.js';
 import debug from 'debug';
 
 export default class Route {

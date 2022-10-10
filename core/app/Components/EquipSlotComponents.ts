@@ -1,7 +1,7 @@
 import Component from '../../source/Component.js';
 import EquipSlotComponent from './EquipSlotComponent.js';
 import EquipSlot from '../Entities/EquipSlot.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 
 /**

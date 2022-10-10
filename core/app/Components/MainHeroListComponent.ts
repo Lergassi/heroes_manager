@@ -2,10 +2,11 @@ import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import _ from 'lodash';
 import HeroComponent, {HeroState} from './HeroComponent.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import HeroFactory, {HeroFactoryCreateOptions} from '../Factories/HeroFactory.js';
 import {unsigned} from '../types.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
+import EventSystem from '../../source/EventSystem.js';
 
 /**
  * @deprecated
@@ -28,6 +29,11 @@ export interface PlacementInterface<T> {
     // removePlacement<T>(placement: T): void;
     // removePlacement(placement: PlacementControllerInterface): void;
     // equal(placement: PlacementInterface): boolean;
+}
+
+export enum MainHeroListComponentEventCode {
+    CreateHero = 'MainHeroListComponent.CreateHero',
+    DeleteHero = 'MainHeroListComponent.DeleteHero',
 }
 
 export default class MainHeroListComponent extends Component {
@@ -53,7 +59,7 @@ export default class MainHeroListComponent extends Component {
     }
 
     /**
-     * @deprecated
+     * @deprecated Использовать createHero.
      * @param hero
      */
     addHero(hero: GameObject): void {
@@ -65,37 +71,34 @@ export default class MainHeroListComponent extends Component {
     }
 
     deleteHero(hero: GameObject, gameObjectStorage: GameObjectStorage): void {
-        if (!hero.get<HeroComponent>('heroComponent').canManipulate()) {
-            throw new AppError('Нельзя удалить героя пока он занят.');
-        }
+        this.canDeleteHero(hero);
 
         _.pull(this._heroes, hero);
         gameObjectStorage.remove(hero);
 
-        this.update();
+        EventSystem.event(MainHeroListComponentEventCode.DeleteHero, this);
     }
 
     createHero(options: HeroFactoryCreateOptions, heroFactory: HeroFactory): GameObject {
-        this.canAddHero();
+        this.canCreateHero();
 
         let hero = heroFactory.create(options);
         this._heroes.push(hero);
 
-        this.update();
+        EventSystem.event(MainHeroListComponentEventCode.CreateHero, this);
 
         return hero;
     }
 
-    canAddHero(): void {
+    canCreateHero(): void {
         if (this._heroes.length > this._max + 1) {
             throw AppError.playerHasMaxHeroes();
         }
     }
 
-    //Если герой не будет доступен вне клссса, то как получить ссылку, которая передается сюда? А если он есть, то значит переместить его в локацию можно без HeroList. У героя устанавливается статус занято (target: локация). Список тут не нужен. Хотя список тоже может работать по этому же принципу.
-    // place(hero: GameObject, placement: HeroPlacement) {
-    //     placement.place(hero);
-    //     hero.getComponent<HeroComponent>('heroComponent').place(placement);
-    //     // _.pull(this._heroes, hero);
-    // }
+    canDeleteHero(hero: GameObject): void {
+        if (!hero.get<HeroComponent>('heroComponent').canManipulate()) {
+            throw new AppError('Нельзя удалить героя пока он занят.');
+        }
+    }
 }

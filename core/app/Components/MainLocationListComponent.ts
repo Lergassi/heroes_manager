@@ -3,11 +3,10 @@ import {unsigned} from '../types.js';
 import GameObject from '../../source/GameObject.js';
 import LocationFactory, {LocationFactoryCreateOptions} from '../Factories/LocationFactory.js';
 import EventSystem from '../../source/EventSystem.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import _ from 'lodash';
 import LocationComponent, {GatheringItemPoint} from './LocationComponent.js';
-import {LevelRange} from './LevelComponent.js';
 import ItemStorageComponent from './ItemStorageComponent.js';
 import HeroGroupComponent from './HeroGroupComponent.js';
 
@@ -20,18 +19,15 @@ export default class MainLocationListComponent extends Component {
     private readonly _locations: GameObject[];
     private _min: unsigned;
     private _max: unsigned;
-    private readonly _eventSystem: EventSystem;
 
     constructor(
         min: unsigned,
         max: unsigned,
-        eventSystem: EventSystem,
     ) {
         super();
         this._locations = [];
         this._min = min;
         this._max = max;
-        this._eventSystem = eventSystem;
     }
 
     create(options: LocationFactoryCreateOptions, locationFactory: LocationFactory): GameObject {
@@ -40,7 +36,7 @@ export default class MainLocationListComponent extends Component {
         let location = locationFactory.create(options);
 
         this._locations.push(location);
-        this._eventSystem.event<MainLocationListComponent>(MainLocationListComponentEventCode.CreateLocation, this);
+        EventSystem.event(MainLocationListComponentEventCode.CreateLocation, this);
 
         return location;
     }
@@ -52,7 +48,7 @@ export default class MainLocationListComponent extends Component {
             _.pull(this._locations, location);
             gameObjectStorage.remove(location);
 
-            this._eventSystem.event<MainLocationListComponent>(MainLocationListComponentEventCode.DeleteLocation, this);
+            EventSystem.event(MainLocationListComponentEventCode.DeleteLocation, this);
         }
     }
 

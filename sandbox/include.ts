@@ -45,7 +45,7 @@ import GameObjectFactory from '../core/app/Factories/GameObjectFactory.js';
 import MainHeroListComponent from '../core/app/Components/MainHeroListComponent.js';
 import Item, {ItemProperties, ItemProperty} from '../core/app/Entities/Item.js';
 import EntityManagerFacade from '../core/source/Facades/EntityManagerFacade.js';
-import AppError from '../core/source/AppError.js';
+import AppError from '../core/source/Errors/AppError.js';
 import IDGeneratorInterface from '../core/source/IDGeneratorInterface.js';
 import AutoIncrementIDGenerator from '../core/source/AutoIncrementIDGenerator.js';
 import ItemBuilder from '../core/app/Services/ItemBuilder.js';
@@ -57,6 +57,7 @@ import ItemStorageManager from '../core/app/Services/ItemStorageManager.js';
 import Range from '../core/app/Range.js';
 import ItemCategory from '../core/app/Entities/ItemCategory.js';
 import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../core/app/consts.js';
+import EventSystem from '../core/source/EventSystem.js';
 
 function createEndPlayerContainer(): ContainerInterface {
     let container = new Container();
@@ -1102,9 +1103,9 @@ export function testNumberKeysForObject() {
 
 export function testLevelRange() {
     console.log([
-        new Range(10),
+        // new Range(10),
         new Range(1, 10),
-        new Range([10, 20]),
+        // new Range([10, 20]),
     ]);
 
     console.log(_.inRange(1, 1, 10));
@@ -1113,8 +1114,8 @@ export function testLevelRange() {
 
 // type World = "world";
 // type Greeting = `hello ${World}`;
-// type Resources = 'resources';
-// // type ItemCategoryAlias = 'resources' | 'rings';
+// type Resources = ItemCategoryAlias.Resources;
+// // type ItemCategoryAlias = ItemCategoryAlias.Resources | ItemCategoryAlias.Rings;
 //
 // interface TestItemBuilderInterface {
 //     name: string;
@@ -1127,13 +1128,13 @@ export function testLevelRange() {
 //     // type A = 'a';
 //     //
 //     // // let w: World = 'world';
-//     // let r: Resources = 'resources';
+//     // let r: Resources = ItemCategoryAlias.Resources;
 //     // console.log(r);
 //     //
 //     // let itemBuilder: TestItemBuilderInterface = {
 //     //     name: 'Дерево',
-//     //     // itemCategory: 'resources',
-//     //     itemCategory: 'resources',
+//     //     // itemCategory: ItemCategoryAlias.Resources,
+//     //     itemCategory: ItemCategoryAlias.Resources,
 //     // };
 //     ItemCategoryAlias['asd'] = 42;  //А так можно?
 //     console.log(ItemCategoryAlias);

@@ -1,5 +1,5 @@
 import ItemStack from './ItemStack.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 
 export default class ItemStackSlot {

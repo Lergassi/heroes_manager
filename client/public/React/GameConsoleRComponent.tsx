@@ -1,5 +1,5 @@
 import React from 'react';
-import AppError from '../../../core/source/AppError.js';
+import AppError from '../../../core/source/Errors/AppError.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';

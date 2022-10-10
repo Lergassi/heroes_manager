@@ -9,7 +9,7 @@ import EquipSlotComponent from '../core/app/Components/EquipSlotComponent.js';
 import _ from 'lodash';
 import sum from '../test_objects/sum.js';
 import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
-import AppError from '../core/source/AppError.js';
+import AppError from '../core/source/Errors/AppError.js';
 import TestObjectLink from '../test/Serialize/SupportObjects/TestObjectLink.js';
 import TestObjectWithLink from '../test/Serialize/TestObjectWithLink.js';
 import {sprintf} from 'sprintf-js';

@@ -6,7 +6,7 @@ import ClientRender from '../public/React/ClientRender.js';
 import debug from 'debug';
 import _ from 'lodash';
 import LocationFactory from '../../core/app/Factories/LocationFactory.js';
-import {LevelRange} from '../../core/app/Components/LevelComponent.js';
+import LevelRange from '../../core/app/LevelRange.js';
 
 export default class Client {
     async run() {
@@ -20,6 +20,8 @@ export default class Client {
         let debugNamespaces = [
             'debug',
             'debug:*',
+            'error',
+            'error:*',
             'log',
             'log:*',
         ];

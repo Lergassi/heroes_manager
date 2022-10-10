@@ -1,7 +1,7 @@
 import React from 'react';
 import GameObject from '../../../core/source/GameObject.js';
 import LocationComponent, {LocationComponentEventCode} from '../../../core/app/Components/LocationComponent.js';
-import {LevelRange} from '../../../core/app/Components/LevelComponent.js';
+import LevelRange from '../../../core/app/LevelRange.js';
 import HeroGroupComponent from '../../../core/app/Components/HeroGroupComponent.js';
 import _ from 'lodash';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
@@ -36,17 +36,13 @@ export class LocationContainerRComponent extends React.Component<LocationRCompon
             });
         };
 
-        props.container.get<EventSystem>(ContainerKey.EventSystem).addListener([
-            LocationComponentEventCode.AddHero,
-            LocationComponentEventCode.RemoveHero,
-            LocationComponentEventCode.Start,
-            LocationComponentEventCode.Start,
-            LocationComponentEventCode.ItemsGenerated,
-        ], {
-            // code: LocationComponentEventCode.AddHero,
-            // code: LocationComponentEventCode.ItemsGenerated,
-            callback: callback,
-        });
+        // EventSystem.addListener([
+        //     LocationComponentEventCode.AddHero,
+        //     LocationComponentEventCode.RemoveHero,
+        //     LocationComponentEventCode.Start,
+        //     LocationComponentEventCode.Start,
+        //     LocationComponentEventCode.ItemsGenerated,
+        // ], callback);
     }
 
     render() {
@@ -62,9 +58,7 @@ export class LocationContainerRComponent extends React.Component<LocationRCompon
         let locationComponent = location.getComponent<LocationComponent>('locationComponent');
         locationComponent.render((values) => {
             locationComponentElement = (
-                <div className={'block__title'}>Location, level: <LevelRangeDefaultRender
-                    levelRange={values.level}
-                /></div>
+                <div className={'block__title'}>Location, level: {values.level}</div>
             );
         });
 

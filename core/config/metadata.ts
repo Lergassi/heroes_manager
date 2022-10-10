@@ -7,7 +7,7 @@ import ItemStackSlot from '../app/RuntimeObjects/ItemStackSlot.js';
 import ItemStack from '../app/RuntimeObjects/ItemStack.js';
 import WalletComponent from '../app/Components/WalletComponent.js';
 import HeroComponent from '../app/Components/HeroComponent.js';
-import LevelComponent from '../app/Components/LevelComponent.js';
+import LevelRange from '../app/Components/ExperienceComponent.js';
 import EquipSlotComponent from '../app/Components/EquipSlotComponent.js';
 import CharacterAttributeComponent from '../app/Components/CharacterAttributeComponent.js';
 import HealthPointsComponent from '../app/Components/HealthPointsComponent.js';
@@ -145,9 +145,9 @@ metadata[HeroComponent.name] = {
         },
     },
 };
-metadata[LevelComponent.name] = {
-    classname: LevelComponent.name,
-    prototype: LevelComponent.prototype,
+metadata[LevelRange.name] = {
+    classname: LevelRange.name,
+    prototype: LevelRange.prototype,
     mapping: {
         _id: {
             type: SerializeType.Number,

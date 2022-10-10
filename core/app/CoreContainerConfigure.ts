@@ -47,6 +47,9 @@ import {ContainerKey} from './consts.js';
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
         container.set<object>('core.config', config);
+
+        EventSystem.create();
+
         //Тут не save_inject, а просто загрузка данных из файла. На сервере из файла, на клиенте через import и webpack.
         container.set<MetadataManager>('core.metadataManager', (container) => {
             return (new MetadataManagerCreator()).create();
@@ -57,10 +60,11 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         container.set<ItemFactory>(ContainerKey.ItemFactory, (container) => {
             return new ItemFactory(container.get<EntityManager>(ContainerKey.EntityManager));
         });
-        (new EntityManagerBuilder(
-            container.get<EntityManager>(ContainerKey.EntityManager),
-            container.get<ItemFactory>(ContainerKey.ItemFactory),
-        )).build();
+        (new EntityManagerBuilder({
+            container: container,
+            entityManager: container.get<EntityManager>(ContainerKey.EntityManager),
+            itemFactory: container.get<ItemFactory>(ContainerKey.ItemFactory),
+        })).build();
         container.set<ItemDatabase>('core.itemDatabase', (container) => {
             return new ItemDatabase(extractItems(container.get<EntityManager>(ContainerKey.EntityManager)));
         });
@@ -73,13 +77,10 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         container.set<JsonSerializer>('core.jsonSerializer', (container) => {
             return new JsonSerializer();
         });
-        container.set<Random>('core.random', (container) => {
-            return new Random();
-        });
         // container.set<EventSystem>('core.eventSystem', (container) => {
-        container.set<EventSystem>(ContainerKey.EventSystem, (container) => {
-            return new EventSystem();
-        });
+        // container.set<EventSystem>(ContainerKey.EventSystem, (container) => {
+        //     return EventSystem.create();
+        // });
 
         // container.set<IDGeneratorInterface>('core.realtimeObjectIdGenerator', (container: ContainerInterface) => {
         //     return new UUIDGenerator();

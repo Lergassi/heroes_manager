@@ -4,7 +4,7 @@ import ItemStack, {ItemStackPlaceInterface} from '../RuntimeObjects/ItemStack.js
 import GameObject from '../../source/GameObject.js';
 import Item from '../Entities/Item.js';
 import _ from 'lodash';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import RComponentBridge, {AssignRComponentInterface} from '../../../client/source/RComponentBridge.js';
 import ItemStorageComponent from './ItemStorageComponent.js';
 

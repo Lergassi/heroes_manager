@@ -2,35 +2,35 @@ import GameObject from '../../source/GameObject.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import UUIDGenerator from '../../source/UUIDGenerator.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
-
-export type WalletFactoryConfig = {
-
-};
+import GameObjectFactory from './GameObjectFactory.js';
+import {CurrencyWalletAlias, unsigned} from '../types.js';
+import Currency from '../Entities/Currency.js';
 
 export default class WalletFactory {
-    private readonly _idGenerator: IDGeneratorInterface;
-    private _config: WalletFactoryConfig;
+    private readonly _gameObjectFactory: GameObjectFactory;
 
-    constructor(idGenerator: IDGeneratorInterface, config: WalletFactoryConfig = {}) {
-        this._idGenerator = idGenerator;
-        this._config = config;
+    constructor(options: {
+        gameObjectFactory: GameObjectFactory,
+    }) {
+        this._gameObjectFactory = options.gameObjectFactory;
     }
 
-    create(currency, value = 0) {
-        let wallet = new GameObject(this._idGenerator.generateID());
+    create(options: {
+        currency: Currency,
+        value: unsigned,
+    }) {
+        let wallet = this._gameObjectFactory.create();
 
         wallet.name = 'Wallet';
         wallet.addTags([
             '#wallet',
-            '#wallet.' + currency.alias
+            CurrencyWalletAlias[options.currency.alias],
         ]);
 
-        wallet.addComponent(new WalletComponent(
-            this._idGenerator.generateID(),
-            wallet,
-            currency,
-            value,
-        ));
+        wallet.set(WalletComponent.name, new WalletComponent({
+            currency: options.currency,
+            value: options.value,
+        }));
 
         return wallet;
     }

@@ -1,5 +1,5 @@
 import EntityManager from '../../source/EntityManager.js';
-import CharacterAttribute, {CharacterAttributeAlias} from '../Entities/CharacterAttribute.js';
+import CharacterAttribute from '../Entities/CharacterAttribute.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
 import {CharacterAttributeIncreaseObject} from '../Entities/Item.js';
 

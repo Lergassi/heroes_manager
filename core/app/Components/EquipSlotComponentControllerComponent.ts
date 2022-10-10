@@ -2,7 +2,7 @@ import Component from '../../source/Component.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import GameObject from '../../source/GameObject.js';
 import EquipSlotComponent from './EquipSlotComponent.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 
 //todo: Придумать другое название. 2 раза Component.

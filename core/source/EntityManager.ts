@@ -7,9 +7,11 @@ export interface ModuleInterface {
 
 export default class EntityManager {
     private readonly _repositories;
+    private readonly _entities;
 
     constructor() {
         this._repositories = {};
+        this._entities = {};
     }
 
     /**
@@ -24,11 +26,33 @@ export default class EntityManager {
         return this._repositories[classname];
     }
 
-    add<Entity>(module: Function, entity: Entity): Entity {
-        return this.getRepository<Entity>(module.name).add(entity);
+    add<Entity>(module: string | Function, entity: Entity): Entity {
+        if (typeof module === 'string') {
+            return this.getRepository<Entity>(module).add(entity);
+        } else {
+            return this.getRepository<Entity>(module.name).add(entity);
+        }
     }
 
-    get<Entity>(module: Function, alias: string/*todo: По ID или фильтру.*/): Entity {
-        return this.getRepository<Entity>(module.name).getOneByAlias(alias);
+    get<Entity>(module: Function | string, alias: string/*todo: По ID или фильтру.*/): Entity {
+        if (typeof module === 'string') {
+            return this.getRepository<Entity>(module).getOneByAlias(alias);
+        } else {
+            return this.getRepository<Entity>(module.name).getOneByAlias(alias);
+        }
+    }
+
+    //@dev
+    set<T>(key: string, value: T): T {
+        if (!this._entities.hasOwnProperty(key)) {
+            this._entities[key] = value;
+        }
+
+        return value;
+    }
+
+    //get
+    entity<T>(key: string, id: string): T {
+        return this._entities[key]?.[id];
     }
 }

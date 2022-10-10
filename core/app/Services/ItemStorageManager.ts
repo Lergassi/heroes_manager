@@ -1,4 +1,4 @@
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';

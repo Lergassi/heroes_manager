@@ -34,11 +34,15 @@ export default class MainLocationListRComponent extends React.Component<MainLoca
             });
         };
 
-        props.container.get<EventSystem>(ContainerKey.EventSystem).addListener([
-            MainLocationListComponentEventCode.CreateLocation,
-            MainLocationListComponentEventCode.DeleteLocation,
-        ], {
-            callback: callback,
+        EventSystem.addListener({
+            codes: [
+                MainLocationListComponentEventCode.CreateLocation,
+                MainLocationListComponentEventCode.DeleteLocation,
+            ],
+            listener: {
+                callback: callback,
+                target: props.mainLocationListComponent,
+            },
         });
     }
 

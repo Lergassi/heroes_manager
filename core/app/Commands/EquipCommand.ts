@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 

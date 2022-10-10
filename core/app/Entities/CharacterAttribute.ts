@@ -1,17 +1,3 @@
-export enum CharacterAttributeAlias {
-    Strength = 'strength',
-    Agility = 'agility',
-    Intelligence = 'intelligence',
-    MaxHealthPoints = 'max_health_points',
-    MaxMagicPoints = 'max_health_points',
-    Protection = 'protection',
-    AttackPower = 'attack_power',
-    AttackSpeed = 'attack_speed',
-    CriticalStrike = 'critical_strike',
-    Stamina = 'stamina',
-    Luck = 'luck',
-}
-
 export default class CharacterAttribute {
     private readonly _id: string;
     private readonly _name: string;

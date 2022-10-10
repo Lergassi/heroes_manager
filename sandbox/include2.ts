@@ -142,11 +142,9 @@ export function testHeroGroup() {
     ];
     // console.log(heroes);
 
-    let heroGroupComponent = new HeroGroupComponent(
-        // idGenerator.generateID(),
-        // heroGroup,
-        5,
-    );
+    let heroGroupComponent = new HeroGroupComponent({
+        size: 5,
+    });
     // console.log(heroGroupComponent);
 
     // heroGroupComponent.setHero(2, heroes[0]);
@@ -425,3 +423,38 @@ export function testIDWrapper() {
     // itemStorage.components.slots.get(10).placeItemStack(itemStack);
     // itemStorage.components.slots.get(10).clear();
 }
+
+interface CatInfoInterface {
+    age: number;
+    breed: string;
+}
+
+class CatInfo {
+    age: number;
+    breed: string;
+
+    constructor(age: number, breed: string) {
+        this.age = age;
+        this.breed = breed;
+    }
+}
+
+type CatName = "miffy" | "boris" | "mordred";
+enum CatNameEnum {
+    miffy = 'miffy',
+    boris = 'boris',
+    mordred = 'mordred',
+}
+
+// const cats: Record<CatName, CatInfoInterface> = {
+// const cats: Record<CatNameEnum, CatInfoInterface> = {
+//     miffy: { age: 10, breed: "Persian" },
+//     boris: { age: 5, breed: "Maine Coon" },
+//     mordred: { age: 16, breed: "British Shorthair" },
+// };
+// const cats: Record<Partial<CatNameEnum>, CatInfo> = {
+const cats: Record<string, CatInfo> = {
+    [CatNameEnum.miffy]: { age: 10, breed: "Persian" },
+    boris: { age: 5, breed: "Maine Coon" },
+    // mordred: { age: 16, breed: "British Shorthair" },
+};

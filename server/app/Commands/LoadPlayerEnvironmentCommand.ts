@@ -3,7 +3,7 @@ import Input from '../../../core/source/GameConsole/Input.js';
 import SaveInjectContainerDecorator from '../../../core/source/SaveInjectContainerDecorator.js';
 import Security from '../../source/Security.js';
 import fs from 'fs';
-import AppError from '../../../core/source/AppError.js';
+import AppError from '../../../core/source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import Serializer from '../../../core/source/Serializer.js';
 import GameObjectStorage from '../../../core/source/GameObjectStorage.js';

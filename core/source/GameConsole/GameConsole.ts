@@ -1,5 +1,5 @@
 import Command from './Command.js';
-import AppError from '../AppError.js';
+import AppError from '../Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import chalk from 'chalk';
 import debug from 'debug';

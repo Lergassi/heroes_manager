@@ -1,9 +1,11 @@
 import React from 'react';
-import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
+import MainHeroListComponent, {
+    MainHeroListComponentEventCode
+} from '../../../core/app/Components/MainHeroListComponent.js';
 import EquipSlotComponentControllerComponent from '../../../core/app/Components/EquipSlotComponentControllerComponent.js';
-import EquipSlotComponent from '../../../core/app/Components/EquipSlotComponent.js';
+import EquipSlotComponent, {EquipSlotComponentEventCode} from '../../../core/app/Components/EquipSlotComponent.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
-import LevelComponent from '../../../core/app/Components/LevelComponent.js';
+import LevelRange from '../../../core/app/Components/ExperienceComponent.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import {
     ItemStorageCollectionRComponentProps,
@@ -18,8 +20,12 @@ import AttackPowerComponent from '../../../core/app/Components/AttackPowerCompon
 import GameObject from '../../../core/source/GameObject.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import AppError from '../../../core/source/AppError.js';
+import AppError from '../../../core/source/Errors/AppError.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
+import MainHeroTableRowRComponent from './MainHeroTableRowRComponent.js';
+import ExperienceComponent from '../../../core/app/Components/ExperienceComponent.js';
+import EventSystem from '../../../core/source/EventSystem.js';
+import {ContainerKey} from '../../../core/app/consts.js';
 
 interface HeroListRComponentProps {
     container: ContainerInterface;
@@ -45,16 +51,39 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
         };
 
         //todo: Шаблонный метод?
-        this.state.heroListComponent.assignRComponent(this);
-        for (let i = 0; i < props.heroListComponent.heroes.length; i++) {
-            props.heroListComponent.heroes[i].assignRComponent(this);
-        }
+        // this.state.heroListComponent.assignRComponent(this);
+        // for (let i = 0; i < props.heroListComponent.heroes.length; i++) {
+        //     props.heroListComponent.heroes[i].assignRComponent(this);
+        // }
+        EventSystem.addListener({
+            codes: [
+                MainHeroListComponentEventCode.CreateHero,
+                MainHeroListComponentEventCode.DeleteHero,
+            ],
+            listener: {
+                callback: (target) => {
+                    this.setState((state) => {
+                        return {
+                            heroListComponent: state.heroListComponent,
+                        };
+                    });
+                },
+            // target:
+            },
+        });
+        // EventSystem.addListener([
+        //     MainHeroListComponentEventCode.CreateHero,
+        //     MainHeroListComponentEventCode.DeleteHero,
+        // ], (target) => {
+        //     this.setState((state) => {
+        //         return {
+        //             heroListComponent: state.heroListComponent,
+        //         };
+        //     });
+        // });
 
+        this.selectHero = this.selectHero.bind(this);
         this.deleteHero = this.deleteHero.bind(this);
-    }
-
-    async deleteHero(hero: GameObject) {
-        await this._container.get<GameConsole>('gameConsole').run('delete_hero', [hero['_id'].toString()]);
     }
 
     update(): void {
@@ -64,45 +93,28 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
     }
 
     selectHero(hero: GameObject) {
+        console.log('selectHero', hero);
         this.setState((state) => ({
             selectedHero: hero,
         }));
         window['sandbox']['showHero']();    //todo: Пока так. От чего будет зависеть окно отображение героя пока не ясно.
     }
 
+    async deleteHero(hero: GameObject) {
+        console.log('deleteHero', hero);
+        await this._container.get<GameConsole>('gameConsole').run('delete_hero', [hero['_id'].toString()]);
+    }
+
     render() {
-        let heroList = this.state.heroListComponent.heroes.map((hero) => {
+        let heroList = this.state.heroListComponent.heroes.map((hero, index) => {
             return (
-                <tr
+                <MainHeroTableRowRComponent
                     key={hero['_id']}
-                >
-                    <td>{hero['_id']}</td>
-                    <td>{hero.get<HeroComponent>('heroComponent').heroClass.name}</td>
-                    <td>{hero.get<LevelComponent>('levelComponent').level} ({hero.get<LevelComponent>('levelComponent').exp})</td>
-                    <td>{hero.get<HealthPointsComponent>('healthPointsComponent').currentHealthPoints}/{hero.get<HealthPointsComponent>('healthPointsComponent').maxHealthPoints}</td>
-                    <td>{hero.get<MagicPointsComponent>('magicPointsComponent').currentMagicPoints}/{hero.get<MagicPointsComponent>('magicPointsComponent').maxMagicPoints}</td>
-                    <td>{hero.get<AttackPowerComponent>('attackPowerComponent').baseMinAttackPower}-{hero.get<AttackPowerComponent>('attackPowerComponent').baseMaxAttackPower}</td>
-                    <td>
-                        <CharacterAttributeValueRComponent
-                            characterAttributeComponent={hero.get<CharacterAttributeComponent>('strength')}
-                        />
-                        /
-                        <CharacterAttributeValueRComponent
-                            characterAttributeComponent={hero.get<CharacterAttributeComponent>('agility')}
-                        />
-                        /
-                        <CharacterAttributeValueRComponent
-                            characterAttributeComponent={hero.get<CharacterAttributeComponent>('intelligence')}
-                        />
-                    </td>
-                    <td>
-                        {hero.get<HeroComponent>('heroComponent').state}
-                    </td>
-                    <td>
-                        <button onClick={this.selectHero.bind(this, hero)}>showHero</button>
-                        <button onClick={this.deleteHero.bind(this, hero)}>Удалить</button>
-                    </td>
-                </tr>
+                    container={this._container}
+                    hero={hero}
+                    selectHero={this.selectHero}
+                    deleteHero={this.deleteHero}
+                />
             );
         });
 
@@ -123,7 +135,7 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
                     {heroList}
                     </tbody>
                 </table>
-                <HeroRComponent
+                <HeroDetailRComponent
                     container={this._container}
                     hero={this.state.selectedHero}
                 />
@@ -132,24 +144,20 @@ export class HeroListRComponent extends React.Component<HeroListRComponentProps,
     }
 }
 
-export interface HeroRComponentProps {
+export interface HeroDetailRComponentProps {
     container: ContainerInterface,
-    // updateHandler: () => void,
-    // hero: GameObject,
     hero?: GameObject,
 }
 
-export interface HeroRComponentState {
+export interface HeroDetailRComponentState {
     hero?: GameObject,
     visible: boolean,
 }
 
-// export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRComponentState> implements RComponentUpdateInterface {
-// export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRComponentState> implements RComponentUpdateInterface {
-export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRComponentState> {
+export class HeroDetailRComponent extends React.Component<HeroDetailRComponentProps, HeroDetailRComponentState> {
     private readonly _container: ContainerInterface;
 
-    constructor(props: HeroRComponentProps) {
+    constructor(props: HeroDetailRComponentProps) {
         super(props);
 
         this._container = props.container;
@@ -226,12 +234,8 @@ export class HeroRComponent extends React.Component<HeroRComponentProps, HeroRCo
                             <td>{hero['_id']}</td>
                         </tr>
                         <tr>
-                            <td>Уровень</td>
-                            <td>{hero.get<LevelComponent>('levelComponent').level}</td>
-                        </tr>
-                        <tr>
-                            <td>Опыт</td>
-                            <td>{hero.get<LevelComponent>('levelComponent').exp}</td>
+                            <td>Уровень (опыт)</td>
+                            <td>{hero.get<ExperienceComponent>(ExperienceComponent.name).level} ({hero.get<ExperienceComponent>(ExperienceComponent.name).exp})</td>
                         </tr>
                         <tr>
                             <td>Класс</td>
@@ -323,6 +327,23 @@ export class EquipSlotRComponent extends React.Component<EquipSlotRComponentProp
         };
 
         this.state.equipSlotComponent.assignRComponent(this);
+        // EventSystem.addListener({
+        //     codes: [
+        //         EquipSlotComponentEventCode.PlaceItemStack,
+        //         EquipSlotComponentEventCode.Clear,
+        //     ],
+        //     listener: {
+        //         callback: (target) => {
+        //             console.log(4242424);
+        //             this.setState((state) => {
+        //                 return {
+        //                     equipSlotComponent: state.target,
+        //                 };
+        //             });
+        //         },
+        //         target: this.state.equipSlotComponent,
+        //     },
+        // });
 
         this.clearHandler = this.clearHandler.bind(this);
     }
@@ -375,7 +396,7 @@ export class CharacterAttributeValueRComponent extends React.Component<Character
 
         return (
             <span>
-                {characterAttributeComponent.finalValue}
+                {characterAttributeComponent.getFinalValue()}
             </span>
         );
     }

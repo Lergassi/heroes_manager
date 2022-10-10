@@ -1,6 +1,6 @@
 import Command from '../../../../core/source/GameConsole/Command.js';
 import Input from '../../../../core/source/GameConsole/Input.js';
-import AppError from '../../../../core/source/AppError.js';
+import AppError from '../../../../core/source/Errors/AppError.js';
 
 export default class TestThrowCommand extends Command {
     get name(): string {

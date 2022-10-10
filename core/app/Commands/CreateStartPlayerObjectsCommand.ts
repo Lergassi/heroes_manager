@@ -18,7 +18,7 @@ import EntityManagerFacade from '../../source/Facades/EntityManagerFacade.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import LocationFactory from '../Factories/LocationFactory.js';
-import {LevelRange} from '../Components/LevelComponent.js';
+import ExperienceComponent from '../Components/ExperienceComponent.js';
 import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 

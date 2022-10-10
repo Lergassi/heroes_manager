@@ -1,8 +1,8 @@
 import {sprintf} from 'sprintf-js';
-import Item from '../app/Entities/Item.js';
-import EquipSlot from '../app/Entities/EquipSlot.js';
-import HeroClass from '../app/Entities/HeroClass.js';
-import ArmorMaterial from '../app/Entities/ArmorMaterial.js';
+import Item from '../../app/Entities/Item.js';
+import EquipSlot from '../../app/Entities/EquipSlot.js';
+import HeroClass from '../../app/Entities/HeroClass.js';
+import ArmorMaterial from '../../app/Entities/ArmorMaterial.js';
 
 export default class AppError extends Error {
     //Сделано для работы ctrl+B.

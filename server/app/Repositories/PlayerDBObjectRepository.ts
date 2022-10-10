@@ -1,6 +1,6 @@
 import Repository from '../../../core/source/Repository.js';
 import {Pool} from 'mysql';
-import AppError from '../../../core/source/AppError.js';
+import AppError from '../../../core/source/Errors/AppError.js';
 import UserDBObject from '../DBObjects/UserDBObject.js';
 import * as dateFns from 'date-fns';
 import {DateFormat} from '../../../core/source/DateFormat.js';

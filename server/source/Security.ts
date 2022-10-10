@@ -1,4 +1,4 @@
-import AppError from '../../core/source/AppError.js';
+import AppError from '../../core/source/Errors/AppError.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import UserDBObject from '../app/DBObjects/UserDBObject.js';
 import PlayerDBObject from '../app/DBObjects/PlayerDBObject.js';

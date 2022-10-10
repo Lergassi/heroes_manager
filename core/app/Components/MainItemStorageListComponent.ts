@@ -1,6 +1,6 @@
 import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import RComponentBridge, {RComponentUpdateInterface} from '../../../client/source/RComponentBridge.js';

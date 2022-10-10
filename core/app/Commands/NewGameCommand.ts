@@ -18,10 +18,10 @@ import PlayerContainerConfigure from '../PlayerContainerConfigure.js';
 import GameConsole from '../../source/GameConsole/GameConsole.js';
 import ReactDOM from 'react-dom/client';
 import ClientRender from '../../../client/public/React/ClientRender.js';
-import AppError from '../../source/AppError.js';
+import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import LocationFactory from '../Factories/LocationFactory.js';
-import {LevelRange} from '../Components/LevelComponent.js';
+import ExperienceComponent from '../Components/ExperienceComponent.js';
 import {ContainerKey} from '../consts.js';
 
 export default class NewGameCommand extends Command {
@@ -51,11 +51,6 @@ export default class NewGameCommand extends Command {
         if (scenario) {
             await this.container.get<GameConsole>('gameConsole').getCommand(this._scenarios[scenario]).run();
         }
-
-        // window['gameLocation'] = this.container.get<LocationFactory>(ContainerKey.LocationFactory).create({
-        //     level: new LevelRange(1, 5),
-        // });
-        // console.log('gameLocation', window['gameLocation']);
 
         this.container.get<ClientRender>('client.clientRender').buildGameUI();
     }

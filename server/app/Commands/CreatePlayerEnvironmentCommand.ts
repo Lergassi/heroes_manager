@@ -27,7 +27,11 @@ import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorage
 import IDGeneratorInterface from '../../../core/source/IDGeneratorInterface.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
 import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
+import {CurrencyAlias} from '../../../core/app/types.js';
 
+/**
+ * TODO: НЕ АКТУАЛЬНО ПОКА НЕТ СЕРВЕРА!!!
+ */
 export default class CreatePlayerEnvironmentCommand extends Command {
     get name(): string {
         return 'create_player_env';
@@ -104,15 +108,15 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         let config = this.container.get<object>('core.config');
 
         let currencies = [
-            'gold_currency',
-            'research_points',
+            CurrencyAlias.Gold,
+            CurrencyAlias.ResearchPoints,
         ];
 
         currencies.forEach((currencyAlias) => {
-            this.container.get<GameObjectStorage>('player.gameObjectStorage').add(this.container.get<WalletFactory>('player.walletFactory').create(
-                this.container.get<EntityManager>('core.entityManager').getRepository<Currency>(Currency.name).getOneByAlias(currencyAlias),
-                config['start_wallet_values'][currencyAlias]['value'],
-            ));
+            this.container.get<GameObjectStorage>('player.gameObjectStorage').add(this.container.get<WalletFactory>('player.walletFactory').create({
+                currency: this.container.get<EntityManager>('core.entityManager').getRepository<Currency>(Currency.name).getOneByAlias(currencyAlias),
+                value: config['start_wallet_values'][currencyAlias]['value'],
+            }));
         });
     }
 

@@ -1,4 +1,4 @@
-import AppError from '../core/source/AppError.js';
+import AppError from '../core/source/Errors/AppError.js';
 import TestThrowCommand from '../server/app/Commands/TestCommands/TestThrowCommand.js';
 import Container from '../core/source/Container.js';
 

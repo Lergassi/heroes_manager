@@ -14,7 +14,7 @@ import WalletComponent from '../app/Components/WalletComponent.js';
 import ItemStorageComponent from '../app/Components/ItemStorageComponent.js';
 import GameObjectStorage from '../source/GameObjectStorage.js';
 import ContainerInterface from '../source/ContainerInterface.js';
-import LevelComponent from '../app/Components/LevelComponent.js';
+import LevelRange from '../app/Components/ExperienceComponent.js';
 import EntityManager from '../source/EntityManager.js';
 import ItemStorageManager from '../app/Services/ItemStorageManager.js';
 import Item from '../app/Entities/Item.js';
@@ -109,9 +109,9 @@ export function debugGameObject(gameObject: GameObject) {
     });
 }
 
-export function debugLevelComponent(levelComponent: LevelComponent) {
+export function debugLevelComponent(levelComponent: LevelRange) {
     debug('debug')('%j', {
-        component: LevelComponent.name,
+        component: LevelRange.name,
         _id: levelComponent['_id'],
         _level: levelComponent['_level'],
         _maxLevel: levelComponent['_maxLevel'],
@@ -129,7 +129,7 @@ export function debugHero(hero: GameObject) {
         _heroClass: heroComponent['_heroClass']['_name'],
     });
 
-    debugLevelComponent(hero.getComponentByName<LevelComponent>(LevelComponent.name));
+    debugLevelComponent(hero.getComponentByName<LevelRange>(LevelRange.name));
 
     let healthPointsComponent: HealthPointsComponent = <HealthPointsComponent>hero.getComponentByName(HealthPointsComponent.name);
     debug('debug')('%j', {
@@ -364,7 +364,7 @@ export function debugPlayerGameObject(container: ContainerInterface) {
     let playerGameObject = container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag('#player');
     debug('debug')('# player');
     debugGameObject(playerGameObject);
-    debugLevelComponent(playerGameObject.getComponentByName(LevelComponent.name));
+    debugLevelComponent(playerGameObject.getComponentByName(LevelRange.name));
 }
 
 export function debugGameObjectStorage(gameObjectStorage: GameObjectStorage) {
