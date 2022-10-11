@@ -1,7 +1,5 @@
 import Component from '../../source/Component.js';
-import GameObject from '../../source/GameObject.js';
 import EquipSlot from '../Entities/EquipSlot.js';
-import ItemStackSlot from '../RuntimeObjects/ItemStackSlot.js';
 import ItemStack, {ItemStackPlaceInterface} from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';
 import AppError from '../../source/Errors/AppError.js';
@@ -61,12 +59,12 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
 
     clear(): void { //todo: Переименовать в destroy.
         if (this.isBusy()) {
-            this._increaseItemCollectorComponent.remoteItem(this._itemStack.item);
+            this._increaseItemCollectorComponent.removeItem(this._itemStack.item);
             this._itemStack = null;
+            EventSystem.event(EquipSlotComponentEventCode.Clear, this);
         }
 
-        this.update();
-        EventSystem.event(EquipSlotComponentEventCode.Clear, this);
+        // this.update();
     }
 
     isBusy(): boolean {

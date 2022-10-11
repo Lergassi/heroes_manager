@@ -1,7 +1,5 @@
 import Command from '../../../../core/source/GameConsole/Command.js';
 import Input from '../../../../core/source/GameConsole/Input.js';
-import Security from '../../../source/Security.js';
-import debug from 'debug';
 
 export default class DebugUserEnvironmentCommand extends Command {
     get name(): string {

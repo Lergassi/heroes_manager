@@ -7,20 +7,16 @@ import HeroClass from '../core/app/Entities/HeroClass.js';
 import EquipSlot from '../core/app/Entities/EquipSlot.js';
 import EquipSlotComponent from '../core/app/Components/EquipSlotComponent.js';
 import _ from 'lodash';
-import sum from '../test_objects/sum.js';
 import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
-import AppError from '../core/source/Errors/AppError.js';
-import TestObjectLink from '../test/Serialize/SupportObjects/TestObjectLink.js';
-import TestObjectWithLink from '../test/Serialize/TestObjectWithLink.js';
 import {sprintf} from 'sprintf-js';
-import ItemStack from '../core/app/RuntimeObjects/ItemStack.js';
 import HeroComponent from '../core/app/Components/HeroComponent.js';
+import {HeroClassID} from '../core/app/types.js';
 
 let container = new Container();
 (new DefaultContainerConfigure()).configure(container);
 (new CoreContainerConfigure()).configure(container);
 
-let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('warrior');
+let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
 let equipSlot = container.get<EntityManager>('core.entityManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias('head');
 let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_helmet_01');
 

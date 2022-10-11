@@ -1,13 +1,11 @@
-import Component from './Component.js';
 import _ from 'lodash';
 import AppError from './Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
-import ComponentInterface from './ComponentInterface.js';
 import RComponentBridge, {
     AssignRComponentInterface,
     RComponentUpdateInterface
 } from '../../client/source/RComponentBridge.js';
-import ItemStack from '../app/RuntimeObjects/ItemStack.js';
+import {assert} from './assert.js';
 
 export default class GameObject implements AssignRComponentInterface {
     // private readonly _id: number = this['_generateID'];
@@ -15,14 +13,17 @@ export default class GameObject implements AssignRComponentInterface {
     // private readonly _id: number;
     private _name: string;
     private readonly _tags: string[];
-    private readonly _components: ComponentInterface[]; //todo: У компонентов не будет интерфейсов.
+    private readonly _components;
     // private readonly _components: [];
     // private readonly _components: any[];
-    // private readonly _componentNames: {[name: string]: ComponentInterface};
     private readonly _componentNames: {[name: string]: Object};
     // private _rComponentBridge: RComponentBridge;
     private _rComponentBridges: RComponentBridge[];
     private _assignedRComponents: RComponentUpdateInterface[];
+
+    get ID(): number {
+        return this._id;
+    }
 
     get name(): string {
         return this._name;
@@ -32,6 +33,9 @@ export default class GameObject implements AssignRComponentInterface {
         this._name = value;
     }
 
+    /**
+     * @deprecated
+     */
     get tags(): string[] {
         return this._tags;
     }
@@ -122,7 +126,7 @@ export default class GameObject implements AssignRComponentInterface {
     }
 
     /**
-     * @deprecated
+     * @deprecated Поиска компонента на встроенному ID больше не доступен.
      * @param id
      */
     getComponentByID<T>(id: number): T {
@@ -194,24 +198,27 @@ export default class GameObject implements AssignRComponentInterface {
     }
 
     /**
-     * Также вызывается метод addComponent.
+     * Как контейнер. Также вызывается метод addComponent.
      * @dev
      */
-    set<Component>(name: string, component: Component): Component {
+    set<Component>(key: string, component: Component): Component {
+        assert(typeof key === 'string');
+        assert(key.length > 0);
+
         this.addComponent(component);
-        this._componentNames[name] = component;
+        this._componentNames[key] = component;
 
         return component;
     }
 
     /**
+     * Получить компонент по ключу как в контейнере.
      * @dev
      */
-    get<Component>(name: string): Component {
-        // if (!this._componentNames.hasOwnProperty(name)) {
-        //     throw new AppError(sprintf('Компонент "%s" не найден в GameObject.', name));
-        // }
+    get<Component>(key: string): Component {
+        assert(typeof key === 'string');
+        assert(key.length > 0);
 
-        return <Component>this._componentNames[name];
+        return <Component>this._componentNames[key];
     }
 }

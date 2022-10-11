@@ -2,7 +2,6 @@ import Controller from '../../../source/Controller.js';
 import _ from 'lodash';
 import debug from 'debug';
 import GameConsole from '../../../../core/source/GameConsole/GameConsole.js';
-import chalk from 'chalk';
 
 export default class GameConsoleSiteController extends Controller {
     async execute(req, res) {

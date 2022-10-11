@@ -3,9 +3,6 @@
  */
 import GameObject from '../../source/GameObject.js';
 import PlayerComponent from '../Components/PlayerComponent.js';
-import LevelRange from '../Components/ExperienceComponent.js';
-import UUIDGenerator from '../../source/UUIDGenerator.js';
-import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ExperienceComponent from '../Components/ExperienceComponent.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import {unsigned} from '../types.js';

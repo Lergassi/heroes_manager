@@ -1,5 +1,4 @@
 import Component from '../../source/Component.js';
-import GameObject from '../../source/GameObject.js';
 
 export default class MagicPointsComponent extends Component {
     private _currentMagicPoints: number;

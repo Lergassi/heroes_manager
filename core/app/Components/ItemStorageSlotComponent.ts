@@ -1,12 +1,12 @@
 import Component from '../../source/Component.js';
-import ItemStackSlot from '../RuntimeObjects/ItemStackSlot.js';
 import ItemStack, {ItemStackPlaceInterface} from '../RuntimeObjects/ItemStack.js';
 import GameObject from '../../source/GameObject.js';
 import Item from '../Entities/Item.js';
 import _ from 'lodash';
 import AppError from '../../source/Errors/AppError.js';
-import RComponentBridge, {AssignRComponentInterface} from '../../../client/source/RComponentBridge.js';
-import ItemStorageComponent from './ItemStorageComponent.js';
+import {AssignRComponentInterface} from '../../../client/source/RComponentBridge.js';
+import {unsigned} from '../types.js';
+import ItemStackFactory from '../Factories/ItemStackFactory.js';
 
 export default class ItemStorageSlotComponent extends Component implements ItemStackPlaceInterface, AssignRComponentInterface {
     private _itemStack: ItemStack;
@@ -15,8 +15,8 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
         return this._itemStack;
     }
 
-    constructor(id?: number, gameObject?: GameObject) {
-        super(id, gameObject);
+    constructor() {
+        super();
         this._itemStack = null;
     }
 
@@ -28,12 +28,28 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
         return true;
     }
 
+    /**
+     * Создает ItemStack. Если count > stackSize генерируется исключение. Для добавления и объединения предметов использовать другие методы.
+     * @param options
+     */
+    createItemStack(options: {
+        item: Item,
+        count: unsigned,
+        itemStackFactory: ItemStackFactory,
+    }) {
+        this.canPlaceItem(options.item);
+
+        this._itemStack = options.itemStackFactory.create(options.item, options.count);
+
+        this.update();
+    }
+
     placeItemStack(itemStack: ItemStack): void {
         this.canPlaceItem(itemStack.item);
-        this._itemStack = itemStack;
-        this.update();
 
-        // this.gameObject.update();
+        this._itemStack = itemStack;
+
+        this.update();
     }
 
     isBusy(): boolean {
@@ -44,20 +60,12 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
         return !this.isBusy();
     }
 
-    clear(): void {
+    destroyItemStack(): void {
         this._itemStack = null;
 
-        // this.gameObject.update();
         this.update();
     }
 
-    // assignRComponent(rComponent): void {
-    //     this._rComponentBridge.rComponent = rComponent;
-    // }
-    //
-    // update() {
-    //     this._rComponentBridge.update(this);
-    // }
     containsItem(item: Item): boolean {
         return this._itemStack && this._itemStack.containsItem(item);
     }

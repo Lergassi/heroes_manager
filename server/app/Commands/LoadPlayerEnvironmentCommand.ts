@@ -1,6 +1,5 @@
 import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
-import SaveInjectContainerDecorator from '../../../core/source/SaveInjectContainerDecorator.js';
 import Security from '../../source/Security.js';
 import fs from 'fs';
 import AppError from '../../../core/source/Errors/AppError.js';
@@ -14,7 +13,7 @@ import _ from 'lodash';
 import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure.js';
 import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
-import UUIDGenerator from '../../../core/source/UUIDGenerator.js';
+import {ContainerKey} from '../../../core/app/consts.js';
 
 export default class LoadPlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -57,7 +56,7 @@ export default class LoadPlayerEnvironmentCommand extends Command {
         //todo: Пока сохранений данных нет - будет создаваться стартовый контейнер.
         (new PlayerContainerConfigure()).configure(this.container);
 
-        let gameObjectStorage = this.container.get<GameObjectStorage>('player.gameObjectStorage');
+        let gameObjectStorage = this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage);
         for (let i = 0; i < objectData['data']['gameObjects'].length; i++) {
             gameObjectStorage.add(serializer.unserialize(objectData['data']['gameObjects'][i]));
         }

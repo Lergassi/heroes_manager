@@ -5,10 +5,11 @@ import GameObject from '../../source/GameObject.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
+import {ContainerKey} from '../consts.js';
 
 export default class RemoveEquipCommand extends Command {
     get name(): string {
-        return 'remove_equip_to_item_storage';
+        return 'hero.remove_equip_to_item_storage';  //todo: Добавить команду destroyItem без перемещения в сумку.
     }
 
     configure() {
@@ -23,19 +24,19 @@ export default class RemoveEquipCommand extends Command {
     }
 
     async execute(input: Input) {
-        let heroID = parseInt(input.getArgument('hero_id'));
-        let equipSlotComponentID = parseInt(input.getArgument('component_id'));
+        let heroID = parseInt(input.getArgument('hero_id'), 10);
+        let equipSlotComponentID = parseInt(input.getArgument('component_id'), 10);
 
-        let itemStorageID = parseInt(input.getArgument('item_storage_id'));
-        let itemStorageSlotComponentID = parseInt(input.getArgument('item_storage_slot_component_id'));
+        let itemStorageID = parseInt(input.getArgument('item_storage_id'), 10);
+        let itemStorageSlotComponentID = parseInt(input.getArgument('item_storage_slot_component_id'), 10);
 
-        let hero = <GameObject>this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(heroID);
+        let hero = <GameObject>this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(heroID);
         let equipSlotComponent = <EquipSlotComponent>hero.getComponentByID(equipSlotComponentID);
         if (equipSlotComponent.isFree()) {
             throw new AppError('EquipSlotComponent пустой.');
         }
 
-        let itemStorage = <GameObject>this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(itemStorageID);
+        let itemStorage = <GameObject>this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(itemStorageID);
         let itemStorageSlotComponent = <ItemStorageSlotComponent>itemStorage.getComponentByID(itemStorageSlotComponentID);
 
         itemStorageSlotComponent.placeItemStack(equipSlotComponent.itemStack);

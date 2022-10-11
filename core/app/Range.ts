@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import AppError from '../source/Errors/AppError.js';
 
 export default class Range {

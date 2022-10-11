@@ -1,7 +1,7 @@
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
-import LevelRange from '../Components/ExperienceComponent.js';
+import ExperienceComponent from '../Components/ExperienceComponent.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import EntityManager from '../../source/EntityManager.js';
 import EquipSlot from '../Entities/EquipSlot.js';
@@ -18,7 +18,6 @@ import GameObjectFactory from './GameObjectFactory.js';
 import {CharacterAttributeID, unsigned} from '../types.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import ItemAttributeCollectorComponent from '../Components/ItemAttributeCollectorComponent.js';
-import ExperienceComponent from '../Components/ExperienceComponent.js';
 
 // export type HeroFactoryOptions = {
 //     idGenerator: IDGeneratorInterface;
@@ -62,7 +61,6 @@ export default class HeroFactory {
         this._config = options.config;
     }
 
-    // create(heroClass: HeroClass, level: number = 1): GameObject {
     create(options: {
         heroClass: HeroClass;
         level: unsigned;
@@ -143,12 +141,12 @@ export default class HeroFactory {
         }));
         hero.set(CharacterAttributeID.Agility, new CharacterAttributeComponent({
             characterAttributeID: CharacterAttributeID.Agility,
-            baseValue: 10,
+            baseValue: 11,
             increaseItemCollector: increaseItemCollectorComponent,
         }));
         hero.set(CharacterAttributeID.Intelligence, new CharacterAttributeComponent({
             characterAttributeID: CharacterAttributeID.Intelligence,
-            baseValue: 10,
+            baseValue: 12,
             increaseItemCollector: increaseItemCollectorComponent,
         }));
 

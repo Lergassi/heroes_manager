@@ -2,6 +2,7 @@ import AppError from './Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import ContainerInterface from './ContainerInterface.js';
 import _ from 'lodash';
+import {assert} from './assert.js';
 
 //todo: Заменить any на Template.
 export default class Container implements ContainerInterface {
@@ -12,9 +13,10 @@ export default class Container implements ContainerInterface {
     }
 
     //Объявления функций нужны, чтобы работали подсказки в ide где 1 из аргументов указан как any.
-    set<T>(key: string, value: (container: ContainerInterface) => T): void;
-    set<T>(key: string, value: T): void;
-    set<T>(key: string, value: T | ((container: ContainerInterface) => T)): void {
+    // set<T>(key: string, value: (container: ContainerInterface) => T): void;
+    // set<T>(key: string, value: T): void;
+    // set<T>(key: string, value: T | ((container: ContainerInterface) => T)): void {
+    set<T>(key: string, value: T | ((container: ContainerInterface) => T)): T {
         if (value instanceof Function) {
             this._services[key] = value(this);
         } else {
@@ -23,15 +25,17 @@ export default class Container implements ContainerInterface {
 
         // this._services[key] = value(this);
 
-        // return this._services[key];
+        return this._services[key];
     }
 
+    /**
+     * @throws
+     * @param key
+     */
     get<T>(key: string): T {
-        if (!key) {
-            throw new AppError('key не может быть пустым.');
-        }
+        assert(typeof key === 'string');
+        assert(key.length > 0);
 
-        //todo: Убрать.
         if (!this.has(key)) {
             throw new AppError(sprintf('Сервис с ключом %s не найден в контейнере.', key));
         }

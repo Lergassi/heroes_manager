@@ -1,6 +1,4 @@
-import {ItemCount, ItemCountRange, Loot, unsigned} from '../types.js';
-import Item from '../Entities/Item.js';
-import LevelRange from '../LevelRange.js';
+import {Loot} from '../types.js';
 import Component from '../../source/Component.js';
 
 export default class ItemLootGeneratorComponent extends Component {

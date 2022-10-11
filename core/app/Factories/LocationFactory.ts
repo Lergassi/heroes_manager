@@ -1,28 +1,20 @@
 import HeroGroupComponent from '../Components/HeroGroupComponent.js';
-import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import LocationComponent, {
     GatheringItemPoint,
     GatheringItemPointType,
     GatheringItemPointTypeValues
 } from '../Components/LocationComponent.js';
 import EntityManager from '../../source/EntityManager.js';
-import Item from '../Entities/Item.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import GameObject from '../../source/GameObject.js';
-import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
-import ExperienceComponent from '../Components/ExperienceComponent.js';
 import ItemDatabase from '../ItemDatabase.js';
 import Random from '../Services/Random.js';
 import ItemCategory from '../Entities/ItemCategory.js';
-import _ from 'lodash';
-import {CurrencyAlias, CurrencyWalletAlias, ItemCategoryAlias, Seconds, unsigned} from '../types.js';
+import {CurrencyAlias, CurrencyWalletAlias, ItemCategoryAlias, unsigned} from '../types.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
 import AppError from '../../source/Errors/AppError.js';
-import {debugItemList} from '../../debug/debug_functions.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
-import EventSystem from '../../source/EventSystem.js';
-import LevelRange from '../LevelRange.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import Currency from '../Entities/Currency.js';
 

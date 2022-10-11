@@ -4,7 +4,7 @@ export default {
     // date_format_ru: 'hh:mm:ss dd.MM.yyyy',
     max_player_level: 100,
     start_hero_values: {
-        warrior: {
+        Warrior: {
             max_level: 100,
             max_health_points: 120,
             max_magic_points: 100,
@@ -19,7 +19,7 @@ export default {
                 luck: 0
             }
         },
-        rogue: {
+        Rogue: {
             max_level: 100,
             max_health_points: 100,
             max_magic_points: 100,
@@ -34,7 +34,7 @@ export default {
                 luck: 0
             }
         },
-        mage: {
+        Mage: {
             max_level: 100,
             max_health_points: 70,
             max_magic_points: 100,
@@ -50,7 +50,7 @@ export default {
                 luck: 0
             }
         },
-        gunslinger: {
+        Gunslinger: {
             max_level: 100,
             max_health_points: 80,
             max_magic_points: 100,

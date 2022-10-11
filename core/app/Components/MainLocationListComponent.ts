@@ -6,9 +6,8 @@ import EventSystem from '../../source/EventSystem.js';
 import AppError from '../../source/Errors/AppError.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import _ from 'lodash';
-import LocationComponent, {GatheringItemPoint} from './LocationComponent.js';
-import ItemStorageComponent from './ItemStorageComponent.js';
-import HeroGroupComponent from './HeroGroupComponent.js';
+import LocationComponent from './LocationComponent.js';
+import {assert} from '../../source/assert.js';
 
 export enum MainLocationListComponentEventCode {
     CreateLocation = 'MainLocationListComponent.CreateLocation',
@@ -42,6 +41,9 @@ export default class MainLocationListComponent extends Component {
     }
 
     delete(location: GameObject, gameObjectStorage: GameObjectStorage): void {
+        assert(location instanceof GameObject);
+        assert(gameObjectStorage instanceof GameObjectStorage);
+
         this.canDeleteLocation(location);
 
         if (_.includes(this._locations, location)) {

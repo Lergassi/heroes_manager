@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import AppError from '../../source/Errors/AppError.js';
-import {sprintf} from 'sprintf-js';
 
 export type RandomSomeOptions = {
     unique: boolean;

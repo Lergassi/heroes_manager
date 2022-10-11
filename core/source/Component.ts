@@ -1,16 +1,11 @@
 import GameObject from './GameObject.js';
-import RComponentBridge, {
-    AssignRComponentInterface,
-    RComponentUpdateInterface
-} from '../../client/source/RComponentBridge.js';
-import _ from 'lodash';
+import {AssignRComponentInterface, RComponentUpdateInterface} from '../../client/source/RComponentBridge.js';
 
-// export default class Component {
-export default class Component implements AssignRComponentInterface {
+export default class Component implements AssignRComponentInterface/* todo: Удалить интерфейс. Теперь работает на событиях. */ {
     /**
      * @deprecated
      */
-    private readonly _id: number = this['_generateID'];
+    private readonly _id: number = this['_generateID']; //todo: У компонентов ну будет ID.
 
     /**
      * @deprecated

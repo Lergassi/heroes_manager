@@ -1,9 +1,5 @@
 import Component from '../../source/Component.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
-import GameObject from '../../source/GameObject.js';
-import EquipSlotComponent from './EquipSlotComponent.js';
-import _ from 'lodash';
-import {CharacterAttributeID, unsigned} from '../types.js';
+import {CharacterAttributeID} from '../types.js';
 import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
 
 export default class CharacterAttributeComponent extends Component {

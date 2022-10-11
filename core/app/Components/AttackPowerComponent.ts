@@ -1,6 +1,5 @@
 import Component from '../../source/Component.js';
 import CharacterAttributeComponent from './CharacterAttributeComponent.js';
-import GameObject from '../../source/GameObject.js';
 import CharacterAttribute from '../Entities/CharacterAttribute.js';
 import {unsigned} from '../types.js';
 

@@ -1,7 +1,4 @@
-import GameObject from '../../source/GameObject.js';
 import WalletComponent from '../Components/WalletComponent.js';
-import UUIDGenerator from '../../source/UUIDGenerator.js';
-import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import {CurrencyWalletAlias, unsigned} from '../types.js';
 import Currency from '../Entities/Currency.js';

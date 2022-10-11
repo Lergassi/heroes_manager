@@ -1,5 +1,3 @@
-import LocationComponent from '../app/Components/LocationComponent.js';
-
 export interface LocationProps {
     // location: LocationComponent;
     locationFactory;

@@ -17,13 +17,7 @@ import Container from '../core/source/Container.js';
 import EntityManager from '../core/source/EntityManager.js';
 import ContainerInterface from '../core/source/ContainerInterface.js';
 import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
-import {
-    debugContainer,
-    debugEntityManager,
-    debugHero,
-    debugItemStorage,
-    debugItemStorages
-} from '../core/debug/debug_functions.js';
+import {debugEntityManager, debugHero, debugItemStorage} from '../core/debug/debug_functions.js';
 import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
 import fs from 'fs';
 import PathResolver from '../server/source/PathResolver.js';
@@ -35,7 +29,6 @@ import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js
 import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
 import GameObject from '../core/source/GameObject.js';
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
-import UUIDGenerator from '../core/source/UUIDGenerator.js';
 import PlayerItemStorageFactory from '../core/app/Factories/PlayerItemStorageFactory.js';
 import MainItemStorageListComponent from '../core/app/Components/MainItemStorageListComponent.js';
 import TechItemStorageFactoryDecorator from '../core/app/Factories/TechItemStorageFactoryDecorator.js';
@@ -43,21 +36,13 @@ import GameObjectStorage from '../core/source/GameObjectStorage.js';
 import ItemStorageFactoryInterface from '../core/app/Factories/ItemStorageFactoryInterface.js';
 import GameObjectFactory from '../core/app/Factories/GameObjectFactory.js';
 import MainHeroListComponent from '../core/app/Components/MainHeroListComponent.js';
-import Item, {ItemProperties, ItemProperty} from '../core/app/Entities/Item.js';
 import EntityManagerFacade from '../core/source/Facades/EntityManagerFacade.js';
 import AppError from '../core/source/Errors/AppError.js';
-import IDGeneratorInterface from '../core/source/IDGeneratorInterface.js';
 import AutoIncrementIDGenerator from '../core/source/AutoIncrementIDGenerator.js';
-import ItemBuilder from '../core/app/Services/ItemBuilder.js';
-import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
 import {Simulate} from 'react-dom/test-utils';
-import contextMenu = Simulate.contextMenu;
-import LocationComponent, {AvailableGatherItem} from '../core/app/Components/LocationComponent.js';
-import ItemStorageManager from '../core/app/Services/ItemStorageManager.js';
 import Range from '../core/app/Range.js';
-import ItemCategory from '../core/app/Entities/ItemCategory.js';
 import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../core/app/consts.js';
-import EventSystem from '../core/source/EventSystem.js';
+import {HeroClassID} from '../core/app/types.js';
 
 function createEndPlayerContainer(): ContainerInterface {
     let container = new Container();
@@ -629,7 +614,7 @@ export function testSerializeItemStorage(container: ContainerInterface, serializ
 }
 
 export function testSerializeHero(container: ContainerInterface, serializer: Serializer, jsonSerializer: JsonSerializer) {
-    let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('warrior');
+    let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
     let hero = container.get<HeroFactory>('player.heroFactory').create({
         heroClass: heroClass,
         level: 1,
@@ -756,7 +741,7 @@ export function testItemStorageFactories() {
     let idGenerator = new AutoIncrementIDGenerator(1);
     let gameObjectStorage = new GameObjectStorage();
 
-    container.set('player.gameObjectStorage', gameObjectStorage);
+    container.set(ContainerKey.GameObjectStorage, gameObjectStorage);
     container.set('player.realtimeObjectIdGenerator', idGenerator);
 
     let basicItemStorageFactory = new ItemStorageFactory(
@@ -769,7 +754,7 @@ export function testItemStorageFactories() {
 
     let techItemStorageFactory = new TechItemStorageFactoryDecorator(
         basicItemStorageFactory,
-        container.get<GameObjectStorage>('player.gameObjectStorage'),
+        container.get<GameObjectStorage>(ContainerKey.GameObjectStorage),
     );
 
     let itemStorageCollectionGameObject = new GameObject(idGenerator.generateID());
@@ -781,7 +766,7 @@ export function testItemStorageFactories() {
             // techItemStorageFactory.create(),
         ],
     ));
-    container.get<GameObjectStorage>('player.gameObjectStorage').add(itemStorageCollectionGameObject);
+    container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(itemStorageCollectionGameObject);
 
     let playerItemStorageFactory = new PlayerItemStorageFactory(
         techItemStorageFactory,
@@ -915,11 +900,11 @@ export function testHeroController() {
     ));
 
     let warrior = container.get<HeroFactory>('player.heroFactory').create({
-        heroClass: container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('warrior'),
+        heroClass: container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
         level: 1,
     });
     let mage = container.get<HeroFactory>('player.heroFactory').create({
-        heroClass: container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('mage'),
+        heroClass: container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
         level: 1,
     });
     heroController.addHero(warrior);

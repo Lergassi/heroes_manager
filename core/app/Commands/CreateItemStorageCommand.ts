@@ -1,7 +1,5 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
-import GameObjectStorage from '../../source/GameObjectStorage.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import {unsigned} from '../types.js';
@@ -9,7 +7,7 @@ import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 
 export default class CreateItemStorageCommand extends Command {
     get name(): string {
-        return 'create_item_storage';
+        return 'item_storage.create';
     }
 
     configure() {

@@ -1,10 +1,8 @@
 import ContainerConfigureInterface from '../../core/source/ContainerConfigureInterface.js';
-import GameConsole from '../../core/source/GameConsole/GameConsole.js';
 import config from '../config/main.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
-import Kernel from '../../core/source/Kernel.js';
 
 export default class ClientContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {

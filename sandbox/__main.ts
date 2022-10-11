@@ -1,25 +1,4 @@
-import UUIDGenerator from '../core/source/UUIDGenerator.js';
-import {
-    testEntityManagerFacade, testEnumMerging,
-    testEquipSlotDecorators,
-    testHeroController,
-    testInherit,
-    testItemBuilder,
-    testItemStorageFactories,
-    testJSLinks,
-    testLevelRange,
-    testLodashFind,
-    testNumberKeysForObject,
-    testUUIDGenerator
-} from './include.js';
-import {
-    testConstructorOverload, testIDWrapper,
-    testItemProperty,
-    testLocation,
-    testLocationFactory,
-    testPrototypeInherit,
-    testSymbol
-} from './include2.js';
+import {testLocationFactory} from './include2.js';
 // import {format} from 'date-fns';
 
 //js, node

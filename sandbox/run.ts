@@ -2,7 +2,6 @@
 import yargs from 'yargs/yargs';
 import {hideBin} from 'yargs/helpers';
 import {SandboxController} from './SandboxController.js';
-import _ from 'lodash';
 import dotenv from 'dotenv';
 import debug from 'debug';
 

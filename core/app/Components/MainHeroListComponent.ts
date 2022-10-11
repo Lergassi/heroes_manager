@@ -1,12 +1,14 @@
 import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import _ from 'lodash';
-import HeroComponent, {HeroState} from './HeroComponent.js';
+import HeroComponent from './HeroComponent.js';
 import AppError from '../../source/Errors/AppError.js';
 import HeroFactory, {HeroFactoryCreateOptions} from '../Factories/HeroFactory.js';
 import {unsigned} from '../types.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import EventSystem from '../../source/EventSystem.js';
+import HeroClass from '../Entities/HeroClass.js';
+import {assert} from '../../source/assert.js';
 
 /**
  * @deprecated
@@ -70,24 +72,36 @@ export default class MainHeroListComponent extends Component {
         this.update();
     }
 
+    createHero(options: {
+        heroClass: HeroClass;
+        heroFactory: HeroFactory;
+        level: unsigned;
+    }): GameObject {
+        this.canCreateHero();
+
+        // let level = options.level ?? 1;
+
+        let hero = options.heroFactory.create({
+            heroClass: options.heroClass,
+            level: options.level,
+        });
+        this._heroes.push(hero);
+
+        EventSystem.event(MainHeroListComponentEventCode.CreateHero, this);
+
+        return hero;
+    }
+
     deleteHero(hero: GameObject, gameObjectStorage: GameObjectStorage): void {
+        assert(hero instanceof GameObject);
+        assert(gameObjectStorage instanceof GameObjectStorage);
+
         this.canDeleteHero(hero);
 
         _.pull(this._heroes, hero);
         gameObjectStorage.remove(hero);
 
         EventSystem.event(MainHeroListComponentEventCode.DeleteHero, this);
-    }
-
-    createHero(options: HeroFactoryCreateOptions, heroFactory: HeroFactory): GameObject {
-        this.canCreateHero();
-
-        let hero = heroFactory.create(options);
-        this._heroes.push(hero);
-
-        EventSystem.event(MainHeroListComponentEventCode.CreateHero, this);
-
-        return hero;
     }
 
     canCreateHero(): void {

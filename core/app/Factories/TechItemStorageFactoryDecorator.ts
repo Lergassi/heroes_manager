@@ -1,6 +1,5 @@
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import GameObject from '../../source/GameObject.js';
-import ContainerInterface from '../../source/ContainerInterface.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 
 /**

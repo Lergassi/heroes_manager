@@ -2,6 +2,8 @@ import AppError from '../Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import Input from './Input.js';
 import ContainerInterface from '../ContainerInterface.js';
+import {assert} from '../assert.js';
+import _ from 'lodash';
 
 export default abstract class Command {
     private readonly _description: string;
@@ -15,13 +17,15 @@ export default abstract class Command {
         return this._description;
     }
 
-    get container(): ContainerInterface {
+    protected get container(): ContainerInterface {
         return this._container;
     }
 
     constructor(container: ContainerInterface) {
-        this._description = '';
+        assert(!_.isNil(container));
+
         this._container = container;
+        this._description = '';
         this._commandArguments = [];
         this._requireArgumentsLength = 0;
         this.configure();

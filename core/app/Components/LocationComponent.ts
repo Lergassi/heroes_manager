@@ -5,18 +5,15 @@ import GameObject from '../../source/GameObject.js';
 import ItemStorageComponent from './ItemStorageComponent.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import _ from 'lodash';
-import {debugItemStorage, debugItemStorages} from '../../debug/debug_functions.js';
 import AppError from '../../source/Errors/AppError.js';
 import debug from 'debug';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
-import {Minutes, Seconds, unsigned} from '../types.js';
+import {Seconds, unsigned} from '../types.js';
 import {sprintf} from 'sprintf-js';
-import {PlacementControllerInterface, PlacementInterface} from './MainHeroListComponent.js';
 import EventSystem from '../../source/EventSystem.js';
-import LevelRange from '../LevelRange.js';
 import ExperienceComponent from './ExperienceComponent.js';
-import {assert} from '../../source/functions.js';
+import {assert} from '../../source/assert.js';
 
 export class AvailableGatherItem {
     private readonly _item: Item;
@@ -113,11 +110,12 @@ export type GatheringItemPoint = {
 // type LocationComponentRenderSignature
 
 export enum LocationComponentEventCode {
-    Start = 'location_component.start',
-    Stop = 'location_component.stop',
-    AddHero = 'location_component.add_hero',
-    RemoveHero = 'location_component.remove_hero',
-    ItemsGenerated = 'location_component.items_generated',
+    Start = 'LocationComponent.Start',
+    Stop = 'LocationComponent.Stop',
+    AddHero = 'LocationComponent.AddHero',
+    RemoveHero = 'LocationComponent.RemoveHero',
+    ItemsGenerated = 'LocationComponent.ItemsGenerated',
+    GetItems = 'LocationComponent.GetItems',
 }
 
 // export default class LocationComponent extends Component implements PlacementInterface {
@@ -158,7 +156,7 @@ export default class LocationComponent extends Component {
 
     start(): void {
         if (this._state !== LocationState.Waiting) {
-            return;
+            throw new AppError('Охота уже запущена.');   //todo: Одна ошибка на подобные действия.
         }
 
         if (this._heroGroupComponent.heroesCount === 0) {
@@ -178,7 +176,7 @@ export default class LocationComponent extends Component {
 
     stop() {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
         if (this._state !== LocationState.Hunting) {
-            return;
+            throw new AppError('Охота не запущена.');
         }
 
         this._state = LocationState.Waiting;
@@ -186,6 +184,14 @@ export default class LocationComponent extends Component {
         clearInterval(this._intervalID);
         debug('log')('Охота остановлена.');
         EventSystem.event(LocationComponentEventCode.Stop, this);
+    }
+
+    toggleState(): void {
+        if (this._state === LocationState.Waiting) {
+            this.start();
+        } else if (this._state === LocationState.Hunting) {
+            this.stop();
+        }
     }
 
     /**
@@ -197,6 +203,7 @@ export default class LocationComponent extends Component {
 
         itemStorageManager.moveFrom(this._internalItemStorageComponent);
         // debug('log')('Предметы перемещены.');
+        EventSystem.event(LocationComponentEventCode.GetItems, this)
     }
 
     private _generateItems() {
@@ -211,15 +218,18 @@ export default class LocationComponent extends Component {
     }
 
     addHero(hero: GameObject) {
-        assert(!_.isNil(hero));
         assert(hero instanceof GameObject);
+
         this._canAddHero(hero);
 
         this._heroGroupComponent.addHero(hero);
-        EventSystem.event(LocationComponentEventCode.AddHero, this);
+        EventSystem.event(LocationComponentEventCode.AddHero, this);    //todo: Или достаточно события из группы? Может как то связать их? "Цепочка" событыий.
     }
 
     removeHero(hero: GameObject) {
+        assert(!_.isNil(hero));
+        assert(hero instanceof GameObject);
+
         this._canRemoveHero();
 
         this._heroGroupComponent.removeHero(hero);

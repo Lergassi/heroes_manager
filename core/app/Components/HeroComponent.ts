@@ -1,8 +1,5 @@
 import Component from '../../source/Component.js';
 import HeroClass from '../Entities/HeroClass.js';
-import GameObject from '../../source/GameObject.js';
-import AppError from '../../source/Errors/AppError.js';
-import {PlacementControllerInterface, PlacementInterface} from './MainHeroListComponent.js';
 
 export enum HeroState {
     Free = 'Free',

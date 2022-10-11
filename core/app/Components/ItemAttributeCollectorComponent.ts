@@ -19,7 +19,7 @@ export default class ItemAttributeCollectorComponent {
         }
     }
 
-    remoteItem(item: Item): void {
+    removeItem(item: Item): void {
         _.pull(this._items, item);
     }
 

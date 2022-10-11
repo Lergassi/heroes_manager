@@ -20,6 +20,12 @@ import DebugGameObjectStorageCommand from './Commands/DebugCommands/DebugGameObj
 import DeleteHeroCommand from './Commands/DeleteHeroCommand.js';
 import CreatePlayerEnvironmentCommand from './Commands/CreatePlayerEnvironmentCommand.js';
 import CreateLocationCommand from './Commands/CreateLocationCommand.js';
+import AddHeroToLocationCommand from './Commands/AddHeroToLocationCommand.js';
+import RemoveHeroFromLocationCommand from './Commands/RemoveHeroFromLocationCommand.js';
+import DeleteLocationCommand from './Commands/DeleteLocationCommand.js';
+import ToggleLocationCommand from './Commands/ToggleLocationCommand.js';
+import GetItemsFromLocationCommand from './Commands/GetItemsFromLocationCommand.js';
+import ClearItemStorageSlotCommand from './Commands/ClearItemStorageSlotCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -42,17 +48,27 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new HelpCommand(container));
         gameConsole.register(new ListCommand(container));
 
+        /* GAME */
         gameConsole.register(new NewGameCommand(container));
         gameConsole.register(new CreatePlayerEnvironmentCommand(container));
         gameConsole.register(new CreateStartPlayerObjectsCommand(container));
 
+        gameConsole.register(new CreateItemStorageCommand(container));
         gameConsole.register(new AddItemCommand(container));
+        gameConsole.register(new ClearItemStorageSlotCommand(container));
+
         gameConsole.register(new CreateHeroCommand(container));
         gameConsole.register(new DeleteHeroCommand(container));
-        gameConsole.register(new CreateItemStorageCommand(container));
+
         gameConsole.register(new EquipCommand(container));
         gameConsole.register(new RemoveEquipCommand(container));
+
         gameConsole.register(new CreateLocationCommand(container));
+        gameConsole.register(new DeleteLocationCommand(container));
+        gameConsole.register(new AddHeroToLocationCommand(container));
+        gameConsole.register(new RemoveHeroFromLocationCommand(container));
+        gameConsole.register(new ToggleLocationCommand(container));
+        gameConsole.register(new GetItemsFromLocationCommand(container));
 
         /* DEBUG */
         gameConsole.register(new DebugEntitiesCommand(container));

@@ -1,5 +1,4 @@
 import GameObject from '../../source/GameObject.js';
-import UUIDGenerator from '../../source/UUIDGenerator.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 

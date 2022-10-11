@@ -11,7 +11,6 @@ import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
 import HeroFactory from '../../../core/app/Factories/HeroFactory.js';
 import EntityManager from '../../../core/source/EntityManager.js';
 import ItemStorageManager from '../../../core/app/Services/ItemStorageManager.js';
-import ItemStorageFactory from '../../../core/app/Factories/ItemStorageFactory.js';
 import WalletFactory from '../../../core/app/Factories/WalletFactory.js';
 import Security from '../../source/Security.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
@@ -22,12 +21,11 @@ import {Pool} from 'mysql';
 import _ from 'lodash';
 import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure.js';
 import PathResolver from '../../source/PathResolver.js';
-import UUIDGenerator from '../../../core/source/UUIDGenerator.js';
 import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorageFactoryInterface.js';
 import IDGeneratorInterface from '../../../core/source/IDGeneratorInterface.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
+import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
 import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
-import {CurrencyAlias} from '../../../core/app/types.js';
+import {CurrencyAlias, HeroClassID} from '../../../core/app/types.js';
 
 /**
  * TODO: НЕ АКТУАЛЬНО ПОКА НЕТ СЕРВЕРА!!!
@@ -68,7 +66,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                     (new PlayerContainerConfigure()).configure(this.container);
 
                     let playerGameObject = this.container.get<PlayerFactory>('player.playerFactory').create();
-                    this.container.get<GameObjectStorage>('player.gameObjectStorage').add(playerGameObject);
+                    this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(playerGameObject);
 
                     //Создание директорий.
                     let playerSaveDir = this.container.get<PathResolver>('server.pathResolver').resolve(
@@ -113,7 +111,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         currencies.forEach((currencyAlias) => {
-            this.container.get<GameObjectStorage>('player.gameObjectStorage').add(this.container.get<WalletFactory>('player.walletFactory').create({
+            this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(this.container.get<WalletFactory>('player.walletFactory').create({
                 currency: this.container.get<EntityManager>('core.entityManager').getRepository<Currency>(Currency.name).getOneByAlias(currencyAlias),
                 value: config['start_wallet_values'][currencyAlias]['value'],
             }));
@@ -165,7 +163,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         itemStackBuilders.forEach((itemStackBuilder) => {
-            this.container.get<ItemStorageManager>('player.itemStorageManager').addItem(itemStackBuilder);
+            this.container.get<ItemStorageManager>(ContainerKey.ItemStorageManager).addItem(itemStackBuilder);
         });
     }
 
@@ -174,7 +172,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         //todo: Сделать заготовки для разных задач. Это в репозиторий. Герои создаются НА основе паттерном. Паттер можно взять уже готовый (для начальных героев) или сделать новый. Только не путать с данными для создания героя в целом.
         let heroPatterns = [
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('warrior'),
+                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
                 level: 1,
                 equip: {
                     chest: new ItemStackPattern(
@@ -200,7 +198,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('rogue'),
+                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
                 level: 1,
                 equip: {
                     chest: new ItemStackPattern(
@@ -226,7 +224,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('mage'),
+                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
                 level: 1,
                 equip: {
                     chest: new ItemStackPattern(
@@ -248,7 +246,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('gunslinger'),
+                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
                 level: 1,
                 equip: {
                     chest: new ItemStackPattern(
@@ -279,7 +277,8 @@ export default class CreatePlayerEnvironmentCommand extends Command {
             this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
                 heroClass: datum['heroClass'],
                 level: datum['level'],
-            }, this.container.get<HeroFactory>('player.heroFactory'));
+                heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
+            });
         });
     }
 }

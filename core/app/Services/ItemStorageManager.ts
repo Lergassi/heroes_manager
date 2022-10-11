@@ -5,7 +5,9 @@ import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
-import {debugGameObjectStorage} from '../../debug/debug_functions.js';
+import {unsigned} from '../types.js';
+import Item from '../Entities/Item.js';
+import ItemStackFactory from '../Factories/ItemStackFactory.js';
 
 //todo: Переименовать и переделать. Сделать класс для простого объединения нескольких ItemStorage.
 export default class ItemStorageManager {
@@ -68,14 +70,29 @@ export default class ItemStorageManager {
     }
 
     addItem(itemStackPattern: ItemStackPattern) {
-    // addItem(itemStorages: GameObject[], itemStackPattern: ItemStackPattern) {
         let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
-        // let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot(itemStorages);
         if (!freeItemStorageSlotComponent) {
             throw AppError.freeItemStorageSlotNotFound();
         }
 
         freeItemStorageSlotComponent.placeItemStack(itemStackPattern.build());
+    }
+
+    createItemStack(options: {
+        item: Item,
+        count: unsigned,
+        itemStackFactory: ItemStackFactory,
+    }) {
+        let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
+        if (!freeItemStorageSlotComponent) {
+            throw AppError.freeItemStorageSlotNotFound();
+        }
+
+        freeItemStorageSlotComponent.createItemStack({
+            item: options.item,
+            count: options.count,
+            itemStackFactory: options.itemStackFactory,
+        });
     }
 
     // moveFrom(itemStorageComponent: ItemStorageComponent): void {
@@ -92,7 +109,7 @@ export default class ItemStorageManager {
                 break;
             }
             freeItemStorageSlotComponent.placeItemStack(slots[i].itemStack);
-            slots[i].clear();
+            slots[i].destroyItemStack();
         }
     }
 }

@@ -1,8 +1,6 @@
-import GameContainer from '../../source/GameContainer.js';
 import ItemSlot from './ItemSlot.js';
 import Item from '../Entities/Item.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
-import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 
 /**

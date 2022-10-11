@@ -6,39 +6,24 @@ import WalletFactory from './Factories/WalletFactory.js';
 import HeroFactory from './Factories/HeroFactory.js';
 import EntityManager from '../source/EntityManager.js';
 import ItemStackFactory from './Factories/ItemStackFactory.js';
-import Item from './Entities/Item.js';
 import ItemStorageFactory from './Factories/ItemStorageFactory.js';
 import ItemStorageManager from './Services/ItemStorageManager.js';
 import EquipManager from './Services/EquipManager.js';
-import GameConsole from '../source/GameConsole/GameConsole.js';
-import AddItemCommand from './Commands/AddItemCommand.js';
-import CreateHeroCommand from './Commands/CreateHeroCommand.js';
-import CreateItemStorageCommand from './Commands/CreateItemStorageCommand.js';
-import EquipCommand from './Commands/EquipCommand.js';
-import RemoveEquipCommand from './Commands/RemoveEquipCommand.js';
 // import config from '../config/main.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import IDGeneratorInterface from '../source/IDGeneratorInterface.js';
-import UUIDGenerator from '../source/UUIDGenerator.js';
 import GameObject from '../source/GameObject.js';
 import MainItemStorageListComponent from './Components/MainItemStorageListComponent.js';
-import PlayerItemStorageFactory from './Factories/PlayerItemStorageFactory.js';
 import ItemStorageFactoryInterface from './Factories/ItemStorageFactoryInterface.js';
-import TechItemStorageFactoryDecorator from './Factories/TechItemStorageFactoryDecorator.js';
 import GameObjectFactory from './Factories/GameObjectFactory.js';
 import MainHeroListComponent from './Components/MainHeroListComponent.js';
 import AutoIncrementIDGenerator from '../source/AutoIncrementIDGenerator.js';
 import LocationFactory from './Factories/LocationFactory.js';
 import ItemDatabase from './ItemDatabase.js';
-import Random from './Services/Random.js';
-import Component from '../source/Component.js';
-import EventSystem from '../source/EventSystem.js';
 import MainLocationListComponent from './Components/MainLocationListComponent.js';
 import {ContainerKey} from './consts.js';
-import CreateLocationCommand from './Commands/CreateLocationCommand.js';
 import ExperienceComponentFactory from './Factories/ExperienceComponentFactory.js';
-import Container from '../source/Container.js';
 import EnemyFactory from './Factories/EnemyFactory.js';
 import ExperienceComponent from './Components/ExperienceComponent.js';
 import {CurrencyAlias, CurrencyWalletAlias} from './types.js';
@@ -70,7 +55,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             }
         });
         //endregion dev
-        container.set<GameObjectStorage>('player.gameObjectStorage', (container) => {
+        container.set<GameObjectStorage>(ContainerKey.GameObjectStorage, (container) => {
             return new GameObjectStorage();
         });
         // container.set<UserFactory>('core.userFactory', (container) => {
@@ -80,7 +65,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //Фабрики
         container.set('player.gameObjectFactory', (container) => {
             return new GameObjectFactory(
-                container.get<GameObjectStorage>('player.gameObjectStorage'),
+                container.get<GameObjectStorage>(ContainerKey.GameObjectStorage),
                 container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
             );
         });
@@ -99,7 +84,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             });
 
             //todo: player_env_indev
-            container.get<GameObjectStorage>('player.gameObjectStorage').add(playerFactory.create());
+            container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(playerFactory.create());
 
             return playerFactory;
         });
@@ -115,7 +100,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             ];
 
             _.map(currencies, (currencyAlias) => {
-                container.get<GameObjectStorage>('player.gameObjectStorage').add(walletFactory.create({
+                container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(walletFactory.create({
                     currency: container.get<EntityManager>(ContainerKey.EntityManager).get<Currency>(Currency, currencyAlias),
                     value: 1000,
                 }));
@@ -165,7 +150,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 ],
             ));
 
-            container.get<GameObjectStorage>('player.gameObjectStorage').add(itemStorageCollectionGameObject);
+            container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(itemStorageCollectionGameObject);
 
             return itemStorageCollectionComponent;
         });
@@ -186,10 +171,10 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             //         container,
             //         container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
             //     ),
-            //     container.get<GameObjectStorage>('player.gameObjectStorage'),
+            //     container.get<GameObjectStorage>(ContainerKey.GameObjectStorage),
             // );
             return new ItemStorageFactory(
-                container.get<GameObjectStorage>('player.gameObjectStorage'),
+                container.get<GameObjectStorage>(ContainerKey.GameObjectStorage),
                 container.get<ItemStackFactory>('player.itemStackFactory'),
                 container.get<GameObjectFactory>('player.gameObjectFactory'),
             );
@@ -207,15 +192,15 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new EnemyFactory({
                 entityManager: container.get<EntityManager>('core.entityManager'),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
-                playerExperienceComponent: container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag('#player').getComponent<ExperienceComponent>(ExperienceComponent.name),
-                // playerWalletComponent: container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag('#wallet.' + CurrencyAlias.Gold).getComponent<WalletComponent>(WalletComponent.name),
-                playerWalletComponent: container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag(CurrencyWalletAlias.Gold).getComponent<WalletComponent>(WalletComponent.name),
+                playerExperienceComponent: container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag('#player').getComponent<ExperienceComponent>(ExperienceComponent.name),
+                // playerWalletComponent: container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag('#wallet.' + CurrencyAlias.Gold).getComponent<WalletComponent>(WalletComponent.name),
+                playerWalletComponent: container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag(CurrencyWalletAlias.Gold).getComponent<WalletComponent>(WalletComponent.name),
             });
         });
 
         //Фасады
-        container.set<ItemStorageManager>('player.itemStorageManager', (container) => {
-            return new ItemStorageManager(container.get<GameObjectStorage>('player.gameObjectStorage'));
+        container.set<ItemStorageManager>(ContainerKey.ItemStorageManager, (container) => {
+            return new ItemStorageManager(container.get<GameObjectStorage>(ContainerKey.GameObjectStorage));
         });
         container.set<EquipManager>('player.equipManager', (container) => {
             return new EquipManager();

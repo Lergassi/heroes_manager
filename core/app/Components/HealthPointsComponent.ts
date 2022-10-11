@@ -1,8 +1,6 @@
 import Component from '../../source/Component.js';
-import GameObject from '../../source/GameObject.js';
 import debug from 'debug';
 import EventSystem from '../../source/EventSystem.js';
-import ItemStorageComponent from './ItemStorageComponent.js';
 import {unsigned} from '../types.js';
 
 export enum HealthPointsComponentEventCode {

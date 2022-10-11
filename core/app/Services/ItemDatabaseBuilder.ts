@@ -1,11 +1,6 @@
 import EntityManager from '../../source/EntityManager.js';
 import Item, {ItemGetType} from '../Entities/Item.js';
 import ItemBuilder from './ItemBuilder.js';
-import ItemCategory from '../Entities/ItemCategory.js';
-import Quality from '../Entities/Quality.js';
-import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
 import ItemFactory from '../Factories/ItemFactory.js';
 import {DEFAULT_STACK_SIZE} from '../consts.js';
 import {CharacterAttributeID, ItemCategoryAlias} from '../types.js';
@@ -482,11 +477,6 @@ export default class ItemDatabaseBuilder {
                         properties: {
                             armorMaterial: 'plate',
                         },
-                        increase: {
-                            strength: 1000,
-                            agility: 1000,
-                            intelligence: 1000,
-                        },
                         characterAttributes: {
                             [CharacterAttributeID.Strength]: 100,
                             [CharacterAttributeID.Agility]: 100,
@@ -496,7 +486,6 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        console.log(this._em.get<Item>(Item, 'plate_helmet_02'));
         this._em.add<Item>(
             Item,
             (new ItemBuilder(this._em))
@@ -1045,7 +1034,7 @@ export default class ItemDatabaseBuilder {
                     'boar_leather',
                     ItemCategoryAlias.Resources,
                     {
-
+                        stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
                 .build()

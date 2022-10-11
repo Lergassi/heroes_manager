@@ -1,10 +1,5 @@
 import Item from '../Entities/Item.js';
 import AppError from '../../source/Errors/AppError.js';
-import {sprintf} from 'sprintf-js';
-import ItemStackFactory from '../Factories/ItemStackFactory.js';
-import {floor} from 'lodash';
-import {unsigned} from '../types.js';
-import Range from '../Range.js';
 
 export interface ItemStackPlaceInterface {
     /**

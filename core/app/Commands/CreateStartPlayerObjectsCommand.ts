@@ -1,12 +1,7 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import GameObjectStorage from '../../source/GameObjectStorage.js';
-import WalletFactory from '../Factories/WalletFactory.js';
 import EntityManager from '../../source/EntityManager.js';
-import Currency from '../Entities/Currency.js';
-import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
-import UUIDGenerator from '../../source/UUIDGenerator.js';
 import Item from '../Entities/Item.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import HeroClass from '../Entities/HeroClass.js';
@@ -17,14 +12,13 @@ import EquipSlotComponentControllerComponent from '../Components/EquipSlotCompon
 import EntityManagerFacade from '../../source/Facades/EntityManagerFacade.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
-import LocationFactory from '../Factories/LocationFactory.js';
-import ExperienceComponent from '../Components/ExperienceComponent.js';
 import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
+import {HeroClassID} from '../types.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
-        return 'create_start_player_objects';
+        return 'player.create_start_objects';
     }
 
     get description(): string {
@@ -33,7 +27,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
 
     async execute(input: Input) {
         this._createItemStorages();
-        // this._createItems();
+        this._createItems();
         this._createHeroes();
     }
 
@@ -90,7 +84,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         ];
 
         itemStackBuilders.forEach((itemStackBuilder) => {
-            this.container.get<ItemStorageManager>('player.itemStorageManager').addItem(itemStackBuilder);
+            this.container.get<ItemStorageManager>(ContainerKey.ItemStorageManager).addItem(itemStackBuilder);
         });
     }
 
@@ -100,12 +94,11 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         //todo: Сделать проще: в одну строку.
         let heroPatterns = [
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('warrior'),
+                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
                 level: 1,
                 equip: {
                     head: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        // this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('plate_helmet_01'),
                         this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('plate_helmet_02'),
                     ),
                     chest: new ItemStackPattern(
@@ -131,7 +124,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('rogue'),
+                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
                 level: 1,
                 equip: {
                     chest: new ItemStackPattern(
@@ -157,7 +150,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('mage'),
+                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
                 level: 1,
                 equip: {
                     chest: new ItemStackPattern(
@@ -179,7 +172,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias('gunslinger'),
+                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
                 level: 1,
                 equip: {
                     chest: new ItemStackPattern(
@@ -210,7 +203,8 @@ export default class CreateStartPlayerObjectsCommand extends Command {
             let hero = this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
                 heroClass: datum['heroClass'],
                 level: 1,
-            }, this.container.get<HeroFactory>('player.heroFactory'));
+                heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
+            });
 
             //Начальная экипировка.
             for (const datumElementKey in datum['equip']) {
@@ -219,6 +213,16 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                     datum['equip'][datumElementKey].build(),
                 );
             }
+        });
+        this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+            heroClass: this.container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
+            level: 1,
+            heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
+        });
+        this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+            heroClass: this.container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
+            level: 1,
+            heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
         });
     }
 }

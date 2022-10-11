@@ -37,7 +37,6 @@ import UnloadFullEnvironmentCommand from './Commands/UnloadFullEnvironmentComman
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import PathResolver from '../source/PathResolver.js';
-import DebugGameObjectStorageCommand from '../../core/app/Commands/DebugCommands/DebugGameObjectStorageCommand.js';
 
 export default class ServerContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {

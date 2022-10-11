@@ -1,6 +1,5 @@
 import React from 'react';
-import ExperienceComponent, {ExperienceComponentEventCode} from '../../../core/app/Components/ExperienceComponent.js';
-import EventSystem from '../../../core/source/EventSystem.js';
+import ExperienceComponent from '../../../core/app/Components/ExperienceComponent.js';
 
 export type ExperienceTextRenderRComponentProps = {
     experienceComponent: ExperienceComponent;

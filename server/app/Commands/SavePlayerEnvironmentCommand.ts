@@ -10,6 +10,7 @@ import Security from '../../source/Security.js';
 import MetadataManager from '../../../core/source/MetadataManager.js';
 import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
+import {ContainerKey} from '../../../core/app/consts.js';
 
 export default class SavePlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -20,7 +21,7 @@ export default class SavePlayerEnvironmentCommand extends Command {
         this.container.get<Security>('server.security').assertIsUserLoaded();
         this.container.get<Security>('server.security').assertIsPlayerLoaded();
 
-        let gameObjects = this.container.get<GameObjectStorage>('player.gameObjectStorage')['_gameObjects'];
+        let gameObjects = this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)['_gameObjects'];
         let services = this.container['_services'];
 
         let serializer = this.container.get<Serializer>('core.serializer');

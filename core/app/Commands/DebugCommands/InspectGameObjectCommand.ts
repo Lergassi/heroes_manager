@@ -2,6 +2,7 @@ import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
 import GameObject from '../../../source/GameObject.js';
 import GameObjectStorage from '../../../source/GameObjectStorage.js';
+import {ContainerKey} from '../../consts.js';
 
 export default class InspectGameObjectCommand extends Command {
     get name(): string {
@@ -16,13 +17,13 @@ export default class InspectGameObjectCommand extends Command {
     }
 
     async execute(input: Input) {
-        let id = parseInt(input.getArgument('id'));
+        let id = parseInt(input.getArgument('id'), 10);
         let options = {
-            depth: parseInt(input.getArgument('depth')),
+            depth: parseInt(input.getArgument('depth'), 10),
             showHidden: input.getArgument('showHidden') === '1',
         };
 
-        let gameObject = <GameObject>this.container.get<GameObjectStorage>('player.gameObjectStorage').getOneByID(id);
+        let gameObject = <GameObject>this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(id);
         console.dir(gameObject, options);
     }
 }

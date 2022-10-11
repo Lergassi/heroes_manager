@@ -1,5 +1,4 @@
 import Repository from './Repository.js';
-import ItemBuilder from '../app/Services/ItemBuilder.js';
 
 export interface ModuleInterface {
     name: string;

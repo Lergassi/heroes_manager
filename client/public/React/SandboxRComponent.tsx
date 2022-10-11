@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {LocationContainerRComponent} from './LocationContainerRComponent.js';
 
 function FancyBorder(props) {
     return (

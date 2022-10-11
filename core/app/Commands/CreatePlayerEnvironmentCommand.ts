@@ -4,10 +4,9 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import WalletFactory from '../Factories/WalletFactory.js';
 import EntityManager from '../../source/EntityManager.js';
 import Currency from '../Entities/Currency.js';
-import PlayerFactory from '../Factories/PlayerFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
+import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import {CurrencyAlias} from '../types.js';
 
 /**
@@ -15,7 +14,7 @@ import {CurrencyAlias} from '../types.js';
  */
 export default class CreatePlayerEnvironmentCommand extends Command {
     get name(): string {
-        return 'create_player_env';
+        return 'player.create_env';
     }
 
     async execute(input: Input) {
@@ -41,7 +40,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         currencies.forEach((currencyAlias) => {
-            this.container.get<GameObjectStorage>('player.gameObjectStorage').add(this.container.get<WalletFactory>('player.walletFactory').create({
+            this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(this.container.get<WalletFactory>('player.walletFactory').create({
                 currency: this.container.get<EntityManager>('core.entityManager').getRepository<Currency>(Currency.name).getOneByAlias(currencyAlias),
                 value: config['start_wallet_values'][currencyAlias]['value'],
             }));

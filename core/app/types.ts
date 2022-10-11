@@ -1,5 +1,4 @@
 import Item from './Entities/Item.js';
-import Range from './Range.js';
 import EnemyType from './Entities/EnemyType.js';
 
 export type Milliseconds = number;
@@ -22,6 +21,19 @@ export enum CharacterAttributeID {
     CriticalStrike = 'CriticalStrike',
     Stamina = 'Stamina',
     Luck = 'Luck',
+}
+
+export enum HeroClassID {
+    Warrior = 'Warrior',
+    Paladin = 'Paladin',
+    Rogue = 'Rogue',
+    Gladiator = 'Gladiator',
+    Archer = 'Archer',
+    Gunslinger = 'Gunslinger',
+    Mage = 'Mage',
+    Warlock = 'Warlock',
+    Priest = 'Priest',
+    Druid = 'Druid',
 }
 
 export type ItemCount = {

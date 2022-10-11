@@ -1,29 +1,17 @@
 import GameObjectFactory from './GameObjectFactory.js';
-import HealthPointsComponent, {HealthPointsComponentEventCode} from '../Components/HealthPointsComponent.js';
-import {
-    EnemyTypeAlias,
-    EnemyConfig,
-    EnemyConfigs,
-    EntityManagerKey,
-    Loot,
-    unsigned,
-    EnemyConfigRecord, CurrencyAlias
-} from '../types.js';
+import HealthPointsComponent from '../Components/HealthPointsComponent.js';
+import {EnemyConfig, EntityManagerKey, unsigned} from '../types.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
 import EnemyType from '../Entities/EnemyType.js';
 import EntityManager from '../../source/EntityManager.js';
-import Item from '../Entities/Item.js';
 import EnemyComponent from '../Components/EnemyComponent.js';
-import ContainerInterface from '../../source/ContainerInterface.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
 import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
 import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
-import EventSystem from '../../source/EventSystem.js';
 import ExperienceComponent from '../Components/ExperienceComponent.js';
 import WalletComponent from '../Components/WalletComponent.js';
-import Currency from '../Entities/Currency.js';
-import {assert} from '../../source/functions.js';
+import {assert} from '../../source/assert.js';
 // import assert from 'assert';
 
 // export type EnemyFactoryOptions = {

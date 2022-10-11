@@ -1,5 +1,4 @@
-import Item, {ItemProperties} from '../core/app/Entities/Item.js';
-import ArmorMaterial from '../core/app/Entities/ArmorMaterial.js';
+import {ItemProperties} from '../core/app/Entities/Item.js';
 import GameObjectFactory from '../core/app/Factories/GameObjectFactory.js';
 import IDGeneratorInterface from '../core/source/IDGeneratorInterface.js';
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
@@ -8,19 +7,13 @@ import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
 import ItemStorageManager from '../core/app/Services/ItemStorageManager.js';
 import ItemStorageFactoryInterface from '../core/app/Factories/ItemStorageFactoryInterface.js';
 import MainItemStorageListComponent from '../core/app/Components/MainItemStorageListComponent.js';
-import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
-import LocationComponent, {
-    AvailableGatherItem,
-    GatheringItemPointType, GatheringItemPointTypeValues
-} from '../core/app/Components/LocationComponent.js';
-import EntityManager from '../core/source/EntityManager.js';
 import ContainerInterface from '../core/source/ContainerInterface.js';
 import Container from '../core/source/Container.js';
 import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
 import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../core/app/PlayerContainerConfigure.js';
-import LocationFactory from '../core/app/Factories/LocationFactory.js';
-import GameObject from '../core/source/GameObject.js';
+import {HeroClassID} from '../core/app/types.js';
+import {ContainerKey} from '../core/app/consts.js';
 
 function createEndPlayerContainer(): ContainerInterface {
     let container = new Container();
@@ -171,7 +164,7 @@ export function testLocation() {
     let heroFactory = container.get<HeroFactory>('player.heroFactory');
     let itemStackFactory = container.get<ItemStackFactory>('player.itemStackFactory');
     // let itemStorageFactory = container.get<BasicItemStorageFactory>('player.heroFactory');
-    let itemStorageManager = container.get<ItemStorageManager>('player.itemStorageManager');
+    let itemStorageManager = container.get<ItemStorageManager>(ContainerKey.ItemStorageManager);
     let itemStorage = container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(2);
     container.get<MainItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);
     // debugItemStorages(itemStorageManager.itemStorages);
@@ -344,7 +337,7 @@ function testHeroInherit() {
     // let hero = Object.create(idComponent);
     // let hero = Object.create(Hero);
     // let hero = Object.create(Hero);
-    let hero = new Hero('warrior', 100);
+    let hero = new Hero(HeroClassID.Warrior, 100);
     console.log('hero.prototype', hero.prototype);
     console.log('hero.__proto__', hero.__proto__);
     // hero.prototype.__proto__ = new IdComponent(4242);
@@ -403,7 +396,7 @@ export function testIDWrapper() {
         this._health -= value;
     }
 
-    let hero = new Hero('warrior', 100);
+    let hero = new Hero(HeroClassID.Warrior, 100);
     console.log(hero);
 
     //delete_hero - удалить героя из списка.

@@ -1,7 +1,6 @@
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import ContainerInterface from '../../source/ContainerInterface.js';
 import GameObject from '../../source/GameObject.js';
-import GameObjectStorage from '../../source/GameObjectStorage.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 
 export default class PlayerItemStorageFactory implements ItemStorageFactoryInterface {

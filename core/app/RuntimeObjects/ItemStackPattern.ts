@@ -1,6 +1,5 @@
 import Item from '../Entities/Item.js';
 import ItemStack from './ItemStack.js';
-import UUIDGenerator from '../../source/UUIDGenerator.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 
 export default class ItemStackPattern {

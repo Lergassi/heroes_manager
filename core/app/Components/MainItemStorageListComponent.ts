@@ -2,10 +2,7 @@ import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
-import {sprintf} from 'sprintf-js';
-import RComponentBridge, {RComponentUpdateInterface} from '../../../client/source/RComponentBridge.js';
 import {unsigned} from '../types.js';
-import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 
 export default class MainItemStorageListComponent extends Component {

@@ -1,4 +1,3 @@
-import EntityManager from '../source/EntityManager.js';
 import Item, {ItemFilterCondition} from './Entities/Item.js';
 import _ from 'lodash';
 

@@ -1,10 +1,7 @@
 import {unsigned} from '../types.js';
-import Random from '../Services/Random.js';
 import _ from 'lodash';
 import Component from '../../source/Component.js';
 import WalletComponent from './WalletComponent.js';
-import HealthPointsComponent, {HealthPointsComponentEventCode} from './HealthPointsComponent.js';
-import EventSystem from '../../source/EventSystem.js';
 
 export default class GoldLootGeneratorComponent extends Component {
     private readonly _min: unsigned;

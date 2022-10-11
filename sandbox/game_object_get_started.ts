@@ -1,10 +1,9 @@
 import GameObject from '../core/source/GameObject.js';
 import LevelRange from '../core/app/Components/ExperienceComponent.js';
+import ExperienceComponent from '../core/app/Components/ExperienceComponent.js';
 import PlayerComponent from '../core/app/Components/PlayerComponent.js';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
-import ExperienceComponent from '../core/app/Components/ExperienceComponent.js';
-import EventSystem from '../core/source/EventSystem.js';
 
 namespace GameObjectGetStarted {
     // gameObjectGetStartedTest();

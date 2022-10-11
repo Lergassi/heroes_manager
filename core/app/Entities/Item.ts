@@ -2,10 +2,7 @@ import ItemCategory from './ItemCategory.js';
 import Quality from './Quality.js';
 import ArmorMaterial from './ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
-import CharacterAttribute from './CharacterAttribute.js';
 import _ from 'lodash';
-import AppError from '../../source/Errors/AppError.js';
-import ExperienceComponent from '../Components/ExperienceComponent.js';
 import {CharacterAttributeID} from '../types.js';
 
 // export enum ItemType {
@@ -94,6 +91,10 @@ export interface ItemOptions {
 export default class Item {
     private readonly _id: string;
     private readonly _name: string;
+    /**
+     * @deprecated
+     * @private
+     */
     private readonly _alias: string;
     private readonly _description: string;
     private readonly _itemLevel: number;
@@ -141,7 +142,7 @@ export default class Item {
     }
 
     /**
-     * @deprecated
+     * @deprecated Использовать ID который теперь alias.
      */
     get alias(): string {
         return this._alias;

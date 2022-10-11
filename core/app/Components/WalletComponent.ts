@@ -1,5 +1,4 @@
 import Component from '../../source/Component.js';
-import GameObject from '../../source/GameObject.js';
 import Currency from '../Entities/Currency.js';
 import {unsigned} from '../types.js';
 import debug from 'debug';

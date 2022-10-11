@@ -16,10 +16,10 @@ import GameObjectStorage from '../source/GameObjectStorage.js';
 import ContainerInterface from '../source/ContainerInterface.js';
 import LevelRange from '../app/Components/ExperienceComponent.js';
 import EntityManager from '../source/EntityManager.js';
-import ItemStorageManager from '../app/Services/ItemStorageManager.js';
 import Item from '../app/Entities/Item.js';
 import GameContainer from '../source/GameContainer.js';
 import ItemSlot from '../app/Components_v2/ItemSlot.js';
+import {ContainerKey} from '../app/consts.js';
 
 export function debugEntity(entity) {
     debug('debug')('%j', {
@@ -183,7 +183,7 @@ export function debugHero(hero: GameObject) {
 
 export function debugHeroes(container: ContainerInterface) {
     debug('debug')('# heroes');
-    container.get<GameObjectStorage>('player.gameObjectStorage')
+    container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
         .findByTag('#hero')
         .map((wallet) => {
             debugHero(wallet);
@@ -292,7 +292,7 @@ export function debugNewItemStorage(itemStorage: GameContainer) {
 // export function debugItemStorages(container: ContainerInterface) {
 export function debugItemStorages(itemStorages: GameObject[]) {
     debug('debug')('# item storages');
-    // container.get<GameObjectStorage>('player.gameObjectStorage')
+    // container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
     //     .findByTag('#item_storage')
     itemStorages
         .map((itemStorage) => {
@@ -302,7 +302,7 @@ export function debugItemStorages(itemStorages: GameObject[]) {
 
 // export function debugItemStorageManager(itemStorageManager: ItemStorageManager) {
 //     debug('debug')('# itemStorageManager');
-//     container.get<GameObjectStorage>('player.gameObjectStorage')
+//     container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
 //         .findByTag('#item_storage')
 //         .map((itemStorage) => {
 //             debugItemStorage(itemStorage);
@@ -322,7 +322,7 @@ export function debugWallet(wallet: GameObject) {
 
 export function debugWallets(container: ContainerInterface) {
     debug('debug')('# wallets');
-    container.get<GameObjectStorage>('player.gameObjectStorage')
+    container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
         .findByTag('#wallet')
         .map((wallet) => {
             debugWallet(wallet);
@@ -361,7 +361,7 @@ export function debugContainer(container: ContainerInterface) {
 // }
 
 export function debugPlayerGameObject(container: ContainerInterface) {
-    let playerGameObject = container.get<GameObjectStorage>('player.gameObjectStorage').getOneByTag('#player');
+    let playerGameObject = container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag('#player');
     debug('debug')('# player');
     debugGameObject(playerGameObject);
     debugLevelComponent(playerGameObject.getComponentByName(LevelRange.name));

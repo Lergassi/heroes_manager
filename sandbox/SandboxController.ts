@@ -15,41 +15,27 @@ import LocationComponent from '../core/app/Components/LocationComponent.js';
 import RandomItemGenerator from '../core/app/RandomItemGenerator.js';
 import EntityManager from '../core/source/EntityManager.js';
 import ItemDatabase from '../core/app/ItemDatabase.js';
-import _, {entries, result} from 'lodash';
+import _ from 'lodash';
 import Item from '../core/app/Entities/Item.js';
-import AppError from '../core/source/Errors/AppError.js';
 import ItemCategory from '../core/app/Entities/ItemCategory.js';
-import Quality from '../core/app/Entities/Quality.js';
 import Random from '../core/app/Services/Random.js';
 import {extractItems} from '../core/app/indev.js';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
 import {debugHero, debugItemStorage, debugNewItemStorage} from '../core/debug/debug_functions.js';
 import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
-import {cpus} from 'os';
-import GameObjectAsReact, {LocationProps, LocationType} from '../core/source/GameObjectAsReact.js';
+import GameObjectAsReact, {LocationType} from '../core/source/GameObjectAsReact.js';
 import GameContainer from '../core/source/GameContainer.js';
 import ItemSlot from '../core/app/Components_v2/ItemSlot.js';
 import ItemStorageController from '../core/app/Components_v2/ItemStorageController.js';
-import HeroClass, {HeroClassAlias} from '../core/app/Entities/HeroClass.js';
+import HeroClass from '../core/app/Entities/HeroClass.js';
 import GameObject from '../core/source/GameObject.js';
 import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
-import EventSystem from '../core/source/EventSystem.js';
 import {ContainerKey} from '../core/app/consts.js';
 import EnemyFactory from '../core/app/Factories/EnemyFactory.js';
-import LevelRange from '../core/app/LevelRange.js';
-import GoldLootGeneratorComponent from '../core/app/Components/GoldLootGeneratorComponent.js';
-import {
-    Loot,
-    ItemCount,
-    ItemCountRange,
-    unsigned,
-    EnemyTypes,
-    EntityManagerKey,
-    EnemyTypeAlias, ItemCategoryAlias, EnemyTypeRecord
-} from '../core/app/types.js';
+import {EnemyTypeAlias, EntityManagerKey, HeroClassID, ItemCategoryAlias} from '../core/app/types.js';
 import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponentFactory.js';
 import EnemyType from '../core/app/Entities/EnemyType.js';
-import HealthPointsComponent, {HealthPointsComponentEventCode} from '../core/app/Components/HealthPointsComponent.js';
+import HealthPointsComponent from '../core/app/Components/HealthPointsComponent.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -97,27 +83,27 @@ export class SandboxController {
 
         let heroes = [
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Rogue),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Gunslinger),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Mage),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Mage),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Mage),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Mage),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
                 level: 1,
             }),
         ];
@@ -402,7 +388,7 @@ export class SandboxController {
     }
 
     testHeroFactory() {
-        let heroClass = this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassAlias.Warrior);
+        let heroClass = this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior);
         let hero = this._container.get<HeroFactory>('player.heroFactory').create({
             heroClass: heroClass,
             level: 1,
@@ -641,23 +627,23 @@ export class SandboxController {
 
         let heroes = [
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Rogue),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Rogue),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Gunslinger),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Gunslinger),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Mage),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Mage),
                 level: 1,
             }),
             heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassAlias.Mage),
+                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Mage),
                 level: 1,
             }),
             // heroFactory.create({

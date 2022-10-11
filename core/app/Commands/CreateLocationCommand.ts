@@ -3,13 +3,10 @@ import Input from '../../source/GameConsole/Input.js';
 import {ContainerKey} from '../consts.js';
 import MainLocationListComponent from '../Components/MainLocationListComponent.js';
 import LocationFactory from '../Factories/LocationFactory.js';
-import {unsigned} from '../types.js';
-import ExperienceComponent from '../Components/ExperienceComponent.js';
-import LevelRange from '../LevelRange.js';
 
 export default class CreateLocationCommand extends Command {
     get name(): string {
-        return 'create_location';
+        return 'location.create';
     }
 
     configure() {

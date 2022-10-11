@@ -1,7 +1,5 @@
 import {unsigned} from '../types.js';
 import Component from '../../source/Component.js';
-import HealthPointsComponent, {HealthPointsComponentEventCode} from './HealthPointsComponent.js';
-import EventSystem from '../../source/EventSystem.js';
 import ExperienceComponent from './ExperienceComponent.js';
 import {round} from 'lodash';
 

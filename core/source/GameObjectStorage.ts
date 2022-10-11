@@ -4,8 +4,10 @@ import AppError from './Errors/AppError.js';
 
 export default class GameObjectStorage {
     private readonly _gameObjects: GameObject[];
+    // private readonly _gameObjects: {[ID: number]: GameObject};
 
     constructor(gameObjects = []) {
+    // constructor(gameObjects = {}) {
         this._gameObjects = gameObjects;
     }
 
@@ -13,6 +15,9 @@ export default class GameObjectStorage {
         if (!_.includes(this._gameObjects, gameObject)) {
             this._gameObjects.push(gameObject);
         }
+        // if (!this._gameObjects.hasOwnProperty(gameObject['_id'])) {
+        //     this._ga
+        // }
     }
 
     remove(gameObject: GameObject): void {
@@ -34,12 +39,13 @@ export default class GameObjectStorage {
     }
 
     getOneByID(id: number): GameObject {
-        let gameObject = this.findOneByID(id);
-        if (gameObject) {
-            return gameObject;
+        for (let i = 0; i < this._gameObjects.length; i++) {
+            if (this._gameObjects[i]['_id'] === id) {
+                return this._gameObjects[i];
+            }
         }
 
-        throw AppError.gameObjectNotFound(id);
+        return undefined;
     }
 
     /**

@@ -1,11 +1,4 @@
 import EntityManager from '../core/source/EntityManager.js';
-import ArmorMaterial from '../core/app/Entities/ArmorMaterial.js';
-import Quality from '../core/app/Entities/Quality.js';
-import Currency from '../core/app/Entities/Currency.js';
-import ItemCategory from '../core/app/Entities/ItemCategory.js';
-import HeroRole from '../core/app/Entities/HeroRole.js';
-import CharacterAttribute from '../core/app/Entities/CharacterAttribute.js';
-import Item from '../core/app/Entities/Item.js';
 
 export default class TestObjectCreator {
     createRepositoryManager(): EntityManager {

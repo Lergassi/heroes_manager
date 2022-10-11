@@ -5,7 +5,6 @@ import HeroClass from '../../app/Entities/HeroClass.js';
 import ArmorMaterial from '../../app/Entities/ArmorMaterial.js';
 
 export default class AppError extends Error {
-    //Сделано для работы ctrl+B.
     constructor(message?: string) {
         super(message);
     }

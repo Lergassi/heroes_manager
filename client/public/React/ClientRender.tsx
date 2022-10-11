@@ -2,23 +2,15 @@ import GameConsoleRComponent from './GameConsoleRComponent.js';
 import ReactDOM from 'react-dom/client';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import ItemStorageUI, {ItemStorageCollectionRComponent} from './ItemStorageUI.js';
-import ItemStorageFactory from '../../../core/app/Factories/ItemStorageFactory.js';
-import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
-import ItemStackFactory from '../../../core/app/Factories/ItemStackFactory.js';
-import {debugItemStorage} from '../../../core/debug/debug_functions.js';
-import EntityManager from '../../../core/source/EntityManager.js';
-import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
 import MainItemStorageListComponent from '../../../core/app/Components/MainItemStorageListComponent.js';
-import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorageFactoryInterface.js';
-import {HeroListRComponent, HeroDetailRComponent} from './HeroUI.js';
+import MainHeroListRComponent from './MainHeroListRComponent.js';
 import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
-import {LocationContainerRComponent} from './LocationContainerRComponent.js';
 import AppError from '../../../core/source/Errors/AppError.js';
 import SandboxRComponent from './SandboxRComponent.js';
-import MainLocationListRComponent from '../MainLocationListRComponent.js';
+import MainLocationListRComponent from './MainLocationListRComponent.js';
 import {ContainerKey} from '../../../core/app/consts.js';
 import MainLocationListComponent from '../../../core/app/Components/MainLocationListComponent.js';
+import MainItemStorageListRComponent from './MainItemStorageListRComponent.js';
 
 export default class ClientRender {
     private readonly _container: ContainerInterface;
@@ -71,7 +63,7 @@ export default class ClientRender {
     private _renderGameUI(root) {
         root.render(
             <div>
-                <HeroListRComponent
+                <MainHeroListRComponent
                     heroListComponent={this._container.get<MainHeroListComponent>('player.heroesListComponent')}
                     container={this._container}
                 />
@@ -79,11 +71,7 @@ export default class ClientRender {
                     container={this._container}
                     mainLocationListComponent={this._container.get<MainLocationListComponent>(ContainerKey.MainLocationListComponent)}
                 />
-                {/*<LocationContainerRComponent*/}
-                {/*    container={this._container}*/}
-                {/*    location={window['gameLocation']}*/}
-                {/*/>*/}
-                <ItemStorageCollectionRComponent
+                <MainItemStorageListRComponent
                     itemStorageCollection={this._container.get<MainItemStorageListComponent>('player.itemStorageCollection')}
                 />
             </div>

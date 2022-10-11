@@ -2,10 +2,9 @@ import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
-import HeroComponent, {HeroState} from './HeroComponent.js';
-import {sprintf} from 'sprintf-js';
+import HeroComponent from './HeroComponent.js';
 import {unsigned} from '../types.js';
-import {assert} from '../../source/functions.js';
+import {assert} from '../../source/assert.js';
 
 //todo: В будущем универсальный слот с _container: Container<T>. Слот может быть без логики или с изменением статуса занимаемого объекта.
 export class HeroSlot {
@@ -106,15 +105,15 @@ export default class HeroGroupComponent extends Component {
         this._canEditGroup();
 
         if (this._hasHero(hero)) {
-            return;
+            throw new AppError('Герой уже в группе.');
         }
 
         let heroSlot = this._getFirstFreeHeroSlot();
-        if (heroSlot) {
-            this._setHero(heroSlot, hero);
-        } else {
+        if (!heroSlot) {
             throw new AppError('Группа полная.');
         }
+
+        this._setHero(heroSlot, hero);
     }
 
     _clearPosition(position: number): void {
@@ -131,12 +130,16 @@ export default class HeroGroupComponent extends Component {
     }
 
     //@comment Могут ли понадобиться слоты вне класса?
-    removeHero(hero: GameObject) {
+    removeHero(hero: GameObject): void {
+        assert(!_.isNil(hero));
+        assert(hero instanceof GameObject);
+
         let heroSlot = this._getHeroSlot(hero);
-        if (heroSlot) {
-            heroSlot.clear();
+        if (!heroSlot) {
+            throw new AppError('Герой не найден в группе.');
         }
-        // this.clearPosition(this._getHeroPosition(hero));
+
+        heroSlot.clear();
     }
 
     _getFirstFreeHeroSlot(): HeroSlot {

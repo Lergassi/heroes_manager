@@ -4,19 +4,6 @@ import ArmorMaterial from './ArmorMaterial.js';
 import CharacterAttribute from './CharacterAttribute.js';
 import _ from 'lodash';
 
-export enum HeroClassAlias {
-    Warrior = 'warrior',
-    Paladin = 'paladin',
-    Rogue = 'rogue',
-    Gladiator = 'gladiator',
-    Archer = 'archer',
-    Gunslinger = 'gunslinger',
-    Mage = 'mage',
-    Warlock = 'warlock',
-    Priest = 'priest',
-    Druid = 'druid',
-}
-
 export default class HeroClass {
     private readonly _id: string;
     private readonly _name: string;

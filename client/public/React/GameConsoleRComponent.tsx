@@ -1,10 +1,8 @@
 import React from 'react';
 import AppError from '../../../core/source/Errors/AppError.js';
 import debug from 'debug';
-import {sprintf} from 'sprintf-js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import {debugPlayerEnv} from '../../../core/debug/debug_functions.js';
 
 export interface GameConsoleProps {
     container: ContainerInterface;

@@ -1,14 +1,11 @@
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
-import UUIDGenerator from '../../source/UUIDGenerator.js';
-import ContainerInterface from '../../source/ContainerInterface.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
-import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
+import {unsigned} from '../types.js';
 
 export default class ItemStorageFactory implements ItemStorageFactoryInterface {
     private readonly _gameObjectStorage: GameObjectStorage;
@@ -68,12 +65,14 @@ export default class ItemStorageFactory implements ItemStorageFactoryInterface {
         return itemStorage;
     }
 
-    createIn(size: number, gameObject: GameObject) {
+    createIn(size: unsigned, gameObject: GameObject) {
         let slots = [];
+        let slotIDPrefix = 'slot_';
         for (let i = 0; i < size; i++) {
             let slot = new ItemStorageSlotComponent();
             slots.push(slot);
-            gameObject.addComponent(slot);
+            // gameObject.addComponent(slot);
+            gameObject.set(slotIDPrefix + i.toString(), slot);
         }
 
         let itemStorageComponent = gameObject.set<ItemStorageComponent>('itemStorageComponent', new ItemStorageComponent(

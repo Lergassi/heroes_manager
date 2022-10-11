@@ -1,4 +1,3 @@
-import EntityManager from '../source/EntityManager.js';
 import Item from './Entities/Item.js';
 import ItemDatabase from './ItemDatabase.js';
 import _ from 'lodash';

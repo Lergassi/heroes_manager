@@ -1,9 +1,9 @@
 import Item, {
-    CharacterAttributeIncreaseObject, CharacterAttributeRecord,
+    CharacterAttributeIncreaseObject,
+    CharacterAttributeRecord,
     ItemGetType,
     ItemOptions,
-    ItemProperties,
-    ItemProperty
+    ItemProperties
 } from '../Entities/Item.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
@@ -12,7 +12,6 @@ import ItemCategory from '../Entities/ItemCategory.js';
 import Quality from '../Entities/Quality.js';
 import EntityManager from '../../source/EntityManager.js';
 import {CharacterAttributeIncreaseObjectBuilder} from './CharacterAttributeIncreaseBuilder.js';
-import {omit} from 'lodash';
 
 export type alias = string;
 // export type ItemBuilderCreate = (
