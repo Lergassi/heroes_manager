@@ -11,12 +11,14 @@ import ItemStackFactory from './ItemStackFactory.js';
 import ItemDatabase from '../ItemDatabase.js';
 import Random from '../Services/Random.js';
 import ItemCategory from '../Entities/ItemCategory.js';
-import {CurrencyAlias, CurrencyWalletAlias, ItemCategoryID, unsigned} from '../types.js';
+import {CurrencyWalletAlias, unsigned} from '../types.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
 import AppError from '../../source/Errors/AppError.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import Currency from '../Entities/Currency.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import {CurrencyID} from '../../types/enums/CurrencyID.js';
 
 export type LocationFactoryCreateOptions = {
     // level: LevelRange;
@@ -84,7 +86,7 @@ export default class LocationFactory {
         let location = this._gameObjectFactory.create();
 
         location.set<WalletComponent>(CurrencyWalletAlias.Gold, new WalletComponent({
-            currency: this._entityManager.get<Currency>(Currency, CurrencyAlias.Gold),
+            currency: this._entityManager.get<Currency>(Currency, CurrencyID.Gold),
             value: 0,
         }));
         let heroGroupComponent = location.set<HeroGroupComponent>('heroGroupComponent', new HeroGroupComponent({

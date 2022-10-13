@@ -46,11 +46,11 @@ export default class EntityManager {
         return value;
     }
 
-    get<Entity>(module: Function | string, alias: string/*todo: По ID или фильтру.*/): Entity {
+    get<Entity>(module: Function | string, ID: string): Entity {
         if (typeof module === 'string') {
-            return this.getRepository<Entity>(module).getOneByAlias(alias);
+            return this.getRepository<Entity>(module).getOneByID(ID);
         } else {
-            return this.getRepository<Entity>(module.name).getOneByAlias(alias);
+            return this.getRepository<Entity>(module.name).getOneByID(ID);
         }
     }
 

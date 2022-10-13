@@ -3,7 +3,10 @@ import Item, {ItemGetType} from '../Entities/Item.js';
 import ItemBuilder from './ItemBuilder.js';
 import ItemFactory from '../Factories/ItemFactory.js';
 import {DEFAULT_STACK_SIZE} from '../consts.js';
-import {CharacterAttributeID, ItemCategoryID} from '../types.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
+import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 
 export default class ItemDatabaseBuilder {
     private readonly _em: EntityManager;
@@ -35,9 +38,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '09954f0a-3291-4569-b288-02d073bc826f',
+                    ItemID.Wood,
                     'Древесина',
-                    'wood',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -55,9 +57,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '689e8bd3-1b1c-437f-8532-66680a1f6609',
+                    ItemID.WoodBoards,
                     'Доски',
-                    'wood_boards',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -72,9 +73,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '4f2873d9-6a24-4753-b40d-3bcea2e71d07',
+                    ItemID.Coal,
                     'Уголь',
-                    'coal',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -86,9 +86,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'd2423253-3eff-4715-b2a8-228f78cd1968',
+                    ItemID.IronOre,
                     'Железная руда',
-                    'iron_ore',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -103,9 +102,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '5e48954f-f1ae-457e-8b36-c8ef800bbbd8',
+                    ItemID.IronBar,
                     'Железный слиток',
-                    'iron_bar',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -117,9 +115,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '046e6d7c-6629-4486-9c7b-0fef2e3456f9',
+                    ItemID.CopperOre,
                     'Медная руда',
-                    'copper_ore',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -134,9 +131,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '9dc8102a-3def-43df-9078-332a77dcd4e8',
+                    ItemID.CopperBar,
                     'Медный слиток',
-                    'copper_bar',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -148,9 +144,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'b95e4cc7-d55c-4f43-8dc3-6195b6601469',
+                    ItemID.TinOre,
                     'Оловяная руда',
-                    'tin_bar',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -165,9 +160,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'ad8e524f-21da-4312-8d3e-bb761c576f72',
+                    ItemID.TinBar,
                     'Оловянный слиток',
-                    'tin_bar',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -179,9 +173,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '28409dfa-8ad4-489f-a9f3-bc4e7eea8ffc',
+                    ItemID.BronzeBar,
                     'Бронзовый слиток',
-                    'bronze_bar',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -193,9 +186,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'f7673085-b45d-4d50-990d-60883c9f37be',
+                    ItemID.GoldOre,
                     'Золотая руда',
-                    'gold_ore',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -210,9 +202,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '28409dfa-8ad4-489f-a9f3-bc4e7eea8ffc',
+                    ItemID.GoldBar,
                     'Золотой слиток',
-                    'gold_bar',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -224,9 +215,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'e008221f-2468-480b-a27c-a9702a616e7a',
+                    ItemID.Herb_1,
                     'Трава 1',
-                    'herb_1',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -241,9 +231,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '66560e57-59e6-49b8-a6dc-d008b51c6908',
+                    ItemID.Herb_2,
                     'Трава 2',
-                    'herb_2',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -258,9 +247,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '8ac45b16-af8c-4373-9906-06778de8de81',
+                    ItemID.Herb_3,
                     'Трава 3',
-                    'herb_3',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -275,9 +263,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'ca77d48f-a249-479a-8f55-2d2cf90c353f',
+                    ItemID.Cotton,
                     'Хлопок',
-                    'cotton',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -292,9 +279,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '85a67e7b-ab4c-42eb-896a-c02f42416bbd',
+                    ItemID.CottonThread,
                     'Хлопковая нить',
-                    'cotton_thread',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -306,9 +292,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'e5082072-4b00-4159-a4bb-85223ed28757',
+                    ItemID.CottonFabric,
                     'Хлопковая ткань',
-                    'cotton_fabric',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -320,9 +305,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '2c4fe3a3-57eb-424f-876b-595a252b2877',
+                    ItemID.RabbitSkin,
                     'Шкура зайца',
-                    'rabbit_skin',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -337,9 +321,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '3b749e72-29f1-4590-ba0b-54d765a94766',
+                    ItemID.FoxSkin,
                     'Шкура лисы',
-                    'fox_skin',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -354,9 +337,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '3810cd06-23f9-4257-b6ae-3facfdfebfcb',
+                    ItemID.DeerSkin,
                     'Шкура оленя',
-                    'deer_skin',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -371,9 +353,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '46d89c19-3cc6-4cbb-89df-3faf247bb881',
+                    ItemID.WolfSkin,
                     'Шкура волка',
-                    'wolf_skin',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -388,9 +369,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '5ec3ea72-d263-4b94-ac4a-b77d3c0dbfc3',
+                    ItemID.BearSkin,
                     'Шкура медведя',
-                    'bear_skin',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -405,9 +385,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'd98c137b-140d-427d-b17b-03ec35afec1d',
+                    ItemID.Leather_1,
                     'Кожа',
-                    'leather_1',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -422,9 +401,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'a8555923-f7f6-43ea-9acf-2f58ec20670a',
+                    ItemID.MagicResources_1,
                     'Магический ресурс 1',
-                    'magic_resources_1',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -436,9 +414,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '4cef1e2c-dc75-48cb-9299-c450ae1dfad0',
+                    ItemID.MagicMaterial_1,
                     'Магический предмет 1',
-                    'magic_material_1',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
@@ -453,13 +430,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '8a2e3afc-5d39-4493-90cf-6f212abc05ed',
+                    ItemID.PlateHelmet_01,
                     'Латный шлем 01',
-                    'plate_helmet_01',
                     ItemCategoryID.Helmets,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -469,13 +445,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '51a2a98c-584b-47ca-a2aa-fe4d32b323df',
+                    ItemID.PlateHelmet_02,
                     'Латный шлем 02',
-                    'plate_helmet_02',
                     ItemCategoryID.Helmets,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                         characterAttributes: {
                             [CharacterAttributeID.Strength]: 10,
@@ -491,13 +466,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'd54c9ab6-faac-4ef9-a2f1-407e71304a24',
+                    ItemID.PlateShoulders_01,
                     'Латные наплечники 01',
-                    'plate_shoulders_01',
                     ItemCategoryID.ShoulderPads,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -507,13 +481,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'b18f9675-20f1-49b0-939a-f9d5ec4a199d',
+                    ItemID.PlateBreastplate_01,
                     'Латный нагрудник 01',
-                    'plate_breastplate_01',
                     ItemCategoryID.Breastplates,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -523,13 +496,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '30630466-c3b2-4a0e-a347-93b919dd3102',
+                    ItemID.PlateBracer_01,
                     'Латный браслет 01',
-                    'plate_helmet_01',
                     ItemCategoryID.Bracers,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -539,13 +511,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '0de0097c-9d4a-4094-b800-d37196ac3207',
+                    ItemID.PlateGloves_01,
                     'Латные перчатки 01',
-                    'plate_gloves_01',
                     ItemCategoryID.Gloves,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -555,13 +526,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'f65240d0-5c4f-47b7-ae18-91d2714cd715',
+                    ItemID.PlateBelt_01,
                     'Латный пояс 01',
-                    'plate_belt_01',
                     ItemCategoryID.Belts,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -571,13 +541,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '6547cc56-741c-4a17-ba44-6368298c6dd2',
+                    ItemID.PlatePants_01,
                     'Латный штаны 01',
-                    'plate_pants_01',
                     ItemCategoryID.Pants,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -587,13 +556,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '604677b5-e285-4c04-9ee3-537746621f5a',
+                    ItemID.PlateBoots_01,
                     'Латный сапоги 01',
-                    'plate_boots_01',
                     ItemCategoryID.Boots,
                     {
                         properties: {
-                            armorMaterial: 'plate',
+                            armorMaterial: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -603,13 +571,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '4de1e1bc-5842-4e78-a956-6b43735293c3',
+                    ItemID.LeatherHelmet_01,
                     'Кожаный шлем 01',
-                    'leather_helmet_01',
                     ItemCategoryID.Helmets,
                     {
                         properties: {
-                            armorMaterial: 'leather',
+                            armorMaterial: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -619,13 +586,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'f30905f4-e924-4ad2-bbaf-5099a99eaf10',
+                    ItemID.LeatherShoulders_01,
                     'Кожаные наплечники 01',
-                    'leather_shoulders_01',
                     ItemCategoryID.ShoulderPads,
                     {
                         properties: {
-                            armorMaterial: 'leather',
+                            armorMaterial: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -635,13 +601,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '1d86155f-2c89-4d73-8f57-8b93e1e19751',
+                    ItemID.LeatherBreastplate_01,
                     'Кожаный нагрудник 01',
-                    'leather_breastplate_01',
                     ItemCategoryID.Breastplates,
                     {
                         properties: {
-                            armorMaterial: 'leather',
+                            armorMaterial: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -651,13 +616,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '4dc33853-057f-441d-95ac-94aad1211c61',
+                    ItemID.LeatherBracer_01,
                     'Кожаный браслет 01',
-                    'leather_helmet_01',
                     ItemCategoryID.Bracers,
                     {
                         properties: {
-                            armorMaterial: 'leather',
+                            armorMaterial: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -667,13 +631,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '07ec4b03-30d9-482a-8f97-4a3f016cce0c',
+                    ItemID.LeatherGloves_01,
                     'Кожаные перчатки 01',
-                    'leather_gloves_01',
                     ItemCategoryID.Gloves,
                     {
                         properties: {
-                            armorMaterial: 'leather',
+                            armorMaterial: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -683,13 +646,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '0e7a301c-918d-4565-9de1-cb2edab327aa',
+                    ItemID.LeatherBelt_01,
                     'Кожаный пояс 01',
-                    'leather_belt_01',
                     ItemCategoryID.Belts,
                     {
                         properties: {
-                            armorMaterial: 'leather',
+                            armorMaterial: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -699,13 +661,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '9eb09be0-7c1d-4fba-bb11-b6745449978c',
+                    ItemID.LeatherPants_01,
                     'Кожаный штаны 01',
-                    'leather_pants_01',
                     ItemCategoryID.Pants,
                     {
                         properties: {
-                            armorMaterial: 'leather',
+                            armorMaterial: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -715,13 +676,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'e1d91749-5c45-47b4-bb31-9053e33a576d',
+                    ItemID.LeatherBoots_01,
                     'Кожаный сапоги 01',
-                    'leather_boots_01',
                     ItemCategoryID.Boots,
                     {
                         properties: {
-                            armorMaterial: 'leather',
+                            armorMaterial: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -731,13 +691,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'f4bac01f-0d07-4948-b235-631f7e63d83e',
+                    ItemID.ClothHelmet_01,
                     'Тканевый шлем 01',
-                    'cloth_helmet_01',
                     ItemCategoryID.Helmets,
                     {
                         properties: {
-                            armorMaterial: 'cloth',
+                            armorMaterial: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -747,13 +706,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'a92dfe24-68c9-44a9-ad5c-45a392e60850',
+                    ItemID.ClothShoulders_01,
                     'Тканевые наплечники 01',
-                    'cloth_shoulders_01',
                     ItemCategoryID.ShoulderPads,
                     {
                         properties: {
-                            armorMaterial: 'cloth',
+                            armorMaterial: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -763,13 +721,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '6b7a9104-6f81-4f24-8403-a6d9577011a6',
+                    ItemID.ClothBreastplate_01,
                     'Тканевый нагрудник 01',
-                    'cloth_breastplate_01',
                     ItemCategoryID.Breastplates,
                     {
                         properties: {
-                            armorMaterial: 'cloth',
+                            armorMaterial: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -779,13 +736,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'd5e4b73a-68bd-4ddf-954f-e70d4e367d2b',
+                    ItemID.ClothBracer_01,
                     'Тканевый браслет 01',
-                    'cloth_helmet_01',
                     ItemCategoryID.Bracers,
                     {
                         properties: {
-                            armorMaterial: 'cloth',
+                            armorMaterial: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -795,13 +751,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'f9aaca7a-4acd-448e-a0d1-ea1a1c916d9f',
+                    ItemID.ClothGloves_01,
                     'Тканевые перчатки 01',
-                    'cloth_gloves_01',
                     ItemCategoryID.Gloves,
                     {
                         properties: {
-                            armorMaterial: 'cloth',
+                            armorMaterial: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -811,13 +766,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '61847221-ee77-4e81-809c-3d980aecdfd9',
+                    ItemID.ClothBelt_01,
                     'Тканевый пояс 01',
-                    'cloth_belt_01',
                     ItemCategoryID.Belts,
                     {
                         properties: {
-                            armorMaterial: 'cloth',
+                            armorMaterial: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -827,13 +781,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'fa9dc8a9-c74b-4c55-9a2b-4d5c1e045f29',
+                    ItemID.ClothPants_01,
                     'Тканевый штаны 01',
-                    'cloth_pants_01',
                     ItemCategoryID.Pants,
                     {
                         properties: {
-                            armorMaterial: 'cloth',
+                            armorMaterial: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -843,13 +796,12 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'c4ea5041-7709-402a-8bbd-f43e82735902',
+                    ItemID.ClothBoots_01,
                     'Тканевый сапоги 01',
-                    'cloth_boots_01',
                     ItemCategoryID.Boots,
                     {
                         properties: {
-                            armorMaterial: 'cloth',
+                            armorMaterial: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -859,9 +811,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'f2d58c88-a439-46b7-a4ef-e849963356b9',
+                    ItemID.Shield_01,
                     'Щит',
-                    'shield_01',
                     ItemCategoryID.Shields,
                     {
 
@@ -873,9 +824,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '3378ac2f-a12d-4737-b16f-6e15d3453ecf',
+                    ItemID.Amulet_01,
                     'Амулет 01',
-                    'amulet_01',
                     ItemCategoryID.Amulets,
                     {
 
@@ -887,9 +837,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'b0ccfb06-588e-4ea8-bac4-25d57f18cc29',
+                    ItemID.Ring_01,
                     'Кольцо 01',
-                    'ring_01',
                     ItemCategoryID.Rings,
                     {
 
@@ -901,9 +850,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '9d2775b7-7700-4ab6-9b4c-2cd03d7b98fc',
+                    ItemID.Trinket_01,
                     'Тринкет',
-                    'trinket_01',
                     ItemCategoryID.Trinkets,
                     {
 
@@ -918,9 +866,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'a5492c54-9a4d-42b7-8ec3-a8ccaa787854',
+                    ItemID.OneHandedSword_01,
                     'Одноручный меч 01',
-                    'one_handed_sword_01',
                     ItemCategoryID.OneHandedSwords,
                     {
 
@@ -932,9 +879,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '7e294428-7448-43d0-aff0-23f86511fdf2',
+                    ItemID.TwoHandedSword_01,
                     'Двуручный меч 01',
-                    'two_handed_sword_01',
                     ItemCategoryID.TwoHandedSwords,
                     {
 
@@ -946,9 +892,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'f01594a0-efdc-418d-98e9-fe4128a5bc63',
+                    ItemID.Dagger_01,
                     'Кинжал 01',
-                    'dagger_01',
                     ItemCategoryID.Daggers,
                     {
 
@@ -960,9 +905,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '1efc1c84-bc42-49c6-ba6a-87615a5308ea',
+                    ItemID.OneHandedAxe_01,
                     'Одноручный топор 01',
-                    'one_handed_axe_01',
                     ItemCategoryID.OneHandedAxes,
                     {
 
@@ -974,9 +918,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '2c6e3f0f-0f64-45d3-a9d5-68775b938d36',
+                    ItemID.TwoHandedAxe_01,
                     'Двуручный топор 01',
-                    'two_handed_axe_01',
                     ItemCategoryID.TwoHandedAxes,
                     {
 
@@ -988,9 +931,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '5d67d7e2-76f5-435c-a0e0-e76cc5c23564',
+                    ItemID.Staff_01,
                     'Посох 01',
-                    'staff_01',
                     ItemCategoryID.Staffs,
                     {
 
@@ -1002,9 +944,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '6dead4cd-91cd-4f48-b103-0a7e7f652b3c',
+                    ItemID.Wand_01,
                     'Жезл 01',
-                    'wand_01',
                     ItemCategoryID.Wands,
                     {
 
@@ -1016,9 +957,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    '7a00f9f6-d6a7-471c-b95f-a48533cfdeb8',
+                    ItemID.Revolver_01,
                     'Револьвер 01',
-                    'revolver_01',
                     ItemCategoryID.Revolvers,
                     {
 
@@ -1030,9 +970,8 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    'f36d184e-8c6a-4dfb-a9b9-0f3e242860a6',
+                    ItemID.BoarLeather,
                     'Кожа кабана',
-                    'boar_leather',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,

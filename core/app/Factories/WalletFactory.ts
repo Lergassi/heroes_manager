@@ -13,7 +13,7 @@ export default class WalletFactory {
     }
 
     create(options: {
-        currency: Currency,
+        currency: Currency, //todo: ID
         value: unsigned,
     }) {
         let wallet = this._gameObjectFactory.create();
@@ -21,7 +21,7 @@ export default class WalletFactory {
         wallet.name = 'Wallet';
         wallet.addTags([
             '#wallet',
-            CurrencyWalletAlias[options.currency.alias],
+            CurrencyWalletAlias[options.currency['_id']],   //todo: Доступ.
         ]);
 
         wallet.set(WalletComponent.name, new WalletComponent({

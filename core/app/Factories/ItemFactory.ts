@@ -19,7 +19,6 @@ export default class ItemFactory {
           return (new ItemBuilder(this._em).default(
               id,
               name,
-              alias,
               itemCategory,
               options,
           )).build();

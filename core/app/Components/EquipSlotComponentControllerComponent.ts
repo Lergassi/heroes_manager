@@ -40,7 +40,7 @@ export default class EquipSlotComponentControllerComponent extends Component {
             }
         }
 
-        throw AppError.heroNotContainsEquipSlot(equipSlot.name);
+        throw AppError.heroNotContainsEquipSlot();
     }
 
     equipItemStack(equipSlot: EquipSlot, itemStack: ItemStack): boolean {

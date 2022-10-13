@@ -16,23 +16,29 @@ export default class ItemDatabase {
     }
 
     get(ID: string): Item {
-        let item = this.filter({
-            alias: [ID],
-        });
+        for (let i = 0; i < this._items.length; i++) {
+            if (this._items[i]['_id'] === ID) { //todo: Доступ.
+                return this._items[i];
+            }
+        }
 
-        return item[0] || undefined;
+        return undefined;
     }
 
     all(): Item[] {
         return _.concat<Item>(this._items);
     }
 
+    /**
+     * @deprecated
+     * @param filter
+     */
     filter(filter: ItemFilterCondition): Item[] {
         let result = [];
         for (let i = 0; i < this._items.length; i++) {
-            if (this._items[i].filter(filter)) {
-                result.push(this._items[i]);
-            }
+            // if (this._items[i][].filter(filter)) {
+            //     result.push(this._items[i]);
+            // }
         }
 
         return result;

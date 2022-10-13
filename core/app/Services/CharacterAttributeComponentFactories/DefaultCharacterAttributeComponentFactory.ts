@@ -1,7 +1,8 @@
-import {CharacterAttributeID, unsigned} from '../../types.js';
+import {unsigned} from '../../types.js';
 import ItemAttributeCollectorComponent from '../../Components/ItemAttributeCollectorComponent.js';
 import CharacterAttributeComponent from '../../Components/CharacterAttributeComponent.js';
 import _ from 'lodash';
+import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 
 export default class DefaultCharacterAttributeComponentFactory {
     // private _default = {

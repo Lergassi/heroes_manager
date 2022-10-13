@@ -12,6 +12,7 @@ import ItemCategory from '../Entities/ItemCategory.js';
 import Quality from '../Entities/Quality.js';
 import EntityManager from '../../source/EntityManager.js';
 import {CharacterAttributeIncreaseObjectBuilder} from './CharacterAttributeIncreaseBuilder.js';
+import {QualityID} from '../../types/enums/QualityID.js';
 
 export type alias = string;
 // export type ItemBuilderCreate = (
@@ -91,7 +92,6 @@ export default class ItemBuilder {
 
     private _id: string;
     private _name: string;
-    private _alias: string;
     private _description: string;
     private _itemLevel: number;
     private _sort: number;
@@ -110,7 +110,7 @@ export default class ItemBuilder {
     private _default: Partial<ItemBuilderOptions> = {
         description: '',
         itemLevel: 1,
-        quality: 'common',
+        quality: QualityID.Common,
         sort: 500,
         stackSize: 1,   //todo: Может как stackable лучше указать как default?
     };
@@ -123,13 +123,11 @@ export default class ItemBuilder {
     default(
         id: string,
         name: string,
-        alias: string,
         itemCategory: alias,
         options: Partial<ItemBuilderOptions> = {},
     ) {
         this._id = id;
         this._name = name;
-        this._alias = alias;
         this._itemCategory = this._entityManager.get<ItemCategory>(ItemCategory, itemCategory);
 
         this._description = options.description ?? this._default.description;
@@ -200,7 +198,6 @@ export default class ItemBuilder {
         return new Item(
             this._id,
             this._name,
-            this._alias,
             this._description,
             this._stackSize,
             this._itemLevel,

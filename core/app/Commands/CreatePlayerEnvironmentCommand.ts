@@ -7,8 +7,8 @@ import Currency from '../Entities/Currency.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
-import {CurrencyAlias} from '../types.js';
-import {ContainerKey} from '../../types/containerKey.js';
+import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CurrencyID} from '../../types/enums/CurrencyID.js';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.
@@ -36,8 +36,8 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         let config = this.container.get<object>('core.config');
 
         let currencies = [
-            CurrencyAlias.Gold,
-            CurrencyAlias.ResearchPoints,
+            CurrencyID.Gold,
+            CurrencyID.ResearchPoints,
         ];
 
         currencies.forEach((currencyAlias) => {

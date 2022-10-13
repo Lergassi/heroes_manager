@@ -31,16 +31,21 @@ import HeroClass from '../core/app/Entities/HeroClass.js';
 import GameObject from '../core/source/GameObject.js';
 import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
 import EnemyFactory from '../core/app/Factories/EnemyFactory.js';
-import {CharacterAttributeID, EnemyTypeID, EntityManagerKey, HeroClassID, ItemCategoryID} from '../core/app/types.js';
+import {EntityManagerKey} from '../core/app/types.js';
 import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponentFactory.js';
 import EnemyType from '../core/app/Entities/EnemyType.js';
 import HealthPointsComponent from '../core/app/Components/HealthPointsComponent.js';
 import ItemAttributeCollectorComponent from '../core/app/Components/ItemAttributeCollectorComponent.js';
 import EnemyGroupComponent from '../core/app/Components/EnemyGroupComponent.js';
 import AttackPowerComponent from '../core/app/Components/AttackPowerComponent.js';
-import {ContainerKey} from '../core/types/containerKey.js';
+import {ContainerKey} from '../core/types/enums/ContainerKey.js';
 import CharacterAttributeComponent from '../core/app/Components/CharacterAttributeComponent.js';
-import CharacterAttributeCollectorComponent from '../core/app/Components/CharacterAttributeCollectorComponent.js';
+import CharacterAttributeRawValueCollectorComponent from '../core/app/Components/CharacterAttributeRawValueCollectorComponent.js';
+import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
+import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
+import {HeroClassID} from '../core/types/enums/HeroClassID.js';
+import {EnemyTypeID} from '../core/types/enums/EnemyTypeID.js';
+import {ItemID} from '../core/types/enums/ItemID.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -66,12 +71,12 @@ export class SandboxController {
         // this.testRandom_oneFromRange();
         // this.testLodashPull();
 
-        this.devHeroFactory();
+        // this.devHeroFactory();
         // this.devLocation();
         // this.devGoldLootGeneratorComponent();
         // this.devLevelComponent();
         // this.devLootGenerator();
-        // this.devFight();
+        this.devFight();
         // this.devAttackPowerComponent();
     }
 
@@ -163,8 +168,8 @@ export class SandboxController {
         );
         // console.log(randomItemGenerator);
         // console.log(randomItemGenerator.generateItems(4242));
-        // console.log(em.get<Item>(Item, 'plate_helmet_02'));
-        // console.log(em.get<Item>(Item, 'plate_helmet_02').name);
+        // console.log(em.get<Item>(Item, ItemID.PlateHelmet_02));
+        // console.log(em.get<Item>(Item, ItemID.PlateHelmet_02).name);
         console.log(_.map(randomItemGenerator.generateItems(4242), (item) => {
             return item['name'];
         }));
@@ -208,19 +213,19 @@ export class SandboxController {
                 // {itemCategory: em.get<ItemCategory>(ItemCategory, ItemCategoryAlias.Resources), includeChildren: false},
                 // {itemCategory: em.get<ItemCategory>(ItemCategory, ItemCategoryAlias.Resources)},
             ],
-            // quality: [em.get<Quality>(Quality, 'epic')],
+            // quality: [em.get<Quality>(Quality, QualityID.Epic)],
         });
         resources = [
-            // itemDatabase.get('iron_ore'),
-            itemDatabase.get('iron_ore'),
-            itemDatabase.get('iron_bar'),
-            itemDatabase.get('copper_ore'),
+            // itemDatabase.get(ItemID.IronOre),
+            itemDatabase.get(ItemID.IronOre),
+            itemDatabase.get(ItemID.IronBar),
+            itemDatabase.get(ItemID.CopperOre),
         ];
         // console.log(ItemCategoryAlias.Resources, resources);
-        console.log(_.map(resources, item => [item.itemCategory.name, item.name]));
+        // console.log(_.map(resources, item => [item.itemCategory.name, item.name]));
         // console.log(random.one(resources).name);
         // console.log(random.some(resources, 3, {unique: true}));
-        console.log(_.map(Random.some(resources, 3, {unique: true}), item => [item.itemCategory.name, item.name]));
+        // console.log(_.map(Random.some(resources, 3, {unique: true}), item => [item.itemCategory.name, item.name]));
     }
 
     testDateDiffs() {
@@ -257,7 +262,7 @@ export class SandboxController {
         let itemStackFactory: ItemStackFactory = this._container.get(ContainerKey.ItemStackFactory);
 
         let item = {
-            item: db.get('wood'),
+            item: db.get(ItemID.Wood),
             // count: 1,
             count: 123,
         };
@@ -277,8 +282,8 @@ export class SandboxController {
         // console.log(itemStorageComponent);
         // debugItemStorage(itemStorage);
 
-        // itemStorageComponent.addItem(db.get('wood'), 12);
-        let item = db.get('wood');
+        // itemStorageComponent.addItem(db.get(ItemID.Wood), 12);
+        let item = db.get(ItemID.Wood);
         // let counts = [
         //     8,
         //     8,
@@ -302,8 +307,8 @@ export class SandboxController {
             remainder.push(itemStorageComponent.addItem(item, count));
         });
         console.log(counts, remainder);
-        // itemStorageComponent.addItem(db.get('wood'), 12);
-        // itemStorageComponent.addItem(db.get('wood'), 12);
+        // itemStorageComponent.addItem(db.get(ItemID.Wood), 12);
+        // itemStorageComponent.addItem(db.get(ItemID.Wood), 12);
 
         debugItemStorage(itemStorage);
     }
@@ -321,7 +326,7 @@ export class SandboxController {
         // console.log(itemStorage);
         // debugNewItemStorage(itemStorage);
         let controller = itemStorage.getComponent<ItemStorageComponent>('itemStorageComponent');
-        controller.addItem(this._container.get<ItemDatabase>(ContainerKey.ItemDatabase).get('wood'), 24);
+        controller.addItem(this._container.get<ItemDatabase>(ContainerKey.ItemDatabase).get(ItemID.Wood), 24);
         debugItemStorage(itemStorage);
         // let itemStorage = new ItemStorageComponent();
     }
@@ -337,8 +342,8 @@ export class SandboxController {
         // let itemSlot1 = new ItemSlotComponent();
         // let itemSlot2 = new ItemSlotComponent();
         // // console.log(itemSlot1);
-        // itemSlot1.place(itemStackFactory.create(db.get('wood'), 10));
-        // itemSlot2.place(itemStackFactory.create(db.get('wood'), 20));
+        // itemSlot1.place(itemStackFactory.create(db.get(ItemID.Wood), 10));
+        // itemSlot2.place(itemStackFactory.create(db.get(ItemID.Wood), 20));
         // console.log(itemSlot1);
         // console.log(itemSlot2);
         // itemSlot1.replace(itemSlot2);
@@ -350,8 +355,8 @@ export class SandboxController {
         // console.log(itemSlotContainer);
         // let itemSlot = itemSlotContainer.get<ItemSlot>('itemSlot');
         // // console.log(itemSlot);
-        // // let itemStack = itemSlot.place(itemStackFactory.create(db.get('wood'), 10));
-        // let itemStack = itemSlot.place(itemStackFactory.create(db.get('wood'), 20));
+        // // let itemStack = itemSlot.place(itemStackFactory.create(db.get(ItemID.Wood), 10));
+        // let itemStack = itemSlot.place(itemStackFactory.create(db.get(ItemID.Wood), 20));
         // console.log(itemStack);
         // console.log(itemStack.add(4));
         // console.log(itemStack.add(40));
@@ -381,24 +386,24 @@ export class SandboxController {
         }));
 
         // console.dir(itemStorage, {depth: 4});
-        // itemStorage.get<GameContainer[]>('itemSlots')[0].get<ItemSlot>('itemSlot').place(itemStackFactory.create(db.get('wood'), 10));
-        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get('wood'), 12);
-        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get('wood'), 12);
-        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get('wood'), 12);
+        // itemStorage.get<GameContainer[]>('itemSlots')[0].get<ItemSlot>('itemSlot').place(itemStackFactory.create(db.get(ItemID.Wood), 10));
+        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get(ItemID.Wood), 12);
+        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get(ItemID.Wood), 12);
+        itemStorage.getComponent<ItemStorageController>('controller').addItem(db.get(ItemID.Wood), 12);
         // console.log(itemStorage.get<GameContainer[]>('itemSlots')[0]['_components']['itemSlot']);
         debugNewItemStorage(itemStorage);
 
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
-        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get('wood'), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
+        // console.log(itemStorageController.addItemStack(itemStackFactory.create(db.get(ItemID.Wood), 10)));
         // console.dir(itemStorage, {depth: 5});
     }
 
@@ -466,7 +471,7 @@ export class SandboxController {
         };
 
         let wood: _ItemType = {
-            name: 'wood',
+            name: ItemID.Wood,
             stackSize: 20,
         };
         let sword: _ItemType = {
@@ -631,20 +636,6 @@ export class SandboxController {
         let heroFactory = this._container.get<HeroFactory>('player.heroFactory');
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
-        // let enemies = [];
-        // enemies.push(enemyFactory.create({
-        //     enemyTypeID: EnemyTypeID.Boar,
-        //     level: 1,
-        // }));
-        // enemies.push(enemyFactory.create({
-        //     enemyTypeID: EnemyTypeID.Boar,
-        //     level: 1,
-        // }));
-        // enemies.push(enemyFactory.create({
-        //     enemyTypeID: EnemyTypeID.Boar,
-        //     level: 1,
-        // }));
-        //
         let heroes = [
             heroFactory.create({
                 heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
@@ -676,6 +667,8 @@ export class SandboxController {
         heroGroupComponent.addHero(heroes[2]);
         heroGroupComponent.addHero(heroes[3]);
         heroGroupComponent.addHero(heroes[4]);
+        console.log(heroGroupComponent);
+        console.log(heroes[0]);
 
         let enemyGroupComponent = new EnemyGroupComponent({
             size: 5,
@@ -705,6 +698,7 @@ export class SandboxController {
             level: 1,
             enemyFactory: enemyFactory,
         });
+        console.log(enemyGroupComponent);
 
         // heroGroupComponent.attack(enemyGroupComponent);
         // enemyGroupComponent.attack(heroGroupComponent);
@@ -733,7 +727,7 @@ export class SandboxController {
 
         let attackPowerComponent = new AttackPowerComponent({
             range: _.random(16, 34),
-            characterAttributeCollectorComponent: new CharacterAttributeCollectorComponent({itemAttributeCollectorComponent: itemAttributeCollectorComponent}),
+            characterAttributeCollectorComponent: new CharacterAttributeRawValueCollectorComponent(),
             // itemAttributeCollectorComponent: itemAttributeCollectorComponent,
             dependentCharacterAttributeComponents: [attributes[CharacterAttributeID.Strength]],
         });
@@ -747,20 +741,20 @@ export class SandboxController {
 
     testLodashPull() {
         let items = [
-            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'wood'),
-            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'iron_ore'),
-            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01'),
-            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01'),
-            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01'),
+            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.Wood),
+            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.IronOre),
+            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01),
+            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01),
+            this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01),
         ];
         console.log(items);
 
-        // _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01'));
-        console.log(_.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01')));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01')));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01')));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01')));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, 'one_handed_sword_01')));
+        // _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01));
+        console.log(_.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
         console.log(items);
     }
 }

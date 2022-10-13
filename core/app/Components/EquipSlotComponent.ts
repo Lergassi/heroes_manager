@@ -33,7 +33,7 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     constructor(options: {
         equipSlot: EquipSlot,
         heroComponent: HeroComponent,
-        itemAttributeCollectorComponent: ItemAttributeCollectorComponent,
+        itemAttributeCollectorComponent: ItemAttributeCollectorComponent,   //todo: В декоратор.
     }) {
         super();
         this._equipSlot = options.equipSlot;

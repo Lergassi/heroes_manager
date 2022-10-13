@@ -1,6 +1,7 @@
 import Component from '../../source/Component.js';
 import EnemyType from '../Entities/EnemyType.js';
-import {EnemyTypeID, unsigned} from '../types.js';
+import {unsigned} from '../types.js';
+import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 
 export default class EnemyComponent extends Component {
     private readonly _enemyType: EnemyType;

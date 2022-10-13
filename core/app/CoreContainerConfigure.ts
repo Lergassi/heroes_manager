@@ -14,7 +14,7 @@ import ItemFactory from './Factories/ItemFactory.js';
 import ItemDatabase from './ItemDatabase.js';
 import {extractItems} from './indev.js';
 import EventSystem from '../source/EventSystem.js';
-import {ContainerKey} from '../types/containerKey.js';
+import {ContainerKey} from '../types/enums/ContainerKey.js';
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {

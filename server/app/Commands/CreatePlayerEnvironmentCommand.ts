@@ -25,8 +25,10 @@ import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorage
 import IDGeneratorInterface from '../../../core/source/IDGeneratorInterface.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
 import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
-import {CurrencyAlias, HeroClassID} from '../../../core/app/types.js';
-import {ContainerKey} from '../../../core/types/containerKey.js';
+import {ContainerKey} from '../../../core/types/enums/ContainerKey.js';
+import {HeroClassID} from '../../../core/types/enums/HeroClassID.js';
+import {CurrencyID} from '../../../core/types/enums/CurrencyID.js';
+import {ItemID} from '../../../core/types/enums/ItemID.js';
 
 /**
  * TODO: НЕ АКТУАЛЬНО ПОКА НЕТ СЕРВЕРА!!!
@@ -107,8 +109,8 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         let config = this.container.get<object>('core.config');
 
         let currencies = [
-            CurrencyAlias.Gold,
-            CurrencyAlias.ResearchPoints,
+            CurrencyID.Gold,
+            CurrencyID.ResearchPoints,
         ];
 
         currencies.forEach((currencyAlias) => {
@@ -128,37 +130,37 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         let itemStackBuilders = [
             new ItemStackPattern(
                 this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('wood'),
+                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Wood),
                 10,
                 ),
             new ItemStackPattern(
                 this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('iron_ore'),
+                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.IronOre),
                 10,
                 ),
             new ItemStackPattern(
                 this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('one_handed_sword_01'),
+                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01),
                 1,
                 ),
             new ItemStackPattern(
                 this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('one_handed_sword_01'),
+                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01),
                 1,
                 ),
             new ItemStackPattern(
                 this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('plate_helmet_01'),
+                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateHelmet_01),
                 1,
                 ),
             new ItemStackPattern(
                 this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('plate_boots_01'),
+                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBoots_01),
                 1,
                 ),
             new ItemStackPattern(
                 this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('shield_01'),
+                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Shield_01),
                 1,
                 ),
         ];
@@ -178,23 +180,23 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                 equip: {
                     chest: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('plate_breastplate_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBreastplate_01),
                     ),
                     legs: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('plate_pants_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlatePants_01),
                     ),
                     foots: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('plate_boots_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBoots_01),
                     ),
                     right_hand: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('one_handed_sword_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01),
                     ),
                     left_hand: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('shield_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Shield_01),
                     ),
                 },
             },
@@ -204,23 +206,23 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                 equip: {
                     chest: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('leather_breastplate_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherBreastplate_01),
                     ),
                     legs: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('leather_pants_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherPants_01),
                     ),
                     foots: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('leather_boots_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherBoots_01),
                     ),
                     right_hand: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('dagger_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Dagger_01),
                     ),
                     left_hand: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('dagger_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Dagger_01),
                     ),
                 },
             },
@@ -230,19 +232,19 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                 equip: {
                     chest: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('cloth_breastplate_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.ClothBreastplate_01),
                     ),
                     legs: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('cloth_pants_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.ClothPants_01),
                     ),
                     foots: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('cloth_boots_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.ClothBoots_01),
                     ),
                     right_hand: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('staff_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Staff_01),
                     ),
                 },
             },
@@ -252,23 +254,23 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                 equip: {
                     chest: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('leather_breastplate_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherBreastplate_01),
                     ),
                     legs: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('leather_pants_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherPants_01),
                     ),
                     foots: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('leather_boots_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherBoots_01),
                     ),
                     right_hand: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('revolver_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Revolver_01),
                     ),
                     left_hand: new ItemStackPattern(
                         this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias('revolver_01'),
+                        this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Revolver_01),
                     ),
                 },
             },

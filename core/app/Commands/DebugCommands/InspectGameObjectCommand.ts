@@ -2,7 +2,7 @@ import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
 import GameObject from '../../../source/GameObject.js';
 import GameObjectStorage from '../../../source/GameObjectStorage.js';
-import {ContainerKey} from '../../../types/containerKey.js';
+import {ContainerKey} from '../../../types/enums/ContainerKey.js';
 
 export default class InspectGameObjectCommand extends Command {
     get name(): string {

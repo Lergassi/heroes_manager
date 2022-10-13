@@ -13,7 +13,7 @@ import _ from 'lodash';
 import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure.js';
 import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
-import {ContainerKey} from '../../../core/types/containerKey.js';
+import {ContainerKey} from '../../../core/types/enums/ContainerKey.js';
 
 export default class LoadPlayerEnvironmentCommand extends Command {
     get name(): string {

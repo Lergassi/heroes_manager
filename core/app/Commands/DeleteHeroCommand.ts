@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
-import {ContainerKey} from '../../types/containerKey.js';
+import {ContainerKey} from '../../types/enums/ContainerKey.js';
 
 export default class DeleteHeroCommand extends Command {
     get name(): string {

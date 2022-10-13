@@ -25,11 +25,12 @@ import MainLocationListComponent from './Components/MainLocationListComponent.js
 import ExperienceComponentFactory from './Factories/ExperienceComponentFactory.js';
 import EnemyFactory from './Factories/EnemyFactory.js';
 import ExperienceComponent from './Components/ExperienceComponent.js';
-import {CurrencyAlias, CurrencyWalletAlias} from './types.js';
+import {CurrencyWalletAlias} from './types.js';
 import WalletComponent from './Components/WalletComponent.js';
 import Currency from './Entities/Currency.js';
 import _ from 'lodash';
-import {ContainerKey} from '../types/containerKey.js';
+import {ContainerKey} from '../types/enums/ContainerKey.js';
+import {CurrencyID} from '../types/enums/CurrencyID.js';
 
 /**
  * todo: Временно не актуально.
@@ -95,8 +96,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             //todo: player_env_indev
             let currencies = [
-                CurrencyAlias.Gold,
-                CurrencyAlias.ResearchPoints,
+                CurrencyID.Gold,
+                CurrencyID.ResearchPoints,
             ];
 
             _.map(currencies, (currencyAlias) => {

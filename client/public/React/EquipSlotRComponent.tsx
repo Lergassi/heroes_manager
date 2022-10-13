@@ -61,7 +61,7 @@ export default class EquipSlotRComponent extends React.Component<EquipSlotRCompo
         return (
             <tr>
                 <td>{equipSlotComponent['_id']}</td>
-                <td>{equipSlotComponent.equipSlot.name}</td>
+                <td>{equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/}</td>
                 <td>
                     <ItemStackTextRComponent
                         itemStack={equipSlotComponent.itemStack}

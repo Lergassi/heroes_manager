@@ -1,7 +1,7 @@
 import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
 import {assert} from '../../source/assert.js';
-import {CharacterAttributeID} from '../types.js';
 import CharacterAttributeComponent from './CharacterAttributeComponent.js';
+import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 //todo: Возможно стоит атрибуты оставить в "сыром" виде, а конечное значение получать другим способом.
 export default class HeroAttributeCollectorComponent {

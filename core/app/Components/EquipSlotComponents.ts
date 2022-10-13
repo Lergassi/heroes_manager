@@ -4,6 +4,7 @@ import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 
 /**
+ * @deprecated
  * Отработка варианта контейнера.
  */
 export default class EquipSlotComponents extends Component {

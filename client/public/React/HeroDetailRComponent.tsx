@@ -4,7 +4,7 @@ import React from 'react';
 import ExperienceComponent from '../../../core/app/Components/ExperienceComponent.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
 import EquipSlotRComponent from './EquipSlotRComponent.js';
-import {EquipSlotID} from '../../../core/app/types.js';
+import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
 
 export interface HeroDetailRComponentProps {
     hero?: GameObject,

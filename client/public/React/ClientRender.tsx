@@ -10,7 +10,7 @@ import SandboxRComponent from './SandboxRComponent.js';
 import MainLocationListRComponent from './MainLocationListRComponent.js';
 import MainLocationListComponent from '../../../core/app/Components/MainLocationListComponent.js';
 import MainItemStorageListRComponent from './MainItemStorageListRComponent.js';
-import {ContainerKey} from '../../../core/types/containerKey.js';
+import {ContainerKey} from '../../../core/types/enums/ContainerKey.js';
 
 export default class ClientRender {
     private readonly _container: ContainerInterface;

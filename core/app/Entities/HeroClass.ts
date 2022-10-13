@@ -3,7 +3,7 @@ import ItemCategory from './ItemCategory.js';
 import ArmorMaterial from './ArmorMaterial.js';
 import CharacterAttribute from './CharacterAttribute.js';
 import _ from 'lodash';
-import {CharacterAttributeID} from '../types.js';
+import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 export default class HeroClass {
     private readonly _id: string;
@@ -88,16 +88,11 @@ export default class HeroClass {
 
     isMainCharacterAttribute(ID: CharacterAttributeID): boolean {
         for (let i = 0; i < this._mainCharacterAttributes.length; i++) {
-            if (this._mainCharacterAttributes[i].id === ID) {
+            if (this._mainCharacterAttributes[i]['_id'] === ID) {   //todo: Доступ.
                 return true;
             }
         }
 
         return false;
-        // return _.every(_.map(this._mainCharacterAttributes, (characterAttribute) => {
-        //     console.log(characterAttribute.id);
-        //     console.log(characterAttribute.id === ID);
-        //     return characterAttribute.id === ID;
-        // }), Boolean);
     }
 }

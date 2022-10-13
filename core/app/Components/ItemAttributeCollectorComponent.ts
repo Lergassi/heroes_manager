@@ -1,6 +1,6 @@
 import Item from '../Entities/Item.js';
-import {CharacterAttributeID} from '../types.js';
 import _ from 'lodash';
+import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 /**
  * И не важно теперь где и как располается предмет в каком слоте и какая логика слота.

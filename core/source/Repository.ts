@@ -77,28 +77,29 @@ export default class Repository<Entity> {
         return result;
     }
 
-    getOneByID(id): Entity {
-        let entity = this.findOneByID(id);
+    getOneByID(ID): Entity {
+        let entity = this.findOneByID(ID);
 
         if (!entity) {
-            throw new AppError(sprintf('Сущность типа %s id(%s) не найдена.', this._entityClassname, id));
+            throw new AppError(sprintf('Сущность типа %s ID(%s) не найдена.', this._entityClassname, ID));
         }
 
         return entity;
     }
 
     /**
-     * @deprecated alias дальше не будет. Теперь ID - это alias.
+     * @deprecated Убирать по возможности. Метод - псевдоним для getOneByID
      * @param alias
      */
     getOneByAlias(alias: string): Entity {
-        //todo: Это не здесь надо проверять, а в объектах при валидации.
-        let entity = this.findOneByAlias(alias);
-        if (!entity) {
-            throw new AppError(sprintf('Сущность типа %s alias(%s) не найдена.', this._entityClassname, alias));
-        }
-
-        return entity;
+        // //todo: Это не здесь надо проверять, а в объектах при валидации.
+        // let entity = this.findOneByAlias(alias);
+        // if (!entity) {
+        //     throw new AppError(sprintf('Сущность типа %s alias(%s) не найдена.', this._entityClassname, alias));
+        // }
+        //
+        // return entity;
+        return this.getOneByID(alias);
     }
 
     findAll() {

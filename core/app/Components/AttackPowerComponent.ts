@@ -1,27 +1,28 @@
 import Component from '../../source/Component.js';
 import CharacterAttributeComponent from './CharacterAttributeComponent.js';
-import {CharacterAttributeID, unsigned} from '../types.js';
+import {unsigned} from '../types.js';
 import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
 import _, {round} from 'lodash';
 import {assert} from '../../source/assert.js';
-import CharacterAttributeCollectorComponent from './CharacterAttributeCollectorComponent.js';
+import CharacterAttributeRawValueCollectorComponent from './CharacterAttributeRawValueCollectorComponent.js';
+import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 export default class AttackPowerComponent extends Component {
     private readonly _range: unsigned;
     private readonly _attackPowerCharacterAttributeComponent: CharacterAttributeComponent;
     private readonly _itemAttributeCollectorComponent: ItemAttributeCollectorComponent;
-    private readonly _characterAttributeCollectorComponent: CharacterAttributeCollectorComponent;
+    private readonly _characterAttributeCollectorComponent: CharacterAttributeRawValueCollectorComponent;
     private readonly _dependentCharacterAttributeComponents: CharacterAttributeComponent[];
     private readonly _dependentCharacterAttributeMultiplier: number;
 
     constructor(options: {
         range: unsigned,
-        characterAttributeCollectorComponent: CharacterAttributeCollectorComponent,
+        characterAttributeCollectorComponent: CharacterAttributeRawValueCollectorComponent,
         dependentCharacterAttributeComponents: CharacterAttributeComponent[],
     }) {
         super();
         // assert(options.attackPowerCharacterAttributeComponent instanceof CharacterAttributeComponent);
-        assert(options.characterAttributeCollectorComponent instanceof CharacterAttributeCollectorComponent);
+        assert(options.characterAttributeCollectorComponent instanceof CharacterAttributeRawValueCollectorComponent);
         assert(!_.isNil(options.dependentCharacterAttributeComponents));
 
         this._range = options.range;

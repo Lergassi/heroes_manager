@@ -1,8 +1,9 @@
 import CharacterAttributeComponent from '../../Components/CharacterAttributeComponent.js';
-import {CharacterAttributeID, unsigned} from '../../types.js';
+import {unsigned} from '../../types.js';
 import ItemAttributeCollectorComponent from '../../Components/ItemAttributeCollectorComponent.js';
 import DefaultCharacterAttributeComponentFactory from './DefaultCharacterAttributeComponentFactory.js';
 import _ from 'lodash';
+import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 
 export default class AgilityValueGenerator {
     generate(options: {

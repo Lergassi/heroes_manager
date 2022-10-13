@@ -54,28 +54,30 @@ export default class AppError extends Error {
         return new AppError(sprintf('Предмет "%s" нельзя экипировать.', item.name));
     }
 
-    static itemNotAvailableForEquip(item: Item, equipSlot: EquipSlot) {
-        return new AppError(sprintf('Предмет "%s" нельзя экипировать в слот "%s".', item.name,equipSlot.name));
+    static itemNotAvailableForEquip(item?: Item, equipSlot?: EquipSlot) {
+        return new AppError(sprintf('Предмет нельзя экипировать в указанный слот.'));
     }
 
     static pathNotExists(target: string) {
         return new AppError(sprintf('Путь %s не существует.', target));
     }
 
-    static itemCategoryNotAvailable(item: Item, equipSlot: EquipSlot) {
-        return new AppError(sprintf('Предмет категории "%s" нельзя экипировать в слот "%s"', item.itemCategory.name, equipSlot.name));
+    static itemCategoryNotAvailable(item?: Item, equipSlot?: EquipSlot) {
+        // return new AppError(sprintf('Предмет категории "%s" нельзя экипировать в слот "%s"', item.itemCategory.name, equipSlot.name));
+        return new AppError(sprintf('Предмет данной категории нельзя экипировать в выбранный слот.'));
     }
 
-    static equipNotAvailableByArmorMaterial(armorMaterial: ArmorMaterial, heroClass: HeroClass) {
-        return new AppError(sprintf('Предмет с материалом "%s" не доступен для класса "%s".', armorMaterial.name, heroClass.name));
+    static equipNotAvailableByArmorMaterial(armorMaterial?: ArmorMaterial, heroClass?: HeroClass) {
+        // return new AppError(sprintf('Предмет с материалом "%s" не доступен для класса "%s".', armorMaterial.name, heroClass.name));
+        return new AppError(sprintf('Предмет данного материала не доступен для класса.'));
     }
 
     static itemStorageRangeOverflow(min: number, max: number) {
         return new AppError(sprintf('Кол-во ItemStorage у игрока должно быть в диапазоне %s-%s.', min, max));
     }
 
-    static heroNotContainsEquipSlot(name: string) {
-        return new AppError(sprintf('У героя нет слота "%s"', name));
+    static heroNotContainsEquipSlot(name?: string) {
+        return new AppError(sprintf('Герой не содержит данного слота.'));
     }
 
     static itemsNotEnoughForRandomSelection() {

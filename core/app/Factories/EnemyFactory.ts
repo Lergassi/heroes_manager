@@ -1,6 +1,6 @@
 import GameObjectFactory from './GameObjectFactory.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
-import {EnemyConfig, EnemyTypeID, EntityManagerKey, unsigned} from '../types.js';
+import {EnemyConfig, EntityManagerKey, unsigned} from '../types.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
 import EnemyType from '../Entities/EnemyType.js';
 import EntityManager from '../../source/EntityManager.js';
@@ -14,6 +14,7 @@ import WalletComponent from '../Components/WalletComponent.js';
 import {assert} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
 import AttackPowerComponent from '../Components/AttackPowerComponent.js';
+import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 // import assert from 'assert';
 
 // export type EnemyFactoryOptions = {
@@ -60,6 +61,9 @@ export default class EnemyFactory {
         assert(!_.isNil(enemyConfig), sprintf('EnemyConfig (%s) не найден.', options.enemyTypeID));
 
         let enemy = this._gameObjectFactory.create();
+
+        enemy.name = 'Enemy: ' + enemyType.name;
+        enemy.addTags('#enemy');
 
         let enemyComponent = enemy.set<EnemyComponent>(EnemyComponent.name, new EnemyComponent({
             enemyType: enemyType,

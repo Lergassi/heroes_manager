@@ -4,7 +4,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {assert} from '../../source/assert.js';
 import _ from 'lodash';
 import LocationComponent from '../Components/LocationComponent.js';
-import {ContainerKey} from '../../types/containerKey.js';
+import {ContainerKey} from '../../types/enums/ContainerKey.js';
 
 export default class AddHeroToLocationCommand extends Command {
     get name(): string {

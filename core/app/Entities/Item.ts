@@ -3,7 +3,7 @@ import Quality from './Quality.js';
 import ArmorMaterial from './ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
 import _ from 'lodash';
-import {CharacterAttributeID} from '../types.js';
+import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 // export enum ItemType {
 //     Stackable = 'Stackable',
@@ -91,11 +91,6 @@ export interface ItemOptions {
 export default class Item {
     private readonly _id: string;
     private readonly _name: string;
-    /**
-     * @deprecated
-     * @private
-     */
-    private readonly _alias: string;
     private readonly _description: string;
     private readonly _itemLevel: number;
     private readonly _sort: number;
@@ -145,7 +140,7 @@ export default class Item {
      * @deprecated Использовать ID который теперь alias.
      */
     get alias(): string {
-        return this._alias;
+        return this._id;
     }
 
     /**
@@ -208,7 +203,6 @@ export default class Item {
     constructor (
         id: string,
         name: string,
-        alias: string,
         description: string,
         stackSize: number,
         itemLevel: number,
@@ -222,7 +216,6 @@ export default class Item {
     ) {
         this._id = id;
         this._name = name;
-        this._alias = alias;
         this._description = description;
         this._itemLevel = itemLevel;
         this._sort = sort;
@@ -235,16 +228,9 @@ export default class Item {
 
         //Не путать с логикой из строителя. Тут всегда пустые значения.
         this._getTypes = options.getTypes ?? [];
-        // this.properties.increase.strength;
     }
 
     increaseCharacterAttribute(ID: CharacterAttributeID): number {
         return this._characterAttributes[ID] ?? 0;
-    }
-
-    filter(condition: ItemFilterCondition) {
-        return condition.alias && _.includes(condition.alias, this._alias) ||
-            condition.itemCategory && _.includes(condition.itemCategory, this._itemCategory)
-            ;
     }
 }

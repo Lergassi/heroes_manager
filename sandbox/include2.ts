@@ -12,8 +12,8 @@ import Container from '../core/source/Container.js';
 import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
 import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../core/app/PlayerContainerConfigure.js';
-import {HeroClassID} from '../core/app/types.js';
-import {ContainerKey} from '../core/types/containerKey.js';
+import {ContainerKey} from '../core/types/enums/ContainerKey.js';
+import {HeroClassID} from '../core/types/enums/HeroClassID.js';
 
 function createEndPlayerContainer(): ContainerInterface {
     let container = new Container();

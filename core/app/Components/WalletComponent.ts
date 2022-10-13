@@ -42,6 +42,6 @@ export default class WalletComponent extends Component {
 
     add(value: unsigned) {
         this._value += value;
-        debug('log')(sprintf('Добавлена валюта (%s): %s.', this._currency.name, value));
+        debug('log')(sprintf('Добавлена валюта (%s): %s.', this._currency['_name'], value));    //todo: Доступ.
     }
 }

@@ -1,77 +1,80 @@
+import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
+import {HeroClassID} from '../types/enums/HeroClassID.js';
+import {CurrencyID} from '../types/enums/CurrencyID.js';
+
 export default {
     // date_format_mysql: 'yyyy-MM-dd hh:mm:ss',
     // date_format_save_filename: 'dd.MM.yyyy_hh:mm:ss',
     // date_format_ru: 'hh:mm:ss dd.MM.yyyy',
     max_player_level: 100,
     start_hero_values: {
-        Warrior: {
+        [HeroClassID.Warrior]: {
             max_level: 100,
-            max_health_points: 120,
-            max_magic_points: 100,
+            [CharacterAttributeID.MaxHealthPoints]: 120,
+            [CharacterAttributeID.MaxMagicPoints]: 100,
             min_attack_power: 30,
             max_attack_power: 40,
             character_attributes: {
-                strength: 10,
-                agility: 5,
-                intelligence: 5,
+                [CharacterAttributeID.Strength]: 10,
+                [CharacterAttributeID.Agility]: 5,
+                [CharacterAttributeID.Intelligence]: 5,
             }
         },
-        Paladin: {
+        [HeroClassID.Paladin]: {
             max_level: 100,
-            max_health_points: 100,
-            max_magic_points: 200,
+            [CharacterAttributeID.MaxHealthPoints]: 100,
+            [CharacterAttributeID.MaxMagicPoints]: 200,
             min_attack_power: 30,
             max_attack_power: 40,
             character_attributes: {
-                strength: 10,
-                agility: 5,
-                intelligence: 10,
-                stamina: 8,
+                [CharacterAttributeID.Strength]: 10,
+                [CharacterAttributeID.Agility]: 5,
+                [CharacterAttributeID.Intelligence]: 10,
             }
         },
-        Rogue: {
+        [HeroClassID.Rogue]: {
             max_level: 100,
-            max_health_points: 100,
-            max_magic_points: 100,
+            [CharacterAttributeID.MaxHealthPoints]: 100,
+            [CharacterAttributeID.MaxMagicPoints]: 100,
             min_attack_power: 40,
             max_attack_power: 50,
             character_attributes: {
-                strength: 5,
-                agility: 10,
-                intelligence: 5,
+                [CharacterAttributeID.Strength]: 5,
+                [CharacterAttributeID.Agility]: 10,
+                [CharacterAttributeID.Intelligence]: 5,
             }
         },
-        Mage: {
+        [HeroClassID.Mage]: {
             max_level: 100,
-            max_health_points: 70,
-            max_magic_points: 200,
+            [CharacterAttributeID.MaxHealthPoints]: 70,
+            [CharacterAttributeID.MaxMagicPoints]: 200,
             magic_points: 100,
             min_attack_power: 60,
             max_attack_power: 70,
             character_attributes: {
-                strength: 5,
-                agility: 5,
-                intelligence: 12,
+                [CharacterAttributeID.Strength]: 5,
+                [CharacterAttributeID.Agility]: 5,
+                [CharacterAttributeID.Intelligence]: 12,
             }
         },
-        Gunslinger: {
+        [HeroClassID.Gunslinger]: {
             max_level: 100,
-            max_health_points: 80,
-            max_magic_points: 130,
+            [CharacterAttributeID.MaxHealthPoints]: 80,
+            [CharacterAttributeID.MaxMagicPoints]: 130,
             min_attack_power: 50,
             max_attack_power: 60,
             character_attributes: {
-                strength: 4,
-                agility: 10,
-                intelligence: 7,
+                [CharacterAttributeID.Strength]: 4,
+                [CharacterAttributeID.Agility]: 10,
+                [CharacterAttributeID.Intelligence]: 7,
             }
         },
     },
     start_wallet_values: {
-        gold_currency: {
+        [CurrencyID.Gold]: {
             value: 1000
         },
-        research_points: {
+        [CurrencyID.ResearchPoints]: {
             value: 10
         }
     }

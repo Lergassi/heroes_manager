@@ -6,7 +6,7 @@ import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import EntityManager from '../../source/EntityManager.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
-import {ContainerKey} from '../../types/containerKey.js';
+import {ContainerKey} from '../../types/enums/ContainerKey.js';
 
 export default class AddItemCommand extends Command {
     get name(): string {

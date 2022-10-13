@@ -42,8 +42,10 @@ import AutoIncrementIDGenerator from '../core/source/AutoIncrementIDGenerator.js
 import {Simulate} from 'react-dom/test-utils';
 import Range from '../core/app/Range.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../core/app/consts.js';
-import {HeroClassID} from '../core/app/types.js';
-import {ContainerKey} from '../core/types/containerKey.js';
+import {ContainerKey} from '../core/types/enums/ContainerKey.js';
+import {HeroClassID} from '../core/types/enums/HeroClassID.js';
+import {ArmorMaterialID} from '../core/types/enums/ArmorMaterialID.js';
+import {ItemID} from '../core/types/enums/ItemID.js';
 
 function createEndPlayerContainer(): ContainerInterface {
     let container = new Container();
@@ -368,7 +370,6 @@ export function javascriptSerializerGetStarted() {
     let armorMaterial = new ArmorMaterial(
         '42',
         'Armor Material',
-        'armor_material',
         undefined,
         500,
     );
@@ -493,10 +494,10 @@ function serializeRealEntities(container: ContainerInterface, serializer: Serial
     }
     coreSerializer.finish();
     debugEntityManager(entityManager);
-    // debugItem(entityManager.getRepository<Item>(Item.name).getOneByAlias('wood'));
-    // debugItem(entityManager.getRepository<Item>(Item.name).getOneByAlias('iron_ore'));
-    // debugItem(entityManager.getRepository<Item>(Item.name).getOneByAlias('one_handed_sword_01'));
-    // debugItem(entityManager.getRepository<Item>(Item.name).getOneByAlias('plate_breastplate_01'));
+    // debugItem(entityManager.getRepository<Item>(Item.name).getOneByAlias(ItemID.Wood));
+    // debugItem(entityManager.getRepository<Item>(Item.name).getOneByAlias(ItemID.IronOre));
+    // debugItem(entityManager.getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01));
+    // debugItem(entityManager.getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBreastplate_01));
 }
 
 function serializeItemCategory(container: ContainerInterface, serializer: Serializer, jsonSerializer: JsonSerializer) {
@@ -586,13 +587,13 @@ export function testSerializeItemStorage(container: ContainerInterface, serializ
     let itemStorage = container.get<ItemStorageFactoryInterface>('player.ItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
 
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias('wood', 20),
+        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias(ItemID.Wood, 20),
     );
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias('wood', 20),
+        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias(ItemID.Wood, 20),
     );
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias('one_handed_sword_01', 1),
+        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias(ItemID.OneHandedSword_01, 1),
     );
 
     let expectedStringData = '{"classname":"GameObject","data":{"_id":1,"_name":"ItemStorage","_tags":["#item_storage"],"_components":[{"classname":"ItemStorageComponent","data":{"_id":2,"_gameObject":{"classname":"GameObject","id":1},"_size":20}},{"classname":"ItemStorageSlotComponent","data":{"_id":3,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":{"classname":"ItemStack","data":{"_id":23,"_item":{"classname":"Item","id":"09954f0a-3291-4569-b288-02d073bc826f"},"_count":20}}}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":4,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":{"classname":"ItemStack","data":{"_id":24,"_item":{"classname":"Item","id":"09954f0a-3291-4569-b288-02d073bc826f"},"_count":20}}}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":5,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":{"classname":"ItemStack","data":{"_id":25,"_item":{"classname":"Item","id":"a5492c54-9a4d-42b7-8ec3-a8ccaa787854"},"_count":1}}}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":6,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":7,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":8,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":9,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":10,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":11,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":12,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":13,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":14,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":15,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":16,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":17,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":18,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":19,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":20,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":21,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":22,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}}]}}';
@@ -930,7 +931,7 @@ export function testEntityManagerFacade() {
     let facade = container.get<EntityManagerFacade>(ContainerKey.EntityManagerFacade);
 
     // let entity = facade.entity(Item, 'wood1');
-    let entity = facade.entity(ArmorMaterial, 'plate');
+    let entity = facade.entity(ArmorMaterial, ArmorMaterialID.Plate);
     console.log(entity);
 }
 
