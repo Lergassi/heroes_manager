@@ -1,8 +1,8 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import {ContainerKey} from '../consts.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
+import {ContainerKey} from '../../types/containerKey.js';
 
 export default class ClearItemStorageSlotCommand extends Command {
     get name(): string {

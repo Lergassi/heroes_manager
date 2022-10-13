@@ -8,9 +8,9 @@ import MainHeroListComponent from '../../../core/app/Components/MainHeroListComp
 import AppError from '../../../core/source/Errors/AppError.js';
 import SandboxRComponent from './SandboxRComponent.js';
 import MainLocationListRComponent from './MainLocationListRComponent.js';
-import {ContainerKey} from '../../../core/app/consts.js';
 import MainLocationListComponent from '../../../core/app/Components/MainLocationListComponent.js';
 import MainItemStorageListRComponent from './MainItemStorageListRComponent.js';
+import {ContainerKey} from '../../../core/types/containerKey.js';
 
 export default class ClientRender {
     private readonly _container: ContainerInterface;

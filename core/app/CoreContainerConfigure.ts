@@ -14,7 +14,7 @@ import ItemFactory from './Factories/ItemFactory.js';
 import ItemDatabase from './ItemDatabase.js';
 import {extractItems} from './indev.js';
 import EventSystem from '../source/EventSystem.js';
-import {ContainerKey} from './consts.js';
+import {ContainerKey} from '../types/containerKey.js';
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -37,7 +37,7 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
             entityManager: container.get<EntityManager>(ContainerKey.EntityManager),
             itemFactory: container.get<ItemFactory>(ContainerKey.ItemFactory),
         })).build();
-        container.set<ItemDatabase>('core.itemDatabase', (container) => {
+        container.set<ItemDatabase>(ContainerKey.ItemDatabase, (container) => {
             return new ItemDatabase(extractItems(container.get<EntityManager>(ContainerKey.EntityManager)));
         });
         container.set<EntityManagerFacade>(ContainerKey.EntityManagerFacade, (container) => {

@@ -3,6 +3,7 @@ import ItemCategory from './ItemCategory.js';
 import ArmorMaterial from './ArmorMaterial.js';
 import CharacterAttribute from './CharacterAttribute.js';
 import _ from 'lodash';
+import {CharacterAttributeID} from '../types.js';
 
 export default class HeroClass {
     private readonly _id: string;
@@ -35,6 +36,9 @@ export default class HeroClass {
         return this._sort;
     }
 
+    /**
+     * @deprecated
+     */
     get heroRole(): HeroRole {
         return this._heroRole;
     }
@@ -47,6 +51,9 @@ export default class HeroClass {
         return this._availableArmorMaterials;
     }
 
+    /**
+     * @deprecated
+     */
     get mainCharacterAttributes(): CharacterAttribute[] {
         return this._mainCharacterAttributes;
     }
@@ -77,5 +84,20 @@ export default class HeroClass {
         // console.log(armorMaterial, this._availableArmorMaterials);
         // console.log(_.includes(this._availableArmorMaterials, armorMaterial));
         return _.includes(this._availableArmorMaterials, armorMaterial);
+    }
+
+    isMainCharacterAttribute(ID: CharacterAttributeID): boolean {
+        for (let i = 0; i < this._mainCharacterAttributes.length; i++) {
+            if (this._mainCharacterAttributes[i].id === ID) {
+                return true;
+            }
+        }
+
+        return false;
+        // return _.every(_.map(this._mainCharacterAttributes, (characterAttribute) => {
+        //     console.log(characterAttribute.id);
+        //     console.log(characterAttribute.id === ID);
+        //     return characterAttribute.id === ID;
+        // }), Boolean);
     }
 }

@@ -7,6 +7,9 @@ import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
 import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
 import EventSystem from '../../source/EventSystem.js';
+import {unsigned} from '../types.js';
+import ItemStackFactory from '../Factories/ItemStackFactory.js';
+import {assert} from '../../source/assert.js';
 
 export enum EquipSlotComponentEventCode {
     PlaceItemStack = 'EquipSlotComponent.placeItemStack',
@@ -17,7 +20,7 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     private readonly _equipSlot: EquipSlot;
     private readonly _heroComponent: HeroComponent;
     private _itemStack: ItemStack;
-    private _increaseItemCollectorComponent: ItemAttributeCollectorComponent;
+    private _itemAttributeCollectionComponent: ItemAttributeCollectorComponent;
 
     get equipSlot(): EquipSlot {
         return this._equipSlot;
@@ -30,13 +33,13 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     constructor(options: {
         equipSlot: EquipSlot,
         heroComponent: HeroComponent,
-        increaseItemCollectorComponent: ItemAttributeCollectorComponent,
+        itemAttributeCollectorComponent: ItemAttributeCollectorComponent,
     }) {
         super();
         this._equipSlot = options.equipSlot;
         this._heroComponent = options.heroComponent;
         this._itemStack = null;
-        this._increaseItemCollectorComponent = options.increaseItemCollectorComponent;
+        this._itemAttributeCollectionComponent = options.itemAttributeCollectorComponent;
     }
 
     canPlaceItem(item: Item): boolean {
@@ -49,17 +52,34 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
         return true;
     }
 
+    /**
+     * @deprecated Для создания использовать метод createItemStack.
+     * @param itemStack
+     */
     placeItemStack(itemStack: ItemStack): void {
         this.canPlaceItem(itemStack.item);
         this._itemStack = itemStack;
-        this._increaseItemCollectorComponent.addItem(itemStack.item);
+        this._itemAttributeCollectionComponent.addItem(itemStack.item);
 
         this.update();
     }
 
+    //todo: Сделать один интерфейс.
+    createItemStack(options: {
+        item: Item,
+        count: unsigned,
+        itemStackFactory: ItemStackFactory,
+    }) {
+        assert(options.itemStackFactory instanceof ItemStackFactory);
+
+        this.canPlaceItem(options.item);
+        this._itemStack = options.itemStackFactory.create(options.item, options.count);
+        this._itemAttributeCollectionComponent.addItem(options.item);
+    }
+
     clear(): void { //todo: Переименовать в destroy.
         if (this.isBusy()) {
-            this._increaseItemCollectorComponent.removeItem(this._itemStack.item);
+            this._itemAttributeCollectionComponent.removeItem(this._itemStack.item);
             this._itemStack = null;
             EventSystem.event(EquipSlotComponentEventCode.Clear, this);
         }

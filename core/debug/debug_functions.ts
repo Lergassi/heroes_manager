@@ -19,7 +19,7 @@ import EntityManager from '../source/EntityManager.js';
 import Item from '../app/Entities/Item.js';
 import GameContainer from '../source/GameContainer.js';
 import ItemSlot from '../app/Components_v2/ItemSlot.js';
-import {ContainerKey} from '../app/consts.js';
+import {ContainerKey} from '../types/containerKey.js';
 
 export function debugEntity(entity) {
     debug('debug')('%j', {

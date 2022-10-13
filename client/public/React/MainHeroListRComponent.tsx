@@ -38,11 +38,6 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
             selectedHero: null,
         };
 
-        //todo: Шаблонный метод?
-        // this.state.heroListComponent.assignRComponent(this);
-        // for (let i = 0; i < props.heroListComponent.heroes.length; i++) {
-        //     props.heroListComponent.heroes[i].assignRComponent(this);
-        // }
         EventSystem.addListener({
             codes: [
                 MainHeroListComponentEventCode.CreateHero,
@@ -59,18 +54,8 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
             // target:
             },
         });
-        // EventSystem.addListener([
-        //     MainHeroListComponentEventCode.CreateHero,
-        //     MainHeroListComponentEventCode.DeleteHero,
-        // ], (target) => {
-        //     this.setState((state) => {
-        //         return {
-        //             heroListComponent: state.heroListComponent,
-        //         };
-        //     });
-        // });
 
-        this.selectHero = this.selectHero.bind(this);
+        this._selectHero = this._selectHero.bind(this);
         this.deleteHero = this.deleteHero.bind(this);
     }
 
@@ -80,7 +65,7 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
         }));
     }
 
-    selectHero(hero: GameObject) {
+    private _selectHero(hero: GameObject) {
         this.setState((state) => ({
             selectedHero: hero,
         }));
@@ -88,18 +73,17 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
     }
 
     async deleteHero(hero: GameObject) {
-        console.log('deleteHero', hero);
-        await this._container.get<GameConsole>('gameConsole').run('hero.delete', [hero['_id'].toString()]);
+        await this._container.get<GameConsole>('gameConsole').run('hero.delete', [hero.ID.toString()]);
     }
 
     render() {
         let heroList = this.state.heroListComponent.heroes.map((hero, index) => {
             return (
                 <MainHeroTableRowRComponent
-                    key={hero['_id']}
+                    key={hero.ID}
                     container={this._container}
                     hero={hero}
-                    selectHero={this.selectHero}
+                    selectHero={this._selectHero}
                     deleteHero={this.deleteHero}
                 />
             );
@@ -123,7 +107,6 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
                     </tbody>
                 </table>
                 <HeroDetailRComponent
-                    container={this._container}
                     hero={this.state.selectedHero}
                 />
             </div>

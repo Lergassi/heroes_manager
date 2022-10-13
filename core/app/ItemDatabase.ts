@@ -15,13 +15,9 @@ export default class ItemDatabase {
         return this._items.length;
     }
 
-    /**
-     * Предполагается, что alias заменит ID.
-     * @param alias
-     */
-    get(alias: string): Item {
+    get(ID: string): Item {
         let item = this.filter({
-            alias: [alias],
+            alias: [ID],
         });
 
         return item[0] || undefined;

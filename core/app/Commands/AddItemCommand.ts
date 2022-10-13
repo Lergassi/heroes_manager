@@ -6,7 +6,7 @@ import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import EntityManager from '../../source/EntityManager.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
-import {ContainerKey} from '../consts.js';
+import {ContainerKey} from '../../types/containerKey.js';
 
 export default class AddItemCommand extends Command {
     get name(): string {
@@ -38,7 +38,7 @@ export default class AddItemCommand extends Command {
             .get<ItemStorageManager>(ContainerKey.ItemStorageManager).createItemStack({
                 item: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(alias),
                 count: count,
-                itemStackFactory: this.container.get<ItemStackFactory>('player.itemStackFactory'),
+                itemStackFactory: this.container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
             });
     }
 }

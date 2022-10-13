@@ -13,7 +13,7 @@ import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js'
 import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../core/app/PlayerContainerConfigure.js';
 import {HeroClassID} from '../core/app/types.js';
-import {ContainerKey} from '../core/app/consts.js';
+import {ContainerKey} from '../core/types/containerKey.js';
 
 function createEndPlayerContainer(): ContainerInterface {
     let container = new Container();
@@ -106,7 +106,7 @@ export function testItemProperty() {
     // console.log(property);
     // console.log(property.alias);
     // console.log(itemPropertyList.get('stackSize1'));
-    // let a: TestIncreaseProperty = 'agility';
+    // let a: TestIncreaseProperty = CharacterAttributeID.Agility;
     // let c = new TestIncreaseList();
     // console.log(c.strength.alias);
 
@@ -162,7 +162,7 @@ export function testLocation() {
     let gameObjectFactory = container.get<GameObjectFactory>('player.gameObjectFactory');
     let idGenerator = container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator');
     let heroFactory = container.get<HeroFactory>('player.heroFactory');
-    let itemStackFactory = container.get<ItemStackFactory>('player.itemStackFactory');
+    let itemStackFactory = container.get<ItemStackFactory>(ContainerKey.ItemStackFactory);
     // let itemStorageFactory = container.get<BasicItemStorageFactory>('player.heroFactory');
     let itemStorageManager = container.get<ItemStorageManager>(ContainerKey.ItemStorageManager);
     let itemStorage = container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(2);

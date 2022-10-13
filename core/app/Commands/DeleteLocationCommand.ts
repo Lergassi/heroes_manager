@@ -1,8 +1,8 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import {ContainerKey} from '../consts.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import MainLocationListComponent from '../Components/MainLocationListComponent.js';
+import {ContainerKey} from '../../types/containerKey.js';
 
 export default class DeleteLocationCommand extends Command {
     get name(): string {

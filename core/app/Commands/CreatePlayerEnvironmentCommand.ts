@@ -6,8 +6,9 @@ import EntityManager from '../../source/EntityManager.js';
 import Currency from '../Entities/Currency.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
+import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import {CurrencyAlias} from '../types.js';
+import {ContainerKey} from '../../types/containerKey.js';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.

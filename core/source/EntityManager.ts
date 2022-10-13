@@ -1,4 +1,6 @@
 import Repository from './Repository.js';
+import {assert} from './assert.js';
+import _ from 'lodash';
 
 export interface ModuleInterface {
     name: string;
@@ -33,6 +35,17 @@ export default class EntityManager {
         }
     }
 
+    //@dev
+    set<T>(key: string, value: T): T {
+        assert(!_.isNil(key));
+
+        if (!this._entities.hasOwnProperty(key)) {
+            this._entities[key] = value;
+        }
+
+        return value;
+    }
+
     get<Entity>(module: Function | string, alias: string/*todo: По ID или фильтру.*/): Entity {
         if (typeof module === 'string') {
             return this.getRepository<Entity>(module).getOneByAlias(alias);
@@ -41,17 +54,11 @@ export default class EntityManager {
         }
     }
 
-    //@dev
-    set<T>(key: string, value: T): T {
-        if (!this._entities.hasOwnProperty(key)) {
-            this._entities[key] = value;
-        }
-
-        return value;
-    }
-
     //get
-    entity<T>(key: string, id: string): T {
-        return this._entities[key]?.[id];
+    entity<T>(key: string, ID: string): T {
+        assert(!_.isNil(key));
+        assert(!_.isNil(ID));
+
+        return this._entities[key]?.[ID];
     }
 }

@@ -14,16 +14,14 @@ export default class ItemAttributeCollectorComponent {
     }
 
     addItem(item: Item): void {
-        if (!_.includes(this._items, item)) {
-            this._items.push(item);
-        }
+        this._items.push(item);
     }
 
     removeItem(item: Item): void {
-        _.pull(this._items, item);
+        _.pullAt(this._items, _.indexOf(this._items, item));
     }
 
-    increaseCharacterAttribute(ID: CharacterAttributeID): number {
+    totalValue(ID: CharacterAttributeID): number {
         let increaseValue = 0;
         for (let i = 0; i < this._items.length; i++) {
             increaseValue += this._items[i].increaseCharacterAttribute(ID);

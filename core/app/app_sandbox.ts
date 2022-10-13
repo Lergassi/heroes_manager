@@ -1,3 +1,5 @@
+import {CharacterAttributeID} from './types.js';
+
 export class TestItem {
     private _properties;
 
@@ -18,7 +20,7 @@ let properties = {
     armorMaterial: entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias('plate'),  //todo: Возможные ошибки! Был репозиторий вместо сущности!
     //todo: Пока без "интерфейса".
     increase: [
-        new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('strength'), 42),
+        new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Strength), 42),
         new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('stamina'), 42),
         new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('protection'), 42),
     ],

@@ -114,7 +114,7 @@ export default class GameConsoleRComponent extends React.Component<any, any>{
                 }
                 this.resetHistoryPosition();
 
-                debug('debug')(resultUrl);
+                debug('log:game_console')(resultUrl);
 
                 await this._container.get<GameConsole>('gameConsole').runByQuery(commandString);
 

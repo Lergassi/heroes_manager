@@ -4,9 +4,9 @@ import React from 'react';
 import ExperienceComponent from '../../../core/app/Components/ExperienceComponent.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
 import EquipSlotRComponent from './EquipSlotRComponent.js';
+import {EquipSlotID} from '../../../core/app/types.js';
 
 export interface HeroDetailRComponentProps {
-    container: ContainerInterface,
     hero?: GameObject,
 }
 
@@ -16,15 +16,11 @@ export interface HeroDetailRComponentState {
 }
 
 export default class HeroDetailRComponent extends React.Component<HeroDetailRComponentProps, HeroDetailRComponentState> {
-    private readonly _container: ContainerInterface;
-
     constructor(props: HeroDetailRComponentProps) {
         super(props);
 
-        this._container = props.container;
         this.state = {
             hero: null,
-            // visible: false,
             visible: true,
         };
 
@@ -79,9 +75,10 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
     render() {
         if (!this.state.visible) return null;
 
-        let hero = this.props.hero; //todo: Это можно сделать в виде отдельного компонента. Например выбор кнопкой мыши.
+        let hero = this.props.hero;
         if (!hero) {
-            return (<div>Герой не выбран.</div>);
+            // return (<div>Герой не выбран.</div>);
+            return;
         }
 
         return (
@@ -108,59 +105,59 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                 <table className={'basic-table'}>
                     <tbody>
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('right_hand')}
+                        equipSlotComponent={hero.get(EquipSlotID.RightHand)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('left_hand')}
+                        equipSlotComponent={hero.get(EquipSlotID.LeftHand)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('head')}
+                        equipSlotComponent={hero.get(EquipSlotID.Head)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('neck')}
+                        equipSlotComponent={hero.get(EquipSlotID.Neck)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('shoulders')}
+                        equipSlotComponent={hero.get(EquipSlotID.Shoulders)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('chest')}
+                        equipSlotComponent={hero.get(EquipSlotID.Chest)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('wrist')}
+                        equipSlotComponent={hero.get(EquipSlotID.Wrist)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('hands')}
+                        equipSlotComponent={hero.get(EquipSlotID.Hands)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('waist')}
+                        equipSlotComponent={hero.get(EquipSlotID.Waist)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('legs')}
+                        equipSlotComponent={hero.get(EquipSlotID.Legs)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('foots')}
+                        equipSlotComponent={hero.get(EquipSlotID.Foots)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('finger_1')}
+                        equipSlotComponent={hero.get(EquipSlotID.Finger_1)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('finger_2')}
+                        equipSlotComponent={hero.get(EquipSlotID.Finger_2)}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get('trinket')}
+                        equipSlotComponent={hero.get(EquipSlotID.Trinket)}
                         updateHandler={this.updateHandler}
                     />
                     </tbody>

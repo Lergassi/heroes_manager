@@ -23,9 +23,10 @@ import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure
 import PathResolver from '../../source/PathResolver.js';
 import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorageFactoryInterface.js';
 import IDGeneratorInterface from '../../../core/source/IDGeneratorInterface.js';
-import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
+import {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
 import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
 import {CurrencyAlias, HeroClassID} from '../../../core/app/types.js';
+import {ContainerKey} from '../../../core/types/containerKey.js';
 
 /**
  * TODO: НЕ АКТУАЛЬНО ПОКА НЕТ СЕРВЕРА!!!

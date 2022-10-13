@@ -5,9 +5,9 @@ import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js'
 import AppError from '../../source/Errors/AppError.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import {ContainerKey} from '../consts.js';
 import {assert} from '../../source/assert.js';
 import EquipSlot from '../Entities/EquipSlot.js';
+import {ContainerKey} from '../../types/containerKey.js';
 
 export default class EquipCommand extends Command {
     get name(): string {

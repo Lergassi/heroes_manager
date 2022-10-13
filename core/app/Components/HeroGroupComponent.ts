@@ -5,6 +5,8 @@ import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
 import {unsigned} from '../types.js';
 import {assert} from '../../source/assert.js';
+import TakeComponent from './TakeComponent.js';
+import EventSystem from '../../source/EventSystem.js';
 
 //todo: В будущем универсальный слот с _container: Container<T>. Слот может быть без логики или с изменением статуса занимаемого объекта.
 export class HeroSlot {
@@ -16,11 +18,15 @@ export class HeroSlot {
 
     place(hero: GameObject): void {
         this._hero = hero;
-        this._hero.getComponent<HeroComponent>('heroComponent').take(); //todo: Или отдельно в виде декоратора.
+        // this._hero.getComponent<HeroComponent>('heroComponent').take(); //todo: Или отдельно в виде декоратора.
+        // this._hero.getComponent<TakeComponent>(TakeComponent.name)?.take<HeroSlot>({
+        //     owner: this,
+        // }); //todo: Или отдельно в виде декоратора.
+        // this._hero.getComponent<TakeComponent>(TakeComponent.name)?.take2<HeroSlot>(this);
     }
 
     clear(): void {
-        this._hero.getComponent<HeroComponent>('heroComponent').release();
+        // this._hero.getComponent<HeroComponent>('heroComponent').release();
         this._hero = null;
     }
 
@@ -37,6 +43,12 @@ export class HeroSlot {
     }
 }
 
+export enum HeroGroupComponentEventCode {
+    AddHero = 'HeroGroupComponent.AddHero',
+    RemoveHero = 'HeroGroupComponent.RemoveHero',
+}
+
+//todo: Группа героев и слоты под герои - разные компоненты. Группа должна быть только группой, а слоты - только для UI. Тоже надо разделить. Иначе классов плодиться много бесполезных и логика усложняется.
 export default class HeroGroupComponent extends Component {
     private readonly _heroes: {[position: string]: HeroSlot};
     private readonly _size: number;
@@ -79,7 +91,8 @@ export default class HeroGroupComponent extends Component {
     }
 
     _setHero(heroSlot: HeroSlot, hero: GameObject): void {
-        if (hero.get<HeroComponent>('heroComponent').isBusy()) {
+        // if (hero.get<HeroComponent>('heroComponent').isBusy()) {
+        if (!hero.get<TakeComponent>(TakeComponent.name).isFree()) {
             throw new AppError('Герой занят.');
         }
 
@@ -99,6 +112,10 @@ export default class HeroGroupComponent extends Component {
         }
 
         heroSlot.place(hero);
+        hero.getComponent<TakeComponent>(TakeComponent.name)?.take<HeroGroupComponent>({
+            owner: this,
+        });
+        EventSystem.event(HeroGroupComponentEventCode.AddHero, this);
     }
 
     addHero(hero: GameObject): void {
@@ -131,7 +148,6 @@ export default class HeroGroupComponent extends Component {
 
     //@comment Могут ли понадобиться слоты вне класса?
     removeHero(hero: GameObject): void {
-        assert(!_.isNil(hero));
         assert(hero instanceof GameObject);
 
         let heroSlot = this._getHeroSlot(hero);
@@ -140,6 +156,10 @@ export default class HeroGroupComponent extends Component {
         }
 
         heroSlot.clear();
+        hero.getComponent<TakeComponent>(TakeComponent.name)?.release<HeroGroupComponent>({
+            owner: this,
+        });
+        EventSystem.event(HeroGroupComponentEventCode.RemoveHero, this);
     }
 
     _getFirstFreeHeroSlot(): HeroSlot {

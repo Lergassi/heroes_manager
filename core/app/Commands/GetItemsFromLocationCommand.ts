@@ -1,9 +1,9 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import {ContainerKey} from '../consts.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import LocationComponent from '../Components/LocationComponent.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
+import {ContainerKey} from '../../types/containerKey.js';
 
 export default class GetItemsFromLocationCommand extends Command {
     get name(): string {

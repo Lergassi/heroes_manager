@@ -22,7 +22,6 @@ import AutoIncrementIDGenerator from '../source/AutoIncrementIDGenerator.js';
 import LocationFactory from './Factories/LocationFactory.js';
 import ItemDatabase from './ItemDatabase.js';
 import MainLocationListComponent from './Components/MainLocationListComponent.js';
-import {ContainerKey} from './consts.js';
 import ExperienceComponentFactory from './Factories/ExperienceComponentFactory.js';
 import EnemyFactory from './Factories/EnemyFactory.js';
 import ExperienceComponent from './Components/ExperienceComponent.js';
@@ -30,6 +29,7 @@ import {CurrencyAlias, CurrencyWalletAlias} from './types.js';
 import WalletComponent from './Components/WalletComponent.js';
 import Currency from './Entities/Currency.js';
 import _ from 'lodash';
+import {ContainerKey} from '../types/containerKey.js';
 
 /**
  * todo: Временно не актуально.
@@ -113,11 +113,10 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 config: container.get<object>('core.config'),
                 entityManager: container.get<EntityManager>('core.entityManager'),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
-                idGenerator: container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
                 experienceComponentFactory: container.get<ExperienceComponentFactory>(ContainerKey.ExperienceComponentFactory),
             });
         });
-        container.set<ItemStackFactory>('player.itemStackFactory', (container) => {
+        container.set<ItemStackFactory>(ContainerKey.ItemStackFactory, (container) => {
             return new ItemStackFactory(
                 container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
                 container.get<EntityManager>('core.entityManager'),
@@ -175,7 +174,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             // );
             return new ItemStorageFactory(
                 container.get<GameObjectStorage>(ContainerKey.GameObjectStorage),
-                container.get<ItemStackFactory>('player.itemStackFactory'),
+                container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
                 container.get<GameObjectFactory>('player.gameObjectFactory'),
             );
         });
@@ -183,8 +182,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new LocationFactory({
                 entityManager: container.get<EntityManager>('core.entityManager'),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
-                itemDatabase: container.get<ItemDatabase>('core.itemDatabase'),
-                itemStackFactory: container.get<ItemStackFactory>('player.itemStackFactory'),
+                itemDatabase: container.get<ItemDatabase>(ContainerKey.ItemDatabase),
+                itemStackFactory: container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
                 itemStorageFactory: container.get<ItemStorageFactory>('player.itemStorageFactory'),
             });
         });
@@ -211,7 +210,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             let mainHeroListComponent = heroListControllerGameObject.addComponent(new MainHeroListComponent(
                 0,
-                10,
+                // 10,
+                100,    //todo: В настройки.
             ));
 
             return mainHeroListComponent;

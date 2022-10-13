@@ -87,6 +87,10 @@ export default class Repository<Entity> {
         return entity;
     }
 
+    /**
+     * @deprecated alias дальше не будет. Теперь ID - это alias.
+     * @param alias
+     */
     getOneByAlias(alias: string): Entity {
         //todo: Это не здесь надо проверять, а в объектах при валидации.
         let entity = this.findOneByAlias(alias);

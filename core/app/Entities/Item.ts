@@ -80,7 +80,7 @@ export type ItemProperty = keyof ItemProperties;
 // a.stackSize = 42;
 
 export type CharacterAttributeIncreaseObject = {[alias: string]: CharacterAttributeIncrease};
-export type CharacterAttributeRecord = {[characterAttributeID in CharacterAttributeID]: number};
+export type CharacterAttributeRecord = {[ID in CharacterAttributeID]: number};
 
 export interface ItemOptions {
     getTypes: ItemGetType[];

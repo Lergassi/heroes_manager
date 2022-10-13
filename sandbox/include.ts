@@ -41,8 +41,9 @@ import AppError from '../core/source/Errors/AppError.js';
 import AutoIncrementIDGenerator from '../core/source/AutoIncrementIDGenerator.js';
 import {Simulate} from 'react-dom/test-utils';
 import Range from '../core/app/Range.js';
-import {ContainerKey, DEFAULT_ITEM_STORAGE_SIZE} from '../core/app/consts.js';
+import {DEFAULT_ITEM_STORAGE_SIZE} from '../core/app/consts.js';
 import {HeroClassID} from '../core/app/types.js';
+import {ContainerKey} from '../core/types/containerKey.js';
 
 function createEndPlayerContainer(): ContainerInterface {
     let container = new Container();
@@ -585,13 +586,13 @@ export function testSerializeItemStorage(container: ContainerInterface, serializ
     let itemStorage = container.get<ItemStorageFactoryInterface>('player.ItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
 
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('wood', 20),
+        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias('wood', 20),
     );
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('wood', 20),
+        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias('wood', 20),
     );
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
-        container.get<ItemStackFactory>('player.itemStackFactory').createByItemAlias('one_handed_sword_01', 1),
+        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias('one_handed_sword_01', 1),
     );
 
     let expectedStringData = '{"classname":"GameObject","data":{"_id":1,"_name":"ItemStorage","_tags":["#item_storage"],"_components":[{"classname":"ItemStorageComponent","data":{"_id":2,"_gameObject":{"classname":"GameObject","id":1},"_size":20}},{"classname":"ItemStorageSlotComponent","data":{"_id":3,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":{"classname":"ItemStack","data":{"_id":23,"_item":{"classname":"Item","id":"09954f0a-3291-4569-b288-02d073bc826f"},"_count":20}}}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":4,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":{"classname":"ItemStack","data":{"_id":24,"_item":{"classname":"Item","id":"09954f0a-3291-4569-b288-02d073bc826f"},"_count":20}}}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":5,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":{"classname":"ItemStack","data":{"_id":25,"_item":{"classname":"Item","id":"a5492c54-9a4d-42b7-8ec3-a8ccaa787854"},"_count":1}}}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":6,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":7,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":8,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":9,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":10,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":11,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":12,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":13,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":14,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":15,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":16,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":17,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":18,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":19,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":20,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":21,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}},{"classname":"ItemStorageSlotComponent","data":{"_id":22,"_gameObject":{"classname":"GameObject","id":1},"_itemStackSlot":{"classname":"ItemStackSlot","data":{"_itemStack":null}}}}]}}';
@@ -746,7 +747,7 @@ export function testItemStorageFactories() {
 
     let basicItemStorageFactory = new ItemStorageFactory(
         gameObjectStorage,
-        container.get<ItemStackFactory>('player.itemStackFactory'),
+        container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
         // idGenerator,
         null,
     );

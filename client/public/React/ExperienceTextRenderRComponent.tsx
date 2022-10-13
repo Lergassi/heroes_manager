@@ -36,10 +36,10 @@ export default class ExperienceTextRenderRComponent extends React.Component<Expe
 
     render() {
         let experienceComponent = this.props.experienceComponent;
+        // let experienceComponent = this.state.experienceComponent;
 
         return (
             <span>
-                {/*{this.state.experienceComponent.level} ({this.state.experienceComponent.exp})*/}
                 {experienceComponent.level} ({experienceComponent.exp})
             </span>
         );

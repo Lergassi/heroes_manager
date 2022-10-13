@@ -10,14 +10,14 @@ import _ from 'lodash';
 import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
 import {sprintf} from 'sprintf-js';
 import HeroComponent from '../core/app/Components/HeroComponent.js';
-import {HeroClassID} from '../core/app/types.js';
+import {EquipSlotID, HeroClassID} from '../core/app/types.js';
 
 let container = new Container();
 (new DefaultContainerConfigure()).configure(container);
 (new CoreContainerConfigure()).configure(container);
 
 let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
-let equipSlot = container.get<EntityManager>('core.entityManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias('head');
+let equipSlot = container.get<EntityManager>('core.entityManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(EquipSlotID.Head);
 let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias('plate_helmet_01');
 
 let hero = container.get<HeroFactory>('core.heroFactory').create({

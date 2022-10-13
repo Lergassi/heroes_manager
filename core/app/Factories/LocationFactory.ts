@@ -11,7 +11,7 @@ import ItemStackFactory from './ItemStackFactory.js';
 import ItemDatabase from '../ItemDatabase.js';
 import Random from '../Services/Random.js';
 import ItemCategory from '../Entities/ItemCategory.js';
-import {CurrencyAlias, CurrencyWalletAlias, ItemCategoryAlias, unsigned} from '../types.js';
+import {CurrencyAlias, CurrencyWalletAlias, ItemCategoryID, unsigned} from '../types.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
 import AppError from '../../source/Errors/AppError.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
@@ -107,7 +107,7 @@ export default class LocationFactory {
         //todo: Предметы должны устаналиваться более строго. А вдруг в бд не будет предметов категории? Надо чтобы items всегда был в рабочем состоянии.
         let items = this._itemDatabase.filter({
             itemCategory: [
-                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryAlias.Resources),
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Resources),
             ],
         });
         if (items.length < this._gatheringItemPointsCount) {

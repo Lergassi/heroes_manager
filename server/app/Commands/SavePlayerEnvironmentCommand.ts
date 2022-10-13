@@ -10,7 +10,7 @@ import Security from '../../source/Security.js';
 import MetadataManager from '../../../core/source/MetadataManager.js';
 import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
-import {ContainerKey} from '../../../core/app/consts.js';
+import {ContainerKey} from '../../../core/types/containerKey.js';
 
 export default class SavePlayerEnvironmentCommand extends Command {
     get name(): string {

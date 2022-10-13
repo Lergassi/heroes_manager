@@ -1,5 +1,6 @@
 import Item from './Entities/Item.js';
 import EnemyType from './Entities/EnemyType.js';
+import EquipSlotComponent from './Components/EquipSlotComponent.js';
 
 export type Milliseconds = number;
 export type Minutes = number;
@@ -9,10 +10,46 @@ export type Days = number;
 
 export type unsigned = number;
 
+//todo: item
+
+export enum ItemCategoryID {
+    Weapons = 'Weapons',
+    OneHandedSwords = 'OneHandedSwords',
+    TwoHandedSwords = 'TwoHandedSwords',
+    OneHandedAxes = 'OneHandedAxes',
+    TwoHandedAxes = 'TwoHandedAxes',
+    Daggers = 'Daggers',
+    Bows = 'Bows',
+    Crossbows = 'Crossbows',
+    Revolvers = 'Revolvers',
+    Staffs = 'Staffs',
+    Wands = 'Wands',
+
+    Armor = 'Armor',
+    Helmets = 'Helmets',
+    ShoulderPads = 'ShoulderPads',
+    Breastplates = 'Breastplates',
+    Gloves = 'Gloves',
+    Bracers = 'Bracers',
+    Belts = 'Belts',
+    Pants = 'Pants',
+    Boots = 'Boots',
+
+    Shields = 'Shields',
+
+    Amulets = 'Amulets',
+    Rings = 'Rings',
+    Trinkets = 'Trinkets',
+
+    Resources = 'Resources',
+    Materials = 'Materials',
+}
+
 export enum CharacterAttributeID {
     Strength = 'Strength',
     Agility = 'Agility',
     Intelligence = 'Intelligence',
+
     MaxHealthPoints = 'MaxHealthPoints',
     MaxMagicPoints = 'MaxMagicPoints',
     Protection = 'Protection',
@@ -21,6 +58,12 @@ export enum CharacterAttributeID {
     CriticalStrike = 'CriticalStrike',
     Stamina = 'Stamina',
     Luck = 'Luck',
+}
+
+export enum HeroRoleID {
+    Tank = 'Tank',
+    DamageDealer = 'DamageDealer',
+    Support = 'Support',
 }
 
 export enum HeroClassID {
@@ -35,6 +78,29 @@ export enum HeroClassID {
     Priest = 'Priest',
     Druid = 'Druid',
 }
+
+export enum EquipSlotID {
+    Head = 'Head',
+    Shoulders = 'Shoulders',
+    Chest = 'Chest',
+    Wrist = 'Wrist',    //запястье
+    Hands = 'Hands',
+    Waist = 'Waist',    //талия
+    Legs = 'Legs',
+    Foots = 'Foots',
+
+    RightHand = 'RightHand',
+    LeftHand = 'LeftHand',
+
+    Neck = 'Neck',
+    Finger_1 = 'Finger_1',
+    Finger_2 = 'Finger_2',
+
+    Trinket = 'Trinket',
+}
+
+//todo: В будущем должно быть equipSlots или просто slots.
+export type EquipSlotComponentsType = Partial<{[ID in EquipSlotID]: EquipSlotComponent}>;
 
 export type ItemCount = {
     item: Item;
@@ -57,44 +123,11 @@ export type Loot = {
     chance: unsigned;
 }
 
-export enum ItemCategoryAlias {
-    Weapons = 'Weapons',
-    OneHandedSwords = 'OneHandedSwords',
-    TwoHandedSwords = 'TwoHandedSwords',
-    OneHandedAxes = 'OneHandedAxes',
-    TwoHandedAxes = 'TwoHandedAxes',
-    Daggers = 'Daggers',
-    Bows = 'Bows',
-    Crossbows = 'Crossbows',
-    Revolvers = 'Revolvers',
-    Staffs = 'Staffs',
-    Wands = 'Wands',
-
-    Amulets = 'Amulets',
-    Rings = 'Rings',
-    Trinkets = 'Trinkets',
-
-    Armor = 'Armor',
-    Helmets = 'Helmets',
-    ShoulderPads = 'ShoulderPads',
-    Breastplates = 'Breastplates',
-    Gloves = 'Gloves',
-    Bracers = 'Bracers',
-    Belts = 'Belts',
-    Pants = 'Pants',
-    Boots = 'Boots',
-
-    Shields = 'Shields',
-
-    Resources = 'Resources',
-    Materials = 'Materials',
-}
-
 export enum EnemyCategoryAlias {
     Beast = 'Beast',
 }
 
-export enum EnemyTypeAlias {
+export enum EnemyTypeID {
     Boar = 'Boar',
     Skeleton = 'Skeleton',
     Bear = 'Bear',
@@ -115,6 +148,11 @@ export type EnemyConfig = {
     loot: Loot[],
     exp: unsigned,
     gold: unsigned[],
+    // attackPowerForFirstLevel: unsigned[],
+    // maxHealthPointsForFirstLevel: unsigned,
+    // maxMagicPointsForFirstLevel: unsigned,
+    // protectionForFirstLevel: unsigned,
+    //...
 };
 
 export type EnemyConfigs = {

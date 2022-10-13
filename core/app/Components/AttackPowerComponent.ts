@@ -1,52 +1,64 @@
 import Component from '../../source/Component.js';
 import CharacterAttributeComponent from './CharacterAttributeComponent.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
-import {unsigned} from '../types.js';
+import {CharacterAttributeID, unsigned} from '../types.js';
+import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
+import _, {round} from 'lodash';
+import {assert} from '../../source/assert.js';
+import CharacterAttributeCollectorComponent from './CharacterAttributeCollectorComponent.js';
 
 export default class AttackPowerComponent extends Component {
-    /**
-     * Постоянное минимальное значения диапазона урона. Повышаются с уровнем. Не зависит ни от чего.
-     * @private
-     */
-    private _baseMinAttackPower: number;
-
-    /**
-     * Постоянное максимальное значения диапазона урона. Повышаются с уровнем. Не зависит ни от чего.
-     * @private
-     */
-    private _baseMaxAttackPower: number;
+    private readonly _range: unsigned;
+    private readonly _attackPowerCharacterAttributeComponent: CharacterAttributeComponent;
+    private readonly _itemAttributeCollectorComponent: ItemAttributeCollectorComponent;
+    private readonly _characterAttributeCollectorComponent: CharacterAttributeCollectorComponent;
     private readonly _dependentCharacterAttributeComponents: CharacterAttributeComponent[];
+    private readonly _dependentCharacterAttributeMultiplier: number;
 
-    constructor(
-        baseMinAttackPower: number,
-        baseMaxAttackPower: number,
-        dependentCharacterAttributes: CharacterAttribute[],
-    ) {
+    constructor(options: {
+        range: unsigned,
+        characterAttributeCollectorComponent: CharacterAttributeCollectorComponent,
+        dependentCharacterAttributeComponents: CharacterAttributeComponent[],
+    }) {
         super();
-        this._baseMinAttackPower = baseMinAttackPower;
-        this._baseMaxAttackPower = baseMaxAttackPower;
+        // assert(options.attackPowerCharacterAttributeComponent instanceof CharacterAttributeComponent);
+        assert(options.characterAttributeCollectorComponent instanceof CharacterAttributeCollectorComponent);
+        assert(!_.isNil(options.dependentCharacterAttributeComponents));
 
-        //todo: В зависимости. Зависимости должны быть указаны отдельно для сохранения и загрузки.
-        //todo: В GameObjectStorage.
-        // this._dependentCharacterAttributeComponents = gameObject
-        //     .findComponentsByName(CharacterAttributeComponent.name)
-        //     .filter((characterAttributeComponentFound: CharacterAttributeComponent) => {
-        //         return dependentCharacterAttributes.some((characterAttributeComponent) => {
-        //             return characterAttributeComponent === characterAttributeComponentFound.characterAttribute;
-        //         });
-        //     });
-
-        // this._dependentCharacterAttributeComponents = <CharacterAttributeComponent[]>gameObject
-        //     .findComponentsByName(CharacterAttributeComponent.name)
-        //     .filter((characterAttributeComponentFound: CharacterAttributeComponent) => {
-        //         return dependentCharacterAttributes.some((characterAttributeComponent) => {
-        //             return characterAttributeComponent === characterAttributeComponentFound.characterAttribute;
-        //         });
-        //     })
-        // ;
+        this._range = options.range;
+        this._characterAttributeCollectorComponent = options.characterAttributeCollectorComponent;
+        this._dependentCharacterAttributeComponents = options.dependentCharacterAttributeComponents;
+        this._dependentCharacterAttributeMultiplier = 2;
     }
 
-    getFinalAttackPower(): unsigned {
-        return 0;
+    /**
+     * @deprecated
+     */
+    finalMinAttackPower(): number {
+        let value = this._characterAttributeCollectorComponent.totalValue(CharacterAttributeID.AttackPower) +
+            _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
+                // return value.finalValue() * this._dependentCharacterAttributeMultiplier;
+                return this._characterAttributeCollectorComponent.totalValue(value['_characterAttributeID']) * this._dependentCharacterAttributeMultiplier;
+            })) -
+            round(this._range / 2, 0)
+            ;
+
+        //todo: А если значение min получиться больше max? Или методы буду вызваны с задержкой.
+        return value < 0 ? 0 : value;
+    }
+
+    /**
+     * @deprecated
+     */
+    finalMaxAttackPower(): number {
+        return this._characterAttributeCollectorComponent.totalValue(CharacterAttributeID.AttackPower) +
+            _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
+                return this._characterAttributeCollectorComponent.totalValue(value['_characterAttribute']) * this._dependentCharacterAttributeMultiplier;
+            })) +
+            round(this._range / 2, 0)
+            ;
+    }
+
+    finalAttackPower(): number {
+        return _.random(this.finalMinAttackPower(), this.finalMaxAttackPower());
     }
 }

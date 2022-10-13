@@ -6,12 +6,11 @@ import EventSystem from '../../../core/source/EventSystem.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
 import HealthPointsComponent from '../../../core/app/Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../../../core/app/Components/MagicPointsComponent.js';
-import AttackPowerComponent from '../../../core/app/Components/AttackPowerComponent.js';
-import CharacterAttributeComponent from '../../../core/app/Components/CharacterAttributeComponent.js';
-import CharacterAttributeValueRComponent from './CharacterAttributeValueRComponent.js';
 import ExperienceTextRenderRComponent from './ExperienceTextRenderRComponent.js';
 import {CharacterAttributeID} from '../../../core/app/types.js';
 import {EquipSlotComponentEventCode} from '../../../core/app/Components/EquipSlotComponent.js';
+import CharacterAttributeCollectorComponent from '../../../core/app/Components/CharacterAttributeCollectorComponent.js';
+import AttackPowerComponent from '../../../core/app/Components/AttackPowerComponent.js';
 
 export type HeroTableRowRComponentProps = {
     container: ContainerInterface;
@@ -67,19 +66,23 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                 /></td>
                 <td>{hero.get<HealthPointsComponent>('healthPointsComponent').currentHealthPoints}/{hero.get<HealthPointsComponent>('healthPointsComponent').maxHealthPoints}</td>
                 <td>{hero.get<MagicPointsComponent>('magicPointsComponent').currentMagicPoints}/{hero.get<MagicPointsComponent>('magicPointsComponent').maxMagicPoints}</td>
-                <td>{hero.get<AttackPowerComponent>('attackPowerComponent')['_baseMinAttackPower']}-{hero.get<AttackPowerComponent>('attackPowerComponent')['_baseMaxAttackPower']}</td>
+                <td>{hero.get<AttackPowerComponent>(AttackPowerComponent.name).finalMinAttackPower()}-{hero.get<AttackPowerComponent>(AttackPowerComponent.name).finalMaxAttackPower()}</td>
+                {/*<td>{hero.get<CharacterAttributeCollectorComponent>(CharacterAttributeCollectorComponent.name).totalValue(CharacterAttributeID.AttackPower)}</td>*/}
                 <td>
-                    <CharacterAttributeValueRComponent
-                        characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Strength)}
-                    />
-                    /
-                    <CharacterAttributeValueRComponent
-                        characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Agility)}
-                    />
-                    /
-                    <CharacterAttributeValueRComponent
-                        characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Intelligence)}
-                    />
+                    {/*<CharacterAttributeValueRComponent*/}
+                    {/*    characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Strength)}*/}
+                    {/*/>*/}
+                    {/*/*/}
+                    {/*<CharacterAttributeValueRComponent*/}
+                    {/*    characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Agility)}*/}
+                    {/*/>*/}
+                    {/*/*/}
+                    {/*<CharacterAttributeValueRComponent*/}
+                    {/*    characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Intelligence)}*/}
+                    {/*/>*/}
+                    {hero.get<CharacterAttributeCollectorComponent>(CharacterAttributeCollectorComponent.name).totalValue(CharacterAttributeID.Strength)}/
+                    {hero.get<CharacterAttributeCollectorComponent>(CharacterAttributeCollectorComponent.name).totalValue(CharacterAttributeID.Agility)}/
+                    {hero.get<CharacterAttributeCollectorComponent>(CharacterAttributeCollectorComponent.name).totalValue(CharacterAttributeID.Intelligence)}
                 </td>
                 <td>
                     {hero.get<HeroComponent>('heroComponent').state}
@@ -87,8 +90,6 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                 <td>
                     <button onClick={this.props.selectHero.bind(this, hero)}>showHero</button>
                     <button onClick={this.props.deleteHero.bind(this, hero)}>Удалить</button>
-                    {/*<button onClick={this.props.selectHero(hero)}>showHero</button>*/}
-                    {/*<button onClick={this.props.deleteHero(hero)}>Удалить</button>*/}
                 </td>
             </tr>
         );

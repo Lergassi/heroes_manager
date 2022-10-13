@@ -18,7 +18,7 @@ export default class CharacterAttributeValueRComponent extends React.Component<C
 
         return (
             <span>
-                {characterAttributeComponent.getFinalValue()}
+                {/*{characterAttributeComponent.finalValue()}*/}
             </span>
         );
     }

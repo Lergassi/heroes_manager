@@ -1,6 +1,6 @@
 import GameObjectFactory from './GameObjectFactory.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
-import {EnemyConfig, EntityManagerKey, unsigned} from '../types.js';
+import {EnemyConfig, EnemyTypeID, EntityManagerKey, unsigned} from '../types.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
 import EnemyType from '../Entities/EnemyType.js';
 import EntityManager from '../../source/EntityManager.js';
@@ -12,6 +12,8 @@ import _ from 'lodash';
 import ExperienceComponent from '../Components/ExperienceComponent.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import {assert} from '../../source/assert.js';
+import {sprintf} from 'sprintf-js';
+import AttackPowerComponent from '../Components/AttackPowerComponent.js';
 // import assert from 'assert';
 
 // export type EnemyFactoryOptions = {
@@ -23,7 +25,7 @@ import {assert} from '../../source/assert.js';
 
 export type EnemyFactoryCreateOptions = {
     level: unsigned;
-    type: EnemyType;
+    enemyTypeID: EnemyTypeID;
 };
 
 export default class EnemyFactory {
@@ -48,26 +50,29 @@ export default class EnemyFactory {
 
     create(options: EnemyFactoryCreateOptions) {
         assert(options.level >= 1);
-        assert(
-            !_.isNil(options.type) &&
-            options.type instanceof EnemyType
-        );
+        assert(!_.isNil(options.enemyTypeID));
 
-        let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, options.type.alias);    //todo: Пока без классов.
-        if (!enemyConfig) {
-            throw new AppError('Для врага не найден EnemyConfig.');
-        }
+        let enemyType = this._entityManager.entity<EnemyType>(EntityManagerKey.EnemyType, options.enemyTypeID);
+        assert(enemyType instanceof EnemyType, sprintf('EnemyType (%s) не найден.', options.enemyTypeID));
+
+        // let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, options.type.alias);    //todo: Пока без классов.
+        let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, options.enemyTypeID);
+        assert(!_.isNil(enemyConfig), sprintf('EnemyConfig (%s) не найден.', options.enemyTypeID));
 
         let enemy = this._gameObjectFactory.create();
 
         let enemyComponent = enemy.set<EnemyComponent>(EnemyComponent.name, new EnemyComponent({
-            enemyType: options.type,
+            enemyType: enemyType,
             level: options.level,
         }));
         let healthPointsComponent = enemy.set<HealthPointsComponent>(HealthPointsComponent.name, new HealthPointsComponent(
             100,
             100,
         ));
+        // enemy.set(AttackPowerComponent.name, new AttackPowerComponent({
+        //     baseMinAttackPower: 10,
+        //     baseMaxAttackPower: 20,
+        // }));
 
         //лут
         let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ItemLootGeneratorComponent.name, new ItemLootGeneratorComponent({
@@ -80,19 +85,6 @@ export default class EnemyFactory {
         let experienceGeneratorComponent = enemy.set<ExperienceGeneratorComponent>(ExperienceGeneratorComponent.name, new ExperienceGeneratorComponent({
             exp: enemyConfig.exp,
         }));
-
-        // EventSystem.addListener({
-        //     codes: [
-        //         HealthPointsComponentEventCode.Died,
-        //     ],
-        //     listener: {
-        //         target: healthPointsComponent,
-        //         callback: (target) => {
-        //             goldLootGeneratorComponent.transfer(walletComponent);           //Кошелек локации.
-        //             experienceGeneratorComponent.distribute(experienceComponents);  //Все герои.
-        //         },
-        //     },
-        // });
 
         return enemy;
     }
