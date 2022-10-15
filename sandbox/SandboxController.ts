@@ -18,7 +18,6 @@ import ItemDatabase from '../core/app/ItemDatabase.js';
 import _ from 'lodash';
 import Item from '../core/app/Entities/Item.js';
 import ItemCategory from '../core/app/Entities/ItemCategory.js';
-import Random from '../core/app/Services/Random.js';
 import {extractItems} from '../core/app/indev.js';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
 import {debugHero, debugItemStorage, debugNewItemStorage} from '../core/debug/debug_functions.js';
@@ -35,17 +34,19 @@ import {EntityManagerKey} from '../core/app/types.js';
 import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponentFactory.js';
 import EnemyType from '../core/app/Entities/EnemyType.js';
 import HealthPointsComponent from '../core/app/Components/HealthPointsComponent.js';
-import ItemAttributeCollectorComponent from '../core/app/Components/ItemAttributeCollectorComponent.js';
-import EnemyGroupComponent from '../core/app/Components/EnemyGroupComponent.js';
+import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
 import AttackPowerComponent from '../core/app/Components/AttackPowerComponent.js';
 import {ContainerKey} from '../core/types/enums/ContainerKey.js';
-import CharacterAttributeComponent from '../core/app/Components/CharacterAttributeComponent.js';
-import CharacterAttributeRawValueCollectorComponent from '../core/app/Components/CharacterAttributeRawValueCollectorComponent.js';
+import CharacterAttributeCollector from '../core/app/Components/CharacterAttributeCollector.js';
 import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
 import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../core/types/enums/HeroClassID.js';
 import {EnemyTypeID} from '../core/types/enums/EnemyTypeID.js';
 import {ItemID} from '../core/types/enums/ItemID.js';
+import HeroGroupCharacterAttributeCollector from '../core/app/Decorators/HeroGroupCharacterAttributeCollector.js';
+import HeroGroupInterface from '../core/app/Interfaces/HeroGroupInterface.js';
+import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
+import AttackPower from '../core/app/Components/CharacterAttributes/AttackPower.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -71,13 +72,15 @@ export class SandboxController {
         // this.testRandom_oneFromRange();
         // this.testLodashPull();
 
-        // this.devHeroFactory();
+        this.devHeroFactory();
         // this.devLocation();
         // this.devGoldLootGeneratorComponent();
         // this.devLevelComponent();
         // this.devLootGenerator();
-        this.devFight();
+        // this.devFight();
         // this.devAttackPowerComponent();
+
+        // this.devNewCharacterAttributesGetStarted();
     }
 
     devLocation() {
@@ -90,10 +93,11 @@ export class SandboxController {
     }
 
     devHeroFactory() {
-        this._container.get<HeroFactory>('player.heroFactory').create({
+        let hero = this._container.get<HeroFactory>('player.heroFactory').create({
             heroClass: this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
             level: 1,
         });
+        console.log(hero);
     }
 
     devLocationFactory() {
@@ -659,46 +663,101 @@ export class SandboxController {
             }),
         ];
 
-        let heroGroupComponent = new HeroGroupComponent({
+        let heroAttributeCharacterAttributeSummary = new CharacterAttributeCollector();
+
+        let hero = this._container.get<GameObjectFactory>(ContainerKey.GameObjectFactory).create();
+
+        let heroGroupComponent: HeroGroupInterface = new HeroGroupComponent({
+        // let heroGroupComponent = new HeroGroupComponent({
+        // let heroGroupComponent = new HeroGroupComponent({
             size: 5,
         });
+        // console.log(heroGroupComponent);
+        // hero.set<HeroGroupComponent>(HeroGroupComponent.name, heroGroupComponent);
+        // let heroGroupCharacterAttributeCollectorProxy = new HeroGroupCharacterAttributeCollector({
+        heroGroupComponent = new HeroGroupCharacterAttributeCollector({
+            heroGroup: heroGroupComponent,
+            // characterAttributeValueCollector: heroAttributeCharacterAttributeSummary,
+        });
+        // hero.set(HeroGroupComponent.name, heroGroupCharacterAttributeCollectorProxy);
         heroGroupComponent.addHero(heroes[0]);
         heroGroupComponent.addHero(heroes[1]);
         heroGroupComponent.addHero(heroes[2]);
         heroGroupComponent.addHero(heroes[3]);
         heroGroupComponent.addHero(heroes[4]);
-        console.log(heroGroupComponent);
-        console.log(heroes[0]);
 
-        let enemyGroupComponent = new EnemyGroupComponent({
-            size: 5,
-        });
-        enemyGroupComponent.createEnemy({
-            enemyTypeID: EnemyTypeID.Boar,
-            level: 1,
-            enemyFactory: enemyFactory,
-        });
-        enemyGroupComponent.createEnemy({
-            enemyTypeID: EnemyTypeID.Boar,
-            level: 1,
-            enemyFactory: enemyFactory,
-        });
-        enemyGroupComponent.createEnemy({
-            enemyTypeID: EnemyTypeID.Boar,
-            level: 1,
-            enemyFactory: enemyFactory,
-        });
-        enemyGroupComponent.createEnemy({
-            enemyTypeID: EnemyTypeID.Boar,
-            level: 1,
-            enemyFactory: enemyFactory,
-        });
-        enemyGroupComponent.createEnemy({
-            enemyTypeID: EnemyTypeID.Boar,
-            level: 1,
-            enemyFactory: enemyFactory,
-        });
-        console.log(enemyGroupComponent);
+        // heroGroupCharacterAttributeCollectorProxy.addHero(heroes[0]);
+        // heroGroupCharacterAttributeCollectorProxy.addHero(heroes[1]);
+        // heroGroupCharacterAttributeCollectorProxy.addHero(heroes[2]);
+        // heroGroupCharacterAttributeCollectorProxy.addHero(heroes[3]);
+        // heroGroupCharacterAttributeCollectorProxy.addHero(heroes[4]);
+
+        // console.log(heroes[0]);
+        // console.log(heroes[0].get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name));
+        // console.log(heroes[0].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // console.log(heroes[0].get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.Strength));
+        // console.log(heroes[0].get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.Agility));
+        // console.log(heroes[0].get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.Intelligence));
+        // console.log(heroes[0].get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.AttackPower));
+
+        console.log(heroAttributeCharacterAttributeSummary.value(CharacterAttributeID.Strength));
+        console.log(heroAttributeCharacterAttributeSummary.value(CharacterAttributeID.Agility));
+        console.log(heroAttributeCharacterAttributeSummary.value(CharacterAttributeID.Intelligence));
+        console.log(heroAttributeCharacterAttributeSummary.value(CharacterAttributeID.AttackPower));
+        // console.log(heroGroupCharacterAttributeCollectorProxy.totalValue(CharacterAttributeID.Strength));
+        // console.log(heroGroupCharacterAttributeCollectorProxy.totalValue(CharacterAttributeID.Agility));
+        // console.log(heroGroupCharacterAttributeCollectorProxy.totalValue(CharacterAttributeID.Intelligence));
+        // console.log(heroGroupCharacterAttributeCollectorProxy.totalValue(CharacterAttributeID.AttackPower));
+
+        // heroAttributeCharacterAttributeSummary.addCollector(heroes[0].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // heroAttributeCharacterAttributeSummary.addCollector(heroes[1].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // heroAttributeCharacterAttributeSummary.addCollector(heroes[2].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // heroAttributeCharacterAttributeSummary.addCollector(heroes[3].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // heroAttributeCharacterAttributeSummary.addCollector(heroes[4].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // console.log(heroAttributeCharacterAttributeSummary.totalValue(CharacterAttributeID.Strength));
+        // console.log(heroAttributeCharacterAttributeSummary.totalValue(CharacterAttributeID.Agility));
+        // console.log(heroAttributeCharacterAttributeSummary.totalValue(CharacterAttributeID.Intelligence));
+        // console.log(heroAttributeCharacterAttributeSummary.totalValue(CharacterAttributeID.AttackPower));
+
+        // heroAttributeCharacterAttributeSummary.removeCollector(heroes[0].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // heroAttributeCharacterAttributeSummary.removeCollector(heroes[1].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // heroAttributeCharacterAttributeSummary.removeCollector(heroes[2].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // heroAttributeCharacterAttributeSummary.removeCollector(heroes[3].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // heroAttributeCharacterAttributeSummary.removeCollector(heroes[4].get<CharacterAttributeValueCollector>(CharacterAttributeValueCollector.name));
+        // console.log(heroAttributeCharacterAttributeSummary.totalValue(CharacterAttributeID.Strength));
+        // console.log(heroAttributeCharacterAttributeSummary.totalValue(CharacterAttributeID.Agility));
+        // console.log(heroAttributeCharacterAttributeSummary.totalValue(CharacterAttributeID.Intelligence));
+        // console.log(heroAttributeCharacterAttributeSummary.totalValue(CharacterAttributeID.AttackPower));
+
+        // let enemyGroupComponent = new EnemyGroupComponent({
+        //     size: 5,
+        // });
+        // enemyGroupComponent.createEnemy({
+        //     enemyTypeID: EnemyTypeID.Boar,
+        //     level: 1,
+        //     enemyFactory: enemyFactory,
+        // });
+        // enemyGroupComponent.createEnemy({
+        //     enemyTypeID: EnemyTypeID.Boar,
+        //     level: 1,
+        //     enemyFactory: enemyFactory,
+        // });
+        // enemyGroupComponent.createEnemy({
+        //     enemyTypeID: EnemyTypeID.Boar,
+        //     level: 1,
+        //     enemyFactory: enemyFactory,
+        // });
+        // enemyGroupComponent.createEnemy({
+        //     enemyTypeID: EnemyTypeID.Boar,
+        //     level: 1,
+        //     enemyFactory: enemyFactory,
+        // });
+        // enemyGroupComponent.createEnemy({
+        //     enemyTypeID: EnemyTypeID.Boar,
+        //     level: 1,
+        //     enemyFactory: enemyFactory,
+        // });
+        // console.log(enemyGroupComponent);
 
         // heroGroupComponent.attack(enemyGroupComponent);
         // enemyGroupComponent.attack(heroGroupComponent);
@@ -708,7 +767,7 @@ export class SandboxController {
     devAttackPowerComponent() {
         let em = this._container.get<ItemDatabase>(ContainerKey.ItemDatabase);
 
-        let itemAttributeCollectorComponent = new ItemAttributeCollectorComponent();
+        let itemAttributeCollectorComponent = new ItemCharacterAttributeCollector();
 
         let attributes = {
             // [CharacterAttributeID.Strength]: new CharacterAttributeComponent({
@@ -725,17 +784,18 @@ export class SandboxController {
             // })
         };
 
-        let attackPowerComponent = new AttackPowerComponent({
-            range: _.random(16, 34),
-            characterAttributeCollectorComponent: new CharacterAttributeRawValueCollectorComponent(),
-            // itemAttributeCollectorComponent: itemAttributeCollectorComponent,
-            dependentCharacterAttributeComponents: [attributes[CharacterAttributeID.Strength]],
-        });
+        // let attackPowerComponent = new AttackPowerComponent({
+        //     // range: _.random(16, 34),
+        //     // attackPower: new CharacterAttributeValueCollector(),
+        //     attackPower: new CharacterAttributeComponent({characterAttributeID: CharacterAttributeID.AttackPower}),
+        //     // itemAttributeCollectorComponent: itemAttributeCollectorComponent,
+        //     // dependentCharacterAttributeComponents: [attributes[CharacterAttributeID.Strength]],
+        // });
 
         // itemAttributeCollectorComponent.addItem(em.get(ItemID.PlateHelmet_02));
         // console.log(itemAttributeCollectorComponent.increaseCharacterAttribute());
 
-        console.log([attackPowerComponent.finalMinAttackPower(), attackPowerComponent.finalMaxAttackPower()]);
+        // console.log([attackPowerComponent.finalMinAttackPower(), attackPowerComponent.finalMaxAttackPower()]);
         // console.log(attackPowerComponent.finalAttackPower());
     }
 
@@ -756,5 +816,21 @@ export class SandboxController {
         _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
         _.pullAt(items, _.indexOf(items, this._container.get<EntityManager>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
         console.log(items);
+    }
+
+    addHeroGroupDecorator(heroGroup: HeroGroupComponent) {
+
+    }
+
+    devNewCharacterAttributesGetStarted() {
+        let attackPower = new AttackPower({
+            left: 16,
+            right: 24,
+        });
+        console.log(attackPower.value());
+        attackPower.shift(10);
+        attackPower.shift(10);
+        attackPower.shift(10);
+        console.log(attackPower.value());
     }
 }

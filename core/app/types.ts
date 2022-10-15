@@ -3,18 +3,16 @@ import EnemyType from './Entities/EnemyType.js';
 import EquipSlotComponent from './Components/EquipSlotComponent.js';
 import {EquipSlotID} from '../types/enums/EquipSlotID.js';
 
+export type unsigned = number;
+
 export type Milliseconds = number;
 export type Minutes = number;
 export type Seconds = number;
 export type Hours = number;
 export type Days = number;
 
-export type unsigned = number;
-
-//todo: item
-
 //todo: В будущем должно быть equipSlots или просто slots.
-export type EquipSlotComponentsType = Partial<{[ID in EquipSlotID]: EquipSlotComponent}>;
+export type EquipSlots = Partial<{[ID in EquipSlotID]: EquipSlotComponent}>;
 
 export type ItemCount = {
     item: Item;

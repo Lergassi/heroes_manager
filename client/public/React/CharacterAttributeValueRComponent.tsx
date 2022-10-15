@@ -1,8 +1,8 @@
-import CharacterAttributeComponent from '../../../core/app/Components/CharacterAttributeComponent.js';
+import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
 import React from 'react';
 
 export interface CharacterAttributeValueRComponentProps {
-    characterAttributeComponent: CharacterAttributeComponent;
+    characterAttributeComponent: CharacterAttribute;
 }
 
 export interface CharacterAttributeValueRComponentState {

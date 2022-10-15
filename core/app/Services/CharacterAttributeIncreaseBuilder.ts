@@ -1,5 +1,5 @@
 import EntityManager from '../../source/EntityManager.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
+import CharacterAttributeData from '../Entities/CharacterAttributeData.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
 import {CharacterAttributeIncreaseObject} from '../Entities/Item.js';
 
@@ -17,7 +17,7 @@ export default class CharacterAttributeIncreaseBuilder {
     build(values: CharacterAttributeIncreaseObjectBuilder): CharacterAttributeIncreaseObject {
         let result: CharacterAttributeIncreaseObject = {};
         for (const alias in values) {
-            let characterAttribute = this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(alias);
+            let characterAttribute = this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(alias);
             result[alias] = new CharacterAttributeIncrease(characterAttribute, values[alias]);
         }
 

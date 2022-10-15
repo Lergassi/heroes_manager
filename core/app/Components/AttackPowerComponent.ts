@@ -1,65 +1,86 @@
 import Component from '../../source/Component.js';
-import CharacterAttributeComponent from './CharacterAttributeComponent.js';
+import CharacterAttribute from './CharacterAttribute.js';
 import {unsigned} from '../types.js';
-import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
-import _, {round} from 'lodash';
+import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
+import _, {curryRight, round} from 'lodash';
 import {assert} from '../../source/assert.js';
-import CharacterAttributeRawValueCollectorComponent from './CharacterAttributeRawValueCollectorComponent.js';
+import CharacterAttributeCollector from './CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 export default class AttackPowerComponent extends Component {
     private readonly _range: unsigned;
-    private readonly _attackPowerCharacterAttributeComponent: CharacterAttributeComponent;
-    private readonly _itemAttributeCollectorComponent: ItemAttributeCollectorComponent;
-    private readonly _characterAttributeCollectorComponent: CharacterAttributeRawValueCollectorComponent;
-    private readonly _dependentCharacterAttributeComponents: CharacterAttributeComponent[];
+    private readonly _attackPowerCharacterAttributeComponent: CharacterAttribute;
+    private readonly _itemAttributeCollectorComponent: ItemCharacterAttributeCollector;
+    private readonly _attackPower: CharacterAttribute;
+    private readonly _dependentCharacterAttributeComponents: CharacterAttribute[];
     private readonly _dependentCharacterAttributeMultiplier: number;
 
     constructor(options: {
-        range: unsigned,
-        characterAttributeCollectorComponent: CharacterAttributeRawValueCollectorComponent,
-        dependentCharacterAttributeComponents: CharacterAttributeComponent[],
+        attackPower: CharacterAttribute,
+        dependentCharacterAttributeComponents?: CharacterAttribute[],
     }) {
         super();
         // assert(options.attackPowerCharacterAttributeComponent instanceof CharacterAttributeComponent);
-        assert(options.characterAttributeCollectorComponent instanceof CharacterAttributeRawValueCollectorComponent);
-        assert(!_.isNil(options.dependentCharacterAttributeComponents));
+        // assert(options.attackPower instanceof CharacterAttributeValueCollector);
+        assert(!_.isNil(options.attackPower));
+        // assert(!_.isNil(options.dependentCharacterAttributeComponents));
 
-        this._range = options.range;
-        this._characterAttributeCollectorComponent = options.characterAttributeCollectorComponent;
+        this._range = 10;
+        this._attackPower = options.attackPower;
         this._dependentCharacterAttributeComponents = options.dependentCharacterAttributeComponents;
         this._dependentCharacterAttributeMultiplier = 2;
     }
 
-    /**
-     * @deprecated
-     */
-    finalMinAttackPower(): number {
-        let value = this._characterAttributeCollectorComponent.totalValue(CharacterAttributeID.AttackPower) +
+    // /**
+    //  * @deprecated
+    //  */
+    // finalMinAttackPower(): number {
+    //     let value = this._attackPower.value() +
+    //         _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
+    //             return value.value() * this._dependentCharacterAttributeMultiplier;
+    //         })) -
+    //         round(this._range / 2, 0)
+    //         ;
+    //
+    //     return value < 0 ? 0 : value;
+    // }
+    //
+    // /**
+    //  * @deprecated
+    //  */
+    // finalMaxAttackPower(): number {
+    //     return this._attackPower.value() +
+    //         _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
+    //             return value.value() * this._dependentCharacterAttributeMultiplier;
+    //             // return this._attackPower.totalValue(value['_characterAttribute']) * this._dependentCharacterAttributeMultiplier;
+    //         })) +
+    //         round(this._range / 2, 0)
+    //         ;
+    // }
+    //
+    // finalAttackPower(): number {
+    //     return _.random(this.finalMinAttackPower(), this.finalMaxAttackPower());
+    // }
+
+    value(): {left: number; right: number} {
+        let left = this._attackPower.value() +
             _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
-                // return value.finalValue() * this._dependentCharacterAttributeMultiplier;
-                return this._characterAttributeCollectorComponent.totalValue(value['_characterAttributeID']) * this._dependentCharacterAttributeMultiplier;
+                return value.value() * this._dependentCharacterAttributeMultiplier;
             })) -
             round(this._range / 2, 0)
-            ;
+        ;
+        left = left < 0 ? 0 : left;
 
-        //todo: А если значение min получиться больше max? Или методы буду вызваны с задержкой.
-        return value < 0 ? 0 : value;
-    }
-
-    /**
-     * @deprecated
-     */
-    finalMaxAttackPower(): number {
-        return this._characterAttributeCollectorComponent.totalValue(CharacterAttributeID.AttackPower) +
+        let right = this._attackPower.value() +
             _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
-                return this._characterAttributeCollectorComponent.totalValue(value['_characterAttribute']) * this._dependentCharacterAttributeMultiplier;
+                return value.value() * this._dependentCharacterAttributeMultiplier;
             })) +
             round(this._range / 2, 0)
             ;
-    }
 
-    finalAttackPower(): number {
-        return _.random(this.finalMinAttackPower(), this.finalMaxAttackPower());
+        return {
+            left: left,
+            right: right,
+        };
     }
 }

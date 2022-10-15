@@ -5,6 +5,11 @@ import ExperienceComponent from '../../../core/app/Components/ExperienceComponen
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
 import EquipSlotRComponent from './EquipSlotRComponent.js';
 import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
+import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
+import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
+import HealthPointsComponent from '../../../core/app/Components/HealthPointsComponent.js';
+import MagicPointsComponent from '../../../core/app/Components/MagicPointsComponent.js';
+import AttackPowerComponent from '../../../core/app/Components/AttackPowerComponent.js';
 
 export interface HeroDetailRComponentProps {
     hero?: GameObject,
@@ -97,7 +102,43 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                     </tr>
                     <tr>
                         <td>Класс</td>
-                        <td>{hero.get<HeroComponent>('heroComponent').heroClass.name}</td>
+                        <td>{hero.get<HeroComponent>(HeroComponent.name).heroClass.name}</td>
+                    </tr>
+                    <tr>
+                        <td>Сила</td>
+                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Strength).value()}</td>
+                    </tr>
+                    <tr>
+                        <td>Ловкость</td>
+                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Agility).value()}</td>
+                    </tr>
+                    <tr>
+                        <td>Интеллект</td>
+                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Intelligence).value()}</td>
+                    </tr>
+                    {/*<tr>*/}
+                    {/*    <td>Максимальное кол-ко очков здоровья</td>*/}
+                    {/*    <td>{hero.get<CharacterAttribute>(CharacterAttributeID.MaxHealthPoints).value()}</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                    {/*    <td>Максимальное кол-ко очков магиии</td>*/}
+                    {/*    <td>{hero.get<CharacterAttribute>(CharacterAttributeID.MaxMagicPoints).value()}</td>*/}
+                    {/*</tr>*/}
+                    <tr>
+                        <td>Сила атаки</td>
+                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.AttackPower).value()}</td>
+                    </tr>
+                    <tr>
+                        <td>Очки здоровья</td>
+                        <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name).currentHealthPoints}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name).maxHealthPoints}</td>
+                    </tr>
+                    <tr>
+                        <td>Очки магии</td>
+                        <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name).currentMagicPoints}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name).maxMagicPoints}</td>
+                    </tr>
+                    <tr>
+                        <td>Сила атаки</td>
+                        <td>{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().left}/{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().right}</td>
                     </tr>
                     </tbody>
                 </table>

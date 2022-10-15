@@ -7,7 +7,7 @@ import Item, {
 } from '../Entities/Item.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
+import CharacterAttributeData from '../Entities/CharacterAttributeData.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import Quality from '../Entities/Quality.js';
 import EntityManager from '../../source/EntityManager.js';
@@ -142,7 +142,7 @@ export default class ItemBuilder {
         this._increase = {};
         let characterAttributeIncreaseObjectBuilder = options.increase ?? {};
         for (const alias in characterAttributeIncreaseObjectBuilder) {
-            let characterAttribute = this._entityManager.get<CharacterAttribute>(CharacterAttribute, alias);
+            let characterAttribute = this._entityManager.get<CharacterAttributeData>(CharacterAttributeData, alias);
             this._increase[alias] = new CharacterAttributeIncrease(characterAttribute, characterAttributeIncreaseObjectBuilder[alias]);
         }
         this._characterAttributes = options.characterAttributes || {};

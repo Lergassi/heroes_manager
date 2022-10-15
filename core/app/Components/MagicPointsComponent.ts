@@ -4,10 +4,16 @@ export default class MagicPointsComponent extends Component {
     private _currentMagicPoints: number;
     private _maxMagicPoints: number;
 
+    /**
+     * @deprecated
+     */
     get currentMagicPoints(): number {
         return this._currentMagicPoints;
     }
 
+    /**
+     * @deprecated
+     */
     get maxMagicPoints(): number {
         return this._maxMagicPoints;
     }

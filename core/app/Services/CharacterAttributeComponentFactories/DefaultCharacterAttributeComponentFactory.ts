@@ -1,6 +1,6 @@
 import {unsigned} from '../../types.js';
-import ItemAttributeCollectorComponent from '../../Components/ItemAttributeCollectorComponent.js';
-import CharacterAttributeComponent from '../../Components/CharacterAttributeComponent.js';
+import ItemCharacterAttributeCollector from '../../Components/ItemCharacterAttributeCollector.js';
+import CharacterAttribute from '../../Components/CharacterAttribute.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 

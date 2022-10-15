@@ -9,7 +9,7 @@ export class TestItem {
 
 import ArmorMaterial from './Entities/ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../source/IncreaseList.js';
-import CharacterAttribute from './Entities/CharacterAttribute.js';
+import CharacterAttributeData from './Entities/CharacterAttributeData.js';
 import EntityManager from '../source/EntityManager.js';
 import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
 
@@ -21,8 +21,8 @@ let properties = {
     armorMaterial: entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Plate),  //todo: Возможные ошибки! Был репозиторий вместо сущности!
     //todo: Пока без "интерфейса".
     increase: [
-        new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Strength), 42),
-        new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('stamina'), 42),
-        new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias('protection'), 42),
+        new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Strength), 42),
+        new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias('stamina'), 42),
+        new CharacterAttributeIncrease(entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias('protection'), 42),
     ],
 };

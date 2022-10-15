@@ -9,14 +9,14 @@ import WalletComponent from '../app/Components/WalletComponent.js';
 import HeroComponent from '../app/Components/HeroComponent.js';
 import LevelRange from '../app/Components/ExperienceComponent.js';
 import EquipSlotComponent from '../app/Components/EquipSlotComponent.js';
-import CharacterAttributeComponent from '../app/Components/CharacterAttributeComponent.js';
+import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import HealthPointsComponent from '../app/Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../app/Components/MagicPointsComponent.js';
 import AttackPowerComponent from '../app/Components/AttackPowerComponent.js';
 import PlayerComponent from '../app/Components/PlayerComponent.js';
 import ArmorMaterial from '../app/Entities/ArmorMaterial.js';
 import Quality from '../app/Entities/Quality.js';
-import CharacterAttribute from '../app/Entities/CharacterAttribute.js';
+import CharacterAttributeData from '../app/Entities/CharacterAttributeData.js';
 import Currency from '../app/Entities/Currency.js';
 import HeroRole from '../app/Entities/HeroRole.js';
 import ItemCategory from '../app/Entities/ItemCategory.js';
@@ -184,9 +184,9 @@ metadata[EquipSlotComponent.name] = {
         },
     },
 };
-metadata[CharacterAttributeComponent.name] = {
-    classname: CharacterAttributeComponent.name,
-    prototype: CharacterAttributeComponent.prototype,
+metadata[CharacterAttributeData.name] = {
+    classname: CharacterAttributeData.name,
+    prototype: CharacterAttributeData.prototype,
     mapping: {
         _id: {
             type: SerializeType.Number,
@@ -316,9 +316,9 @@ metadata[Quality.name] = {
         },
     },
 };
-metadata[CharacterAttribute.name] = {
-    classname: CharacterAttribute.name,
-    prototype: CharacterAttribute.prototype,
+metadata[CharacterAttributeData.name] = {
+    classname: CharacterAttributeData.name,
+    prototype: CharacterAttributeData.prototype,
     mapping: {
         _id: {
             type: SerializeType.Number,

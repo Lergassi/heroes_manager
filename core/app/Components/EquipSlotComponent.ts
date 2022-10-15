@@ -5,7 +5,7 @@ import Item from '../Entities/Item.js';
 import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
-import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
+import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
 import EventSystem from '../../source/EventSystem.js';
 import {unsigned} from '../types.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
@@ -20,7 +20,7 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     private readonly _equipSlot: EquipSlot;
     private readonly _heroComponent: HeroComponent;
     private _itemStack: ItemStack;
-    private _itemAttributeCollectionComponent: ItemAttributeCollectorComponent;
+    private _itemAttributeCollectionComponent: ItemCharacterAttributeCollector;
 
     get equipSlot(): EquipSlot {
         return this._equipSlot;
@@ -33,7 +33,7 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     constructor(options: {
         equipSlot: EquipSlot,
         heroComponent: HeroComponent,
-        itemAttributeCollectorComponent: ItemAttributeCollectorComponent,   //todo: В декоратор.
+        itemAttributeCollectorComponent: ItemCharacterAttributeCollector,   //todo: В декоратор.
     }) {
         super();
         this._equipSlot = options.equipSlot;

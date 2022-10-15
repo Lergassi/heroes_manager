@@ -14,7 +14,7 @@ import EquipSlot from '../Entities/EquipSlot.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import {EquipSlotComponentsType, unsigned} from '../types.js';
+import {EquipSlots, unsigned} from '../types.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import HeroAttributeCollectorComponent from '../Components/HeroAttributeCollectorComponent.js';
@@ -22,6 +22,7 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
+import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -172,7 +173,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
             //Начальная экипировка.
             for (const equipSlotID in heroPatterns[i]['equip']) {
                 hero
-                    .get<EquipSlotComponentsType>('EquipSlotComponentsType')[equipSlotID as EquipSlotID]
+                    .get<EquipSlots>(GameObjectKey.EquipSlots)[equipSlotID as EquipSlotID]
                     ?.createItemStack({
                         item: heroPatterns[i]['equip'][equipSlotID],
                         count: 1,

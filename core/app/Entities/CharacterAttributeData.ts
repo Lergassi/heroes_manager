@@ -1,4 +1,4 @@
-export default class CharacterAttribute {
+export default class CharacterAttributeData {
     private readonly _id: string;
     private readonly _name: string;
     private readonly _alias: string;

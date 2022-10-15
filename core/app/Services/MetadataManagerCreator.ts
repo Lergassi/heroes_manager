@@ -1,7 +1,7 @@
 import MetadataManager, {repositoryManagerFinderCallback} from '../../source/MetadataManager.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import {SerializeType} from '../../source/Serializer.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
+import CharacterAttributeData from '../Entities/CharacterAttributeData.js';
 import Currency from '../Entities/Currency.js';
 import Quality from '../Entities/Quality.js';
 import HeroRole from '../Entities/HeroRole.js';
@@ -18,7 +18,7 @@ import ItemStack from '../RuntimeObjects/ItemStack.js';
 import HeroComponent from '../Components/HeroComponent.js';
 import LevelRange from '../Components/ExperienceComponent.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
-import CharacterAttributeComponent from '../Components/CharacterAttributeComponent.js';
+import CharacterAttribute from '../Components/CharacterAttribute.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
 import AttackPowerComponent from '../Components/AttackPowerComponent.js';
@@ -397,7 +397,7 @@ export default class MetadataManagerCreator {
             },
         });
         metadataManager.addMetadata({
-            module: CharacterAttributeComponent,
+            module: CharacterAttribute,
             mapping: {
                 _id: {
                     type: SerializeType.String,

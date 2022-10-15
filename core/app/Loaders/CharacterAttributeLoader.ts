@@ -1,9 +1,9 @@
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
+import CharacterAttributeData from '../Entities/CharacterAttributeData.js';
 import EntityManager from '../../source/EntityManager.js';
 
 export default class CharacterAttributeLoader {
     load(data: object, entityManager: EntityManager) {
-        let characterAttribute = Object.create(CharacterAttribute.prototype);
+        let characterAttribute = Object.create(CharacterAttributeData.prototype);
 
         characterAttribute['_id'] = <number>data['_id'];
         characterAttribute['_name'] = data['_name'];

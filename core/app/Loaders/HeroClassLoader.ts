@@ -2,7 +2,7 @@ import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import HeroClass from '../Entities/HeroClass.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import HeroRole from '../Entities/HeroRole.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
+import CharacterAttributeData from '../Entities/CharacterAttributeData.js';
 import EntityManager from '../../source/EntityManager.js';
 
 export default class HeroClassLoader {
@@ -22,7 +22,7 @@ export default class HeroClassLoader {
             return entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByID(item['id']);
         });
         heroClass['_mainCharacterAttributes'] = data['_mainCharacterAttributes'].map((item) => {
-            return entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByID(item['id']);
+            return entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByID(item['id']);
         });
 
         return heroClass;

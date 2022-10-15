@@ -1,6 +1,6 @@
 import ArmorMaterialLoader from '../app/Loaders/ArmorMaterialLoader.js';
 import ArmorMaterial from '../app/Entities/ArmorMaterial.js';
-import CharacterAttribute from '../app/Entities/CharacterAttribute.js';
+import CharacterAttributeData from '../app/Entities/CharacterAttributeData.js';
 import CharacterAttributeLoader from '../app/Loaders/CharacterAttributeLoader.js';
 import Currency from '../app/Entities/Currency.js';
 import HeroRole from '../app/Entities/HeroRole.js';
@@ -24,8 +24,8 @@ export default [
         loader: ArmorMaterialLoader,
     },
     {
-        classname: CharacterAttribute.name,
-        prototype: CharacterAttribute.prototype,
+        classname: CharacterAttributeData.name,
+        prototype: CharacterAttributeData.prototype,
         loader: CharacterAttributeLoader,
     },
     {

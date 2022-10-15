@@ -1,6 +1,6 @@
 import EntityManager from '../../source/EntityManager.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import CharacterAttribute from '../Entities/CharacterAttribute.js';
+import CharacterAttributeData from '../Entities/CharacterAttributeData.js';
 import Currency from '../Entities/Currency.js';
 import Quality from '../Entities/Quality.js';
 import HeroRole from '../Entities/HeroRole.js';
@@ -91,68 +91,68 @@ export default class EntityManagerBuilder {
     }
 
     private _createCharacterAttributes() {
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.MaxHealthPoints,
             'Очки здоровья',
             '',
             480,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.MaxMagicPoints,
             'Очки магии',
             '',
             490,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.Strength,
             'Сила',
             'Увеличивает силу атаки у классов с главной характеристикой \"Сила\".',
             500,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.Agility,
             'Ловкость',
             'Увеличивает силу атаки у классов с главной характеристикой \"Ловкость\".',
             510,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.Intelligence,
             'Интеллект',
             'Увеличивает силу атаки и кол-во очков магии у классов с главной характеристикой \"Интеллект\".',
             520,
         ));
         //---
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.Protection,
             'Защита',
             '',
             530,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.AttackPower,
             'Сила атаки',
             'Сила атаки - это одно значение. Диапазон управляется в другом месте.',
             535,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.AttackSpeed,
             'Скорость атаки',
             '',
             540,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.CriticalStrike,
             'Критический удар',
             '',
             550,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.Stamina,
             'Выносливость',
             '',
             560,
         ));
-        this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).add(new CharacterAttribute(
+        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
             CharacterAttributeID.Luck,
             'Удача',
             'Влияет на многие характеристики.',
@@ -436,7 +436,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Plate),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Strength),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Strength),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -454,8 +454,8 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Plate),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Strength),
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Strength),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -472,7 +472,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Leather),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Agility),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Agility),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -489,7 +489,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Plate),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Strength),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Strength),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -507,7 +507,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Leather),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Agility),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Agility),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -524,8 +524,8 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Leather),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Agility),
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Agility),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -543,7 +543,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Cloth),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -561,7 +561,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Cloth),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -579,7 +579,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Cloth),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -597,7 +597,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Cloth),
             ],
             [
-                this._entityManager.getRepository<CharacterAttribute>(CharacterAttribute.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
     }

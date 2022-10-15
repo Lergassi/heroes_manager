@@ -10,5 +10,5 @@ export const DEFAULT_ITEM_STORAGE_SIZE = 20;
 export const DEFAULT_STACK_SIZE = 50;
 
 // export enum ComponentDefaultName {
-//     HealthPointsComponent = 'HealthPointsComponent',
+//     HealthPointsComponent = HealthPointsComponent.name,
 // }

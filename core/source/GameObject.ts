@@ -198,8 +198,10 @@ export default class GameObject implements AssignRComponentInterface {
     }
 
     /**
+     * @indev
      * Как контейнер. Также вызывается метод addComponent.
-     * @dev
+     * @param key Использовать только строки из переменных: название модуля .name, enum ComponentKey и тд. todo: Возможно заменить key: string на key: Component.Key.
+     * @param component
      */
     set<Component>(key: string, component: Component): Component {
         assert(typeof key === 'string');
@@ -213,7 +215,7 @@ export default class GameObject implements AssignRComponentInterface {
 
     /**
      * Получить компонент по ключу как в контейнере.
-     * @dev
+     * @indev
      */
     get<Component>(key: string): Component {
         assert(typeof key === 'string');

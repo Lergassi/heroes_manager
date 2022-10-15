@@ -1,7 +1,7 @@
 import HeroRole from './HeroRole.js';
 import ItemCategory from './ItemCategory.js';
 import ArmorMaterial from './ArmorMaterial.js';
-import CharacterAttribute from './CharacterAttribute.js';
+import CharacterAttributeData from './CharacterAttributeData.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
@@ -14,7 +14,7 @@ export default class HeroClass {
     private readonly _heroRole: HeroRole;
     private readonly _availableWeaponItemCategories: ItemCategory[];
     private readonly _availableArmorMaterials: ArmorMaterial[];
-    private readonly _mainCharacterAttributes: CharacterAttribute[];
+    private readonly _mainCharacterAttributes: CharacterAttributeData[];
 
     get id(): string {
         return this._id;
@@ -54,7 +54,7 @@ export default class HeroClass {
     /**
      * @deprecated
      */
-    get mainCharacterAttributes(): CharacterAttribute[] {
+    get mainCharacterAttributes(): CharacterAttributeData[] {
         return this._mainCharacterAttributes;
     }
 
@@ -67,7 +67,7 @@ export default class HeroClass {
         heroRole: HeroRole,
         availableWeaponItemCategories: ItemCategory[],
         availableArmorMaterials: ArmorMaterial[],
-        mainCharacterAttributes: CharacterAttribute[],
+        mainCharacterAttributes: CharacterAttributeData[],
     ) {
         this._id = id;
         this._name = name;

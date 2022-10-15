@@ -1,15 +1,15 @@
 import _ from 'lodash';
-import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
-import CharacterAttributeRawValueCollectorComponent from './CharacterAttributeRawValueCollectorComponent.js';
+import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
+import CharacterAttributeCollector from './CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 export default class TotalCharacterAttributeValueCollectorComponent {
-    private readonly _itemAttributeCollectorComponent: ItemAttributeCollectorComponent;
-    private readonly _characterAttributeValueCollectorComponent: CharacterAttributeRawValueCollectorComponent;
+    private readonly _itemAttributeCollectorComponent: ItemCharacterAttributeCollector;
+    private readonly _characterAttributeValueCollectorComponent: CharacterAttributeCollector;
 
     constructor(options: {
-        itemAttributeCollectorComponent: ItemAttributeCollectorComponent,
-        characterAttributeValueCollectorComponent: CharacterAttributeRawValueCollectorComponent,
+        itemAttributeCollectorComponent: ItemCharacterAttributeCollector,
+        characterAttributeValueCollectorComponent: CharacterAttributeCollector,
     }) {
         this._itemAttributeCollectorComponent = options.itemAttributeCollectorComponent;
         this._characterAttributeValueCollectorComponent = options.characterAttributeValueCollectorComponent;
@@ -17,8 +17,8 @@ export default class TotalCharacterAttributeValueCollectorComponent {
 
     totalValue(ID: CharacterAttributeID): number {
         return _.sum([
-            this._characterAttributeValueCollectorComponent.totalValue(ID),
-            this._itemAttributeCollectorComponent.totalValue(ID),
+            this._characterAttributeValueCollectorComponent.value(ID),
+            this._itemAttributeCollectorComponent.value(ID),
         ]);
     }
 }

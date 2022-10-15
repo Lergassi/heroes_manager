@@ -6,7 +6,7 @@ import EquipSlotComponent from '../../../core/app/Components/EquipSlotComponent.
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
 import ExperienceComponent from '../../../core/app/Components/ExperienceComponent.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
-import CharacterAttributeComponent from '../../../core/app/Components/CharacterAttributeComponent.js';
+import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
 import GameObject from '../../../core/source/GameObject.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';

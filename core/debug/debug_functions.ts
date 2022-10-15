@@ -2,7 +2,7 @@ import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
 import GameObject from '../source/GameObject.js';
-import CharacterAttributeComponent from '../app/Components/CharacterAttributeComponent.js';
+import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import EquipSlotComponent from '../app/Components/EquipSlotComponent.js';
 import HealthPointsComponent from '../app/Components/HealthPointsComponent.js';
 import AttackPowerComponent from '../app/Components/AttackPowerComponent.js';
@@ -157,9 +157,9 @@ export function debugHero(hero: GameObject) {
     });
 
     debug('debug')('# characterAttribute: finalValue (_baseValue)');
-    hero.findComponentsByName(CharacterAttributeComponent.name).map((characterAttributeComponent) => {
+    hero.findComponentsByName(CharacterAttribute.name).map((characterAttributeComponent) => {
         debug('debug')('%j', {
-            component: CharacterAttributeComponent.name,
+            component: CharacterAttribute.name,
             _id: characterAttributeComponent['_id'],
             _characterAttribute: characterAttributeComponent['_characterAttribute']['_name'],
             finalValue: characterAttributeComponent['finalValue'],

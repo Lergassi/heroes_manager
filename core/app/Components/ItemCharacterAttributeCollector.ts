@@ -6,7 +6,7 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
  * И не важно теперь где и как располается предмет в каком слоте и какая логика слота.
  * todo: Пока один класс на все атрибуты. Дальше можно разделить.
  */
-export default class ItemAttributeCollectorComponent {
+export default class ItemCharacterAttributeCollector {
     private _items: Item[];
 
     constructor() {
@@ -21,7 +21,7 @@ export default class ItemAttributeCollectorComponent {
         _.pullAt(this._items, _.indexOf(this._items, item));
     }
 
-    totalValue(ID: CharacterAttributeID): number {
+    value(ID: CharacterAttributeID): number {
         let increaseValue = 0;
         for (let i = 0; i < this._items.length; i++) {
             increaseValue += this._items[i].increaseCharacterAttribute(ID);

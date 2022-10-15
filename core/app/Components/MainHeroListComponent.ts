@@ -111,7 +111,7 @@ export default class MainHeroListComponent extends Component {
     }
 
     canDeleteHero(hero: GameObject): void {
-        if (!hero.get<HeroComponent>('heroComponent').canManipulate()) {
+        if (!hero.get<HeroComponent>(HeroComponent.name).canManipulate()) {
             throw new AppError('Нельзя удалить героя пока он занят.');
         }
     }

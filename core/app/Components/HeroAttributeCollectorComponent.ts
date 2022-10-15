@@ -1,12 +1,12 @@
-import ItemAttributeCollectorComponent from './ItemAttributeCollectorComponent.js';
+import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
 import {assert} from '../../source/assert.js';
-import CharacterAttributeComponent from './CharacterAttributeComponent.js';
+import CharacterAttribute from './CharacterAttribute.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 //todo: Возможно стоит атрибуты оставить в "сыром" виде, а конечное значение получать другим способом.
 export default class HeroAttributeCollectorComponent {
     // private readonly _itemAttributeCollectorComponent: ItemAttributeCollectorComponent;
-    private readonly _characterAttributeComponents: Partial<{[ID in CharacterAttributeID]: CharacterAttributeComponent}>;
+    private readonly _characterAttributeComponents: Partial<{[ID in CharacterAttributeID]: CharacterAttribute}>;
 
     constructor() {
         // assert(options.itemAttributeCollectorComponent instanceof ItemAttributeCollectorComponent);
@@ -17,7 +17,7 @@ export default class HeroAttributeCollectorComponent {
 
     addCharacterAttributeComponent(options: {
         ID: CharacterAttributeID,
-        characterAttributeComponent: CharacterAttributeComponent,
+        characterAttributeComponent: CharacterAttribute,
     }) {
         if (!this._characterAttributeComponents.hasOwnProperty(options.ID)) {
             this._characterAttributeComponents[options.ID] = options.characterAttributeComponent;
