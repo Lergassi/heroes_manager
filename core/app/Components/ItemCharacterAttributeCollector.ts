@@ -7,7 +7,7 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
  * todo: Пока один класс на все атрибуты. Дальше можно разделить.
  */
 export default class ItemCharacterAttributeCollector {
-    private _items: Item[];
+    private readonly _items: Item[];
 
     constructor() {
         this._items = [];

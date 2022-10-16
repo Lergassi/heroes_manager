@@ -7,7 +7,7 @@ import ItemStackFactory from '../Factories/ItemStackFactory.js';
 // export const DEFAULT_ITEM_STORAGE_SIZE = 20;
 
 /**
- * Это контроллер.
+ * todo: Вообще переделать. Убрать слоты с новыми идеями.
  */
 export default class ItemStorageComponent extends Component {
     private readonly _size: number;
@@ -59,6 +59,9 @@ export default class ItemStorageComponent extends Component {
         return slots;
     }
 
+    /**
+     * @deprecated Только для рендера.
+     */
     get busyItemStorageSlotCount(): number {
         let count = 0;
         // const itemStorageSlotComponents = this._slots;
@@ -93,6 +96,9 @@ export default class ItemStorageComponent extends Component {
     //     return freeItemStorageSlotComponent;
     // }
 
+    /**
+     * @deprecated
+     */
     getFreeItemStorageSlotComponents(): ItemStorageSlotComponent[] {
         let freeItemStorageSlotComponents: ItemStorageSlotComponent[] = [];
         // let itemStorageSlotComponents = this._slots;
@@ -111,6 +117,9 @@ export default class ItemStorageComponent extends Component {
         return freeItemStorageSlotComponents;
     }
 
+    /**
+     * @deprecated
+     */
     getFirstFreeItemStorageSlotComponent(): ItemStorageSlotComponent {
         // let freeItemStorageSlotComponent;
         // let itemStorageSlotComponents = this._slots;
@@ -131,6 +140,9 @@ export default class ItemStorageComponent extends Component {
         return undefined;
     }
 
+    /**
+     * @deprecated
+     */
     getItemStorageSlotComponentsWithItem(item: Item): ItemStorageSlotComponent[] {
         let itemStorageSlotComponentsWithItem = [];
         // let itemStorageSlotComponents = this._slots;

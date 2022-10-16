@@ -27,7 +27,7 @@ export default class CharacterAttributeCollectorDecorator {
     }
 
     addBaseValue(value: unsigned): void {
-        this._characterAttribute.add(value);
+        this._characterAttribute.increaseBaseValue(value);
         this._characterAttributeCollectorComponent.add({
             ID: this._characterAttributeID,
             value: value,

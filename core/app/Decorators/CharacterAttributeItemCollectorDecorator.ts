@@ -19,8 +19,8 @@ export default class CharacterAttributeItemCollectorDecorator implements Charact
         this._itemCollector = options.itemCollector;
     }
 
-    add(value: unsigned): void {
-        this._characterAttribute.add(value);
+    increaseBaseValue(value: unsigned): void {
+        this._characterAttribute.increaseBaseValue(value);
     }
 
     value(): number {

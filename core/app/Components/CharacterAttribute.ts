@@ -9,14 +9,9 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 /**
  * Все значения в игре представлены в виде одного значения. Далее уже они используюся для вычисления других значений, например сила атаки это число, которое по своей логике преобразуется в диапазон.
  */
-// export default class CharacterAttributeComponent extends Component implements CharacterAttributeInterface {
-export default class CharacterAttribute {
+export default class CharacterAttribute implements CharacterAttributeInterface {
     private readonly _characterAttributeID: CharacterAttributeID;    //todo: Убрать. Сделать с доступом по индексу. Во всех подобных местах.
-    /**
-     * Показатель, который всегда будет у героя без какой либо экипировки. С ростом уровня увеличивается именно этот показатель. Уменьшить нельзя.
-     * @private
-     */
-    private _value: number;
+    private _baseValue: number;
     private readonly _itemCharacterAttributeCollector: ItemCharacterAttributeCollector;
     private readonly _characterAttributeCollector: CharacterAttributeCollector;
 
@@ -27,7 +22,7 @@ export default class CharacterAttribute {
     }) {
         // super();
         this._characterAttributeID = options.characterAttributeID;
-        this._value = 0;
+        this._baseValue = 0;
         this._itemCharacterAttributeCollector = options.itemCharacterAttributeCollector;
         // this._characterAttributeCollector = options.characterAttributeCollector;
 
@@ -38,29 +33,39 @@ export default class CharacterAttribute {
     }
 
     // finalValue(): number {
-    //     // return this._value + this._itemAttributeCollectorComponent.increaseCharacterAttribute(this._characterAttributeID);
-    //     return this._value;
+    //     // return this._baseValue + this._itemAttributeCollectorComponent.increaseCharacterAttribute(this._characterAttributeID);
+    //     return this._baseValue;
     // }
 
-    add(value: unsigned): void {
-        this._value += value;
+    increaseBaseValue(value: unsigned): void {
+        this._baseValue += value;
         // this._characterAttributeCollector.add({
         //     ID: this._characterAttributeID,
         //     value: value,
         // });
+        // this['_collector'].add(this._characterAttributeID, value);
     }
 
     // increase(target/*: CharacterAttributeCollector */) {
-    //     target['increase'](this._characterAttributeID, this._value);
+    //     target['increase'](this._characterAttributeID, this._baseValue);
     // }
     //
     // decrease(target/*: CharacterAttributeCollector */) {
-    //     target['decrease'](this._characterAttributeID, this._value);
+    //     target['decrease'](this._characterAttributeID, this._baseValue);
     // }
 
+    //todo: Пока так. Если будет не удобно - убрать.
     value(): number {
-        return this._value +
+        return this._baseValue +
             this._itemCharacterAttributeCollector.value(this._characterAttributeID)
             ;
+    }
+
+    increase(collector /* interface: .add(value); */) {
+        collector.add(this._characterAttributeID, this._baseValue);
+    }
+
+    decrease(collector /* interface: .remove(value); */) {
+        collector.remove(this._characterAttributeID, this._baseValue);
     }
 }

@@ -5,17 +5,17 @@ export enum CharacterAttributeID {
     Intelligence = 'Intelligence',
 
     //здоровье
-    MaxHealthPoints = 'MaxHealthPoints',    //базовое значение + предметы + выносливость + бафф
+    MaxHealthPoints = 'MaxHealthPoints',
     Protection = 'Protection',
     Stamina = 'Stamina',
 
     //магия
-    MaxMagicPoints = 'MaxMagicPoints',      //базовое значение + предметы + интеллект + бафф
+    MaxMagicPoints = 'MaxMagicPoints',
 
     //сила атаки
-    AttackPower = 'AttackPower',            //базовое значение + предметы + усиление от сил/лов/инт + бафф
+    AttackPower = 'AttackPower',
     AttackSpeed = 'AttackSpeed',
-    CriticalStrike = 'CriticalStrike',      //значение - шанс крита. У шанса есть кап.
+    CriticalStrike = 'CriticalStrike',
 
     //прочее
     Luck = 'Luck',

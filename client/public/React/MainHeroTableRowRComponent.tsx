@@ -13,9 +13,11 @@ import AttackPowerComponent from '../../../core/app/Components/AttackPowerCompon
 import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
 import TotalCharacterAttributeValueCollectorComponent
     from '../../../core/app/Components/TotalCharacterAttributeValueCollectorComponent.js';
-import AttackPower from '../../../core/app/Components/CharacterAttributes/AttackPower.js';
+import AttackPower from '../../../core/app/Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
 import Strength from '../../../core/app/Components/CharacterAttributes/Strength.js';
 import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
+import {CharacterAttributes} from '../../../core/app/types.js';
+import {GameObjectKey} from '../../../core/types/enums/GameObjectKey.js';
 
 export type HeroTableRowRComponentProps = {
     container: ContainerInterface;
@@ -91,9 +93,9 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                     {/*{hero.get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.Agility)}/*/}
                     {/*{hero.get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.Intelligence)}*/}
                     {/*{hero.get<CharacterAttributeComponent>(CharacterAttributeID.Strength).value()}/*/}
-                    {hero.get<CharacterAttribute>(CharacterAttributeID.Strength).value()}/
-                    {hero.get<CharacterAttribute>(CharacterAttributeID.Agility).value()}/
-                    {hero.get<CharacterAttribute>(CharacterAttributeID.Intelligence).value()}
+                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes)[CharacterAttributeID.Strength].value()}/
+                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes)[CharacterAttributeID.Agility].value()}/
+                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes)[CharacterAttributeID.Intelligence].value()}
                 </td>
                 <td>
                     {hero.get<HeroComponent>(HeroComponent.name).state}

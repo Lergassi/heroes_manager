@@ -46,7 +46,7 @@ import {ItemID} from '../core/types/enums/ItemID.js';
 import HeroGroupCharacterAttributeCollector from '../core/app/Decorators/HeroGroupCharacterAttributeCollector.js';
 import HeroGroupInterface from '../core/app/Interfaces/HeroGroupInterface.js';
 import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
-import AttackPower from '../core/app/Components/CharacterAttributes/AttackPower.js';
+import AttackPower from '../core/app/Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -72,12 +72,12 @@ export class SandboxController {
         // this.testRandom_oneFromRange();
         // this.testLodashPull();
 
-        this.devHeroFactory();
+        // this.devHeroFactory();
         // this.devLocation();
         // this.devGoldLootGeneratorComponent();
         // this.devLevelComponent();
         // this.devLootGenerator();
-        // this.devFight();
+        this.devFight();
         // this.devAttackPowerComponent();
 
         // this.devNewCharacterAttributesGetStarted();
@@ -823,14 +823,14 @@ export class SandboxController {
     }
 
     devNewCharacterAttributesGetStarted() {
-        let attackPower = new AttackPower({
-            left: 16,
-            right: 24,
-        });
-        console.log(attackPower.value());
-        attackPower.shift(10);
-        attackPower.shift(10);
-        attackPower.shift(10);
-        console.log(attackPower.value());
+        // let attackPower = new AttackPower({
+        //     left: 16,
+        //     right: 24,
+        // });
+        // console.log(attackPower.value());
+        // attackPower.shift(10);
+        // attackPower.shift(10);
+        // attackPower.shift(10);
+        // console.log(attackPower.value());
     }
 }
