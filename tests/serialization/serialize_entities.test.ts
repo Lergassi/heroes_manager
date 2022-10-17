@@ -45,6 +45,7 @@ for (let i = 0; i < testData.length; i++) {
 
     test(messages['serializedDataEqualToExpected'], () => {
         expect(jsonSerializedEntity.length).toBeGreaterThan(0);
+        // expect(jsonSerializedEntity.length).toBeG(0);
         expect(jsonSerializedEntity).toBe(serializedData[testData[i].alias]);
     });
 }

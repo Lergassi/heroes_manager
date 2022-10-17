@@ -130,7 +130,7 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                     </tr>
                     <tr>
                         <td>Очки здоровья</td>
-                        <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name).currentHealthPoints}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name).maxHealthPoints}</td>
+                        <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_maxHealthPoints']['value']()}</td>
                     </tr>
                     <tr>
                         <td>Очки магии</td>

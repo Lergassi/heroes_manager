@@ -7,14 +7,15 @@ import EntityManager from '../../source/EntityManager.js';
 import EnemyComponent from '../Components/EnemyComponent.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
 import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
-import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import ExperienceComponent from '../Components/ExperienceComponent.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import {assert} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
-import AttackPowerComponent from '../Components/AttackPowerComponent.js';
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
+import CharacterAttribute from '../Components/CharacterAttribute.js';
+import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
+import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 // import assert from 'assert';
 
 // export type EnemyFactoryOptions = {
@@ -70,7 +71,10 @@ export default class EnemyFactory {
             level: options.level,
         }));
         let healthPointsComponent = enemy.set<HealthPointsComponent>(HealthPointsComponent.name, new HealthPointsComponent(
-            100,
+            new CharacterAttribute(
+                CharacterAttributeID.MaxHealthPoints,
+                new ItemCharacterAttributeCollector(),
+            ),
         ));
         // enemy.set(AttackPowerComponent.name, new AttackPowerComponent({
         //     baseMinAttackPower: 10,

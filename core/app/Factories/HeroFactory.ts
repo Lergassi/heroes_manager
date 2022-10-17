@@ -27,6 +27,8 @@ import AttackPowerDependentIncreaserDecorator
     from '../Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import CharacterAttributeFactory from './CharacterAttributeFactory.js';
+import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
+import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
 
 // export type HeroFactoryOptions = {
 //     idGenerator: IDGeneratorInterface;
@@ -144,7 +146,9 @@ export default class HeroFactory {
             CharacterAttributeID.Strength,
             CharacterAttributeID.Agility,
             CharacterAttributeID.Intelligence,
+            CharacterAttributeID.MaxHealthPoints,
             CharacterAttributeID.AttackPower,
+            CharacterAttributeID.Protection,
             // CharacterAttributeID.Stamina,
             // CharacterAttributeID.CriticalStrike,
             // CharacterAttributeID.Luck,
@@ -169,24 +173,28 @@ export default class HeroFactory {
         //todo: Временно.
         hero.set<CharacterAttributes>(GameObjectKey.CharacterAttributes, characterAttributes);
 
+        //todo: Переделать хранение главных атрибутов у классов.
         let mainCharacterAttributes = options.heroClass.mainCharacterAttributes;
-        //todo: Остается вопрос как генерировать разные показатели для каждого класса по отдельности. У мага своя логика, у воина своя и тд.
+        //todo: Переделать при создании логики создания разных показателей для каждого класса.
         let modifiers = {
-            main: new (function () {
-                this.modify = function (value) {
-                    return value * 2;
-                }
-            }),
+            main: function (value) {
+                return value * 2;
+            },
         };
 
         for (let i = 0; i < characterAttributeIDs.length; i++) {
-            let modifier;
+            let baseValueModifierCallback;
             if (_.filter(mainCharacterAttributes, (value) => {
                 return value['_id'] === characterAttributeIDs[i];
             }).length) {
-                modifier = modifiers.main;
+                baseValueModifierCallback = modifiers.main;
             }
-            characterAttributes[characterAttributeIDs[i]] = hero.set<CharacterAttributeInterface>(characterAttributeIDs[i], characterAttributeFactory.create(characterAttributeIDs[i] as CharacterAttributeID, options.level, itemCharacterAttributeCollector, modifier));
+            characterAttributes[characterAttributeIDs[i]] = hero.set<CharacterAttributeInterface>(characterAttributeIDs[i], characterAttributeFactory.create(
+                characterAttributeIDs[i] as CharacterAttributeID,
+                options.level,
+                itemCharacterAttributeCollector,
+                baseValueModifierCallback,
+            ));
         }
 
         // characterAttributes[CharacterAttributeID.Strength] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.Strength, new CharacterAttribute({
@@ -226,7 +234,7 @@ export default class HeroFactory {
         //     level: options.level,
         //     characterAttributeID: CharacterAttributeID.AttackPower,
         // }));
-        //todo: Цепочка?builder? .create(...).decorate(...).decorate(...).build().
+        //todo: Цепочка? builder? .create(...).decorate(...).decorate(...).build().
         characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new AttackPowerDependentIncreaserDecorator({
             attackPower: hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             dependentCharacterAttributes: _.filter(_.map(options.heroClass.mainCharacterAttributes, (characterAttribute) => {   //todo: Через индекс.
@@ -234,10 +242,19 @@ export default class HeroFactory {
             }), value => value != undefined),
         }));
 
-        let healthPointsComponent = hero.addComponent(new HealthPointsComponent(
-            this._config['start_hero_values'][options.heroClass.alias][CharacterAttributeID.MaxHealthPoints],
-        ));
-        hero.set<HealthPointsComponent>(HealthPointsComponent.name, healthPointsComponent);
+        // let healthPointsComponent: DamageControllerInterface = new HealthPointsComponent(
+        // let healthPointsComponent = new HealthPointsComponent(
+        //К компоненту с очками здоровья возможно не будет доступа вообще.
+        let healthPointsComponent = new HealthPointsComponent(
+            // this._config['start_hero_values'][options.heroClass.alias][CharacterAttributeID.MaxHealthPoints],
+            hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).MaxHealthPoints,
+        );
+        let damageController = new ArmorDecorator(
+            healthPointsComponent as DamageControllerInterface,
+            hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Protection,
+        );
+        hero.set<HealthPointsComponent>(HealthPointsComponent.name, healthPointsComponent); //Пока только для рендера.
+        hero.set<DamageControllerInterface>(GameObjectKey.DamageController, damageController);
 
         //todo: Очки магии добавляются только для магов. Магов надо помечать или настраивать для каждого класса по отдельности.
         /*

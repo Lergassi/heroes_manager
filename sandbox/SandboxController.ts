@@ -47,6 +47,7 @@ import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
 import ArmorDecorator from '../core/app/Components/CharacterAttributes/ArmorDecorator.js';
 import Decimal from 'decimal.js';
 import DamageControllerInterface from '../core/app/Interfaces/DamageControllerInterface.js';
+import {GameObjectKey} from '../core/types/enums/GameObjectKey.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -74,7 +75,7 @@ export class SandboxController {
         // this.testFloatEqual();
         // this.testDecimajs();
 
-        // this.devHeroFactory();
+        this.devHeroFactory();
         // this.devLocation();
         // this.devGoldLootGeneratorComponent();
         // this.devLevelComponent();
@@ -84,7 +85,8 @@ export class SandboxController {
 
         //fight
         // this.devDefence();
-        this.devFight();
+        // this.devArmor();
+        // this.devArmorInEnemy();
 
         // this.devNewCharacterAttributesGetStarted();
     }
@@ -104,6 +106,8 @@ export class SandboxController {
             level: 1,
         });
         console.log(hero);
+        // console.log(hero.get<HealthPointsComponent>(HealthPointsComponent.name));
+        console.log(hero.get<DamageControllerInterface>(GameObjectKey.DamageController));
     }
 
     devLocationFactory() {
@@ -844,15 +848,18 @@ export class SandboxController {
     private createDefence(options: {
         protectionBaseValue: number;
     }) {
-        let protection = new CharacterAttribute({
-            characterAttributeID: CharacterAttributeID.Protection,
-            itemCharacterAttributeCollector: new ItemCharacterAttributeCollector(),
-        });
+        let protection = new CharacterAttribute(
+            CharacterAttributeID.Protection,
+            new ItemCharacterAttributeCollector(),
+        );
 
         protection.increaseBaseValue(options.protectionBaseValue);
 
         let defence = new ArmorDecorator(
-            new HealthPointsComponent(100),
+            new HealthPointsComponent(new CharacterAttribute(
+                CharacterAttributeID.MaxHealthPoints,
+                new ItemCharacterAttributeCollector(),
+            )),
             protection,
         );
 
@@ -1017,20 +1024,24 @@ export class SandboxController {
         console.log(+(0.1 + 0.2).toFixed(4));
     }
 
-    private devFight() {
+    private devArmor() {
         let entityManager = this._container.get<EntityManager>(ContainerKey.EntityManager);
         let heroFactory = this._container.get<HeroFactory>(ContainerKey.HeroFactory);
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
+        let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector()
+        let maxHealthPoints = new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, itemCharacterAttributeCollector);
+        maxHealthPoints.increaseBaseValue(100);
+
         let healthPoints: DamageControllerInterface = new HealthPointsComponent(
         // let healthPoints = new HealthPointsComponent(
-            100,
+            maxHealthPoints,
         );
 
-        let protection = new CharacterAttribute({
-            characterAttributeID: CharacterAttributeID.Protection,
-            itemCharacterAttributeCollector: new ItemCharacterAttributeCollector(),
-        });
+        let protection = new CharacterAttribute(
+            CharacterAttributeID.Protection,
+            itemCharacterAttributeCollector,
+        );
         // protection.increaseBaseValue(-100);
         protection.increaseBaseValue(0);
         // protection.increaseBaseValue(42);
@@ -1060,5 +1071,9 @@ export class SandboxController {
         healthPoints.damage(damage);
         healthPoints.damage(damage);
         healthPoints.damage(damage);
+    }
+
+    private devArmorInEnemy() {
+        // let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
     }
 }

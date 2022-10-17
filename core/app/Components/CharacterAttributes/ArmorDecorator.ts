@@ -1,18 +1,20 @@
 import CharacterAttribute from '../CharacterAttribute.js';
 import {float, integer, unsigned} from '../../types.js';
 import _ from 'lodash';
-import {assert, assertPositive} from '../../../source/assert.js';
+import {assert, assertNotNil, assertPositive} from '../../../source/assert.js';
 import HealthPointsComponent from '../HealthPointsComponent.js';
 import DamageControllerInterface from '../../Interfaces/DamageControllerInterface.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import CharacterAttributeInterface from '../../Decorators/CharacterAttributeInterface.js';
 
 //@decorator
 export default class ArmorDecorator implements DamageControllerInterface {
 // export default class Armor {
     // private readonly _healthPoints: DamageInterface;
     private readonly _healthPoints: DamageControllerInterface;
-    private readonly _protection: CharacterAttribute;
+    // private readonly _protection: CharacterAttribute;
+    private readonly _protection: CharacterAttributeInterface;
     private readonly _maxProtection: float;
     private readonly _onePercentArmorProtectionValue: integer;   //Каждые n брони = 1% блокировки.
 
@@ -24,11 +26,14 @@ export default class ArmorDecorator implements DamageControllerInterface {
 
     constructor(
         healthPoints: DamageControllerInterface,
-        protection: CharacterAttribute,
+        // protection: CharacterAttribute,
+        protection: CharacterAttributeInterface,
         // options?: {
         //
         // },
     ) {
+        assertNotNil(healthPoints);
+        assertNotNil(protection);
         this._healthPoints = healthPoints;
         this._protection = protection;
 

@@ -4,8 +4,9 @@ import EventSystem from '../../source/EventSystem.js';
 import {unsigned} from '../types.js';
 import AppError from '../../source/Errors/AppError.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import {assertPositive} from '../../source/assert.js';
+import {assertNotNil, assertPositive} from '../../source/assert.js';
 import ArmorDecorator from './CharacterAttributes/ArmorDecorator.js';
+import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 
 export enum HealthPointsComponentEventCode {
     TakeDamage = 'HealthPointsComponent.TakeDamage',
@@ -16,54 +17,24 @@ export enum HealthPointsComponentEventCode {
 export default class HealthPointsComponent extends Component implements DamageControllerInterface {
 // export default class HealthPointsComponent extends Component {
     private _currentHealthPoints: unsigned;
-    private _maxHealthPoints: unsigned;
+    // private _maxHealthPoints: unsigned;
+    private _maxHealthPoints: CharacterAttributeInterface;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
 
-    /**
-     * @deprecated
-     */
-    get currentHealthPoints(): number {
-        return this._currentHealthPoints;
-    }
-
-    /**
-     * @deprecated
-     */
-    set currentHealthPoints(value: number) {
-        this._currentHealthPoints = value;
-    }
-
-    /**
-     * @deprecated
-     */
-    get maxHealthPoints(): number {
-        return this._maxHealthPoints;
-    }
-
-    /**
-     * @deprecated
-     */
-    set maxHealthPoints(value: number) {
-        this._maxHealthPoints = value;
-    }
-
-    /**
-     * @deprecated
-     */
-    get isDead(): boolean {
-        return this._isDead;
-    }
-
     constructor(
-        maxHealthPoints: unsigned,
+        // maxHealthPoints: unsigned,
+        maxHealthPoints: CharacterAttributeInterface,
         // armor: Armor,
     ) {
         super();
 
-        assertPositive(maxHealthPoints);
+        // assertPositive(maxHealthPoints);
+        assertNotNil(maxHealthPoints);
 
+        // this._maxHealthPoints = maxHealthPoints;
+        // this._currentHealthPoints = maxHealthPoints;
         this._maxHealthPoints = maxHealthPoints;
-        this._currentHealthPoints = maxHealthPoints;
+        this._currentHealthPoints = maxHealthPoints.value();
         this._isDead = false;
     }
 

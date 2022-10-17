@@ -3,7 +3,9 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import {unsigned} from '../types.js';
-import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
+import CharacterAttributeValueGenerator, {
+    BaseValueModifierCallback
+} from '../Services/CharacterAttributeValueGenerator.js';
 
 export default class CharacterAttributeFactory {
     private readonly _characterAttributeValueGenerator: CharacterAttributeValueGenerator;
@@ -19,17 +21,17 @@ export default class CharacterAttributeFactory {
         ID: CharacterAttributeID,
         level: unsigned,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
-        baseValueModifier?,
+        baseValueModifierCallback?: BaseValueModifierCallback,
     ) {
-        let characterAttribute = new CharacterAttribute({
-            characterAttributeID: ID,
-            itemCharacterAttributeCollector: itemCharacterAttributeCollector,
-        });
-        characterAttribute.increaseBaseValue(this._characterAttributeValueGenerator.generate({
-            level: level,
-            characterAttributeID: ID,
-            modifier: baseValueModifier,
-        }));
+        let characterAttribute = new CharacterAttribute(
+            ID,
+            itemCharacterAttributeCollector,
+        );
+        characterAttribute.increaseBaseValue(this._characterAttributeValueGenerator.generate(
+            ID,
+            level,
+            baseValueModifierCallback,
+        ));
 
         // }) * (options.heroClass.isMainCharacterAttribute(CharacterAttributeID.Strength) ? this._mainCharacterAttributeMultiplier : 1));  //todo: Найти место где и как это сделать. Стратегия? Возможное решение: сюда надо передавать доп логику для генератора. Выбор логики делается выше. Сюда не надо передавать HeroClass, CharacterAttribute[] или другие сущности и компоненты.
         /*

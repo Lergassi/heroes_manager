@@ -7,16 +7,17 @@ export enum CharacterAttributeID {
     //здоровье
     MaxHealthPoints = 'MaxHealthPoints',
     Protection = 'Protection',              //Числовой показатель.
-    // ProtectionBlock = 'ProtectionBlock',    //Процентный показатель блокировки урона. Высчитываемый атрибут.
+    // Armor = 'Armor',                        //Процентный показатель блокировки урона. Высчитываемый атрибут.
     Stamina = 'Stamina',
 
     //магия
     MaxMagicPoints = 'MaxMagicPoints',
 
-    //атаки
+    //атака
     AttackPower = 'AttackPower',
     AttackSpeed = 'AttackSpeed',
     CriticalStrike = 'CriticalStrike',
+    // CriticalStrikeChance = 'CriticalStrikeChance',
 
     //прочее
     Luck = 'Luck',
