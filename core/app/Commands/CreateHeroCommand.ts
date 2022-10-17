@@ -5,6 +5,7 @@ import HeroFactory from '../Factories/HeroFactory.js';
 import EntityManager from '../../source/EntityManager.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 import {unsigned} from '../types.js';
+import {ContainerKey} from '../../types/enums/ContainerKey.js';
 
 export default class CreateHeroCommand extends Command {
     get name(): string {
@@ -26,7 +27,7 @@ export default class CreateHeroCommand extends Command {
         this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
             heroClass: heroClass,
             level: level,
-            heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
+            heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
         });
     }
 }

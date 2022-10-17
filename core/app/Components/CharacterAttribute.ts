@@ -5,6 +5,7 @@ import CharacterAttributeCollector from './CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeComponentInterface from '../Interfaces/CharacterAttributeComponentInterface.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
+import {assert, assertPositive} from '../../source/assert.js';
 
 /**
  * Все значения в игре представлены в виде одного значения. Далее уже они используюся для вычисления других значений, например сила атаки это число, которое по своей логике преобразуется в диапазон.
@@ -17,7 +18,7 @@ export default class CharacterAttribute implements CharacterAttributeInterface {
 
     constructor(options: {
         characterAttributeID: CharacterAttributeID, //todo: Или string? Или сущность? Или убрать? Но тогда collector не будет работать. В декоратор.
-        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
+        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,   //todo: Убрать в декоратор.
         // characterAttributeCollector: CharacterAttributeCollector,
     }) {
         // super();
@@ -37,7 +38,10 @@ export default class CharacterAttribute implements CharacterAttributeInterface {
     //     return this._baseValue;
     // }
 
+    //todo: Не удобно. Не понятно в какой случае настройки нужно делать после создания объекта.
     increaseBaseValue(value: unsigned): void {
+        assertPositive(value);
+
         this._baseValue += value;
         // this._characterAttributeCollector.add({
         //     ID: this._characterAttributeID,

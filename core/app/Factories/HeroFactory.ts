@@ -236,7 +236,6 @@ export default class HeroFactory {
 
         let healthPointsComponent = hero.addComponent(new HealthPointsComponent(
             this._config['start_hero_values'][options.heroClass.alias][CharacterAttributeID.MaxHealthPoints],
-            this._config['start_hero_values'][options.heroClass.alias][CharacterAttributeID.MaxHealthPoints],
         ));
         hero.set<HealthPointsComponent>(HealthPointsComponent.name, healthPointsComponent);
 

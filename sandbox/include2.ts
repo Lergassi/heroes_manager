@@ -121,7 +121,7 @@ export function testHeroGroup() {
     let container = createEndPlayerContainer();
     let gameObjectFactory = container.get<GameObjectFactory>('player.gameObjectFactory');
     let idGenerator = container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator');
-    let heroFactory = container.get<HeroFactory>('player.heroFactory');
+    let heroFactory = container.get<HeroFactory>(ContainerKey.HeroFactory);
 
     let heroGroup = gameObjectFactory.create();
 
@@ -161,9 +161,9 @@ export function testLocation() {
     let container = createEndPlayerContainer();
     let gameObjectFactory = container.get<GameObjectFactory>('player.gameObjectFactory');
     let idGenerator = container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator');
-    let heroFactory = container.get<HeroFactory>('player.heroFactory');
+    let heroFactory = container.get<HeroFactory>(ContainerKey.HeroFactory);
     let itemStackFactory = container.get<ItemStackFactory>(ContainerKey.ItemStackFactory);
-    // let itemStorageFactory = container.get<BasicItemStorageFactory>('player.heroFactory');
+    // let itemStorageFactory = container.get<BasicItemStorageFactory>(ContainerKey.HeroFactory);
     let itemStorageManager = container.get<ItemStorageManager>(ContainerKey.ItemStorageManager);
     let itemStorage = container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(2);
     container.get<MainItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);

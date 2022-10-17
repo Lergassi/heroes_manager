@@ -3,7 +3,6 @@
 import ContainerInterface from '../core/source/ContainerInterface.js';
 import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
 import Container from '../core/source/Container.js';
-// noinspection TypeScriptCheckImport
 import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../core/app/PlayerContainerConfigure.js';
 import LocationFactory from '../core/app/Factories/LocationFactory.js';
@@ -35,7 +34,6 @@ import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponen
 import EnemyType from '../core/app/Entities/EnemyType.js';
 import HealthPointsComponent from '../core/app/Components/HealthPointsComponent.js';
 import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
-import AttackPowerComponent from '../core/app/Components/AttackPowerComponent.js';
 import {ContainerKey} from '../core/types/enums/ContainerKey.js';
 import CharacterAttributeCollector from '../core/app/Components/CharacterAttributeCollector.js';
 import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
@@ -46,7 +44,9 @@ import {ItemID} from '../core/types/enums/ItemID.js';
 import HeroGroupCharacterAttributeCollector from '../core/app/Decorators/HeroGroupCharacterAttributeCollector.js';
 import HeroGroupInterface from '../core/app/Interfaces/HeroGroupInterface.js';
 import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
-import AttackPower from '../core/app/Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
+import ArmorDecorator from '../core/app/Components/CharacterAttributes/ArmorDecorator.js';
+import Decimal from 'decimal.js';
+import DamageControllerInterface from '../core/app/Interfaces/DamageControllerInterface.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -71,14 +71,20 @@ export class SandboxController {
         // this.testReadonly();
         // this.testRandom_oneFromRange();
         // this.testLodashPull();
+        // this.testFloatEqual();
+        // this.testDecimajs();
 
         // this.devHeroFactory();
         // this.devLocation();
         // this.devGoldLootGeneratorComponent();
         // this.devLevelComponent();
         // this.devLootGenerator();
-        this.devFight();
+        // this.devCharacterAttributeCollector();
         // this.devAttackPowerComponent();
+
+        //fight
+        // this.devDefence();
+        this.devFight();
 
         // this.devNewCharacterAttributesGetStarted();
     }
@@ -93,7 +99,7 @@ export class SandboxController {
     }
 
     devHeroFactory() {
-        let hero = this._container.get<HeroFactory>('player.heroFactory').create({
+        let hero = this._container.get<HeroFactory>(ContainerKey.HeroFactory).create({
             heroClass: this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
             level: 1,
         });
@@ -102,7 +108,7 @@ export class SandboxController {
 
     devLocationFactory() {
         let idGenerator = this._container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator');
-        let heroFactory = this._container.get<HeroFactory>('player.heroFactory');
+        let heroFactory = this._container.get<HeroFactory>(ContainerKey.HeroFactory);
         let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
 
         let heroes = [
@@ -413,7 +419,7 @@ export class SandboxController {
 
     testHeroFactory() {
         let heroClass = this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior);
-        let hero = this._container.get<HeroFactory>('player.heroFactory').create({
+        let hero = this._container.get<HeroFactory>(ContainerKey.HeroFactory).create({
             heroClass: heroClass,
             level: 1,
         });
@@ -433,7 +439,7 @@ export class SandboxController {
     // }
 
     devHeroGroup() {
-        let heroFactory = this._container.get<HeroFactory>('player.heroFactory');
+        let heroFactory = this._container.get<HeroFactory>(ContainerKey.HeroFactory);
         let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
 
         let heroes = [
@@ -635,9 +641,9 @@ export class SandboxController {
         });
     }
 
-    devFight() {
+    devCharacterAttributeCollector() {
         let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
-        let heroFactory = this._container.get<HeroFactory>('player.heroFactory');
+        let heroFactory = this._container.get<HeroFactory>(ContainerKey.HeroFactory);
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
         let heroes = [
@@ -832,5 +838,227 @@ export class SandboxController {
         // attackPower.shift(10);
         // attackPower.shift(10);
         // console.log(attackPower.value());
+    }
+
+    //factory
+    private createDefence(options: {
+        protectionBaseValue: number;
+    }) {
+        let protection = new CharacterAttribute({
+            characterAttributeID: CharacterAttributeID.Protection,
+            itemCharacterAttributeCollector: new ItemCharacterAttributeCollector(),
+        });
+
+        protection.increaseBaseValue(options.protectionBaseValue);
+
+        let defence = new ArmorDecorator(
+            new HealthPointsComponent(100),
+            protection,
+        );
+
+        return defence;
+    }
+
+    private devDefence() {
+        let defence = this.createDefence({
+            // protectionBaseValue: 42,    //4.2% брони
+            protectionBaseValue: 300,
+        });
+
+        let damage = [
+            ..._.range(0, 11),
+            ..._.range(20, 101, 10),
+        ];
+        console.log(damage);
+
+        console.log(defence);
+        for (let i = 0; i < damage.length; i++) {
+            console.log(damage[i], defence.damage(damage[i]));
+        }
+        // console.log(defence.finalDamage(100.123));
+        // console.log(defence.finalDamage(-100));
+    }
+
+    private testFloatEqual() {
+        let value = 0.3;
+        let validData = [
+            1,
+            0.3,
+            0.29,
+            0.299,
+            0.2999,
+            0.29999,
+            0.299999,
+            0.2999999,
+            0.29999999,
+            0.299999999,
+            0.2999999999,
+            0.29999999999,
+            0.299999999999,
+            0.2999999999999,
+            0.29999999999999,
+            0.299999999999999,
+            0.2999999999999999,         //< 0.3 => true
+            0.29999999999999999,        //< 0.3 => false, 176 знаков после занятой
+            0.299999999999999999,
+            0.2999999999999999999,
+            0.29999999999999999999,
+            0.299999999999999999999,
+            0.2999999999999999999999,
+            0.29999999999999999999999,
+            0.299999999999999999999999,
+            0.2999999999999999999999999,
+            0.29999999999999999999999999,
+            0.299999999999999999999999999,
+            0.2999999999999999999999999999,
+            0.29999999999999999999999999999,
+            0.299999999999999999999999999999,
+            0.2999999999999999999999999999999,
+            0.29999999999999999999999999999999,
+            0.299999999999999999999999999999999,
+            0.2999999999999999999999999999999999,
+            0.29999999999999999999999999999999999,
+            0.299999999999999999999999999999999999,
+            0.2999999999999999999999999999999999999,
+            // 0.299999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999,
+            // 0.0000000000000000000000001,
+            // 0.0000000000000000000000000000000000000001,
+            // 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,
+        ];
+
+        for (let i = 0; i < validData.length; i++) {
+            // console.log(validData[i], value >= validData[i]);
+            console.log(validData[i], value > validData[i]);
+        }
+        console.log(_.repeat('-', 32));
+
+        // for (let i = 0; i < validData.length; i++) {
+        //     // console.log(validData[i], value >= validData[i]);
+        //     console.log(validData[i], _.round(validData[i] * 100000), value > _.round(validData[i] * 100000));
+        // }
+    }
+
+    private testDecimajs() {
+        // console.log(0 === 1e-324);
+        // let x = new Decimal(0);
+        // console.log(x.equals('1e-324'));
+        // console.log(_.repeat('-', 32));
+
+        // console.log(0.1, 0.3 - 0.2, 0.1 > (0.3 - 0.2));
+        // let x1 = new Decimal(0.1);
+        // console.log(x1.greaterThan((new Decimal(0.3)).minus(0.2)))       // false
+        // console.log(new Decimal(0).gt(x1));
+        // console.log(_.repeat('-', 32));
+
+        // let value = 0.3;
+        // let values = [
+        //     0.2999999999999999,    //16
+        //     0.29999999999999999,    //17
+        //     // '0.29999999999999999',
+        //     // new Decimal,
+        // ];
+        // // console.log(0.2999999999999999);
+        // // console.log(0.29999999999999999);
+        // // console.log(new Decimal('0.29999999999999999'));
+        //
+        // // console.log(value, values[0], value > values[0]);
+        //
+        // // let x2 = new Decimal(value);
+        // let x2 = new Decimal(0.3);
+        // // console.log(x2, values[0], x2.greaterThan(values[0]));
+        // // console.log(x2, values[0], x2.greaterThan(new Decimal(values[0])));
+        // // console.log(x2, new Decimal(0.29999999999999999), x2.greaterThan(new Decimal(0.29999999999999999)));
+        // // console.log(x2, new Decimal(0.29999999999999999), x2.greaterThan(new Decimal(_.round(values[0], 10))));
+        //
+        // for (let i = 0; i < values.length; i++) {
+        //     console.log(value, values[i], value > values[i]);
+        //     console.log(x2, values[i], x2.greaterThan(new Decimal(values[i])));
+        //     console.log(x2, values[i], x2.greaterThan(new Decimal(values[i].toString())));
+        //     console.log(_.repeat('-', 32));
+        // }
+        // console.log(_.repeat('-', 32));
+
+        let damage = 100;
+
+        let maxProtection = 0.3;
+        // let protectionAttribute = 300;
+        // let protectionAttribute = 299;
+        // let protectionAttribute = 299.9999999999999;    //16
+        let protectionAttribute = 299.99999999999999;   //17
+        //299.9999999999999
+        let onePercentArmorProtectionValue = 10;
+
+        let protection = protectionAttribute / onePercentArmorProtectionValue / 100;
+        console.log(protection);
+        console.log(protection, maxProtection, protection <= maxProtection);
+
+        let dProtectionAttribute = new Decimal(protectionAttribute);
+        console.log(dProtectionAttribute);
+        // let dProtection = new Decimal(protectionAttribute);
+        console.log(_.repeat('-', 32));
+
+        let a = 0.1;
+        let b = 0.2;
+        let c = a + b;
+        console.log(a, b, c, (a + b) == c);
+        console.log(a, b, c, (a + b) === c);
+        console.log(a, b, c, (a + b) > c);
+        console.log(a, b, c, (a + b) >= c);
+        console.log(_.repeat('-', 32));
+
+        console.log((0.1 + 0.2) == 0.3);
+        console.log((0.1 + 0.2) === 0.3);
+        console.log((0.1 + 0.2) > 0.3);
+        console.log((0.1 + 0.2) >= 0.3);
+        console.log(_.repeat('-', 32));
+
+        console.log((0.1 + 0.2));
+        console.log((0.1 + 0.2).toFixed(4));
+        console.log(+(0.1 + 0.2).toFixed(4));
+    }
+
+    private devFight() {
+        let entityManager = this._container.get<EntityManager>(ContainerKey.EntityManager);
+        let heroFactory = this._container.get<HeroFactory>(ContainerKey.HeroFactory);
+        let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
+
+        let healthPoints: DamageControllerInterface = new HealthPointsComponent(
+        // let healthPoints = new HealthPointsComponent(
+            100,
+        );
+
+        let protection = new CharacterAttribute({
+            characterAttributeID: CharacterAttributeID.Protection,
+            itemCharacterAttributeCollector: new ItemCharacterAttributeCollector(),
+        });
+        // protection.increaseBaseValue(-100);
+        protection.increaseBaseValue(0);
+        // protection.increaseBaseValue(42);
+        // protection.increaseBaseValue(100);
+        // protection.increaseBaseValue(10000000);
+
+        healthPoints = new ArmorDecorator(
+            healthPoints,
+            protection,
+        );
+
+        // let damageController = new DamageController(
+        //     healthPoints,
+        //     this.createDefence({
+        //         protectionBaseValue: 100,
+        //     }),
+        // );
+
+        let damage = 42;
+        // console.log(damageController);
+        // damageController.damage(damage);
+        // damageController.damage(damage);
+        // damageController.damage(damage);
+        // console.log(damageController);
+
+        healthPoints.damage(damage);
+        healthPoints.damage(damage);
+        healthPoints.damage(damage);
+        healthPoints.damage(damage);
     }
 }

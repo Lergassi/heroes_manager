@@ -109,7 +109,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             return walletFactory;
         });
-        container.set<HeroFactory>('player.heroFactory', (container) => {
+        container.set<HeroFactory>(ContainerKey.HeroFactory, (container) => {
             return new HeroFactory({
                 config: container.get<object>('core.config'),
                 entityManager: container.get<EntityManager>('core.entityManager'),

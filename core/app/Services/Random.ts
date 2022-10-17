@@ -1,10 +1,6 @@
 import _ from 'lodash';
 import AppError from '../../source/Errors/AppError.js';
 
-export type RandomSomeOptions = {
-    unique: boolean;
-}
-
 export default class Random {
     private constructor() {}
 
@@ -12,11 +8,15 @@ export default class Random {
         return items[_.random(0, items.length - 1)];
     }
 
-    /*
-        options:
-            уникальные. todo: Если count больше items.length то не получиться "выбрать" уникальные значения. Наверное как-по другому нужно сделать и название другое.
+    /**
+     * Возможно исключение тут лишнее и нужно сделать по другому.
+     * @param items
+     * @param count
+     * @param options
      */
-    static some<T>(items: T[], count: number, options: Partial<RandomSomeOptions> = {}): T[] {
+    static some<T>(items: T[], count: number, options: {
+        unique?: boolean;
+    }): T[] {
         if (options.unique && items.length < count) {
             throw AppError.itemsNotEnoughForRandomSelection();
         }

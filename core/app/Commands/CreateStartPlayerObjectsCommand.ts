@@ -167,7 +167,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
             let hero = this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
                 heroClass: heroPatterns[i]['heroClass'],
                 level: 1,
-                heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
+                heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
             });
 
             //Начальная экипировка.
@@ -191,12 +191,12 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
             heroClass: this.container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
             level: 1,
-            heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
+            heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
         });
         this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
             heroClass: this.container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
             level: 1,
-            heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
+            heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
         });
     }
 }

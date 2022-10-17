@@ -95,4 +95,12 @@ export default class AppError extends Error {
     static playerHasMaxHeroes() {
         return new AppError('Нельзя создать нового героя. У игрока максимальное кол-во героев.');
     }
+
+    static isDead() {
+        return new AppError('Объект мертвый.');
+    }
+
+    static isNotDead() {
+        return new AppError('Объект живой.');
+    }
 }

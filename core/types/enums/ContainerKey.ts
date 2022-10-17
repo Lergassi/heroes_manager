@@ -12,6 +12,7 @@ export enum ContainerKey {
     GameObjectFactory = 'player.gameObjectFactory',
     ItemStorageManager = 'player.ItemStorageManager',
     //фабрики
+    HeroFactory = 'player.HeroFactory',
     LocationFactory = 'player.LocationFactory',
     EnemyFactory = 'player.EnemyFactory',
     ItemStackFactory= 'player.ItemStackFactory',

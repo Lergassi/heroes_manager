@@ -6,6 +6,8 @@ import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
 import CharacterAttribute from './Components/CharacterAttribute.js';
 import CharacterAttributeInterface from './Decorators/CharacterAttributeInterface.js';
 
+export type integer = number;
+export type float = number;
 export type unsigned = number;
 
 export type Milliseconds = number;
@@ -17,7 +19,7 @@ export type Days = number;
 //todo: В будущем должно быть equipSlots или просто slots.
 export type EquipSlots = Partial<{[ID in EquipSlotID]: EquipSlotComponent}>;
 // export type CharacterAttributes = Partial<{[id in CharacterAttributeID]: CharacterAttribute}>;
-export type CharacterAttributes = Partial<{[id in CharacterAttributeID]: CharacterAttributeInterface}>;
+export type CharacterAttributes = Partial<{[ID in CharacterAttributeID]: CharacterAttributeInterface}>;
 
 export type ItemCount = {
     item: Item;

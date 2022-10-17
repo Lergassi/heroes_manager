@@ -2,16 +2,21 @@ import Component from '../../source/Component.js';
 import debug from 'debug';
 import EventSystem from '../../source/EventSystem.js';
 import {unsigned} from '../types.js';
+import AppError from '../../source/Errors/AppError.js';
+import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
+import {assertPositive} from '../../source/assert.js';
+import ArmorDecorator from './CharacterAttributes/ArmorDecorator.js';
 
 export enum HealthPointsComponentEventCode {
+    TakeDamage = 'HealthPointsComponent.TakeDamage',
     Died = 'HealthPointsComponent.Died',
     Resurrect = 'HealthPointsComponent.Resurrect',
-    TakeDamage = 'HealthPointsComponent.TakeDamage',
 }
 
-export default class HealthPointsComponent extends Component {
-    private _currentHealthPoints: number;
-    private _maxHealthPoints: number;
+export default class HealthPointsComponent extends Component implements DamageControllerInterface {
+// export default class HealthPointsComponent extends Component {
+    private _currentHealthPoints: unsigned;
+    private _maxHealthPoints: unsigned;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
 
     /**
@@ -31,7 +36,7 @@ export default class HealthPointsComponent extends Component {
     /**
      * @deprecated
      */
-    get maxHealthPoints(): number { //todo: final? Сделать отдельный класс для показателей, которые могут иметь базовое значение и усиления.
+    get maxHealthPoints(): number {
         return this._maxHealthPoints;
     }
 
@@ -50,23 +55,47 @@ export default class HealthPointsComponent extends Component {
     }
 
     constructor(
-        currentHealthPoints: number,
-        maxHealthPoints: number,
+        maxHealthPoints: unsigned,
+        // armor: Armor,
     ) {
         super();
-        this._currentHealthPoints = currentHealthPoints;
+
+        assertPositive(maxHealthPoints);
+
         this._maxHealthPoints = maxHealthPoints;
+        this._currentHealthPoints = maxHealthPoints;
         this._isDead = false;
     }
 
-    kill(): void {
-        if (this._isDead) {
-            return;
+    damage(damage: unsigned): void {
+        assertPositive(damage);
+
+        this._canModify();
+
+        debug('log')('Получено урона: ' + damage);
+        EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
+
+        let healthPoints = this._currentHealthPoints - damage;
+        if (healthPoints <= 0) {
+            this.kill();
+        } else {
+            this._currentHealthPoints = healthPoints;
         }
+    }
+
+    // add(value: unsigned): void {
+    //     this._canModify();
+    //
+    //     let healthPoints = this._currentHealthPoints + value;
+    //     this._currentHealthPoints = healthPoints >= this._maxHealthPoints ? this._maxHealthPoints : healthPoints;
+    // }
+
+    kill(): void {
+        this._canModify();
 
         this._currentHealthPoints = 0;
         this._isDead = true;
-        debug('log')('Персонаж умер.');
+        debug('log')('Объект умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
         EventSystem.event(HealthPointsComponentEventCode.Died, this);
         /*
             В вов:
@@ -79,30 +108,20 @@ export default class HealthPointsComponent extends Component {
          */
     }
 
-    resurrect(): void {
-        if (!this._isDead) {
-            return;
-        }
+    // resurrect(): void {
+    //     if (!this._isDead) {
+    //         throw AppError.isNotDead();
+    //     }
+    //
+    //     this._currentHealthPoints = this._maxHealthPoints;
+    //     this._isDead = false;
+    //     debug('log')('Объект воскрес.');
+    //     EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
+    // }
 
-        this._currentHealthPoints = this._maxHealthPoints;
-        this._isDead = false;
-        debug('log')('Персонаж воскрес.');
-        EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
-    }
-
-    damage(value: unsigned): void {
+    private _canModify(): void {
         if (this._isDead) {
-            return;
-        }
-
-        debug('log')('Персонаж получил урон: ' + value);
-        EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
-
-        let healthPoints = this._currentHealthPoints - value;
-        if (healthPoints <= 0) {
-            this.kill();
-        } else {
-            this._currentHealthPoints = healthPoints;
+            throw AppError.isDead();
         }
     }
 }

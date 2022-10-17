@@ -6,3 +6,12 @@ export function assert(condition: boolean, message?: string) {
         throw new AssertError(message);
     }
 }
+
+/**
+ * Включая ноль.
+ * @param value
+ * @param message
+ */
+export function assertPositive(value: number, message?: string) {
+    assert(value >= 0, 'Значение должно быть больше нуля.');
+}

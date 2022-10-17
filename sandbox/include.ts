@@ -617,7 +617,7 @@ export function testSerializeItemStorage(container: ContainerInterface, serializ
 
 export function testSerializeHero(container: ContainerInterface, serializer: Serializer, jsonSerializer: JsonSerializer) {
     let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
-    let hero = container.get<HeroFactory>('player.heroFactory').create({
+    let hero = container.get<HeroFactory>(ContainerKey.HeroFactory).create({
         heroClass: heroClass,
         level: 1,
     });
@@ -901,11 +901,11 @@ export function testHeroController() {
         10,
     ));
 
-    let warrior = container.get<HeroFactory>('player.heroFactory').create({
+    let warrior = container.get<HeroFactory>(ContainerKey.HeroFactory).create({
         heroClass: container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
         level: 1,
     });
-    let mage = container.get<HeroFactory>('player.heroFactory').create({
+    let mage = container.get<HeroFactory>(ContainerKey.HeroFactory).create({
         heroClass: container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
         level: 1,
     });

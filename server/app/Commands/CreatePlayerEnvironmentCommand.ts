@@ -280,7 +280,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
             this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
                 heroClass: datum['heroClass'],
                 level: datum['level'],
-                heroFactory: this.container.get<HeroFactory>('player.heroFactory'),
+                heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
             });
         });
     }

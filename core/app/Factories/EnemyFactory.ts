@@ -71,7 +71,6 @@ export default class EnemyFactory {
         }));
         let healthPointsComponent = enemy.set<HealthPointsComponent>(HealthPointsComponent.name, new HealthPointsComponent(
             100,
-            100,
         ));
         // enemy.set(AttackPowerComponent.name, new AttackPowerComponent({
         //     baseMinAttackPower: 10,
