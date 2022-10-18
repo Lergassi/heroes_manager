@@ -1,50 +1,44 @@
-import {unsigned} from '../types.js';
-import StrengthValueGenerator from './CharacterAttributeComponentFactories/StrengthValueGenerator.js';
-import AgilityValueGenerator from './CharacterAttributeComponentFactories/AgilityValueGenerator.js';
-import IntelligenceValueGenerator from './CharacterAttributeComponentFactories/IntelligenceValueGenerator.js';
-import AttackPowerValueGenerator from './CharacterAttributeComponentFactories/AttackPowerValueGenerator.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
-import ProtectionValueGenerator from './CharacterAttributeComponentFactories/ProtectionValueGenerator.js';
-import CharacterAttributeValueGeneratorInterface from '../Interfaces/CharacterAttributeValueGeneratorInterface.js';
-import MaxHealthPointsValueGenerator from './CharacterAttributeComponentFactories/MaxHealthPointsValueGenerator.js';
+import CharacterAttributeStartValueGeneratorInterface
+    from '../Interfaces/CharacterAttributeStartValueGeneratorInterface.js';
+import StrengthStartValueGenerator from './CharacterAttributeStartValueGenerators/StrengthStartValueGenerator.js';
+import AgilityStartValueGenerator from './CharacterAttributeStartValueGenerators/AgilityStartValueGenerator.js';
+import IntelligenceStartValueGenerator from './CharacterAttributeStartValueGenerators/IntelligenceStartValueGenerator.js';
+import MaxHealthPointsStartValueGenerator
+    from './CharacterAttributeStartValueGenerators/MaxHealthPointsStartValueGenerator.js';
+import ProtectionStartValueGenerator from './CharacterAttributeStartValueGenerators/ProtectionStartValueGenerator.js';
+import DefaultCharacterAttributeStartValueGenerator
+    from './CharacterAttributeStartValueGenerators/DefaultCharacterAttributeStartValueGenerator.js';
+import MaxMagicPointsStartValueGenerator
+    from './CharacterAttributeStartValueGenerators/MaxMagicPointsStartValueGenerator.js';
+import AttackPowerStartValueGenerator from './CharacterAttributeStartValueGenerators/AttackPowerStartValueGenerator.js';
 import DefaultCharacterAttributeValueGenerator
-    from './CharacterAttributeComponentFactories/DefaultCharacterAttributeValueGenerator.js';
+    from './CharacterAttributeValueGenerators/DefaultCharacterAttributeValueGenerator.js';
+import {unsigned} from '../types.js';
+import {CharacterAttributeValueModifier} from './CharacterAttributeStartValueGenerator.js';
+import CharacterAttributeValueGeneratorInterface from '../Interfaces/CharacterAttributeValueGeneratorInterface.js';
 
-export type BaseValueModifierCallback = (value: number) => number;
-
-//todo: Многие атрибуты должны зависить от класса. У магов, например, минимальное условное значение, разное здоровье и тд.
+//todo: Временно. Переделать когда будет прокачка героев. Далее станет более понятно какой нужен интерфейс у классов отвечающих за генерацию прибавки к атрибутам.
 export default class CharacterAttributeValueGenerator {
-    // private _characterAttributeValueGenerators: Partial<{[ID in CharacterAttributeID]: CharacterAttributeValueGeneratorInterface}> = {
-    // private _characterAttributeValueGenerators: {[ID in CharacterAttributeID]: CharacterAttributeValueGeneratorInterface} = {
-    // private _characterAttributeValueGenerators: Record<CharacterAttributeID, CharacterAttributeValueGeneratorInterface> = {
-    private _characterAttributeValueGenerators: Map<CharacterAttributeID, CharacterAttributeValueGeneratorInterface> = new Map([
-        [CharacterAttributeID.Strength, new StrengthValueGenerator()],
-        [CharacterAttributeID.Agility, new AgilityValueGenerator()],
-        [CharacterAttributeID.Intelligence, new IntelligenceValueGenerator()],
+    private _characterAttributeValueGenerators: Record<CharacterAttributeID, CharacterAttributeValueGeneratorInterface> = {
+        [CharacterAttributeID.Strength]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.Agility]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.Intelligence]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.MaxHealthPoints]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.Protection]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.Stamina]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.MaxMagicPoints]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.AttackPower]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.AttackSpeed]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.CriticalStrike]: new DefaultCharacterAttributeValueGenerator(),
+        [CharacterAttributeID.Luck]: new DefaultCharacterAttributeValueGenerator(),
+    };
 
-        [CharacterAttributeID.MaxHealthPoints, new MaxHealthPointsValueGenerator()],
-        [CharacterAttributeID.Protection, new ProtectionValueGenerator()],
-
-        [CharacterAttributeID.Stamina, new DefaultCharacterAttributeValueGenerator()],
-
-        [CharacterAttributeID.MaxMagicPoints, new DefaultCharacterAttributeValueGenerator()],
-
-        [CharacterAttributeID.AttackPower, new AttackPowerValueGenerator()],
-        [CharacterAttributeID.AttackSpeed, new DefaultCharacterAttributeValueGenerator()],
-        [CharacterAttributeID.CriticalStrike, new DefaultCharacterAttributeValueGenerator()],
-
-        [CharacterAttributeID.Luck, new DefaultCharacterAttributeValueGenerator()],
-        //todo: Нет ошибки с дублированием ключа если тип {[ID in CharacterAttributeID]: CharacterAttributeValueGeneratorInterface}.
-        // [CharacterAttributeID.Luck, new DefaultCharacterAttributeValueGenerator()],
-    ]);
-
-    generate(
+    increase(
         characterAttributeID: CharacterAttributeID,
         level: unsigned,
-        baseValueModifierCallback?: BaseValueModifierCallback,
+        modifier?: CharacterAttributeValueModifier,
     ): number {
-        let value = this._characterAttributeValueGenerators.get(characterAttributeID)?.generate(level) ?? 0;
-
-        return baseValueModifierCallback ? baseValueModifierCallback(value) : value;
+        return this._characterAttributeValueGenerators[characterAttributeID]?.increase(level, modifier) ?? 0;
     }
 }

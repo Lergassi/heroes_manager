@@ -75,7 +75,7 @@ export class SandboxController {
         // this.testFloatEqual();
         // this.testDecimajs();
 
-        this.devHeroFactory();
+        // this.devHeroFactory();
         // this.devLocation();
         // this.devGoldLootGeneratorComponent();
         // this.devLevelComponent();
@@ -84,9 +84,10 @@ export class SandboxController {
         // this.devAttackPowerComponent();
 
         //fight
+        // this.devFight();
         // this.devDefence();
-        // this.devArmor();
-        // this.devArmorInEnemy();
+        // this.devHeroArmor();
+        this.devEnemyArmor();
 
         // this.devNewCharacterAttributesGetStarted();
     }
@@ -525,11 +526,10 @@ export class SandboxController {
         let enemyType = em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar);
         // console.log(enemyType);
         // console.log(enemyType.alias);
-        let enemy = enemyFactory.create({
-            level: 1,
-            // type: enemyType,
-            enemyTypeID: EnemyTypeID.Boar,
-        });
+        let enemy = enemyFactory.create(
+            1,
+            EnemyTypeID.Boar,
+        );
         console.log(enemy);
     }
 
@@ -595,22 +595,22 @@ export class SandboxController {
         let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
 
         let enemies: GameObject[] = [];
-        enemies.push(enemyFactory.create({
+        enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
             // enemyType: EnemyTypeID.Boar,
-            enemyTypeID: EnemyTypeID.Boar,
-            level: 1,
-        }));
-        enemies.push(enemyFactory.create({
+            1,
+            EnemyTypeID.Boar,
+        ));
+        enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            enemyTypeID: EnemyTypeID.Boar,
-            level: 1,
-        }));
-        enemies.push(enemyFactory.create({
+            1,
+            EnemyTypeID.Boar,
+        ));
+        enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            enemyTypeID: EnemyTypeID.Boar,
-            level: 1,
-        }));
+            1,
+            EnemyTypeID.Boar,
+        ));
         console.log(_.map(enemies, (enemy) => {
             return enemy['_id'];
         }));
@@ -851,6 +851,7 @@ export class SandboxController {
         let protection = new CharacterAttribute(
             CharacterAttributeID.Protection,
             new ItemCharacterAttributeCollector(),
+            0,
         );
 
         protection.increaseBaseValue(options.protectionBaseValue);
@@ -859,6 +860,7 @@ export class SandboxController {
             new HealthPointsComponent(new CharacterAttribute(
                 CharacterAttributeID.MaxHealthPoints,
                 new ItemCharacterAttributeCollector(),
+                0,
             )),
             protection,
         );
@@ -1024,13 +1026,13 @@ export class SandboxController {
         console.log(+(0.1 + 0.2).toFixed(4));
     }
 
-    private devArmor() {
+    private devHeroArmor() {
         let entityManager = this._container.get<EntityManager>(ContainerKey.EntityManager);
         let heroFactory = this._container.get<HeroFactory>(ContainerKey.HeroFactory);
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector()
-        let maxHealthPoints = new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, itemCharacterAttributeCollector);
+        let maxHealthPoints = new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, itemCharacterAttributeCollector, 0);
         maxHealthPoints.increaseBaseValue(100);
 
         let healthPoints: DamageControllerInterface = new HealthPointsComponent(
@@ -1041,6 +1043,7 @@ export class SandboxController {
         let protection = new CharacterAttribute(
             CharacterAttributeID.Protection,
             itemCharacterAttributeCollector,
+            0,
         );
         // protection.increaseBaseValue(-100);
         protection.increaseBaseValue(0);
@@ -1073,7 +1076,22 @@ export class SandboxController {
         healthPoints.damage(damage);
     }
 
-    private devArmorInEnemy() {
-        // let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
+    private devEnemyArmor() {
+        let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
+
+        let enemy = enemyFactory.create(1, EnemyTypeID.Bear);
+        console.log(enemy);
+        console.log(enemy.get<DamageControllerInterface>(GameObjectKey.DamageController));
+        console.log(enemy.get<HealthPointsComponent>(HealthPointsComponent.name));
+
+        // let damage = 100;
+        let damage = 24;
+
+        let maxIterations = 10_000;
+        let i = 0;
+        while (i < maxIterations) {
+            enemy.get<DamageControllerInterface>(GameObjectKey.DamageController).damage(damage);
+            ++i;
+        }
     }
 }

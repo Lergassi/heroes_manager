@@ -7,8 +7,8 @@ import CharacterAttribute from './Components/CharacterAttribute.js';
 import CharacterAttributeInterface from './Decorators/CharacterAttributeInterface.js';
 
 export type integer = number;
-export type float = number;
 export type unsigned = number;
+export type float = number;
 
 export type Milliseconds = number;
 export type Minutes = number;
@@ -16,7 +16,7 @@ export type Seconds = number;
 export type Hours = number;
 export type Days = number;
 
-//todo: В будущем должно быть equipSlots или просто slots.
+//todo: В будущем должно быть equipSlots или просто slots. Или не будет...
 export type EquipSlots = Partial<{[ID in EquipSlotID]: EquipSlotComponent}>;
 // export type CharacterAttributes = Partial<{[id in CharacterAttributeID]: CharacterAttribute}>;
 export type CharacterAttributes = Partial<{[ID in CharacterAttributeID]: CharacterAttributeInterface}>;

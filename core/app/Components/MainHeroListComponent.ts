@@ -9,6 +9,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import EventSystem from '../../source/EventSystem.js';
 import HeroClass from '../Entities/HeroClass.js';
 import {assert} from '../../source/assert.js';
+import {HeroClassID} from '../../types/enums/HeroClassID.js';
 
 /**
  * @deprecated
@@ -73,7 +74,7 @@ export default class MainHeroListComponent extends Component {
     }
 
     createHero(options: {
-        heroClass: HeroClass;
+        heroClass: HeroClass | HeroClassID;
         heroFactory: HeroFactory;
         level: unsigned;
     }): GameObject {

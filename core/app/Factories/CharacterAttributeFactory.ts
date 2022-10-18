@@ -3,40 +3,38 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import {unsigned} from '../types.js';
-import CharacterAttributeValueGenerator, {
-    BaseValueModifierCallback
-} from '../Services/CharacterAttributeValueGenerator.js';
+import CharacterAttributeStartValueGenerator, {
+    CharacterAttributeValueModifier
+} from '../Services/CharacterAttributeStartValueGenerator.js';
+import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
 
 export default class CharacterAttributeFactory {
-    private readonly _characterAttributeValueGenerator: CharacterAttributeValueGenerator;
-    private readonly _mainCharacterAttributeMultiplier: unsigned = 2;
+    private readonly _characterAttributeStartValueGenerator: CharacterAttributeStartValueGenerator;
 
     constructor(
-        characterAttributeValueGenerator: CharacterAttributeValueGenerator,
+        characterAttributeStartValueGenerator: CharacterAttributeStartValueGenerator,
     ) {
-        this._characterAttributeValueGenerator = characterAttributeValueGenerator;
+        this._characterAttributeStartValueGenerator = characterAttributeStartValueGenerator;
     }
 
     create(
         ID: CharacterAttributeID,
         level: unsigned,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
-        baseValueModifierCallback?: BaseValueModifierCallback,
+        options?: { //todo: Времено пока в разработке. Далее для каждого класса будет своя логика без передачи из вне.
+            baseValueModifier?: CharacterAttributeValueModifier,
+            increaseValueModifier?: CharacterAttributeValueModifier,
+        },
     ) {
         let characterAttribute = new CharacterAttribute(
             ID,
             itemCharacterAttributeCollector,
+            this._characterAttributeStartValueGenerator.generate(
+                ID,
+                level,
+                options?.baseValueModifier,
+            )
         );
-        characterAttribute.increaseBaseValue(this._characterAttributeValueGenerator.generate(
-            ID,
-            level,
-            baseValueModifierCallback,
-        ));
-
-        // }) * (options.heroClass.isMainCharacterAttribute(CharacterAttributeID.Strength) ? this._mainCharacterAttributeMultiplier : 1));  //todo: Найти место где и как это сделать. Стратегия? Возможное решение: сюда надо передавать доп логику для генератора. Выбор логики делается выше. Сюда не надо передавать HeroClass, CharacterAttribute[] или другие сущности и компоненты.
-        /*
-            У класса есть список главных атрибутов.
-         */
 
         return characterAttribute;
     }

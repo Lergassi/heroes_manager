@@ -28,3 +28,7 @@ export function assertIsGreaterThan(value: number, expected: number, message?: s
 export function assertIsGreaterThanOrEqual(value: number, expected: number, message?: string) {
     assert(value >= expected, 'Значение должно быть больше или равно указанному.');
 }
+
+export function assertIsNumber(value: any, message?: string) {
+    assert(typeof value === 'number', 'Значение должно быть числом.');
+}

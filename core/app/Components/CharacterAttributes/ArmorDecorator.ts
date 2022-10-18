@@ -49,16 +49,19 @@ export default class ArmorDecorator implements DamageControllerInterface {
     damage(damage: unsigned): void {
         assertPositive(damage);
 
-        let finalDamage = damage - _.round(+(damage * this._calcProtectionMultiplier()).toFixed(4), 0);
+        // let protectDamage = +((damage * this._calcProtectionModifier()).toFixed(4));
+        let protectDamage = _.ceil(+((damage * this._calcProtectionModifier()).toFixed(4)), 0);
+        // console.log('protectDamage', protectDamage);
+        let finalDamage = damage - protectDamage;
 
         //todo: Нужно решить задачу с сообщением и расчетами. Если герой мертвый, то нанести урон нельзя и расчеты сделаны зря. А после урона вывести сообщение нельзя иначе сначала будет сообщение об уроне, а потом про блокировку. Можно вообще не выводить сообщения. И сообщения только для разработчика. Для пользователя можно сделать другую систему сообщений с передачей через метод.
-        debug('log')(sprintf('Блокировано урона (%f): %d/%d.', this._calcProtectionMultiplier(), damage - finalDamage, damage));
+        debug('log')(sprintf('Блокировано урона (%f): %d/%d.', this._calcProtectionModifier(), damage - finalDamage, damage));
         this._healthPoints.damage(finalDamage);
 
         // return finalDamage;
     }
 
-    private _calcProtectionMultiplier(): number {
+    private _calcProtectionModifier(): number {
         let protection = +(this._protection.value() / this._onePercentArmorProtectionValue / 100).toFixed(4);
 
         return protection <= this._maxProtection ? protection : this._maxProtection;

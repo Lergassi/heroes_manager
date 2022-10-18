@@ -1,32 +1,19 @@
 import Component from '../../source/Component.js';
+import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
+import {unsigned} from '../types.js';
+import {assertNotNil} from '../../source/assert.js';
 
 export default class MagicPointsComponent extends Component {
-    private _currentMagicPoints: number;
-    private _maxMagicPoints: number;
-
-    /**
-     * @deprecated
-     */
-    get currentMagicPoints(): number {
-        return this._currentMagicPoints;
-    }
-
-    /**
-     * @deprecated
-     */
-    get maxMagicPoints(): number {
-        return this._maxMagicPoints;
-    }
+    private _currentMagicPoints: unsigned;
+    private _maxMagicPoints: CharacterAttributeInterface;
 
     constructor(
-        // id: number,
-        // gameObject: GameObject,
-        currentMagicPoints: number,
-        maxMagicPoints: number
+        maxMagicPoints: CharacterAttributeInterface,
     ) {
-        // super(id, gameObject);
         super();
-        this._currentMagicPoints = currentMagicPoints;
+        assertNotNil(maxMagicPoints);
+
         this._maxMagicPoints = maxMagicPoints;
+        this._currentMagicPoints = maxMagicPoints.value();
     }
 }

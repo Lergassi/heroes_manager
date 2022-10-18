@@ -970,8 +970,34 @@ export default class ItemDatabaseBuilder {
             Item,
             (new ItemBuilder(this._em))
                 .default(
-                    ItemID.BoarLeather,
+                    ItemID.BoarSkin,
                     'Кожа кабана',
+                    ItemCategoryID.Resources,
+                    {
+                        stackSize: DEFAULT_STACK_SIZE,
+                    },
+                )
+                .build()
+        );
+        this._em.add<Item>(
+            Item,
+            (new ItemBuilder(this._em))
+                .default(
+                    ItemID.BearMeat,
+                    'Мясо медведя',
+                    ItemCategoryID.Resources,
+                    {
+                        stackSize: DEFAULT_STACK_SIZE,
+                    },
+                )
+                .build()
+        );
+        this._em.add<Item>(
+            Item,
+            (new ItemBuilder(this._em))
+                .default(
+                    ItemID.BoarMeat,
+                    'Мясо кабана',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,

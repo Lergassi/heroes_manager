@@ -17,6 +17,7 @@ export enum ContainerKey {
     EnemyFactory = 'player.EnemyFactory',
     ItemStackFactory= 'player.ItemStackFactory',
     //компоненты
+    MainHeroListComponent = 'player.MainHeroListComponent',
     MainLocationListComponent = 'player.MainLocationListComponent',
 
     //player Фабрики компонентов (class Component).

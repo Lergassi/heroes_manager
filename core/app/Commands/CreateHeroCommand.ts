@@ -24,7 +24,7 @@ export default class CreateHeroCommand extends Command {
 
         let heroClass: HeroClass = this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>('HeroClass').getOneByAlias(heroClassAlias);
 
-        this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+        this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
             heroClass: heroClass,
             level: level,
             heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),

@@ -3,10 +3,10 @@ import ItemCharacterAttributeCollector from '../../Components/ItemCharacterAttri
 import CharacterAttribute from '../../Components/CharacterAttribute.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
-import CharacterAttributeValueGeneratorInterface from '../../Interfaces/CharacterAttributeValueGeneratorInterface.js';
+import CharacterAttributeStartValueGeneratorInterface from '../../Interfaces/CharacterAttributeStartValueGeneratorInterface.js';
 
-export default class DefaultCharacterAttributeValueGenerator implements CharacterAttributeValueGeneratorInterface {
-    generate(level: unsigned): number {
+export default class DefaultCharacterAttributeStartValueGenerator implements CharacterAttributeStartValueGeneratorInterface {
+    generate(modifier?:(value: number) => number): number {
         return 0;
     }
 }

@@ -1666,16 +1666,35 @@ export default class EntityManagerBuilder {
     }
 
     private _createEnemyConfigs() {
+        let maxEnemyLevel = 100;    //todo: config.maxEnemyLevel
         let enemyConfigs: EnemyConfigRecord = {
             [EnemyTypeID.Boar]: {
                 enemy: this._entityManager.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar), //todo: Тоже через фабрику, чтобы сократить кол-во использований EntityManager.
                 loot: [
-                    {enemyLevel: [1, 40], item: this._entityManager.get<Item>(Item, ItemID.Wood), count: [4, 10], chance: 40},
-                    {enemyLevel: [10, 30], item: this._entityManager.get<Item>(Item, ItemID.IronOre), count: [2, 6], chance: 20},
-                    {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
-                    {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
-                    {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
+                    //todo: В луте может быть не только предмет с шансом, но и тип предмета: категория + редкость например.
+                    {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BoarMeat), count: [1, 3], chance: 30},
+                    {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BoarSkin), count: [1, 2], chance: 20},
+                    // {enemyLevel: [1, 40], item: this._entityManager.get<Item>(Item, ItemID.Wood), count: [4, 10], chance: 40},
+                    // {enemyLevel: [10, 30], item: this._entityManager.get<Item>(Item, ItemID.IronOre), count: [2, 6], chance: 20},
+                    // {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
+                    // {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
+                    // {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
                     {enemyLevel: [50, 100], item: this._entityManager.get<Item>(Item, ItemID.OneHandedSword_01), count: [1, 1], chance: 1},
+                ],
+                exp: 20,
+                gold: [10, 20],
+            },
+            [EnemyTypeID.Bear]: {
+                enemy: this._entityManager.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Bear), //todo: Тоже через фабрику, чтобы сократить кол-во использований EntityManager.
+                loot: [
+                    {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BearMeat), count: [1, 5], chance: 30},
+                    {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BearSkin), count: [1, 3], chance: 20},
+                    // {enemyLevel: [1, 40], item: this._entityManager.get<Item>(Item, ItemID.Wood), count: [4, 10], chance: 40},
+                    // {enemyLevel: [10, 30], item: this._entityManager.get<Item>(Item, ItemID.IronOre), count: [2, 6], chance: 20},
+                    // {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
+                    // {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
+                    {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
+                    // {enemyLevel: [50, 100], item: this._entityManager.get<Item>(Item, ItemID.OneHandedSword_01), count: [1, 1], chance: 1},
                 ],
                 exp: 20,
                 gold: [10, 20],

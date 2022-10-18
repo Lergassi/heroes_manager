@@ -64,7 +64,7 @@ export default class ClientRender {
         root.render(
             <div>
                 <MainHeroListRComponent
-                    heroListComponent={this._container.get<MainHeroListComponent>('player.heroesListComponent')}
+                    heroListComponent={this._container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent)}
                     container={this._container}
                 />
                 <MainLocationListRComponent

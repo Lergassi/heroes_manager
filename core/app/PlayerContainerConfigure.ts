@@ -192,9 +192,6 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new EnemyFactory({
                 entityManager: container.get<EntityManager>('core.entityManager'),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
-                playerExperienceComponent: container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag('#player').getComponent<ExperienceComponent>(ExperienceComponent.name),
-                // playerWalletComponent: container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag('#wallet.' + CurrencyAlias.Gold).getComponent<WalletComponent>(WalletComponent.name),
-                playerWalletComponent: container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag(CurrencyWalletAlias.Gold).getComponent<WalletComponent>(WalletComponent.name),
             });
         });
 
@@ -206,7 +203,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new EquipManager();
         });
 
-        container.set<MainHeroListComponent>('player.heroesListComponent', (container) => {
+        container.set<MainHeroListComponent>(ContainerKey.MainHeroListComponent, (container) => {
             let heroListControllerGameObject = container.get<GameObjectFactory>('player.gameObjectFactory').create();
 
             let mainHeroListComponent = heroListControllerGameObject.addComponent(new MainHeroListComponent(

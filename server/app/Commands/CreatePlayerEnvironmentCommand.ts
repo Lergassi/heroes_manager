@@ -277,7 +277,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         heroPatterns.forEach((datum) => {
-            this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+            this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
                 heroClass: datum['heroClass'],
                 level: datum['level'],
                 heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),

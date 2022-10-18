@@ -26,8 +26,12 @@ export enum ItemID {
     DeerSkin = 'DeerSkin',
     WolfSkin = 'WolfSkin',
     BearSkin = 'BearSkin',
+    BoarSkin = 'BoarSkin',
+
     Leather_1 = 'Leather_1',
-    BoarLeather = 'BoarLeather',
+
+    BoarMeat = 'BoarMeat',
+    BearMeat = 'BearMeat',
 
     MagicResources_1 = 'MagicResources_1',
     MagicMaterial_1 = 'MagicMaterial_1',

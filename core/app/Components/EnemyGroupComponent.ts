@@ -33,10 +33,10 @@ export default class EnemyGroupComponent extends Component {
         assert(options.enemyFactory instanceof EnemyFactory)
         assert((this._enemies.length + 1) <= this._size, 'Группа врагов полная. Нельзя добавить нового врага в группу.')
 
-        let enemy = options.enemyFactory.create({
-            level: options.level,
-            enemyTypeID: options.enemyTypeID,
-        });
+        let enemy = options.enemyFactory.create(
+            options.level,
+            options.enemyTypeID,
+        );
         this._enemies.push(enemy);
 
         EventSystem.event(EnemyGroupComponentEventCode.CreateEnemy, this);

@@ -164,7 +164,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         ];
 
         for (let i = 0; i < heroPatterns.length; i++) {
-            let hero = this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+            let hero = this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
                 heroClass: heroPatterns[i]['heroClass'],
                 level: 1,
                 heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
@@ -188,12 +188,12 @@ export default class CreateStartPlayerObjectsCommand extends Command {
             // console.log(hero.get<HeroAttributeCollectorComponent>(HeroAttributeCollectorComponent.name).finalValue(CharacterAttributeID.Stamina));
         }
 
-        this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+        this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
             heroClass: this.container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
             level: 1,
             heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
         });
-        this.container.get<MainHeroListComponent>('player.heroesListComponent').createHero({
+        this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
             heroClass: this.container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
             level: 1,
             heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),

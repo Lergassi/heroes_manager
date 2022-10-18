@@ -134,7 +134,7 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                     </tr>
                     <tr>
                         <td>Очки магии</td>
-                        <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name).currentMagicPoints}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name).maxMagicPoints}</td>
+                        <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>
                     </tr>
                     <tr>
                         <td>Сила атаки</td>

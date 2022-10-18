@@ -72,7 +72,7 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                     experienceComponent={hero.get<ExperienceComponent>(ExperienceComponent.name)}
                 /></td>
                 <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_maxHealthPoints']['value']()}</td>
-                <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name).currentMagicPoints}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name).maxMagicPoints}</td>
+                <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>
                 {/* todo: Сделать отдельный компонент для вывода значений, который получаются одним методом. */}
                 <td>{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().left}-{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().right}</td>
                 {/*<td>{hero.get<AttackPower>(CharacterAttributeID.AttackPower).value()[0]}-{hero.get<AttackPower>(CharacterAttributeID.AttackPower).value()[1]}</td>*/}

@@ -20,7 +20,7 @@ export default class DeleteHeroCommand extends Command {
 
         this
             .container
-            .get<MainHeroListComponent>('player.heroesListComponent')
+            .get<MainHeroListComponent>(ContainerKey.MainHeroListComponent)
             .deleteHero(
                 this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(heroId),
                 this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage),
