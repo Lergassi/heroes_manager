@@ -136,10 +136,10 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                         <td>Очки магии</td>
                         <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>
                     </tr>
-                    <tr>
-                        <td>Сила атаки</td>
-                        <td>{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().left}/{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().right}</td>
-                    </tr>
+                    {/*<tr>*/}
+                    {/*    <td>Сила атаки</td>*/}
+                    {/*    <td>{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().left}/{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().right}</td>*/}
+                    {/*</tr>*/}
                     </tbody>
                 </table>
                 <div>Экипировка</div>
@@ -147,58 +147,72 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                     <tbody>
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.RightHand)}
+                        name={'Правая рука'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.LeftHand)}
+                        name={'Левая рука'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Head)}
+                        name={'Голова'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Neck)}
+                        name={'Шея'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Shoulders)}
+                        name={'Плечи'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Chest)}
+                        name={'Грудь'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Wrist)}
+                        name={'Запя'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Hands)}
+                        name={'Руки'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Waist)}
+                        name={'Талия'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Legs)}
+                        name={'Ноги'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Foots)}
+                        name={'Ступни'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Finger_1)}
+                        name={'Палец 1'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Finger_2)}
+                        name={'Палец 2'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
                         equipSlotComponent={hero.get(EquipSlotID.Trinket)}
+                        name={'Тринкет'}
                         updateHandler={this.updateHandler}
                     />
                     </tbody>

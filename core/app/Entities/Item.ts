@@ -4,6 +4,7 @@ import ArmorMaterial from './ArmorMaterial.js';
 import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 
 // export enum ItemType {
 //     Stackable = 'Stackable',
@@ -62,6 +63,7 @@ export type ItemFilterCondition = Readonly<Partial<{
 
 export interface ItemProperties {
     armorMaterial?: ArmorMaterial;
+    twoHandWeapon?: boolean;
     // readonly isStackable?: boolean;
     // stackSize?: number;    //Не может быть одновременно с isEquipable... хотя зелья? А почему можно экипировать только экипировку? Так и надо ставить тип = Экипировка.
 }
@@ -186,9 +188,6 @@ export default class Item {
         return this._quality;
     }
 
-    /**
-     * @deprecated
-     */
     get armorMaterial(): ArmorMaterial {
         return this._armorMaterial;
     }
@@ -232,5 +231,32 @@ export default class Item {
 
     increaseCharacterAttribute(ID: CharacterAttributeID): number {
         return this._characterAttributes[ID] ?? 0;
+    }
+
+    hasArmorMaterial(armorMaterial: ArmorMaterial | ArmorMaterial[]): boolean {
+        if (!this._properties.armorMaterial) {
+            return false;
+        }
+
+        if (armorMaterial instanceof ArmorMaterial) {
+            armorMaterial = [armorMaterial];
+        }
+
+        return _.includes(armorMaterial, this._properties.armorMaterial);
+    }
+
+    hasItemCategory(itemCategory: ItemCategory | ItemCategory[]): boolean {
+        if (itemCategory instanceof ItemCategory) {
+            itemCategory = [itemCategory];
+        }
+        // console.log(this.itemCategory);
+        // console.log(itemCategory);
+
+        return _.includes(itemCategory, this.itemCategory);
+    }
+
+    //todo: tmp
+    isTwoHandWeapon(): boolean {
+        return Boolean(this._properties.twoHandWeapon);
     }
 }

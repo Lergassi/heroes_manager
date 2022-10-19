@@ -48,6 +48,17 @@ import ArmorDecorator from '../core/app/Components/CharacterAttributes/ArmorDeco
 import Decimal from 'decimal.js';
 import DamageControllerInterface from '../core/app/Interfaces/DamageControllerInterface.js';
 import {GameObjectKey} from '../core/types/enums/GameObjectKey.js';
+import {testPrototypeInherit} from './include2.js';
+import Fight from '../core/app/Components/Fight.js';
+import EquipSlotWithItemCategoryDecorator from '../core/app/Components/EquipSlots/EquipSlotWithItemCategoryDecorator.js';
+import ItemFactory from '../core/app/Factories/ItemFactory.js';
+import EquipSlotInterface from '../core/app/Interfaces/EquipSlotInterface.js';
+import {testSerializeEntityManager} from './include.js';
+import ArmorMaterial from '../core/app/Entities/ArmorMaterial.js';
+import {ArmorMaterialID} from '../core/types/enums/ArmorMaterialID.js';
+import DefaultEquipSlot from '../core/app/Components/EquipSlots/DefaultEquipSlot.js';
+import RightHand from '../core/app/Components/EquipSlots/RightHand.js';
+import LeftHand from '../core/app/Components/EquipSlots/LeftHand.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -87,9 +98,11 @@ export class SandboxController {
         // this.devFight();
         // this.devDefence();
         // this.devHeroArmor();
-        this.devEnemyArmor();
+        // this.devEnemyArmor();
 
         // this.devNewCharacterAttributesGetStarted();
+
+        this.devNewEquipSlotSystem();
     }
 
     devLocation() {
@@ -102,10 +115,10 @@ export class SandboxController {
     }
 
     devHeroFactory() {
-        let hero = this._container.get<HeroFactory>(ContainerKey.HeroFactory).create({
-            heroClass: this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
-            level: 1,
-        });
+        let hero = this._container.get<HeroFactory>(ContainerKey.HeroFactory).create(
+            this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
+            1,
+        );
         console.log(hero);
         // console.log(hero.get<HealthPointsComponent>(HealthPointsComponent.name));
         console.log(hero.get<DamageControllerInterface>(GameObjectKey.DamageController));
@@ -117,30 +130,30 @@ export class SandboxController {
         let em = this._container.get<EntityManager>(ContainerKey.EntityManager);
 
         let heroes = [
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Rogue),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Gunslinger),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Mage),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Mage),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
-                level: 1,
-            }),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Rogue),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Gunslinger),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Mage),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Mage),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
+                1,
+            ),
         ];
 
         let locationFactory = new LocationFactory({
@@ -424,10 +437,10 @@ export class SandboxController {
 
     testHeroFactory() {
         let heroClass = this._container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior);
-        let hero = this._container.get<HeroFactory>(ContainerKey.HeroFactory).create({
-            heroClass: heroClass,
-            level: 1,
-        });
+        let hero = this._container.get<HeroFactory>(ContainerKey.HeroFactory).create(
+            heroClass,
+            1,
+        );
         debugHero(hero);
     }
 
@@ -527,8 +540,8 @@ export class SandboxController {
         // console.log(enemyType);
         // console.log(enemyType.alias);
         let enemy = enemyFactory.create(
-            1,
             EnemyTypeID.Boar,
+            1,
         );
         console.log(enemy);
     }
@@ -598,18 +611,19 @@ export class SandboxController {
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
             // enemyType: EnemyTypeID.Boar,
-            1,
             EnemyTypeID.Boar,
+            1,
         ));
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            1,
             EnemyTypeID.Boar,
+            1,
         ));
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            1,
             EnemyTypeID.Boar,
+            1,
+
         ));
         console.log(_.map(enemies, (enemy) => {
             return enemy['_id'];
@@ -651,26 +665,26 @@ export class SandboxController {
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
         let heroes = [
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Rogue),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Gunslinger),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Mage),
-                level: 1,
-            }),
-            heroFactory.create({
-                heroClass: em.get<HeroClass>(HeroClass, HeroClassID.Mage),
-                level: 1,
-            }),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Warrior),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Rogue),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Gunslinger),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Mage),
+                1,
+            ),
+            heroFactory.create(
+                em.get<HeroClass>(HeroClass, HeroClassID.Mage),
+                1,
+            ),
         ];
 
         let heroAttributeCharacterAttributeSummary = new CharacterAttributeCollector();
@@ -1079,7 +1093,7 @@ export class SandboxController {
     private devEnemyArmor() {
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
-        let enemy = enemyFactory.create(1, EnemyTypeID.Bear);
+        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1);
         console.log(enemy);
         console.log(enemy.get<DamageControllerInterface>(GameObjectKey.DamageController));
         console.log(enemy.get<HealthPointsComponent>(HealthPointsComponent.name));
@@ -1087,11 +1101,108 @@ export class SandboxController {
         // let damage = 100;
         let damage = 24;
 
-        let maxIterations = 10_000;
-        let i = 0;
-        while (i < maxIterations) {
-            enemy.get<DamageControllerInterface>(GameObjectKey.DamageController).damage(damage);
-            ++i;
-        }
+        // let maxIterations = 10_000;
+        // let i = 0;
+        // while (i < maxIterations) {
+        //     enemy.get<DamageControllerInterface>(GameObjectKey.DamageController).damage(damage);
+        //     ++i;
+        // }
+    }
+
+    private devFight() {
+        let heroFactory = this._container.get<HeroFactory>(ContainerKey.HeroFactory);
+        let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
+
+        let hero = heroFactory.create(HeroClassID.Warrior, 1);
+        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1);
+        console.log(hero);
+        console.log(enemy);
+
+        let fight = new Fight();
+        // fight.fight(
+        //     hero.get<DamageControllerInterface>(GameObjectKey.DamageController),
+        //     enemy.get<DamageControllerInterface>(GameObjectKey.DamageController),
+        // );
+    }
+
+    private devNewEquipSlotSystem() {
+        let itemStackFactory = this._container.get<ItemStackFactory>(ContainerKey.ItemStackFactory);
+        let entityManager = this._container.get<EntityManager>(ContainerKey.EntityManager);
+        let itemDatabase = this._container.get<ItemDatabase>(ContainerKey.ItemDatabase);
+
+        // let equipSlot: EquipSlotInterface = new DefaultEquipSlot([
+        //     entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Helmets),
+        //     // entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Amulets),
+        // ]);
+        //
+        // equipSlot = new ArmorMaterialEquipSlotDecorator(
+        //     equipSlot,
+        //     [entityManager.get<ArmorMaterial>(ArmorMaterial, ArmorMaterialID.Plate)],
+        // );
+        //
+        // equipSlot.createItemStack(
+        //     itemDatabase.get(ItemID.PlateHelmet_01),
+        //     // itemDatabase.get(ItemID.LeatherHelmet_01),
+        //     // itemDatabase.get(ItemID.PlateBelt_01),
+        //     1,
+        //     itemStackFactory,
+        // );
+        //
+        // console.log(equipSlot);
+
+        // let warriorRightHand: EquipSlotInterface = new DefaultEquipSlot();
+        // let warriorLeftHand: EquipSlotInterface = new DefaultEquipSlot();
+        //
+        // warriorRightHand = new EquipSlotWithItemCategoryDecorator(
+        //     warriorRightHand,
+        //     [
+        //         entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.OneHandedSwords),
+        //         entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.OneHandedAxes),
+        //     ]);
+        // warriorLeftHand = new EquipSlotWithItemCategoryDecorator(
+        //     warriorLeftHand,
+        //     [
+        //         entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Shields),
+        //     ]);
+        // warriorRightHand.createItemStack(itemDatabase.get(ItemID.OneHandedSword_01), 1, itemStackFactory);
+        // warriorLeftHand.createItemStack(itemDatabase.get(ItemID.Shield_01), 1, itemStackFactory);
+        // console.log(warriorRightHand);
+        // console.log(warriorLeftHand);
+
+        // let mageRightHand: EquipSlotInterface = new DefaultEquipSlot();
+        // let mageLeftHand: EquipSlotInterface = new DefaultEquipSlot();
+        // let mageLeftHand = new DefaultEquipSlot();
+        let mageLeftHand: EquipSlotInterface = new LeftHand();
+        let mageRightHand: EquipSlotInterface = new RightHand(mageLeftHand as LeftHand);
+
+        // mageRightHand = new Decorator(mageRightHand);
+        // mageLeftHand = new Decorator(mageRightHand);
+
+        mageRightHand = new EquipSlotWithItemCategoryDecorator(
+            mageRightHand,
+            [
+                entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Staffs),
+                entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
+            ]);
+        mageLeftHand = new EquipSlotWithItemCategoryDecorator(
+            mageLeftHand,
+            [
+                entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
+            ]);
+        // mageRightHand = new RightHandDecorator(mageRightHand);    //Логика должна быть привяза к правой руке. А левая ничего не делает. У неё нет логики никакой. Её нельзя разблокировать.
+        // mageLeftHand = new Decorator(mageLeftHand, mageRightHand);    //Логика должна быть привяза к правой руке. А левая ничего не делает. У неё нет логики никакой. Её нельзя разблокировать.
+
+        mageRightHand.createItemStack(itemDatabase.get(ItemID.Staff_01),1, itemStackFactory);
+        // mageRightHand.destroyItemStack();
+        // mageRightHand.createItemStack(itemDatabase.get(ItemID.Wand_01),1, itemStackFactory);
+        // mageLeftHand.createItemStack(itemDatabase.get(ItemID.Staff_01),1, itemStackFactory);
+        mageLeftHand.createItemStack(itemDatabase.get(ItemID.Wand_01),1, itemStackFactory);
+        console.log(mageRightHand);
+        console.log(mageLeftHand);
+
+        // rightHand.equip('two_hand_sword');   //Левая блокируется.
+        // leftHand.equip('shield');   //Ошибка. Слот заблокирован.
+        // //или
+        // leftHand.equip('shield');    //Может быть постоянный блок, если герою доступны только двуручки.
     }
 }

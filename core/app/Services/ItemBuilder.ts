@@ -183,6 +183,7 @@ export default class ItemBuilder {
             armorMaterial: options?.properties?.armorMaterial ?
                 this._entityManager.get<ArmorMaterial>(ArmorMaterial, options.properties.armorMaterial) :
                 undefined,
+            twoHandWeapon: options?.properties?.twoHandWeapon,
         })).build();
 
         // typeof options?.properties?.stackSize !== 'undefined' ? this._properties.stackSize = options.properties.stackSize : 0;

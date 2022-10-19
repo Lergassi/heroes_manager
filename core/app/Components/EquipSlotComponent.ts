@@ -12,8 +12,8 @@ import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {assert} from '../../source/assert.js';
 
 export enum EquipSlotComponentEventCode {
-    PlaceItemStack = 'EquipSlotComponent.placeItemStack',
-    Clear = 'EquipSlotComponent.Clear',
+    CreateItemStack = 'EquipSlotComponent.CreateItemStack',
+    DestroyItemStack = 'EquipSlotComponent.DestroyItemStack',
 }
 
 export default class EquipSlotComponent extends Component implements ItemStackPlaceInterface {
@@ -44,7 +44,7 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
 
     canPlaceItem(item: Item): boolean {
         // this._equipSlot.canEquipItem(item, this.gameObject.getComponentByName<HeroComponent>(HeroComponent.name))
-        this._equipSlot.canEquipItem(item, this._heroComponent)
+        this._equipSlot.canEquipItem(item, this._heroComponent);
         if (!this.isFree()) {
             throw new AppError('Слот занят. Сначала его нужно освободить.');
         }
@@ -69,7 +69,7 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
         item: Item,
         count: unsigned,
         itemStackFactory: ItemStackFactory,
-    }) {
+    }): void {
         assert(options.itemStackFactory instanceof ItemStackFactory);
 
         this.canPlaceItem(options.item);
@@ -81,7 +81,7 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
         if (this.isBusy()) {
             this._itemAttributeCollectionComponent.removeItem(this._itemStack.item);
             this._itemStack = null;
-            EventSystem.event(EquipSlotComponentEventCode.Clear, this);
+            EventSystem.event(EquipSlotComponentEventCode.DestroyItemStack, this);
         }
 
         // this.update();

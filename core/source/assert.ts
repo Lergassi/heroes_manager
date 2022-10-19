@@ -32,3 +32,12 @@ export function assertIsGreaterThanOrEqual(value: number, expected: number, mess
 export function assertIsNumber(value: any, message?: string) {
     assert(typeof value === 'number', 'Значение должно быть числом.');
 }
+
+export function assertMinLength<T>(array: T[], minLength: number, message?: string) {
+    assertIsArray(array);
+    assert(array.length >= minLength, 'Массив не соответствует минимальной указаной длине.');
+}
+
+export function assertIsArray(value: any, message?: string) {
+    assert(Array.isArray(value), 'Переменная должна быть массивом.');
+}

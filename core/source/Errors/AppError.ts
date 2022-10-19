@@ -103,4 +103,8 @@ export default class AppError extends Error {
     static isNotDead() {
         return new AppError('Объект живой.');
     }
+
+    static deprecated() {
+        return new AppError('Код устарел и больше не работает.');
+    }
 }

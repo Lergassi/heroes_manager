@@ -9,81 +9,47 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 
 export default class AttackPowerComponent extends Component {
-    private readonly _range: unsigned;
-    private readonly _attackPowerCharacterAttributeComponent: CharacterAttribute;
-    private readonly _itemAttributeCollectorComponent: ItemCharacterAttributeCollector;
-    private readonly _attackPower: CharacterAttributeInterface;
+    private readonly _rangeSide: unsigned;
+    private readonly _attackPowerCharacterAttribute: CharacterAttributeInterface;
     private readonly _dependentCharacterAttributeComponents: CharacterAttributeInterface[];
     private readonly _dependentCharacterAttributeMultiplier: number;
 
-    constructor(options: {
-        attackPower: CharacterAttributeInterface,
+    constructor(
+        attackPowerCharacterAttribute: CharacterAttributeInterface,
         dependentCharacterAttributeComponents?: CharacterAttributeInterface[],
-    }) {
+    ) {
         super();
         // assert(options.attackPowerCharacterAttributeComponent instanceof CharacterAttributeComponent);
         // assert(options.attackPower instanceof CharacterAttributeValueCollector);
-        assert(!_.isNil(options.attackPower));
+        assert(!_.isNil(attackPowerCharacterAttribute));
         // assert(!_.isNil(options.dependentCharacterAttributeComponents));
 
-        this._range = 10;
-        this._attackPower = options.attackPower;
-        this._dependentCharacterAttributeComponents = options.dependentCharacterAttributeComponents;
+        this._rangeSide = 5;
         this._dependentCharacterAttributeMultiplier = 2;
+
+        this._attackPowerCharacterAttribute = attackPowerCharacterAttribute;
+        this._dependentCharacterAttributeComponents = dependentCharacterAttributeComponents;
     }
 
-    // /**
-    //  * @deprecated
-    //  */
-    // finalMinAttackPower(): number {
-    //     let value = this._attackPower.value() +
-    //         _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
-    //             return value.value() * this._dependentCharacterAttributeMultiplier;
-    //         })) -
-    //         round(this._range / 2, 0)
-    //         ;
-    //
-    //     return value < 0 ? 0 : value;
-    // }
-    //
-    // /**
-    //  * @deprecated
-    //  */
-    // finalMaxAttackPower(): number {
-    //     return this._attackPower.value() +
-    //         _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
-    //             return value.value() * this._dependentCharacterAttributeMultiplier;
-    //             // return this._attackPower.totalValue(value['_characterAttribute']) * this._dependentCharacterAttributeMultiplier;
-    //         })) +
-    //         round(this._range / 2, 0)
-    //         ;
-    // }
-    //
-    // finalAttackPower(): number {
-    //     return _.random(this.finalMinAttackPower(), this.finalMaxAttackPower());
-    // }
-
     value(): {left: number; right: number} {
-        let left = this._attackPower.value() -
-            // _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
-            //     return value.value() * this._dependentCharacterAttributeMultiplier;
-            // })) -
-            round(this._range / 2, 0)
+        let left = this._attackPowerCharacterAttribute.value() -
+            round(this._rangeSide, 0)
         ;
         left = left < 0 ? 0 : left;
 
-        let right = this._attackPower.value() +
-            // _.sum(_.map(this._dependentCharacterAttributeComponents, (value) => {
-            //     return value.value() * this._dependentCharacterAttributeMultiplier;
-            // })) +
-            round(this._range / 2, 0)
+        let right = this._attackPowerCharacterAttribute.value() +
+            round(this._rangeSide, 0)
             ;
 
         return {
             left: left,
             right: right,
-            // left: 1000,
-            // right: 2000,
         };
+    }
+
+    generateAttackPower(): number {
+        let value = this.value();
+
+        return _.random(value.left, value.right);
     }
 }

@@ -23,6 +23,7 @@ import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
+import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -110,10 +111,12 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                 level: 1,
                 equip: {
                     [EquipSlotID.Head]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateHelmet_02),
+                    // [EquipSlotID.Head]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherHelmet_01),
                     [EquipSlotID.Chest]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBreastplate_01),
                     [EquipSlotID.Legs]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlatePants_01),
                     [EquipSlotID.Foots]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBoots_01),
                     [EquipSlotID.RightHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01),
+                    // [EquipSlotID.RightHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Staff_01),
                     [EquipSlotID.LeftHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Shield_01),
                 },
             },
@@ -172,13 +175,17 @@ export default class CreateStartPlayerObjectsCommand extends Command {
 
             //Начальная экипировка.
             for (const equipSlotID in heroPatterns[i]['equip']) {
+                // console.log(equipSlotID, hero.get<EquipSlotInterface>(equipSlotID));
+                // console.log(heroPatterns[i]['equip'][equipSlotID]);
                 hero
-                    .get<EquipSlots>(GameObjectKey.EquipSlots)[equipSlotID as EquipSlotID]
-                    ?.createItemStack({
-                        item: heroPatterns[i]['equip'][equipSlotID],
-                        count: 1,
-                        itemStackFactory: this.container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
-                    });
+                    // .get<EquipSlots>(GameObjectKey.EquipSlots)[equipSlotID as EquipSlotID]
+                    // .get<EquipSlotInterface>(GameObjectKey.EquipSlots)[equipSlotID as EquipSlotID]
+                    .get<EquipSlotInterface>(equipSlotID)
+                    ?.createItemStack(
+                        heroPatterns[i]['equip'][equipSlotID],
+                        1,
+                        this.container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
+                    );
             }
             // console.log(hero.get(HeroAttributeCollectorComponent.name));
             // console.log(hero.get<HeroAttributeCollectorComponent>(HeroAttributeCollectorComponent.name).finalValue(CharacterAttributeID.Strength));

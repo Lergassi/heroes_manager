@@ -20,7 +20,7 @@ export default class CharacterAttributeFactory {
     create(
         ID: CharacterAttributeID,
         level: unsigned,
-        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
+        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,   //todo: В декоратор.
         options?: { //todo: Времено пока в разработке. Далее для каждого класса будет своя логика без передачи из вне.
             baseValueModifier?: CharacterAttributeValueModifier,
             increaseValueModifier?: CharacterAttributeValueModifier,

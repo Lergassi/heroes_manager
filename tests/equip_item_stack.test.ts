@@ -13,6 +13,7 @@ import HeroComponent from '../core/app/Components/HeroComponent.js';
 import {HeroClassID} from '../core/types/enums/HeroClassID.js';
 import {EquipSlotID} from '../core/types/enums/EquipSlotID.js';
 import {ItemID} from '../core/types/enums/ItemID.js';
+import {ContainerKey} from '../core/types/enums/ContainerKey.js';
 
 let container = new Container();
 (new DefaultContainerConfigure()).configure(container);
@@ -22,10 +23,10 @@ let heroClass = container.get<EntityManager>('core.entityManager').getRepository
 let equipSlot = container.get<EntityManager>('core.entityManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(EquipSlotID.Head);
 let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateHelmet_01);
 
-let hero = container.get<HeroFactory>('core.heroFactory').create({
-    heroClass: heroClass,
-    level: 1,
-});
+let hero = container.get<HeroFactory>(ContainerKey.HeroFactory).create(
+    heroClass,
+    1,
+);
 let equipSlotComponent = _.filter(hero.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name), (equipSlotComponent) => {
     return equipSlotComponent.equipSlot === equipSlot;
 })[0];

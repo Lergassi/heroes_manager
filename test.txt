@@ -1,0 +1,45 @@
+let attackPower = new AttackPower(
+    10, //Значения фиксированные и не меняются.
+    20,
+);
+
+attackPower.generate(); //Случайное значение из диапазона.
+
+let attackPowerCharacterAttribute = new CharacterAttribute(42);
+attackPowerCharacterAttribute.increase(5);
+attackPowerCharacterAttribute.increase(5);
+attackPowerCharacterAttribute.increase(5);
+
+attackPower = new AttackPowerIncreaseDecorator(
+    attackPower,
+    attackPowerCharacterAttribute,  //И не нужно делать никаких действий над диапазоном. Он уже задан. А усиления просто сдвигают значения вправо.
+);
+
+range(): {left: number, right: number} {
+    return {
+        left: this._left + this._apCharacterAttribute.value(),
+        right: this._right + this._apCharacterAttribute.value(),
+    };
+}
+
+generateAttackPower(): number {
+    //let range = this.range();
+    //return _.random(this._left + this._apCharacterAttribute.value(), this._right + this._apCharacterAttribute.value());
+
+    return this._attackPower.generateAttackPower() + this._apCharacterAttribute.value();
+}
+
+attackPowerCharacterAttribute.increase(5);
+attackPowerCharacterAttribute.increase(5);
+//...
+
+damage.attack(target) {
+    let damage = _.range(this.left, this._right);
+
+    target.attack(damage);
+}
+
+hero1.damage.attack(hero2.attackController);
+//или
+let damage = damage.generateAttack();
+hero1.damageController.attack(damage);

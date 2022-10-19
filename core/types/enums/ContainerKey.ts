@@ -11,11 +11,14 @@ export enum ContainerKey {
     GameObjectStorage = 'player.GameObjectStorage',
     GameObjectFactory = 'player.gameObjectFactory',
     ItemStorageManager = 'player.ItemStorageManager',
+    CharacterAttributeStartValueGenerator = 'player.CharacterAttributeStartValueGenerator',
+    CharacterAttributeValueGenerator = 'player.CharacterAttributeValueGenerator',
     //фабрики
     HeroFactory = 'player.HeroFactory',
     LocationFactory = 'player.LocationFactory',
     EnemyFactory = 'player.EnemyFactory',
-    ItemStackFactory= 'player.ItemStackFactory',
+    ItemStackFactory = 'player.ItemStackFactory',
+    CharacterAttributeFactory = 'player.CharacterAttributeFactory',
     //компоненты
     MainHeroListComponent = 'player.MainHeroListComponent',
     MainLocationListComponent = 'player.MainLocationListComponent',

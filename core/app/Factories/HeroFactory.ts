@@ -31,61 +31,55 @@ import DamageControllerInterface from '../Interfaces/DamageControllerInterface.j
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
 import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-
-// export type HeroFactoryOptions = {
-//     idGenerator: IDGeneratorInterface;
-//     entityManager: EntityManager;
-//     gameObjectFactory: GameObjectFactory;
-//     levelComponentFactory: ExperienceComponentFactory;
-//     config: {}; //todo: Убрать.
-// }
-
-export type HeroFactoryCreateOptions = {
-    heroClass: HeroClass;
-    level: unsigned;
-}
+import {assert, assertNotNil} from '../../source/assert.js';
+import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
+import DefaultEquipSlot from '../Components/EquipSlots/DefaultEquipSlot.js';
+import EquipSlotWithItemCategoryDecorator from '../Components/EquipSlots/EquipSlotWithItemCategoryDecorator.js';
+import ItemCategory from '../Entities/ItemCategory.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import EquipSlotWithArmorMaterialDecorator from '../Components/EquipSlots/EquipSlotWithArmorMaterialDecorator.js';
+import ArmorMaterial from '../Entities/ArmorMaterial.js';
+import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
+import RightHand from '../Components/EquipSlots/RightHand.js';
+import LeftHand from '../Components/EquipSlots/LeftHand.js';
+import EquipSlotWithItemCollectorDecorator from '../Components/EquipSlots/EquipSlotWithItemCollectorDecorator.js';
+import EquipSlotFactory from './EquipSlotFactory.js';
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManager;
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _experienceComponentFactory: ExperienceComponentFactory;
-    private readonly _config: object;
+    private readonly _characterAttributeFactory: CharacterAttributeFactory;
 
     constructor(
         options: {
             entityManager: EntityManager;
             gameObjectFactory: GameObjectFactory;
             experienceComponentFactory: ExperienceComponentFactory;
-            config: {}; //todo: Убрать.
+            characterAttributeFactory: CharacterAttributeFactory;
         },
-        // idGenerator: IDGeneratorInterface,
-        // entityManager: EntityManager,
-        // gameObjectFactory: GameObjectFactory,
-        // config: object
     ) {
+        assertNotNil(options);
+        assertNotNil(options.entityManager);
+        assertNotNil(options.gameObjectFactory);
+        assertNotNil(options.experienceComponentFactory);
+        assertNotNil(options.characterAttributeFactory);
+
         this._entityManager = options.entityManager;
         this._gameObjectFactory = options.gameObjectFactory;
         this._experienceComponentFactory = options.experienceComponentFactory;
-        this._config = options.config;
+        this._characterAttributeFactory = options.characterAttributeFactory;
     }
 
-    create(options: {
-        // heroClass: HeroClass;
-        heroClass: HeroClassID | HeroClass;
-        level: unsigned;
+    create(
+        heroClass: HeroClassID | HeroClass,
+        level: unsigned,
         // characterAttributeCollector?: CharacterAttributeCollector;
-    }): GameObject {
-        //todo: Что значит начальные настройки? Не понятно при срабатывании исключения.
-        //todo: Переделать. Настройки будут генерироваться случайно по алгоритму.
-        // if(!this._config['start_hero_values'].hasOwnProperty(options.heroClass.alias)) {
-        //     throw new AppError(sprintf('Начальные настройки для класса "%s" не найдены.', options.heroClass.name));
-        // }
+    ): GameObject {
+        heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(HeroClass, heroClass) : heroClass;
 
-        let heroClass = !(options.heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(HeroClass, options.heroClass) : options.heroClass;
-
-        // let hero = new GameObject(this._idGenerator.generateID());
-        // let hero = new GameObject();
-        let hero = this._gameObjectFactory.create();    //todo: Если ниже будут ошибки, в программе останется не используемый объект.
+        //todo: Если ниже будут ошибки, в программе останется не используемый объект.
+        let hero = this._gameObjectFactory.create();
 
         hero.name = 'Hero: ' + heroClass.name;
         hero.addTags('#hero');
@@ -96,10 +90,14 @@ export default class HeroFactory {
         ));
 
         hero.set<ExperienceComponent>(ExperienceComponent.name, this._experienceComponentFactory.create({
-            level: options.level,
+            level: level,
         }));
 
-        let equipSlotIDs = [
+        let equipSlotFactory = new EquipSlotFactory(
+            this._entityManager,
+        );
+
+        let armorEquipSlotIDs = [
             EquipSlotID.Head,
             EquipSlotID.Shoulders,
             EquipSlotID.Chest,
@@ -112,8 +110,8 @@ export default class HeroFactory {
             EquipSlotID.Finger_1,
             EquipSlotID.Finger_2,
             EquipSlotID.Trinket,
-            EquipSlotID.RightHand,
-            EquipSlotID.LeftHand,
+            // EquipSlotID.RightHand,
+            // EquipSlotID.LeftHand,
         ];
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
@@ -122,8 +120,8 @@ export default class HeroFactory {
         // let heroAttributeCollectorComponent = new HeroAttributeCollectorComponent();
         // hero.set(HeroAttributeCollectorComponent.name, heroAttributeCollectorComponent);
 
-        let characterAttributeCollector = new CharacterAttributeCollector();
-        hero.set(CharacterAttributeCollector.name, characterAttributeCollector);
+        // let characterAttributeCollector = new CharacterAttributeCollector();
+        // hero.set(CharacterAttributeCollector.name, characterAttributeCollector);
 
         // let totalCharacterAttributeValueCollectorComponent = new TotalCharacterAttributeValueCollectorComponent({
         //     characterAttributeValueCollectorComponent: characterAttributeCollector,
@@ -131,19 +129,36 @@ export default class HeroFactory {
         // });
         // hero.set(TotalCharacterAttributeValueCollectorComponent.name, totalCharacterAttributeValueCollectorComponent);
 
-        let equipSlotComponents: EquipSlots = {};
-        equipSlotIDs.forEach((equipSlotID) => {
-            let equipSlotComponent = new EquipSlotComponent({
-                equipSlot: this._entityManager.getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(equipSlotID),
-                heroComponent: heroComponent,
-                itemAttributeCollectorComponent: itemCharacterAttributeCollector,
-            });
-            hero.addComponent(equipSlotComponent);
-            hero.set<EquipSlotComponent>(equipSlotID, equipSlotComponent);
-            equipSlotComponents[equipSlotID] = equipSlotComponent;
-        });
-        //todo: Временно.
-        hero.set<EquipSlots>(GameObjectKey.EquipSlots, equipSlotComponents);
+        let equipSlotComponents: Partial<Record<EquipSlotID, EquipSlotInterface>> = {}; //todo: Временно.
+        for (let i = 0; i < armorEquipSlotIDs.length; i++) {
+            let equipSlot = equipSlotFactory.createArmor(
+                this._entityManager.get<EquipSlot>(EquipSlot, armorEquipSlotIDs[i]),
+                heroClass,
+                itemCharacterAttributeCollector,
+            );
+            hero.set<EquipSlotInterface>(armorEquipSlotIDs[i], equipSlot);
+        }
+
+        let leftHand: EquipSlotInterface = equipSlotFactory.createLeftHand(
+            this._entityManager.get<EquipSlot>(EquipSlot, EquipSlotID.LeftHand),
+            heroClass,
+            itemCharacterAttributeCollector,
+        );
+        let rightHand : EquipSlotInterface = equipSlotFactory.createRightHand(
+            leftHand as LeftHand,
+            this._entityManager.get<EquipSlot>(EquipSlot, EquipSlotID.RightHand),
+            heroClass,
+            itemCharacterAttributeCollector,
+        );
+
+        equipSlotComponents.LeftHand = leftHand;    //todo: Не удобно. Если не знать, что объект нужно добавлять в два места всегда буду забывать.
+        equipSlotComponents.RightHand = rightHand;
+        hero.set<EquipSlotInterface>(EquipSlotID.RightHand, rightHand);
+        hero.set<EquipSlotInterface>(EquipSlotID.LeftHand, leftHand);
+
+        hero.set<Partial<Record<EquipSlotID, EquipSlotInterface>>>(GameObjectKey.EquipSlots, equipSlotComponents);
+
+        //end equipSlots
 
         //region characterAttributes
         let characterAttributeIDs = [
@@ -159,11 +174,6 @@ export default class HeroFactory {
             // CharacterAttributeID.Luck,
         ];
 
-        let characterAttributeValueGenerator = new CharacterAttributeValueGenerator();
-        let characterAttributeStartValueGenerator = new CharacterAttributeStartValueGenerator(characterAttributeValueGenerator);
-        let characterAttributeFactory = new CharacterAttributeFactory(
-            characterAttributeStartValueGenerator,
-        );
         /*
             todo: Переделать в ооп когда будут все характеристики и больше логики.
                 mainCharacterAttributeMultiplier разный на каждый атрибут.
@@ -174,8 +184,8 @@ export default class HeroFactory {
                     А если я хочу просто увеличить значение без учета логики класса? Просто добавить значения. Я не смогу отменить логику внутри класса. А за разницу роста главных характеристик пусть отвечает другой класс. Получается isMain не нужен.
                 (6, 9) и прочие подобные значения передавать из вне или внутри задавать?
          */
-        let characterAttributes: CharacterAttributes = {};
         //todo: Временно.
+        let characterAttributes: CharacterAttributes = {};
         hero.set<CharacterAttributes>(GameObjectKey.CharacterAttributes, characterAttributes);
 
         //todo: Переделать хранение главных атрибутов у классов.
@@ -183,7 +193,7 @@ export default class HeroFactory {
         //todo: Переделать при создании логики создания разных показателей для каждого класса.
         let modifiers = {
             main: function (value) {
-                return value * 2;
+                return value + _.ceil(value * 0.5); //todo: Для каждого класса нужно уникальное значение. Особено где зависимость от двух атрибутов.
             },
         };
 
@@ -194,9 +204,9 @@ export default class HeroFactory {
             }).length) {
                 baseValueModifier = modifiers.main;
             }
-            characterAttributes[characterAttributeIDs[i]] = hero.set<CharacterAttributeInterface>(characterAttributeIDs[i], characterAttributeFactory.create(
+            characterAttributes[characterAttributeIDs[i]] = hero.set<CharacterAttributeInterface>(characterAttributeIDs[i], this._characterAttributeFactory.create(
                 characterAttributeIDs[i] as CharacterAttributeID,
-                options.level,
+                level,
                 itemCharacterAttributeCollector,
                 {
                     baseValueModifier: baseValueModifier,
@@ -204,56 +214,17 @@ export default class HeroFactory {
             ));
         }
 
-        // characterAttributes[CharacterAttributeID.Strength] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.Strength, new CharacterAttribute({
-        //     characterAttributeID: CharacterAttributeID.Strength,
-        //     itemCharacterAttributeCollector: itemCharacterAttributeCollector,
-        // }));
-        // hero.get<CharacterAttributeInterface>(CharacterAttributeID.Strength).increaseBaseValue(characterAttributeStartValueGenerator.generate({
-        //     level: options.level,
-        //     characterAttributeID: CharacterAttributeID.Strength,
-        // }) * (heroClass.isMainCharacterAttribute(CharacterAttributeID.Strength) ? mainCharacterAttributeMultiplier : 1));
-        //todo: Вобщем пока без увеличенных стартовых значений.
-        // characterAttributes[CharacterAttributeID.Strength] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.Strength, characterAttributeFactory.create(CharacterAttributeID.Strength, options.level, itemCharacterAttributeCollector));
-        //
-        // characterAttributes[CharacterAttributeID.Agility] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.Agility, new CharacterAttribute({
-        //     characterAttributeID: CharacterAttributeID.Agility,
-        //     itemCharacterAttributeCollector: itemCharacterAttributeCollector,
-        // }));
-        // hero.get<CharacterAttributeInterface>(CharacterAttributeID.Agility).increaseBaseValue(characterAttributeStartValueGenerator.generate({
-        //     level: options.level,
-        //     characterAttributeID: CharacterAttributeID.Agility,
-        // }) * (heroClass.isMainCharacterAttribute(CharacterAttributeID.Agility) ? mainCharacterAttributeMultiplier : 1));
-        //
-        // characterAttributes[CharacterAttributeID.Intelligence] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.Intelligence, new CharacterAttribute({
-        //     characterAttributeID: CharacterAttributeID.Intelligence,
-        //     itemCharacterAttributeCollector: itemCharacterAttributeCollector,
-        // }));
-        // hero.get<CharacterAttributeInterface>(CharacterAttributeID.Intelligence).increaseBaseValue(characterAttributeStartValueGenerator.generate({
-        //     level: options.level,
-        //     characterAttributeID: CharacterAttributeID.Intelligence,
-        // }) * (heroClass.isMainCharacterAttribute(CharacterAttributeID.Intelligence) ? mainCharacterAttributeMultiplier : 1));
-        //
-        // characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new CharacterAttribute({
-        //     characterAttributeID: CharacterAttributeID.AttackPower,
-        //     itemCharacterAttributeCollector: itemCharacterAttributeCollector,
-        // }));
-        // hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower).increaseBaseValue(characterAttributeStartValueGenerator.generate({
-        //     level: options.level,
-        //     characterAttributeID: CharacterAttributeID.AttackPower,
-        // }));
         //todo: Цепочка? builder? .create(...).decorate(...).decorate(...).build().
         characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new AttackPowerDependentIncreaserDecorator({
             attackPower: hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             dependentCharacterAttributes: _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {   //todo: Через индекс.
                 return hero.get<CharacterAttributeInterface>(characterAttribute['_id']);    //todo: Доступ.
             }), value => value != undefined),
+            // dependentCharacterAttributes: [],
         }));
 
-        // let healthPointsComponent: DamageControllerInterface = new HealthPointsComponent(
-        // let healthPointsComponent = new HealthPointsComponent(
         //К компоненту с очками здоровья возможно не будет доступа вообще.
         let healthPointsComponent = new HealthPointsComponent(
-            // this._config['start_hero_values'][heroClass.alias][CharacterAttributeID.MaxHealthPoints],
             hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).MaxHealthPoints,
         );
         let damageController = new ArmorDecorator(
@@ -274,14 +245,12 @@ export default class HeroFactory {
             hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).MaxMagicPoints,
         ));
 
-        let attackPowerComponent = hero.set(AttackPowerComponent.name, new AttackPowerComponent({
-            attackPower: hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
-            dependentCharacterAttributeComponents: _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {
+        let attackPowerComponent = hero.set(AttackPowerComponent.name, new AttackPowerComponent(
+            hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
+            _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {
                 return hero.get<CharacterAttributeInterface>(characterAttribute['_id']);    //todo: Доступ.
             }), value => value != undefined),
-            // attackPowerCharacterAttributeComponent: hero.get<CharacterAttributeComponent>(CharacterAttributeID.AttackPower),
-        }));
-        // console.log(attackPowerComponent);
+        ));
 
         //Controllers
         // let equipSlotComponentControllerComponent = hero.set('equipSlotComponentControllerComponent',new EquipSlotComponentControllerComponent(

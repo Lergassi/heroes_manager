@@ -21,6 +21,7 @@ import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
 import CharacterAttributeStartValueGenerator from '../Services/CharacterAttributeStartValueGenerator.js';
 import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
+import CharacterAttributeFactory from './CharacterAttributeFactory.js';
 // import assert from 'assert';
 
 // export type EnemyFactoryOptions = {
@@ -38,18 +39,21 @@ export type EnemyFactoryCreateOptions = {
 export default class EnemyFactory {
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _entityManager: EntityManager;
+    private readonly _characterAttributeFactory: CharacterAttributeFactory;
 
     constructor(options: {
         gameObjectFactory: GameObjectFactory,
         entityManager: EntityManager,
+        characterAttributeFactory: CharacterAttributeFactory;
     }) {
         this._gameObjectFactory = options.gameObjectFactory;
         this._entityManager = options.entityManager;
+        this._characterAttributeFactory = options.characterAttributeFactory;
     }
 
     create(
-        level: unsigned,
         enemyTypeID: EnemyTypeID,
+        level: unsigned,
     ) {
         assert(level >= 1);
         assert(!_.isNil(enemyTypeID));
@@ -57,7 +61,6 @@ export default class EnemyFactory {
         let enemyType = this._entityManager.entity<EnemyType>(EntityManagerKey.EnemyType, enemyTypeID);
         assert(enemyType instanceof EnemyType, sprintf('EnemyType (%s) не найден.', enemyTypeID));
 
-        // let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, options.type.alias);    //todo: Пока без классов.
         let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, enemyTypeID);
         assert(!_.isNil(enemyConfig), sprintf('EnemyConfig (%s) не найден.', enemyTypeID));
 
@@ -66,7 +69,7 @@ export default class EnemyFactory {
         enemy.name = 'Enemy: ' + enemyType.name;
         enemy.addTags('#enemy');
 
-        let characterAttributeStartValueGenerator = new CharacterAttributeStartValueGenerator(new CharacterAttributeValueGenerator());
+        let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
 
         let enemyComponent = enemy.set<EnemyComponent>(EnemyComponent.name, new EnemyComponent({
             enemyType: enemyType,
@@ -74,20 +77,21 @@ export default class EnemyFactory {
         }));
 
         let healthPointsComponent = enemy.set<HealthPointsComponent>(HealthPointsComponent.name, new HealthPointsComponent(
-            new CharacterAttribute(
+            this._characterAttributeFactory.create(
                 CharacterAttributeID.MaxHealthPoints,
-                new ItemCharacterAttributeCollector(),
-                characterAttributeStartValueGenerator.generate(CharacterAttributeID.MaxHealthPoints, level),
+                level,
+                itemCharacterAttributeCollector,
             ),
         ));
         let armorDecorator = enemy.set<DamageControllerInterface>(GameObjectKey.DamageController, new ArmorDecorator(
             healthPointsComponent as DamageControllerInterface,
-            new CharacterAttribute(
-                CharacterAttributeID.MaxHealthPoints,
-                new ItemCharacterAttributeCollector(),
-                characterAttributeStartValueGenerator.generate(CharacterAttributeID.Protection, level),
+            this._characterAttributeFactory.create(
+                CharacterAttributeID.Protection,
+                level,
+                itemCharacterAttributeCollector,
             ),
         ));
+        // let attackPower =
 
         //лут
         let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ItemLootGeneratorComponent.name, new ItemLootGeneratorComponent({

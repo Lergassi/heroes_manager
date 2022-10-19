@@ -3,7 +3,7 @@ import GameObject from '../../source/GameObject.js';
 import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
 import AppError from '../../source/Errors/AppError.js';
-import HeroFactory, {HeroFactoryCreateOptions} from '../Factories/HeroFactory.js';
+import HeroFactory from '../Factories/HeroFactory.js';
 import {unsigned} from '../types.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import EventSystem from '../../source/EventSystem.js';
@@ -82,10 +82,10 @@ export default class MainHeroListComponent extends Component {
 
         // let level = options.level ?? 1;
 
-        let hero = options.heroFactory.create({
-            heroClass: options.heroClass,
-            level: options.level,
-        });
+        let hero = options.heroFactory.create(
+            options.heroClass,
+            options.level,
+        );
         this._heroes.push(hero);
 
         EventSystem.event(MainHeroListComponentEventCode.CreateHero, this);

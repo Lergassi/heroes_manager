@@ -30,6 +30,8 @@ import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {QualityID} from '../../types/enums/QualityID.js';
 import {HeroRoleID} from '../../types/enums/HeroRoleID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
+import EquipSlotAvailableItemCategory from '../Entities/EquipSlotAvailableItemCategory.js';
+import EquipSlotAvailableItemCategoryForHands from '../Entities/EquipSlotAvailableItemCategoryForHands.js';
 
 export default class EntityManagerBuilder {
     private readonly _container: ContainerInterface;
@@ -424,7 +426,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Warrior,
             'Воин',
-            HeroClassID.Warrior,
             '',
             500,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.Tank),
@@ -442,7 +443,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Paladin,
             'Паладин',
-            HeroClassID.Paladin,
             '',
             510,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.Tank),
@@ -461,7 +461,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Rogue,
             'Разбойник',
-            HeroClassID.Rogue,
             '',
             520,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.DamageDealer),
@@ -478,7 +477,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Gladiator,
             'Гладиатор',
-            HeroClassID.Gladiator,
             '',
             530,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.DamageDealer),
@@ -495,7 +493,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Archer,
             'Лучник',
-            HeroClassID.Archer,
             '',
             540,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.DamageDealer),
@@ -513,7 +510,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Gunslinger,
             'Стрелок',
-            HeroClassID.Gunslinger,
             '',
             550,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.DamageDealer),
@@ -531,7 +527,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Mage,
             'Маг',
-            HeroClassID.Mage,
             '',
             560,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.DamageDealer),
@@ -549,7 +544,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Warlock,
             'Чернокнижник',
-            HeroClassID.Warlock,
             '',
             570,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.DamageDealer),
@@ -567,7 +561,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Priest,
             'Священик',
-            HeroClassID.Priest,
             '',
             560,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.Support),
@@ -585,7 +578,6 @@ export default class EntityManagerBuilder {
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
             HeroClassID.Druid,
             'Друид',
-            HeroClassID.Druid,
             '',
             560,
             this._entityManager.getRepository<HeroRole>(HeroRole.name).getOneByAlias(HeroRoleID.Support),
@@ -608,964 +600,262 @@ export default class EntityManagerBuilder {
             'Голова',
             '',
             500,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Helmets),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Helmets),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Shoulders,
             'Плечи',
             '',
             510,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.ShoulderPads),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.ShoulderPads),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Chest,
             'Грудь',
             '',
             520,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Breastplates),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Breastplates),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Wrist,
             'Запястье',
             '',
             530,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bracers),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Bracers),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Hands,
             'Руки',
             '',
             540,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Gloves),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Gloves),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Waist,
             'Талия',
             '',
             550,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Belts),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Belts),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Legs,
             'Ноги',
             '',
             560,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Pants),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Pants),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Foots,
             'Ступни',
             '',
             570,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Boots),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Boots),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Neck,
             'Шея',
             '',
             580,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Amulets),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Amulets),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Finger_1,
             'Палец 1',
             '',
             590,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Rings),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Finger_2,
             'Палец 2',
             '',
             600,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Rings),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Rings),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.Trinket,
             'Аксессуар',
             '',
             610,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Trinkets),
-                    ],
-                ),
-            ],
+            new EquipSlotAvailableItemCategory([
+                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Rings),
+            ]),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.RightHand,
             'Правая рука',
             '',
             620,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.OneHandedSwords),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.OneHandedAxes),
+            new EquipSlotAvailableItemCategoryForHands(
+                {
+                    [HeroClassID.Warrior]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.OneHandedSwords),
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.OneHandedAxes),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.OneHandedSwords),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.OneHandedAxes),
+                    [HeroClassID.Paladin]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.OneHandedSwords),
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.OneHandedAxes),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Daggers),
+                    [HeroClassID.Rogue]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Daggers),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.OneHandedSwords),
+                    [HeroClassID.Gladiator]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.OneHandedSwords),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bows),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Crossbows),
+                    [HeroClassID.Archer]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Bows),
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Crossbows),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Revolvers),
+                    [HeroClassID.Gunslinger]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Revolvers),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Staffs),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                    [HeroClassID.Mage]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Staffs),
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Staffs),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                    [HeroClassID.Warlock]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Staffs),
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Staffs),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                    [HeroClassID.Priest]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Staffs),
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Staffs),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                    [HeroClassID.Druid]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Staffs),
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
                     ],
-                ),
-            ],
+                },
+            ),
         ));
         this._entityManager.getRepository<EquipSlot>(EquipSlot.name).add(new EquipSlot(
             EquipSlotID.LeftHand,
             'Левая рука',
             '',
             620,
-            [
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Shields),
+            new EquipSlotAvailableItemCategoryForHands(
+                {
+                    [HeroClassID.Warrior]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Shields),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Shields),
+                    [HeroClassID.Paladin]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Shields),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Daggers),
+                    [HeroClassID.Rogue]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Daggers),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.OneHandedSwords),
+                    [HeroClassID.Gladiator]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.OneHandedSwords),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bows),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Crossbows),
+                    [HeroClassID.Archer]: [
+
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                    [
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Revolvers),
+                    [HeroClassID.Gunslinger]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Revolvers),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                    [
-                        // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                    [HeroClassID.Mage]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                    [
-                        // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                    [HeroClassID.Warlock]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                    [
-                        // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                    [HeroClassID.Priest]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
                     ],
-                ),
-                new EquipSlotRule(
-                    this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                    [
-                        // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
-                        this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                    [HeroClassID.Druid]: [
+                        this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Wands),
                     ],
-                ),
-            ],
+                },
+            ),
+            // [
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
+                //     [
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Shields),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
+                //     [
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Shields),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
+                //     [
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Daggers),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
+                //     [
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.OneHandedSwords),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
+                //     [
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bows),
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Crossbows),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
+                //     [
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Revolvers),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
+                //     [
+                //         // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
+                //     [
+                //         // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
+                //     [
+                //         // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                //     ],
+                // ),
+                // new EquipSlotRule(
+                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
+                //     [
+                //         // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
+                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
+                //     ],
+                // ),
+            // ],
         ));
     }
 

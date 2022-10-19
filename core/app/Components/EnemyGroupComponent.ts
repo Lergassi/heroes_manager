@@ -34,8 +34,8 @@ export default class EnemyGroupComponent extends Component {
         assert((this._enemies.length + 1) <= this._size, 'Группа врагов полная. Нельзя добавить нового врага в группу.')
 
         let enemy = options.enemyFactory.create(
-            options.level,
             options.enemyTypeID,
+            options.level,
         );
         this._enemies.push(enemy);
 

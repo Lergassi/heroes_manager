@@ -2,14 +2,17 @@ import EquipSlotComponent from '../../../core/app/Components/EquipSlotComponent.
 import React from 'react';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
+import EquipSlotInterface from '../../../core/app/Interfaces/EquipSlotInterface.js';
 
 export interface EquipSlotRComponentProps {
-    equipSlotComponent: EquipSlotComponent,
+    // equipSlotComponent: EquipSlotComponent,
+    equipSlotComponent: EquipSlotInterface,
+    name: string,
     updateHandler: () => void,
 }
 
 export interface EquipSlotRComponentState {
-    equipSlotComponent: EquipSlotComponent,
+    equipSlotComponent: EquipSlotInterface,
 }
 
 export default class EquipSlotRComponent extends React.Component<EquipSlotRComponentProps, EquipSlotRComponentState> implements RComponentUpdateInterface {
@@ -20,7 +23,7 @@ export default class EquipSlotRComponent extends React.Component<EquipSlotRCompo
             equipSlotComponent: props.equipSlotComponent,
         };
 
-        this.state.equipSlotComponent.assignRComponent(this);
+        // this.state.equipSlotComponent.assignRComponent(this);
         // EventSystem.addListener({
         //     codes: [
         //         EquipSlotComponentEventCode.PlaceItemStack,
@@ -51,21 +54,28 @@ export default class EquipSlotRComponent extends React.Component<EquipSlotRCompo
     }
 
     clearHandler() {
-        this.props.equipSlotComponent.clear();
+        this.props.equipSlotComponent.destroyItemStack();
         this.props.updateHandler();
     }
 
     render() {
         // let equipSlotComponent = this.state.equipSlotComponent;
         let equipSlotComponent = this.props.equipSlotComponent;
+        // console.log(equipSlotComponent);
+        let r;
+        equipSlotComponent.render((values) => {
+            r = (<span>{values.item ? values.item.name : 'Пусто'}</span>);
+        });
         return (
             <tr>
-                <td>{equipSlotComponent['_id']}</td>
-                <td>{equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/}</td>
+                {/*<td>{equipSlotComponent['_id']}</td>*/}
+                {/*<td>{equipSlotComponent.equipSlot['_name']/*todo: Доступ.*!/</td>*/}
+                <td>{this.props.name ?? 'asd'}</td>
                 <td>
-                    <ItemStackTextRComponent
-                        itemStack={equipSlotComponent.itemStack}
-                    />
+                    {/*<ItemStackTextRComponent*/}
+                    {/*    itemStack={equipSlotComponent.itemStack}*/}
+                    {/*/>*/}
+                    {r}
                 </td>
                 <td><button onClick={this.clearHandler}>Очистить</button></td>
             </tr>

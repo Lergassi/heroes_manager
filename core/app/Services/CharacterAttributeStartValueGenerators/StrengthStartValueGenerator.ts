@@ -13,14 +13,4 @@ export default class StrengthStartValueGenerator implements CharacterAttributeSt
 
         return modifier ? modifier(value) : value;
     }
-
-    // increaseValue(level: unsigned, modifier?: (value: number) => number) {
-    //     let value = _.random(2, 4) * level;
-    //
-    //     return modifier ? modifier(value) : value;
-    // }
-
-    // private _modify(value, modifier?) {
-    //     return modifier ? modifier(value) : value;
-    // }
 }

@@ -50,7 +50,8 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
             codes: [
                 ExperienceComponentEventCode.AddExp,
                 ExperienceComponentEventCode.AddLevel,
-                EquipSlotComponentEventCode.Clear,
+                EquipSlotComponentEventCode.CreateItemStack,
+                EquipSlotComponentEventCode.DestroyItemStack,
             ],
             listener: {
                 callback: callback,
@@ -74,28 +75,13 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                 <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_maxHealthPoints']['value']()}</td>
                 <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>
                 {/* todo: Сделать отдельный компонент для вывода значений, который получаются одним методом. */}
-                <td>{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().left}-{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().right}</td>
+                <td>{hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).AttackPower.value()}</td>
                 {/*<td>{hero.get<AttackPower>(CharacterAttributeID.AttackPower).value()[0]}-{hero.get<AttackPower>(CharacterAttributeID.AttackPower).value()[1]}</td>*/}
                 {/*<td>{hero.get<CharacterAttributeCollectorComponent>(CharacterAttributeCollectorComponent.name).totalValue(CharacterAttributeID.AttackPower)}</td>*/}
                 <td>
-                    {/*<CharacterAttributeValueRComponent*/}
-                    {/*    characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Strength)}*/}
-                    {/*/>*/}
-                    {/*/*/}
-                    {/*<CharacterAttributeValueRComponent*/}
-                    {/*    characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Agility)}*/}
-                    {/*/>*/}
-                    {/*/*/}
-                    {/*<CharacterAttributeValueRComponent*/}
-                    {/*    characterAttributeComponent={hero.get<CharacterAttributeComponent>(CharacterAttributeID.Intelligence)}*/}
-                    {/*/>*/}
-                    {/*{hero.get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.Strength)}/*/}
-                    {/*{hero.get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.Agility)}/*/}
-                    {/*{hero.get<TotalCharacterAttributeValueCollectorComponent>(TotalCharacterAttributeValueCollectorComponent.name).totalValue(CharacterAttributeID.Intelligence)}*/}
-                    {/*{hero.get<CharacterAttributeComponent>(CharacterAttributeID.Strength).value()}/*/}
-                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes)[CharacterAttributeID.Strength].value()}/
-                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes)[CharacterAttributeID.Agility].value()}/
-                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes)[CharacterAttributeID.Intelligence].value()}
+                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Strength.value()}/
+                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Agility.value()}/
+                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Intelligence.value()}
                 </td>
                 <td>
                     {hero.get<HeroComponent>(HeroComponent.name).state}

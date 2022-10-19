@@ -617,10 +617,10 @@ export function testSerializeItemStorage(container: ContainerInterface, serializ
 
 export function testSerializeHero(container: ContainerInterface, serializer: Serializer, jsonSerializer: JsonSerializer) {
     let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
-    let hero = container.get<HeroFactory>(ContainerKey.HeroFactory).create({
-        heroClass: heroClass,
-        level: 1,
-    });
+    let hero = container.get<HeroFactory>(ContainerKey.HeroFactory).create(
+        heroClass,
+        1,
+    );
     debugHero(hero);
     let serializedHero = serializer.serialize(hero);
     let serializedStringData = jsonSerializer.toJson(serializedHero);
@@ -901,14 +901,14 @@ export function testHeroController() {
         10,
     ));
 
-    let warrior = container.get<HeroFactory>(ContainerKey.HeroFactory).create({
-        heroClass: container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-        level: 1,
-    });
-    let mage = container.get<HeroFactory>(ContainerKey.HeroFactory).create({
-        heroClass: container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-        level: 1,
-    });
+    let warrior = container.get<HeroFactory>(ContainerKey.HeroFactory).create(
+        container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
+        1,
+    );
+    let mage = container.get<HeroFactory>(ContainerKey.HeroFactory).create(
+        container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
+        1,
+    );
     heroController.addHero(warrior);
     heroController.addHero(warrior);
     heroController.addHero(mage);

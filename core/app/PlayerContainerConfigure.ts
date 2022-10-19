@@ -31,6 +31,9 @@ import Currency from './Entities/Currency.js';
 import _ from 'lodash';
 import {ContainerKey} from '../types/enums/ContainerKey.js';
 import {CurrencyID} from '../types/enums/CurrencyID.js';
+import CharacterAttributeValueGenerator from './Services/CharacterAttributeValueGenerator.js';
+import CharacterAttributeStartValueGenerator from './Services/CharacterAttributeStartValueGenerator.js';
+import CharacterAttributeFactory from './Factories/CharacterAttributeFactory.js';
 
 /**
  * todo: Временно не актуально.
@@ -109,12 +112,23 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             return walletFactory;
         });
+        container.set<CharacterAttributeValueGenerator>(ContainerKey.CharacterAttributeValueGenerator, (container) => {
+            return new CharacterAttributeValueGenerator();
+        });
+        container.set<CharacterAttributeStartValueGenerator>(ContainerKey.CharacterAttributeStartValueGenerator, (container) => {
+            return new CharacterAttributeStartValueGenerator(container.get<CharacterAttributeValueGenerator>(ContainerKey.CharacterAttributeValueGenerator));
+        });
+        container.set<CharacterAttributeFactory>(ContainerKey.CharacterAttributeFactory, (container) => {
+            return new CharacterAttributeFactory(
+                container.get<CharacterAttributeStartValueGenerator>(ContainerKey.CharacterAttributeStartValueGenerator),
+            );
+        });
         container.set<HeroFactory>(ContainerKey.HeroFactory, (container) => {
             return new HeroFactory({
-                config: container.get<object>('core.config'),
                 entityManager: container.get<EntityManager>('core.entityManager'),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
                 experienceComponentFactory: container.get<ExperienceComponentFactory>(ContainerKey.ExperienceComponentFactory),
+                characterAttributeFactory: container.get<CharacterAttributeFactory>(ContainerKey.CharacterAttributeFactory),
             });
         });
         container.set<ItemStackFactory>(ContainerKey.ItemStackFactory, (container) => {
@@ -192,6 +206,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new EnemyFactory({
                 entityManager: container.get<EntityManager>('core.entityManager'),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
+                characterAttributeFactory: container.get<CharacterAttributeFactory>(ContainerKey.CharacterAttributeFactory),
             });
         });
 

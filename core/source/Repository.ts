@@ -32,7 +32,7 @@ export default class Repository<Entity> {
         }
 
         for (let i = 0; i < this._items.length; i++) {
-            if (this._items[i]['_id'] === id) {
+            if (this._items[i]['_id'] === id || (this._items[i].id ? this._items[i].id === id : false)) {   //todo: Переделать. Всю логику поиска и хранения сущностей.
                 return this._items[i];
             }
         }

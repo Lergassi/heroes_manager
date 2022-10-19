@@ -453,10 +453,10 @@ export default class ItemDatabaseBuilder {
                             armorMaterial: ArmorMaterialID.Plate,
                         },
                         characterAttributes: {
-                            [CharacterAttributeID.Strength]: 10,
-                            [CharacterAttributeID.Agility]: 11,
-                            [CharacterAttributeID.Intelligence]: 12,
-                            [CharacterAttributeID.AttackPower]: 100,
+                            [CharacterAttributeID.Strength]: 2,
+                            // [CharacterAttributeID.Agility]: 1,
+                            // [CharacterAttributeID.Intelligence]: 12,
+                            // [CharacterAttributeID.AttackPower]: 10,
                         },
                     },
                 )
@@ -883,7 +883,9 @@ export default class ItemDatabaseBuilder {
                     'Двуручный меч 01',
                     ItemCategoryID.TwoHandedSwords,
                     {
-
+                        properties: {
+                            twoHandWeapon: true,
+                        }
                     },
                 )
                 .build()
@@ -935,7 +937,9 @@ export default class ItemDatabaseBuilder {
                     'Посох 01',
                     ItemCategoryID.Staffs,
                     {
-
+                        properties: {
+                            twoHandWeapon: true,
+                        }
                     },
                 )
                 .build()
