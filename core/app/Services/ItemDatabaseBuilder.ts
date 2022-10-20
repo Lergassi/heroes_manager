@@ -9,14 +9,14 @@ import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 
 export default class ItemDatabaseBuilder {
-    private readonly _em: EntityManager;
-    private _itemFactory: ItemFactory;
+    private readonly _entityManager: EntityManager;
+    private readonly _itemFactory: ItemFactory;
 
     constructor(
         entityManager: EntityManager,
         itemFactory: ItemFactory,
     ) {
-        this._em = entityManager;
+        this._entityManager = entityManager;
         this._itemFactory = itemFactory;
     }
 
@@ -26,7 +26,7 @@ export default class ItemDatabaseBuilder {
         this._createArmor();
         this._createWeapons();
 
-        return this._em;
+        return this._entityManager;
     }
 
     private _createItems() {
@@ -34,9 +34,9 @@ export default class ItemDatabaseBuilder {
     }
 
     private _createResources() {
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Wood,
                     'Древесина',
@@ -53,9 +53,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.WoodBoards,
                     'Доски',
@@ -69,9 +69,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Coal,
                     'Уголь',
@@ -82,9 +82,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.IronOre,
                     'Железная руда',
@@ -98,9 +98,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.IronBar,
                     'Железный слиток',
@@ -111,9 +111,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.CopperOre,
                     'Медная руда',
@@ -127,9 +127,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.CopperBar,
                     'Медный слиток',
@@ -140,9 +140,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.TinOre,
                     'Оловяная руда',
@@ -156,9 +156,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.TinBar,
                     'Оловянный слиток',
@@ -169,9 +169,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.BronzeBar,
                     'Бронзовый слиток',
@@ -182,9 +182,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.GoldOre,
                     'Золотая руда',
@@ -198,9 +198,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.GoldBar,
                     'Золотой слиток',
@@ -211,9 +211,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Herb_1,
                     'Трава 1',
@@ -227,9 +227,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Herb_2,
                     'Трава 2',
@@ -243,9 +243,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Herb_3,
                     'Трава 3',
@@ -259,9 +259,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Cotton,
                     'Хлопок',
@@ -275,9 +275,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.CottonThread,
                     'Хлопковая нить',
@@ -288,9 +288,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.CottonFabric,
                     'Хлопковая ткань',
@@ -301,9 +301,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.RabbitSkin,
                     'Шкура зайца',
@@ -317,9 +317,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.FoxSkin,
                     'Шкура лисы',
@@ -333,9 +333,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.DeerSkin,
                     'Шкура оленя',
@@ -349,9 +349,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.WolfSkin,
                     'Шкура волка',
@@ -365,9 +365,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.BearSkin,
                     'Шкура медведя',
@@ -381,11 +381,11 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Leather_1,
+                    ItemID.Leather01,
                     'Кожа',
                     ItemCategoryID.Materials,
                     {
@@ -397,9 +397,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.MagicResources_1,
                     'Магический ресурс 1',
@@ -410,9 +410,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.MagicMaterial_1,
                     'Магический предмет 1',
@@ -426,9 +426,9 @@ export default class ItemDatabaseBuilder {
     }
 
     private _createArmor() {
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateHelmet_01,
                     'Латный шлем 01',
@@ -441,9 +441,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateHelmet_02,
                     'Латный шлем 02',
@@ -462,9 +462,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateShoulders_01,
                     'Латные наплечники 01',
@@ -477,9 +477,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateBreastplate_01,
                     'Латный нагрудник 01',
@@ -492,9 +492,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateBracer_01,
                     'Латный браслет 01',
@@ -507,9 +507,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateGloves_01,
                     'Латные перчатки 01',
@@ -522,9 +522,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateBelt_01,
                     'Латный пояс 01',
@@ -537,9 +537,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlatePants_01,
                     'Латный штаны 01',
@@ -552,9 +552,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateBoots_01,
                     'Латный сапоги 01',
@@ -567,9 +567,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherHelmet_01,
                     'Кожаный шлем 01',
@@ -582,9 +582,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherShoulders_01,
                     'Кожаные наплечники 01',
@@ -597,9 +597,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherBreastplate_01,
                     'Кожаный нагрудник 01',
@@ -612,9 +612,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherBracer_01,
                     'Кожаный браслет 01',
@@ -627,9 +627,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherGloves_01,
                     'Кожаные перчатки 01',
@@ -642,9 +642,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherBelt_01,
                     'Кожаный пояс 01',
@@ -657,9 +657,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherPants_01,
                     'Кожаный штаны 01',
@@ -672,9 +672,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherBoots_01,
                     'Кожаный сапоги 01',
@@ -687,9 +687,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothHelmet_01,
                     'Тканевый шлем 01',
@@ -702,9 +702,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothShoulders_01,
                     'Тканевые наплечники 01',
@@ -717,9 +717,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothBreastplate_01,
                     'Тканевый нагрудник 01',
@@ -732,9 +732,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothBracer_01,
                     'Тканевый браслет 01',
@@ -747,9 +747,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothGloves_01,
                     'Тканевые перчатки 01',
@@ -762,9 +762,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothBelt_01,
                     'Тканевый пояс 01',
@@ -777,9 +777,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothPants_01,
                     'Тканевый штаны 01',
@@ -792,9 +792,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothBoots_01,
                     'Тканевый сапоги 01',
@@ -807,9 +807,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Shield_01,
                     'Щит',
@@ -820,9 +820,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Amulet_01,
                     'Амулет 01',
@@ -833,9 +833,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Ring_01,
                     'Кольцо 01',
@@ -846,9 +846,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Trinket_01,
                     'Тринкет',
@@ -862,9 +862,9 @@ export default class ItemDatabaseBuilder {
     }
 
     private _createWeapons() {
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.OneHandedSword_01,
                     'Одноручный меч 01',
@@ -875,9 +875,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.TwoHandedSword_01,
                     'Двуручный меч 01',
@@ -890,9 +890,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Dagger_01,
                     'Кинжал 01',
@@ -903,9 +903,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.OneHandedAxe_01,
                     'Одноручный топор 01',
@@ -916,9 +916,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.TwoHandedAxe_01,
                     'Двуручный топор 01',
@@ -929,9 +929,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Staff_01,
                     'Посох 01',
@@ -944,9 +944,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Wand_01,
                     'Жезл 01',
@@ -957,9 +957,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Revolver_01,
                     'Револьвер 01',
@@ -970,9 +970,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.BoarSkin,
                     'Кожа кабана',
@@ -983,9 +983,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.BearMeat,
                     'Мясо медведя',
@@ -996,9 +996,9 @@ export default class ItemDatabaseBuilder {
                 )
                 .build()
         );
-        this._em.add<Item>(
+        this._entityManager.add<Item>(
             Item,
-            (new ItemBuilder(this._em))
+            (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.BoarMeat,
                     'Мясо кабана',

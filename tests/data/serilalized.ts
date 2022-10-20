@@ -4,7 +4,7 @@ import Currency from '../../core/app/Entities/Currency.js';
 import JsonSerializer from '../../core/source/JsonSerializer.js';
 import ItemCategory from '../../core/app/Entities/ItemCategory.js';
 import HeroRole from '../../core/app/Entities/HeroRole.js';
-import CharacterAttributeData from '../../core/app/Entities/CharacterAttributeData.js';
+import CharacterAttributeEntity from '../../core/app/Entities/CharacterAttributeEntity.js';
 
 let jsonSerializer = new JsonSerializer();
 
@@ -76,7 +76,7 @@ export default {
         },
     }),
     test_character_attribute: jsonSerializer.toJson({
-        classname: CharacterAttributeData.name,
+        classname: CharacterAttributeEntity.name,
         data: {
             _id: 106,
             _name: 'test CharacterAttribute',

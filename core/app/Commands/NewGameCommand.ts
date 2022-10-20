@@ -5,14 +5,15 @@ import GameConsole from '../../source/GameConsole/GameConsole.js';
 import ClientRender from '../../../client/public/React/ClientRender.js';
 import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class NewGameCommand extends Command {
     private readonly _scenarios = {
-        basic: 'player.create_start_objects',
+        basic: CommandNameID.create_player_start_objects,
     };
 
     get name(): string {
-        return 'new_game';
+        return CommandNameID.new_game;
     }
 
     configure() {
@@ -28,7 +29,8 @@ export default class NewGameCommand extends Command {
         // (new CoreContainerConfigure()).configure(this.container);
         (new PlayerContainerConfigure()).configure(this.container);
 
-        await this.container.get<GameConsole>('gameConsole').getCommand('player.create_env').run();
+        // await this.container.get<GameConsole>('gameConsole').getCommand(CommandNameID.create_player_env).run();
+        await this.container.get<GameConsole>('gameConsole').getCommand(CommandNameID.create_player_env).run();
         if (scenario) {
             await this.container.get<GameConsole>('gameConsole').getCommand(this._scenarios[scenario]).run();
         }

@@ -1,9 +1,9 @@
 export default class ItemCategory {
-    private readonly _id: string;
-    private readonly _name: string;
-    private readonly _description: string;
-    private readonly _sort: number;
-    private readonly _parent: ItemCategory;
+    readonly id: string;
+    readonly name: string;
+    readonly description: string;
+    readonly sort: number;
+    readonly parent: ItemCategory;
 
     constructor(
         id: string,
@@ -12,10 +12,10 @@ export default class ItemCategory {
         sort: number,
         parent: ItemCategory = null,
     ) {
-        this._id = id;
-        this._name = name;
-        this._description = description;
-        this._sort = sort;
-        this._parent = parent;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.sort = sort;
+        this.parent = parent;
     }
 }

@@ -1,5 +1,5 @@
 import Item from './Entities/Item.js';
-import EnemyType from './Entities/EnemyType.js';
+import EnemyEntity from './Entities/EnemyEntity.js';
 import EquipSlotComponent from './Components/EquipSlotComponent.js';
 import {EquipSlotID} from '../types/enums/EquipSlotID.js';
 import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
@@ -47,13 +47,13 @@ export enum EnemyCategoryAlias {
 }
 
 export type EnemyTypes = {
-    [alias: string]: EnemyType;
+    [alias: string]: EnemyEntity;
 }
 
-export type EnemyTypeRecord = Record<string, EnemyType>;
+export type EnemyTypeRecord = Record<string, EnemyEntity>;
 
 export type EnemyConfig = {
-    enemy: EnemyType,
+    enemy: EnemyEntity,
     loot: Loot[],
     exp: unsigned,
     gold: unsigned[],

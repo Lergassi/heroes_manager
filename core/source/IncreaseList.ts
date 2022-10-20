@@ -1,10 +1,10 @@
-import CharacterAttributeData from '../app/Entities/CharacterAttributeData.js';
+import CharacterAttributeEntity from '../app/Entities/CharacterAttributeEntity.js';
 
 export class CharacterAttributeIncrease {
-    private readonly _characterAttribute: CharacterAttributeData;
+    private readonly _characterAttribute: CharacterAttributeEntity;
     private readonly _value: number;
 
-    get characterAttribute(): CharacterAttributeData {
+    get characterAttribute(): CharacterAttributeEntity {
         return this._characterAttribute;
     }
 
@@ -12,7 +12,7 @@ export class CharacterAttributeIncrease {
         return this._value;
     }
 
-    constructor(characterAttribute: CharacterAttributeData, value: number) {
+    constructor(characterAttribute: CharacterAttributeEntity, value: number) {
         this._characterAttribute = characterAttribute;
         this._value = value;
     }
@@ -44,11 +44,11 @@ export default class IncreaseList {
         //todo: Нужна проверка, чтобы не было повторяющихся значений. done: За уникальность отвечают ключи объекта.
     }
 
-    get(characterAttribute: string | CharacterAttributeData): CharacterAttributeIncrease {
+    get(characterAttribute: string | CharacterAttributeEntity): CharacterAttributeIncrease {
         for (const increaseKey in this._increase) {
             if (
                 typeof characterAttribute === 'string' && this._increase[increaseKey].characterAttribute['_id'] === characterAttribute ||   //todo: Доступ.
-                characterAttribute instanceof CharacterAttributeData && this._increase[increaseKey].characterAttribute === characterAttribute
+                characterAttribute instanceof CharacterAttributeEntity && this._increase[increaseKey].characterAttribute === characterAttribute
             ) {
                 return this._increase[increaseKey];
             }

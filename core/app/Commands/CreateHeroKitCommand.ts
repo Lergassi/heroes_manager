@@ -4,14 +4,11 @@ import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class CreateHeroKitCommand extends Command {
-    // private _kits = {
-    //     all_heroes:
-    // };
-
     get name(): string {
-        return 'hero.create_all_classes';
+        return CommandNameID.create_all_hero_classes;
     }
 
     async execute(input: Input) {

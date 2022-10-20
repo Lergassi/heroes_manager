@@ -8,7 +8,7 @@ import {unsigned} from '../types.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import EventSystem from '../../source/EventSystem.js';
 import HeroClass from '../Entities/HeroClass.js';
-import {assert} from '../../source/assert.js';
+import {assert, assertIsInstanceOf} from '../../source/assert.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import TakeComponent from './TakeComponent.js';
 import {takeCoverage} from 'v8';
@@ -77,8 +77,8 @@ export default class MainHeroListComponent extends Component {
 
     createHero(options: {
         heroClass: HeroClass | HeroClassID;
-        heroFactory: HeroFactory;
         level: unsigned;
+        heroFactory: HeroFactory;
     }): GameObject {
         this.canCreateHero();
 
@@ -96,8 +96,8 @@ export default class MainHeroListComponent extends Component {
     }
 
     deleteHero(hero: GameObject, gameObjectStorage: GameObjectStorage): void {
-        assert(hero instanceof GameObject);
-        assert(gameObjectStorage instanceof GameObjectStorage);
+        assertIsInstanceOf(hero, GameObject);
+        assertIsInstanceOf(gameObjectStorage, GameObjectStorage);
 
         this.canDeleteHero(hero);
 

@@ -42,6 +42,7 @@ export function assertIsArray(value: any, message?: string) {
     assert(Array.isArray(value), 'Переменная должна быть массивом.');
 }
 
-// export function assertInstanceOf(value: any, target: any, message?: string) {
-//
-// }
+//todo: Надо ли value и target проверять на nil?
+export function assertIsInstanceOf(value: any, target: any, message?: string) {
+    assert(value instanceof target, 'Объект неверного типа (instanceof).');
+}

@@ -2,7 +2,7 @@ import GameObjectFactory from './GameObjectFactory.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import {EnemyConfig, EntityManagerKey, unsigned} from '../types.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
-import EnemyType from '../Entities/EnemyType.js';
+import EnemyEntity from '../Entities/EnemyEntity.js';
 import EntityManager from '../../source/EntityManager.js';
 import EnemyComponent from '../Components/EnemyComponent.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
@@ -60,8 +60,8 @@ export default class EnemyFactory {
         assert(level >= 1);
         assert(!_.isNil(enemyTypeID));
 
-        let enemyType = this._entityManager.entity<EnemyType>(EntityManagerKey.EnemyType, enemyTypeID);
-        assert(enemyType instanceof EnemyType, sprintf('EnemyType (%s) не найден.', enemyTypeID));
+        let enemyType = this._entityManager.entity<EnemyEntity>(EntityManagerKey.EnemyType, enemyTypeID);
+        assert(enemyType instanceof EnemyEntity, sprintf('EnemyType (%s) не найден.', enemyTypeID));
 
         let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, enemyTypeID);
         assert(!_.isNil(enemyConfig), sprintf('EnemyConfig (%s) не найден.', enemyTypeID));

@@ -1,7 +1,7 @@
 import MetadataManager, {repositoryManagerFinderCallback} from '../../source/MetadataManager.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import {SerializeType} from '../../source/Serializer.js';
-import CharacterAttributeData from '../Entities/CharacterAttributeData.js';
+import CharacterAttributeEntity from '../Entities/CharacterAttributeEntity.js';
 import Currency from '../Entities/Currency.js';
 import Quality from '../Entities/Quality.js';
 import HeroRole from '../Entities/HeroRole.js';

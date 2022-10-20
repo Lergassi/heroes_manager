@@ -11,8 +11,14 @@ export default abstract class Command {
     private readonly _commandArguments;
     private _requireArgumentsLength: number;
 
+    /**
+     * @deprecated
+     */
     abstract get name(): string;
 
+    /**
+     * @deprecated
+     */
     get description(): string {
         return this._description;
     }
@@ -36,9 +42,9 @@ export default abstract class Command {
     };
 
     configure(): void {
-        if (!this.name) {
-            throw new AppError('Свойство "name" не может быть пустым.');
-        }
+        // if (!this.name) {
+        //     throw new AppError('Свойство "name" не может быть пустым.');
+        // }
     }
 
     addArgument(name: string, description: string = '', isRequire: boolean = true, defaultValue: any = undefined): void {

@@ -1,23 +1,24 @@
 import GameObject from './GameObject.js';
 import _ from 'lodash';
 import AppError from './Errors/AppError.js';
+import {assertIsArray, assertIsInstanceOf, assertIsNumber, assertNotNil} from './assert.js';
 
 export default class GameObjectStorage {
     private readonly _gameObjects: GameObject[];
-    // private readonly _gameObjects: {[ID: number]: GameObject};
 
-    constructor(gameObjects = []) {
-    // constructor(gameObjects = {}) {
+    constructor(gameObjects: GameObject[] = []) {
+        assertIsArray(gameObjects);
+
         this._gameObjects = gameObjects;
     }
 
     add(gameObject: GameObject): void {
+        assertNotNil(gameObject);
+        assertIsInstanceOf(gameObject, GameObject);
+
         if (!_.includes(this._gameObjects, gameObject)) {
             this._gameObjects.push(gameObject);
         }
-        // if (!this._gameObjects.hasOwnProperty(gameObject['_id'])) {
-        //     this._ga
-        // }
     }
 
     remove(gameObject: GameObject): void {
@@ -38,9 +39,11 @@ export default class GameObjectStorage {
         return undefined;
     }
 
-    getOneByID(id: number): GameObject {
+    getOneByID(ID: number): GameObject | undefined {
+        assertIsNumber(ID);
+
         for (let i = 0; i < this._gameObjects.length; i++) {
-            if (this._gameObjects[i]['_id'] === id) {
+            if (this._gameObjects[i]['_id'] === ID) {
                 return this._gameObjects[i];
             }
         }
@@ -86,7 +89,7 @@ export default class GameObjectStorage {
     }
 
     /**
-     * @deprecated Полностью уничтожать объект.
+     * @deprecated Бесполезный метод. Полностью уничтожать объект.
      */
     clear() {
         _.remove(this._gameObjects);

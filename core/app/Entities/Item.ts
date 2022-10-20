@@ -6,11 +6,6 @@ import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 
-// export enum ItemType {
-//     Stackable = 'Stackable',
-//     Equip = 'Equip',
-// }
-
 /**
  * Может быть несколько типов одновременно. Или без типов.
  */
@@ -20,38 +15,6 @@ export enum ItemGetType {
     Crafting = 'Crafting',
     Purchased = 'Purchased',
 }
-
-export type ItemCategoryCondition = {
-    itemCategory: ItemCategory;
-    includeChildren: boolean;
-}
-
-// export type ItemFilter = {
-//     id: string | string[],
-//     name: string | string[],
-//     alias: string | string[],
-//     // itemLevel: number | number[],  //тут диапазон
-//     itemLevel: {
-//         min: number;
-//         max: number;
-//         condition: string;
-//     },
-//     // itemLevel: LevelRangeCondition,  //тут диапазон
-//     // itemCategory: string | string[] | ItemCategory | ItemCategory[],
-//     itemCategory: ItemCategory[],
-//     // itemCategory: Partial<ItemCategoryCondition[]>,
-//     // itemCategory: {
-//     //     list: ItemCategory | ItemCategory[],
-//     //     withChildren: boolean,
-//     // },
-//     // quality: Quality | Quality[],
-//     quality: Quality[],
-//     increase: {},   //А надо?
-//     // properties: ItemProperties,
-//     properties: {
-//         armorMaterial: ArmorMaterial | ArmorMaterial[],
-//     },
-// }
 
 /**
  * @indev Пока только с условие ИЛИ.
@@ -67,19 +30,6 @@ export interface ItemProperties {
     // readonly isStackable?: boolean;
     // stackSize?: number;    //Не может быть одновременно с isEquipable... хотя зелья? А почему можно экипировать только экипировку? Так и надо ставить тип = Экипировка.
 }
-export type ItemProperty = keyof ItemProperties;
-
-// export interface CharacterAttributes {
-//     strength?: number;
-//     agility?: number;
-//     intelligence?: number;
-// }
-
-// let a: ItemProperties = {
-//     stackSize: 10,
-//     armorMaterial: null,
-// };
-// a.stackSize = 42;
 
 export type CharacterAttributeIncreaseObject = {[alias: string]: CharacterAttributeIncrease};
 export type CharacterAttributeRecord = {[ID in CharacterAttributeID]: number};
@@ -91,113 +41,19 @@ export interface ItemOptions {
 }
 
 export default class Item {
-    private readonly _id: string;
-    private readonly _name: string;
-    private readonly _description: string;
-    private readonly _itemLevel: number;
-    private readonly _sort: number;
-    private readonly _getTypes: ItemGetType[];
-    private readonly _itemCategory: ItemCategory;
-    private readonly _quality: Quality;
-    private readonly _stackSize: number;
+    readonly id: string;
+    readonly name: string;
+    readonly description: string;
+    readonly itemLevel: number;
+    readonly sort: number;
+    readonly getTypes: ItemGetType[];
+    readonly itemCategory: ItemCategory;
+    readonly quality: Quality;
+    readonly stackSize: number;
 
-    private readonly _strengthIncrease: number;
-    private readonly _agilityIncrease: number;
-    private readonly _intelligenceIncrease: number;
-    private readonly _healthPointsIncrease: number; //Отдельно от выносливости.
-    private readonly _magicPointsIncrease: number;
-    private readonly _attackPowerIncrease: number;
-    //и тд. Допустим всего атрибутов в игре 30.
-
-    // private readonly _increase: {[alias: string]: CharacterAttributeIncrease};
-    private readonly _increase: CharacterAttributeIncreaseObject;
-    private readonly _characterAttributes: Partial<CharacterAttributeRecord>;
-    private readonly _properties: Readonly<ItemProperties>;
-
-    //Логические значения будут заданы явно. Иначе сначала придется проверять наличие переменой в properties.
-    // private readonly _isStackable: boolean;
-
-    //@deprecated
-    // private readonly _stackSize: number;    //Нет у экипировки.
-    //@deprecated
-    // private readonly _isEquipable: boolean; //Только у экипировки.
-    //@deprecated
-    private readonly _armorMaterial: ArmorMaterial; //Только у брони. todo: Временно. Необязательные параметры перенести в другое место.
-
-    /**
-     * @deprecated
-     */
-    get id(): string {
-        return this._id;
-    }
-
-    /**
-     * @deprecated
-     */
-    get name(): string {
-        return this._name;
-    }
-
-    /**
-     * @deprecated Использовать ID который теперь alias.
-     */
-    get alias(): string {
-        return this._id;
-    }
-
-    /**
-     * @deprecated
-     */
-    get description(): string {
-        return this._description;
-    }
-
-    /**
-     * @deprecated
-     */
-    get stackSize(): number {
-        return this._stackSize;
-    }
-
-    /**
-     * @deprecated
-     */
-    get itemLevel(): number {
-        return this._itemLevel;
-    }
-
-    /**
-     * @deprecated
-     */
-    get sort(): number {
-        return this._sort;
-    }
-
-    // /**
-    //  * @deprecated Использовать properties.
-    //  */
-    // get isEquipable(): boolean {
-    //     return this._isEquipable;
-    // }
-
-    get itemCategory(): ItemCategory {
-        return this._itemCategory;
-    }
-
-    get quality(): Quality {
-        return this._quality;
-    }
-
-    get armorMaterial(): ArmorMaterial {
-        return this._armorMaterial;
-    }
-
-    /**
-     * @deprecated
-     */
-    get properties(): Readonly<ItemProperties> {
-        return this._properties;
-    }
+    readonly increase: CharacterAttributeIncreaseObject;
+    readonly characterAttributes: Partial<CharacterAttributeRecord>;
+    readonly properties: Readonly<ItemProperties>;
 
     constructor (
         id: string,
@@ -213,28 +69,27 @@ export default class Item {
         options: Partial<ItemOptions> = {},
         characterAttributes: Partial<CharacterAttributeRecord>,
     ) {
-        this._id = id;
-        this._name = name;
-        this._description = description;
-        this._itemLevel = itemLevel;
-        this._sort = sort;
-        this._itemCategory = itemCategory;
-        this._quality = quality;
-        this._stackSize = stackSize;
-        this._increase = increase;
-        this._characterAttributes = characterAttributes;
-        this._properties = properties;
-
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.itemLevel = itemLevel;
+        this.sort = sort;
+        this.itemCategory = itemCategory;
+        this.quality = quality;
+        this.stackSize = stackSize;
+        this.increase = increase;
+        this.characterAttributes = characterAttributes;
+        this.properties = properties;
         //Не путать с логикой из строителя. Тут всегда пустые значения.
-        this._getTypes = options.getTypes ?? [];
+        this.getTypes = options.getTypes ?? [];
     }
 
     increaseCharacterAttribute(ID: CharacterAttributeID): number {
-        return this._characterAttributes[ID] ?? 0;
+        return this.characterAttributes[ID] ?? 0;
     }
 
     hasArmorMaterial(armorMaterial: ArmorMaterial | ArmorMaterial[]): boolean {
-        if (!this._properties.armorMaterial) {
+        if (!this.properties.armorMaterial) {
             return false;
         }
 
@@ -242,7 +97,7 @@ export default class Item {
             armorMaterial = [armorMaterial];
         }
 
-        return _.includes(armorMaterial, this._properties.armorMaterial);
+        return _.includes(armorMaterial, this.properties.armorMaterial);
     }
 
     hasItemCategory(itemCategory: ItemCategory | ItemCategory[]): boolean {
@@ -257,6 +112,6 @@ export default class Item {
 
     //todo: tmp
     isTwoHandWeapon(): boolean {
-        return Boolean(this._properties.twoHandWeapon);
+        return Boolean(this.properties.twoHandWeapon);
     }
 }

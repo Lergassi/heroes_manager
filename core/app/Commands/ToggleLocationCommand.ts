@@ -3,10 +3,11 @@ import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import LocationComponent from '../Components/LocationComponent.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class ToggleLocationCommand extends Command {
     get name(): string {
-        return 'location.toggle';
+        return CommandNameID.toggle_location;
     }
 
     configure() {

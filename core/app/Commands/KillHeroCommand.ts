@@ -1,14 +1,16 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
 import {assertNotNil} from '../../source/assert.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import TakeComponent from '../Components/TakeComponent.js';
+import AppError from '../../source/Errors/AppError.js';
 
-export default class ResurrectHeroCommand extends Command {
+export default class KillHeroCommand extends Command {
     get name(): string {
-        return CommandNameID.resurrect_hero;
+        return CommandNameID.kill_hero;
     }
 
     configure() {
@@ -21,6 +23,11 @@ export default class ResurrectHeroCommand extends Command {
         let hero = this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(heroID);
         assertNotNil(hero);
 
-        hero.get<HealthPointsComponent>(HealthPointsComponent.name).resurrect();
+        //todo: Неверно. Нужно искать в главном списке и проверять возможность убить командой. Но пока так.
+        if (!hero.get<TakeComponent>(TakeComponent.name).isFree()) {
+            throw new AppError();
+        }
+
+        hero.get<HealthPointsComponent>(HealthPointsComponent.name).kill();
     }
 }

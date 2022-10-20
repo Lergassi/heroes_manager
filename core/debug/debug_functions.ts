@@ -378,7 +378,7 @@ export function debugItemList(items: Item[]) {
     for (let i = 0; i < items.length; i++) {
         debug('debug')('%j', {
             name: items[i].name,
-            alias: items[i].alias,
+            alias: items[i].id,
         });
     }
     separator();

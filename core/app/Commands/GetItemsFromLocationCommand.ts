@@ -4,10 +4,11 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import LocationComponent from '../Components/LocationComponent.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class GetItemsFromLocationCommand extends Command {
     get name(): string {
-        return 'location.get_items';
+        return CommandNameID.get_items_from_location;
     }
 
     configure() {

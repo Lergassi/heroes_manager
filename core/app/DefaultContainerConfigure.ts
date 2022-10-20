@@ -29,6 +29,8 @@ import ClearItemStorageSlotCommand from './Commands/ClearItemStorageSlotCommand.
 import CreateHeroKitCommand from './Commands/CreateHeroKitCommand.js';
 import FightCommand from './Commands/FightCommand.js';
 import ResurrectHeroCommand from './Commands/ResurrectHeroCommand.js';
+import {CommandNameID} from '../types/enums/CommandNameID.js';
+import KillHeroCommand from './Commands/KillHeroCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -62,6 +64,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
 
         gameConsole.register(new CreateHeroCommand(container));
         gameConsole.register(new DeleteHeroCommand(container));
+        gameConsole.register(new KillHeroCommand(container));
         gameConsole.register(new ResurrectHeroCommand(container));
         gameConsole.register(new CreateHeroKitCommand(container));
 

@@ -7,10 +7,11 @@ import EntityManager from '../../source/EntityManager.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class AddItemCommand extends Command {
     get name(): string {
-        return 'item.create';
+        return CommandNameID.add_item;
     }
 
     configure() {

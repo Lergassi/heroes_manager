@@ -1,6 +1,6 @@
 import EntityManager from '../../source/EntityManager.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import CharacterAttributeData from '../Entities/CharacterAttributeData.js';
+import CharacterAttributeEntity from '../Entities/CharacterAttributeEntity.js';
 import Currency from '../Entities/Currency.js';
 import Quality from '../Entities/Quality.js';
 import HeroRole from '../Entities/HeroRole.js';
@@ -14,7 +14,7 @@ import CharacterAttributeIncreaseBuilder from './CharacterAttributeIncreaseBuild
 import Recipe from '../Entities/Recipe.js';
 import ItemDatabaseBuilder from './ItemDatabaseBuilder.js';
 import ItemFactory from '../Factories/ItemFactory.js';
-import EnemyType from '../Entities/EnemyType.js';
+import EnemyEntity from '../Entities/EnemyEntity.js';
 import {
     EnemyConfigRecord,
     EnemyTypeRecord,
@@ -32,6 +32,7 @@ import {HeroRoleID} from '../../types/enums/HeroRoleID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import EquipSlotAvailableItemCategory from '../Entities/EquipSlotAvailableItemCategory.js';
 import EquipSlotAvailableItemCategoryForHands from '../Entities/EquipSlotAvailableItemCategoryForHands.js';
+import {RecipeID} from '../../types/enums/RecipeID.js';
 
 export default class EntityManagerBuilder {
     private readonly _container: ContainerInterface;
@@ -57,8 +58,8 @@ export default class EntityManagerBuilder {
         this._createQualities();
         this._createHeroRoles();
         this._createItemCategories();
-        this._createItems();
-        // this._createRecipes();
+        this._createItems();    //ItemDatabase
+        this._createRecipes();
         this._createHeroClasses();
         this._createEquipSlots();
         this._createEnemyTypes();
@@ -93,68 +94,68 @@ export default class EntityManagerBuilder {
     }
 
     private _createCharacterAttributes() {
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.MaxHealthPoints,
             'Очки здоровья',
             '',
             480,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.MaxMagicPoints,
             'Очки магии',
             '',
             490,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.Strength,
             'Сила',
             'Увеличивает силу атаки у классов с главной характеристикой \"Сила\".',
             500,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.Agility,
             'Ловкость',
             'Увеличивает силу атаки у классов с главной характеристикой \"Ловкость\".',
             510,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.Intelligence,
             'Интеллект',
             'Увеличивает силу атаки и кол-во очков магии у классов с главной характеристикой \"Интеллект\".',
             520,
         ));
         //---
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.Protection,
             'Защита',
             '',
             530,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.AttackPower,
             'Сила атаки',
             'Сила атаки - это одно значение. Диапазон управляется в другом месте.',
             535,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.AttackSpeed,
             'Скорость атаки',
             '',
             540,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.CriticalStrike,
             'Критический удар',
             '',
             550,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.Stamina,
             'Выносливость',
             '',
             560,
         ));
-        this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).add(new CharacterAttributeData(
+        this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).add(new CharacterAttributeEntity(
             CharacterAttributeID.Luck,
             'Удача',
             'Влияет на многие характеристики.',
@@ -437,7 +438,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Plate),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Strength),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Strength),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -454,8 +455,8 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Plate),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Strength),
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Strength),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -471,7 +472,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Leather),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Agility),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Agility),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -487,7 +488,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Plate),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Strength),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Strength),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -504,7 +505,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Leather),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Agility),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Agility),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -520,8 +521,8 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Leather),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Agility),
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Agility),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -538,7 +539,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Cloth),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -555,7 +556,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Cloth),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -572,7 +573,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Cloth),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
         this._entityManager.getRepository<HeroClass>(HeroClass.name).add(new HeroClass(
@@ -589,7 +590,7 @@ export default class EntityManagerBuilder {
                 this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(ArmorMaterialID.Cloth),
             ],
             [
-                this._entityManager.getRepository<CharacterAttributeData>(CharacterAttributeData.name).getOneByAlias(CharacterAttributeID.Intelligence),
+                this._entityManager.getRepository<CharacterAttributeEntity>(CharacterAttributeEntity.name).getOneByAlias(CharacterAttributeID.Intelligence),
             ],
         ));
     }
@@ -859,97 +860,95 @@ export default class EntityManagerBuilder {
         ));
     }
 
-    // private _createRecipes() {
-    //     this._entityManager.add<Recipe>(
-    //         Recipe,
-    //         new Recipe(
-    //             '572bb85a-5046-4366-bd8b-5ee494fc362b',
-    //             this._entityManager.get<Item>(Item, ItemID.WoodBoards),
-    //             'wood_board_recipe',
-    //             500,
-    //             1,
-    //             [
-    //                 {item: this._entityManager.get<Item>(Item, ItemID.Wood), count: 1},
-    //             ],
-    //         )
-    //     );
-    //     this._entityManager.add<Recipe>(
-    //         Recipe,
-    //         new Recipe(
-    //             '572bb85a-5046-4366-bd8b-5ee494fc362b',
-    //             this._entityManager.get<Item>(Item, ItemID.Leather_1),
-    //             'leather_rabbit_skin_recipe',
-    //             500,
-    //             1,
-    //             [
-    //                 {item: this._entityManager.get<Item>(Item, ItemID.RabbitSkin), count: 5},
-    //             ],
-    //         )
-    //     );
-    //     this._entityManager.add<Recipe>(
-    //         Recipe,
-    //         new Recipe(
-    //             'd3f50597-1607-4971-b2ea-c8c15960ffc8',
-    //             this._entityManager.get<Item>(Item, ItemID.Leather_1),
-    //             'leather_fox_skin_recipe',
-    //             500,
-    //             1,
-    //             [
-    //                 {item: this._entityManager.get<Item>(Item, ItemID.FoxSkin), count: 1},
-    //             ],
-    //         )
-    //     );
-    //     this._entityManager.add<Recipe>(
-    //         Recipe,
-    //         new Recipe(
-    //             '1e7c2421-3c8a-41ce-a68f-24d994f4280c',
-    //             this._entityManager.get<Item>(Item, ItemID.Leather_1),
-    //             'leather_deer_skin_recipe',
-    //             500,
-    //             1,
-    //             [
-    //                 {item: this._entityManager.get<Item>(Item, ItemID.DeerSkin), count: 1},
-    //             ],
-    //         )
-    //     );
-    //     this._entityManager.add<Recipe>(
-    //         Recipe,
-    //         new Recipe(
-    //             '50cc0d46-4759-4fab-99da-71aa98d582bb',
-    //             this._entityManager.get<Item>(Item, ItemID.Leather_1),
-    //             'leather_wolf_skin_recipe',
-    //             500,
-    //             1,
-    //             [
-    //                 {item: this._entityManager.get<Item>(Item, ItemID.WolfSkin), count: 1},
-    //             ],
-    //         )
-    //     );
-    //     this._entityManager.add<Recipe>(
-    //         Recipe,
-    //         new Recipe(
-    //             '7a9a2b93-43bf-4495-abf5-c4ea3231db62',
-    //             this._entityManager.get<Item>(Item, ItemID.Leather_1),
-    //             'leather_bear_skin_recipe',
-    //             500,
-    //             5,
-    //             [
-    //                 {item: this._entityManager.get<Item>(Item, ItemID.BearSkin), count: 1},
-    //             ],
-    //         )
-    //     );
-    // }
+    private _createRecipes() {
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                RecipeID.WoodBoards01,
+                this._entityManager.get<Item>(Item, ItemID.WoodBoards),
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, ItemID.Wood), count: 2},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                RecipeID.Leather01_01,
+                this._entityManager.get<Item>(Item, ItemID.Leather01),
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, ItemID.RabbitSkin), count: 5},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                RecipeID.Leather01_02,
+                this._entityManager.get<Item>(Item, ItemID.Leather01),
+                // 'leather_fox_skin_recipe',
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, ItemID.FoxSkin), count: 1},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                RecipeID.Leather01_03,
+                this._entityManager.get<Item>(Item, ItemID.Leather01),
+                // 'leather_deer_skin_recipe',
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, ItemID.DeerSkin), count: 1},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                RecipeID.Leather01_04,
+                this._entityManager.get<Item>(Item, ItemID.Leather01),
+                // 'leather_wolf_skin_recipe',
+                500,
+                1,
+                [
+                    {item: this._entityManager.get<Item>(Item, ItemID.WolfSkin), count: 1},
+                ],
+            )
+        );
+        this._entityManager.add<Recipe>(
+            Recipe,
+            new Recipe(
+                RecipeID.Leather01_05,
+                this._entityManager.get<Item>(Item, ItemID.Leather01),
+                // 'leather_bear_skin_recipe',
+                500,
+                5,
+                [
+                    {item: this._entityManager.get<Item>(Item, ItemID.BearSkin), count: 1},
+                ],
+            )
+        );
+    }
 
     private _createEnemyTypes() {
         let enemyTypes: EnemyTypeRecord = {
-            [EnemyTypeID.Boar]: new EnemyType({
-                id: EnemyTypeID.Boar,
-                name: 'Кабан',
-            }),
-            [EnemyTypeID.Bear]: new EnemyType({
-                id: EnemyTypeID.Bear,
-                name: 'Медведь',
-            }),
+            [EnemyTypeID.Boar]: new EnemyEntity(
+                EnemyTypeID.Boar,
+                'Кабан',
+            ),
+            [EnemyTypeID.Bear]: new EnemyEntity(
+                EnemyTypeID.Bear,
+                'Медведь',
+            ),
         };
 
         this._entityManager.set<EnemyTypeRecord>(EntityManagerKey.EnemyType, enemyTypes);
@@ -959,7 +958,7 @@ export default class EntityManagerBuilder {
         let maxEnemyLevel = 100;    //todo: config.maxEnemyLevel
         let enemyConfigs: EnemyConfigRecord = {
             [EnemyTypeID.Boar]: {
-                enemy: this._entityManager.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar), //todo: Тоже через фабрику, чтобы сократить кол-во использований EntityManager.
+                enemy: this._entityManager.entity<EnemyEntity>(EntityManagerKey.EnemyType, EnemyTypeID.Boar), //todo: Тоже через фабрику, чтобы сократить кол-во использований EntityManager.
                 loot: [
                     //todo: В луте может быть не только предмет с шансом, но и тип предмета: категория + редкость например.
                     {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BoarMeat), count: [1, 3], chance: 30},
@@ -975,7 +974,7 @@ export default class EntityManagerBuilder {
                 gold: [10, 20],
             },
             [EnemyTypeID.Bear]: {
-                enemy: this._entityManager.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Bear), //todo: Тоже через фабрику, чтобы сократить кол-во использований EntityManager.
+                enemy: this._entityManager.entity<EnemyEntity>(EntityManagerKey.EnemyType, EnemyTypeID.Bear), //todo: Тоже через фабрику, чтобы сократить кол-во использований EntityManager.
                 loot: [
                     {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BearMeat), count: [1, 5], chance: 30},
                     {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BearSkin), count: [1, 3], chance: 20},

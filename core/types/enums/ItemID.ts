@@ -28,7 +28,7 @@ export enum ItemID {
     BearSkin = 'BearSkin',
     BoarSkin = 'BoarSkin',
 
-    Leather_1 = 'Leather_1',
+    Leather01 = 'Leather01',
 
     BoarMeat = 'BoarMeat',
     BearMeat = 'BearMeat',

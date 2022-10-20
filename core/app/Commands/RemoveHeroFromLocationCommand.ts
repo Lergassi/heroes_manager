@@ -5,10 +5,11 @@ import {assert} from '../../source/assert.js';
 import _ from 'lodash';
 import LocationComponent from '../Components/LocationComponent.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class RemoveHeroFromLocationCommand extends Command {
     get name(): string {
-        return 'location.remove_hero';
+        return CommandNameID.remove_hero_from_location;
     }
 
     configure() {

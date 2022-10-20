@@ -1,4 +1,4 @@
-export default class Currency {
+export default class CharacterAttributeEntity {
     readonly id: string;
     readonly name: string;
     readonly alias: string;

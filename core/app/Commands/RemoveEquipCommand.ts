@@ -6,10 +6,11 @@ import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class RemoveEquipCommand extends Command {
     get name(): string {
-        return 'hero.remove_equip_to_item_storage';  //todo: Добавить команду destroyItem без перемещения в сумку.
+        return CommandNameID.remove_equip_to_item_storage_slot;  //todo: Добавить команду destroyItem без перемещения в сумку.
     }
 
     configure() {

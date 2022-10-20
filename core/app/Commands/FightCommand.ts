@@ -10,10 +10,11 @@ import AttackController from '../Components/AttackController.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class FightCommand extends Command {
     get name(): string {
-        return 'fight';
+        return CommandNameID.fight;
     }
 
     configure() {

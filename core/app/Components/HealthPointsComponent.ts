@@ -27,9 +27,8 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         maxHealthPoints: CharacterAttributeInterface,
         stateController: StateController,
     ) {
-        this._stateController = stateController;
-        // assertPositive(maxHealthPoints);
         assertNotNil(maxHealthPoints);
+        assertNotNil(stateController);
 
         // this._maxHealthPoints = maxHealthPoints;
         // this._currentHealthPoints = maxHealthPoints;

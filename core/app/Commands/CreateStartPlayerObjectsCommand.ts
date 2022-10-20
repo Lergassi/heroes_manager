@@ -24,10 +24,11 @@ import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
-        return 'player.create_start_objects';
+        return CommandNameID.create_player_start_objects;
     }
 
     get description(): string {

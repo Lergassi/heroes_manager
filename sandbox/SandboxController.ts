@@ -31,7 +31,7 @@ import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
 import EnemyFactory from '../core/app/Factories/EnemyFactory.js';
 import {EntityManagerKey} from '../core/app/types.js';
 import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponentFactory.js';
-import EnemyType from '../core/app/Entities/EnemyType.js';
+import EnemyEntity from '../core/app/Entities/EnemyEntity.js';
 import HealthPointsComponent from '../core/app/Components/HealthPointsComponent.js';
 import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
 import {ContainerKey} from '../core/types/enums/ContainerKey.js';
@@ -540,7 +540,7 @@ export class SandboxController {
         // let enemyType = em.entity<EnemyTypeRecord>(EntityManagerKey.EnemyType)[EnemyTypeAlias.Boar];
         // let enemyType = em.entity<EnemyTypeRecord>(EntityManagerKey.EnemyType)[EnemyTypeAlias.Fox];
         // let enemyType = em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Fox);
-        let enemyType = em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar);
+        let enemyType = em.entity<EnemyEntity>(EntityManagerKey.EnemyType, EnemyTypeID.Boar);
         // console.log(enemyType);
         // console.log(enemyType.alias);
         let enemy = enemyFactory.create(

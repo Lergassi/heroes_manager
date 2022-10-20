@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import debug from 'debug';
 import _ from 'lodash';
 import ValidationError from '../Errors/ValidationError.js';
+import {assertNotNil} from '../assert.js';
 
 export interface CommandOptions {
     name: string;
@@ -12,10 +13,11 @@ export interface CommandOptions {
 }
 
 export default class GameConsole {
-    private readonly _commands: {
-        [name: string]: Command,
-    };
+    private readonly _commands: {[name: string]: Command};
 
+    /**
+     * @deprecated
+     */
     get names(): string[] {
         let names = [];
         for (const commandsKey in this._commands) {
@@ -30,6 +32,8 @@ export default class GameConsole {
     }
 
     register(command: Command) {
+        assertNotNil(command);
+
         this._commands[command.name] = command;
     }
 

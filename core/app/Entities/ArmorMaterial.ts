@@ -1,16 +1,9 @@
 export default class ArmorMaterial {
-    private readonly _id: string;
-    private readonly _name: string;
-    private readonly _alias: string;
-    private readonly _description: string;
-    private readonly _sort: number;
-
-    /**
-     * @deprecated
-     */
-    get alias(): string {
-        return this._id;
-    }
+    readonly id: string;
+    readonly name: string;
+    readonly alias: string;
+    readonly description: string;
+    readonly sort: number;
 
     constructor(
         id: string,
@@ -18,9 +11,9 @@ export default class ArmorMaterial {
         description: string,
         sort: number,
     ) {
-        this._id = id;
-        this._name = name;
-        this._description = description;
-        this._sort = sort;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.sort = sort;
     }
 }

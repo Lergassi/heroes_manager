@@ -3,10 +3,11 @@ import Input from '../../source/GameConsole/Input.js';
 import MainLocationListComponent from '../Components/MainLocationListComponent.js';
 import LocationFactory from '../Factories/LocationFactory.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class CreateLocationCommand extends Command {
     get name(): string {
-        return 'location.create';
+        return CommandNameID.create_location;
     }
 
     configure() {

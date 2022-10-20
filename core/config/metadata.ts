@@ -16,7 +16,7 @@ import AttackController from '../app/Components/AttackController.js';
 import PlayerComponent from '../app/Components/PlayerComponent.js';
 import ArmorMaterial from '../app/Entities/ArmorMaterial.js';
 import Quality from '../app/Entities/Quality.js';
-import CharacterAttributeData from '../app/Entities/CharacterAttributeData.js';
+import CharacterAttributeEntity from '../app/Entities/CharacterAttributeEntity.js';
 import Currency from '../app/Entities/Currency.js';
 import HeroRole from '../app/Entities/HeroRole.js';
 import ItemCategory from '../app/Entities/ItemCategory.js';
@@ -184,9 +184,9 @@ metadata[EquipSlotComponent.name] = {
         },
     },
 };
-metadata[CharacterAttributeData.name] = {
-    classname: CharacterAttributeData.name,
-    prototype: CharacterAttributeData.prototype,
+metadata[CharacterAttributeEntity.name] = {
+    classname: CharacterAttributeEntity.name,
+    prototype: CharacterAttributeEntity.prototype,
     mapping: {
         _id: {
             type: SerializeType.Number,
@@ -316,9 +316,9 @@ metadata[Quality.name] = {
         },
     },
 };
-metadata[CharacterAttributeData.name] = {
-    classname: CharacterAttributeData.name,
-    prototype: CharacterAttributeData.prototype,
+metadata[CharacterAttributeEntity.name] = {
+    classname: CharacterAttributeEntity.name,
+    prototype: CharacterAttributeEntity.prototype,
     mapping: {
         _id: {
             type: SerializeType.Number,

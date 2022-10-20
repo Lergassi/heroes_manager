@@ -9,13 +9,14 @@ import MainItemStorageListComponent from '../Components/MainItemStorageListCompo
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.
  */
 export default class CreatePlayerEnvironmentCommand extends Command {
     get name(): string {
-        return 'player.create_env';
+        return CommandNameID.create_player_env;
     }
 
     async execute(input: Input) {

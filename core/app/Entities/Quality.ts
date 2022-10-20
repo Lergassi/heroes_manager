@@ -1,8 +1,8 @@
 export default class Quality {
-    private readonly _id: string;
-    private readonly _name: string;
-    private readonly _description: string;
-    private readonly _sort: number;
+    readonly id: string;
+    readonly name: string;
+    readonly description: string;
+    readonly sort: number;
 
     constructor(
         id: string,
@@ -10,9 +10,9 @@ export default class Quality {
         description: string,
         sort: number,
     ) {
-        this._id = id;
-        this._name = name;
-        this._description = description;
-        this._sort = sort;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.sort = sort;
     }
 }

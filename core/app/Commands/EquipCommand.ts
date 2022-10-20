@@ -8,10 +8,11 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {assert} from '../../source/assert.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class EquipCommand extends Command {
     get name(): string {
-        return 'hero.equip_from_item_storage';
+        return CommandNameID.equip_from_item_storage_slot;
     }
 
     configure() {

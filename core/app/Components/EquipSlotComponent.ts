@@ -16,6 +16,9 @@ export enum EquipSlotComponentEventCode {
     DestroyItemStack = 'EquipSlotComponent.DestroyItemStack',
 }
 
+/**
+ * @deprecated todo: Переделать управление слотами в командах.
+ */
 export default class EquipSlotComponent extends Component implements ItemStackPlaceInterface {
     private readonly _equipSlot: EquipSlot;
     private readonly _heroComponent: HeroComponent;

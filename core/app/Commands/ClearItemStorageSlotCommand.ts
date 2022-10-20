@@ -3,10 +3,11 @@ import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class ClearItemStorageSlotCommand extends Command {
     get name(): string {
-        return 'item_storage.clear_slot';
+        return CommandNameID.clear_slot_item_storage_slot;
     }
 
     configure() {
