@@ -7,6 +7,8 @@ import DamageControllerInterface from '../Interfaces/DamageControllerInterface.j
 import {assertNotNil, assertPositive} from '../../source/assert.js';
 import ArmorDecorator from './CharacterAttributes/ArmorDecorator.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
+import CharacterIsDeadError from '../../source/Errors/CharacterIsDeadError.js';
+import StateController from './StateController.js';
 
 export enum HealthPointsComponentEventCode {
     TakeDamage = 'HealthPointsComponent.TakeDamage',
@@ -14,20 +16,18 @@ export enum HealthPointsComponentEventCode {
     Resurrect = 'HealthPointsComponent.Resurrect',
 }
 
-export default class HealthPointsComponent extends Component implements DamageControllerInterface {
-// export default class HealthPointsComponent extends Component {
+export default class HealthPointsComponent implements DamageControllerInterface {
     private _currentHealthPoints: unsigned;
     // private _maxHealthPoints: unsigned;
-    private _maxHealthPoints: CharacterAttributeInterface;
+    private readonly _maxHealthPoints: CharacterAttributeInterface;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
+    private readonly _stateController: StateController;
 
     constructor(
-        // maxHealthPoints: unsigned,
         maxHealthPoints: CharacterAttributeInterface,
-        // armor: Armor,
+        stateController: StateController,
     ) {
-        super();
-
+        this._stateController = stateController;
         // assertPositive(maxHealthPoints);
         assertNotNil(maxHealthPoints);
 
@@ -36,6 +36,7 @@ export default class HealthPointsComponent extends Component implements DamageCo
         this._maxHealthPoints = maxHealthPoints;
         this._currentHealthPoints = maxHealthPoints.value();
         this._isDead = false;
+        this._stateController = stateController;
     }
 
     damage(damage: unsigned): void {
@@ -43,7 +44,7 @@ export default class HealthPointsComponent extends Component implements DamageCo
 
         this._canModify();
 
-        debug('log')('Получено урона: ' + damage);
+        debug('log')('Персонаж получил урон: ' + damage);
         EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
 
         let healthPoints = this._currentHealthPoints - damage;
@@ -63,10 +64,12 @@ export default class HealthPointsComponent extends Component implements DamageCo
 
     kill(): void {
         this._canModify();
+        this._stateController.assertAnyAction();
 
         this._currentHealthPoints = 0;
         this._isDead = true;
-        debug('log')('Объект умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
+        debug('log')('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
+        this._stateController.state('Dead', 'Персонаж мертвый.');
         EventSystem.event(HealthPointsComponentEventCode.Died, this);
         /*
             В вов:
@@ -79,20 +82,23 @@ export default class HealthPointsComponent extends Component implements DamageCo
          */
     }
 
-    // resurrect(): void {
-    //     if (!this._isDead) {
-    //         throw AppError.isNotDead();
-    //     }
-    //
-    //     this._currentHealthPoints = this._maxHealthPoints;
-    //     this._isDead = false;
-    //     debug('log')('Объект воскрес.');
-    //     EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
-    // }
+    resurrect(): void {
+        if (!this._isDead) {
+            throw AppError.isNotDead();
+        }
+
+        this._currentHealthPoints = this._maxHealthPoints.value();
+        this._isDead = false;
+        this._stateController.removeState();
+        debug('log')('Персонаж воскрес.');
+        EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
+    }
 
     private _canModify(): void {
-        if (this._isDead) {
-            throw AppError.isDead();
-        }
+        // if (this._isDead) {
+        //     // throw AppError.isDead();
+        //     throw new CharacterIsDeadError();
+        // }
+        this._stateController.assertAnyAction();
     }
 }

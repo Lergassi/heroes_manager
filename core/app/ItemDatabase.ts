@@ -36,9 +36,9 @@ export default class ItemDatabase {
     filter(filter: ItemFilterCondition): Item[] {
         let result = [];
         for (let i = 0; i < this._items.length; i++) {
-            // if (this._items[i][].filter(filter)) {
-            //     result.push(this._items[i]);
-            // }
+            if (_.includes(filter.itemCategory, this._items[i].itemCategory)) {
+                result.push(this._items[i]);
+            }
         }
 
         return result;

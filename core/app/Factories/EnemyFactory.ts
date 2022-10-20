@@ -8,8 +8,6 @@ import EnemyComponent from '../Components/EnemyComponent.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
 import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
 import _ from 'lodash';
-import ExperienceComponent from '../Components/ExperienceComponent.js';
-import WalletComponent from '../Components/WalletComponent.js';
 import {assert} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
@@ -19,9 +17,10 @@ import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttribut
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import CharacterAttributeStartValueGenerator from '../Services/CharacterAttributeStartValueGenerator.js';
-import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
 import CharacterAttributeFactory from './CharacterAttributeFactory.js';
+import AttackController from '../Components/AttackController.js';
+import StateController from '../Components/StateController.js';
+import {options} from 'yargs';
 // import assert from 'assert';
 
 // export type EnemyFactoryOptions = {
@@ -54,6 +53,9 @@ export default class EnemyFactory {
     create(
         enemyTypeID: EnemyTypeID,
         level: unsigned,
+        options?: {
+            characterAttributeValues: Partial<{[ID in CharacterAttributeID]: number}>,
+        }
     ) {
         assert(level >= 1);
         assert(!_.isNil(enemyTypeID));
@@ -69,6 +71,8 @@ export default class EnemyFactory {
         enemy.name = 'Enemy: ' + enemyType.name;
         enemy.addTags('#enemy');
 
+        let stateController = new StateController();
+
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
 
         let enemyComponent = enemy.set<EnemyComponent>(EnemyComponent.name, new EnemyComponent({
@@ -82,6 +86,7 @@ export default class EnemyFactory {
                 level,
                 itemCharacterAttributeCollector,
             ),
+            stateController,
         ));
         let armorDecorator = enemy.set<DamageControllerInterface>(GameObjectKey.DamageController, new ArmorDecorator(
             healthPointsComponent as DamageControllerInterface,
@@ -91,7 +96,24 @@ export default class EnemyFactory {
                 itemCharacterAttributeCollector,
             ),
         ));
-        // let attackPower =
+
+        enemy.set<AttackController>(GameObjectKey.AttackController, new AttackController(
+            // new CharacterAttribute(
+            //     CharacterAttributeID.AttackPower,
+            //     new ItemCharacterAttributeCollector(),
+            //     200,
+            // ),
+            this._characterAttributeFactory.create(
+                CharacterAttributeID.AttackPower,
+                level,
+                itemCharacterAttributeCollector,    //todo: При такой реализации нельзя вообще изменить начальные настройки. Надо доработать.
+                {
+                    // baseValue: 1000,                //todo: Так? А тогда зачем модификатор? При указании baseValue и baseValueModifier одновременно baseValue работать не будет.
+                    baseValue: options?.characterAttributeValues?.AttackPower,
+                }
+            ),
+            stateController,
+        ))
 
         //лут
         let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ItemLootGeneratorComponent.name, new ItemLootGeneratorComponent({

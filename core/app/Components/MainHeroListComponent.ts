@@ -10,6 +10,8 @@ import EventSystem from '../../source/EventSystem.js';
 import HeroClass from '../Entities/HeroClass.js';
 import {assert} from '../../source/assert.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
+import TakeComponent from './TakeComponent.js';
+import {takeCoverage} from 'v8';
 
 /**
  * @deprecated
@@ -112,7 +114,7 @@ export default class MainHeroListComponent extends Component {
     }
 
     canDeleteHero(hero: GameObject): void {
-        if (!hero.get<HeroComponent>(HeroComponent.name).canManipulate()) {
+        if (hero.get<TakeComponent>(TakeComponent.name) && !hero.get<TakeComponent>(TakeComponent.name).isFree()) {
             throw new AppError('Нельзя удалить героя пока он занят.');
         }
     }

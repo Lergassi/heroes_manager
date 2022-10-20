@@ -22,6 +22,7 @@ export default class CharacterAttributeFactory {
         level: unsigned,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,   //todo: В декоратор.
         options?: { //todo: Времено пока в разработке. Далее для каждого класса будет своя логика без передачи из вне.
+            baseValue?: number,
             baseValueModifier?: CharacterAttributeValueModifier,
             increaseValueModifier?: CharacterAttributeValueModifier,
         },
@@ -29,7 +30,7 @@ export default class CharacterAttributeFactory {
         let characterAttribute = new CharacterAttribute(
             ID,
             itemCharacterAttributeCollector,
-            this._characterAttributeStartValueGenerator.generate(
+            options?.baseValue ?? this._characterAttributeStartValueGenerator.generate(
                 ID,
                 level,
                 options?.baseValueModifier,

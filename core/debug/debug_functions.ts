@@ -5,7 +5,7 @@ import GameObject from '../source/GameObject.js';
 import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import EquipSlotComponent from '../app/Components/EquipSlotComponent.js';
 import HealthPointsComponent from '../app/Components/HealthPointsComponent.js';
-import AttackPowerComponent from '../app/Components/AttackPowerComponent.js';
+import AttackController from '../app/Components/AttackController.js';
 import MagicPointsComponent from '../app/Components/MagicPointsComponent.js';
 import HeroComponent from '../app/Components/HeroComponent.js';
 import ItemStack from '../app/RuntimeObjects/ItemStack.js';
@@ -148,9 +148,9 @@ export function debugHero(hero: GameObject) {
         _maxMagicPoints: magicPointsComponent['_maxMagicPoints'],
     });
 
-    let attackPowerComponent: AttackPowerComponent = <AttackPowerComponent>hero.getComponentByName(AttackPowerComponent.name);
+    let attackPowerComponent: AttackController = <AttackController>hero.getComponentByName(AttackController.name);
     debug('debug')('%j', {
-        component: AttackPowerComponent.name,
+        component: AttackController.name,
         _id: attackPowerComponent['_id'],
         _baseMinAttackPower: attackPowerComponent['_baseMinAttackPower'],
         _baseMaxAttackPower: attackPowerComponent['_baseMaxAttackPower'],

@@ -8,7 +8,7 @@ import EquipSlot from '../Entities/EquipSlot.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
-import AttackPowerComponent from '../Components/AttackPowerComponent.js';
+import AttackController from '../Components/AttackController.js';
 import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
@@ -44,6 +44,8 @@ import RightHand from '../Components/EquipSlots/RightHand.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import EquipSlotWithItemCollectorDecorator from '../Components/EquipSlots/EquipSlotWithItemCollectorDecorator.js';
 import EquipSlotFactory from './EquipSlotFactory.js';
+import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
+import StateController from '../Components/StateController.js';
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManager;
@@ -83,6 +85,8 @@ export default class HeroFactory {
 
         hero.name = 'Hero: ' + heroClass.name;
         hero.addTags('#hero');
+
+        let stateController = new StateController();
 
         let heroComponent = hero.set(HeroComponent.name, new HeroComponent(
             heroClass.name,
@@ -226,6 +230,7 @@ export default class HeroFactory {
         //К компоненту с очками здоровья возможно не будет доступа вообще.
         let healthPointsComponent = new HealthPointsComponent(
             hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).MaxHealthPoints,
+            stateController,
         );
         let damageController = new ArmorDecorator(
             healthPointsComponent as DamageControllerInterface,
@@ -245,11 +250,12 @@ export default class HeroFactory {
             hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).MaxMagicPoints,
         ));
 
-        let attackPowerComponent = hero.set(AttackPowerComponent.name, new AttackPowerComponent(
+        let attackPowerComponent = hero.set<AttackControllerInterface>(GameObjectKey.AttackController, new AttackController(
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
-            _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {
-                return hero.get<CharacterAttributeInterface>(characterAttribute['_id']);    //todo: Доступ.
-            }), value => value != undefined),
+            stateController,
+            // _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {
+            //     return hero.get<CharacterAttributeInterface>(characterAttribute['_id']);    //todo: Доступ.
+            // }), value => value != undefined),
         ));
 
         //Controllers

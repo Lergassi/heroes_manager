@@ -41,3 +41,7 @@ export function assertMinLength<T>(array: T[], minLength: number, message?: stri
 export function assertIsArray(value: any, message?: string) {
     assert(Array.isArray(value), 'Переменная должна быть массивом.');
 }
+
+// export function assertInstanceOf(value: any, target: any, message?: string) {
+//
+// }

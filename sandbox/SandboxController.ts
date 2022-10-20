@@ -59,6 +59,10 @@ import {ArmorMaterialID} from '../core/types/enums/ArmorMaterialID.js';
 import DefaultEquipSlot from '../core/app/Components/EquipSlots/DefaultEquipSlot.js';
 import RightHand from '../core/app/Components/EquipSlots/RightHand.js';
 import LeftHand from '../core/app/Components/EquipSlots/LeftHand.js';
+import FightController from '../core/app/Components/FightController.js';
+import AttackController from '../core/app/Components/AttackController.js';
+import AttackControllerInterface from '../core/app/Interfaces/AttackControllerInterface.js';
+import StateController from '../core/app/Components/StateController.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -95,14 +99,14 @@ export class SandboxController {
         // this.devAttackPowerComponent();
 
         //fight
-        // this.devFight();
+        this.devFight();
         // this.devDefence();
         // this.devHeroArmor();
         // this.devEnemyArmor();
 
         // this.devNewCharacterAttributesGetStarted();
 
-        this.devNewEquipSlotSystem();
+        // this.devNewEquipSlotSystem();
     }
 
     devLocation() {
@@ -871,11 +875,14 @@ export class SandboxController {
         protection.increaseBaseValue(options.protectionBaseValue);
 
         let defence = new ArmorDecorator(
-            new HealthPointsComponent(new CharacterAttribute(
-                CharacterAttributeID.MaxHealthPoints,
-                new ItemCharacterAttributeCollector(),
-                0,
-            )),
+            new HealthPointsComponent(
+                new CharacterAttribute(
+                    CharacterAttributeID.MaxHealthPoints,
+                    new ItemCharacterAttributeCollector(),
+                    0,
+                ),
+                new StateController(),
+            ),
             protection,
         );
 
@@ -1052,6 +1059,7 @@ export class SandboxController {
         let healthPoints: DamageControllerInterface = new HealthPointsComponent(
         // let healthPoints = new HealthPointsComponent(
             maxHealthPoints,
+            new StateController(),
         );
 
         let protection = new CharacterAttribute(
@@ -1114,15 +1122,46 @@ export class SandboxController {
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
         let hero = heroFactory.create(HeroClassID.Warrior, 1);
-        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1);
+        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1, {
+            characterAttributeValues: {
+                [CharacterAttributeID.AttackPower]: 1000042,
+            },
+        });
         console.log(hero);
         console.log(enemy);
 
-        let fight = new Fight();
-        // fight.fight(
-        //     hero.get<DamageControllerInterface>(GameObjectKey.DamageController),
-        //     enemy.get<DamageControllerInterface>(GameObjectKey.DamageController),
-        // );
+        let heroAttackController = new FightController(
+            hero.get<AttackControllerInterface>(GameObjectKey.AttackController),
+            hero.get<DamageControllerInterface>(GameObjectKey.DamageController),
+        );
+        let enemyAttackController = new FightController(
+            enemy.get<AttackControllerInterface>(GameObjectKey.AttackController),
+            enemy.get<DamageControllerInterface>(GameObjectKey.DamageController),
+        );
+        console.log(heroAttackController);
+        console.log(enemyAttackController);
+
+        // let maxHits = 10_000;
+        // let currentHit = 0;
+        // while (currentHit < maxHits) {
+        //     heroAttackController.hit(enemyAttackController);
+        //     ++currentHit;
+        // }
+        // heroAttackController.hit(enemyAttackController);
+        // enemyAttackController.hit(heroAttackController);
+        // heroAttackController.exchangeHits(enemyAttackController);
+        // heroAttackController.exchangeHits(enemyAttackController);
+        // heroAttackController.exchangeHits(enemyAttackController);
+        // heroAttackController.exchangeHits(enemyAttackController);
+        // heroAttackController.exchangeHits(enemyAttackController);
+        // heroAttackController.exchangeHits(enemyAttackController);
+        // heroAttackController.exchangeHits(enemyAttackController);
+        // heroAttackController.exchangeHits(enemyAttackController);
+
+        // heroAttackController.hit(enemyAttackController);
+        heroAttackController.fightToDead(enemyAttackController);
+        console.log(heroAttackController);
+        console.log(enemyAttackController);
     }
 
     private devNewEquipSlotSystem() {

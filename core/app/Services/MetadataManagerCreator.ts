@@ -21,7 +21,7 @@ import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
-import AttackPowerComponent from '../Components/AttackPowerComponent.js';
+import AttackController from '../Components/AttackController.js';
 import PlayerComponent from '../Components/PlayerComponent.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
@@ -451,7 +451,7 @@ export default class MetadataManagerCreator {
             },
         });
         metadataManager.addMetadata({
-            module: AttackPowerComponent,
+            module: AttackController,
             mapping: {
                 _id: {
                     type: SerializeType.String,

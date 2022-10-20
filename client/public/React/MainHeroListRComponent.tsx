@@ -93,16 +93,16 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
             <div className={'block'}>
                 <table className={'basic-table basic-table__full-width'}>
                     <tbody>
-                    <tr>
-                        <th>id</th>
-                        <th>heroClass</th>
-                        <th>level (exp)</th>
-                        <th>Health points</th>
-                        <th>Magic points</th>
-                        <th>Attack power</th>
-                        <th>STR/AGL/INT</th>
-                        <th></th>
-                    </tr>
+                    {/*<tr>*/}
+                    {/*    <th>id</th>*/}
+                    {/*    <th>heroClass</th>*/}
+                    {/*    <th>level (exp)</th>*/}
+                    {/*    <th>Health points</th>*/}
+                    {/*    <th>Magic points</th>*/}
+                    {/*    <th>Attack power</th>*/}
+                    {/*    <th>STR/AGL/INT</th>*/}
+                    {/*    <th></th>*/}
+                    {/*</tr>*/}
                     {heroList}
                     </tbody>
                 </table>

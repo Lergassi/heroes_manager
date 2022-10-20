@@ -12,7 +12,7 @@ import EquipSlotComponent from '../app/Components/EquipSlotComponent.js';
 import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import HealthPointsComponent from '../app/Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../app/Components/MagicPointsComponent.js';
-import AttackPowerComponent from '../app/Components/AttackPowerComponent.js';
+import AttackController from '../app/Components/AttackController.js';
 import PlayerComponent from '../app/Components/PlayerComponent.js';
 import ArmorMaterial from '../app/Entities/ArmorMaterial.js';
 import Quality from '../app/Entities/Quality.js';
@@ -241,9 +241,9 @@ metadata[MagicPointsComponent.name] = {
         },
     },
 };
-metadata[AttackPowerComponent.name] = {
-    classname: AttackPowerComponent.name,
-    prototype: AttackPowerComponent.prototype,
+metadata[AttackController.name] = {
+    classname: AttackController.name,
+    prototype: AttackController.prototype,
     mapping: {
         _id: {
             type: SerializeType.Number,

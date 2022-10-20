@@ -43,3 +43,75 @@ hero1.damage.attack(hero2.attackController);
 //или
 let damage = damage.generateAttack();
 hero1.damageController.attack(damage);
+
+//////////////////////////////////////////
+
+/*
+    Герой не может атаковать и совершать другие действия (двигаться) если мертвый.
+    Герой не может атаковать и совершать другие действия (двигаться) если на нем какие-либо эффекты: стан.
+
+    Цель не может получить урон если мертва.
+    Цель не может получить урон на ней какие-либо эффекты: неуязвимость.
+
+    Пока у героя только атака пусть это будет через дополнительный класс с методом assertCanAction() например.
+
+    Кстате это разные действия. Получить урон - это просто операция с числами, атака - физическая.
+    Герой не может просто так сменить состояние. Его нужно именно воскресить.
+*/
+hero.attack(target);
+
+/////
+
+//actionController.action('атака', hero);
+hero.attack(target);
+attack(target) {
+    //this._actionController.assertAction('attack');
+}
+
+контроллер.действие(действие, () => {
+    hero.attack(target);    //хм...
+})
+
+actionController = new ActionController();
+hero //это контейнер. actionController внутри. Сам ни от чего не зависит. А нет - зависит. Тоже декоратор?
+
+health = new Health();
+health = new ActionController(health);  //и чё?
+health = new Armor(health);
+health = new MagicArmor(health);
+
+//Надо сделать так, чтобы состояние нельзя было изменить из любой точки программы. Если объект ничего
+
+health = new Health(actionController);
+Health {
+    Health(actionController) {
+        this._actionController.assign(() => {
+            return this._isDead;
+        });
+    }
+
+    kill() {
+        this._actionController.setState(Dead);
+    }
+
+    resurrect() {
+        this._actionController.setState(Life);
+    }
+}
+
+stun() {
+    this._actionController.setState(Stun);
+}
+
+hero.block();
+hero.unblock();
+hero.assertAction('attack');
+
+hero.addState('dead');  //Все остальные эффекты удаляются.
+hero.addState('stun');  //Если есть эффект dead другие действия не возможны.
+
+states = [];
+if (state === dead) {
+    states.clear();
+    states.add(state);
+}

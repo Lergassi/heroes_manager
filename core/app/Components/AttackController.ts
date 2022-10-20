@@ -7,30 +7,33 @@ import {assert} from '../../source/assert.js';
 import CharacterAttributeCollector from './CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
+import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
+import StateController from './StateController.js';
 
-export default class AttackPowerComponent extends Component {
+export default class AttackController implements AttackControllerInterface {
     private readonly _rangeSide: unsigned;
     private readonly _attackPowerCharacterAttribute: CharacterAttributeInterface;
-    private readonly _dependentCharacterAttributeComponents: CharacterAttributeInterface[];
-    private readonly _dependentCharacterAttributeMultiplier: number;
+    private readonly _stateController: StateController;
 
     constructor(
-        attackPowerCharacterAttribute: CharacterAttributeInterface,
-        dependentCharacterAttributeComponents?: CharacterAttributeInterface[],
+        attackPowerCharacterAttribute: CharacterAttributeInterface, //todo: Нужен дополнительная логика с числом для врагов.
+        stateController: StateController,
     ) {
-        super();
+        assert(!_.isNil(attackPowerCharacterAttribute));
+        assert(!_.isNil(stateController));
         // assert(options.attackPowerCharacterAttributeComponent instanceof CharacterAttributeComponent);
         // assert(options.attackPower instanceof CharacterAttributeValueCollector);
-        assert(!_.isNil(attackPowerCharacterAttribute));
         // assert(!_.isNil(options.dependentCharacterAttributeComponents));
 
-        this._rangeSide = 5;
-        this._dependentCharacterAttributeMultiplier = 2;
-
+        this._rangeSide = 2;
         this._attackPowerCharacterAttribute = attackPowerCharacterAttribute;
-        this._dependentCharacterAttributeComponents = dependentCharacterAttributeComponents;
+        this._stateController = stateController;
+
     }
 
+    /**
+     * @deprecated
+     */
     value(): {left: number; right: number} {
         let left = this._attackPowerCharacterAttribute.value() -
             round(this._rangeSide, 0)
@@ -47,7 +50,15 @@ export default class AttackPowerComponent extends Component {
         };
     }
 
-    generateAttackPower(): number {
+    generateDamage(): number {
+        let value = this.value();
+
+        return _.random(value.left, value.right);
+    }
+
+    attack(): number {
+        this._stateController.assertAnyAction();
+
         let value = this.value();
 
         return _.random(value.left, value.right);

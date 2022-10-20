@@ -27,6 +27,8 @@ import ToggleLocationCommand from './Commands/ToggleLocationCommand.js';
 import GetItemsFromLocationCommand from './Commands/GetItemsFromLocationCommand.js';
 import ClearItemStorageSlotCommand from './Commands/ClearItemStorageSlotCommand.js';
 import CreateHeroKitCommand from './Commands/CreateHeroKitCommand.js';
+import FightCommand from './Commands/FightCommand.js';
+import ResurrectHeroCommand from './Commands/ResurrectHeroCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -60,6 +62,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
 
         gameConsole.register(new CreateHeroCommand(container));
         gameConsole.register(new DeleteHeroCommand(container));
+        gameConsole.register(new ResurrectHeroCommand(container));
         gameConsole.register(new CreateHeroKitCommand(container));
 
         gameConsole.register(new EquipCommand(container));
@@ -71,6 +74,8 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new RemoveHeroFromLocationCommand(container));
         gameConsole.register(new ToggleLocationCommand(container));
         gameConsole.register(new GetItemsFromLocationCommand(container));
+
+        gameConsole.register(new FightCommand(container));
 
         /* DEBUG */
         gameConsole.register(new DebugEntitiesCommand(container));

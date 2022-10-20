@@ -97,11 +97,11 @@ export default class AppError extends Error {
     }
 
     static isDead() {
-        return new AppError('Объект мертвый.');
+        return new AppError('Персонаж мертвый.');
     }
 
     static isNotDead() {
-        return new AppError('Объект живой.');
+        return new AppError('Персонаж живой.');
     }
 
     static deprecated() {

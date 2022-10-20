@@ -9,7 +9,7 @@ import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.
 import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
 import HealthPointsComponent from '../../../core/app/Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../../../core/app/Components/MagicPointsComponent.js';
-import AttackPowerComponent from '../../../core/app/Components/AttackPowerComponent.js';
+import AttackController from '../../../core/app/Components/AttackController.js';
 
 export interface HeroDetailRComponentProps {
     hero?: GameObject,

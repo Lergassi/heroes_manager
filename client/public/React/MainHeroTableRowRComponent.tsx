@@ -4,12 +4,14 @@ import GameObject from '../../../core/source/GameObject.js';
 import ExperienceComponent, {ExperienceComponentEventCode} from '../../../core/app/Components/ExperienceComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
-import HealthPointsComponent from '../../../core/app/Components/HealthPointsComponent.js';
+import HealthPointsComponent, {
+    HealthPointsComponentEventCode
+} from '../../../core/app/Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../../../core/app/Components/MagicPointsComponent.js';
 import ExperienceTextRenderRComponent from './ExperienceTextRenderRComponent.js';
 import {EquipSlotComponentEventCode} from '../../../core/app/Components/EquipSlotComponent.js';
 import CharacterAttributeCollector from '../../../core/app/Components/CharacterAttributeCollector.js';
-import AttackPowerComponent from '../../../core/app/Components/AttackPowerComponent.js';
+import AttackController from '../../../core/app/Components/AttackController.js';
 import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
 import TotalCharacterAttributeValueCollectorComponent
     from '../../../core/app/Components/TotalCharacterAttributeValueCollectorComponent.js';
@@ -18,6 +20,7 @@ import Strength from '../../../core/app/Components/CharacterAttributes/Strength.
 import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
 import {CharacterAttributes} from '../../../core/app/types.js';
 import {GameObjectKey} from '../../../core/types/enums/GameObjectKey.js';
+import TakeComponent from '../../../core/app/Components/TakeComponent.js';
 
 export type HeroTableRowRComponentProps = {
     container: ContainerInterface;
@@ -45,17 +48,18 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
             });
         };
 
-        //todo: И так на каждый компонент?
         EventSystem.addListener({
             codes: [
                 ExperienceComponentEventCode.AddExp,
                 ExperienceComponentEventCode.AddLevel,
                 EquipSlotComponentEventCode.CreateItemStack,
                 EquipSlotComponentEventCode.DestroyItemStack,
+                HealthPointsComponentEventCode.TakeDamage,
+                HealthPointsComponentEventCode.Died,
+                HealthPointsComponentEventCode.Resurrect,
             ],
             listener: {
                 callback: callback,
-                // target: ,
             },
         });
     }
@@ -73,6 +77,7 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                     experienceComponent={hero.get<ExperienceComponent>(ExperienceComponent.name)}
                 /></td>
                 <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_maxHealthPoints']['value']()}</td>
+                <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_isDead'] ? 'Мертвый' : 'Живой'}</td>
                 <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>
                 {/* todo: Сделать отдельный компонент для вывода значений, который получаются одним методом. */}
                 <td>{hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).AttackPower.value()}</td>
@@ -84,7 +89,7 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                     {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Intelligence.value()}
                 </td>
                 <td>
-                    {hero.get<HeroComponent>(HeroComponent.name).state}
+                    {hero.get<TakeComponent>(TakeComponent.name)['_state']}
                 </td>
                 <td>
                     <button onClick={this.props.selectHero.bind(this, hero)}>showHero</button>
