@@ -23,7 +23,7 @@ export default class MainItemStorageListRComponent extends React.Component<ItemS
 
     render() {
         return (<div>
-            {this.state.itemStorageCollection.itemStorages.map((itemStorage) => (
+            {this.state.itemStorageCollection['_itemStorages'].map((itemStorage) => (   //todo: Доступ.
                 <ItemStorageRComponent
                     key={itemStorage['_id']}
                     itemStorage={itemStorage}

@@ -1,7 +1,7 @@
 import CharacterAttribute from '../CharacterAttribute.js';
 import {float, integer, unsigned} from '../../types.js';
 import _ from 'lodash';
-import {assert, assertNotNil, assertPositive} from '../../../source/assert.js';
+import {assert, assertNotNil, assertIsPositive} from '../../../source/assert.js';
 import HealthPointsComponent from '../HealthPointsComponent.js';
 import DamageControllerInterface from '../../Interfaces/DamageControllerInterface.js';
 import debug from 'debug';
@@ -31,7 +31,7 @@ export default class ArmorDecorator implements DamageControllerInterface {
     //todo: Далее можно сделать механику модификации урона в виде цепочки или декораторов .damage(42) где урон проходит через все привязаные методы.
     //todo: Если урон < 10, то логика защиты практически не работает. Рашить далее.
     damage(damage: unsigned): void {
-        assertPositive(damage);
+        assertIsPositive(damage);
 
         let protectDamage = _.ceil(+((damage * this._calcProtectionModifier()).toFixed(4)), 0);
         let finalDamage = damage - protectDamage;

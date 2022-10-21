@@ -76,6 +76,10 @@ export default class AppError extends Error {
         return new AppError(sprintf('Кол-во ItemStorage у игрока должно быть в диапазоне %s-%s.', min, max));
     }
 
+    static playerHasMaxItemStorages() {
+        return new AppError('Игрок имеет максимальное количество ItemStorage.');
+    }
+
     static heroNotContainsEquipSlot(name?: string) {
         return new AppError(sprintf('Герой не содержит данного слота.'));
     }

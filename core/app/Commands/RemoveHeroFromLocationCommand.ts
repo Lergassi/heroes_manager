@@ -26,6 +26,6 @@ export default class RemoveHeroFromLocationCommand extends Command {
         let location = this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(locationID);
 
         location
-            ?.get<LocationComponent>('locationComponent').removeHero(hero);
+            ?.get<LocationComponent>(LocationComponent.name).removeHero(hero);
     }
 }

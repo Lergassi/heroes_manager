@@ -4,7 +4,7 @@ import EventSystem from '../../source/EventSystem.js';
 import {unsigned} from '../types.js';
 import AppError from '../../source/Errors/AppError.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import {assertNotNil, assertPositive} from '../../source/assert.js';
+import {assertNotNil, assertIsPositive} from '../../source/assert.js';
 import ArmorDecorator from './CharacterAttributes/ArmorDecorator.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import CharacterIsDeadError from '../../source/Errors/CharacterIsDeadError.js';
@@ -39,7 +39,7 @@ export default class HealthPointsComponent implements DamageControllerInterface 
     }
 
     damage(damage: unsigned): void {
-        assertPositive(damage);
+        assertIsPositive(damage);
 
         this._canModify();
 

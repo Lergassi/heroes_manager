@@ -16,6 +16,7 @@ import ItemDatabaseBuilder from './ItemDatabaseBuilder.js';
 import ItemFactory from '../Factories/ItemFactory.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
 import {
+    EnemyConfig,
     EnemyConfigRecord,
     EnemyTypeRecord,
     EntityManagerKey
@@ -24,7 +25,7 @@ import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
+import {EnemyID} from '../../types/enums/EnemyID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {QualityID} from '../../types/enums/QualityID.js';
@@ -62,7 +63,8 @@ export default class EntityManagerBuilder {
         this._createRecipes();
         this._createHeroClasses();
         this._createEquipSlots();
-        this._createEnemyTypes();
+
+        // this._createEnemyTypes();
         this._createEnemyConfigs();
 
         return this._entityManager;
@@ -790,73 +792,6 @@ export default class EntityManagerBuilder {
                     ],
                 },
             ),
-            // [
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
-                //     [
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Shields),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
-                //     [
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Shields),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
-                //     [
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Daggers),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gladiator),
-                //     [
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.OneHandedSwords),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Archer),
-                //     [
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Bows),
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Crossbows),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
-                //     [
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Revolvers),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
-                //     [
-                //         // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warlock),
-                //     [
-                //         // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Priest),
-                //     [
-                //         // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
-                //     ],
-                // ),
-                // new EquipSlotRule(
-                //     this._entityManager.getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Druid),
-                //     [
-                //         // this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryAlias.Staffs),
-                //         this._entityManager.getRepository<ItemCategory>(ItemCategory.name).getOneByAlias(ItemCategoryID.Wands),
-                //     ],
-                // ),
-            // ],
         ));
     }
 
@@ -866,7 +801,6 @@ export default class EntityManagerBuilder {
             new Recipe(
                 RecipeID.WoodBoards01,
                 this._entityManager.get<Item>(Item, ItemID.WoodBoards),
-                500,
                 1,
                 [
                     {item: this._entityManager.get<Item>(Item, ItemID.Wood), count: 2},
@@ -878,7 +812,6 @@ export default class EntityManagerBuilder {
             new Recipe(
                 RecipeID.Leather01_01,
                 this._entityManager.get<Item>(Item, ItemID.Leather01),
-                500,
                 1,
                 [
                     {item: this._entityManager.get<Item>(Item, ItemID.RabbitSkin), count: 5},
@@ -891,7 +824,6 @@ export default class EntityManagerBuilder {
                 RecipeID.Leather01_02,
                 this._entityManager.get<Item>(Item, ItemID.Leather01),
                 // 'leather_fox_skin_recipe',
-                500,
                 1,
                 [
                     {item: this._entityManager.get<Item>(Item, ItemID.FoxSkin), count: 1},
@@ -904,7 +836,6 @@ export default class EntityManagerBuilder {
                 RecipeID.Leather01_03,
                 this._entityManager.get<Item>(Item, ItemID.Leather01),
                 // 'leather_deer_skin_recipe',
-                500,
                 1,
                 [
                     {item: this._entityManager.get<Item>(Item, ItemID.DeerSkin), count: 1},
@@ -917,7 +848,6 @@ export default class EntityManagerBuilder {
                 RecipeID.Leather01_04,
                 this._entityManager.get<Item>(Item, ItemID.Leather01),
                 // 'leather_wolf_skin_recipe',
-                500,
                 1,
                 [
                     {item: this._entityManager.get<Item>(Item, ItemID.WolfSkin), count: 1},
@@ -930,7 +860,6 @@ export default class EntityManagerBuilder {
                 RecipeID.Leather01_05,
                 this._entityManager.get<Item>(Item, ItemID.Leather01),
                 // 'leather_bear_skin_recipe',
-                500,
                 5,
                 [
                     {item: this._entityManager.get<Item>(Item, ItemID.BearSkin), count: 1},
@@ -940,25 +869,26 @@ export default class EntityManagerBuilder {
     }
 
     private _createEnemyTypes() {
-        let enemyTypes: EnemyTypeRecord = {
-            [EnemyTypeID.Boar]: new EnemyEntity(
-                EnemyTypeID.Boar,
-                'Кабан',
-            ),
-            [EnemyTypeID.Bear]: new EnemyEntity(
-                EnemyTypeID.Bear,
-                'Медведь',
-            ),
-        };
-
-        this._entityManager.set<EnemyTypeRecord>(EntityManagerKey.EnemyType, enemyTypes);
+        // let enemyTypes: EnemyTypeRecord = {
+        //     [EnemyTypeID.Boar]: new EnemyEntity(
+        //         EnemyTypeID.Boar,
+        //         'Кабан',
+        //     ),
+        //     [EnemyTypeID.Bear]: new EnemyEntity(
+        //         EnemyTypeID.Bear,
+        //         'Медведь',
+        //     ),
+        // };
+        //
+        // this._entityManager.set<EnemyTypeRecord>(EntityManagerKey.EnemyType, enemyTypes);
     }
 
     private _createEnemyConfigs() {
         let maxEnemyLevel = 100;    //todo: config.maxEnemyLevel
-        let enemyConfigs: EnemyConfigRecord = {
-            [EnemyTypeID.Boar]: {
-                enemy: this._entityManager.entity<EnemyEntity>(EntityManagerKey.EnemyType, EnemyTypeID.Boar), //todo: Тоже через фабрику, чтобы сократить кол-во использований EntityManager.
+        //todo: А у врага может несколько настроек?
+        let enemyConfigs: Partial<EnemyConfigRecord> = {
+            [EnemyID.Boar]: {
+                enemyID: EnemyID.Boar,
                 loot: [
                     //todo: В луте может быть не только предмет с шансом, но и тип предмета: категория + редкость например.
                     {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BoarMeat), count: [1, 3], chance: 30},
@@ -973,8 +903,8 @@ export default class EntityManagerBuilder {
                 exp: 20,
                 gold: [10, 20],
             },
-            [EnemyTypeID.Bear]: {
-                enemy: this._entityManager.entity<EnemyEntity>(EntityManagerKey.EnemyType, EnemyTypeID.Bear), //todo: Тоже через фабрику, чтобы сократить кол-во использований EntityManager.
+            [EnemyID.Bear]: {
+                enemyID: EnemyID.Bear,
                 loot: [
                     {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BearMeat), count: [1, 5], chance: 30},
                     {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(Item, ItemID.BearSkin), count: [1, 3], chance: 20},
@@ -990,6 +920,6 @@ export default class EntityManagerBuilder {
             },
         };
 
-        this._entityManager.set<EnemyConfigRecord>(EntityManagerKey.EnemyConfig, enemyConfigs);
+        this._entityManager.set<Partial<EnemyConfigRecord>>(EntityManagerKey.EnemyConfig, enemyConfigs);
     }
 }

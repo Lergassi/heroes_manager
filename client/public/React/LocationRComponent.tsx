@@ -3,7 +3,7 @@ import GameObject from '../../../core/source/GameObject.js';
 import LocationComponent, {LocationComponentEventCode} from '../../../core/app/Components/LocationComponent.js';
 import LevelRange from '../../../core/app/LevelRange.js';
 import HeroGroupComponent from '../../../core/app/Components/HeroGroupComponent.js';
-import _ from 'lodash';
+import _, {values} from 'lodash';
 import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
@@ -53,7 +53,7 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
         let location = this.state.location;
 
         let locationComponentElement;
-        let locationComponent = location.getComponent<LocationComponent>('locationComponent');
+        let locationComponent = location.getComponent<LocationComponent>(LocationComponent.name);
         locationComponent.render((values) => {
             locationComponentElement = (
                 <div className={'block__title'}>Location ({location['_id']}), level: {values.level}</div>
@@ -94,10 +94,28 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
             </table>
         );
 
+        //todo: Временно.
+        let gatheringItemPointsRows = location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints'].map((value, index) => {
+            return (
+                <tr key={index}>
+                    <td>{value.item.name}</td>
+                    <td>{value.count.value}/{value.count.period}с</td>
+                    <td>{value.type}</td>
+                </tr>
+            );
+        });
+        let gatheringItemPointsTable = (
+            <table className={'basic-table'}>
+                <tbody>{gatheringItemPointsRows}</tbody>
+            </table>
+        );
+
         return (
             <div className={'block'}>
                 <div className={'block__title'}>{locationComponentElement}</div>
                 <div className={'block__content'}>
+                    <div>GatheringItemPoints:</div>
+                    {gatheringItemPointsTable}
                     <div>HeroGroupComponent:</div>
                     {heroGroupComponentTable}
                     <div>Items:</div>
@@ -107,68 +125,3 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
         );
     }
 }
-
-// export class GatheringItemPointRComponent extends React.Component<any, any> {
-//     constructor(props) {
-//         super(props);
-//     }
-// }
-//
-// export class HeroGroupRComponent extends React.Component<any, any> {
-//     constructor(props) {
-//         super(props);
-//     }
-// }
-//
-// export class HeroGroupLocationRComponent extends React.Component<any, any> {
-//     constructor(props) {
-//         super(props);
-//     }
-//
-//     render() {
-//         return (
-//             <HeroGroupRComponent
-//
-//             />
-//         );
-//     }
-// }
-
-// export interface LevelRangeDefaultRenderProps {
-//     levelRange: LevelRange;
-// }
-//
-// export class LevelRangeDefaultRender extends React.Component<LevelRangeDefaultRenderProps, any> {
-//     constructor(props) {
-//         super(props);
-//     }
-//
-//     render() {
-//         let levelRange = this.props.levelRange;
-//
-//         let element;
-//         {levelRange.render((values) => {
-//             element = (<span>
-//                 {values.min} - {values.max}
-//             </span>);
-//         })}
-//
-//         return (<span>
-//             {element}
-//         </span>);
-//     }
-// }
-
-// export class Listener {
-//     private _code: string;
-//
-//     equalCode(code: string) {
-//         return this._code === code;
-//     }
-// }
-//
-// export class UniversalListener {
-//     equalCode(code: string) {
-//         return true;
-//     }
-// }

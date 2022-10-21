@@ -51,7 +51,7 @@ export default class GameObject implements AssignRComponentInterface {
         // this['_id'] = GameObject['generateID']();
         this._id = id;
         // this._name = GameObject.name + ': ' + this._id;
-        this._name = GameObject.name + ': ' + this['_id'];
+        this._name = GameObject.name + ': ' + this._id;
         this._components = [];
         this._componentNames = {};
         this._tags = [];
@@ -61,6 +61,10 @@ export default class GameObject implements AssignRComponentInterface {
         this._assignedRComponents = [];
     }
 
+    /**
+     * @deprecated Пока есть GameObject далее работает как контейнер.
+     * @param component
+     */
     addComponent<Component>(component: Component): Component {
         if (!_.includes(this._components, component)) {
             this._components.push(component);
@@ -69,6 +73,10 @@ export default class GameObject implements AssignRComponentInterface {
         return component;
     }
 
+    /**
+     * @deprecated
+     * @param name
+     */
     getComponent<Component>(name: string): Component;
     getComponent<Component>(Module: Function): Component;
     getComponent<Component>(nameOrModule: string | Function): Component {
@@ -85,6 +93,10 @@ export default class GameObject implements AssignRComponentInterface {
         return undefined;
     }
 
+    /**
+     * @deprecated
+     * @param Module
+     */
     getComponents<Component>(Module: Function): Component[] {
         let result: Component[] = [];
         for (let i = 0; i < this._components.length; i++) {
@@ -111,7 +123,7 @@ export default class GameObject implements AssignRComponentInterface {
     }
 
     /**
-     * @deprecated Использовать getComponents
+     * @deprecated Использовать get.
      * @param name
      */
     findComponentsByName<T>(name: string): T[] {
@@ -131,7 +143,7 @@ export default class GameObject implements AssignRComponentInterface {
      */
     getComponentByID<T>(id: number): T {
         for (let i = 0; i < this._components.length; i++) {
-            if (this._components[i]['_id'] === id) {
+            if (this._components[i].id === id) {
                 return <T>this._components[i];
             }
         }
@@ -171,16 +183,27 @@ export default class GameObject implements AssignRComponentInterface {
         return _.includes(this._tags, tag);
     }
 
+    /**
+     * @deprecated
+     * @param rComponent
+     */
     assignRComponent(rComponent: RComponentUpdateInterface): void {
         // this._rComponentBridge.rComponent = rComponent;
         // this._rComponentBridges.push(new RComponentBridge(rComponent));
         this._assignedRComponents.push(rComponent);
     }
 
+    /**
+     * @deprecated
+     * @param rComponent
+     */
     removeRComponent(rComponent): void {
 
     }
 
+    /**
+     * @deprecated
+     */
     update() {
         // this._rComponentBridge.update(this);
         // for (let i = 0; i < this._rComponentBridges.length; i++) {
@@ -203,7 +226,7 @@ export default class GameObject implements AssignRComponentInterface {
      * @param key Использовать только строки из переменных: название модуля .name, enum ComponentKey и тд. todo: Возможно заменить key: string на key: Component.Key.
      * @param component
      */
-    set<Component>(key: string, component: Component): Component {
+    set<T>(key: string, component: T): T {
         assert(typeof key === 'string');
         assert(key.length > 0);
 
@@ -217,10 +240,10 @@ export default class GameObject implements AssignRComponentInterface {
      * Получить компонент по ключу как в контейнере.
      * @indev
      */
-    get<Component>(key: string): Component {
+    get<T>(key: string): T {
         assert(typeof key === 'string');
         assert(key.length > 0);
 
-        return <Component>this._componentNames[key];
+        return <T>this._componentNames[key];
     }
 }

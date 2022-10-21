@@ -9,6 +9,7 @@ export enum CommandNameID {
 
     create_hero = 'create_hero',
     delete_hero = 'delete_hero',
+    create_random_hero_class = 'create_random_hero_class',
     kill_hero = 'kill_hero',
     resurrect_hero = 'resurrect_hero',
     create_all_hero_classes = 'create_all_hero_classes',
@@ -19,9 +20,8 @@ export enum CommandNameID {
     delete_location = 'delete_location',
     add_hero_to_location = 'add_hero_to_location',
     remove_hero_from_location = 'remove_hero_from_location',
-    toggle_location = 'resurrect_hero',
+    toggle_location = 'toggle_location',
     get_items_from_location = 'get_items_from_location',
 
     fight = 'fight',
-
 }

@@ -41,9 +41,8 @@ export enum MainHeroListComponentEventCode {
     DeleteHero = 'MainHeroListComponent.DeleteHero',
 }
 
-export default class MainHeroListComponent extends Component {
+export default class MainHeroListComponent {
     private readonly _heroes: GameObject[];
-    private _min: unsigned;
     private _max: unsigned;
 
     /**
@@ -54,12 +53,9 @@ export default class MainHeroListComponent extends Component {
     }
 
     constructor(
-        min: unsigned,
         max: unsigned,
     ) {
-        super();
         this._heroes = [];
-        this._min = max;
         this._max = max;
     }
 
@@ -71,8 +67,6 @@ export default class MainHeroListComponent extends Component {
         if (!_.includes(this._heroes, hero)) {
             this._heroes.push(hero);
         }
-
-        this.update();
     }
 
     createHero(options: {
@@ -108,7 +102,7 @@ export default class MainHeroListComponent extends Component {
     }
 
     canCreateHero(): void {
-        if (this._heroes.length > this._max + 1) {
+        if (this._heroes.length + 1 > this._max) {
             throw AppError.playerHasMaxHeroes();
         }
     }

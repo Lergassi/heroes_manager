@@ -10,7 +10,7 @@ import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent
 import _ from 'lodash';
 import {assert} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
-import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
+import {EnemyID} from '../../types/enums/EnemyID.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
@@ -32,7 +32,7 @@ import {options} from 'yargs';
 
 export type EnemyFactoryCreateOptions = {
     level: unsigned;
-    enemyTypeID: EnemyTypeID;
+    enemyTypeID: EnemyID;
 };
 
 export default class EnemyFactory {
@@ -51,34 +51,37 @@ export default class EnemyFactory {
     }
 
     create(
-        enemyTypeID: EnemyTypeID,
+        enemyID: EnemyID,
         level: unsigned,
         options?: {
             characterAttributeValues: Partial<{[ID in CharacterAttributeID]: number}>,
         }
     ) {
         assert(level >= 1);
-        assert(!_.isNil(enemyTypeID));
+        assert(!_.isNil(enemyID));
 
-        let enemyType = this._entityManager.entity<EnemyEntity>(EntityManagerKey.EnemyType, enemyTypeID);
-        assert(enemyType instanceof EnemyEntity, sprintf('EnemyType (%s) не найден.', enemyTypeID));
+        // let enemyType = this._entityManager.entity<EnemyEntity>(EntityManagerKey.EnemyType, enemyID);
+        // assert(enemyType instanceof EnemyEntity, sprintf('EnemyType (%s) не найден.', enemyID));
 
-        let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, enemyTypeID);
-        assert(!_.isNil(enemyConfig), sprintf('EnemyConfig (%s) не найден.', enemyTypeID));
+        // let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, enemyID);
+        let enemyConfig = this._entityManager.get<EnemyConfig>(EntityManagerKey.EnemyConfig, enemyID);
+        assert(!_.isNil(enemyConfig), sprintf('EnemyConfig (%s) не найден.', enemyID));
 
         let enemy = this._gameObjectFactory.create();
 
-        enemy.name = 'Enemy: ' + enemyType.name;
+        // enemy.name = 'Enemy: ' + enemyType.name;
+        enemy.name = 'Enemy: ' + enemyID;
         enemy.addTags('#enemy');
 
         let stateController = new StateController();
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
 
-        let enemyComponent = enemy.set<EnemyComponent>(EnemyComponent.name, new EnemyComponent({
-            enemyType: enemyType,
-            level: level,
-        }));
+        //todo: Потом сделаю отдельный компонент для уровня.
+        // let enemyComponent = enemy.set<EnemyComponent>(EnemyComponent.name, new EnemyComponent({
+        //     enemyType: enemyType,
+        //     level: level,
+        // }));
 
         let healthPointsComponent = enemy.set<HealthPointsComponent>(HealthPointsComponent.name, new HealthPointsComponent(
             this._characterAttributeFactory.create(

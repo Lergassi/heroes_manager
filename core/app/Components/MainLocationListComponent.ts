@@ -16,16 +16,13 @@ export enum MainLocationListComponentEventCode {
 
 export default class MainLocationListComponent extends Component {
     private readonly _locations: GameObject[];
-    private _min: unsigned;
     private _max: unsigned;
 
     constructor(
-        min: unsigned,
         max: unsigned,
     ) {
         super();
         this._locations = [];
-        this._min = min;
         this._max = max;
     }
 
@@ -61,7 +58,7 @@ export default class MainLocationListComponent extends Component {
     }
 
     canDeleteLocation(location: GameObject): void {
-        location.get<LocationComponent>('locationComponent').canDelete();
+        location.get<LocationComponent>(LocationComponent.name).canDelete();
     }
 
     render(callback: ({}: Readonly<{

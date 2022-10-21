@@ -23,7 +23,7 @@ export default class EntityDatabase {
         this.assertIsEntityStorageExists(entityName);
 
         for (let i = 0; i < this._items[entityName].length; i++) {
-            if (this._items[entityName][i]['_id'] === ID) {
+            if (this._items[entityName][i].id === ID) {
                 return this._items[entityName][i];
             }
         }

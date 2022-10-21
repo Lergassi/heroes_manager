@@ -1,6 +1,6 @@
 import {unsigned} from '../../types.js';
 import _ from 'lodash';
-import {assertIsGreaterThan, assertIsGreaterThanOrEqual, assertPositive} from '../../../source/assert.js';
+import {assertIsGreaterThan, assertIsGreaterThanOrEqual, assertIsPositive} from '../../../source/assert.js';
 import CharacterAttributeStartValueGeneratorInterface from '../../Interfaces/CharacterAttributeStartValueGeneratorInterface.js';
 
 export default class ProtectionStartValueGenerator implements CharacterAttributeStartValueGeneratorInterface {

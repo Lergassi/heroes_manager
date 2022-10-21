@@ -22,7 +22,7 @@ export default class GetItemsFromLocationCommand extends Command {
         this
             .container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
             .getOneByID(locationID)
-            ?.get<LocationComponent>('locationComponent')
+            ?.get<LocationComponent>(LocationComponent.name)
             ?.moveItems(this.container.get<ItemStorageManager>(ContainerKey.ItemStorageManager))
         ;
     }

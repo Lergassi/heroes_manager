@@ -6,7 +6,7 @@ import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import ItemCategory from '../../Entities/ItemCategory.js';
 import _ from 'lodash';
 import AppError from '../../../source/Errors/AppError.js';
-import {assertIsArray, assertMinLength} from '../../../source/assert.js';
+import {assertIsArray, assertIsMinLength} from '../../../source/assert.js';
 
 //todo: Далее внутри, без зависимостей, может быть компонент вообще без правил, просто для размещения предмета.
 export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInterface {

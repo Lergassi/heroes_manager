@@ -204,7 +204,7 @@ export default class HeroFactory {
         for (let i = 0; i < characterAttributeIDs.length; i++) {
             let baseValueModifier;
             if (_.filter(mainCharacterAttributes, (value) => {
-                return value['_id'] === characterAttributeIDs[i];
+                return value.id === characterAttributeIDs[i];
             }).length) {
                 baseValueModifier = modifiers.main;
             }
@@ -222,7 +222,7 @@ export default class HeroFactory {
         characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new AttackPowerDependentIncreaserDecorator({
             attackPower: hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             dependentCharacterAttributes: _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {   //todo: Через индекс.
-                return hero.get<CharacterAttributeInterface>(characterAttribute['_id']);    //todo: Доступ.
+                return hero.get<CharacterAttributeInterface>(characterAttribute.id);    //todo: Доступ.
             }), value => value != undefined),
             // dependentCharacterAttributes: [],
         }));
@@ -254,7 +254,7 @@ export default class HeroFactory {
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             stateController,
             // _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {
-            //     return hero.get<CharacterAttributeInterface>(characterAttribute['_id']);    //todo: Доступ.
+            //     return hero.get<CharacterAttributeInterface>(characterAttribute.id);    //todo: Доступ.
             // }), value => value != undefined),
         ));
 

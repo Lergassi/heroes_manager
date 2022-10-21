@@ -39,7 +39,7 @@ import CharacterAttributeCollector from '../core/app/Components/CharacterAttribu
 import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
 import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../core/types/enums/HeroClassID.js';
-import {EnemyTypeID} from '../core/types/enums/EnemyTypeID.js';
+import {EnemyID} from '../core/types/enums/EnemyID.js';
 import {ItemID} from '../core/types/enums/ItemID.js';
 import HeroGroupCharacterAttributeCollector from '../core/app/Decorators/HeroGroupCharacterAttributeCollector.js';
 import HeroGroupInterface from '../core/app/Interfaces/HeroGroupInterface.js';
@@ -91,15 +91,17 @@ export class SandboxController {
         // this.testDecimajs();
 
         // this.devHeroFactory();
+        // this.devEnemyFactory();
         // this.devLocation();
         // this.devGoldLootGeneratorComponent();
         // this.devLevelComponent();
         // this.devLootGenerator();
         // this.devCharacterAttributeCollector();
         // this.devAttackPowerComponent();
+        // this.testEntityManager();
 
         //fight
-        this.devFight();
+        // this.devFight();
         // this.devDefence();
         // this.devHeroArmor();
         // this.devEnemyArmor();
@@ -173,7 +175,7 @@ export class SandboxController {
         });
         // console.log(location);
 
-        let locationComponent = location.getComponent<LocationComponent>('locationComponent');
+        let locationComponent = location.getComponent<LocationComponent>(LocationComponent.name);
         // console.log(locationComponent);
         // console.log(heroes[0]);
         locationComponent.addHero(heroes[0]);
@@ -540,11 +542,11 @@ export class SandboxController {
         // let enemyType = em.entity<EnemyTypeRecord>(EntityManagerKey.EnemyType)[EnemyTypeAlias.Boar];
         // let enemyType = em.entity<EnemyTypeRecord>(EntityManagerKey.EnemyType)[EnemyTypeAlias.Fox];
         // let enemyType = em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeAlias.Fox);
-        let enemyType = em.entity<EnemyEntity>(EntityManagerKey.EnemyType, EnemyTypeID.Boar);
+        // let enemyType = em.entity<EnemyEntity>(EntityManagerKey.EnemyType, EnemyID.Boar);
         // console.log(enemyType);
         // console.log(enemyType.alias);
         let enemy = enemyFactory.create(
-            EnemyTypeID.Boar,
+            EnemyID.Boar,
             1,
         );
         console.log(enemy);
@@ -615,17 +617,17 @@ export class SandboxController {
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
             // enemyType: EnemyTypeID.Boar,
-            EnemyTypeID.Boar,
+            EnemyID.Boar,
             1,
         ));
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            EnemyTypeID.Boar,
+            EnemyID.Boar,
             1,
         ));
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            EnemyTypeID.Boar,
+            EnemyID.Boar,
             1,
 
         ));
@@ -1101,7 +1103,7 @@ export class SandboxController {
     private devEnemyArmor() {
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
-        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1);
+        let enemy = enemyFactory.create(EnemyID.Bear, 1);
         console.log(enemy);
         console.log(enemy.get<DamageControllerInterface>(GameObjectKey.DamageController));
         console.log(enemy.get<HealthPointsComponent>(HealthPointsComponent.name));
@@ -1122,7 +1124,7 @@ export class SandboxController {
         let enemyFactory = this._container.get<EnemyFactory>(ContainerKey.EnemyFactory);
 
         let hero = heroFactory.create(HeroClassID.Warrior, 1);
-        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1, {
+        let enemy = enemyFactory.create(EnemyID.Bear, 1, {
             characterAttributeValues: {
                 [CharacterAttributeID.AttackPower]: 1000042,
             },
@@ -1243,5 +1245,10 @@ export class SandboxController {
         // leftHand.equip('shield');   //Ошибка. Слот заблокирован.
         // //или
         // leftHand.equip('shield');    //Может быть постоянный блок, если герою доступны только двуручки.
+    }
+
+    private testEntityManager() {
+        console.log(this._container.get(ContainerKey.EntityManager));
+        // console.log(this._container.get<EntityManager>(ContainerKey.EntityManager).get(EntityManagerKey.EnemyType, EnemyID.Bear));
     }
 }

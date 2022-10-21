@@ -17,7 +17,7 @@ export default class ItemDatabase {
 
     get(ID: string): Item {
         for (let i = 0; i < this._items.length; i++) {
-            if (this._items[i]['_id'] === ID) { //todo: Доступ.
+            if (this._items[i].id === ID) { //todo: Доступ.
                 return this._items[i];
             }
         }

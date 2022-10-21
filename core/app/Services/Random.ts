@@ -17,17 +17,17 @@ export default class Random {
     static some<T>(items: T[], count: number, options: {
         unique?: boolean;
     }): T[] {
-        if (options.unique && items.length < count) {
-            throw AppError.itemsNotEnoughForRandomSelection();
-        }
+        // if (options.unique && items.length < count) {
+        //     throw AppError.itemsNotEnoughForRandomSelection();
+        // }
 
         let i = 0;
         let result = [];
         let copyItems = [...items];
         while (i < count) {
-            if (!copyItems.length) {
-                throw AppError.itemsNotEnoughForRandomSelection();
-            }
+            // if (!copyItems.length) {
+            //     throw AppError.itemsNotEnoughForRandomSelection();
+            // }
 
             let item = this.one(copyItems)
             result.push(item);

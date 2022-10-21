@@ -5,6 +5,7 @@ import {EquipSlotID} from '../types/enums/EquipSlotID.js';
 import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
 import CharacterAttribute from './Components/CharacterAttribute.js';
 import CharacterAttributeInterface from './Decorators/CharacterAttributeInterface.js';
+import {EnemyID} from '../types/enums/EnemyID.js';
 
 export type integer = number;
 export type unsigned = number;
@@ -53,7 +54,7 @@ export type EnemyTypes = {
 export type EnemyTypeRecord = Record<string, EnemyEntity>;
 
 export type EnemyConfig = {
-    enemy: EnemyEntity,
+    enemyID: EnemyID,
     loot: Loot[],
     exp: unsigned,
     gold: unsigned[],
@@ -68,7 +69,8 @@ export type EnemyConfigs = {
     [alias: string]: EnemyConfig;
 };
 
-export type EnemyConfigRecord = Record<string, EnemyConfig>;
+// export type EnemyConfigRecord = Record<string, EnemyConfig>;
+export type EnemyConfigRecord = Record<EnemyID, EnemyConfig>;
 
 export enum ItemAlias {
     Wood = 'Wood',
@@ -76,7 +78,7 @@ export enum ItemAlias {
 }
 
 export enum EntityManagerKey {
-    EnemyType = 'EnemyType',
+    // EnemyType = 'EnemyType',
     EnemyConfig = 'EnemyConfig',
 }
 

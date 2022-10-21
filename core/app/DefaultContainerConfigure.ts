@@ -26,11 +26,12 @@ import DeleteLocationCommand from './Commands/DeleteLocationCommand.js';
 import ToggleLocationCommand from './Commands/ToggleLocationCommand.js';
 import GetItemsFromLocationCommand from './Commands/GetItemsFromLocationCommand.js';
 import ClearItemStorageSlotCommand from './Commands/ClearItemStorageSlotCommand.js';
-import CreateHeroKitCommand from './Commands/CreateHeroKitCommand.js';
+import CreateAllHeroClassesCommand from './Commands/CreateAllHeroClassesCommand.js';
 import FightCommand from './Commands/FightCommand.js';
 import ResurrectHeroCommand from './Commands/ResurrectHeroCommand.js';
 import {CommandNameID} from '../types/enums/CommandNameID.js';
 import KillHeroCommand from './Commands/KillHeroCommand.js';
+import CreateRandomHeroClassCommand from './Commands/CreateRandomHeroClassCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -66,7 +67,8 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new DeleteHeroCommand(container));
         gameConsole.register(new KillHeroCommand(container));
         gameConsole.register(new ResurrectHeroCommand(container));
-        gameConsole.register(new CreateHeroKitCommand(container));
+        gameConsole.register(new CreateAllHeroClassesCommand(container));
+        gameConsole.register(new CreateRandomHeroClassCommand(container));
 
         gameConsole.register(new EquipCommand(container));
         gameConsole.register(new RemoveEquipCommand(container));

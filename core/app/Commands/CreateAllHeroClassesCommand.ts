@@ -6,7 +6,7 @@ import HeroFactory from '../Factories/HeroFactory.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
-export default class CreateHeroKitCommand extends Command {
+export default class CreateAllHeroClassesCommand extends Command {
     get name(): string {
         return CommandNameID.create_all_hero_classes;
     }

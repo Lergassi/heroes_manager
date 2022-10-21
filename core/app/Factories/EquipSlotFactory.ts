@@ -33,7 +33,7 @@ export default class EquipSlotFactory {
         );
         equipSlot = new EquipSlotWithItemCategoryDecorator(
             equipSlot,
-            equipSlotData.itemCategories.get(heroClass.id as HeroClassID),
+            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
         );
         equipSlot = new EquipSlotWithArmorMaterialDecorator(
             equipSlot,
@@ -57,7 +57,7 @@ export default class EquipSlotFactory {
         );
         leftHand = new EquipSlotWithItemCategoryDecorator(
             leftHand,
-            equipSlotData.itemCategories.get(heroClass.id as HeroClassID),
+            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
         );
 
         return leftHand;
@@ -78,7 +78,7 @@ export default class EquipSlotFactory {
         );
         rightHand = new EquipSlotWithItemCategoryDecorator(
             rightHand,
-            equipSlotData.itemCategories.get(heroClass.id as HeroClassID),
+            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
         );
 
         return rightHand;

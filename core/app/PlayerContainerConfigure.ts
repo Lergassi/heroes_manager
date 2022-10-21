@@ -156,8 +156,6 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             //todo: Не удобно. Игровые обязательные объекты должны быть вынесены в другое место.
             let itemStorageCollectionComponent = itemStorageCollectionGameObject.addComponent<MainItemStorageListComponent>(new MainItemStorageListComponent(
-                // 1,
-                0,
                 4,
                 [
                     // container.get<ItemStorageFactoryInterface>('player.techItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE),
@@ -222,9 +220,12 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             let heroListControllerGameObject = container.get<GameObjectFactory>('player.gameObjectFactory').create();
 
             let mainHeroListComponent = heroListControllerGameObject.addComponent(new MainHeroListComponent(
-                0,
                 // 10,
                 100,    //todo: В настройки.
+                // 1000,    //todo: В настройки.
+                // 10_000,    //todo: В настройки.
+                // 100_000,    //todo: В настройки.
+                // 1_000_000,    //todo: В настройки.
             ));
 
             return mainHeroListComponent;
@@ -235,7 +236,6 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             let mainLocationList = container.get<GameObjectFactory>('player.gameObjectFactory').create();
 
             let mainLocationListComponent = mainLocationList.addComponent(new MainLocationListComponent(
-                0,
                 10,
             ));
 

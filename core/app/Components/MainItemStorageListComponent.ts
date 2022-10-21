@@ -4,60 +4,42 @@ import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import {unsigned} from '../types.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
+import {
+    assertIsArray,
+    assertIsMaxLength,
+    assertIsMinLength,
+    assertIsNumber,
+    assertIsPositive
+} from '../../source/assert.js';
+import {sprintf} from 'sprintf-js';
 
 export default class MainItemStorageListComponent extends Component {
     private readonly _itemStorages: GameObject[];
-    private _min: number;
     private _max: number;
 
-    /**
-     * @deprecated
-     */
-    get itemStorages(): GameObject[] {
-        return this._itemStorages;
-    }
-
-    /**
-     * @deprecated
-     */
-    get min(): number {
-        return this._min;
-    }
-
-    /**
-     * @deprecated
-     */
-    get max(): number {
-        return this._max;
-    }
-
     constructor(
-        min: unsigned,
         max: unsigned,
         itemStorages: GameObject[],
     ) {
         super();
-        this._min = min;
+        assertIsPositive(max);
+        assertIsArray(itemStorages);
+        assertIsMaxLength(itemStorages, max, sprintf('Количество ItemStorage не может быть больше %d.', max));
+
         this._max = max;
         this._itemStorages = itemStorages;
-
-        //todo: validate
-        if (this._itemStorages.length < this._min || this._itemStorages.length > this._max) {
-            throw AppError.itemStorageRangeOverflow(this._min, this._max);
-        }
     }
 
     canAddItemStorage(): boolean {
-        //todo: validate
         if (this._itemStorages.length + 1 > this._max) {
-            throw AppError.itemStorageRangeOverflow(this._min, this._max);
+            throw AppError.playerHasMaxItemStorages();
         }
 
         return true;
     }
 
     /**
-     * @deprecated
+     * @deprecated Использовать метод create().
      * @param itemStorage
      */
     add(itemStorage: GameObject): void {

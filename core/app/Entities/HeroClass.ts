@@ -41,7 +41,7 @@ export default class HeroClass {
 
     isMainCharacterAttribute(ID: CharacterAttributeID): boolean {
         for (let i = 0; i < this.mainCharacterAttributes.length; i++) {
-            if (this.mainCharacterAttributes[i]['_id'] === ID) {   //todo: Доступ.
+            if (this.mainCharacterAttributes[i].id === ID) {   //todo: Доступ.
                 return true;
             }
         }

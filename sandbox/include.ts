@@ -761,8 +761,6 @@ export function testItemStorageFactories() {
 
     let itemStorageCollectionGameObject = new GameObject(idGenerator.generateID());
     let itemStorageCollectionComponent = <MainItemStorageListComponent>itemStorageCollectionGameObject.addComponent(new MainItemStorageListComponent(
-        // 1,
-        0,
         4,
         [
             // techItemStorageFactory.create(),
@@ -897,7 +895,6 @@ export function testHeroController() {
     let heroControllerGameObject = container.get<GameObjectFactory>('player.gameObjectFactory').create();
 
     let heroController = heroControllerGameObject.addComponent<MainHeroListComponent>(new MainHeroListComponent(
-        0,
         10,
     ));
 

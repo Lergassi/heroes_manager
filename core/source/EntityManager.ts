@@ -1,6 +1,7 @@
 import Repository from './Repository.js';
 import {assert} from './assert.js';
 import _ from 'lodash';
+import AppError from './Errors/AppError.js';
 
 export interface ModuleInterface {
     name: string;
@@ -9,6 +10,7 @@ export interface ModuleInterface {
 export default class EntityManager {
     private readonly _repositories;
     private readonly _entities;
+    // private readonly _entities: {[key in ]};
 
     constructor() {
         this._repositories = {};
@@ -35,6 +37,18 @@ export default class EntityManager {
         }
     }
 
+    addEntity(key, ID, entity) {
+        if (!this._entities.hasOwnProperty(key)) {
+            this._entities[key] = {};
+        }
+
+        if (this._entities[key].hasOwnProperty(ID)) {
+            throw new AppError('Сущность с таким ID уже существует.');
+        }
+
+        this._entities[key][ID] = entity;
+    }
+
     //@dev
     set<T>(key: string, value: T): T {
         assert(!_.isNil(key));
@@ -46,15 +60,30 @@ export default class EntityManager {
         return value;
     }
 
-    get<Entity>(module: Function | string, ID: string): Entity {
-        if (typeof module === 'string') {
-            return this.getRepository<Entity>(module).getOneByID(ID);
-        } else {
-            return this.getRepository<Entity>(module.name).getOneByID(ID);
+    /**
+     * @deprecated Изменять на строковое значение при возможности. Далее будут ключи из переменных.
+     * @param moduleOrKey
+     * @param ID
+     */
+    get<T>(moduleOrKey: Function | string, ID: string): T {
+        if (typeof moduleOrKey === 'function') {
+            moduleOrKey = moduleOrKey.name;
         }
+
+        let entity = this._entities[moduleOrKey]?.[ID];
+
+        if (!entity) {
+            entity = this.getRepository<T>(moduleOrKey).getOneByID(ID);
+        }
+
+        return entity;
     }
 
-    //get
+    /**
+     * @deprecated
+     * @param key
+     * @param ID
+     */
     entity<T>(key: string, ID: string): T {
         assert(!_.isNil(key));
         assert(!_.isNil(ID));

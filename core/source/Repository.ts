@@ -28,16 +28,16 @@ export default class Repository<Entity> {
      */
     findOneByID(id): Entity | null {
         if (!id) {
-            return null;
+            return undefined;
         }
 
         for (let i = 0; i < this._items.length; i++) {
-            if (this._items[i]['_id'] === id || (this._items[i].id ? this._items[i].id === id : false)) {   //todo: Переделать. Всю логику поиска и хранения сущностей.
+            if (this._items[i].id === id || (this._items[i].id ? this._items[i].id === id : false)) {   //todo: Переделать. Всю логику поиска и хранения сущностей.
                 return this._items[i];
             }
         }
 
-        return null;
+        return undefined;
     }
 
     /**
@@ -80,9 +80,9 @@ export default class Repository<Entity> {
     getOneByID(ID): Entity {
         let entity = this.findOneByID(ID);
 
-        if (!entity) {
-            throw new AppError(sprintf('Сущность типа %s ID(%s) не найдена.', this._entityClassname, ID));
-        }
+        // if (!entity) {
+        //     throw new AppError(sprintf('Сущность типа %s ID(%s) не найдена.', this._entityClassname, ID));
+        // }
 
         return entity;
     }

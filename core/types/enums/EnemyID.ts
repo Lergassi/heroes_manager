@@ -1,4 +1,4 @@
-export enum EnemyTypeID {
+export enum EnemyID {
     Boar = 'Boar',
     Skeleton = 'Skeleton',
     Bear = 'Bear',

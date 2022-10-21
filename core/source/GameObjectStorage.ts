@@ -31,7 +31,7 @@ export default class GameObjectStorage {
      */
     findOneByID(id: number): GameObject {
         for (let i = 0; i < this._gameObjects.length; i++) {
-            if (this._gameObjects[i]['_id'] === id) {
+            if (this._gameObjects[i].ID === id) {
                 return this._gameObjects[i];
             }
         }
@@ -43,7 +43,7 @@ export default class GameObjectStorage {
         assertIsNumber(ID);
 
         for (let i = 0; i < this._gameObjects.length; i++) {
-            if (this._gameObjects[i]['_id'] === ID) {
+            if (this._gameObjects[i].ID === ID) {
                 return this._gameObjects[i];
             }
         }

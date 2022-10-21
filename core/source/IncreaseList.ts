@@ -47,7 +47,7 @@ export default class IncreaseList {
     get(characterAttribute: string | CharacterAttributeEntity): CharacterAttributeIncrease {
         for (const increaseKey in this._increase) {
             if (
-                typeof characterAttribute === 'string' && this._increase[increaseKey].characterAttribute['_id'] === characterAttribute ||   //todo: Доступ.
+                typeof characterAttribute === 'string' && this._increase[increaseKey].characterAttribute.id === characterAttribute ||   //todo: Доступ.
                 characterAttribute instanceof CharacterAttributeEntity && this._increase[increaseKey].characterAttribute === characterAttribute
             ) {
                 return this._increase[increaseKey];

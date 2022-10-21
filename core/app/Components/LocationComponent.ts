@@ -58,14 +58,14 @@ export enum LocationState {
     Hunting = 'Hunting',
 }
 
-export enum GatheringItemPointType {
+export enum GatheringItemPointID {
     low = 'low',
     normal = 'normal',
     high = 'high',
 }
 
 export type GatheringItemPointTypeValues = {
-    readonly [key in GatheringItemPointType]: GatheringItemValue;
+    readonly [key in GatheringItemPointID]: GatheringItemValue;
 };
 
 // type ItemGatheringTypeLiteral = 'low' | 'normal' | 'high';
@@ -90,9 +90,8 @@ export type GatheringItemValue = {  //todo: Только не сбор, а в ц
 
 export type GatheringItemPoint = {
     readonly item: Item;
-    // readonly value: number;
-    readonly value: GatheringItemValue;
-    readonly type: GatheringItemPointType;
+    readonly count: GatheringItemValue;
+    readonly type: GatheringItemPointID;
 }
 
 // export class ItemGatheringPoint {
@@ -209,7 +208,7 @@ export default class LocationComponent extends Component {
     private _generateItems() {
         let partOfMaxPeriodGathering = this._heroGroupComponent.partOfMaxHeroesCount /*todo: Так чтоли? */;
         for (let i = 0; i < this._gatheringItemPoints.length; i++) {
-            let count = _.ceil(this._gatheringItemPoints[i].value.value / this._gatheringItemPoints[i].value.period * this._intervalPeriod * partOfMaxPeriodGathering);
+            let count = _.ceil(this._gatheringItemPoints[i].count.value / this._gatheringItemPoints[i].count.period * this._intervalPeriod * partOfMaxPeriodGathering);
             if (this._internalItemStorageComponent.addItem(this._gatheringItemPoints[i].item, count) !== count) {   //todo: Не удобно.
                 debug('log')(sprintf('Собран предмет: %s (%s). Эффективность сбора: %s', this._gatheringItemPoints[i].item.name, count, partOfMaxPeriodGathering));
             }

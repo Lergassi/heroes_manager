@@ -9,7 +9,7 @@ export default class EquipSlotAvailableItemCategory implements EquipSlotAvailabl
         this._itemCategories = itemCategories;
     }
 
-    get(heroClassID: HeroClassID): ItemCategory[] {
+    getItemCategories(heroClassID: HeroClassID): ItemCategory[] {
         return this._itemCategories;
     }
 }
