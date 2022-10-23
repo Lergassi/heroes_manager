@@ -165,8 +165,8 @@ export function testLocation() {
     let itemStackFactory = container.get<ItemStackFactory>(ContainerKey.ItemStackFactory);
     // let itemStorageFactory = container.get<BasicItemStorageFactory>(ContainerKey.HeroFactory);
     let itemStorageManager = container.get<ItemStorageManager>(ContainerKey.ItemStorageManager);
-    let itemStorage = container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(2);
-    container.get<MainItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);
+    let itemStorage = container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory).create(2);
+    container.get<MainItemStorageListComponent>(ContainerKey.MainItemStorageList).add(itemStorage);
     // debugItemStorages(itemStorageManager.itemStorages);
 
     let heroes = [

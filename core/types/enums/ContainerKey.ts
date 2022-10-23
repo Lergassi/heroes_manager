@@ -10,6 +10,7 @@ export enum ContainerKey {
     IDGenerator = 'player.realtimeObjectIdGenerator',
     GameObjectStorage = 'player.GameObjectStorage',
     GameObjectFactory = 'player.gameObjectFactory',
+    ItemStorageFactory = 'ItemStorageFactory',
     ItemStorageManager = 'player.ItemStorageManager',
     CharacterAttributeStartValueGenerator = 'player.CharacterAttributeStartValueGenerator',
     CharacterAttributeValueGenerator = 'player.CharacterAttributeValueGenerator',
@@ -20,6 +21,7 @@ export enum ContainerKey {
     ItemStackFactory = 'player.ItemStackFactory',
     CharacterAttributeFactory = 'player.CharacterAttributeFactory',
     //компоненты
+    MainItemStorageList = 'player.MainItemStorageList',
     MainHeroListComponent = 'player.MainHeroListComponent',
     MainLocationListComponent = 'player.MainLocationListComponent',
 

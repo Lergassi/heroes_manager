@@ -16,35 +16,35 @@ export default class EquipSlotWithArmorMaterialDecorator implements EquipSlotInt
         this._armorMaterials = armorMaterials;
     }
 
-    equip(itemStack: ItemStack): void {
-        this._equipSlot.equip(itemStack);
-    }
-
     createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
         this._assertCanEquip(item);
 
         this._equipSlot.createItemStack(item, count, itemStackFactory);
     }
 
-    destroyItemStack(): void {
-        this._equipSlot.destroyItemStack();
-    }
-
-    private _assertCanEquip(item: Item): void {
-        // console.log(item);
-        // console.log(this._armorMaterials);
-        if (!item.hasArmorMaterial(this._armorMaterials)) {
-            throw AppError.equipNotAvailableByArmorMaterial();
-        }
+    clear(): void {
+        this._equipSlot.clear();
     }
 
     isFree(): boolean {
         return this._equipSlot.isFree();
     }
 
+    equip(itemStack: ItemStack): void {
+        this._assertCanEquip(itemStack.item);
+
+        this._equipSlot.equip(itemStack);
+    }
+
     render(callback: (values: {
         item: Item,
     }) => void) {
         this._equipSlot.render(callback);
+    }
+
+    private _assertCanEquip(item: Item): void {
+        if (!item.hasArmorMaterial(this._armorMaterials)) {
+            throw AppError.equipNotAvailableByArmorMaterial();
+        }
     }
 }

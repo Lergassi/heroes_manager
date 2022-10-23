@@ -4,20 +4,14 @@ import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 
 export default interface EquipSlotInterface {
-    // equip(itemStack: ItemStack): boolean;  //todo: Пока не понятно от куда будет экипировка, так как сумки будут переделаны.
-    // createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): boolean;
-    // destroyItemStack(): boolean;
-    // // removeItemStack(itemStorage): void;
-    // isFree(): boolean;
     /**
-     * @deprecated
+     * @deprecated Пока не понятно от куда будет экипировка, так как сумки будут переделаны. Очищать источник экипировки вручную.
      * @param itemStack
      */
-    equip(itemStack: ItemStack): void;  //todo: Пока не понятно от куда будет экипировка, так как сумки будут переделаны.
+    equip(itemStack: ItemStack): void;
     createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void;
-    destroyItemStack(): void;
-    // removeItemStack(itemStorage): void;
+    clear(): void;
     isFree(): boolean;
-
     render(callback: (values: {item: Item}) => void);
+    // moveTo(target: ItemSlotInterface): void;
 }

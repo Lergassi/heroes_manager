@@ -17,9 +17,16 @@ export default class MainItemStorageListComponent extends Component {
     private readonly _itemStorages: GameObject[];
     private _max: number;
 
+    /**
+     * @indev Геттер будет до конца разработки.
+     */
+    get itemStorages(): GameObject[] {
+        return this._itemStorages;
+    }
+
     constructor(
         max: unsigned,
-        itemStorages: GameObject[],
+        itemStorages: GameObject[] = [],
     ) {
         super();
         assertIsPositive(max);
@@ -62,4 +69,9 @@ export default class MainItemStorageListComponent extends Component {
     }
 
     //remove(itemStorage: GameObject)
+
+    //@indev Вместо геттера.
+    map(callback: (itemStorage: GameObject, index?: number) => void) {
+        _.map(this._itemStorages, callback);
+    }
 }

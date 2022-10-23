@@ -12,6 +12,7 @@ export default class RightHand implements EquipSlotInterface {
     private readonly _leftHand: LeftHand;
 
     constructor(leftHand: LeftHand) {
+    // constructor() {
         assertNotNil(leftHand);
 
         this._leftHand = leftHand;
@@ -21,18 +22,13 @@ export default class RightHand implements EquipSlotInterface {
     createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
         this._equipSlot.createItemStack(item, count, itemStackFactory);
         if (item.isTwoHandWeapon()) {
-            console.log(this._leftHand);
             this._leftHand.block();
         }
     }
 
-    destroyItemStack(): void {
-        this._equipSlot.destroyItemStack();
+    clear(): void {
+        this._equipSlot.clear();
         this._leftHand.unblock();
-    }
-
-    equip(itemStack: ItemStack): void {
-        this._equipSlot.equip(itemStack);
     }
 
     isFree(): boolean {
@@ -43,5 +39,9 @@ export default class RightHand implements EquipSlotInterface {
         item: Item,
     }) => void) {
         this._equipSlot.render(callback);
+    }
+
+    equip(itemStack: ItemStack) {
+        this._equipSlot.equip(itemStack);
     }
 }

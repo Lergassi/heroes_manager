@@ -19,38 +19,38 @@ export function assertIsPositive(value: number, message?: string) {
 }
 
 export function assertNotNil(value: any, message?: string) {
-    assert(!_.isNil(value), 'Значение не может быть null или undefined.');
+    assert(!_.isNil(value), message || 'Значение не может быть null или undefined.');
 }
 
 export function assertIsGreaterThan(value: number, expected: number, message?: string) {
-    assert(value > expected, 'Значение должно быть больше указанного.');
+    assert(value > expected, message || 'Значение должно быть больше указанного.');
 }
 
 export function assertIsGreaterThanOrEqual(value: number, expected: number, message?: string) {
     assertIsNumber(value);
     assertIsNumber(expected);
-    assert(value >= expected, 'Значение должно быть больше или равно указанному.');
+    assert(value >= expected, message || 'Значение должно быть больше или равно указанному.');
 }
 
 export function assertIsNumber(value: any, message?: string) {
-    assert(typeof value === 'number', 'Значение должно быть числом.');
+    assert(typeof value === 'number', message || 'Значение должно быть числом.');
 }
 
 export function assertIsMinLength<T>(array: T[], minLength: number, message?: string) {
     assertIsArray(array);
-    assert(array.length >= minLength, 'Массив не соответствует минимальной указаной длине.');
+    assert(array.length >= minLength, message || 'Массив не соответствует минимальной указаной длине.');
 }
 
 export function assertIsMaxLength<T>(array: T[], maxLength: number, message?: string) {
     assertIsArray(array);
-    assert(array.length <= maxLength, 'Массив не соответствует максимальной указаной длине.');
+    assert(array.length <= maxLength, message || 'Массив не соответствует максимальной указаной длине.');
 }
 
 export function assertIsArray(value: any, message?: string) {
-    assert(Array.isArray(value), 'Переменная должна быть массивом.');
+    assert(Array.isArray(value), message || 'Переменная должна быть массивом.');
 }
 
 //todo: Надо ли value и target проверять на nil?
 export function assertIsInstanceOf(value: any, target: any, message?: string) {
-    assert(value instanceof target, 'Объект неверного типа (instanceof).');
+    assert(value instanceof target, message || 'Объект неверного типа (instanceof).');
 }

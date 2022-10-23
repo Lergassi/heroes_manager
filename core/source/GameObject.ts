@@ -6,6 +6,7 @@ import RComponentBridge, {
     RComponentUpdateInterface
 } from '../../client/source/RComponentBridge.js';
 import {assert} from './assert.js';
+import {GameObjectKey} from '../types/enums/GameObjectKey.js';
 
 export default class GameObject implements AssignRComponentInterface {
     // private readonly _id: number = this['_generateID'];
@@ -223,12 +224,13 @@ export default class GameObject implements AssignRComponentInterface {
     /**
      * @indev
      * Как контейнер. Также вызывается метод addComponent.
-     * @param key Использовать только строки из переменных: название модуля .name, enum ComponentKey и тд. todo: Возможно заменить key: string на key: Component.Key.
+     * @param key Только строки из enum GameObjectKey.
      * @param component
      */
-    set<T>(key: string, component: T): T {
+    set<T>(key: string | GameObjectKey, component: T): T {
+    // set<T>(key: GameObjectKey, component: T): T {
         assert(typeof key === 'string');
-        assert(key.length > 0);
+        // assert(key.length > 0);
 
         this.addComponent(component);
         this._componentNames[key] = component;
@@ -237,12 +239,12 @@ export default class GameObject implements AssignRComponentInterface {
     }
 
     /**
-     * Получить компонент по ключу как в контейнере.
+     * Получить компонент по ключу как в контейнере. Только строки из enum GameObjectKey.
      * @indev
      */
-    get<T>(key: string): T {
+    get<T>(key: string | GameObjectKey): T {
         assert(typeof key === 'string');
-        assert(key.length > 0);
+        // assert(key.length > 0);
 
         return <T>this._componentNames[key];
     }

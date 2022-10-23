@@ -63,6 +63,9 @@ import FightController from '../core/app/Components/FightController.js';
 import AttackController from '../core/app/Components/AttackController.js';
 import AttackControllerInterface from '../core/app/Interfaces/AttackControllerInterface.js';
 import StateController from '../core/app/Components/StateController.js';
+import MainItemStorageListComponent from '../core/app/Components/MainItemStorageListComponent.js';
+import ItemStorageUnion from '../core/app/Components/ItemStorageUnion.js';
+import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
 
 export class SandboxController {
     private _container: ContainerInterface;
@@ -99,6 +102,7 @@ export class SandboxController {
         // this.devCharacterAttributeCollector();
         // this.devAttackPowerComponent();
         // this.testEntityManager();
+        // this.devItemStorageUnion();
 
         //fight
         // this.devFight();
@@ -109,6 +113,7 @@ export class SandboxController {
         // this.devNewCharacterAttributesGetStarted();
 
         // this.devNewEquipSlotSystem();
+        this.devNewItemStorage();
     }
 
     devLocation() {
@@ -167,7 +172,7 @@ export class SandboxController {
             gameObjectFactory: this._container.get<GameObjectFactory>('player.gameObjectFactory'),
             itemDatabase: this._container.get<ItemDatabase>(ContainerKey.ItemDatabase),
             itemStackFactory: this._container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
-            itemStorageFactory: this._container.get<ItemStorageFactory>('player.itemStorageFactory'),
+            itemStorageFactory: this._container.get<ItemStorageFactory>(ContainerKey.ItemStorageFactory),
         });
 
         let location = locationFactory.create({
@@ -311,8 +316,8 @@ export class SandboxController {
         let db: ItemDatabase = this._container.get(ContainerKey.ItemDatabase);
         let itemStackFactory: ItemStackFactory = this._container.get(ContainerKey.ItemStackFactory);
 
-        let itemStorage = this._container.get<ItemStorageFactory>('player.itemStorageFactory').create(10);
-        let itemStorageComponent = itemStorage.getComponent<ItemStorageComponent>('itemStorageComponent');
+        let itemStorage = this._container.get<ItemStorageFactory>(ContainerKey.ItemStorageFactory).create(10);
+        let itemStorageComponent = itemStorage.getComponent<ItemStorageComponent>(GameObjectKey.ItemStorageComponent);
         // console.log(itemStorageComponent);
         // debugItemStorage(itemStorage);
 
@@ -354,12 +359,12 @@ export class SandboxController {
     }
 
     private testNewComponents() {
-        let itemStorageFactory = this._container.get<ItemStorageFactory>('player.itemStorageFactory');
+        let itemStorageFactory = this._container.get<ItemStorageFactory>(ContainerKey.ItemStorageFactory);
 
         let itemStorage = itemStorageFactory.create(20);
         // console.log(itemStorage);
         // debugNewItemStorage(itemStorage);
-        let controller = itemStorage.getComponent<ItemStorageComponent>('itemStorageComponent');
+        let controller = itemStorage.getComponent<ItemStorageComponent>(GameObjectKey.ItemStorageComponent);
         controller.addItem(this._container.get<ItemDatabase>(ContainerKey.ItemDatabase).get(ItemID.Wood), 24);
         debugItemStorage(itemStorage);
         // let itemStorage = new ItemStorageComponent();
@@ -1213,6 +1218,7 @@ export class SandboxController {
         // let mageRightHand: EquipSlotInterface = new DefaultEquipSlot();
         // let mageLeftHand: EquipSlotInterface = new DefaultEquipSlot();
         // let mageLeftHand = new DefaultEquipSlot();
+        // let mageLeftHand: EquipSlotInterface = new LeftHand();
         let mageLeftHand: EquipSlotInterface = new LeftHand();
         let mageRightHand: EquipSlotInterface = new RightHand(mageLeftHand as LeftHand);
 
@@ -1250,5 +1256,81 @@ export class SandboxController {
     private testEntityManager() {
         console.log(this._container.get(ContainerKey.EntityManager));
         // console.log(this._container.get<EntityManager>(ContainerKey.EntityManager).get(EntityManagerKey.EnemyType, EnemyID.Bear));
+    }
+
+    private devItemStorageUnion() {
+        let itemStorageFactory = this._container.get<ItemStorageFactory>(ContainerKey.ItemStorageFactory);
+        let itemDatabase = this._container.get<ItemDatabase>(ContainerKey.ItemDatabase);
+
+        let items = [
+            {item: itemDatabase.get(ItemID.Wood), count: 244},
+            {item: itemDatabase.get(ItemID.Wood), count: 244},
+            {item: itemDatabase.get(ItemID.Wood), count: 25},   //Сумма -> остаток
+            {item: itemDatabase.get(ItemID.Wood), count: 25},   //50
+            {item: itemDatabase.get(ItemID.Wood), count: 50},
+            {item: itemDatabase.get(ItemID.Wood), count: 50},
+            {item: itemDatabase.get(ItemID.Wood), count: 26},
+            {item: itemDatabase.get(ItemID.Wood), count: 26},   //50    -> 2
+            {item: itemDatabase.get(ItemID.Wood), count: 26},   //28
+            {item: itemDatabase.get(ItemID.Wood), count: 4},    //32
+        ];
+
+        let itemStorage = itemStorageFactory.create(10);
+        for (let i = 0; i < items.length; i++) {
+            itemStorage.get<ItemStorageComponent>(ItemStorageComponent.name).addItem(items[i].item, items[i].count);
+        }
+        console.log(itemStorage);
+
+        let mainItemStorageList = new MainItemStorageListComponent(3);
+
+        mainItemStorageList.create(10, itemStorageFactory);
+        mainItemStorageList.create(10, itemStorageFactory);
+        mainItemStorageList.create(10, itemStorageFactory);
+
+        // for (let i = 0; i < items.length; i++) {
+        //     let maxIterations = 10_000;
+        //     let currentIteration = 0;
+        //     while (items[i].count > 0 || currentIteration < maxIterations) {
+        //         // items[i].count -= items[i].count - itemStorageUnion.addItem(mainItemStorageList.itemStorages, items[i].item, items[i].count);
+        //         items[i].count -= items[i].count - ItemStorageComponent.addItemToItemStorages(mainItemStorageList.itemStorages, items[i].item, items[i].count);
+        //         // console.log('flaw', items[i].item.name, items[i].count);
+        //         ++currentIteration;
+        //     }
+        // }
+
+        ItemStorageComponent.addItemToItemStorages(mainItemStorageList.itemStorages, itemDatabase.get(ItemID.Wood), 51);
+        ItemStorageComponent.addItemToItemStorages(mainItemStorageList.itemStorages, itemDatabase.get(ItemID.Wood), 51);
+        ItemStorageComponent.addItemToItemStorages(mainItemStorageList.itemStorages, itemDatabase.get(ItemID.Wood), 51);
+
+        console.log(mainItemStorageList);
+        console.log(mainItemStorageList.itemStorages);
+
+        // mainItemStorageList.map((itemStorage, index) => {
+        //     console.log(itemStorage);
+        // });
+    }
+
+    private devNewItemStorage() {
+        let itemDatabase = this._container.get<ItemDatabase>(ContainerKey.ItemDatabase);
+        let itemStackFactory = this._container.get<ItemStackFactory>(ContainerKey.ItemStackFactory);
+
+        let itemStorage = new ItemStorageV2(
+            10,
+            itemStackFactory,
+        );
+        // console.log(itemStorage);
+
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 40));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage);
     }
 }

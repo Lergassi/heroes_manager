@@ -3,15 +3,24 @@ import ItemStorageSlotComponent from './ItemStorageSlotComponent.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
+import GameObject from '../../source/GameObject.js';
+import {unsigned} from '../types.js';
+import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
+import AppError from '../../source/Errors/AppError.js';
+import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
+import EventSystem from '../../source/EventSystem.js';
 
-// export const DEFAULT_ITEM_STORAGE_SIZE = 20;
+export enum ItemStorageComponentEventCode {
+    AddItem = 'ItemStorageComponent.AddItem',
+    Clear = 'ItemStorageComponent.Clear',
+    Update = 'ItemStorageComponent.Update',
+}
 
 /**
  * todo: Вообще переделать. Убрать слоты с новыми идеями.
  */
 export default class ItemStorageComponent extends Component {
     private readonly _size: number;
-    // private readonly _slots: ItemStorageSlotComponent[];
     private readonly _slots: {[key: string]: ItemStorageSlotComponent};
     private readonly _itemStackFactory: ItemStackFactory;
 
@@ -36,13 +45,6 @@ export default class ItemStorageComponent extends Component {
         //     ));
         // }
     }
-
-    // /**
-    //  * @deprecated
-    //  */
-    // get size(): number {
-    //     return this._size;
-    // }
 
     /**
      * @deprecated
@@ -162,24 +164,16 @@ export default class ItemStorageComponent extends Component {
     }
 
     /**
+     * Добавляет предметы объединяя с другими стеками.
      * todo: Может только itemStack?
      * @param item
      * @param count
      * @return Остаток.
      */
     addItem(item: Item, count: number = 1): number {
-        // if (slotsWithItem.length) {
-        //
-        // }
+        assertIsInstanceOf(item, Item);
+        assertIsGreaterThanOrEqual(count, 1);
 
-        // let itemStacks = this._itemStackFactory.createSome(item, count);
-        //
-        // let slot = this.getFirstFreeItemStorageSlotComponent();
-        // if (slot) {
-        //     slot.placeItemStack(this._itemStackFactory.create(item, count));
-        // }
-
-        // slot.placeItemStack(this._itemStackFactory.create(item, count));
         let currentCount = count;
         let slotsWithItem = this.getItemStorageSlotComponentsWithItem(item);
         let freeSlots = this.getFreeItemStorageSlotComponents();
@@ -223,7 +217,24 @@ export default class ItemStorageComponent extends Component {
             }
         }
 
+        EventSystem.event(ItemStorageComponentEventCode.Update, this);
+
         return currentCount;
+    }
+
+    static addItemToItemStorages(itemStorages: GameObject[], item: Item, count: number): unsigned {
+        for (let i = 0; i < itemStorages.length; i++) {
+            if (!itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent)) {
+                throw AppError.componentNotFound(GameObjectKey.ItemStorageComponent);
+            }
+
+            count -= count - itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).addItem(item, count);
+            if (count <= 0) {
+                break;
+            }
+        }
+
+        return count;
     }
 
     addItemStack(itemStack: ItemStack) /* todo: return ID или остаток */ {
@@ -231,6 +242,8 @@ export default class ItemStorageComponent extends Component {
         if (slot) {
             slot.placeItemStack(itemStack);
         }
+
+        EventSystem.event(ItemStorageComponentEventCode.Update, this);
     }
 
     clear(): void {
@@ -241,11 +254,29 @@ export default class ItemStorageComponent extends Component {
         for (const slotsKey in this._slots) {
             this._slots[slotsKey].destroyItemStack();
         }
+
+        EventSystem.event(ItemStorageComponentEventCode.Update, this);
     }
 
-    //Предположим что ID доступен из вне, а слоты нет. И за рендер отвечает данный класс. И слоты снаружи не нужны. Или отдельный массив для слотов?
+    /**
+     * Предположим что ID доступен из вне, а слоты нет. И за рендер отвечает данный класс. И слоты снаружи не нужны. Или отдельный массив для слотов?
+     * @deprecated Слотов не будет.
+     * @param ID
+     */
     clearSlot(ID: string) {
         this._slots[ID]?.destroyItemStack();
+
+        EventSystem.event(ItemStorageComponentEventCode.Update, this);
+    }
+
+    /**
+     * @deprecated Временно для рендера, до новой системы сумок.
+     * @param index
+     */
+    getItemStorageSlot(index: number): ItemStorageSlotComponent {
+        assertNotNil(this._slots[index], 'ItemStorageSlot не найден.');
+
+        return this._slots[index];
     }
 
     render(callback: (values: {

@@ -11,7 +11,7 @@ import ItemStackFactory from '../Factories/ItemStackFactory.js';
 export default class ItemStorageSlotComponent extends Component implements ItemStackPlaceInterface, AssignRComponentInterface {
     private _itemStack: ItemStack;
 
-    get itemStack(): ItemStack {
+    get itemStack(): ItemStack | undefined {
         return this._itemStack;
     }
 
@@ -74,6 +74,14 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
         itemStack: ItemStack,
     }) => void) {
         callback({
+            itemStack: this._itemStack,
+        });
+    }
+
+    render2(callback: (values: {
+        itemStack: ItemStack,
+    }) => any) {
+        return callback({
             itemStack: this._itemStack,
         });
     }

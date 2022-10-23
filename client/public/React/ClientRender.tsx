@@ -72,7 +72,7 @@ export default class ClientRender {
                     mainLocationListComponent={this._container.get<MainLocationListComponent>(ContainerKey.MainLocationListComponent)}
                 />
                 <MainItemStorageListRComponent
-                    itemStorageCollection={this._container.get<MainItemStorageListComponent>('player.itemStorageCollection')}
+                    itemStorageCollection={this._container.get<MainItemStorageListComponent>(ContainerKey.MainItemStorageList)}
                 />
             </div>
         );

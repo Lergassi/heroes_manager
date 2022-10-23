@@ -5,6 +5,7 @@ export type ListenerType = Readonly<{
     // code: string;
     callback: (target) => void;
     target?: any;
+    // target: any;
 }>
 
 export type listenerCallback = (target) => void;
@@ -50,9 +51,7 @@ export default class EventSystem {
         }
 
         for (let i = 0; i < EventSystem._listeners[code].length; i++) {
-            // console.log('target', target);
-            // console.log('EventSystem._listeners[code][i].target', EventSystem._listeners[code][i].target);
-            // console.log(EventSystem._listeners[code][i].target && EventSystem._listeners[code][i].target === target);
+            //todo: А может ли вообще событие быть без таргета? Пока нет системы рендара и новой системы в замен GameObject - да. Рендер GameObject подписывается на все события в компонентах пока.
             if (EventSystem._listeners[code][i].target) {
                 if (EventSystem._listeners[code][i].target === target) {
                     EventSystem._listeners[code][i].callback(target);

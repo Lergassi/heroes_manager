@@ -54,7 +54,7 @@ export default class EquipSlotRComponent extends React.Component<EquipSlotRCompo
     }
 
     clearHandler() {
-        this.props.equipSlotComponent.destroyItemStack();
+        this.props.equipSlotComponent.clear();
         this.props.updateHandler();
     }
 

@@ -4,15 +4,15 @@ export enum CommandNameID {
     create_player_start_objects = 'create_player_start_objects',
 
     create_item_storage = 'create_item_storage',
-    clear_slot_item_storage_slot = 'clear_slot_item_storage_slot',
-    add_item = 'add_item',
+    clear_item_storage_slot = 'clear_item_storage_slot',
+    create_item = 'create_item',
 
     create_hero = 'create_hero',
     delete_hero = 'delete_hero',
     create_random_hero_class = 'create_random_hero_class',
+    create_all_hero_classes = 'create_all_hero_classes',
     kill_hero = 'kill_hero',
     resurrect_hero = 'resurrect_hero',
-    create_all_hero_classes = 'create_all_hero_classes',
     equip_from_item_storage_slot = 'equip_from_item_storage_slot',
     remove_equip_to_item_storage_slot = 'remove_equip_to_item_storage_slot',
 

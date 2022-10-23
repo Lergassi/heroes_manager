@@ -88,6 +88,7 @@ export default class Item {
         return this.characterAttributes[ID] ?? 0;
     }
 
+    //todo: Метод должен быть в свойствах.
     hasArmorMaterial(armorMaterial: ArmorMaterial | ArmorMaterial[]): boolean {
         if (!this.properties.armorMaterial) {
             return false;

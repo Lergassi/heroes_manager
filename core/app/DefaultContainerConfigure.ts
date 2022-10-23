@@ -6,7 +6,7 @@ import HelpCommand from '../../server/app/Commands/HelpCommand.js';
 import ListCommand from '../../server/app/Commands/ListCommand.js';
 import NewGameCommand from './Commands/NewGameCommand.js';
 import CreateStartPlayerObjectsCommand from './Commands/CreateStartPlayerObjectsCommand.js';
-import AddItemCommand from './Commands/AddItemCommand.js';
+import CreateItemCommand from './Commands/CreateItemCommand.js';
 import CreateHeroCommand from './Commands/CreateHeroCommand.js';
 import CreateItemStorageCommand from './Commands/CreateItemStorageCommand.js';
 import EquipCommand from './Commands/EquipCommand.js';
@@ -60,7 +60,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new CreateStartPlayerObjectsCommand(container));
 
         gameConsole.register(new CreateItemStorageCommand(container));
-        gameConsole.register(new AddItemCommand(container));
+        gameConsole.register(new CreateItemCommand(container));
         gameConsole.register(new ClearItemStorageSlotCommand(container));
 
         gameConsole.register(new CreateHeroCommand(container));

@@ -40,14 +40,6 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
             hero: props.hero,
         };
 
-        let callback = (target) => {
-            this.setState((state) => {
-                return {
-                    hero: state.hero,
-                };
-            });
-        };
-
         EventSystem.addListener({
             codes: [
                 ExperienceComponentEventCode.AddExp,
@@ -59,7 +51,13 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                 HealthPointsComponentEventCode.Resurrect,
             ],
             listener: {
-                callback: callback,
+                callback: (target) => {
+                    this.setState((state) => {
+                        return {
+                            hero: state.hero,
+                        };
+                    });
+                },
             },
         });
     }
@@ -68,21 +66,18 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
         let hero = this.state.hero;
 
         return (
-            <tr
-                key={hero['_id']}
-            >
-                <td>{hero['_id']}</td>
+            <tr key={hero.ID}>
+                <td>{hero.ID}</td>
                 <td>{hero.get<HeroComponent>(HeroComponent.name).heroClass.name}</td>
-                <td><ExperienceTextRenderRComponent
-                    experienceComponent={hero.get<ExperienceComponent>(ExperienceComponent.name)}
-                /></td>
+                <td>
+                    <ExperienceTextRenderRComponent
+                        experienceComponent={hero.get<ExperienceComponent>(ExperienceComponent.name)}
+                    />
+                </td>
                 <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_maxHealthPoints']['value']()}</td>
                 <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_isDead'] ? 'Мертвый' : 'Живой'}</td>
-                <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>
-                {/* todo: Сделать отдельный компонент для вывода значений, который получаются одним методом. */}
+                {/*<td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>*/}
                 <td>{hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).AttackPower.value()}</td>
-                {/*<td>{hero.get<AttackPower>(CharacterAttributeID.AttackPower).value()[0]}-{hero.get<AttackPower>(CharacterAttributeID.AttackPower).value()[1]}</td>*/}
-                {/*<td>{hero.get<CharacterAttributeCollectorComponent>(CharacterAttributeCollectorComponent.name).totalValue(CharacterAttributeID.AttackPower)}</td>*/}
                 <td>
                     {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Strength.value()}/
                     {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Agility.value()}/

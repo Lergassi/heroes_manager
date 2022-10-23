@@ -23,17 +23,13 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         EventSystem.event(EquipSlotComponentEventCode.CreateItemStack, this);
     }
 
-    destroyItemStack(): void {
+    clear(): void {
         if (this.isFree()) {
             return;
         }
 
         this._itemStack = null;
         EventSystem.event(EquipSlotComponentEventCode.DestroyItemStack, this);
-    }
-
-    equip(itemStack: ItemStack): void {
-        this._itemStack = itemStack;
     }
 
     isFree(): boolean {
@@ -49,8 +45,18 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
     }
 
     private _assertCanCreateItemStack(): void {
+        this._assertCanEquipItem();
+    }
+
+    private _assertCanEquipItem(): void {
         if (!this.isFree()) {
             throw new AppError('Слот занят.');
         }
+    }
+
+    equip(itemStack: ItemStack): void {
+        this._assertCanCreateItemStack();
+
+        this._itemStack = itemStack;
     }
 }

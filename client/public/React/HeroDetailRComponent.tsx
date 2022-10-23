@@ -82,7 +82,6 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
 
         let hero = this.props.hero;
         if (!hero) {
-            // return (<div>Герой не выбран.</div>);
             return;
         }
 
@@ -116,14 +115,6 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                         <td>Интеллект</td>
                         <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Intelligence).value()}</td>
                     </tr>
-                    {/*<tr>*/}
-                    {/*    <td>Максимальное кол-ко очков здоровья</td>*/}
-                    {/*    <td>{hero.get<CharacterAttribute>(CharacterAttributeID.MaxHealthPoints).value()}</td>*/}
-                    {/*</tr>*/}
-                    {/*<tr>*/}
-                    {/*    <td>Максимальное кол-ко очков магиии</td>*/}
-                    {/*    <td>{hero.get<CharacterAttribute>(CharacterAttributeID.MaxMagicPoints).value()}</td>*/}
-                    {/*</tr>*/}
                     <tr>
                         <td>Сила атаки</td>
                         <td>{hero.get<CharacterAttribute>(CharacterAttributeID.AttackPower).value()}</td>
@@ -136,10 +127,6 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                         <td>Очки магии</td>
                         <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>
                     </tr>
-                    {/*<tr>*/}
-                    {/*    <td>Сила атаки</td>*/}
-                    {/*    <td>{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().left}/{hero.get<AttackPowerComponent>(AttackPowerComponent.name).value().right}</td>*/}
-                    {/*</tr>*/}
                     </tbody>
                 </table>
                 <div>Экипировка</div>

@@ -197,6 +197,7 @@ export default class LocationComponent extends Component {
      * Перемещает объекты в сумки. Если слотов не хватает, остатки остаются в локации. Технически: перемещение между сумками.
      * @param itemStorageManager
      */
+    // moveItems(itemStorageManager: ItemStorageManager) {
     moveItems(itemStorageManager: ItemStorageManager) {
         this.canModify();
 

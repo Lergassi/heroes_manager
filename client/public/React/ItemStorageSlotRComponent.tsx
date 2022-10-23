@@ -18,7 +18,6 @@ export interface ItemStorageSlotRComponentState {
 export default class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRComponentProps, ItemStorageSlotRComponentState> implements RComponentUpdateInterface {
     constructor(props: ItemStorageSlotRComponentProps) {
         super(props);
-        // console.log('this.props', this.props);
 
         this.state = {
             itemStorageSlotComponent: props.itemStorageSlotComponent,

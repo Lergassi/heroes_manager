@@ -17,8 +17,8 @@ export default class AppError extends Error {
         return new AppError(sprintf('GameObject id(%s) не найден.', id));
     }
 
-    static componentNotFound(id) {
-        return new AppError(sprintf('Компонент id(%s) в GameObject не найден.', id));
+    static componentNotFound(key: string) {
+        return new AppError(sprintf('Компонент %s не найден в GameObject.', key));
     }
 
     static playerNotLoaded() {

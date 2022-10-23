@@ -26,10 +26,10 @@ export default class CreatePlayerEnvironmentCommand extends Command {
 
     private _createItemStorages() {
         // let itemStorage = this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-        // this.container.get<ItemStorageListComponent>('player.itemStorageCollection').add(itemStorage);
-        this.container.get<MainItemStorageListComponent>('player.itemStorageCollection').create(
+        // this.container.get<ItemStorageListComponent>(ContainerKey.MainItemStorageList).add(itemStorage);
+        this.container.get<MainItemStorageListComponent>(ContainerKey.MainItemStorageList).create(
             DEFAULT_ITEM_STORAGE_SIZE,
-            this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory'),
+            this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory),
         );
     }
 

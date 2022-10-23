@@ -122,8 +122,8 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     private _createStartItemStorages() {
-        this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-        this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+        this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory).create(DEFAULT_ITEM_STORAGE_SIZE);
+        this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory).create(DEFAULT_ITEM_STORAGE_SIZE);
     }
 
     private _createStartItems() {

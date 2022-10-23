@@ -24,19 +24,6 @@ export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInte
         // this._itemStack = null;
     }
 
-    /**
-     * @deprecated До тех пор, пока не будет экипировки из другого места. Использовать createItemStack.
-     * @param itemStack
-     */
-    equip(itemStack: ItemStack): void {
-        this._assertCanEquip(itemStack.item);
-
-        // this._itemStack = itemStack;
-        this._equipSlot.equip(itemStack);
-
-        // return true;
-    }
-
     createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
         this._assertCanEquip(item);
 
@@ -46,10 +33,10 @@ export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInte
         // return true;
     }
 
-    destroyItemStack(): void {
+    clear(): void {
         // this._itemStack = null;
 
-        this._equipSlot.destroyItemStack();
+        this._equipSlot.clear();
 
         // return true;
     }
@@ -73,5 +60,15 @@ export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInte
         item: Item,
     }) => void) {
         this._equipSlot.render(callback);
+    }
+
+    /**
+     * @deprecated До тех пор, пока не будет экипировки из другого места. Использовать createItemStack.
+     * @param itemStack
+     */
+    equip(itemStack: ItemStack): void {
+        this._assertCanEquip(itemStack.item);
+
+        this._equipSlot.equip(itemStack);
     }
 }

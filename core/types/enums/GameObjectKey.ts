@@ -3,4 +3,5 @@ export enum GameObjectKey {
     CharacterAttributes = 'CharacterAttributes',
     AttackController = 'AttackController',
     DamageController = 'DamageController',
+    ItemStorageComponent = 'ItemStorageComponent',
 }

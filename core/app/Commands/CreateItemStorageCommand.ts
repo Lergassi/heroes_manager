@@ -5,6 +5,7 @@ import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterfac
 import {unsigned} from '../types.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {ContainerKey} from '../../types/enums/ContainerKey.js';
 
 export default class CreateItemStorageCommand extends Command {
     get name(): string {
@@ -19,6 +20,6 @@ export default class CreateItemStorageCommand extends Command {
     async execute(input: Input) {
         let size: unsigned = parseInt(input.getArgument('size'), 10);
 
-        this.container.get<MainItemStorageListComponent>('player.itemStorageCollection').create(size, this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory'));
+        this.container.get<MainItemStorageListComponent>(ContainerKey.MainItemStorageList).create(size, this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory));
     }
 }

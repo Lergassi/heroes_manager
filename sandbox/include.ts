@@ -584,7 +584,7 @@ export function testSerializeEntityManager() {
 }
 
 export function testSerializeItemStorage(container: ContainerInterface, serializer: Serializer, jsonSerializer: JsonSerializer) {
-    let itemStorage = container.get<ItemStorageFactoryInterface>('player.ItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
+    let itemStorage = container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory).create(DEFAULT_ITEM_STORAGE_SIZE);
 
     itemStorage.getComponentByName<ItemStorageComponent>(ItemStorageComponent.name).addItemStack(
         container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).createByItemAlias(ItemID.Wood, 20),
@@ -731,7 +731,7 @@ export function testContainerGetByPattern() {
 export function testUUIDGenerator() {
     let container = createEndPlayerContainer();
 
-    let itemStorageFactory = container.get<ItemStorageFactoryInterface>('player.itemStorageFactory');
+    let itemStorageFactory = container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory);
 
     let itemStorage = itemStorageFactory.create(20);
     debugItemStorage(itemStorage);

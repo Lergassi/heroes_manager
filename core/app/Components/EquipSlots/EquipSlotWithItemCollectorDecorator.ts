@@ -22,18 +22,12 @@ export default class EquipSlotWithItemCollectorDecorator implements EquipSlotInt
         this._item = item;
     }
 
-    destroyItemStack(): void {
+    clear(): void {
         if (!this.isFree()) {
-            this._equipSlot.destroyItemStack();
+            this._equipSlot.clear();
             this._itemCharacterAttributeCollection.removeItem(this._item);
             this._item = null;
         }
-    }
-
-    equip(itemStack: ItemStack): void {
-        this._equipSlot.equip(itemStack);
-        this._itemCharacterAttributeCollection.addItem(itemStack.item);
-        this._item = itemStack.item;
     }
 
     isFree(): boolean {
@@ -44,5 +38,11 @@ export default class EquipSlotWithItemCollectorDecorator implements EquipSlotInt
         item: Item,
     }) => void) {
         this._equipSlot.render(callback);
+    }
+
+    equip(itemStack: ItemStack): void {
+        this._equipSlot.equip(itemStack);
+        this._itemCharacterAttributeCollection.addItem(itemStack.item);
+        this._item = itemStack.item;
     }
 }

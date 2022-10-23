@@ -150,7 +150,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //         container,
         //     );
         // });
-        container.set<MainItemStorageListComponent>('player.itemStorageCollection', (container) => {
+        container.set<MainItemStorageListComponent>(ContainerKey.MainItemStorageList, (container) => {
             let idGenerator = container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator');
             let itemStorageCollectionGameObject = new GameObject(idGenerator.generateID());
 
@@ -170,14 +170,14 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //     return new PlayerItemStorageFactory(
         //         container.get<ItemStorageFactoryInterface>('player.techItemStorageFactory'),
         //         container,
-        //         container.get<ItemStorageListComponent>('player.itemStorageCollection'),
+        //         container.get<ItemStorageListComponent>(ContainerKey.MainItemStorageList),
         //     );
         // });
         // //alias
         // container.set<ItemStorageFactoryInterface>('player.itemStorageFactory', (container) => {
         //     return container.get<ItemStorageFactoryInterface>('player.playerItemStorageFactory');
         // });
-        container.set<ItemStorageFactoryInterface>('player.itemStorageFactory', (container) => {
+        container.set<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory, (container) => {
             // return new TechItemStorageFactoryDecorator(
             //     new ItemStorageFactory(
             //         container,
@@ -197,7 +197,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
                 itemDatabase: container.get<ItemDatabase>(ContainerKey.ItemDatabase),
                 itemStackFactory: container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
-                itemStorageFactory: container.get<ItemStorageFactory>('player.itemStorageFactory'),
+                itemStorageFactory: container.get<ItemStorageFactory>(ContainerKey.ItemStorageFactory),
             });
         });
         container.set<EnemyFactory>(ContainerKey.EnemyFactory, (container) => {

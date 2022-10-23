@@ -1,4 +1,7 @@
 export enum EquipSlotID {
+    RightHand = 'RightHand',
+    LeftHand = 'LeftHand',
+
     Head = 'Head',
     Shoulders = 'Shoulders',
     Chest = 'Chest',
@@ -7,9 +10,6 @@ export enum EquipSlotID {
     Waist = 'Waist',    //талия
     Legs = 'Legs',
     Foots = 'Foots',
-
-    RightHand = 'RightHand',
-    LeftHand = 'LeftHand',
 
     Neck = 'Neck',
     Finger_1 = 'Finger_1',

@@ -21,27 +21,12 @@ export default class ItemStorageManager {
     }
 
     constructor(gameObjectStorage: GameObjectStorage) {
-    // constructor() {
         this._gameObjectStorage = gameObjectStorage;
     }
 
-    // /**
-    //  * @deprecated
-    //  */
-    // findFirstFreeItemStorageSlot() {
-    //     const itemStorages = this._gameObjectStorage.findByTag('#item_storage');
-    //     for (let i = 0; i < itemStorages.length; i++) {
-    //         const itemStorageSlotComponents = <ItemStorageSlotComponent[]>itemStorages[i].findComponentsByName(ItemStorageSlotComponent.name);
-    //         for (let j = 0; j < itemStorageSlotComponents.length; j++) {
-    //             if (itemStorageSlotComponents[j].isFree()) {
-    //                 return itemStorageSlotComponents[j];
-    //             }
-    //         }
-    //     }
-    //
-    //     return undefined;
-    // }
-
+    /**
+     * @deprecated
+     */
     getFirstFreeItemStorageSlot() {
     // getFirstFreeItemStorageSlot(itemStorages: GameObject[]) {
         let itemStorages = this._gameObjectStorage.findByTag('#item_storage');
@@ -59,7 +44,6 @@ export default class ItemStorageManager {
     }
 
     addItemStack(itemStack: ItemStack) {
-    // addItemStack(itemStorages: GameObject[], itemStack: ItemStack) {
         let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
         // let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot(itemStorages);
         if (!freeItemStorageSlotComponent) {
@@ -69,6 +53,10 @@ export default class ItemStorageManager {
         freeItemStorageSlotComponent.placeItemStack(itemStack);
     }
 
+    /**
+     * @deprecated
+     * @param itemStackPattern
+     */
     addItem(itemStackPattern: ItemStackPattern) {
         let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
         if (!freeItemStorageSlotComponent) {
@@ -76,6 +64,10 @@ export default class ItemStorageManager {
         }
 
         freeItemStorageSlotComponent.placeItemStack(itemStackPattern.build());
+    }
+
+    addItem2(item: Item, count: unsigned) {
+
     }
 
     createItemStack(options: {
@@ -95,7 +87,6 @@ export default class ItemStorageManager {
         });
     }
 
-    // moveFrom(itemStorageComponent: ItemStorageComponent): void {
     moveFrom(itemStorageComponent: ItemStorageComponent): void {
         let slots = itemStorageComponent.itemStorageSlotComponents;
         for (let i = 0; i < slots.length; i++) {
