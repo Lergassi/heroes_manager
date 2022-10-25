@@ -94,6 +94,7 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
         );
 
         //todo: Временно.
+        // console.log(location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints']);
         let gatheringItemPointsRows = location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints'].map((value, index) => {
             return (
                 <tr key={index}>

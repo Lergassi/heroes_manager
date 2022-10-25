@@ -9,12 +9,12 @@ export default interface ItemStorageInterface {
      */
     addItem(item: Item, count: unsigned): unsigned;
 
-    /**
-     *
-     * @param item
-     * @param count Кол-во удаленных предметов.
-     */
-    removeItem(item: Item, count: unsigned): unsigned;
+    // /**
+    //  *
+    //  * @param item
+    //  * @param count Кол-во не удаленных предметов.
+    //  */
+    // removeItem(item: Item, count: unsigned): unsigned;
 
     /**
      * В том числе не stackable.

@@ -11,12 +11,13 @@ import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
  */
 export enum ItemGetType {
     Gathering = 'Gathering',
-    Hunting = 'Hunting',
+    Hunting = 'Hunting',    //Имеется ввиду добыча с лута из убитый врагов.
     Crafting = 'Crafting',
     Purchased = 'Purchased',
 }
 
 /**
+ * @deprecated Будет переделано когда большая бд.
  * @indev Пока только с условие ИЛИ.
  */
 export type ItemFilterCondition = Readonly<Partial<{
@@ -24,36 +25,49 @@ export type ItemFilterCondition = Readonly<Partial<{
     itemCategory: /*ItemCategory | */ ItemCategory[],
 }>>
 
+/**
+ * Не обязательные свойства. Атрибуты отдельно.
+ */
 export interface ItemProperties {
     armorMaterial?: ArmorMaterial;
-    twoHandWeapon?: boolean;
-    // readonly isStackable?: boolean;
-    // stackSize?: number;    //Не может быть одновременно с isEquipable... хотя зелья? А почему можно экипировать только экипировку? Так и надо ставить тип = Экипировка.
+    twoHandWeapon?: boolean;    //Всё оружие по умолчанию одноручное.
 }
 
-export type CharacterAttributeIncreaseObject = {[alias: string]: CharacterAttributeIncrease};
 export type CharacterAttributeRecord = {[ID in CharacterAttributeID]: number};
 
 export interface ItemOptions {
     getTypes: ItemGetType[];
-    isStackable: boolean;
-    isEquipable: boolean;
 }
 
-export default class Item {
-    readonly id: string;
-    readonly name: string;
-    readonly description: string;
-    readonly itemLevel: number;
-    readonly sort: number;
-    readonly getTypes: ItemGetType[];
-    readonly itemCategory: ItemCategory;
-    readonly quality: Quality;
-    readonly stackSize: number;
+//todo: Идеи по private/public.
+export default class Item {                             //private or public? Фильтр и поиск не учитывается.
+    /**
+     * @deprecated private
+     */
+    readonly id: string;                        //Пока не понятно как пользоваться.
+    /**
+     * @deprecated private
+     */
+    readonly name: string;                      //Много где но в основном тоже только для игрока при выводе.
+    private readonly description: string;               //Для игрока в тултипе.
+    private readonly itemLevel: number;                 //Нужно только для информирования игрока при рендере.
+    private readonly sort: number;                      //Пока не используется. Даже если будет нужен - не понятно как использовать. Сортировать массив/объект который в EntityManager/ItemDatabase? А с другими полями как? Допустим на аукционе. А по другим полям. !!!->>> Это же общий список на всю игру - его не надо сортировать. Для этого будет другой класс. Пока скрыто.
+    private readonly getTypes: ItemGetType[];           //Может в дальнейшем использоваться для генерации лута.
+    /**
+     * @deprecated private
+     */
+    readonly itemCategory: ItemCategory;        //Может в дальнейшем использоваться для генерации лута.
+    private readonly quality: Quality;                  //Может в дальнейшем использоваться для генерации лута.
+    /**
+     * @deprecated private
+     */
+    readonly stackSize: number;                         //Нужно для стека. maxSize у стека? Кстате а зачем все данные в стеке например? sort может пригодиться. Зачем нужен getTypes, characterAttributes, armorMaterial у древесины никогда не будет...
 
-    readonly increase: CharacterAttributeIncreaseObject;
-    readonly characterAttributes: Partial<CharacterAttributeRecord>;
-    readonly properties: Readonly<ItemProperties>;
+    /**
+     * @deprecated private
+     */
+    readonly properties: Readonly<ItemProperties>;      //armorMaterial нужно при экипировки в слоты брони и проверки в зависимости от класса, twoHandWeapon блокировка левой руки.
+    private readonly characterAttributes: Readonly<Partial<CharacterAttributeRecord>>;  //Разные атрибуты. Сделан метод увеличения отдельного атрибута.
 
     constructor (
         id: string,
@@ -64,10 +78,9 @@ export default class Item {
         sort: number,
         itemCategory: ItemCategory,
         quality: Quality,
-        increase: CharacterAttributeIncreaseObject = {},
         properties: ItemProperties = {},
-        options: Partial<ItemOptions> = {},
         characterAttributes: Partial<CharacterAttributeRecord>,
+        options: Partial<ItemOptions> = {},
     ) {
         this.id = id;
         this.name = name;
@@ -77,7 +90,6 @@ export default class Item {
         this.itemCategory = itemCategory;
         this.quality = quality;
         this.stackSize = stackSize;
-        this.increase = increase;
         this.characterAttributes = characterAttributes;
         this.properties = properties;
         //Не путать с логикой из строителя. Тут всегда пустые значения.
@@ -86,6 +98,14 @@ export default class Item {
 
     increaseCharacterAttribute(ID: CharacterAttributeID): number {
         return this.characterAttributes[ID] ?? 0;
+    }
+
+    hasItemCategory(itemCategory: ItemCategory | ItemCategory[]): boolean {
+        if (itemCategory instanceof ItemCategory) {
+            itemCategory = [itemCategory];
+        }
+
+        return _.includes(itemCategory, this.itemCategory);
     }
 
     //todo: Метод должен быть в свойствах.
@@ -101,17 +121,7 @@ export default class Item {
         return _.includes(armorMaterial, this.properties.armorMaterial);
     }
 
-    hasItemCategory(itemCategory: ItemCategory | ItemCategory[]): boolean {
-        if (itemCategory instanceof ItemCategory) {
-            itemCategory = [itemCategory];
-        }
-        // console.log(this.itemCategory);
-        // console.log(itemCategory);
-
-        return _.includes(itemCategory, this.itemCategory);
-    }
-
-    //todo: tmp
+    //todo: Метод должен быть в свойствах.
     isTwoHandWeapon(): boolean {
         return Boolean(this.properties.twoHandWeapon);
     }

@@ -12,6 +12,7 @@ import MainItemStorageListComponent from '../Components/MainItemStorageListCompo
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import ItemDatabase from '../ItemDatabase.js';
 import {assertNotNil} from '../../source/assert.js';
+import {sprintf} from 'sprintf-js';
 
 export default class CreateItemCommand extends Command {
     get name(): string {
@@ -25,10 +26,11 @@ export default class CreateItemCommand extends Command {
     }
 
     async execute(input: Input) {
-        let itemID: string = input.getArgument('item_id');
-        let count: number = parseInt(input.getArgument('count'), 10);
+        let itemID = input.getArgument('item_id');
+        let count = parseInt(input.getArgument('count'), 10);
 
         let item = this.container.get<ItemDatabase>(ContainerKey.ItemDatabase).get(itemID);
+        assertNotNil(item, sprintf('Предмет ID(%s) не найден.', itemID));
 
         //todo: Со статичным методом уже удобнее, но возможно можно лучше. И геттер.
         ItemStorageComponent.addItemToItemStorages(

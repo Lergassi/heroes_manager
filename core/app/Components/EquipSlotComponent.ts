@@ -25,6 +25,9 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     private _itemStack: ItemStack;
     private _itemAttributeCollectionComponent: ItemCharacterAttributeCollector;
 
+    /**
+     * @deprecated
+     */
     get equipSlot(): EquipSlot {
         return this._equipSlot;
     }
@@ -33,16 +36,16 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
         return this._itemStack;
     }
 
-    constructor(options: {
+    constructor(
         equipSlot: EquipSlot,
         heroComponent: HeroComponent,
         itemAttributeCollectorComponent: ItemCharacterAttributeCollector,   //todo: В декоратор.
-    }) {
+    ) {
         super();
-        this._equipSlot = options.equipSlot;
-        this._heroComponent = options.heroComponent;
+        this._equipSlot = equipSlot;
+        this._heroComponent = heroComponent;
+        this._itemAttributeCollectionComponent = itemAttributeCollectorComponent;
         this._itemStack = null;
-        this._itemAttributeCollectionComponent = options.itemAttributeCollectorComponent;
     }
 
     canPlaceItem(item: Item): boolean {

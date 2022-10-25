@@ -7,20 +7,20 @@ import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class ItemDatabaseBuilder {
-    private readonly _entityManager: EntityManager;
+    private readonly _entityManager: EntityManagerInterface;
     private readonly _itemFactory: ItemFactory;
 
     constructor(
-        entityManager: EntityManager,
-        itemFactory: ItemFactory,
+        entityManager: EntityManagerInterface,
     ) {
         this._entityManager = entityManager;
-        this._itemFactory = itemFactory;
+        this._itemFactory = new ItemFactory(this._entityManager);
     }
 
-    build(): EntityManager {
+    build(): EntityManagerInterface {
         this._createItems();
         this._createResources();
         this._createArmor();
@@ -34,8 +34,8 @@ export default class ItemDatabaseBuilder {
     }
 
     private _createResources() {
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Wood,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Wood,
@@ -43,18 +43,14 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
-                        properties: {
-
-                        },
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.WoodBoards,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.WoodBoards,
@@ -62,15 +58,11 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
-                        properties: {
-
-                        },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Coal,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Coal,
@@ -80,10 +72,9 @@ export default class ItemDatabaseBuilder {
                         stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.IronOre,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.IronOre,
@@ -96,10 +87,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.IronBar,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.IronBar,
@@ -109,10 +99,9 @@ export default class ItemDatabaseBuilder {
                         stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.CopperOre,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.CopperOre,
@@ -125,10 +114,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.CopperBar,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.CopperBar,
@@ -138,52 +126,9 @@ export default class ItemDatabaseBuilder {
                         stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
-            (new ItemBuilder(this._entityManager))
-                .default(
-                    ItemID.TinOre,
-                    'Оловяная руда',
-                    ItemCategoryID.Resources,
-                    {
-                        stackSize: DEFAULT_STACK_SIZE,
-                        getTypes: [
-                            ItemGetType.Gathering,
-                        ],
-                    },
-                )
-                .build()
-        );
-        this._entityManager.add<Item>(
-            Item,
-            (new ItemBuilder(this._entityManager))
-                .default(
-                    ItemID.TinBar,
-                    'Оловянный слиток',
-                    ItemCategoryID.Materials,
-                    {
-                        stackSize: DEFAULT_STACK_SIZE,
-                    },
-                )
-                .build()
-        );
-        this._entityManager.add<Item>(
-            Item,
-            (new ItemBuilder(this._entityManager))
-                .default(
-                    ItemID.BronzeBar,
-                    'Бронзовый слиток',
-                    ItemCategoryID.Materials,
-                    {
-                        stackSize: DEFAULT_STACK_SIZE,
-                    },
-                )
-                .build()
-        );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.GoldOre,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.GoldOre,
@@ -196,10 +141,21 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.TinBar,
+            (new ItemBuilder(this._entityManager))
+                .default(
+                    ItemID.TinBar,
+                    'Оловянный слиток',
+                    ItemCategoryID.Materials,
+                    {
+                        stackSize: DEFAULT_STACK_SIZE,
+                    },
+                )
+        );
+        this._itemFactory.createByBuilder(
+            ItemID.GoldBar,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.GoldBar,
@@ -209,10 +165,9 @@ export default class ItemDatabaseBuilder {
                         stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Herb_1,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Herb_1,
@@ -225,10 +180,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Herb_2,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Herb_2,
@@ -241,10 +195,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Herb_3,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Herb_3,
@@ -257,10 +210,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Cotton,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Cotton,
@@ -273,10 +225,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.CottonThread,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.CottonThread,
@@ -286,10 +237,9 @@ export default class ItemDatabaseBuilder {
                         stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.CottonFabric,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.CottonFabric,
@@ -299,10 +249,9 @@ export default class ItemDatabaseBuilder {
                         stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.RabbitSkin,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.RabbitSkin,
@@ -315,10 +264,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.FoxSkin,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.FoxSkin,
@@ -331,10 +279,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.DeerSkin,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.DeerSkin,
@@ -347,10 +294,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.WolfSkin,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.WolfSkin,
@@ -363,10 +309,9 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.BearSkin,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.BearSkin,
@@ -379,13 +324,12 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Leather_01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Leather01,
+                    ItemID.Leather_01,
                     'Кожа',
                     ItemCategoryID.Materials,
                     {
@@ -395,39 +339,72 @@ export default class ItemDatabaseBuilder {
                         ],
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.MagicResources_01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.MagicResources_1,
+                    ItemID.MagicResources_01,
                     'Магический ресурс 1',
                     ItemCategoryID.Resources,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.MagicMaterial_01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.MagicMaterial_1,
+                    ItemID.MagicMaterial_01,
                     'Магический предмет 1',
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
                     },
                 )
-                .build()
+        );
+        this._itemFactory.createByBuilder(
+            ItemID.BoarSkin,
+            (new ItemBuilder(this._entityManager))
+                .default(
+                    ItemID.BoarSkin,
+                    'Кожа кабана',
+                    ItemCategoryID.Resources,
+                    {
+                        stackSize: DEFAULT_STACK_SIZE,
+                    },
+                ),
+        );
+        this._itemFactory.createByBuilder(
+            ItemID.BearMeat,
+            (new ItemBuilder(this._entityManager))
+                .default(
+                    ItemID.BearMeat,
+                    'Мясо медведя',
+                    ItemCategoryID.Resources,
+                    {
+                        stackSize: DEFAULT_STACK_SIZE,
+                    },
+                ),
+        );
+        this._itemFactory.createByBuilder(
+            ItemID.BoarMeat,
+            (new ItemBuilder(this._entityManager))
+                .default(
+                    ItemID.BoarMeat,
+                    'Мясо кабана',
+                    ItemCategoryID.Resources,
+                    {
+                        stackSize: DEFAULT_STACK_SIZE,
+                    },
+                ),
         );
     }
 
     private _createArmor() {
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlateHelmet_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateHelmet_01,
@@ -439,10 +416,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlateHelmet_02,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateHelmet_02,
@@ -460,10 +436,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlateShoulders_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateShoulders_01,
@@ -475,10 +450,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlateBreastplate_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateBreastplate_01,
@@ -490,10 +464,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlateBracer_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateBracer_01,
@@ -505,10 +478,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlateGloves_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateGloves_01,
@@ -520,10 +492,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlateBelt_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateBelt_01,
@@ -535,10 +506,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlatePants_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlatePants_01,
@@ -550,10 +520,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.PlateBoots_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.PlateBoots_01,
@@ -565,10 +534,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.LeatherHelmet_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherHelmet_01,
@@ -580,10 +548,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.LeatherShoulders_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherShoulders_01,
@@ -595,10 +562,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.LeatherBreastplate_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherBreastplate_01,
@@ -610,10 +576,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.LeatherBracer_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherBracer_01,
@@ -625,10 +590,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.LeatherGloves_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherGloves_01,
@@ -640,10 +604,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.LeatherBelt_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherBelt_01,
@@ -655,10 +618,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.LeatherPants_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherPants_01,
@@ -670,10 +632,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.LeatherBoots_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.LeatherBoots_01,
@@ -685,10 +646,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.ClothHelmet_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothHelmet_01,
@@ -700,10 +660,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.ClothShoulders_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothShoulders_01,
@@ -715,10 +674,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.ClothBreastplate_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothBreastplate_01,
@@ -730,10 +688,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.ClothBracer_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothBracer_01,
@@ -745,10 +702,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.ClothGloves_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothGloves_01,
@@ -760,10 +716,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.ClothBelt_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothBelt_01,
@@ -775,10 +730,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.ClothPants_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothPants_01,
@@ -790,10 +744,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.ClothBoots_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.ClothBoots_01,
@@ -805,10 +758,9 @@ export default class ItemDatabaseBuilder {
                         },
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Shield_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Shield_01,
@@ -818,10 +770,9 @@ export default class ItemDatabaseBuilder {
 
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Amulet_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Amulet_01,
@@ -831,10 +782,9 @@ export default class ItemDatabaseBuilder {
 
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Ring_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Ring_01,
@@ -844,10 +794,9 @@ export default class ItemDatabaseBuilder {
 
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Trinket_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Trinket_01,
@@ -857,13 +806,12 @@ export default class ItemDatabaseBuilder {
 
                     },
                 )
-                .build()
         );
     }
 
     private _createWeapons() {
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.OneHandedSword_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.OneHandedSword_01,
@@ -873,10 +821,9 @@ export default class ItemDatabaseBuilder {
 
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.TwoHandedSword_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.TwoHandedSword_01,
@@ -888,10 +835,9 @@ export default class ItemDatabaseBuilder {
                         }
                     },
                 )
-                .build()
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Dagger_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Dagger_01,
@@ -900,11 +846,10 @@ export default class ItemDatabaseBuilder {
                     {
 
                     },
-                )
-                .build()
+                ),
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.OneHandedAxe_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.OneHandedAxe_01,
@@ -913,11 +858,10 @@ export default class ItemDatabaseBuilder {
                     {
 
                     },
-                )
-                .build()
+                ),
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.TwoHandedAxe_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.TwoHandedAxe_01,
@@ -926,11 +870,10 @@ export default class ItemDatabaseBuilder {
                     {
 
                     },
-                )
-                .build()
+                ),
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Staff_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Staff_01,
@@ -941,11 +884,10 @@ export default class ItemDatabaseBuilder {
                             twoHandWeapon: true,
                         }
                     },
-                )
-                .build()
+                ),
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Wand_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Wand_01,
@@ -954,11 +896,10 @@ export default class ItemDatabaseBuilder {
                     {
 
                     },
-                )
-                .build()
+                ),
         );
-        this._entityManager.add<Item>(
-            Item,
+        this._itemFactory.createByBuilder(
+            ItemID.Revolver_01,
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.Revolver_01,
@@ -967,47 +908,7 @@ export default class ItemDatabaseBuilder {
                     {
 
                     },
-                )
-                .build()
-        );
-        this._entityManager.add<Item>(
-            Item,
-            (new ItemBuilder(this._entityManager))
-                .default(
-                    ItemID.BoarSkin,
-                    'Кожа кабана',
-                    ItemCategoryID.Resources,
-                    {
-                        stackSize: DEFAULT_STACK_SIZE,
-                    },
-                )
-                .build()
-        );
-        this._entityManager.add<Item>(
-            Item,
-            (new ItemBuilder(this._entityManager))
-                .default(
-                    ItemID.BearMeat,
-                    'Мясо медведя',
-                    ItemCategoryID.Resources,
-                    {
-                        stackSize: DEFAULT_STACK_SIZE,
-                    },
-                )
-                .build()
-        );
-        this._entityManager.add<Item>(
-            Item,
-            (new ItemBuilder(this._entityManager))
-                .default(
-                    ItemID.BoarMeat,
-                    'Мясо кабана',
-                    ItemCategoryID.Resources,
-                    {
-                        stackSize: DEFAULT_STACK_SIZE,
-                    },
-                )
-                .build()
+                ),
         );
     }
 }

@@ -9,18 +9,21 @@ import JsonSerializer from '../source/JsonSerializer.js';
 import MetadataManager from '../source/MetadataManager.js';
 import MetadataManagerCreator from './Services/MetadataManagerCreator.js';
 import EntityManagerBuilder from './Services/EntityManagerBuilder.js';
-import EntityManagerFacade from '../source/Facades/EntityManagerFacade.js';
 import ItemFactory from './Factories/ItemFactory.js';
 import ItemDatabase from './ItemDatabase.js';
-import {extractItems} from './indev.js';
+import {extractItems_dev} from './indev.js';
 import EventSystem from '../source/EventSystem.js';
 import {ContainerKey} from '../types/enums/ContainerKey.js';
+import Item from './Entities/Item.js';
+import {ItemID} from '../types/enums/ItemID.js';
+import _ from 'lodash';
+import EntityManagerInterface from './Interfaces/EntityManagerInterface.js';
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
         container.set<object>('core.config', config);
 
-        EventSystem.create();
+        EventSystem.init();
 
         //Тут не save_inject, а просто загрузка данных из файла. На сервере из файла, на клиенте через import и webpack.
         container.set<MetadataManager>('core.metadataManager', (container) => {
@@ -29,20 +32,22 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         container.set<EntityManager>(ContainerKey.EntityManager, (container) => {
             return new EntityManager();
         });
-        container.set<ItemFactory>(ContainerKey.ItemFactory, (container) => {
-            return new ItemFactory(container.get<EntityManager>(ContainerKey.EntityManager));
-        });
-        (new EntityManagerBuilder({
-            container: container,
-            entityManager: container.get<EntityManager>(ContainerKey.EntityManager),
-            itemFactory: container.get<ItemFactory>(ContainerKey.ItemFactory),
-        })).build();
+        // container.set<ItemFactory>(ContainerKey.ItemFactory, (container) => {
+        //     return new ItemFactory(container.get<EntityManagerInterface>(ContainerKey.EntityManager));
+        // });
+        (new EntityManagerBuilder(
+            container,
+            container.get<EntityManagerInterface>(ContainerKey.EntityManager),
+        )).build();
+        //@indev
         container.set<ItemDatabase>(ContainerKey.ItemDatabase, (container) => {
-            return new ItemDatabase(extractItems(container.get<EntityManager>(ContainerKey.EntityManager)));
+            let items = extractItems_dev(container.get<EntityManagerInterface>(ContainerKey.EntityManager));
+
+            return new ItemDatabase(items);
         });
-        container.set<EntityManagerFacade>(ContainerKey.EntityManagerFacade, (container) => {
-            return new EntityManagerFacade(container.get<EntityManager>(ContainerKey.EntityManager));
-        });
+        // console.log(container.get(ContainerKey.ItemDatabase));
+        // console.log(container.get<ItemDatabase>(ContainerKey.ItemDatabase).get(ItemID.Wood));
+        // console.log(container.get<ItemDatabase>(ContainerKey.ItemDatabase).get(ItemID.WoodBoards));
         container.set<Serializer>('core.serializer', (container) => {
             return new Serializer(container, container.get<MetadataManager>('core.metadataManager'));
         });
@@ -73,14 +78,14 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         // container.set<HeroFactory>('core.heroFactory', (container) => {
         //     return new HeroFactory(
         //         container.get<IDGeneratorInterface>('core.realtimeObjectIdGenerator'),
-        //         container.get<EntityManager>('core.entityManager'),
+        //         container.get<EntityManagerInterface>(ContainerKey.EntityManager),
         //         container.get<object>('core.config'),
         //     );
         // });
         // container.set<ItemStackFactory>('core.itemStackFactory', (container) => {
         //     return new ItemStackFactory(
         //         container.get<IDGeneratorInterface>('core.realtimeObjectIdGenerator'),
-        //         container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name),
+        //         container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository<Item>(Item.name),
         //     );
         // });
         // container.set<ItemStorageFactory>('core.itemStorageFactory', (container) => {

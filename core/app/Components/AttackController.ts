@@ -50,12 +50,6 @@ export default class AttackController implements AttackControllerInterface {
         };
     }
 
-    generateDamage(): number {
-        let value = this.value();
-
-        return _.random(value.left, value.right);
-    }
-
     attack(): number {
         this._stateController.assertAnyAction();
 

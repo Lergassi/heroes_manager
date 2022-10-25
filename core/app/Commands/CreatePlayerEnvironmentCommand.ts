@@ -10,6 +10,8 @@ import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import {EntityID} from '../../types/enums/EntityID.js';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.
@@ -43,9 +45,10 @@ export default class CreatePlayerEnvironmentCommand extends Command {
 
         currencies.forEach((currencyAlias) => {
             this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(this.container.get<WalletFactory>('player.walletFactory').create({
-                currency: this.container.get<EntityManager>('core.entityManager').getRepository<Currency>(Currency.name).getOneByAlias(currencyAlias),
+                currency: this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Currency>(EntityID.Currency, currencyAlias),
                 value: config['start_wallet_values'][currencyAlias]['value'],
             }));
+            // core.entityManager
         });
     }
 }

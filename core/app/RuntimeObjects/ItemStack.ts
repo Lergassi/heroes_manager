@@ -1,5 +1,6 @@
 import Item from '../Entities/Item.js';
 import AppError from '../../source/Errors/AppError.js';
+import {assertNotNil} from '../../source/assert.js';
 
 export interface ItemStackPlaceInterface {
     /**
@@ -41,6 +42,10 @@ export default class ItemStack {
     }
 
     constructor(id: string, item: Item, count: number = 1) {
+        assertNotNil(id);
+        assertNotNil(item);
+        assertNotNil(count);
+
         this._id = id;
         this._item = item;
         this._count = count;

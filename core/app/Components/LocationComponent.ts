@@ -206,6 +206,10 @@ export default class LocationComponent extends Component {
         EventSystem.event(LocationComponentEventCode.GetItems, this)
     }
 
+    /**
+     * todo: В отдельный класс. за сбор ресурсов будет отвечать другой объект. Т.е. локация тут вообще ничего делать не будет. Gathering
+     * @private
+     */
     private _generateItems() {
         let partOfMaxPeriodGathering = this._heroGroupComponent.partOfMaxHeroesCount /*todo: Так чтоли? */;
         for (let i = 0; i < this._gatheringItemPoints.length; i++) {

@@ -1,8 +1,9 @@
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import EntityManager from '../../source/EntityManager.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class ArmorMaterialLoader {
-    load(data: object, entityManager: EntityManager) {
+    load(data: object, entityManager: EntityManagerInterface) {
         let armorMaterial = Object.create(ArmorMaterial.prototype);
 
         armorMaterial['_id'] = <number>data['_id'];

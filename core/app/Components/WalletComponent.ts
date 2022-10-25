@@ -3,8 +3,10 @@ import Currency from '../Entities/Currency.js';
 import {unsigned} from '../types.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
+import WalletInterface from '../Interfaces/WalletInterface.js';
 
-export default class WalletComponent extends Component {
+export default class WalletComponent implements WalletInterface {
     private readonly _currency: Currency;
     private _value: number;
 
@@ -29,19 +31,27 @@ export default class WalletComponent extends Component {
         this._value = value;
     }
 
-    constructor(options: {
+    constructor(
         currency: Currency,
         value: unsigned,
-    },) {
-        super();
-        //todo: validate
+    ) {
+        assertNotNil(currency);
+        assertIsGreaterThanOrEqual(value, 0);
 
-        this._currency = options.currency;
-        this._value = options.value;
+        this._currency = currency;
+        this._value = value;
     }
 
-    add(value: unsigned) {
+    /**
+     *
+     * @param value Остаток.
+     */
+    add(value: unsigned): unsigned {
+        assertIsGreaterThanOrEqual(value, 0);
+
         this._value += value;
-        debug('log')(sprintf('Добавлена валюта (%s): %s.', this._currency['_name'], value));    //todo: Доступ.
+        debug('log')(sprintf('Добавлена валюта (%s): %d.', this._currency['_name'], value));    //todo: Доступ.
+
+        return 0;
     }
 }

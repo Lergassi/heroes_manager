@@ -25,7 +25,6 @@ import MainLocationListComponent from './Components/MainLocationListComponent.js
 import ExperienceComponentFactory from './Factories/ExperienceComponentFactory.js';
 import EnemyFactory from './Factories/EnemyFactory.js';
 import ExperienceComponent from './Components/ExperienceComponent.js';
-import {CurrencyWalletAlias} from './types.js';
 import WalletComponent from './Components/WalletComponent.js';
 import Currency from './Entities/Currency.js';
 import _ from 'lodash';
@@ -34,6 +33,8 @@ import {CurrencyID} from '../types/enums/CurrencyID.js';
 import CharacterAttributeValueGenerator from './Services/CharacterAttributeValueGenerator.js';
 import CharacterAttributeStartValueGenerator from './Services/CharacterAttributeStartValueGenerator.js';
 import CharacterAttributeFactory from './Factories/CharacterAttributeFactory.js';
+import {EntityID} from '../types/enums/EntityID.js';
+import EntityManagerInterface from './Interfaces/EntityManagerInterface.js';
 
 /**
  * todo: Временно не актуально.
@@ -105,7 +106,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             _.map(currencies, (currencyAlias) => {
                 container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(walletFactory.create({
-                    currency: container.get<EntityManager>(ContainerKey.EntityManager).get<Currency>(Currency, currencyAlias),
+                    currency: container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Currency>(EntityID.Currency, currencyAlias),
                     value: 1000,
                 }));
             });
@@ -125,7 +126,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<HeroFactory>(ContainerKey.HeroFactory, (container) => {
             return new HeroFactory({
-                entityManager: container.get<EntityManager>('core.entityManager'),
+                entityManager: container.get<EntityManagerInterface>(ContainerKey.EntityManager),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
                 experienceComponentFactory: container.get<ExperienceComponentFactory>(ContainerKey.ExperienceComponentFactory),
                 characterAttributeFactory: container.get<CharacterAttributeFactory>(ContainerKey.CharacterAttributeFactory),
@@ -134,7 +135,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         container.set<ItemStackFactory>(ContainerKey.ItemStackFactory, (container) => {
             return new ItemStackFactory(
                 container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                container.get<EntityManager>('core.entityManager'),
+                container.get<EntityManagerInterface>(ContainerKey.EntityManager),
             );
         });
         //todo: Только не player а core.
@@ -193,7 +194,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<LocationFactory>(ContainerKey.LocationFactory, (container) => {
             return new LocationFactory({
-                entityManager: container.get<EntityManager>('core.entityManager'),
+                entityManager: container.get<EntityManagerInterface>(ContainerKey.EntityManager),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
                 itemDatabase: container.get<ItemDatabase>(ContainerKey.ItemDatabase),
                 itemStackFactory: container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
@@ -202,7 +203,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<EnemyFactory>(ContainerKey.EnemyFactory, (container) => {
             return new EnemyFactory({
-                entityManager: container.get<EntityManager>('core.entityManager'),
+                entityManager: container.get<EntityManagerInterface>(ContainerKey.EntityManager),
                 gameObjectFactory: container.get<GameObjectFactory>('player.gameObjectFactory'),
                 characterAttributeFactory: container.get<CharacterAttributeFactory>(ContainerKey.CharacterAttributeFactory),
             });

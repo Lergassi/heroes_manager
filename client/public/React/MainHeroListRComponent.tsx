@@ -14,6 +14,7 @@ import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import MainHeroTableRowRComponent from './MainHeroTableRowRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import HeroDetailRComponent from './HeroDetailRComponent.js';
+import {CommandNameID} from '../../../core/types/enums/CommandNameID.js';
 
 interface HeroListRComponentProps {
     container: ContainerInterface;
@@ -73,7 +74,7 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
     }
 
     async deleteHero(hero: GameObject) {
-        await this._container.get<GameConsole>('gameConsole').run('hero.delete', [hero.ID.toString()]);
+        await this._container.get<GameConsole>('gameConsole').run(CommandNameID.delete_hero, [hero.ID.toString()]);
     }
 
     render() {

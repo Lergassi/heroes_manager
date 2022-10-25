@@ -31,6 +31,7 @@ export default class StateController {
     }
 
     assertAnyAction(): void {
+        //todo: @error Неверно. Установив статус получается даже воскресить героя нельзя будет.
         if (this._code !== ObjectStateCode.Free) {
             throw new AppError(this._message);
         }

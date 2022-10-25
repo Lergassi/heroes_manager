@@ -4,18 +4,15 @@ import {unsigned} from '../types.js';
 import {EnemyID} from '../../types/enums/EnemyID.js';
 
 export default class EnemyComponent extends Component {
-    private readonly _enemyType: EnemyEntity;
-    // private readonly _enemyTypeID: EnemyTypeID;
+    private readonly _enemyEntity: EnemyEntity;
     private readonly _level: unsigned;
 
-    constructor(options: {
-        enemyType: EnemyEntity,
-        // enemyTypeID: EnemyTypeID,
+    constructor(
+        enemyEntity: EnemyEntity,
         level: unsigned,
-    }) {
+    ) {
         super();
-        this._enemyType = options.enemyType;
-        // this._enemyTypeID = options.enemyTypeID;
-        this._level = options.level;
+        this._enemyEntity = enemyEntity;
+        this._level = level;
     }
 }

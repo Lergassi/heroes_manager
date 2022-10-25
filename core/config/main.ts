@@ -3,9 +3,6 @@ import {HeroClassID} from '../types/enums/HeroClassID.js';
 import {CurrencyID} from '../types/enums/CurrencyID.js';
 
 export default {
-    // date_format_mysql: 'yyyy-MM-dd hh:mm:ss',
-    // date_format_save_filename: 'dd.MM.yyyy_hh:mm:ss',
-    // date_format_ru: 'hh:mm:ss dd.MM.yyyy',
     max_player_level: 100,
     start_hero_values: {
         [HeroClassID.Warrior]: {

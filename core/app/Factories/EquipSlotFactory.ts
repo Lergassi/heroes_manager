@@ -11,12 +11,13 @@ import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttribut
 import EntityManager from '../../source/EntityManager.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import RightHand from '../Components/EquipSlots/RightHand.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class EquipSlotFactory {
-    private readonly _entityManager: EntityManager;
+    private readonly _entityManager: EntityManagerInterface;
 
     constructor(
-        entityManager: EntityManager,
+        entityManager: EntityManagerInterface,
     ) {
         this._entityManager = entityManager;
     }

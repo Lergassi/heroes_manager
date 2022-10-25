@@ -126,7 +126,7 @@ export function devSerializer() {
     });
 
     let container = new Container();
-    container.set<EntityManager>('core.entityManager', (container) => {
+    container.set<EntityManager>(ContainerKey.EntityManager, (container) => {
         return new EntityManager();
     });
 
@@ -455,10 +455,10 @@ function serializeWithLinkCollections(container: ContainerInterface, serializer:
         new TestObjectLink(102, 'c'),
     ];
 
-    container.get<EntityManager>('core.entityManager').getRepository(TestObjectLink.name).add(linkCollection[0]);
-    container.get<EntityManager>('core.entityManager').getRepository(TestObjectLink.name).add(linkCollection[1]);
-    container.get<EntityManager>('core.entityManager').getRepository(TestObjectLink.name).add(linkCollection[2]);
-    // console.log(container.get<RepositoryManager>('core.entityManager'));
+    container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[0]);
+    container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[1]);
+    container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[2]);
+    // console.log(container.get<RepositoryManager>(ContainerKey.EntityManager));
 
     let testObjectWithLinkCollections = new TestObjectWithLinkCollections(linkCollection);
     let expectedTestObjectWithLLinkCollections = '{"classname":"TestObjectWithLinkCollections","data":{"_linkCollection":[]}';
@@ -476,8 +476,8 @@ function serializeRealEntities(container: ContainerInterface, serializer: Serial
     (new ServerContainerConfigure()).configure(container);
     (new CoreContainerConfigure()).configure(container);
     // debugContainer(container);
-    // debugRepositoryManager(container.get('core.entityManager'));
-    // console.log(container.get('core.entityManager')['_repositories']);
+    // debugRepositoryManager(container.get(ContainerKey.EntityManager));
+    // console.log(container.get(ContainerKey.EntityManager)['_repositories']);
 
     let coreSerializer = container.get<Serializer>('core.serializer');
     let coreJsonSerializer = container.get<JsonSerializer>('core.jsonSerializer');
@@ -487,7 +487,7 @@ function serializeRealEntities(container: ContainerInterface, serializer: Serial
     let objectData = coreJsonSerializer.parse(stringData);
 
     let data = objectData['_data'];
-    let entityManager = container.get<EntityManager>('core.entityManager');
+    let entityManager = container.get<EntityManagerInterface>(ContainerKey.EntityManager);
     // let entities = [];
     for (let i = 0; i < data.length; i++) {
         entityManager.getRepository(data[i]['classname']).add(coreSerializer.unserialize(data[i]));
@@ -616,7 +616,7 @@ export function testSerializeItemStorage(container: ContainerInterface, serializ
 }
 
 export function testSerializeHero(container: ContainerInterface, serializer: Serializer, jsonSerializer: JsonSerializer) {
-    let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
+    let heroClass = container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
     let hero = container.get<HeroFactory>(ContainerKey.HeroFactory).create(
         heroClass,
         1,
@@ -899,11 +899,11 @@ export function testHeroController() {
     ));
 
     let warrior = container.get<HeroFactory>(ContainerKey.HeroFactory).create(
-        container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
+        container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
         1,
     );
     let mage = container.get<HeroFactory>(ContainerKey.HeroFactory).create(
-        container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
+        container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
         1,
     );
     heroController.addHero(warrior);
@@ -923,7 +923,7 @@ export function testEntityManagerFacade() {
     let container = createEndPlayerContainer();
     // let entity = function<Entity>(target: Entity, alias: string): Entity {
     //     //@ts-ignore
-    //     return container.get<EntityManager>('core.entityManager').getRepository<Entity>(target.name).getOneByAlias(alias);
+    //     return container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository<Entity>(target.name).getOneByAlias(alias);
     // };
     let facade = container.get<EntityManagerFacade>(ContainerKey.EntityManagerFacade);
 

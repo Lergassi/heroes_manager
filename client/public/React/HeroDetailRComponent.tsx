@@ -101,7 +101,7 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                     </tr>
                     <tr>
                         <td>Класс</td>
-                        <td>{hero.get<HeroComponent>(HeroComponent.name).heroClass.name}</td>
+                        <td>{hero.get<HeroComponent>(HeroComponent.name)['_heroClass']['_name']}</td>
                     </tr>
                     <tr>
                         <td>Сила</td>

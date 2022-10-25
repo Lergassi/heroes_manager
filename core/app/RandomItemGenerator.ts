@@ -23,7 +23,8 @@ export default class RandomItemGenerator {
     generate(): Item {
     // generate() {
         let items = this._itemDatabase.all();
-        return items[_.random(0, items.length - 1)];
+        let itemKeys = _.keys(items);
+        return items[_.random(0, itemKeys.length - 1)];
     }
 
     generateItems(count: number): Item[] {

@@ -2,6 +2,9 @@ import Item from '../Entities/Item.js';
 import ItemStack from './ItemStack.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 
+/**
+ * @deprecated
+ */
 export default class ItemStackPattern {
     private readonly _item: Item;
     private readonly _count: number;

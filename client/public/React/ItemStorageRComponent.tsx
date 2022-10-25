@@ -42,7 +42,6 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
             ],
             listener: {
                 callback: (target) => {
-                    console.log('target', target);
                     this.setState((state) => {
                         return {
                             itemStorage: state.itemStorage,

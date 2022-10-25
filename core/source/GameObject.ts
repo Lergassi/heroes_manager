@@ -167,6 +167,7 @@ export default class GameObject implements AssignRComponentInterface {
 
     /**
      * Для удобства замены в ide теги должны начинать со знака #.
+     * todo: Убрать. Не акутально.
      */
     addTags(tags: string | string[]): void {
         if (typeof tags === 'string') {

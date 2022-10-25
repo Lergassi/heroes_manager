@@ -1,14 +1,16 @@
 import Item from '../Entities/Item.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
-import EntityManager from '../../source/EntityManager.js';
 import _ from 'lodash';
+import {ItemID} from '../../types/enums/ItemID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import {EntityID} from '../../types/enums/EntityID.js';
 
 export default class ItemStackFactory {
     private readonly _idGenerator: IDGeneratorInterface;
-    private readonly _entityManager: EntityManager;
+    private readonly _entityManager: EntityManagerInterface;
 
-    constructor(idGenerator: IDGeneratorInterface, entityManager: EntityManager) {
+    constructor(idGenerator: IDGeneratorInterface, entityManager: EntityManagerInterface) {
         this._idGenerator = idGenerator;
         this._entityManager = entityManager;
     }
@@ -18,7 +20,11 @@ export default class ItemStackFactory {
      * @param item
      * @param count В пределах диапазона 1 - stackSize.
      */
-    create(item: Item, count: number): ItemStack {
+    create(item: Item | ItemID, count: number): ItemStack {
+        if (!(item instanceof Item)) {
+            item = this._entityManager.get<Item>(EntityID.Item, item);
+        }
+
         return new ItemStack(this._idGenerator.generateID(), item, count);
     }
 
@@ -53,6 +59,6 @@ export default class ItemStackFactory {
      * @param count
      */
     createByItemAlias(alias: string, count = 1): ItemStack {
-        return this.create(this._entityManager.get<Item>(Item, alias), count);
+        return this.create(this._entityManager.get<Item>(EntityID.Item, alias), count);
     }
 }

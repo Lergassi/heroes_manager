@@ -3,9 +3,9 @@ import ItemCategory from './ItemCategory.js';
 import EquipSlotAvailableItemCategoryInterface from '../Interfaces/EquipSlotAvailableItemCategoryInterface.js';
 
 export default class EquipSlotAvailableItemCategoryForHands implements EquipSlotAvailableItemCategoryInterface {
-    private _itemCategories: {[heroClassID in HeroClassID]: ItemCategory[]};
+    private _itemCategories: {[heroClassID in HeroClassID]?: ItemCategory[]};
 
-    constructor(itemCategories: {[heroClassID in HeroClassID]: ItemCategory[]}) {
+    constructor(itemCategories: {[heroClassID in HeroClassID]?/*todo: Временно. enum не удобно. А если классов будет 100? При добавлении нового класса нужно всю программу менять сразу.*/: ItemCategory[]}) {
         this._itemCategories = itemCategories;
     }
 

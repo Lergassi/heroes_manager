@@ -11,7 +11,7 @@ import CreateHeroCommand from './Commands/CreateHeroCommand.js';
 import CreateItemStorageCommand from './Commands/CreateItemStorageCommand.js';
 import EquipCommand from './Commands/EquipCommand.js';
 import RemoveEquipCommand from './Commands/RemoveEquipCommand.js';
-import DebugEntitiesCommand from './Commands/DebugCommands/DebugEntitiesCommand.js';
+import DebugEntityManagerCommand from './Commands/DebugCommands/DebugEntityManagerCommand.js';
 import DebugContainerCommand from '../../server/app/Commands/DebugCommands/DebugContainerCommand.js';
 import InspectGameObjectCommand from './Commands/DebugCommands/InspectGameObjectCommand.js';
 import DebugUserEnvironmentCommand from '../../server/app/Commands/DebugCommands/DebugUserEnvironmentCommand.js';
@@ -32,9 +32,25 @@ import ResurrectHeroCommand from './Commands/ResurrectHeroCommand.js';
 import {CommandNameID} from '../types/enums/CommandNameID.js';
 import KillHeroCommand from './Commands/KillHeroCommand.js';
 import CreateRandomHeroClassCommand from './Commands/CreateRandomHeroClassCommand.js';
+import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
+import debug from 'debug';
+import _ from 'lodash';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
+        //todo: Сделать разный источник для клиента и сервера.
+        let debugNamespaces = [
+            DebugNamespaceID.Info,
+            DebugNamespaceID.Debug,
+            'debug:*',
+            DebugNamespaceID.Error,
+            'error:*',
+            DebugNamespaceID.Log,
+            'log:*',
+            DebugNamespaceID.Warring,
+        ];
+        debug.enable(_.join(debugNamespaces, ','));
+
         container.set<GameConsole>('gameConsole', (container) => {
             return new GameConsole();
         });
@@ -83,7 +99,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new FightCommand(container));
 
         /* DEBUG */
-        gameConsole.register(new DebugEntitiesCommand(container));
+        gameConsole.register(new DebugEntityManagerCommand(container));
         gameConsole.register(new DebugContainerCommand(container));
         gameConsole.register(new DebugGameObjectStorageCommand(container));
         gameConsole.register(new InspectGameObjectCommand(container));

@@ -14,13 +14,14 @@ import {HeroClassID} from '../core/types/enums/HeroClassID.js';
 import {EquipSlotID} from '../core/types/enums/EquipSlotID.js';
 import {ItemID} from '../core/types/enums/ItemID.js';
 import {ContainerKey} from '../core/types/enums/ContainerKey.js';
+import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
 
 let container = new Container();
 (new DefaultContainerConfigure()).configure(container);
 (new CoreContainerConfigure()).configure(container);
 
-let heroClass = container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
-let equipSlot = container.get<EntityManager>('core.entityManager').getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(EquipSlotID.Head);
+let heroClass = container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
+let equipSlot = container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(EquipSlotID.Head);
 let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateHelmet_01);
 
 let hero = container.get<HeroFactory>(ContainerKey.HeroFactory).create(
@@ -33,7 +34,8 @@ let equipSlotComponent = _.filter(hero.findComponentsByName<EquipSlotComponent>(
 
 describe('Test available item category.', () => {
     // test(sprintf('ItemStack with item "%s" available for equip slot "%s".', availableItemStack.item.name, equipSlotComponent.equipSlot.name), () => {
-    test(sprintf('ItemStack with item "%s" available for equip slot "%s".', availableItemStack.item.name, equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/), () => {
+    // test(sprintf('ItemStack with item "%s" available for equip slot "%s".', availableItemStack.item.name, equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/), () => {
+    test(sprintf('ItemStack with item "%s" available for equip slot "%s".', undefined, equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/), () => {
         expect(equipSlotComponent.placeItemStack(availableItemStack)).toBeTruthy();
         equipSlotComponent.clear();
     });
@@ -50,7 +52,8 @@ describe.each([
     [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlatePants_01)],
 ])('Test not available item category.', (a) => {
     // test(sprintf('ItemStack with item "%s" not available for equip slot "%s".', a.item.name, equipSlotComponent.equipSlot.name), () => {
-    test(sprintf('ItemStack with item "%s" not available for equip slot "%s".', a.item.name, equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/), () => {
+    // test(sprintf('ItemStack with item "%s" not available for equip slot "%s".', a.item.name, equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/), () => {
+    test(sprintf('ItemStack with item "%s" not available for equip slot "%s".', undefined, equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/), () => {
         expect(() => {
             equipSlotComponent.placeItemStack(a);
         }).toThrow();
@@ -62,7 +65,7 @@ describe.each([
     // [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.LeatherHelmet_01)],
 ])('Test available armor material.', (a) => {
     // test(sprintf('ItemStack with armor material "%s" available for hero class "%s".', a.item.armorMaterial.name, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClass.name), () => {
-    test(sprintf('ItemStack with armor material "%s" available for hero class "%s".', undefined, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClass.name), () => {
+    test(sprintf('ItemStack with armor material "%s" available for hero class "%s".', undefined, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClassID.name), () => {
         expect(equipSlotComponent.placeItemStack(a)).toBeTruthy();
         equipSlotComponent.clear();
     });
@@ -76,7 +79,7 @@ describe.each([
     [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.ClothHelmet_01)],
 ])('Test not available armor material.', (a) => {
     // test(sprintf('ItemStack with armor material "%s" not available for hero class "%s".', a.item.armorMaterial.name, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClass.name), () => {
-    test(sprintf('ItemStack with armor material "%s" not available for hero class "%s".', undefined, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClass.name), () => {
+    test(sprintf('ItemStack with armor material "%s" not available for hero class "%s".', undefined, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClassID.name), () => {
         expect(() => {
             equipSlotComponent.placeItemStack(a);
         }).toThrow();

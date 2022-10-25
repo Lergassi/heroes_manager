@@ -17,9 +17,8 @@ import ContainerInterface from '../source/ContainerInterface.js';
 import LevelRange from '../app/Components/ExperienceComponent.js';
 import EntityManager from '../source/EntityManager.js';
 import Item from '../app/Entities/Item.js';
-import GameContainer from '../source/GameContainer.js';
-import ItemSlot from '../app/Components_v2/ItemSlot.js';
 import {ContainerKey} from '../types/enums/ContainerKey.js';
+import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
 
 export function debugEntity(entity) {
     debug('debug')('%j', {
@@ -90,7 +89,7 @@ export function debugRepository(repository) {
     }
 }
 
-export function debugEntityManager(entityManager: EntityManager) {
+export function debugEntityManager(entityManager: EntityManagerInterface) {
     debug('debug')(EntityManager.name);
     for (const repositoryKey in entityManager['_repositories']) {
         debug('debug')(sprintf('%sRepository.length: %s',
@@ -267,47 +266,13 @@ export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent)
     });
 }
 
-export function debugNewItemStorage(itemStorage: GameContainer) {
-    let slots = itemStorage.getComponents<ItemSlot>('itemSlots');
-    _.map(slots, (slot) => {
-        // let slot = slotContainer.get<ItemSlot>('itemSlot');
-        debug('debug')('%j', {
-            // component: ItemStorageSlotComponent.name,
-            // _id: slotContainer['_id'],
-            itemStack: slot.isFree() ? 'free' : {
-                item: {
-                    name: slot['_itemStack']['_item']['_name'],
-                    alias: slot['_itemStack']['_item']['_alias'],
-                },
-                count: slot['_itemStack']['_count'],
-            },
-        });
-    });
-}
-
-// export function debugItemStorageComponent(itemStorageComponent: ItemStorageComponent) {
-//
-// }
-
-// export function debugItemStorages(container: ContainerInterface) {
 export function debugItemStorages(itemStorages: GameObject[]) {
     debug('debug')('# item storages');
-    // container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
-    //     .findByTag('#item_storage')
     itemStorages
         .map((itemStorage) => {
             debugItemStorage(itemStorage);
         });
 }
-
-// export function debugItemStorageManager(itemStorageManager: ItemStorageManager) {
-//     debug('debug')('# itemStorageManager');
-//     container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
-//         .findByTag('#item_storage')
-//         .map((itemStorage) => {
-//             debugItemStorage(itemStorage);
-//         });
-// }
 
 export function debugWallet(wallet: GameObject) {
     debugGameObject(wallet);
@@ -348,18 +313,6 @@ export function debugContainer(container: ContainerInterface) {
     }
 }
 
-// export function debugGameObjectStorage(gameObjectStorage: GameObjectStorage) {
-//     debug('debug')('%j', {
-//         name: GameObjectStorage.name,
-//         length: gameObjectStorage['_gameObjects'].length,
-//     });
-//     for (let i = 0; i < gameObjectStorage['_gameObjects'].length; i++) {
-//         debug('debug')('%j', {
-//
-//         });
-//     }
-// }
-
 export function debugPlayerGameObject(container: ContainerInterface) {
     let playerGameObject = container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag('#player');
     debug('debug')('# player');
@@ -377,7 +330,7 @@ export function debugGameObjectStorage(gameObjectStorage: GameObjectStorage) {
 export function debugItemList(items: Item[]) {
     for (let i = 0; i < items.length; i++) {
         debug('debug')('%j', {
-            name: items[i].name,
+            name: items[i]['name'] || items[i]['_name'],
             alias: items[i].id,
         });
     }

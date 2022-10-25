@@ -1,5 +1,4 @@
 import Item, {
-    CharacterAttributeIncreaseObject,
     CharacterAttributeRecord,
     ItemGetType,
     ItemOptions,
@@ -11,44 +10,20 @@ import CharacterAttributeEntity from '../Entities/CharacterAttributeEntity.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import Quality from '../Entities/Quality.js';
 import EntityManager from '../../source/EntityManager.js';
-import {CharacterAttributeIncreaseObjectBuilder} from './CharacterAttributeIncreaseBuilder.js';
 import {QualityID} from '../../types/enums/QualityID.js';
-
-export type alias = string;
-// export type ItemBuilderCreate = (
-//     id: string,
-//     name: string,
-//     alias: string,
-//     itemCategory: alias,
-//     options: ItemBuilderOptions
-// ) => Item;
-// export interface ItemBuilderDefaultInterface {
-//     default(
-//         id: string,
-//         name: string,
-//         alias: string,
-//         itemCategory: alias,
-//         options: ItemBuilderOptions = {},
-//     )
-// }
-
-// export interface ItemBuilder {
-//
-// }
+import {EntityID} from '../../types/enums/EntityID.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export interface ItemBuilderOptions {
     description: string;
     stackSize: number;
     itemLevel: number;
     sort: number;
-    quality: alias;
+    quality: string;
     getTypes: ItemGetType[];
     properties: ItemPropertiesBuilderOptions;
-    //todo: options и другие свойства в Item это не обязательные параметры. Тут пока объединены в ItemBuilderOptions.
-    // armorMaterial: alias;
-    increase: CharacterAttributeIncreaseObjectBuilder;
     characterAttributes: Partial<CharacterAttributeRecord>;
-    // options: Partial<ItemOptions>;
 }
 
 // export interface ItemPropertiesBuilderOptions {
@@ -88,7 +63,7 @@ export class ItemPropertiesBuilder {
 }
 
 export default class ItemBuilder {
-    private _entityManager: EntityManager;
+    private _entityManager: EntityManagerInterface;
 
     private _id: string;
     private _name: string;
@@ -98,12 +73,8 @@ export default class ItemBuilder {
     private _itemCategory: ItemCategory;
     private _quality: Quality;
     private _options: Partial<ItemOptions>;
-
     private _stackSize: number;
-    private _isEquipable: boolean;
-    private _armorMaterial: ArmorMaterial;
 
-    private _increase: CharacterAttributeIncreaseObject;
     private _characterAttributes: Partial<CharacterAttributeRecord>;
     private _properties: ItemProperties;
 
@@ -115,36 +86,36 @@ export default class ItemBuilder {
         stackSize: 1,   //todo: Может как stackable лучше указать как default?
     };
 
-    constructor(entityManager: EntityManager) {
+    constructor(entityManager: EntityManagerInterface) {
         this._entityManager = entityManager;
     }
 
-    //todo: Не понятно, что надо сначала вызвать этот метод.
+    /**
+     * todo: Не понятно, что надо сначала вызвать этот метод.
+     * @param id
+     * @param name
+     * @param itemCategoryID
+     * @param options Всё что не указано будет задано стандартными значениями.
+     */
     default(
         id: string,
         name: string,
-        itemCategory: alias,
+        itemCategoryID: ItemCategoryID,
         options: Partial<ItemBuilderOptions> = {},
     ) {
         this._id = id;
         this._name = name;
-        this._itemCategory = this._entityManager.get<ItemCategory>(ItemCategory, itemCategory);
+        this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
 
         this._description = options.description ?? this._default.description;
         this._itemLevel = options.itemLevel ?? this._default.itemLevel;
         this._sort = options.sort ?? this._default.sort;
         this._quality = options.quality ?
-            this._entityManager.get<Quality>(Quality, options.quality) :
-            this._entityManager.get<Quality>(Quality, this._default.quality)  //или poor?
+            this._entityManager.get<Quality>(EntityID.Quality, options.quality) :
+            this._entityManager.get<Quality>(EntityID.Quality, this._default.quality)  //или poor?
         ;
         this._stackSize = options.stackSize ?? this._default.stackSize;
 
-        this._increase = {};
-        let characterAttributeIncreaseObjectBuilder = options.increase ?? {};
-        for (const alias in characterAttributeIncreaseObjectBuilder) {
-            let characterAttribute = this._entityManager.get<CharacterAttributeEntity>(CharacterAttributeEntity, alias);
-            this._increase[alias] = new CharacterAttributeIncrease(characterAttribute, characterAttributeIncreaseObjectBuilder[alias]);
-        }
         this._characterAttributes = options.characterAttributes || {};
 
         this._options = {};
@@ -181,7 +152,7 @@ export default class ItemBuilder {
         // }
         this._properties = (new ItemPropertiesBuilder({
             armorMaterial: options?.properties?.armorMaterial ?
-                this._entityManager.get<ArmorMaterial>(ArmorMaterial, options.properties.armorMaterial) :
+                this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, options.properties.armorMaterial) :
                 undefined,
             twoHandWeapon: options?.properties?.twoHandWeapon,
         })).build();
@@ -205,25 +176,24 @@ export default class ItemBuilder {
             this._sort,
             this._itemCategory,
             this._quality,
-            this._increase,
             this._properties,
-            this._options,
             this._characterAttributes,
+            this._options,
         );
     }
 
-    armor(armorMaterial: alias) {
-        this._armorMaterial = this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(armorMaterial);
-        this._equip();
+    // armor(armorMaterial: string) {
+    //     this._armorMaterial = this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(armorMaterial);
+    //     this._equip();
+    //
+    //     return this;
+    // }
 
-        return this;
-    }
-
-    weapon() {
-        this._equip();
-
-        return this;
-    }
+    // weapon() {
+    //     this._equip();
+    //
+    //     return this;
+    // }
 
     private _equip() {
         this._stackSize = 1;

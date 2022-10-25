@@ -8,7 +8,7 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import {assert, assertIsNumber, assertNotNil, assertIsPositive} from '../../source/assert.js';
 
 /**
- * Все значения в игре представлены в виде одного значения. Далее уже они используюся для вычисления других значений, например сила атаки это число, которое по своей логике преобразуется в диапазон.
+ * Все значения атрибутов в игре представлены в виде одного значения. Далее уже они используюся для вычисления других значений, например сила атаки это число, которое по своей логике преобразуется в диапазон.
  */
 export default class CharacterAttribute implements CharacterAttributeInterface {
     private readonly _characterAttributeID: CharacterAttributeID;    //todo: Убрать. Сделать с доступом по индексу. Во всех подобных местах.

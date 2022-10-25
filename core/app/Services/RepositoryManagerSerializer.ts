@@ -1,5 +1,6 @@
 import Serializer from '../../source/Serializer.js';
 import EntityManager from '../../source/EntityManager.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class RepositoryManagerSerializer {
     private _serializer: Serializer;
@@ -8,7 +9,7 @@ export default class RepositoryManagerSerializer {
         this._serializer = serializer;
     }
 
-    serialize(entityManager: EntityManager) {
+    serialize(entityManager: EntityManagerInterface) {
         let data = [];
 
         for (const repositoryKey in entityManager['_repositories']) {

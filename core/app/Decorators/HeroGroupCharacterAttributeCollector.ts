@@ -14,14 +14,12 @@ export default class HeroGroupCharacterAttributeCollector implements HeroGroupIn
 
     constructor(options: {
         heroGroup: HeroGroupInterface,
-        // characterAttributeValueCollector: TotalCharacterAttributeValueCollectorComponent,
     }) {
         assert(!_.isNil(options));
         assert(!_.isNil(options.heroGroup));
         // assert(options.characterAttributeValueCollector instanceof TotalCharacterAttributeValueCollectorComponent);
 
         this._heroGroup = options.heroGroup;
-        // this._totalCollectors = options.characterAttributeValueCollector;
         this._totalCollectors = [];
     }
 
@@ -39,7 +37,6 @@ export default class HeroGroupCharacterAttributeCollector implements HeroGroupIn
     }
 
     totalValue(ID: CharacterAttributeID) {
-        // console.log(this._totalCollectors);
         return _.sum(_.map(this._totalCollectors, (totalCollector) => {
             return totalCollector.totalValue(ID);
         }));

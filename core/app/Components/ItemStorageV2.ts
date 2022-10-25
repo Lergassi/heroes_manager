@@ -108,7 +108,7 @@ export default class ItemStorageV2 implements ItemStorageInterface {
         return currentCount;
     }
 
-    removeItem(item: Item, count: unsigned): unsigned {
-        return undefined;
-    }
+    // removeItem(item: Item, count: unsigned): unsigned {
+    //     return undefined;
+    // }
 }

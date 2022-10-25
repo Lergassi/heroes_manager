@@ -27,14 +27,13 @@ export enum ItemID {
     WolfSkin = 'WolfSkin',
     BearSkin = 'BearSkin',
     BoarSkin = 'BoarSkin',
-
-    Leather01 = 'Leather01',
+    Leather_01 = 'Leather_01',
 
     BoarMeat = 'BoarMeat',
     BearMeat = 'BearMeat',
 
-    MagicResources_1 = 'MagicResources_1',
-    MagicMaterial_1 = 'MagicMaterial_1',
+    MagicResources_01 = 'MagicResources_01',
+    MagicMaterial_01 = 'MagicMaterial_01',
 
     PlateHelmet_01 = 'PlateHelmet_01',
     PlateHelmet_02 = 'PlateHelmet_02',

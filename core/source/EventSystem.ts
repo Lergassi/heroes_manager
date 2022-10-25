@@ -11,36 +11,27 @@ export type ListenerType = Readonly<{
 export type listenerCallback = (target) => void;
 
 export default class EventSystem {
-    // private _listeners: {[code: string]: ListenerType[]};
     private static _listeners: {[code: string]: ListenerType[]};
-    // private static _listeners: {[code: string]: listenerCallback[]};
 
-    private constructor() {
-        // EventSystem._listeners = {};
-    }
+    private constructor() {}
 
-    static create() {
+    static init(): EventSystem {
         EventSystem._listeners = {};
 
         return this;
     }
 
-    // static addListener(codes: string | string[], listener: ListenerType): void {
-    // static addListener(codes: string | string[], listener: listenerCallback): void {
     static addListener(options: {
         codes: string | string[],
         listener: ListenerType,
     }): void {
-        if (typeof options.codes === 'string') {
-            options.codes = [options.codes];
-        }
-
-        for (let i = 0; i < options.codes.length; i++) {
-            if (!EventSystem._listeners.hasOwnProperty(options.codes[i])) {
-                EventSystem._listeners[options.codes[i]] = [];
+        let codes = typeof options.codes === 'string' ? [options.codes] : options.codes;
+        for (let i = 0; i < codes.length; i++) {
+            if (!EventSystem._listeners.hasOwnProperty(codes[i])) {
+                EventSystem._listeners[codes[i]] = [];
             }
 
-            EventSystem._listeners[options.codes[i]].push(options.listener);
+            EventSystem._listeners[codes[i]].push(options.listener);
         }
     }
 

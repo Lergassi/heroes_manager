@@ -4,13 +4,13 @@ import EquipSlotComponent from './EquipSlotComponent.js';
 import AppError from '../../source/Errors/AppError.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 
-//todo: Придумать другое название. 2 раза Component.
+/**
+ * @deprecated
+ */
 export default class EquipSlotComponentControllerComponent extends Component {
-    // private _equipSlots;
     private readonly _equipSlotComponents: EquipSlotComponent[];
 
     get equipSlotComponents(): EquipSlotComponent[] {
-        // return this.gameObject.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name);
         return this._equipSlotComponents;
     }
 

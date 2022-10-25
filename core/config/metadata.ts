@@ -401,7 +401,7 @@ metadata[ItemCategory.name] = {
         _parent: {
             type: SerializeType.Link,
             // target: (entityClassname: string, container: ContainerInterface) => {
-            //     return container.get<RepositoryManager>('core.entityManager').getRepository()
+            //     return container.get<RepositoryManager>(ContainerKey.EntityManager).getRepository()
             // },
         },
     },

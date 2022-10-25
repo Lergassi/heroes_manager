@@ -43,39 +43,39 @@ export type Loot = {
     chance: unsigned;
 }
 
-export enum EnemyCategoryAlias {
-    Beast = 'Beast',
-}
+// export enum EnemyCategoryAlias {
+//     Beast = 'Beast',
+// }
+//
+// export type EnemyTypes = {
+//     [alias: string]: EnemyEntity;
+// }
 
-export type EnemyTypes = {
-    [alias: string]: EnemyEntity;
-}
+// export type EnemyTypeRecord = Record<string, EnemyEntity>;
 
-export type EnemyTypeRecord = Record<string, EnemyEntity>;
+// export type EnemyConfig = {
+//     enemyID: EnemyID,
+//     loot: Loot[],
+//     exp: unsigned,
+//     gold: unsigned[],
+//     // attackPowerForFirstLevel: unsigned[],
+//     // maxHealthPointsForFirstLevel: unsigned,
+//     // maxMagicPointsForFirstLevel: unsigned,
+//     // protectionForFirstLevel: unsigned,
+//     //...
+// };
+//
+// export type EnemyConfigs = {
+//     [alias: string]: EnemyConfig;
+// };
+//
+// // export type EnemyConfigRecord = Record<string, EnemyConfig>;
+// export type EnemyConfigRecord = Record<EnemyID, EnemyConfig>;
 
-export type EnemyConfig = {
-    enemyID: EnemyID,
-    loot: Loot[],
-    exp: unsigned,
-    gold: unsigned[],
-    // attackPowerForFirstLevel: unsigned[],
-    // maxHealthPointsForFirstLevel: unsigned,
-    // maxMagicPointsForFirstLevel: unsigned,
-    // protectionForFirstLevel: unsigned,
-    //...
-};
-
-export type EnemyConfigs = {
-    [alias: string]: EnemyConfig;
-};
-
-// export type EnemyConfigRecord = Record<string, EnemyConfig>;
-export type EnemyConfigRecord = Record<EnemyID, EnemyConfig>;
-
-export enum ItemAlias {
-    Wood = 'Wood',
-    IronOre = 'IronOre',
-}
+// export enum ItemAlias {
+//     Wood = 'Wood',
+//     IronOre = 'IronOre',
+// }
 
 export enum EntityManagerKey {
     // EnemyType = 'EnemyType',
@@ -83,7 +83,7 @@ export enum EntityManagerKey {
 }
 
 //ID = ID CurrencyAlias todo: Теги тоже в переменные?
-export enum CurrencyWalletAlias {
-    Gold = 'Wallet.Gold',
-    ResearchPoints = 'Wallet.ResearchPoints',
-}
+// export enum CurrencyWalletAlias {
+//     Gold = 'Wallet.Gold',
+//     ResearchPoints = 'Wallet.ResearchPoints',
+// }

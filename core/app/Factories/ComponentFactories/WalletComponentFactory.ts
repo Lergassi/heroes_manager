@@ -7,10 +7,10 @@ export default class WalletComponentFactory {
         currency: Currency,
         value: unsigned,
     },): WalletComponent {
-        return new WalletComponent({
-            currency: options.currency,
-            value: options.value,
-        });
+        return new WalletComponent(
+            options.currency,
+            options.value,
+        );
     }
 
     // createIn() {

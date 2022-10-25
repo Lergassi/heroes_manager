@@ -42,7 +42,8 @@ export default class AppError extends Error {
     }
 
     static itemStackSizeWrong(item: Item) {
-        return new AppError(sprintf('Размер стека для предмета "%s" должен быть в диапазоне %s-%s', item.name, 0, item.stackSize));
+        // return new AppError(sprintf('Размер стека для предмета "%s" должен быть в диапазоне %s-%s', item.name, 0, item.stackSize));
+        return new AppError(sprintf('Размер стека для предмета не верный.'));
         // return new AppError(sprintf('Размер стека для предмета "%s" не может быть больше %s.', item.name, item.properties.stackSize));
     }
 
@@ -50,8 +51,9 @@ export default class AppError extends Error {
         return new AppError('Свободных слотов не найдено.');
     }
 
-    static itemNotEquipable(item: Item) {
-        return new AppError(sprintf('Предмет "%s" нельзя экипировать.', item.name));
+    static itemNotEquipable(item?: Item) {
+        // return new AppError(sprintf('Предмет "%s" нельзя экипировать.', item.name));
+        return new AppError(sprintf('Предмет "%s" нельзя экипировать.'));
     }
 
     static itemNotAvailableForEquip(item?: Item, equipSlot?: EquipSlot) {
@@ -72,6 +74,7 @@ export default class AppError extends Error {
         return new AppError(sprintf('Предмет данного материала не доступен для класса.'));
     }
 
+    //todo: Не понятно название itemStorageRange.
     static itemStorageRangeOverflow(min: number, max: number) {
         return new AppError(sprintf('Кол-во ItemStorage у игрока должно быть в диапазоне %s-%s.', min, max));
     }

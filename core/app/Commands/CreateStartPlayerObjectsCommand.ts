@@ -1,30 +1,25 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import EntityManager from '../../source/EntityManager.js';
-import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import Item from '../Entities/Item.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
-import HeroClass from '../Entities/HeroClass.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
-import EquipSlotComponentControllerComponent from '../Components/EquipSlotComponentControllerComponent.js';
-import EntityManagerFacade from '../../source/Facades/EntityManagerFacade.js';
-import EquipSlot from '../Entities/EquipSlot.js';
-import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import {EquipSlots, unsigned} from '../types.js';
+import {unsigned} from '../types.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
-import HeroAttributeCollectorComponent from '../Components/HeroAttributeCollectorComponent.js';
-import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import {EntityID} from '../../types/enums/EntityID.js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import debug from 'debug';
+import {sprintf} from 'sprintf-js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -55,47 +50,49 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     }
 
     private _createItems() {
-        let itemStackBuilders = [
-            new ItemStackPattern(
-                this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Wood),
-                10,
-            ),
-            new ItemStackPattern(
-                this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.IronOre),
-                10,
-            ),
-            new ItemStackPattern(
-                this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01),
-                1,
-            ),
-            new ItemStackPattern(
-                this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01),
-                1,
-            ),
-            new ItemStackPattern(
-                this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateHelmet_01),
-                1,
-            ),
-            new ItemStackPattern(
-                this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBoots_01),
-                1,
-            ),
-            new ItemStackPattern(
-                this.container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-                this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Shield_01),
-                1,
-            ),
+        let items = [
+            {
+                itemID: ItemID.Wood,
+                count: 10,
+            },
+            {
+                itemID: ItemID.IronOre,
+                count: 10,
+            },
+            {
+                itemID: ItemID.OneHandedSword_01,
+                count: 1,
+            },
+            {
+                itemID: ItemID.OneHandedSword_01,
+                count: 1,
+            },
+            {
+                itemID: ItemID.PlateHelmet_01,
+                count: 1,
+            },
+            {
+                itemID: ItemID.PlateBoots_01,
+                count: 1,
+            },
+            {
+                itemID: ItemID.Shield_01,
+                count: 1,
+            },
         ];
 
-        itemStackBuilders.forEach((itemStackBuilder) => {
-            this.container.get<ItemStorageManager>(ContainerKey.ItemStorageManager).addItem(itemStackBuilder);
-        });
+        for (let i = 0; i < items.length; i++) {
+            //todo: Отдельный класс для подобной логики.
+            let item = this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Item>(EntityID.Item, items[i].itemID);
+            if (!item) {
+                debug(DebugNamespaceID.Warring)(sprintf('Предмет ID(%s) начального набора предметов не найден и не будет добавлен в сумки.', items[i].itemID));
+                continue;
+            }
+
+            this.container.get<ItemStorageManager>(ContainerKey.ItemStorageManager).addItemStack(
+                this.container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).create(item, items[i].count),
+            );
+        }
     }
 
     private _createHeroes() {
@@ -103,106 +100,100 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         //todo: Сделать заготовки для разных задач. Это в репозиторий. Герои создаются НА основе паттерном. Паттер можно взять уже готовый (для начальных героев) или сделать новый. Только не путать с данными для создания героя в целом.
         //todo: Сделать проще: в одну строку.
         let heroPatterns: {
-            heroClass: HeroClass,
+            heroClassID: HeroClassID,
             level: unsigned,
-            equip: Partial<{[ID in EquipSlotID]: Item}>,
+            equip: Partial<{[ID in EquipSlotID]: ItemID}>,
         }[] = [
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior),
+                heroClassID: HeroClassID.Warrior,
                 level: 1,
                 equip: {
-                    [EquipSlotID.Head]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateHelmet_02),
-                    // [EquipSlotID.Head]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherHelmet_01),
-                    [EquipSlotID.Chest]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBreastplate_01),
-                    [EquipSlotID.Legs]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlatePants_01),
-                    [EquipSlotID.Foots]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBoots_01),
-                    [EquipSlotID.RightHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01),
-                    // [EquipSlotID.RightHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Staff_01),
-                    [EquipSlotID.LeftHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Shield_01),
+                    [EquipSlotID.Head]: ItemID.PlateHelmet_02,
+                    [EquipSlotID.Chest]: ItemID.PlateBreastplate_01,
+                    [EquipSlotID.Legs]: ItemID.PlatePants_01,
+                    [EquipSlotID.Foots]: ItemID.PlateBoots_01,
+                    [EquipSlotID.RightHand]: ItemID.OneHandedSword_01,
+                    [EquipSlotID.LeftHand]: ItemID.Shield_01,
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Paladin),
+                heroClassID: HeroClassID.Paladin,
                 level: 1,
                 equip: {
-                    [EquipSlotID.Head]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateHelmet_02),
-                    [EquipSlotID.Chest]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBreastplate_01),
-                    [EquipSlotID.Legs]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlatePants_01),
-                    [EquipSlotID.Foots]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.PlateBoots_01),
-                    [EquipSlotID.RightHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.OneHandedSword_01),
-                    [EquipSlotID.LeftHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Shield_01),
+                    [EquipSlotID.Head]: ItemID.PlateHelmet_02,
+                    [EquipSlotID.Chest]: ItemID.PlateBreastplate_01,
+                    [EquipSlotID.Legs]: ItemID.PlatePants_01,
+                    [EquipSlotID.Foots]: ItemID.PlateBoots_01,
+                    [EquipSlotID.RightHand]: ItemID.OneHandedSword_01,
+                    [EquipSlotID.LeftHand]: ItemID.Shield_01,
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Rogue),
+                heroClassID: HeroClassID.Rogue,
                 level: 1,
                 equip: {
-                    [EquipSlotID.Chest]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherBreastplate_01),
-                    [EquipSlotID.Legs]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherPants_01),
-                    [EquipSlotID.Foots]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherBoots_01),
-                    [EquipSlotID.RightHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Dagger_01),
-                    [EquipSlotID.LeftHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Dagger_01),
+                    [EquipSlotID.Chest]: ItemID.LeatherBreastplate_01,
+                    [EquipSlotID.Legs]: ItemID.LeatherPants_01,
+                    [EquipSlotID.Foots]: ItemID.LeatherBoots_01,
+                    [EquipSlotID.RightHand]: ItemID.Dagger_01,
+                    [EquipSlotID.LeftHand]: ItemID.Dagger_01,
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Mage),
+                heroClassID: HeroClassID.Mage,
                 level: 1,
                 equip: {
-                    [EquipSlotID.Chest]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.ClothBreastplate_01),
-                    [EquipSlotID.Legs]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.ClothPants_01),
-                    [EquipSlotID.Foots]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.ClothBoots_01),
-                    [EquipSlotID.RightHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Staff_01),
+                    [EquipSlotID.Chest]: ItemID.ClothBreastplate_01,
+                    [EquipSlotID.Legs]: ItemID.ClothPants_01,
+                    [EquipSlotID.Foots]: ItemID.ClothBoots_01,
+                    [EquipSlotID.RightHand]: ItemID.Staff_01,
                 },
             },
             {
-                heroClass: this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Gunslinger),
+                heroClassID: HeroClassID.Gunslinger,
                 level: 1,
                 equip: {
-                    [EquipSlotID.Chest]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherBreastplate_01),
-                    [EquipSlotID.Legs]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherPants_01),
-                    [EquipSlotID.Foots]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.LeatherBoots_01),
-                    [EquipSlotID.RightHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Revolver_01),
-                    [EquipSlotID.LeftHand]: this.container.get<EntityManager>('core.entityManager').getRepository<Item>(Item.name).getOneByAlias(ItemID.Revolver_01),
+                    [EquipSlotID.Chest]: ItemID.LeatherBreastplate_01,
+                    [EquipSlotID.Legs]: ItemID.LeatherPants_01,
+                    [EquipSlotID.Foots]: ItemID.LeatherBoots_01,
+                    [EquipSlotID.RightHand]: ItemID.Revolver_01,
+                    [EquipSlotID.LeftHand]: ItemID.Revolver_01,
                 },
             },
         ];
 
         for (let i = 0; i < heroPatterns.length; i++) {
             let hero = this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
-                heroClass: heroPatterns[i]['heroClass'],
+                heroClass: heroPatterns[i].heroClassID,
                 level: 1,
                 heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
             });
 
             //Начальная экипировка.
-            for (const equipSlotID in heroPatterns[i]['equip']) {
-                // console.log(equipSlotID, hero.get<EquipSlotInterface>(equipSlotID));
-                // console.log(heroPatterns[i]['equip'][equipSlotID]);
+            for (const equipSlotID in heroPatterns[i].equip) {
+                let item = this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Item>(EntityID.Item, heroPatterns[i].equip[equipSlotID]);
+                if (!item) {
+                    debug(DebugNamespaceID.Warring)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
+                    continue;
+                }
+
                 hero
-                    // .get<EquipSlots>(GameObjectKey.EquipSlots)[equipSlotID as EquipSlotID]
-                    // .get<EquipSlotInterface>(GameObjectKey.EquipSlots)[equipSlotID as EquipSlotID]
                     .get<EquipSlotInterface>(equipSlotID)
                     ?.createItemStack(
-                        heroPatterns[i]['equip'][equipSlotID],
+                        item,
                         1,
                         this.container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
                     );
             }
-            // console.log(hero.get(HeroAttributeCollectorComponent.name));
-            // console.log(hero.get<HeroAttributeCollectorComponent>(HeroAttributeCollectorComponent.name).finalValue(CharacterAttributeID.Strength));
-            // console.log(hero.get<HeroAttributeCollectorComponent>(HeroAttributeCollectorComponent.name).finalValue(CharacterAttributeID.Agility));
-            // console.log(hero.get<HeroAttributeCollectorComponent>(HeroAttributeCollectorComponent.name).finalValue(CharacterAttributeID.Intelligence));
-            // console.log(hero.get<HeroAttributeCollectorComponent>(HeroAttributeCollectorComponent.name).finalValue(CharacterAttributeID.AttackPower));
-            // console.log(hero.get<HeroAttributeCollectorComponent>(HeroAttributeCollectorComponent.name).finalValue(CharacterAttributeID.Stamina));
         }
 
         this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
-            heroClass: this.container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
+            heroClass: HeroClassID.Warrior,
             level: 1,
             heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
         });
         this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
-            heroClass: this.container.get<EntityManager>(ContainerKey.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
+            heroClass: HeroClassID.Warrior,
             level: 1,
             heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
         });

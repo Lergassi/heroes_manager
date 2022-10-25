@@ -3,7 +3,7 @@ import Controller from '../../../source/Controller.js';
 
 export default class DebugDevController extends Controller {
     entities(req, res) {
-        // let entityManager = this.container.get<RepositoryManager>('core.entityManager');
+        // let entityManager = this.container.get<RepositoryManager>(ContainerKey.EntityManager);
         // debugRepositoryManager(entityManager);
         //
         // res.statusCode = 200;
@@ -18,7 +18,7 @@ export default class DebugDevController extends Controller {
         // }
         //
         // let detailDebugFunction = meta.hasOwnProperty(classname) ? meta[classname]['detailDebugFunction'] : debugEntity;
-        // this.container.get<RepositoryManager>('core.entityManager').getRepository(classname)['_items'].forEach(detailDebugFunction);
+        // this.container.get<RepositoryManager>(ContainerKey.EntityManager).getRepository(classname)['_items'].forEach(detailDebugFunction);
         //
         // res.statusCode = 200;
         // res.setHeader('Content-Type', 'text/html');

@@ -2,10 +2,13 @@ import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
 import EntityManager from '../../../source/EntityManager.js';
 import {debugEntityManager, debugRepository} from '../../../debug/debug_functions.js';
+import {CommandNameID} from '../../../types/enums/CommandNameID.js';
+import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
+import {ContainerKey} from '../../../types/enums/ContainerKey.js';
 
-export default class DebugEntitiesCommand extends Command {
+export default class DebugEntityManagerCommand extends Command {
     get name(): string {
-        return 'debug_entities';
+        return CommandNameID.debug_entity_manager;
     }
 
     configure() {
@@ -14,11 +17,6 @@ export default class DebugEntitiesCommand extends Command {
     }
 
     async execute(input: Input) {
-        let entityName = input.getArgument('entity');
-        if (entityName) {
-            debugRepository(this.container.get<EntityManager>('core.entityManager').getRepository(entityName));
-        } else {
-            debugEntityManager(this.container.get<EntityManager>('core.entityManager'));
-        }
+        console.log(this.container.get<EntityManagerInterface>(ContainerKey.EntityManager));
     }
 }

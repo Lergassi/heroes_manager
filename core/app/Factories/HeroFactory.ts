@@ -3,7 +3,6 @@ import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
 import ExperienceComponent from '../Components/ExperienceComponent.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
-import EntityManager from '../../source/EntityManager.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
@@ -46,16 +45,18 @@ import EquipSlotWithItemCollectorDecorator from '../Components/EquipSlots/EquipS
 import EquipSlotFactory from './EquipSlotFactory.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
 import StateController from '../Components/StateController.js';
+import {EntityID} from '../../types/enums/EntityID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class HeroFactory {
-    private readonly _entityManager: EntityManager;
+    private readonly _entityManager: EntityManagerInterface;
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _experienceComponentFactory: ExperienceComponentFactory;
     private readonly _characterAttributeFactory: CharacterAttributeFactory;
 
     constructor(
         options: {
-            entityManager: EntityManager;
+            entityManager: EntityManagerInterface;
             gameObjectFactory: GameObjectFactory;
             experienceComponentFactory: ExperienceComponentFactory;
             characterAttributeFactory: CharacterAttributeFactory;
@@ -78,7 +79,7 @@ export default class HeroFactory {
         level: unsigned,
         // characterAttributeCollector?: CharacterAttributeCollector;
     ): GameObject {
-        heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(HeroClass, heroClass) : heroClass;
+        heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(EntityID.HeroClass, heroClass) : heroClass;
 
         //todo: Если ниже будут ошибки, в программе останется не используемый объект.
         let hero = this._gameObjectFactory.create();
@@ -136,7 +137,7 @@ export default class HeroFactory {
         let equipSlotComponents: Partial<Record<EquipSlotID, EquipSlotInterface>> = {}; //todo: Временно.
         for (let i = 0; i < armorEquipSlotIDs.length; i++) {
             let equipSlot = equipSlotFactory.createArmor(
-                this._entityManager.get<EquipSlot>(EquipSlot, armorEquipSlotIDs[i]),
+                this._entityManager.get<EquipSlot>(EntityID.EquipSlot, armorEquipSlotIDs[i]),
                 heroClass,
                 itemCharacterAttributeCollector,
             );
@@ -144,13 +145,13 @@ export default class HeroFactory {
         }
 
         let leftHand: EquipSlotInterface = equipSlotFactory.createLeftHand(
-            this._entityManager.get<EquipSlot>(EquipSlot, EquipSlotID.LeftHand),
+            this._entityManager.get<EquipSlot>(EntityID.EquipSlot, EquipSlotID.LeftHand),
             heroClass,
             itemCharacterAttributeCollector,
         );
         let rightHand : EquipSlotInterface = equipSlotFactory.createRightHand(
             leftHand as LeftHand,
-            this._entityManager.get<EquipSlot>(EquipSlot, EquipSlotID.RightHand),
+            this._entityManager.get<EquipSlot>(EntityID.EquipSlot, EquipSlotID.RightHand),
             heroClass,
             itemCharacterAttributeCollector,
         );

@@ -10,20 +10,17 @@ import EquipSlotAvailableItemCategoryInterface from '../Interfaces/EquipSlotAvai
 export default class EquipSlot {
     readonly id: string;
     readonly name: string;
-    readonly description: string;
     readonly sort: number;
     readonly itemCategories: EquipSlotAvailableItemCategoryInterface;
 
     constructor(
         id: string,
         name: string,
-        description: string,
         sort: number,
         itemCategories: EquipSlotAvailableItemCategoryInterface,
     ) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.sort = sort;
         this.itemCategories = itemCategories;
     }

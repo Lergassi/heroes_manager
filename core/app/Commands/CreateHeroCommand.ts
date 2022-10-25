@@ -7,6 +7,8 @@ import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 import {unsigned} from '../types.js';
 import {ContainerKey} from '../../types/enums/ContainerKey.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {EntityID} from '../../types/enums/EntityID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class CreateHeroCommand extends Command {
     get name(): string {
@@ -15,15 +17,15 @@ export default class CreateHeroCommand extends Command {
 
     configure() {
         super.configure();
-        this.addArgument('alias', '', true);
+        this.addArgument('hero_class_ID', '', true);
         this.addArgument('level', '', false, 1);
     }
 
     async execute(input: Input) {
-        let heroClassAlias: string = input.getArgument('alias');
-        let level: unsigned = parseInt(input.getArgument('level'), 10);
+        let heroClassID = input.getArgument('hero_class_ID');
+        let level = parseInt(input.getArgument('level'), 10);
 
-        let heroClass: HeroClass = this.container.get<EntityManager>('core.entityManager').getRepository<HeroClass>('HeroClass').getOneByAlias(heroClassAlias);
+        let heroClass: HeroClass = this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<HeroClass>(EntityID.HeroClass, heroClassID);
 
         this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
             heroClass: heroClass,

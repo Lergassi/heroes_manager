@@ -1,6 +1,6 @@
 export enum ContainerKey {
     //core
-    EntityManager = 'core.entityManager',
+    EntityManager = 'core.EntityManager',
     EntityManagerFacade = 'core.facade.entityManager',
     EventSystem = 'core.EventSystem',
     ItemFactory = 'core.itemFactory',

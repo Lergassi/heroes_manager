@@ -5,6 +5,7 @@ import CoreContainerConfigure from '../../core/app/CoreContainerConfigure.js';
 import ClientRender from '../public/React/ClientRender.js';
 import debug from 'debug';
 import _ from 'lodash';
+import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 
 export default class Client {
     async run() {
@@ -14,16 +15,6 @@ export default class Client {
         (new ClientContainerConfigure()).configure(container);
         (new CoreContainerConfigure()).configure(container);
         // (new PlayerContainerConfigure()).configure(container);
-
-        let debugNamespaces = [
-            'debug',
-            'debug:*',
-            'error',
-            'error:*',
-            'log',
-            'log:*',
-        ];
-        debug.enable(_.join(debugNamespaces, ','));
 
         debug('log')('Создание клиенте завершено (index.js).');
 

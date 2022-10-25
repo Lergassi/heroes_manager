@@ -4,14 +4,13 @@ import LocationComponent, {
     GatheringItemPointID,
     GatheringItemPointTypeValues
 } from '../Components/LocationComponent.js';
-import EntityManager from '../../source/EntityManager.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStackFactory from './ItemStackFactory.js';
 import ItemDatabase from '../ItemDatabase.js';
 import Random from '../Services/Random.js';
 import ItemCategory from '../Entities/ItemCategory.js';
-import {CurrencyWalletAlias, unsigned} from '../types.js';
+import {unsigned} from '../types.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
 import AppError from '../../source/Errors/AppError.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
@@ -19,6 +18,10 @@ import WalletComponent from '../Components/WalletComponent.js';
 import Currency from '../Entities/Currency.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import {EntityID} from '../../types/enums/EntityID.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export type LocationFactoryCreateOptions = {
     // level: LevelRange;
@@ -52,7 +55,7 @@ export type GatheringItemPointPattern = {
 export default class LocationFactory {
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _itemStackFactory: ItemStackFactory;
-    private readonly _entityManager: EntityManager;
+    private readonly _entityManager: EntityManagerInterface;
     private readonly _itemDatabase: ItemDatabase;
     private readonly _itemStorageFactory: ItemStorageFactory;
 
@@ -66,7 +69,7 @@ export default class LocationFactory {
     constructor(options: {
         gameObjectFactory: GameObjectFactory;
         itemStackFactory: ItemStackFactory;
-        entityManager: EntityManager;
+        entityManager: EntityManagerInterface;
         itemDatabase: ItemDatabase;
         itemStorageFactory: ItemStorageFactory;
     }) {
@@ -85,16 +88,18 @@ export default class LocationFactory {
 
         let location = this._gameObjectFactory.create();
 
-        location.set<WalletComponent>(CurrencyWalletAlias.Gold, new WalletComponent({
-            currency: this._entityManager.get<Currency>(Currency, CurrencyID.Gold),
-            value: 0,
-        }));
+        //todo: Доступ к кошельку нужно сделать удобнее, а не по ID валюты из контейнера.
+        location.set<WalletComponent>(CurrencyID.Gold, new WalletComponent(
+            this._entityManager.get<Currency>(EntityID.Currency, CurrencyID.Gold),
+            0,
+        ));
         let heroGroupComponent = location.set<HeroGroupComponent>('heroGroupComponent', new HeroGroupComponent({
             size: 5,
         }));
 
         let itemStorageComponent = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(internalItemStorageSize, location));
 
+        //todo: Переделать всё что с жилами. Разделить, сделать удобнее. Не понятно что тут происходит.
         //todo: В периоде нет смысла если он используется только при выводе для игрока.
         let gatheringItemPointTypeValues: Readonly<GatheringItemPointTypeValues> = {
             [GatheringItemPointID.low]: {value: 2 * 3600, period: ONE_HOUR_IN_SECONDS},
@@ -108,27 +113,27 @@ export default class LocationFactory {
         ];
 
         //todo: Предметы должны устаналиваться более строго. А вдруг в бд не будет предметов категории? Надо чтобы items всегда был в рабочем состоянии.
-        let items = this._itemDatabase.filter({
-            itemCategory: [
-                this._entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Resources),
-            ],
-        });
-        // if (items.length < this._maxGatheringItemPointsCount) {
-        //     throw new AppError('indev: Предметов не достаточно для создании локации.');
-        // }
+        // let items = this._itemDatabase.filter({
+        let items = this._itemDatabase.getByItemCategory(this._entityManager.get<ItemCategory>(EntityID.ItemCategory, ItemCategoryID.Resources));
+        if (items.length < this._maxGatheringItemPointsCount) {
+            debug(DebugNamespaceID.Warring)('Предметов не достаточно для создании локации.');
+            // throw new AppError('indev: Предметов не достаточно для создании локации.');
+        }
         items = Random.some(items, this._maxGatheringItemPointsCount, {unique: true});
         let selectedGatheringItemPointPattern = Random.one(gatheringItemPointPatterns);
 
-        let gatheringItemPoints: GatheringItemPoint[] = [];
         let index = 0;
+        let gatheringItemPoints: GatheringItemPoint[] = [];
         for (const selectedGatheringItemPointPatternKey in selectedGatheringItemPointPattern) {
             let i = 0;
             while (i < selectedGatheringItemPointPattern[selectedGatheringItemPointPatternKey]) {
-                gatheringItemPoints.push({
-                    item: items[index],
-                    count: gatheringItemPointTypeValues[selectedGatheringItemPointPatternKey],
-                    type: <GatheringItemPointID>selectedGatheringItemPointPatternKey,
-                });
+                if (items[index]) {
+                    gatheringItemPoints.push({
+                        item: items[index],
+                        count: gatheringItemPointTypeValues[selectedGatheringItemPointPatternKey],
+                        type: <GatheringItemPointID>selectedGatheringItemPointPatternKey,
+                    });
+                }
                 ++i;
                 ++index;
             }

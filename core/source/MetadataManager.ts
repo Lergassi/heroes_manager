@@ -3,6 +3,9 @@ import AppError from './Errors/AppError.js';
 import {SerializeType} from './Serializer.js';
 import ContainerInterface from './ContainerInterface.js';
 import EntityManager from './EntityManager.js';
+import {EntityID} from '../types/enums/EntityID.js';
+import {ContainerKey} from '../types/enums/ContainerKey.js';
+import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
 
 export interface MappingField {
     type: SerializeType;
@@ -22,7 +25,7 @@ export interface Metadata {
 type FinderCallback = <T>(container: ContainerInterface, classname: string, id: number) => T;
 
 export function repositoryManagerFinderCallback<T>(container: ContainerInterface, classname: string, id: number): T {
-    return container.get<EntityManager>('core.entityManager').getRepository<T>(classname).findOneByID(id);
+    return container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<T>(classname as EntityID/*todo: НЕ РАБОТАЕТ: classname as EntityID. Сменить выше на EntityID.*/, String(id));
 }
 
 export interface MetadataCollection {

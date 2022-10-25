@@ -1,17 +1,14 @@
 import GameObjectFactory from './GameObjectFactory.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
-import {EnemyConfig, EntityManagerKey, unsigned} from '../types.js';
+import {unsigned} from '../types.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
-import EnemyEntity from '../Entities/EnemyEntity.js';
 import EntityManager from '../../source/EntityManager.js';
-import EnemyComponent from '../Components/EnemyComponent.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
 import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
 import _ from 'lodash';
 import {assert} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
 import {EnemyID} from '../../types/enums/EnemyID.js';
-import CharacterAttribute from '../Components/CharacterAttribute.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
@@ -20,7 +17,9 @@ import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js'
 import CharacterAttributeFactory from './CharacterAttributeFactory.js';
 import AttackController from '../Components/AttackController.js';
 import StateController from '../Components/StateController.js';
-import {options} from 'yargs';
+import {EntityID} from '../../types/enums/EntityID.js';
+import EnemyEntity from '../Entities/EnemyEntity.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 // import assert from 'assert';
 
 // export type EnemyFactoryOptions = {
@@ -37,12 +36,12 @@ export type EnemyFactoryCreateOptions = {
 
 export default class EnemyFactory {
     private readonly _gameObjectFactory: GameObjectFactory;
-    private readonly _entityManager: EntityManager;
+    private readonly _entityManager: EntityManagerInterface;
     private readonly _characterAttributeFactory: CharacterAttributeFactory;
 
     constructor(options: {
         gameObjectFactory: GameObjectFactory,
-        entityManager: EntityManager,
+        entityManager: EntityManagerInterface,
         characterAttributeFactory: CharacterAttributeFactory;
     }) {
         this._gameObjectFactory = options.gameObjectFactory;
@@ -60,16 +59,14 @@ export default class EnemyFactory {
         assert(level >= 1);
         assert(!_.isNil(enemyID));
 
-        // let enemyType = this._entityManager.entity<EnemyEntity>(EntityManagerKey.EnemyType, enemyID);
-        // assert(enemyType instanceof EnemyEntity, sprintf('EnemyType (%s) не найден.', enemyID));
+        let enemyEntity = this._entityManager.get<EnemyEntity>(EntityID.EnemyEntity, enemyID);
+        assert(enemyEntity instanceof EnemyEntity, sprintf('EnemyEntity (%s) не найден.', enemyID));
 
-        // let enemyConfig = this._entityManager.entity<EnemyConfig>(EntityManagerKey.EnemyConfig, enemyID);
-        let enemyConfig = this._entityManager.get<EnemyConfig>(EntityManagerKey.EnemyConfig, enemyID);
-        assert(!_.isNil(enemyConfig), sprintf('EnemyConfig (%s) не найден.', enemyID));
+        // let enemyConfig = this._entityManager.get<EnemyConfig>(EntityID.EnemyConfig, enemyID);
+        // assert(!_.isNil(enemyConfig), sprintf('EnemyConfig (%s) не найден.', enemyID));
 
         let enemy = this._gameObjectFactory.create();
 
-        // enemy.name = 'Enemy: ' + enemyType.name;
         enemy.name = 'Enemy: ' + enemyID;
         enemy.addTags('#enemy');
 
@@ -79,7 +76,7 @@ export default class EnemyFactory {
 
         //todo: Потом сделаю отдельный компонент для уровня.
         // let enemyComponent = enemy.set<EnemyComponent>(EnemyComponent.name, new EnemyComponent({
-        //     enemyType: enemyType,
+        //     enemyEntity: enemyEntity,
         //     level: level,
         // }));
 
@@ -119,16 +116,9 @@ export default class EnemyFactory {
         ))
 
         //лут
-        let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ItemLootGeneratorComponent.name, new ItemLootGeneratorComponent({
-            itemsLoot: enemyConfig.loot,
-        }));
-        let goldLootGeneratorComponent = enemy.set<GoldLootGeneratorComponent>(GoldLootGeneratorComponent.name, new GoldLootGeneratorComponent({
-            min: enemyConfig.gold[0],
-            max: enemyConfig.gold[1],
-        }));
-        let experienceGeneratorComponent = enemy.set<ExperienceGeneratorComponent>(ExperienceGeneratorComponent.name, new ExperienceGeneratorComponent({
-            exp: enemyConfig.exp,
-        }));
+        let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ItemLootGeneratorComponent.name, enemyEntity.createLootGenerator());
+        let goldLootGeneratorComponent = enemy.set<GoldLootGeneratorComponent>(GoldLootGeneratorComponent.name, enemyEntity.createGoldLootGenerator());
+        let experienceGeneratorComponent = enemy.set<ExperienceGeneratorComponent>(ExperienceGeneratorComponent.name, enemyEntity.createExperienceLootGenerator());
 
         return enemy;
     }

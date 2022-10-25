@@ -24,4 +24,7 @@ export enum CommandNameID {
     get_items_from_location = 'get_items_from_location',
 
     fight = 'fight',
+
+    debug_entity_manager = 'debug_entity_manager',
+    debug_items = 'debug_items',
 }

@@ -21,7 +21,12 @@
     "client/**/*",
     "server/**/*",
     "sandbox/**/*",
-    "tests/**/*",
     "jest.config.ts"
+  ],
+  "exclude": [
+    "sandbox/_SandboxController.ts",
+    "sandbox/include.ts",
+    "sandbox/include2.ts",
+    "tests/**/*"
   ]
 }

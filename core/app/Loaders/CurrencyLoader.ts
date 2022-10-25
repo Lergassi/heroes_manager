@@ -1,8 +1,9 @@
 import Currency from '../Entities/Currency.js';
 import EntityManager from '../../source/EntityManager.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class CurrencyLoader {
-    load(data: object, entityManager: EntityManager) {
+    load(data: object, entityManager: EntityManagerInterface) {
         let currency = Object.create(Currency.prototype);
 
         currency['_id'] = <number>data['_id'];
