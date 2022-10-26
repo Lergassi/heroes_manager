@@ -3,7 +3,7 @@ import Currency from '../../Entities/Currency.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import EnemyEntity from '../../Entities/EnemyEntity.js';
 import {EnemyID} from '../../../types/enums/EnemyID.js';
-import {Loot, unsigned} from '../../types.js';
+import {Loot, unsigned} from '../../../types/types.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 
 export default class EnemyEntityFactory {

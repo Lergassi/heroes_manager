@@ -3,7 +3,7 @@ import GameObject from '../../source/GameObject.js';
 import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import {assert} from '../../source/assert.js';
 import TakeComponent from './TakeComponent.js';
 import EventSystem from '../../source/EventSystem.js';
@@ -20,15 +20,9 @@ export class HeroSlot {
 
     place(hero: GameObject): void {
         this._hero = hero;
-        // this._hero.getComponent<HeroComponent>(HeroComponent.name).take(); //todo: Или отдельно в виде декоратора.
-        // this._hero.getComponent<TakeComponent>(TakeComponent.name)?.take<HeroSlot>({
-        //     owner: this,
-        // }); //todo: Или отдельно в виде декоратора.
-        // this._hero.getComponent<TakeComponent>(TakeComponent.name)?.take2<HeroSlot>(this);
     }
 
     clear(): void {
-        // this._hero.getComponent<HeroComponent>(HeroComponent.name).release();
         this._hero = null;
     }
 
@@ -51,7 +45,7 @@ export enum HeroGroupComponentEventCode {
 }
 
 //todo: Группа героев и слоты под герои - разные компоненты. Группа должна быть только группой, а слоты - только для UI. Тоже надо разделить. Иначе классов плодиться много бесполезных и логика усложняется.
-export default class HeroGroupComponent extends Component implements HeroGroupInterface {
+export default class HeroGroupComponent implements HeroGroupInterface {
     private readonly _heroes: {[position: string]: HeroSlot};
     private readonly _size: number;
     private _isBlock: boolean;
@@ -75,9 +69,6 @@ export default class HeroGroupComponent extends Component implements HeroGroupIn
     constructor(options: {
         size: unsigned;
     }) {
-        super();
-        // assert(options.size >= options.heroes.length);
-
         this._size = options.size;
         this._isBlock = false;
 
@@ -85,15 +76,11 @@ export default class HeroGroupComponent extends Component implements HeroGroupIn
         this._heroes = {};
         while (position < this._size) {
             this._heroes[position] = new HeroSlot();
-            // this.addHero(options.heroes[position]);
             ++position;
         }
-
-        // this._stateOwner = null;
     }
 
     _setHero(heroSlot: HeroSlot, hero: GameObject): void {
-        // if (hero.get<HeroComponent>(HeroComponent.name).isBusy()) {
         if (!hero.get<TakeComponent>(TakeComponent.name).isFree()) {
             throw new AppError('Герой занят.');
         }
@@ -114,9 +101,9 @@ export default class HeroGroupComponent extends Component implements HeroGroupIn
         }
 
         heroSlot.place(hero);
-        hero.getComponent<TakeComponent>(TakeComponent.name)?.take<HeroGroupComponent>({
-            owner: this,
-        });
+        hero.getComponent<TakeComponent>(TakeComponent.name)?.take<HeroGroupComponent>(
+            this,
+        );
         EventSystem.event(HeroGroupComponentEventCode.AddHero, this);
     }
 
@@ -157,9 +144,9 @@ export default class HeroGroupComponent extends Component implements HeroGroupIn
         }
 
         heroSlot.clear();
-        hero.getComponent<TakeComponent>(TakeComponent.name)?.release<HeroGroupComponent>({
-            owner: this,
-        });
+        hero.getComponent<TakeComponent>(TakeComponent.name)?.release<HeroGroupComponent>(
+            this,
+        );
         EventSystem.event(HeroGroupComponentEventCode.RemoveHero, this);
     }
 

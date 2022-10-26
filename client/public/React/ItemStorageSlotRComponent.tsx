@@ -1,7 +1,10 @@
-import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorageSlotComponent.js';
+import ItemStorageSlotComponent, {
+    ItemStorageSlotComponentEventCode
+} from '../../../core/app/Components/ItemStorageSlotComponent.js';
 import React from 'react';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
+import EventSystem from '../../../core/source/EventSystem.js';
 
 export interface ItemStorageSlotRComponentProps {
     itemStorageSlotComponent: ItemStorageSlotComponent;
@@ -22,7 +25,21 @@ export default class ItemStorageSlotRComponent extends React.Component<ItemStora
         this.state = {
             itemStorageSlotComponent: props.itemStorageSlotComponent,
         };
-        this.state.itemStorageSlotComponent.assignRComponent(this);
+        // this.state.itemStorageSlotComponent.assignRComponent(this); qweqweqwe
+
+        EventSystem.addListener({
+            codes: [ItemStorageSlotComponentEventCode.Update],
+            listener: {
+                target: props.itemStorageSlotComponent,
+                callback: (target) => {
+                    this.setState((state) => {
+                        return {
+                            itemStorageSlotComponent: state.itemStorageSlotComponent,
+                        };
+                    });
+                },
+            },
+        });
 
         this.clearHandler = this.clearHandler.bind(this);
     }

@@ -17,7 +17,7 @@
     "build_and_watch_babel": "babel client -d client_lib --watch",
     "build_webpack": "webpack --config webpack.config.cjs",
     "build_and_watch_webpack": "webpack --config webpack.config.cjs --watch",
-    "test_raw": "sudo node -r dotenv/config tests/main.js",
+    "test_raw": "sudo node -r dotenv/config _tests/main.js",
     "test": "jest --config=dist/jest.config.js"
   },
   "author": "",

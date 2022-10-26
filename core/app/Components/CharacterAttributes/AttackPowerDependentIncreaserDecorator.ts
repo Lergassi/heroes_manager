@@ -1,5 +1,5 @@
 import CharacterAttributeInterface from '../../Decorators/CharacterAttributeInterface.js';
-import {unsigned} from '../../types.js';
+import {unsigned} from '../../../types/types.js';
 import _ from 'lodash'
 import CharacterAttribute from '../CharacterAttribute.js';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
@@ -19,7 +19,7 @@ export default class AttackPowerDependentIncreaserDecorator implements Character
         this._dependentCharacterAttributeMultiplier = 2;
     }
 
-    increaseBaseValue(value: unsigned) {
+    increaseBaseValue(value: unsigned): void {
         this._attackPower.increaseBaseValue(value);
     }
 

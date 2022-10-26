@@ -37,6 +37,7 @@ import UnloadFullEnvironmentCommand from './Commands/UnloadFullEnvironmentComman
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import PathResolver from '../source/PathResolver.js';
+import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 
 export default class ServerContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -106,7 +107,7 @@ export default class ServerContainerConfigure implements ContainerConfigureInter
 
         this._gameConsoleConfigure(container);
 
-        debug('log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
+        debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
     }

@@ -10,7 +10,6 @@ import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import ItemStorageSlotRComponent from './ItemStorageSlotRComponent.js';
 import _ from 'lodash';
 import {GameObjectKey} from '../../../core/types/enums/GameObjectKey.js';
-import ItemStorageSlots, {ItemStorageSlotsRender} from '../../../core/app/Components/ItemStorageSlots.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 
 export interface ItemStorageRComponentProps {
@@ -23,7 +22,6 @@ export interface ItemStorageRComponentState {
 
 export default class ItemStorageRComponent extends React.Component<ItemStorageRComponentProps, ItemStorageRComponentState> implements RComponentUpdateInterface {
     private _itemStorage: GameObject;
-    _itemStorageSlots: ItemStorageSlots;
 
     constructor(props: ItemStorageRComponentProps) {
         super(props);
@@ -33,8 +31,6 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
         };
         this._itemStorage = props.itemStorage;
         this.state.itemStorage.assignRComponent(this);
-        // this._itemStorageSlots = new ItemStorageSlots([10, 20, 30]);
-        this._itemStorageSlots = new ItemStorageSlots(this._itemStorage.get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).itemStorageSlotComponents);
 
         EventSystem.addListener({
             codes: [

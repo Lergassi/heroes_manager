@@ -26,26 +26,16 @@ export interface ItemBuilderOptions {
     characterAttributes: Partial<CharacterAttributeRecord>;
 }
 
-// export interface ItemPropertiesBuilderOptions {
-// export interface ItemPropertiesBuilderOptions extends omit<ItemProperties, 'armorMaterial'> {
-// export type ItemPropertiesBuilderOptions = Omit<ItemProperties, "armorMaterial"> = {
-//     // armorMaterial?: alias;
-//     // isEquipable?: boolean;
-//     // stackSize?: number;
-// }
-// export type ItemPropertiesBuilderOptions = Omit<ItemProperties, "armorMaterial">;
-// export type ItemPropertiesBuilderOptions = Pick<ItemProperties, 'stackSize' | 'isEquipable'>;
-// export interface ItemPropertiesBuilderOptions extends Pick<ItemProperties, 'stackSize' | 'isEquipable'> {
-//     armorMaterial?: string;
-// }
 export interface ItemPropertiesBuilderOptions extends Omit<ItemProperties, 'armorMaterial'> {
-    armorMaterial?: string;
+    armorMaterialID?: string;
 }
 
+/**
+ * Идея строителя в том, чтобы в Item не попадали свойства, которых не должно быть, вообще, даже с undefined значением.
+ */
 export class ItemPropertiesBuilder {
-    _properties: Readonly<ItemProperties>;
+    private _properties: Readonly<ItemProperties>;
 
-    // constructor(properties: ItemPropertiesBuilderOptions) {
     constructor(properties: ItemProperties) {
         this._properties = {};
         for (const propertiesKey in properties) {
@@ -74,7 +64,6 @@ export default class ItemBuilder {
     private _quality: Quality;
     private _options: Partial<ItemOptions>;
     private _stackSize: number;
-
     private _characterAttributes: Partial<CharacterAttributeRecord>;
     private _properties: ItemProperties;
 
@@ -106,7 +95,6 @@ export default class ItemBuilder {
         this._id = id;
         this._name = name;
         this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
-
         this._description = options.description ?? this._default.description;
         this._itemLevel = options.itemLevel ?? this._default.itemLevel;
         this._sort = options.sort ?? this._default.sort;
@@ -117,51 +105,15 @@ export default class ItemBuilder {
         this._stackSize = options.stackSize ?? this._default.stackSize;
 
         this._characterAttributes = options.characterAttributes || {};
-
         this._options = {};
         this._options.getTypes = options.getTypes ?? [];
 
-        // this._stackSize = options.stackSize ?? 1;
-        // this._isEquipable = options.isEquipable ?? false;
-        // this._armorMaterial = options.armorMaterial ?
-        //     this._entityManager.get<ArmorMaterial>(ArmorMaterial, options.armorMaterial) :
-        //     null
-        // ;
-
-        // this._properties = {
-        //     armorMaterial: options?.properties?.armorMaterial ?
-        //         this._entityManager.get<ArmorMaterial>(ArmorMaterial, options.properties.armorMaterial) :
-        //         undefined,
-        //     isEquipable: options?.properties?.isEquipable ?? undefined,
-        //     stackSize: options?.properties?.stackSize ?? undefined,
-        // };
-
-        //todo: Когда будет очень много свойств станет не удобно.
-        // this._properties = {};
-        // if (options?.properties?.hasOwnProperty('armorMaterial')) {
-        //     this._properties.armorMaterial = options.properties.armorMaterial ?
-        //         this._entityManager.get<ArmorMaterial>(ArmorMaterial, options.properties.armorMaterial) :
-        //         undefined
-        //     ;
-        // }
-        // if (options?.properties?.hasOwnProperty('isEquipable')) {
-        //     this._properties.isEquipable = options.properties.isEquipable;
-        // }
-        // if (options?.properties?.hasOwnProperty('stackSize')) {
-        //     this._properties.stackSize = options.properties.stackSize;
-        // }
         this._properties = (new ItemPropertiesBuilder({
-            armorMaterial: options?.properties?.armorMaterial ?
-                this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, options.properties.armorMaterial) :
+            armorMaterial: options?.properties?.armorMaterialID ?
+                this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, options.properties.armorMaterialID) :
                 undefined,
             twoHandWeapon: options?.properties?.twoHandWeapon,
         })).build();
-
-        // typeof options?.properties?.stackSize !== 'undefined' ? this._properties.stackSize = options.properties.stackSize : 0;
-        // typeof options?.properties?.stackSize !== 'undefined' ?? this._properties.stackSize = options.properties.stackSize;
-        // options?.properties?.stackSize ?? (this._properties.stackSize = options.properties.stackSize);
-        // this._properties.stackSize = options?.properties?.stackSize;
-        // this._properties.set('stackSize', options?.properties?.stackSize);
 
         return this;
     }
@@ -194,10 +146,4 @@ export default class ItemBuilder {
     //
     //     return this;
     // }
-
-    private _equip() {
-        this._stackSize = 1;
-
-        return this;
-    }
 }

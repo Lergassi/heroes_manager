@@ -1,5 +1,6 @@
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
 
 export type ListenerType = Readonly<{
     // code: string;
@@ -36,7 +37,8 @@ export default class EventSystem {
     }
 
     static event(code: string, target: any): void {
-        debug('log:event_system')(sprintf('Сработало событие: %s', code));
+        // debug('log:event_system')(sprintf('Сработало событие: %s', code));
+        debug(DebugNamespaceID.EventSystem)(sprintf('Сработало событие: %s', code));
         if (!EventSystem._listeners.hasOwnProperty(code)) {
             return;
         }

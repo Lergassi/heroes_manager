@@ -5,7 +5,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 
 export default class ItemStorageFactory implements ItemStorageFactoryInterface {
@@ -24,48 +24,21 @@ export default class ItemStorageFactory implements ItemStorageFactoryInterface {
     }
 
     create(size: number): GameObject {
-    // create(size: number, options: Partial<{
-    //     itemStorageList: ItemStorageListComponent,
-    // }> = undefined): GameObject {
         let itemStorage = this._gameObjectFactory.create();
 
         itemStorage.name = 'ItemStorage';
         itemStorage.addTags('#item_storage');
 
         this.createIn(size, itemStorage);
-        // let slots = [];
-        // for (let i = 0; i < size; i++) {
-        //     slots.push(new ItemStorageSlotComponent());
-        // }
-        //
-        // itemStorage.set<ItemStorageComponent>('itemStorageComponent', new ItemStorageComponent(
-        //     // itemStorage,
-        //     // size,
-        //     slots,
-        //     this._itemStackFactory,
-        // ));
-
-        //todo: ItemStorageComponent не имеет смысла без слотов.
-        // for (let i = 0; i < size; i++) {
-        //     let itemStorageSlot = this._gameObjectFactory.create();
-        //
-        //     let itemStorageSlotComponent = itemStorageSlot.addComponent(new ItemStorageSlotComponent());
-        //     // itemStorage.addComponent<ItemStorageSlotComponent>(itemStorageSlotComponent);
-        //     itemStorage.addComponent<GameObject>(itemStorageSlot);
-        //
-        //     // itemStorage.addComponent(new ItemStorageSlotComponent(
-        //     //     this._idGenerator.generateID(),
-        //     //     itemStorage,
-        //     // ));
-        // }
-
-        // if (options.itemStorageList) {
-        //     options.itemStorageList.add(itemStorage);
-        // }
 
         return itemStorage;
     }
 
+    /**
+     * @deprecated Сумка всегда отдельно. Не добавлять поведение сумки в несумку.
+     * @param size
+     * @param gameObject
+     */
     createIn(size: unsigned, gameObject: GameObject) {
         let slots = [];
         let slotIDPrefix = 'slot_';

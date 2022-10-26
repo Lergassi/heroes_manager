@@ -14,7 +14,7 @@ import MaxMagicPointsStartValueGenerator
 import AttackPowerStartValueGenerator from './CharacterAttributeStartValueGenerators/AttackPowerStartValueGenerator.js';
 import DefaultCharacterAttributeValueGenerator
     from './CharacterAttributeValueGenerators/DefaultCharacterAttributeValueGenerator.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import {CharacterAttributeValueModifier} from './CharacterAttributeStartValueGenerator.js';
 import CharacterAttributeValueGeneratorInterface from '../Interfaces/CharacterAttributeValueGeneratorInterface.js';
 

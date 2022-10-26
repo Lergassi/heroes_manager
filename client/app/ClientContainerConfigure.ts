@@ -3,6 +3,7 @@ import config from '../config/main.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 
 export default class ClientContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -15,7 +16,7 @@ export default class ClientContainerConfigure implements ContainerConfigureInter
         // });
         // container.set('gameConsole', container.get<GameConsole>('client.gameConsole'));    //alias
 
-        debug('log')(sprintf('Конфигурация %s завершена.', this.constructor.name));
+        debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
     }

@@ -1,14 +1,12 @@
-import {Loot, unsigned} from '../types.js';
-import Component from '../../source/Component.js';
+import {Loot, unsigned} from '../../types/types.js';
 import ItemStorageComponent from './ItemStorageComponent.js';
 
-export default class ItemLootGeneratorComponent extends Component {
+export default class ItemLootGeneratorComponent {
     private readonly _itemsLoot: Loot[];
 
     constructor(options: {
         itemsLoot: Loot[],
     }) {
-        super();
         this._itemsLoot = options.itemsLoot;
     }
 

@@ -4,7 +4,7 @@ import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {assertIsGreaterThan, assertIsGreaterThanOrEqual, assertIsPositive} from '../../source/assert.js';
 import HeroFactory from '../Factories/HeroFactory.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 import Random from '../Services/Random.js';
 
@@ -42,17 +42,17 @@ export default class CreateRandomHeroClassCommand extends Command {
             HeroClassID.Druid,
         ];
 
-        let heroFactory = this.container.get<HeroFactory>(ContainerKey.HeroFactory);
-        let mainHeroList = this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent);
+        let heroFactory = this.container.get<HeroFactory>(ContainerID.HeroFactory);
+        let mainHeroList = this.container.get<MainHeroListComponent>(ContainerID.MainHeroList);
 
         let i = 0;
         while (i < count) {
             try {
-                mainHeroList.createHero({
-                    heroClass: Random.one(heroClasses),
-                    level: 1,
-                    heroFactory: heroFactory,
-                });
+                mainHeroList.createHero(
+                    Random.one(heroClasses),
+                    1,
+                    heroFactory,
+                );
             } catch (e) {
                 console.log(e);
                 break;

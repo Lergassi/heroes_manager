@@ -1,10 +1,10 @@
 import ContainerInterface from '../core/source/ContainerInterface.js';
 import Container from '../core/source/Container.js';
-import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
-import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
-import PlayerContainerConfigure from '../core/app/PlayerContainerConfigure.js';
+import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
+import CoreContainerConfigure from '../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
+import PlayerContainerConfigure from '../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
 import _ from 'lodash';
-import ItemDatabase from '../core/app/ItemDatabase.js';
+import ItemDatabase from '../core/source/ItemDatabase.js';
 import Item from '../core/app/Entities/Item.js';
 import {ItemID} from '../core/types/enums/ItemID.js';
 import ItemCategoryFactory from '../core/app/Factories/EntityFactories/ItemCategoryFactory.js';
@@ -16,13 +16,15 @@ import {HeroRoleID} from '../core/types/enums/HeroRoleID.js';
 import {ArmorMaterialID} from '../core/types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
 import EntityManagerBuilder from '../core/app/Services/EntityManagerBuilder.js';
-import {ContainerKey} from '../core/types/enums/ContainerKey.js';
+import {ContainerID} from '../core/types/enums/ContainerID.js';
 import EquipSlotEntityFactory from '../core/app/Factories/EntityFactories/EquipSlotEntityFactory.js';
 import {EquipSlotID} from '../core/types/enums/EquipSlotID.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 import AddItemInterface from '../core/app/Interfaces/AddItemInterface.js';
-import {unsigned} from '../core/app/types.js';
+import {unsigned} from '../core/types/types.js';
+import ArmorMaterial from '../core/app/Entities/ArmorMaterial.js';
+import {assertIsArray, assertNotEmpty} from '../core/source/assert.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -42,8 +44,10 @@ export default class SandboxController {
         // console.log('Hello, World!!');
         // this.devNewItemStorage();
         // this._devItemDatabase();
-        this._devInstanceofInterface();
+        // this._devInstanceofInterface();
 
+        this._testVanillaJS();
+        // this._testLodash();
         // this._test1();
         // this._testNewEntityManager();
         // this._testEnumKey();
@@ -142,5 +146,32 @@ export default class SandboxController {
         // console.log(item instanceof AddItemInterface);
         // console.log(item. instanceof AddItemInterfaceTy);
         // console.log(AddItemInterface.name);
+    }
+
+    private _testLodash() {
+        // console.log(0, _.isEmpty(0));
+        // console.log('', _.isEmpty(''));
+        // console.log(undefined, _.isEmpty(undefined));
+        // console.log(null, _.isEmpty(null));
+        // console.log([], _.isEmpty([]));
+        // console.log({}, _.isEmpty({}));
+        //
+        // console.log(' ', _.isEmpty(' '));
+        // console.log(1, _.isEmpty(1));
+
+        // console.log('armorMaterial', _.isPlainObject(new ArmorMaterial('1', 'Латы', 500)));
+        // console.log('object', _.isPlainObject({}));
+        // console.log('array', _.isPlainObject([]));
+        // console.log('null', _.isPlainObject(null));
+
+        // assertIsEmpty();
+        // assertNotEmpty();
+        //
+        // not(assertIsEmpty({}));
+    }
+
+    private _testVanillaJS() {
+        console.log(null === null);
+        console.log(typeof null);
     }
 }

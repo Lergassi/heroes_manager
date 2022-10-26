@@ -2,7 +2,7 @@ import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
 import GameObject from '../../../source/GameObject.js';
 import GameObjectStorage from '../../../source/GameObjectStorage.js';
-import {ContainerKey} from '../../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../../types/enums/ContainerID.js';
 
 export default class InspectGameObjectCommand extends Command {
     get name(): string {
@@ -23,7 +23,7 @@ export default class InspectGameObjectCommand extends Command {
             showHidden: input.getArgument('showHidden') === '1',
         };
 
-        let gameObject = <GameObject>this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(id);
+        let gameObject = <GameObject>this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(id);
         console.dir(gameObject, options);
     }
 }

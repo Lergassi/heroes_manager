@@ -1,9 +1,9 @@
 import Component from '../../source/Component.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import {EnemyID} from '../../types/enums/EnemyID.js';
 
-export default class EnemyComponent extends Component {
+export default class EnemyComponent {
     private readonly _enemyEntity: EnemyEntity;
     private readonly _level: unsigned;
 
@@ -11,7 +11,6 @@ export default class EnemyComponent extends Component {
         enemyEntity: EnemyEntity,
         level: unsigned,
     ) {
-        super();
         this._enemyEntity = enemyEntity;
         this._level = level;
     }

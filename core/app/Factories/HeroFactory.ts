@@ -12,7 +12,7 @@ import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import {CharacterAttributes, EquipSlots, unsigned} from '../types.js';
+import {CharacterAttributes, unsigned} from '../../types/types.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import TakeComponent from '../Components/TakeComponent.js';
@@ -55,23 +55,20 @@ export default class HeroFactory {
     private readonly _characterAttributeFactory: CharacterAttributeFactory;
 
     constructor(
-        options: {
-            entityManager: EntityManagerInterface;
-            gameObjectFactory: GameObjectFactory;
-            experienceComponentFactory: ExperienceComponentFactory;
-            characterAttributeFactory: CharacterAttributeFactory;
-        },
+        entityManager: EntityManagerInterface,
+        gameObjectFactory: GameObjectFactory,
+        experienceComponentFactory: ExperienceComponentFactory,
+        characterAttributeFactory: CharacterAttributeFactory,
     ) {
-        assertNotNil(options);
-        assertNotNil(options.entityManager);
-        assertNotNil(options.gameObjectFactory);
-        assertNotNil(options.experienceComponentFactory);
-        assertNotNil(options.characterAttributeFactory);
+        assertNotNil(entityManager);
+        assertNotNil(gameObjectFactory);
+        assertNotNil(experienceComponentFactory);
+        assertNotNil(characterAttributeFactory);
 
-        this._entityManager = options.entityManager;
-        this._gameObjectFactory = options.gameObjectFactory;
-        this._experienceComponentFactory = options.experienceComponentFactory;
-        this._characterAttributeFactory = options.characterAttributeFactory;
+        this._entityManager = entityManager;
+        this._gameObjectFactory = gameObjectFactory;
+        this._experienceComponentFactory = experienceComponentFactory;
+        this._characterAttributeFactory = characterAttributeFactory;
     }
 
     create(
@@ -268,13 +265,4 @@ export default class HeroFactory {
 
         return hero;
     }
-
-    // private _createCharacterAttributes(options: {
-    //     level: unsigned,
-    //     hero: GameObject,
-    //     itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
-    //     characterAttributeCollector: CharacterAttributeCollector,
-    // }) {
-    //
-    // }
 }

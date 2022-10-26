@@ -1,7 +1,7 @@
 import Container from '../../core/source/Container.js';
-import DefaultContainerConfigure from '../../core/app/DefaultContainerConfigure.js';
+import DefaultContainerConfigure from '../../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
 import ClientContainerConfigure from './ClientContainerConfigure.js';
-import CoreContainerConfigure from '../../core/app/CoreContainerConfigure.js';
+import CoreContainerConfigure from '../../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import ClientRender from '../public/React/ClientRender.js';
 import debug from 'debug';
 import _ from 'lodash';
@@ -16,7 +16,7 @@ export default class Client {
         (new CoreContainerConfigure()).configure(container);
         // (new PlayerContainerConfigure()).configure(container);
 
-        debug('log')('Создание клиенте завершено (index.js).');
+        debug(DebugNamespaceID.Log)('Создание клиенте завершено (index.js).');
 
         // let itemStorageFactory = container.get<ItemStorageFactory>('player.itemStorageFactory');
         //

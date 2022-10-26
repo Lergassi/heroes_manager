@@ -25,7 +25,7 @@ export default class ItemStackFactory {
             item = this._entityManager.get<Item>(EntityID.Item, item);
         }
 
-        return new ItemStack(this._idGenerator.generateID(), item, count);
+        return new ItemStack(item, count);
     }
 
     /**
@@ -51,14 +51,5 @@ export default class ItemStackFactory {
         }
 
         return itemStacks;
-    }
-
-    /**
-     * @deprecated Предметы по alias можно получить только из бд и в местах где это необходмо: консольная команда, строители и тд.
-     * @param alias
-     * @param count
-     */
-    createByItemAlias(alias: string, count = 1): ItemStack {
-        return this.create(this._entityManager.get<Item>(EntityID.Item, alias), count);
     }
 }

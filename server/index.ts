@@ -18,11 +18,12 @@ import config from './config/main.js';
 import Router from './source/Router.js';
 import Container from '../core/source/Container.js';
 import ServerContainerConfigure from './app/ServerContainerConfigure.js';
-import CoreContainerConfigure from '../core/app/CoreContainerConfigure.js';
+import CoreContainerConfigure from '../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import url from 'url';
-import DefaultContainerConfigure from '../core/app/DefaultContainerConfigure.js';
+import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
+import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 
-debug('log')('Запуск инициализации сервера.');
+debug(DebugNamespaceID.Log)('Запуск инициализации сервера.');
 
 let container = new Container();
 
@@ -42,14 +43,14 @@ const server = http.createServer(async (req, res) => {
     try {
         await router.run(req, res);
     } catch (error) {
-        debug('error')('requestListener', error);
+        debug(DebugNamespaceID.Error)('requestListener', error);
         done(error);
     }
 })//end http.createServer
 
 server.listen(config.port, () => {
-    debug('log')(sprintf('Сервер запущен на порте %s.', config.port));
-    debug('log')(_.repeat('-', 32));
+    debug(DebugNamespaceID.Log)(sprintf('Сервер запущен на порте %s.', config.port));
+    debug(DebugNamespaceID.Log)(_.repeat('-', 32));
 });//end listen
 
-debug('log')('Завершение инициализации сервера.');
+debug(DebugNamespaceID.Log)('Завершение инициализации сервера.');

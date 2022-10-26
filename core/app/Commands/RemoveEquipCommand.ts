@@ -5,7 +5,7 @@ import GameObject from '../../source/GameObject.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class RemoveEquipCommand extends Command {
@@ -31,13 +31,13 @@ export default class RemoveEquipCommand extends Command {
         let itemStorageID = parseInt(input.getArgument('item_storage_id'), 10);
         let itemStorageSlotComponentID = parseInt(input.getArgument('item_storage_slot_component_id'), 10);
 
-        let hero = <GameObject>this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(heroID);
+        let hero = <GameObject>this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(heroID);
         let equipSlotComponent = <EquipSlotComponent>hero.getComponentByID(equipSlotComponentID);
         if (equipSlotComponent.isFree()) {
             throw new AppError('EquipSlotComponent пустой.');
         }
 
-        let itemStorage = <GameObject>this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(itemStorageID);
+        let itemStorage = <GameObject>this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(itemStorageID);
         let itemStorageSlotComponent = <ItemStorageSlotComponent>itemStorage.getComponentByID(itemStorageSlotComponentID);
 
         itemStorageSlotComponent.placeItemStack(equipSlotComponent.itemStack);

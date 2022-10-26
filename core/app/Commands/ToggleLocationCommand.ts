@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import LocationComponent from '../Components/LocationComponent.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class ToggleLocationCommand extends Command {
@@ -19,7 +19,7 @@ export default class ToggleLocationCommand extends Command {
         let locationID = parseInt(input.getArgument('location_id'), 10);    //todo: Можно сделать единую "точку входа" для однотипных команд.
 
         this.container
-            .get<GameObjectStorage>(ContainerKey.GameObjectStorage)
+            .get<GameObjectStorage>(ContainerID.GameObjectStorage)
             .getOneByID(locationID)
             ?.get<LocationComponent>(LocationComponent.name)
             .toggleState();

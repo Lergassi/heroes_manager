@@ -4,7 +4,7 @@ import ItemStack from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import GameObject from '../../source/GameObject.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import AppError from '../../source/Errors/AppError.js';
 import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
@@ -30,29 +30,17 @@ export default class ItemStorageComponent extends Component {
     ) {
         super();
         this._size = slots.length;
-        // this._slots = slots;
         this._slots = {};
         for (let i = 0; i < slots.length; i++) {
             this._slots[i.toString()] = slots[i];
         }
         this._itemStackFactory = itemStackFactory;
-
-        //todo: Слоты надо либо скрыть, либо передавать из вне. Тогда логика ItemStorageComponent измениться и будет зависить от переданного кол-ва слотов. Сколько передали - такой и размер.
-        // for (let i = 0; i < size; i++) {
-        //     this.gameObject.addComponent(new ItemStorageSlotComponent(
-        //         IDGenerator.generateID(),
-        //         this.gameObject,
-        //     ));
-        // }
     }
 
     /**
      * @deprecated
      */
     get itemStorageSlotComponents(): ItemStorageSlotComponent[] {
-        // return this._slots;
-        // return undefined;
-
         let slots = [];
         for (const slotsKey in this._slots) {
             slots.push(this._slots[slotsKey]);
@@ -66,10 +54,6 @@ export default class ItemStorageComponent extends Component {
      */
     get busyItemStorageSlotCount(): number {
         let count = 0;
-        // const itemStorageSlotComponents = this._slots;
-        // itemStorageSlotComponents.map((itemStorageSlotComponent: ItemStorageSlotComponent) => {
-        //     count += Number(!itemStorageSlotComponent.isFree());
-        // });
         for (const slotsKey in this._slots) {
             count += Number(!this._slots[slotsKey].isFree());
         }
@@ -81,34 +65,11 @@ export default class ItemStorageComponent extends Component {
         return this._size - this.busyItemStorageSlotCount;
     }
 
-    // /**
-    //  * @deprecated Использовать getFirstFreeItemStorageSlotComponent()
-    //  */
-    // findFirstFreeItemStorageSlotComponent(): ItemStorageSlotComponent {
-    //     let freeItemStorageSlotComponent = null;
-    //
-    //     let itemStorageSlotComponents = this._slots;
-    //     for (let i = 0; i < itemStorageSlotComponents.length; i++) {
-    //         if (itemStorageSlotComponents[i].isFree()) {
-    //             freeItemStorageSlotComponent = itemStorageSlotComponents[i];
-    //             break;
-    //         }
-    //     }
-    //
-    //     return freeItemStorageSlotComponent;
-    // }
-
     /**
      * @deprecated
      */
     getFreeItemStorageSlotComponents(): ItemStorageSlotComponent[] {
         let freeItemStorageSlotComponents: ItemStorageSlotComponent[] = [];
-        // let itemStorageSlotComponents = this._slots;
-        // for (let i = 0; i < itemStorageSlotComponents.length; i++) {
-        //     if (itemStorageSlotComponents[i].isFree()) {
-        //         freeItemStorageSlotComponents.push(itemStorageSlotComponents[i]);
-        //     }
-        // }
 
         for (const slotKey in this._slots) {
             if (this._slots[slotKey].isFree()) {
@@ -123,22 +84,12 @@ export default class ItemStorageComponent extends Component {
      * @deprecated
      */
     getFirstFreeItemStorageSlotComponent(): ItemStorageSlotComponent {
-        // let freeItemStorageSlotComponent;
-        // let itemStorageSlotComponents = this._slots;
-        // for (let i = 0; i < itemStorageSlotComponents.length; i++) {
-        //     if (itemStorageSlotComponents[i].isFree()) {
-        //         freeItemStorageSlotComponent = itemStorageSlotComponents[i];
-        //         break;
-        //     }
-        // }
-
         for (const slotsKey in this._slots) {
             if (this._slots[slotsKey].isFree()) {
                 return this._slots[slotsKey];
             }
         }
 
-        // return freeItemStorageSlotComponent;
         return undefined;
     }
 
@@ -147,12 +98,6 @@ export default class ItemStorageComponent extends Component {
      */
     getItemStorageSlotComponentsWithItem(item: Item): ItemStorageSlotComponent[] {
         let itemStorageSlotComponentsWithItem = [];
-        // let itemStorageSlotComponents = this._slots;
-        // for (let i = 0; i < itemStorageSlotComponents.length; i++) {
-        //     if (itemStorageSlotComponents[i].containsItem(item)) {
-        //         itemStorageSlotComponentsWithItem.push(itemStorageSlotComponents[i]);
-        //     }
-        // }
 
         for (const slotsKey in this._slots) {
             if (this._slots[slotsKey].containsItem(item)) {
@@ -178,25 +123,19 @@ export default class ItemStorageComponent extends Component {
         let slotsWithItem = this.getItemStorageSlotComponentsWithItem(item);
         let freeSlots = this.getFreeItemStorageSlotComponents();
         while (currentCount > 0) {
-            // console.log('slotsWithItem.length', slotsWithItem.length);
             for (let i = 0; i < slotsWithItem.length; i++) {
-                // if (slotsWithItem[i].itemStack.count >= item.stackSize) {
                 if (slotsWithItem[i].itemStack.isFull()) {
                     continue;
                 }
 
-                // let flawCount = slotsWithItem[i].itemStack.item.stackSize - slotsWithItem[i].itemStack.count;
                 let flawCount = slotsWithItem[i].itemStack.flawCount();
                 if (currentCount <= flawCount) {
-                    // slotsWithItem[i].itemStack.count += currentCount;
                     slotsWithItem[i].itemStack.add(currentCount);
                     currentCount = 0;
                 } else {
-                    // slotsWithItem[i].itemStack.count += flawCount;
                     slotsWithItem[i].itemStack.add(flawCount);
                     currentCount -= flawCount;
                 }
-                // currentCount -= flawCount;
             }
 
             if (currentCount > 0) {
@@ -213,7 +152,6 @@ export default class ItemStorageComponent extends Component {
                     }
                 }
                 break;
-                // currentCount = -1;
             }
         }
 
@@ -222,6 +160,12 @@ export default class ItemStorageComponent extends Component {
         return currentCount;
     }
 
+    /**
+     *
+     * @param itemStorages
+     * @param item
+     * @param count Остаток.
+     */
     static addItemToItemStorages(itemStorages: GameObject[], item: Item, count: number): unsigned {
         for (let i = 0; i < itemStorages.length; i++) {
             if (!itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent)) {
@@ -247,10 +191,6 @@ export default class ItemStorageComponent extends Component {
     }
 
     clear(): void {
-        // let itemStorageSlotComponents = this._slots;
-        // for (let i = 0; i < itemStorageSlotComponents.length; i++) {
-        //     itemStorageSlotComponents[i].destroyItemStack();
-        // }
         for (const slotsKey in this._slots) {
             this._slots[slotsKey].destroyItemStack();
         }
@@ -280,7 +220,6 @@ export default class ItemStorageComponent extends Component {
     }
 
     render(callback: (values: {
-        // slots: ItemStorageSlotComponent[],
         slots: {[key: string]: ItemStorageSlotComponent},
     }) => void) {
         callback({

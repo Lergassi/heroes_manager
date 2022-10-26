@@ -1,6 +1,6 @@
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
 import Item from '../../Entities/Item.js';
-import {unsigned} from '../../types.js';
+import {unsigned} from '../../../types/types.js';
 import ItemStackFactory from '../../Factories/ItemStackFactory.js';
 import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import _ from 'lodash';
@@ -8,7 +8,6 @@ import EventSystem from '../../../source/EventSystem.js';
 import {EquipSlotComponentEventCode} from '../EquipSlotComponent.js';
 import AppError from '../../../source/Errors/AppError.js';
 
-//todo: Броня и руки - это разные слоты! Переделать.
 export default class DefaultEquipSlot implements EquipSlotInterface {
     private _itemStack: ItemStack;
 

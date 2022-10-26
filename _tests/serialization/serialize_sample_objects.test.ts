@@ -12,7 +12,7 @@ import messages from '../../core/app/messages.js';
 import TestObjectWithLinkCollections from '../../test/Serialize/TestObjectWithLinkCollections.js';
 import Container from '../../core/source/Container.js';
 import EntityManager from '../../core/source/EntityManager.js';
-import {ContainerKey} from '../../core/types/enums/ContainerKey.js';
+import {ContainerID} from '../../core/types/enums/ContainerID.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 
 let metadataManager = new MetadataManager();
@@ -72,13 +72,13 @@ data.push({
 });
 
 let clearContainer = new Container();
-clearContainer.set<EntityManager>(ContainerKey.EntityManager, (container) => {
+clearContainer.set<EntityManager>(ContainerID.EntityManager, (container) => {
     return new EntityManager();
 });
 let clearSerializer = new Serializer(clearContainer, metadataManager);
 
 let container = new Container();
-container.set<EntityManager>(ContainerKey.EntityManager, (container) => {
+container.set<EntityManager>(ContainerID.EntityManager, (container) => {
     return new EntityManager();
 });
 
@@ -252,9 +252,9 @@ let linkCollection = [
     new TestObjectLink(102, 'c'),
 ];
 
-container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[0]);
-container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[1]);
-container.get<EntityManagerInterface>(ContainerKey.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[2]);
+container.get<EntityManagerInterface>(ContainerID.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[0]);
+container.get<EntityManagerInterface>(ContainerID.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[1]);
+container.get<EntityManagerInterface>(ContainerID.EntityManager).getRepository(TestObjectLink.name).add(linkCollection[2]);
 
 let testObjectWithLinkCollections = new TestObjectWithLinkCollections(linkCollection);
 let expectedTestObjectWithLLinkCollections = '{"classname":"TestObjectWithLinkCollections","data":{"_linkCollection":[{"classname":"TestObjectLink","id":100},{"classname":"TestObjectLink","id":101},{"classname":"TestObjectLink","id":102}]}}';

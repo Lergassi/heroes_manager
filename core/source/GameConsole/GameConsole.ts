@@ -6,6 +6,7 @@ import debug from 'debug';
 import _ from 'lodash';
 import ValidationError from '../Errors/ValidationError.js';
 import {assertNotNil} from '../assert.js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export interface CommandOptions {
     name: string;
@@ -51,7 +52,8 @@ export default class GameConsole {
 
     async run(name: string, commandArguments: string[] = []) {
         let command = this.getCommand(name);
-        debug('log:game_console')(sprintf('Command: %s', chalk.yellow(name)));
+        // debug('log:game_console')(sprintf('Command: %s', chalk.yellow(name)));
+        debug(DebugNamespaceID.GameConsole)(sprintf('Command: %s', chalk.yellow(name)));
         await command.run(commandArguments);
     }
 

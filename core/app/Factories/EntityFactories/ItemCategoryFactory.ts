@@ -2,6 +2,8 @@ import EntityManager from '../../../source/EntityManager.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import ItemCategory from '../../Entities/ItemCategory.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
+import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
+import _ from 'lodash';
 
 export default class ItemCategoryFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -13,16 +15,14 @@ export default class ItemCategoryFactory {
     create(
         id: string,
         name: string,
-        description: string,
         sort: number,
-        parent: string | ItemCategory,
+        parent?: ItemCategoryID,
     ) {
         return this._entityManager.add<ItemCategory>(EntityID.ItemCategory, id, new ItemCategory(
             id,
             name,
-            description,
             sort,
-            parent instanceof ItemCategory ? parent : this._entityManager.get<ItemCategory>(EntityID.ItemCategory, parent),
+            (_.isNil(parent)) ? null : this._entityManager.get<ItemCategory>(EntityID.ItemCategory, parent),
         ));
     }
 }

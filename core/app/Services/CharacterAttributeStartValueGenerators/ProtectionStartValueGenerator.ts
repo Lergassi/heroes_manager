@@ -1,4 +1,4 @@
-import {unsigned} from '../../types.js';
+import {unsigned} from '../../../types/types.js';
 import _ from 'lodash';
 import {assertIsGreaterThan, assertIsGreaterThanOrEqual, assertIsPositive} from '../../../source/assert.js';
 import CharacterAttributeStartValueGeneratorInterface from '../../Interfaces/CharacterAttributeStartValueGeneratorInterface.js';

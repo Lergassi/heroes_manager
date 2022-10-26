@@ -14,13 +14,11 @@ export default class CharacterAttributeEntityFactory {
     create(
         id: string,
         name: string,
-        description: string,
         sort: number,
     ) {
         return this._entityManager.add<CharacterAttributeEntity>(EntityID.CharacterAttribute, id, new CharacterAttributeEntity(
             id,
             name,
-            description,
             sort,
         ));
     }

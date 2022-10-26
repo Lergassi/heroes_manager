@@ -41,33 +41,61 @@ export interface ItemOptions {
 
 //todo: Идеи по private/public.
 export default class Item {                             //private or public? Фильтр и поиск не учитывается.
-    /**
-     * @deprecated private
-     */
-    readonly id: string;                        //Пока не понятно как пользоваться.
-    /**
-     * @deprecated private
-     */
-    readonly name: string;                      //Много где но в основном тоже только для игрока при выводе.
-    private readonly description: string;               //Для игрока в тултипе.
-    private readonly itemLevel: number;                 //Нужно только для информирования игрока при рендере.
-    private readonly sort: number;                      //Пока не используется. Даже если будет нужен - не понятно как использовать. Сортировать массив/объект который в EntityManager/ItemDatabase? А с другими полями как? Допустим на аукционе. А по другим полям. !!!->>> Это же общий список на всю игру - его не надо сортировать. Для этого будет другой класс. Пока скрыто.
-    private readonly getTypes: ItemGetType[];           //Может в дальнейшем использоваться для генерации лута.
-    /**
-     * @deprecated private
-     */
-    readonly itemCategory: ItemCategory;        //Может в дальнейшем использоваться для генерации лута.
-    private readonly quality: Quality;                  //Может в дальнейшем использоваться для генерации лута.
-    /**
-     * @deprecated private
-     */
-    readonly stackSize: number;                         //Нужно для стека. maxSize у стека? Кстате а зачем все данные в стеке например? sort может пригодиться. Зачем нужен getTypes, characterAttributes, armorMaterial у древесины никогда не будет...
+    private readonly _id: string;                        //Пока не понятно как пользоваться.
+    private readonly _name: string;                      //Много где но в основном тоже только для игрока при выводе.
+    private readonly _description: string;               //Для игрока в тултипе.
+    private readonly _itemLevel: number;                 //Нужно только для информирования игрока при рендере.
+    private readonly _sort: number;                      //Пока не используется. Даже если будет нужен - не понятно как использовать. Сортировать массив/объект который в EntityManager/ItemDatabase? А с другими полями как? Допустим на аукционе. А по другим полям. !!!->>> Это же общий список на всю игру - его не надо сортировать. Для этого будет другой класс. Пока скрыто.
+    private readonly _getTypes: ItemGetType[];           //Может в дальнейшем использоваться для генерации лута.
+    private readonly _itemCategory: ItemCategory;        //Может в дальнейшем использоваться для генерации лута.
+    private readonly _quality: Quality;                  //Может в дальнейшем использоваться для генерации лута.
+    private readonly _stackSize: number;                         //Нужно для стека. maxSize у стека? Кстате а зачем все данные в стеке например? sort может пригодиться. Зачем нужен getTypes, characterAttributes, armorMaterial у древесины никогда не будет...
+    private readonly _properties: Readonly<ItemProperties>;      //armorMaterial нужно при экипировки в слоты брони и проверки в зависимости от класса, twoHandWeapon блокировка левой руки.
+    private readonly _characterAttributes: Readonly<Partial<CharacterAttributeRecord>>;  //Разные атрибуты. Сделан метод увеличения отдельного атрибута.
 
-    /**
-     * @deprecated private
-     */
-    readonly properties: Readonly<ItemProperties>;      //armorMaterial нужно при экипировки в слоты брони и проверки в зависимости от класса, twoHandWeapon блокировка левой руки.
-    private readonly characterAttributes: Readonly<Partial<CharacterAttributeRecord>>;  //Разные атрибуты. Сделан метод увеличения отдельного атрибута.
+    get id(): string {
+        return this._id;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    get description(): string {
+        return this._description;
+    }
+
+    get itemLevel(): number {
+        return this._itemLevel;
+    }
+
+    get sort(): number {
+        return this._sort;
+    }
+
+    get getTypes(): ItemGetType[] {
+        return this._getTypes;
+    }
+
+    get itemCategory(): ItemCategory {
+        return this._itemCategory;
+    }
+
+    get quality(): Quality {
+        return this._quality;
+    }
+
+    get stackSize(): number {
+        return this._stackSize;
+    }
+
+    get properties(): Readonly<ItemProperties> {
+        return this._properties;
+    }
+
+    get characterAttributes(): Readonly<Partial<CharacterAttributeRecord>> {
+        return this._characterAttributes;
+    }
 
     constructor (
         id: string,
@@ -82,18 +110,18 @@ export default class Item {                             //private or public? Ф�
         characterAttributes: Partial<CharacterAttributeRecord>,
         options: Partial<ItemOptions> = {},
     ) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.itemLevel = itemLevel;
-        this.sort = sort;
-        this.itemCategory = itemCategory;
-        this.quality = quality;
-        this.stackSize = stackSize;
-        this.characterAttributes = characterAttributes;
-        this.properties = properties;
+        this._id = id;
+        this._name = name;
+        this._description = description;
+        this._itemLevel = itemLevel;
+        this._sort = sort;
+        this._itemCategory = itemCategory;
+        this._quality = quality;
+        this._stackSize = stackSize;
+        this._characterAttributes = characterAttributes;
+        this._properties = properties;
         //Не путать с логикой из строителя. Тут всегда пустые значения.
-        this.getTypes = options.getTypes ?? [];
+        this._getTypes = options.getTypes ?? [];
     }
 
     increaseCharacterAttribute(ID: CharacterAttributeID): number {

@@ -2,6 +2,7 @@ import Controller from '../../../source/Controller.js';
 import _ from 'lodash';
 import debug from 'debug';
 import GameConsole from '../../../../core/source/GameConsole/GameConsole.js';
+import {DebugNamespaceID} from '../../../../core/types/enums/DebugNamespaceID.js';
 
 export default class GameConsoleSiteController extends Controller {
     async execute(req, res) {
@@ -41,7 +42,7 @@ export default class GameConsoleSiteController extends Controller {
                 contentType: 'application/json',
             });
         } catch (e) {
-            debug('error')(e);
+            debug(DebugNamespaceID.Error)(e);
             this.response(req, res, JSON.stringify({
                 error: e.message,
             }), {

@@ -1,6 +1,9 @@
 import Item from '../Entities/Item.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 
+/**
+ * Для сумки и коллекции сумок.
+ */
 export default interface ItemStorageInterface {
     /**
      *

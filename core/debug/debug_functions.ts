@@ -17,11 +17,12 @@ import ContainerInterface from '../source/ContainerInterface.js';
 import LevelRange from '../app/Components/ExperienceComponent.js';
 import EntityManager from '../source/EntityManager.js';
 import Item from '../app/Entities/Item.js';
-import {ContainerKey} from '../types/enums/ContainerKey.js';
+import {ContainerID} from '../types/enums/ContainerID.js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
+import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
 
 export function debugEntity(entity) {
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         classname: entity.constructor.name,
         _id: entity['_id'],
         _name: entity['_name'],
@@ -30,7 +31,7 @@ export function debugEntity(entity) {
 }
 
 export function debugItem(item) {
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         classname: item.constructor.name,
         _id: item['_id'],
         _name: item['_name'],
@@ -45,7 +46,7 @@ export function debugItem(item) {
 }
 
 export function debugItemCategory(itemCategory) {
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         classname: itemCategory.constructor.name,
         _id: itemCategory['_id'],
         _name: itemCategory['_name'],
@@ -58,8 +59,8 @@ export function debugItemCategory(itemCategory) {
 }
 
 export function debugEquipSlot(equipSlot) {
-    debug('debug')(_.repeat('-', 64));
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)(_.repeat('-', 64));
+    debug(DebugNamespaceID.Debug)('%j', {
         classname: equipSlot.constructor.name,
         _id: equipSlot['_id'],
         _name: equipSlot['_name'],
@@ -67,7 +68,7 @@ export function debugEquipSlot(equipSlot) {
     });
 
     equipSlot['_rules'].forEach((equipSlotRule) => {
-        debug('debug')('%j', {
+        debug(DebugNamespaceID.Debug)('%j', {
             classname: equipSlotRule.constructor.name,
             _heroClass: {
                 id: equipSlotRule['_heroClass']['_id'],
@@ -90,9 +91,9 @@ export function debugRepository(repository) {
 }
 
 export function debugEntityManager(entityManager: EntityManagerInterface) {
-    debug('debug')(EntityManager.name);
+    debug(DebugNamespaceID.Debug)(EntityManager.name);
     for (const repositoryKey in entityManager['_repositories']) {
-        debug('debug')(sprintf('%sRepository.length: %s',
+        debug(DebugNamespaceID.Debug)(sprintf('%sRepository.length: %s',
             repositoryKey,
             entityManager['_repositories'][repositoryKey]['_items'].length,
         ));
@@ -101,7 +102,7 @@ export function debugEntityManager(entityManager: EntityManagerInterface) {
 }
 
 export function debugGameObject(gameObject: GameObject) {
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         gameObject: GameObject.name,
         _id: gameObject['_id'],
         _tags: _.join(gameObject['_tags'], ', '),
@@ -109,7 +110,7 @@ export function debugGameObject(gameObject: GameObject) {
 }
 
 export function debugLevelComponent(levelComponent: LevelRange) {
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         component: LevelRange.name,
         _id: levelComponent['_id'],
         _level: levelComponent['_level'],
@@ -122,7 +123,7 @@ export function debugHero(hero: GameObject) {
     let heroComponent: HeroComponent = <HeroComponent>hero.getComponentByName(HeroComponent.name);
     debugGameObject(hero);
 
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         component: HeroComponent.name,
         _id: heroComponent['_id'],
         _heroClass: heroComponent['_heroClass']['_name'],
@@ -131,7 +132,7 @@ export function debugHero(hero: GameObject) {
     debugLevelComponent(hero.getComponentByName<LevelRange>(LevelRange.name));
 
     let healthPointsComponent: HealthPointsComponent = <HealthPointsComponent>hero.getComponentByName(HealthPointsComponent.name);
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         component: HealthPointsComponent.name,
         _id: healthPointsComponent['_id'],
         _currentHealthPoints: healthPointsComponent['_currentHealthPoints'],
@@ -140,7 +141,7 @@ export function debugHero(hero: GameObject) {
     });
 
     let magicPointsComponent: MagicPointsComponent = <MagicPointsComponent>hero.getComponentByName(MagicPointsComponent.name);
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         component: MagicPointsComponent.name,
         _id: magicPointsComponent['_id'],
         _currentMagicPoints: magicPointsComponent['_currentMagicPoints'],
@@ -148,16 +149,16 @@ export function debugHero(hero: GameObject) {
     });
 
     let attackPowerComponent: AttackController = <AttackController>hero.getComponentByName(AttackController.name);
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         component: AttackController.name,
         _id: attackPowerComponent['_id'],
         _baseMinAttackPower: attackPowerComponent['_baseMinAttackPower'],
         _baseMaxAttackPower: attackPowerComponent['_baseMaxAttackPower'],
     });
 
-    debug('debug')('# characterAttribute: finalValue (_baseValue)');
+    debug(DebugNamespaceID.Debug)('# characterAttribute: finalValue (_baseValue)');
     hero.findComponentsByName(CharacterAttribute.name).map((characterAttributeComponent) => {
-        debug('debug')('%j', {
+        debug(DebugNamespaceID.Debug)('%j', {
             component: CharacterAttribute.name,
             _id: characterAttributeComponent['_id'],
             _characterAttribute: characterAttributeComponent['_characterAttribute']['_name'],
@@ -166,9 +167,9 @@ export function debugHero(hero: GameObject) {
         });
     });
 
-    debug('debug')('# equip');
+    debug(DebugNamespaceID.Debug)('# equip');
     hero.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name).map((equipSlotComponent) => {
-        debug('debug')('%j', {
+        debug(DebugNamespaceID.Debug)('%j', {
             component: EquipSlotComponent.name,
             _id: equipSlotComponent['_id'],
             _equipSlot: equipSlotComponent['_equipSlot']['_name'],
@@ -181,8 +182,8 @@ export function debugHero(hero: GameObject) {
 }
 
 export function debugHeroes(container: ContainerInterface) {
-    debug('debug')('# heroes');
-    container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
+    debug(DebugNamespaceID.Debug)('# heroes');
+    container.get<GameObjectStorage>(ContainerID.GameObjectStorage)
         .findByTag('#hero')
         .map((wallet) => {
             debugHero(wallet);
@@ -191,7 +192,7 @@ export function debugHeroes(container: ContainerInterface) {
 
 export function debugItemStack(itemStack: ItemStack) {
     if (itemStack !== undefined) {
-        debug('debug')(sprintf(
+        debug(DebugNamespaceID.Debug)(sprintf(
             '%s(%s): %s',
             itemStack['_item']['_name'],
             itemStack['_item']['_name'],
@@ -199,7 +200,7 @@ export function debugItemStack(itemStack: ItemStack) {
             itemStack['_count'],
         ));
     } else {
-        debug('debug')(undefined);
+        debug(DebugNamespaceID.Debug)(undefined);
     }
 }
 
@@ -242,7 +243,7 @@ export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent)
     }
 
     // debugGameObject(itemStorage);
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         component: ItemStorageComponent.name,
         _id: itemStorageComponent['_id'],
         busy: itemStorageComponent['busyItemStorageSlotCount'],
@@ -252,7 +253,7 @@ export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent)
     // let itemStorageSlotComponents = itemStorage.findComponentsByName(ItemStorageSlotComponent.name);
 
     itemStorageSlotComponents.map((itemStorageSlotComponent: ItemStorageSlotComponent) => {
-        debug('debug')('%j', {
+        debug(DebugNamespaceID.Debug)('%j', {
             component: ItemStorageSlotComponent.name,
             _id: itemStorageSlotComponent['_id'],
             itemStack: itemStorageSlotComponent.isFree() ? 'free' : {
@@ -267,7 +268,7 @@ export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent)
 }
 
 export function debugItemStorages(itemStorages: GameObject[]) {
-    debug('debug')('# item storages');
+    debug(DebugNamespaceID.Debug)('# item storages');
     itemStorages
         .map((itemStorage) => {
             debugItemStorage(itemStorage);
@@ -277,7 +278,7 @@ export function debugItemStorages(itemStorages: GameObject[]) {
 export function debugWallet(wallet: GameObject) {
     debugGameObject(wallet);
     let walletComponent = wallet.getComponentByName(WalletComponent.name);
-    debug('debug')('%j', {
+    debug(DebugNamespaceID.Debug)('%j', {
         component: WalletComponent.name,
         _id: walletComponent['_id'],
         name: walletComponent['_currency']['_name'],
@@ -286,8 +287,8 @@ export function debugWallet(wallet: GameObject) {
 }
 
 export function debugWallets(container: ContainerInterface) {
-    debug('debug')('# wallets');
-    container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
+    debug(DebugNamespaceID.Debug)('# wallets');
+    container.get<GameObjectStorage>(ContainerID.GameObjectStorage)
         .findByTag('#wallet')
         .map((wallet) => {
             debugWallet(wallet);
@@ -303,33 +304,33 @@ export function debugPlayerEnv(container: ContainerInterface) {
 export function debugContainer(container: ContainerInterface) {
     if (Object.keys(container['_services']).length) {
         for (const serviceKey in container['_services']) {
-            debug('debug')(sprintf(
+            debug(DebugNamespaceID.Debug)(sprintf(
                 '%s',
                 serviceKey,
             ));
         }
     } else {
-        debug('debug')('Контейнер пустой.');
+        debug(DebugNamespaceID.Debug)('Контейнер пустой.');
     }
 }
 
 export function debugPlayerGameObject(container: ContainerInterface) {
-    let playerGameObject = container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByTag('#player');
-    debug('debug')('# player');
+    let playerGameObject = container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByTag('#player');
+    debug(DebugNamespaceID.Debug)('# player');
     debugGameObject(playerGameObject);
     debugLevelComponent(playerGameObject.getComponentByName(LevelRange.name));
 }
 
 export function debugGameObjectStorage(gameObjectStorage: GameObjectStorage) {
-    debug('debug')('GameObjectStorage.length: ' + gameObjectStorage['_gameObjects'].length);
+    debug(DebugNamespaceID.Debug)('GameObjectStorage.length: ' + gameObjectStorage['_gameObjects'].length);
     for (let i = 0; i < gameObjectStorage['_gameObjects'].length; i++) {
-        debug('debug')(sprintf('_id: %s, _name: %s', gameObjectStorage['_gameObjects'][i]['_id'], gameObjectStorage['_gameObjects'][i]['_name']));
+        debug(DebugNamespaceID.Debug)(sprintf('_id: %s, _name: %s', gameObjectStorage['_gameObjects'][i]['_id'], gameObjectStorage['_gameObjects'][i]['_name']));
     }
 }
 
 export function debugItemList(items: Item[]) {
     for (let i = 0; i < items.length; i++) {
-        debug('debug')('%j', {
+        debug(DebugNamespaceID.Debug)('%j', {
             name: items[i]['name'] || items[i]['_name'],
             alias: items[i].id,
         });

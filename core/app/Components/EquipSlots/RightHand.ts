@@ -1,6 +1,6 @@
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
 import Item from '../../Entities/Item.js';
-import {unsigned} from '../../types.js';
+import {unsigned} from '../../../types/types.js';
 import ItemStackFactory from '../../Factories/ItemStackFactory.js';
 import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import LeftHand from './LeftHand.js';

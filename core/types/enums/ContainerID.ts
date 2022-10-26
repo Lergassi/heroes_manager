@@ -1,29 +1,31 @@
-export enum ContainerKey {
+export enum ContainerID {
     //core
     EntityManager = 'core.EntityManager',
-    EntityManagerFacade = 'core.facade.entityManager',
-    EventSystem = 'core.EventSystem',
-    ItemFactory = 'core.itemFactory',
+    // EntityManagerFacade = 'core.facade.entityManager',
+    ItemFactory = 'core.ItemFactory',
     ItemDatabase = 'core.ItemDatabase',
 
     //player
+    EventSystem = 'core.EventSystem',
     IDGenerator = 'player.realtimeObjectIdGenerator',
     GameObjectStorage = 'player.GameObjectStorage',
-    GameObjectFactory = 'player.gameObjectFactory',
-    ItemStorageFactory = 'ItemStorageFactory',
+    GameObjectFactory = 'player.GameObjectFactory',
+    ItemStorageFactory = 'player.ItemStorageFactory',
     ItemStorageManager = 'player.ItemStorageManager',
     CharacterAttributeStartValueGenerator = 'player.CharacterAttributeStartValueGenerator',
     CharacterAttributeValueGenerator = 'player.CharacterAttributeValueGenerator',
+
     //фабрики
     HeroFactory = 'player.HeroFactory',
     LocationFactory = 'player.LocationFactory',
     EnemyFactory = 'player.EnemyFactory',
     ItemStackFactory = 'player.ItemStackFactory',
     CharacterAttributeFactory = 'player.CharacterAttributeFactory',
-    //компоненты
+
+    //компоненты из GameObject
     MainItemStorageList = 'player.MainItemStorageList',
-    MainHeroListComponent = 'player.MainHeroListComponent',
-    MainLocationListComponent = 'player.MainLocationListComponent',
+    MainHeroList = 'player.MainHeroList',
+    MainLocationList = 'player.MainLocationList',
 
     //player Фабрики компонентов (class Component).
     ExperienceComponentFactory = 'player.ExperienceComponentFactory',

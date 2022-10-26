@@ -1,4 +1,4 @@
-import {Milliseconds, Seconds} from './types.js';
+import {Milliseconds, Seconds} from '../types/types.js';
 
 export const ONE_SECOND_IN_MILLISECONDS: Milliseconds = 1000;
 
@@ -8,7 +8,3 @@ export const ONE_DAY_IN_SECONDS: Seconds = ONE_HOUR_IN_SECONDS * 24;
 
 export const DEFAULT_ITEM_STORAGE_SIZE = 20;
 export const DEFAULT_STACK_SIZE = 50;
-
-// export enum ComponentDefaultName {
-//     HealthPointsComponent = HealthPointsComponent.name,
-// }

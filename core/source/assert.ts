@@ -8,8 +8,13 @@ export function assert(condition: boolean, message?: string) {
     }
 }
 
+// export function assert(condition: boolean, message?: string) {
+//     if (!condition) {
+//         throw new AssertError(message);
+//     }
+// }
+
 /**
- * Включая ноль.
  * @param value
  * @param message
  */
@@ -17,6 +22,23 @@ export function assertIsPositive(value: number, message?: string) {
     assertIsNumber(value);
     assert(value >= 0, 'Значение должно быть больше нуля.');
 }
+
+/**
+ * Работает как _.isEmpty() включая ноль.
+ * @param value
+ * @param message
+ */
+export function assertNotEmpty(value: any, message?: string) {
+    assert(!_.isEmpty(value), 'Значение не должно быть пустым.');  //todo: 0?
+}
+
+// export function assertObjectKey(value: any, message?: string) {
+//     assert(_.isString(value) || _.isNumber(value), 'Значение не должно быть пустым.');  //todo: 0?
+// }
+
+// export function assertIsObject(value: any, message?: string) {
+//     assert(_.isPlainObject(value), 'Значение должно быть объектом созданным через конструктор.');
+// }
 
 export function assertNotNil(value: any, message?: string) {
     assert(!_.isNil(value), message || 'Значение не может быть null или undefined.');
@@ -32,8 +54,19 @@ export function assertIsGreaterThanOrEqual(value: number, expected: number, mess
     assert(value >= expected, message || 'Значение должно быть больше или равно указанному.');
 }
 
+export function assertInRange(value: number, min: number, max: number, message?: string) {
+    assertIsNumber(value);
+    assertIsNumber(min);
+    assertIsNumber(max);
+    assert(min <= value && value <= max, 'Значение должно быть в указанном диапазоне.');
+}
+
 export function assertIsNumber(value: any, message?: string) {
     assert(typeof value === 'number', message || 'Значение должно быть числом.');
+}
+
+export function assertIsString(value: any, message?: string) {
+    assert(typeof value === 'string', message || 'Значение должно быть строкой.');
 }
 
 export function assertIsMinLength<T>(array: T[], minLength: number, message?: string) {
@@ -50,7 +83,6 @@ export function assertIsArray(value: any, message?: string) {
     assert(Array.isArray(value), message || 'Переменная должна быть массивом.');
 }
 
-//todo: Надо ли value и target проверять на nil?
 export function assertIsInstanceOf(value: any, target: any, message?: string) {
     assert(value instanceof target, message || 'Объект неверного типа (instanceof).');
 }

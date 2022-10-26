@@ -3,7 +3,7 @@ import ItemCategory from './ItemCategory.js';
 import EquipSlotAvailableItemCategoryInterface from '../Interfaces/EquipSlotAvailableItemCategoryInterface.js';
 
 export default class EquipSlotAvailableItemCategory implements EquipSlotAvailableItemCategoryInterface {
-    private _itemCategories: ItemCategory[];
+    private readonly _itemCategories: ItemCategory[];
 
     constructor(itemCategories: ItemCategory[]) {
         this._itemCategories = itemCategories;

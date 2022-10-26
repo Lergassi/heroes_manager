@@ -1,17 +1,18 @@
 import Component from '../../source/Component.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import debug from 'debug';
 import MaxLevelReachedError from '../../source/Errors/MaxLevelReachedError.js';
 import MaxIterationsReachedError from '../../source/Errors/MaxIterationsReachedError.js';
 import EventSystem from '../../source/EventSystem.js';
 import {sprintf} from 'sprintf-js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export enum ExperienceComponentEventCode {
     AddExp = 'ExperienceComponent.AddExp',
     AddLevel = 'ExperienceComponent.AddLevel',
 }
 
-export default class ExperienceComponent extends Component {
+export default class ExperienceComponent {
     private _level: unsigned;
     private readonly _maxLevel: unsigned;
     private _exp: unsigned;
@@ -44,8 +45,6 @@ export default class ExperienceComponent extends Component {
         level: number,
         maxLevel: number,
     ) {
-        super();
-
         this._level = level;
         this._maxLevel = maxLevel;
         this._exp = 0;
@@ -63,7 +62,7 @@ export default class ExperienceComponent extends Component {
         }
 
         this._exp += value;
-        debug('log')(sprintf('Добавлено опыта: %s.', this._exp));   //todo: Не надо выводить у героев. Только у игрока. Сделать отдельный компоненты.
+        debug(DebugNamespaceID.Log)(sprintf('Добавлено опыта: %s.', this._exp));   //todo: Не надо выводить у героев. Только у игрока. Сделать отдельный компоненты.
         EventSystem.event(ExperienceComponentEventCode.AddExp, this);    //todo: Это на каждую переменную придется делать, которая отображается в ui. Надо по другому.
         //todo: Повышение нескольких уровней объединить в одно действие. И через события передавать в дополнительной переменной.
         if (this._exp >= this._totalExpForNextLevel()) {
@@ -96,7 +95,7 @@ export default class ExperienceComponent extends Component {
 
         ++this._level;
         // this._resetExp();
-        debug('log')(sprintf('Уровень повышен: %s.', this._level));
+        debug(DebugNamespaceID.Log)(sprintf('Уровень повышен: %s.', this._level));
         EventSystem.event(ExperienceComponentEventCode.AddLevel, this);
     }
 

@@ -13,13 +13,11 @@ export default class CurrencyFactory {
     create(
         id: string,
         name: string,
-        description: string,
         sort: number,
     ) {
         return this._entityManager.add<Currency>(EntityID.Currency, id, new Currency(
             id,
             name,
-            description,
             sort,
         ));
     }

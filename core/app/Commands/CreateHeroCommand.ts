@@ -4,8 +4,8 @@ import HeroClass from '../Entities/HeroClass.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import EntityManager from '../../source/EntityManager.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
-import {unsigned} from '../types.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {unsigned} from '../../types/types.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
@@ -25,12 +25,12 @@ export default class CreateHeroCommand extends Command {
         let heroClassID = input.getArgument('hero_class_ID');
         let level = parseInt(input.getArgument('level'), 10);
 
-        let heroClass: HeroClass = this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<HeroClass>(EntityID.HeroClass, heroClassID);
+        let heroClass: HeroClass = this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<HeroClass>(EntityID.HeroClass, heroClassID);
 
-        this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
-            heroClass: heroClass,
-            level: level,
-            heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
-        });
+        this.container.get<MainHeroListComponent>(ContainerID.MainHeroList).createHero(
+            heroClass,
+            level,
+            this.container.get<HeroFactory>(ContainerID.HeroFactory),
+        );
     }
 }

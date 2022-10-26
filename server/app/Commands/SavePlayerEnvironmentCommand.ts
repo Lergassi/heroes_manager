@@ -10,7 +10,8 @@ import Security from '../../source/Security.js';
 import MetadataManager from '../../../core/source/MetadataManager.js';
 import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
-import {ContainerKey} from '../../../core/types/enums/ContainerKey.js';
+import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export default class SavePlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -21,7 +22,7 @@ export default class SavePlayerEnvironmentCommand extends Command {
         this.container.get<Security>('server.security').assertIsUserLoaded();
         this.container.get<Security>('server.security').assertIsPlayerLoaded();
 
-        let gameObjects = this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)['_gameObjects'];
+        let gameObjects = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage)['_gameObjects'];
         let services = this.container['_services'];
 
         let serializer = this.container.get<Serializer>('core.serializer');
@@ -58,6 +59,6 @@ export default class SavePlayerEnvironmentCommand extends Command {
         fs.writeFileSync(saveFilePath, saveObjectString);
         fs.chownSync(saveFilePath, 1001, 1001);
 
-        debug('info')(sprintf('Данные сохранены в %s.', saveFilePath));
+        debug(DebugNamespaceID.Info)(sprintf('Данные сохранены в %s.', saveFilePath));
     }
 }

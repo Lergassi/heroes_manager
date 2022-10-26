@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import MainLocationListComponent from '../Components/MainLocationListComponent.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class DeleteLocationCommand extends Command {
@@ -20,10 +20,10 @@ export default class DeleteLocationCommand extends Command {
 
         this
             .container
-            .get<MainLocationListComponent>(ContainerKey.MainLocationListComponent)
+            .get<MainLocationListComponent>(ContainerID.MainLocationList)
             .delete(
-                this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(locationID),
-                this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage),
+                this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(locationID),
+                this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage),
             );
     }
 }

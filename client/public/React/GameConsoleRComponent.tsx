@@ -3,6 +3,7 @@ import AppError from '../../../core/source/Errors/AppError.js';
 import debug from 'debug';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
+import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export interface GameConsoleProps {
     container: ContainerInterface;
@@ -114,7 +115,8 @@ export default class GameConsoleRComponent extends React.Component<any, any>{
                 }
                 this.resetHistoryPosition();
 
-                debug('log:game_console')(resultUrl);
+                // debug('log:game_console')(resultUrl);
+                debug(DebugNamespaceID.GameConsole)(resultUrl);
 
                 await this._container.get<GameConsole>('gameConsole').runByQuery(commandString);
 

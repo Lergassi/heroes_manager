@@ -1,7 +1,7 @@
 import Component from '../../source/Component.js';
 import debug from 'debug';
 import EventSystem from '../../source/EventSystem.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import AppError from '../../source/Errors/AppError.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {assertNotNil, assertIsPositive} from '../../source/assert.js';
@@ -9,6 +9,7 @@ import ArmorDecorator from './CharacterAttributes/ArmorDecorator.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import CharacterIsDeadError from '../../source/Errors/CharacterIsDeadError.js';
 import StateController from './StateController.js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export enum HealthPointsComponentEventCode {
     TakeDamage = 'HealthPointsComponent.TakeDamage',
@@ -43,7 +44,7 @@ export default class HealthPointsComponent implements DamageControllerInterface 
 
         this._canModify();
 
-        debug('log')('Персонаж получил урон: ' + damage);
+        debug(DebugNamespaceID.Log)('Персонаж получил урон: ' + damage);
         EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
 
         let healthPoints = this._currentHealthPoints - damage;
@@ -67,7 +68,7 @@ export default class HealthPointsComponent implements DamageControllerInterface 
 
         this._currentHealthPoints = 0;
         this._isDead = true;
-        debug('log')('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
+        debug(DebugNamespaceID.Log)('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
         this._stateController.state('Dead', 'Персонаж мертвый.');
         EventSystem.event(HealthPointsComponentEventCode.Died, this);
         /*
@@ -89,7 +90,7 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         this._currentHealthPoints = this._maxHealthPoints.value();
         this._isDead = false;
         this._stateController.removeState();
-        debug('log')('Персонаж воскрес.');
+        debug(DebugNamespaceID.Log)('Персонаж воскрес.');
         EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
     }
 

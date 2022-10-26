@@ -1,9 +1,9 @@
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import Component from '../../source/Component.js';
 import ExperienceComponent from './ExperienceComponent.js';
 import {round} from 'lodash';
 
-export default class ExperienceGeneratorComponent extends Component {
+export default class ExperienceGeneratorComponent {
     /**
      * Точное значение выдаваемое компонентом. Множители рассчитываются не ТУТ!!!
      * @private
@@ -14,21 +14,7 @@ export default class ExperienceGeneratorComponent extends Component {
     constructor(options: {
         exp: unsigned,
     }) {    //todo: Тут должны быть компонент не игрока, а группы героев и игрока.
-        super();
         this._exp = options.exp;
-
-        // EventSystem.addListener({
-        //     codes: HealthPointsComponentEventCode.Died,
-        //     listener: {
-        //         callback: (target) => {
-        //             let length = this._experienceComponents.length;
-        //             for (let i = 0; i < this._experienceComponents.length; i++) {
-        //                 this._experienceComponents[i].addExp(round(this._exp / length, 0));
-        //             }
-        //         },
-        //         target: healthPointsComponent,
-        //     },
-        // });
     }
 
     distribute(experienceComponents: ExperienceComponent[]) {
@@ -39,6 +25,6 @@ export default class ExperienceGeneratorComponent extends Component {
     }
 
     distribute2(experienceDistributeController: any) {
-        experienceDistributeController.add(this._exp);  //Объект сам разберется как распределить опыт.
+        experienceDistributeController.add(this._exp);  //Объект сам разберется как распределить опыт, по аналогии с генератором золота.
     }
 }

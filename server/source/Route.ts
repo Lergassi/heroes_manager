@@ -1,6 +1,7 @@
 import {HttpMethod} from './Http.js';
 import AppError from '../../core/source/Errors/AppError.js';
 import debug from 'debug';
+import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 
 export default class Route {
     private readonly _httpMethods: Array<string>;
@@ -36,6 +37,6 @@ export default class Route {
     }
 
     debug() {
-        debug('debug')(this._httpMethods.join(', ') + ': ' + this._pattern);
+        debug(DebugNamespaceID.Debug)(this._httpMethods.join(', ') + ': ' + this._pattern);
     }
 }

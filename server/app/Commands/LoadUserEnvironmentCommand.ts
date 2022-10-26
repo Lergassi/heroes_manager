@@ -6,6 +6,7 @@ import UserDBObject from '../DBObjects/UserDBObject.js';
 import debug from 'debug';
 import Security from '../../source/Security.js';
 import {sprintf} from 'sprintf-js';
+import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export default class LoadUserEnvironmentCommand extends Command {
     get name(): string {
@@ -69,6 +70,6 @@ export default class LoadUserEnvironmentCommand extends Command {
         // this.container.set('server.userDBObject', () => {
         //     return userDBObject;
         // });
-        debug('info')(sprintf('окружение пользователя загружено, %s(%s).', userDBObject['_id'], userDBObject['_email']));
+        debug(DebugNamespaceID.Info)(sprintf('окружение пользователя загружено, %s(%s).', userDBObject['_id'], userDBObject['_email']));
     }
 }

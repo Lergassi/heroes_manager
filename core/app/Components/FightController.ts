@@ -3,6 +3,7 @@ import debug from 'debug';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import CharacterIsDeadError from '../../source/Errors/CharacterIsDeadError.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export default class FightController {
     private _attackController: AttackControllerInterface;
@@ -51,7 +52,7 @@ export default class FightController {
         }
         if (currentHit >= maxHits) {
             //todo: Чтото делать.
-            debug('error')('Ошибка при симуляции боя. Достигнуто максимальное количество ударов.');
+            debug(DebugNamespaceID.Error)('Ошибка при симуляции боя. Достигнуто максимальное количество ударов.');
         }
     }
 }

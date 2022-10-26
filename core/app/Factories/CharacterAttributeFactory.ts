@@ -2,7 +2,7 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import CharacterAttributeStartValueGenerator, {
     CharacterAttributeValueModifier
 } from '../Services/CharacterAttributeStartValueGenerator.js';

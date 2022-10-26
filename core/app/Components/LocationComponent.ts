@@ -9,49 +9,12 @@ import AppError from '../../source/Errors/AppError.js';
 import debug from 'debug';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
-import {Seconds, unsigned} from '../types.js';
+import {Seconds, unsigned} from '../../types/types.js';
 import {sprintf} from 'sprintf-js';
 import EventSystem from '../../source/EventSystem.js';
 import ExperienceComponent from './ExperienceComponent.js';
 import {assert} from '../../source/assert.js';
-
-export class AvailableGatherItem {
-    private readonly _item: Item;
-    private readonly _minCount: number;
-    private readonly _maxCount: number;
-
-    get item(): Item {
-        return this._item;
-    }
-
-    get minCount(): number {
-        return this._minCount;
-    }
-
-    get maxCount(): number {
-        return this._maxCount;
-    }
-
-    constructor(item: Item, minCount: number, maxCount: number) {
-        this._item = item;
-        this._minCount = minCount;
-        this._maxCount = maxCount;
-    }
-}
-
-// class AvailableGatherItemList {
-//     private _items: ItemCountInterface[];
-//
-//     availableItem(item: Item): boolean {
-//         for (let i = 0; i < this._items.length; i++) {
-//             if (this._items[i].item === item) {
-//                 return true;
-//             }
-//         }
-//
-//         return false;
-//     }
-// }
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export enum LocationState {
     Waiting = 'Waiting',
@@ -68,18 +31,6 @@ export type GatheringItemPointTypeValues = {
     readonly [key in GatheringItemPointID]: GatheringItemValue;
 };
 
-// type ItemGatheringTypeLiteral = 'low' | 'normal' | 'high';
-// let a: ItemGatheringTypeLiteral = ''
-
-// export let ItemGatheringPointTypeValues2: {[key: string]: number} = {
-// export let ItemGatheringPointTypeValues2: {[key: ItemGatheringTypeLiteral]: number} = {
-// export let ItemGatheringPointTypeValues2: {[key in ItemGatheringTypeLiteral]: number} = {
-// export let itemGatheringPointTypeValues: {[key in ItemGatheringPointType]: number} = {
-//     low: 42,
-//     normal: 42,
-//     high: 42,
-// };
-
 /**
  * Например: 12/час, 200/час. Для игрока период для жил определяется в часах.
  */
@@ -94,20 +45,6 @@ export type GatheringItemPoint = {
     readonly type: GatheringItemPointID;
 }
 
-// export class ItemGatheringPoint {
-//     readonly item: Item;
-//     readonly value: number;
-//     readonly type: ItemGatheringPointType;
-//
-//     constructor(item: Item, value: number, type: ItemGatheringPointType) {
-//         this.item = item;
-//         this.value = value;
-//         this.type = type;
-//     }
-// }
-
-// type LocationComponentRenderSignature
-
 export enum LocationComponentEventCode {
     Start = 'LocationComponent.Start',
     Stop = 'LocationComponent.Stop',
@@ -117,8 +54,6 @@ export enum LocationComponentEventCode {
     GetItems = 'LocationComponent.GetItems',
 }
 
-// export default class LocationComponent extends Component implements PlacementInterface {
-// export default class LocationComponent extends Component {
 export default class LocationComponent extends Component {
     private readonly _created: Date;
     private readonly _level: unsigned;
@@ -132,7 +67,6 @@ export default class LocationComponent extends Component {
     private _intervalID: NodeJS.Timer;
     private readonly _intervalPeriod: Seconds;
 
-    //todo: Не многовато зависимостей?
     constructor(options: {
         created: Date,
         level: unsigned,
@@ -142,15 +76,16 @@ export default class LocationComponent extends Component {
         itemStackFactory: ItemStackFactory,
     }) {
         super();
+
+        this._intervalPeriod = 1;   //todo: В будущем настраиваемый игрой.
+        this._state = LocationState.Waiting;
+
         this._created = options.created;
         this._level = options.level;
         this._gatheringItemPoints = options.gatheringItemPoints;
         this._heroGroupComponent = options.heroGroupComponent;
         this._internalItemStorageComponent = options.internalItemStorageComponent;
         this._itemStackFactory = options.itemStackFactory;
-
-        this._state = LocationState.Waiting;
-        this._intervalPeriod = 1;   //todo: В будущем настраиваемый игрой.
     }
 
     start(): void {
@@ -169,7 +104,7 @@ export default class LocationComponent extends Component {
             this._generateItems();
             //И другие действия...
         }, this._intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
-        debug('log')('Охота запущена.');
+        debug(DebugNamespaceID.Log)('Охота запущена.');
         EventSystem.event(LocationComponentEventCode.Start, this);
     }
 
@@ -181,7 +116,7 @@ export default class LocationComponent extends Component {
         this._state = LocationState.Waiting;
         this._heroGroupComponent.unblock(this);
         clearInterval(this._intervalID);
-        debug('log')('Охота остановлена.');
+        debug(DebugNamespaceID.Log)('Охота остановлена.');
         EventSystem.event(LocationComponentEventCode.Stop, this);
     }
 
@@ -215,7 +150,7 @@ export default class LocationComponent extends Component {
         for (let i = 0; i < this._gatheringItemPoints.length; i++) {
             let count = _.ceil(this._gatheringItemPoints[i].count.value / this._gatheringItemPoints[i].count.period * this._intervalPeriod * partOfMaxPeriodGathering);
             if (this._internalItemStorageComponent.addItem(this._gatheringItemPoints[i].item, count) !== count) {   //todo: Не удобно.
-                debug('log')(sprintf('Собран предмет: %s (%s). Эффективность сбора: %s', this._gatheringItemPoints[i].item.name, count, partOfMaxPeriodGathering));
+                debug(DebugNamespaceID.Log)(sprintf('Собран предмет: %s (%s). Эффективность сбора: %s', this._gatheringItemPoints[i].item.name, count, partOfMaxPeriodGathering));
             }
         }
         EventSystem.event(LocationComponentEventCode.ItemsGenerated, this);

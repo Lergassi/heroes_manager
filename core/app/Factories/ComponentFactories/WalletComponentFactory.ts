@@ -1,6 +1,6 @@
 import WalletComponent from '../../Components/WalletComponent.js';
 import Currency from '../../Entities/Currency.js';
-import {unsigned} from '../../types.js';
+import {unsigned} from '../../../types/types.js';
 
 export default class WalletComponentFactory {
     create(options: {

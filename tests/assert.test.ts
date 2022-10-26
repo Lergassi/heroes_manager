@@ -1,4 +1,4 @@
-import {assert, assertIsMaxLength, assertIsMinLength} from '../core/source/assert.js';
+import {assert, assertInRange, assertIsMaxLength, assertIsMinLength} from '../core/source/assert.js';
 
 test('assert basic', () => {
     expect(() => {
@@ -51,6 +51,33 @@ describe.each([
     test('assertMaxLength toThrow', () => {
         expect(() => {
             assertIsMaxLength(array as number[], expectLength as number);
+        }).toThrow();
+    });
+});
+
+describe.each([
+    [0,0,0],
+    [0,1,1],
+    [0,0,1],
+    [1,1,1],
+    [1,2,3],
+    [1,1,3],
+    [1,3,3],
+])('assertInRange valid', (min, value, max) => {
+    test('assertInRange not.toThrow', () => {
+        expect(() => {
+            assertInRange(value as number, min as number, max as number);
+        }).not.toThrow();
+    });
+});
+
+describe.each([
+    [1,0,3],
+    [1,4,3],
+])('assertInRange invalid', (min, value, max) => {
+    test('assertInRange toThrow', () => {
+        expect(() => {
+            assertInRange(value as number, min as number, max as number);
         }).toThrow();
     });
 });

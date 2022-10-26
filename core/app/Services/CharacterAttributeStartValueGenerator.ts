@@ -1,4 +1,4 @@
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import StrengthStartValueGenerator from './CharacterAttributeStartValueGenerators/StrengthStartValueGenerator.js';
 import AgilityStartValueGenerator from './CharacterAttributeStartValueGenerators/AgilityStartValueGenerator.js';
 import IntelligenceStartValueGenerator from './CharacterAttributeStartValueGenerators/IntelligenceStartValueGenerator.js';
@@ -15,9 +15,9 @@ import {assertNotNil} from '../../source/assert.js';
 
 export type CharacterAttributeValueModifier = (value: number) => number;
 
-//todo: !Многие атрибуты должны зависить от класса. У магов, например, минимальное условное значение, разное здоровье и тд. Только не от класса, а скорее от роли. Так как используется и для врагов.
+//todo: Многие атрибуты должны зависить от класса. У магов, например, минимальное условное значение, разное здоровье и тд. Только не от класса, а скорее от роли. Так как используется и для врагов.
 export default class CharacterAttributeStartValueGenerator {
-    private _characterAttributeStartValueGenerators: Record<CharacterAttributeID, CharacterAttributeStartValueGeneratorInterface> = {
+    private readonly _characterAttributeStartValueGenerators: Record<CharacterAttributeID, CharacterAttributeStartValueGeneratorInterface> = {
         [CharacterAttributeID.Strength]: new StrengthStartValueGenerator(),
         [CharacterAttributeID.Agility]: new AgilityStartValueGenerator(),
         [CharacterAttributeID.Intelligence]: new IntelligenceStartValueGenerator(),
@@ -30,7 +30,7 @@ export default class CharacterAttributeStartValueGenerator {
         [CharacterAttributeID.CriticalStrike]: new DefaultCharacterAttributeStartValueGenerator(),
         [CharacterAttributeID.Luck]: new DefaultCharacterAttributeStartValueGenerator(),
     };
-    private _characterAttributeValueGenerator: CharacterAttributeValueGenerator;
+    private readonly _characterAttributeValueGenerator: CharacterAttributeValueGenerator;
 
     constructor(
         characterAttributeValueGenerator: CharacterAttributeValueGenerator,
@@ -45,9 +45,6 @@ export default class CharacterAttributeStartValueGenerator {
         level: unsigned,
         baseValueModifier?: CharacterAttributeValueModifier,
     ): number {
-        // let value = this._characterAttributeStartValueGenerators.get(characterAttributeID)?.startValue(baseValueModifier) ?? 0;
-        //
-        // return baseValueModifier ? baseValueModifier(value) : value;
         return (this._characterAttributeStartValueGenerators[characterAttributeID]?.generate(baseValueModifier) ?? 0) +
             this._characterAttributeValueGenerator.increase(characterAttributeID, level)
             ;

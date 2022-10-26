@@ -14,13 +14,11 @@ export default class HeroRoleFactory {
     create(
         id: string,
         name: string,
-        description: string,
         sort: number,
     ) {
         return this._entityManager.add<HeroRole>(EntityID.HeroRole, id, new HeroRole(
             id,
             name,
-            description,
             sort,
         ));
     }

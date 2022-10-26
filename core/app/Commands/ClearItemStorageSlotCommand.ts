@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 
@@ -24,7 +24,7 @@ export default class ClearItemStorageSlotCommand extends Command {
         //Нужен доступ к слотам.
         this
             .container
-            .get<GameObjectStorage>(ContainerKey.GameObjectStorage)
+            .get<GameObjectStorage>(ContainerID.GameObjectStorage)
             .getOneByID(itemStorageID)
             ?.get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent)
             ?.clearSlot(itemStorageSlotIndex)

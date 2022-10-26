@@ -17,13 +17,13 @@ import PlayerDBObjectRepository from '../Repositories/PlayerDBObjectRepository.j
 import PlayerDBObject from '../DBObjects/PlayerDBObject.js';
 import {Pool} from 'mysql';
 import _ from 'lodash';
-import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure.js';
+import PlayerContainerConfigure from '../../../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
 import PathResolver from '../../source/PathResolver.js';
 import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorageFactoryInterface.js';
 import IDGeneratorInterface from '../../../core/source/IDGeneratorInterface.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
 import MainHeroListComponent from '../../../core/app/Components/MainHeroListComponent.js';
-import {ContainerKey} from '../../../core/types/enums/ContainerKey.js';
+import {ContainerID} from '../../../core/types/enums/ContainerID.js';
 import {HeroClassID} from '../../../core/types/enums/HeroClassID.js';
 import {CurrencyID} from '../../../core/types/enums/CurrencyID.js';
 import {ItemID} from '../../../core/types/enums/ItemID.js';
@@ -31,9 +31,10 @@ import HeroFactory from '../../../core/app/Factories/HeroFactory.js';
 import ItemStackFactory from '../../../core/app/Factories/ItemStackFactory.js';
 import EntityManagerInterface from '../../../core/app/Interfaces/EntityManagerInterface.js';
 import {EntityID} from '../../../core/types/enums/EntityID.js';
+import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 /**
- * TODO: НЕ АКТУАЛЬНО ПОКА НЕТ СЕРВЕРА!!!
+ * TODO: Не актуально пока нет сервера.
  */
 export default class CreatePlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -64,14 +65,14 @@ export default class CreatePlayerEnvironmentCommand extends Command {
             })
                 .then(async () => {
                     this.container.get<Security>('server.security').loginPlayer(playerDBObject);
-                    debug('info')('Игрок создан: ' + playerDBObject['_id']);
+                    debug(DebugNamespaceID.Info)('Игрок создан: ' + playerDBObject['_id']);
 
                     //Без save_inject.
                     // (new CoreContainerConfigure()).configure(this.container);
                     (new PlayerContainerConfigure()).configure(this.container);
 
                     let playerGameObject = this.container.get<PlayerFactory>('player.playerFactory').create();
-                    this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(playerGameObject);
+                    this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).add(playerGameObject);
 
                     //Создание директорий.
                     let playerSaveDir = this.container.get<PathResolver>('server.pathResolver').resolve(
@@ -82,7 +83,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                     fs.mkdirSync(playerSaveDir);
                     fs.chownSync(playerSaveDir, 1001, 1001);
 
-                    debug('info')('Директория создана: ' + playerSaveDir);
+                    debug(DebugNamespaceID.Info)('Директория создана: ' + playerSaveDir);
 
                     //todo: Вся подобная логика в отдельные классы.
                     //Окружение игрока.
@@ -100,7 +101,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                     connection.commit();
                 })
                 .catch((error) => {
-                    debug('error')(error);
+                    debug(DebugNamespaceID.Error)(error);
                     connection.rollback();
                 })
             ;
@@ -110,22 +111,22 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     private _createWallets() {
         let config = this.container.get<object>('core.config');
 
-        let currencies = [
+        let currencyIDs = [
             CurrencyID.Gold,
             CurrencyID.ResearchPoints,
         ];
 
-        currencies.forEach((currencyAlias) => {
-            this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(this.container.get<WalletFactory>('player.walletFactory').create({
-                currency: this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Currency>(EntityID.Currency, currencyAlias),
-                value: config['start_wallet_values'][currencyAlias]['value'],
-            }));
+        _.map(currencyIDs, (currencyID) => {
+            this.container.get<WalletFactory>('player.walletFactory').create(
+                this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, currencyID),
+                config['start_wallet_values'][currencyID]['value'],
+            )
         });
     }
 
     private _createStartItemStorages() {
-        this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory).create(DEFAULT_ITEM_STORAGE_SIZE);
-        this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory).create(DEFAULT_ITEM_STORAGE_SIZE);
+        this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory).create(DEFAULT_ITEM_STORAGE_SIZE);
+        this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory).create(DEFAULT_ITEM_STORAGE_SIZE);
     }
 
     private _createStartItems() {
@@ -161,8 +162,8 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         for (let i = 0; i < items.length; i++) {
-            this.container.get<ItemStorageManager>(ContainerKey.ItemStorageManager).addItemStack(
-                this.container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).create(items[i].itemID, items[i].count),
+            this.container.get<ItemStorageManager>(ContainerID.ItemStorageManager).addItemStack(
+                this.container.get<ItemStackFactory>(ContainerID.ItemStackFactory).create(items[i].itemID, items[i].count),
             );
         }
     }
@@ -217,11 +218,11 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         for (let i = 0; i < heroPatterns.length; i++) {
-            this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
-                heroClass: heroPatterns[i].heroClassID as HeroClassID,
-                level: heroPatterns[i].level,
-                heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
-            });
+            this.container.get<MainHeroListComponent>(ContainerID.MainHeroList).createHero(
+                heroPatterns[i].heroClassID as HeroClassID,
+                heroPatterns[i].level,
+                this.container.get<HeroFactory>(ContainerID.HeroFactory),
+            );
         }
     }
 }

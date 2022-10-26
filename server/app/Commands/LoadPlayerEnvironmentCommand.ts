@@ -10,10 +10,11 @@ import debug from 'debug';
 import PlayerDBObjectRepository from '../Repositories/PlayerDBObjectRepository.js';
 import PlayerDBObject from '../DBObjects/PlayerDBObject.js';
 import _ from 'lodash';
-import PlayerContainerConfigure from '../../../core/app/PlayerContainerConfigure.js';
+import PlayerContainerConfigure from '../../../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
 import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
-import {ContainerKey} from '../../../core/types/enums/ContainerKey.js';
+import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export default class LoadPlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -56,13 +57,13 @@ export default class LoadPlayerEnvironmentCommand extends Command {
         //todo: Пока сохранений данных нет - будет создаваться стартовый контейнер.
         (new PlayerContainerConfigure()).configure(this.container);
 
-        let gameObjectStorage = this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage);
+        let gameObjectStorage = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage);
         for (let i = 0; i < objectData['data']['gameObjects'].length; i++) {
             gameObjectStorage.add(serializer.unserialize(objectData['data']['gameObjects'][i]));
         }
 
         serializer.finish();
 
-        debug('info')(sprintf('Окружение игрока загружено, %s(%s) загружено.', playerDBObject['_id'], playerDBObject['_name']));
+        debug(DebugNamespaceID.Info)(sprintf('Окружение игрока загружено, %s(%s) загружено.', playerDBObject['_id'], playerDBObject['_name']));
     }
 }

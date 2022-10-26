@@ -24,6 +24,8 @@ import {assertNotNil} from '../../source/assert.js';
 import EquipSlotEntityFactory from '../Factories/EntityFactories/EquipSlotEntityFactory.js';
 import EnemyEntityFactory from '../Factories/EntityFactories/EnemyEntityFactory.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export default class EntityManagerBuilder {
     private readonly _container: ContainerInterface;
@@ -41,6 +43,8 @@ export default class EntityManagerBuilder {
     }
 
     build(): EntityManagerInterface {
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Start');
+
         this._createArmorMaterials();
         this._createCharacterAttributes();
         this._createCurrencies();
@@ -54,6 +58,8 @@ export default class EntityManagerBuilder {
 
         this._createEnemyEntities();
 
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.End');
+
         return this._entityManager;
     }
 
@@ -65,21 +71,20 @@ export default class EntityManagerBuilder {
         this._entityManager.add<ArmorMaterial>(EntityID.ArmorMaterial, ArmorMaterialID.Plate, new ArmorMaterial(
             ArmorMaterialID.Plate,
             'Латы',
-            '',
             500,
         ));
         this._entityManager.add<ArmorMaterial>(EntityID.ArmorMaterial, ArmorMaterialID.Leather, new ArmorMaterial(
             ArmorMaterialID.Leather,
             'Кожа',
-            '',
             510,
         ));
         this._entityManager.add<ArmorMaterial>(EntityID.ArmorMaterial, ArmorMaterialID.Cloth, new ArmorMaterial(
             ArmorMaterialID.Cloth,
             'Ткань',
-            '',
             520,
         ));
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.ArmorMaterial');
     }
 
     private _createCharacterAttributes() {
@@ -87,69 +92,61 @@ export default class EntityManagerBuilder {
         characterAttributeFactory.create(
             CharacterAttributeID.MaxHealthPoints,
             'Очки здоровья',
-            '',
             480,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.MaxMagicPoints,
             'Очки магии',
-            '',
             490,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.Strength,
             'Сила',
-            'Увеличивает силу атаки у классов с главной характеристикой \"Сила\".',
             500,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.Agility,
             'Ловкость',
-            'Увеличивает силу атаки у классов с главной характеристикой \"Ловкость\".',
             500,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.Intelligence,
             'Интеллект',
-            'Увеличивает силу атаки и кол-во очков магии у классов с главной характеристикой \"Интеллект\".',
             520,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.Protection,
             'Защита',
-            '',
             530,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.AttackPower,
             'Сила атаки',
-            'Сила атаки - это одно значение. Диапазон управляется в другом месте.',
             535,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.AttackSpeed,
             'Скорость атаки',
-            '',
             540,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.CriticalStrike,
             'Критический удар',
-            '',
             550,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.Stamina,
             'Выносливость',
-            '',
             560,
         );
         characterAttributeFactory.create(
             CharacterAttributeID.Luck,
             'Удача',
-            'Влияет на многие характеристики.',
             570,
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.CharacterAttribute');
+
     }
 
     private _createCurrencies() {
@@ -157,15 +154,16 @@ export default class EntityManagerBuilder {
         currencyFactory.create(
             CurrencyID.Gold,
             'Золото',
-            '',
             500,
         );
         currencyFactory.create(
             CurrencyID.ResearchPoints,
             'Очки исследования',
-            '',
             510,
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Currency');
+
     }
 
     private _createQualities() {
@@ -173,39 +171,35 @@ export default class EntityManagerBuilder {
         qualityFactory.create(
             QualityID.Poor,
             'Poor',
-            'Серые вещи. Мусор для продажи.',
             500,
         );
         qualityFactory.create(
             QualityID.Common,
             'Common',
-            'Белые вещи.',
             510,
         );
         qualityFactory.create(
             QualityID.Uncommon,
             'Uncommon',
-            'Зеленые вещи.',
             520,
         );
         qualityFactory.create(
             QualityID.Rare,
             'Rare',
-            'Синие вещи.',
             530,
         );
         qualityFactory.create(
             QualityID.Epic,
             'Epic',
-            'Фиолетовые вещи.',
             540,
         );
         qualityFactory.create(
             QualityID.Legendary,
             'Legendary',
-            'Оранжевые вещи.',
             550,
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Quality');
     }
 
     private _createHeroRoles() {
@@ -213,21 +207,20 @@ export default class EntityManagerBuilder {
         heroRoleFactory.create(
             HeroRoleID.Tank,
             'Танк',
-            '',
             500,
         );
         heroRoleFactory.create(
             HeroRoleID.Support,
             'Поддержка',
-            '',
             510,
         );
         heroRoleFactory.create(
             HeroRoleID.DamageDealer,
             'Боец',
-            '',
             520,
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.HeroRole');
     }
 
     private _createItemCategories() {
@@ -235,185 +228,161 @@ export default class EntityManagerBuilder {
         itemCategoryFactory.create(
             ItemCategoryID.Weapons,
             'Оружие',
-            '',
             500,
             null,
         );
         itemCategoryFactory.create(
             ItemCategoryID.OneHandedSwords,
             'Одноручные мечи',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.TwoHandedSwords,
             'Двуручные мечи',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.OneHandedAxes,
             'Одноручные топоры',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.TwoHandedAxes,
             'Двуручные топоры',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Staffs,
             'Посохи',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Wands,
             'Жезлы',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Daggers,
             'Кинжалы',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Bows,
             'Луки',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Crossbows,
             'Арбалеты',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Revolvers,
             'Револьверы',
-            '',
             500,
             ItemCategoryID.Weapons,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Armor,
             'Броня',
-            '',
             500,
             null,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Helmets,
             'Шлемы',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Breastplates,
             'Нагрудники',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Boots,
             'Сапоги',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Gloves,
             'Перчатки',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Pants,
             'Штаны',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.ShoulderPads,
             'Наплечники',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Belts,
             'Поясы',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Bracers,
             'Браслеты',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Amulets,
             'Амулеты',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Rings,
             'Кольца',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Trinkets,
             'Аксессуары',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Shields,
             'Щиты',
-            '',
             500,
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Resources,
             'Ресурсы',
-            '',
             500,
             null,
         );
         itemCategoryFactory.create(
             ItemCategoryID.Materials,
             'Материалы',
-            '',
             500,
             null,
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.ItemCategory');
     }
 
     private _createHeroClasses() {
@@ -421,7 +390,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Warrior,
             'Воин',
-            '',
             500,
             HeroRoleID.Tank,
             [
@@ -438,7 +406,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Paladin,
             'Паладин',
-            '',
             510,
             HeroRoleID.Tank,
             [
@@ -456,7 +423,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Rogue,
             'Разбойник',
-            '',
             520,
             HeroRoleID.DamageDealer,
             [
@@ -472,7 +438,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Gladiator,
             'Гладиатор',
-            '',
             530,
             HeroRoleID.DamageDealer,
             [
@@ -488,7 +453,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Archer,
             'Лучник',
-            '',
             540,
             HeroRoleID.DamageDealer,
             [
@@ -505,7 +469,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Gunslinger,
             'Стрелок',
-            '',
             550,
             HeroRoleID.DamageDealer,
             [
@@ -522,7 +485,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Mage,
             'Маг',
-            '',
             560,
             HeroRoleID.DamageDealer,
             [
@@ -539,7 +501,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Warlock,
             'Чернокнижник',
-            '',
             570,
             HeroRoleID.DamageDealer,
             [
@@ -556,7 +517,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Priest,
             'Священик',
-            '',
             560,
             HeroRoleID.Support,
             [
@@ -573,7 +533,6 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Druid,
             'Друид',
-            '',
             560,
             HeroRoleID.Support,
             [
@@ -587,6 +546,8 @@ export default class EntityManagerBuilder {
                 CharacterAttributeID.Intelligence,
             ],
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.HeroClass');
     }
 
     private _createEquipSlots() {
@@ -768,6 +729,8 @@ export default class EntityManagerBuilder {
                 ],
             },
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.EquipSlot');
     }
 
     // private _createRecipes() {
@@ -878,5 +841,7 @@ export default class EntityManagerBuilder {
             20,
             [10, 20],
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.EnemyEntity');
     }
 }

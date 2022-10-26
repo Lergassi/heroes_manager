@@ -1,38 +1,38 @@
-import ContainerConfigureInterface from '../source/ContainerConfigureInterface.js';
-import ContainerInterface from '../source/ContainerInterface.js';
-import GameConsole from '../source/GameConsole/GameConsole.js';
-import Kernel from '../source/Kernel.js';
-import HelpCommand from '../../server/app/Commands/HelpCommand.js';
-import ListCommand from '../../server/app/Commands/ListCommand.js';
-import NewGameCommand from './Commands/NewGameCommand.js';
-import CreateStartPlayerObjectsCommand from './Commands/CreateStartPlayerObjectsCommand.js';
-import CreateItemCommand from './Commands/CreateItemCommand.js';
-import CreateHeroCommand from './Commands/CreateHeroCommand.js';
-import CreateItemStorageCommand from './Commands/CreateItemStorageCommand.js';
-import EquipCommand from './Commands/EquipCommand.js';
-import RemoveEquipCommand from './Commands/RemoveEquipCommand.js';
-import DebugEntityManagerCommand from './Commands/DebugCommands/DebugEntityManagerCommand.js';
-import DebugContainerCommand from '../../server/app/Commands/DebugCommands/DebugContainerCommand.js';
-import InspectGameObjectCommand from './Commands/DebugCommands/InspectGameObjectCommand.js';
-import DebugUserEnvironmentCommand from '../../server/app/Commands/DebugCommands/DebugUserEnvironmentCommand.js';
-import DebugPlayerEnvironmentCommand from './Commands/DebugCommands/DebugPlayerEnvironmentCommand.js';
-import DebugGameObjectStorageCommand from './Commands/DebugCommands/DebugGameObjectStorageCommand.js';
-import DeleteHeroCommand from './Commands/DeleteHeroCommand.js';
-import CreatePlayerEnvironmentCommand from './Commands/CreatePlayerEnvironmentCommand.js';
-import CreateLocationCommand from './Commands/CreateLocationCommand.js';
-import AddHeroToLocationCommand from './Commands/AddHeroToLocationCommand.js';
-import RemoveHeroFromLocationCommand from './Commands/RemoveHeroFromLocationCommand.js';
-import DeleteLocationCommand from './Commands/DeleteLocationCommand.js';
-import ToggleLocationCommand from './Commands/ToggleLocationCommand.js';
-import GetItemsFromLocationCommand from './Commands/GetItemsFromLocationCommand.js';
-import ClearItemStorageSlotCommand from './Commands/ClearItemStorageSlotCommand.js';
-import CreateAllHeroClassesCommand from './Commands/CreateAllHeroClassesCommand.js';
-import FightCommand from './Commands/FightCommand.js';
-import ResurrectHeroCommand from './Commands/ResurrectHeroCommand.js';
-import {CommandNameID} from '../types/enums/CommandNameID.js';
-import KillHeroCommand from './Commands/KillHeroCommand.js';
-import CreateRandomHeroClassCommand from './Commands/CreateRandomHeroClassCommand.js';
-import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
+import ContainerConfigureInterface from '../../../source/ContainerConfigureInterface.js';
+import ContainerInterface from '../../../source/ContainerInterface.js';
+import GameConsole from '../../../source/GameConsole/GameConsole.js';
+import Kernel from '../../../source/Kernel.js';
+import HelpCommand from '../../../../server/app/Commands/HelpCommand.js';
+import ListCommand from '../../../../server/app/Commands/ListCommand.js';
+import NewGameCommand from '../../Commands/NewGameCommand.js';
+import CreateStartPlayerObjectsCommand from '../../Commands/CreateStartPlayerObjectsCommand.js';
+import CreateItemCommand from '../../Commands/CreateItemCommand.js';
+import CreateHeroCommand from '../../Commands/CreateHeroCommand.js';
+import CreateItemStorageCommand from '../../Commands/CreateItemStorageCommand.js';
+import EquipCommand from '../../Commands/EquipCommand.js';
+import RemoveEquipCommand from '../../Commands/RemoveEquipCommand.js';
+import DebugEntityManagerCommand from '../../Commands/DebugCommands/DebugEntityManagerCommand.js';
+import DebugContainerCommand from '../../../../server/app/Commands/DebugCommands/DebugContainerCommand.js';
+import InspectGameObjectCommand from '../../Commands/DebugCommands/InspectGameObjectCommand.js';
+import DebugUserEnvironmentCommand from '../../../../server/app/Commands/DebugCommands/DebugUserEnvironmentCommand.js';
+import DebugPlayerEnvironmentCommand from '../../Commands/DebugCommands/DebugPlayerEnvironmentCommand.js';
+import DebugGameObjectStorageCommand from '../../Commands/DebugCommands/DebugGameObjectStorageCommand.js';
+import DeleteHeroCommand from '../../Commands/DeleteHeroCommand.js';
+import CreatePlayerEnvironmentCommand from '../../Commands/CreatePlayerEnvironmentCommand.js';
+import CreateLocationCommand from '../../Commands/CreateLocationCommand.js';
+import AddHeroToLocationCommand from '../../Commands/AddHeroToLocationCommand.js';
+import RemoveHeroFromLocationCommand from '../../Commands/RemoveHeroFromLocationCommand.js';
+import DeleteLocationCommand from '../../Commands/DeleteLocationCommand.js';
+import ToggleLocationCommand from '../../Commands/ToggleLocationCommand.js';
+import GetItemsFromLocationCommand from '../../Commands/GetItemsFromLocationCommand.js';
+import ClearItemStorageSlotCommand from '../../Commands/ClearItemStorageSlotCommand.js';
+import CreateAllHeroClassesCommand from '../../Commands/CreateAllHeroClassesCommand.js';
+import FightCommand from '../../Commands/FightCommand.js';
+import ResurrectHeroCommand from '../../Commands/ResurrectHeroCommand.js';
+import {CommandNameID} from '../../../types/enums/CommandNameID.js';
+import KillHeroCommand from '../../Commands/KillHeroCommand.js';
+import CreateRandomHeroClassCommand from '../../Commands/CreateRandomHeroClassCommand.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import _ from 'lodash';
 
@@ -42,12 +42,16 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         let debugNamespaces = [
             DebugNamespaceID.Info,
             DebugNamespaceID.Debug,
-            'debug:*',
             DebugNamespaceID.Error,
-            'error:*',
             DebugNamespaceID.Log,
-            'log:*',
             DebugNamespaceID.Warring,
+            DebugNamespaceID.Load,
+            // 'debug:*',
+            // 'error:*',
+            // 'log:*',
+
+            // DebugNamespaceID.GameConsole,
+            DebugNamespaceID.EventSystem,
         ];
         debug.enable(_.join(debugNamespaces, ','));
 

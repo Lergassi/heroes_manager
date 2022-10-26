@@ -1,6 +1,6 @@
-import Item, {ItemFilterCondition} from './Entities/Item.js';
+import Item, {ItemFilterCondition} from '../app/Entities/Item.js';
 import _ from 'lodash';
-import ItemCategory from './Entities/ItemCategory.js';
+import ItemCategory from '../app/Entities/ItemCategory.js';
 
 /**
  * todo: В будущем это будет полноценная бд.

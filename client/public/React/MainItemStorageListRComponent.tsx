@@ -18,7 +18,7 @@ export default class MainItemStorageListRComponent extends React.Component<ItemS
         this.state = {
             itemStorageCollection: props.itemStorageCollection,
         };
-        this.state.itemStorageCollection.assignRComponent(this);
+        // this.state.itemStorageCollection.assignRComponent(this);
     }
 
     render() {

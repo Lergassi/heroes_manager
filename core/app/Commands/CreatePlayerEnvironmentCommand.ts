@@ -7,11 +7,12 @@ import Currency from '../Entities/Currency.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import {EntityID} from '../../types/enums/EntityID.js';
+import _ from 'lodash';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.
@@ -23,32 +24,29 @@ export default class CreatePlayerEnvironmentCommand extends Command {
 
     async execute(input: Input) {
         this._createItemStorages(); //todo: Игра может работать без контейнера, но это не удобно. Придётся его каждый раз создавать вручную. Еще 1 команда?
-        // this._createWallets();
+        // this._createWallets();   //Пока создается в ...ContainerConfigure из-за зависимостей друг от друга.
     }
 
     private _createItemStorages() {
-        // let itemStorage = this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-        // this.container.get<ItemStorageListComponent>(ContainerKey.MainItemStorageList).add(itemStorage);
-        this.container.get<MainItemStorageListComponent>(ContainerKey.MainItemStorageList).create(
+        this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
             DEFAULT_ITEM_STORAGE_SIZE,
-            this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory),
+            this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory),
         );
     }
 
     private _createWallets() {
         let config = this.container.get<object>('core.config');
 
-        let currencies = [
+        let currencyIDs = [
             CurrencyID.Gold,
             CurrencyID.ResearchPoints,
         ];
 
-        currencies.forEach((currencyAlias) => {
-            this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).add(this.container.get<WalletFactory>('player.walletFactory').create({
-                currency: this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Currency>(EntityID.Currency, currencyAlias),
-                value: config['start_wallet_values'][currencyAlias]['value'],
-            }));
-            // core.entityManager
+        _.map(currencyIDs, (currencyID) => {
+            this.container.get<WalletFactory>('player.walletFactory').create(
+                this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, currencyID),
+                config['start_wallet_values'][currencyID]['value'],
+            )
         });
     }
 }

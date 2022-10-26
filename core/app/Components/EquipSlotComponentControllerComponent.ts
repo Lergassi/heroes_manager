@@ -14,11 +14,9 @@ export default class EquipSlotComponentControllerComponent extends Component {
         return this._equipSlotComponents;
     }
 
-    // constructor(id: number, gameObject: GameObject) {
     constructor(
         equipSlotComponents: EquipSlotComponent[],
     ) {
-        // super(id, gameObject);
         super();
 
         this._equipSlotComponents = equipSlotComponents;

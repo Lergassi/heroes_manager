@@ -10,7 +10,7 @@ import SandboxRComponent from './SandboxRComponent.js';
 import MainLocationListRComponent from './MainLocationListRComponent.js';
 import MainLocationListComponent from '../../../core/app/Components/MainLocationListComponent.js';
 import MainItemStorageListRComponent from './MainItemStorageListRComponent.js';
-import {ContainerKey} from '../../../core/types/enums/ContainerKey.js';
+import {ContainerID} from '../../../core/types/enums/ContainerID.js';
 
 export default class ClientRender {
     private readonly _container: ContainerInterface;
@@ -64,15 +64,15 @@ export default class ClientRender {
         root.render(
             <div>
                 <MainHeroListRComponent
-                    heroListComponent={this._container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent)}
+                    heroListComponent={this._container.get<MainHeroListComponent>(ContainerID.MainHeroList)}
                     container={this._container}
                 />
                 <MainLocationListRComponent
                     container={this._container}
-                    mainLocationListComponent={this._container.get<MainLocationListComponent>(ContainerKey.MainLocationListComponent)}
+                    mainLocationListComponent={this._container.get<MainLocationListComponent>(ContainerID.MainLocationList)}
                 />
                 <MainItemStorageListRComponent
-                    itemStorageCollection={this._container.get<MainItemStorageListComponent>(ContainerKey.MainItemStorageList)}
+                    itemStorageCollection={this._container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList)}
                 />
             </div>
         );

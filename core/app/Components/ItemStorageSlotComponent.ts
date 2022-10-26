@@ -5,10 +5,16 @@ import Item from '../Entities/Item.js';
 import _ from 'lodash';
 import AppError from '../../source/Errors/AppError.js';
 import {AssignRComponentInterface} from '../../../client/source/RComponentBridge.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
+import EventSystem from '../../source/EventSystem.js';
 
-export default class ItemStorageSlotComponent extends Component implements ItemStackPlaceInterface, AssignRComponentInterface {
+export enum ItemStorageSlotComponentEventCode {
+    CreateItemStack = 'ItemStorageSlotComponent.CreateItemStack',
+    Update = 'ItemStorageSlotComponent.Update',
+}
+
+export default class ItemStorageSlotComponent implements ItemStackPlaceInterface {
     private _itemStack: ItemStack;
 
     get itemStack(): ItemStack | undefined {
@@ -16,7 +22,6 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
     }
 
     constructor() {
-        super();
         this._itemStack = null;
     }
 
@@ -40,16 +45,14 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
         this.canPlaceItem(options.item);
 
         this._itemStack = options.itemStackFactory.create(options.item, options.count);
-
-        this.update();
+        EventSystem.event(ItemStorageSlotComponentEventCode.Update, this);
     }
 
     placeItemStack(itemStack: ItemStack): void {
         this.canPlaceItem(itemStack.item);
 
         this._itemStack = itemStack;
-
-        this.update();
+        EventSystem.event(ItemStorageSlotComponentEventCode.Update, this);
     }
 
     isBusy(): boolean {
@@ -62,8 +65,7 @@ export default class ItemStorageSlotComponent extends Component implements ItemS
 
     destroyItemStack(): void {
         this._itemStack = null;
-
-        this.update();
+        EventSystem.event(ItemStorageSlotComponentEventCode.Update, this);
     }
 
     containsItem(item: Item): boolean {

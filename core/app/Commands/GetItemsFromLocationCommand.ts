@@ -3,7 +3,7 @@ import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import LocationComponent from '../Components/LocationComponent.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
 export default class GetItemsFromLocationCommand extends Command {
@@ -20,10 +20,10 @@ export default class GetItemsFromLocationCommand extends Command {
         let locationID = parseInt(input.getArgument('location_id'), 10);
 
         this
-            .container.get<GameObjectStorage>(ContainerKey.GameObjectStorage)
+            .container.get<GameObjectStorage>(ContainerID.GameObjectStorage)
             .getOneByID(locationID)
             ?.get<LocationComponent>(LocationComponent.name)
-            ?.moveItems(this.container.get<ItemStorageManager>(ContainerKey.ItemStorageManager))
+            ?.moveItems(this.container.get<ItemStorageManager>(ContainerID.ItemStorageManager))
         ;
     }
 }

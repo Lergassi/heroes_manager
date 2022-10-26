@@ -22,7 +22,6 @@ export default class HeroClassFactory {
     create(
         id: string,
         name: string,
-        description: string,
         sort: number,
         heroRoleID: HeroRoleID,
         availableWeaponItemCategoryIDs: ItemCategoryID[],
@@ -32,7 +31,6 @@ export default class HeroClassFactory {
         return this._entityManager.add<HeroClass>(EntityID.HeroClass, id, new HeroClass(
             id,
             name,
-            description,
             sort,
             this._entityManager.get<HeroRole>(EntityID.HeroRole, heroRoleID),
             _.map(availableWeaponItemCategoryIDs, (itemCategoryID) => {

@@ -1,5 +1,5 @@
 import CharacterAttribute from '../../Components/CharacterAttribute.js';
-import {unsigned} from '../../types.js';
+import {unsigned} from '../../../types/types.js';
 import ItemCharacterAttributeCollector from '../../Components/ItemCharacterAttributeCollector.js';
 import DefaultCharacterAttributeStartValueGenerator from './DefaultCharacterAttributeStartValueGenerator.js';
 import _ from 'lodash';
@@ -13,10 +13,4 @@ export default class AgilityStartValueGenerator implements CharacterAttributeSta
 
         return modifier ? modifier(value) : value;
     }
-
-    // increaseValue(level: unsigned, modifier?: (value: number) => number) {
-    //     let value = _.random(2, 4) * level;
-    //
-    //     return modifier ? modifier(value) : value;
-    // }
 }

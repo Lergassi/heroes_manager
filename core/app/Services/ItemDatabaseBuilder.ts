@@ -8,6 +8,8 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export default class ItemDatabaseBuilder {
     private readonly _entityManager: EntityManagerInterface;
@@ -21,17 +23,21 @@ export default class ItemDatabaseBuilder {
     }
 
     build(): EntityManagerInterface {
-        this._createItems();
+        debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.Start');
+
+        // this._createItems();
         this._createResources();
         this._createArmor();
         this._createWeapons();
 
+        debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.End');
+
         return this._entityManager;
     }
 
-    private _createItems() {
-
-    }
+    // private _createItems() {
+    //
+    // }
 
     private _createResources() {
         this._itemFactory.createByBuilder(
@@ -400,6 +406,8 @@ export default class ItemDatabaseBuilder {
                     },
                 ),
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.Resources');
     }
 
     private _createArmor() {
@@ -412,7 +420,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Helmets,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -426,7 +434,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Helmets,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                         characterAttributes: {
                             [CharacterAttributeID.Strength]: 2,
@@ -446,7 +454,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.ShoulderPads,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -460,7 +468,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Breastplates,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -474,7 +482,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Bracers,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -488,7 +496,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Gloves,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -502,7 +510,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Belts,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -516,7 +524,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Pants,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -530,7 +538,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Boots,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Plate,
+                            armorMaterialID: ArmorMaterialID.Plate,
                         },
                     },
                 )
@@ -544,7 +552,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Helmets,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Leather,
+                            armorMaterialID: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -558,7 +566,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.ShoulderPads,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Leather,
+                            armorMaterialID: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -572,7 +580,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Breastplates,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Leather,
+                            armorMaterialID: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -586,7 +594,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Bracers,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Leather,
+                            armorMaterialID: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -600,7 +608,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Gloves,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Leather,
+                            armorMaterialID: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -614,7 +622,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Belts,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Leather,
+                            armorMaterialID: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -628,7 +636,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Pants,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Leather,
+                            armorMaterialID: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -642,7 +650,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Boots,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Leather,
+                            armorMaterialID: ArmorMaterialID.Leather,
                         },
                     },
                 )
@@ -656,7 +664,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Helmets,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Cloth,
+                            armorMaterialID: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -670,7 +678,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.ShoulderPads,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Cloth,
+                            armorMaterialID: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -684,7 +692,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Breastplates,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Cloth,
+                            armorMaterialID: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -698,7 +706,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Bracers,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Cloth,
+                            armorMaterialID: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -712,7 +720,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Gloves,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Cloth,
+                            armorMaterialID: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -726,7 +734,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Belts,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Cloth,
+                            armorMaterialID: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -740,7 +748,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Pants,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Cloth,
+                            armorMaterialID: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -754,7 +762,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Boots,
                     {
                         properties: {
-                            armorMaterial: ArmorMaterialID.Cloth,
+                            armorMaterialID: ArmorMaterialID.Cloth,
                         },
                     },
                 )
@@ -807,6 +815,8 @@ export default class ItemDatabaseBuilder {
                     },
                 )
         );
+
+        debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.Armor');
     }
 
     private _createWeapons() {
@@ -910,5 +920,7 @@ export default class ItemDatabaseBuilder {
                     },
                 ),
         );
-    }
-}
+
+        debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.Weapons');
+    }//end method
+}//end class

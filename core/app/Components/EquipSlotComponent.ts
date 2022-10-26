@@ -7,7 +7,7 @@ import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
 import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
 import EventSystem from '../../source/EventSystem.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {assert} from '../../source/assert.js';
 
@@ -17,9 +17,9 @@ export enum EquipSlotComponentEventCode {
 }
 
 /**
- * @deprecated todo: Переделать управление слотами в командах.
+ * @deprecated Использовать DefaultEquipSlot, по рукам и тд.
  */
-export default class EquipSlotComponent extends Component implements ItemStackPlaceInterface {
+export default class EquipSlotComponent implements ItemStackPlaceInterface {
     private readonly _equipSlot: EquipSlot;
     private readonly _heroComponent: HeroComponent;
     private _itemStack: ItemStack;
@@ -41,7 +41,6 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
         heroComponent: HeroComponent,
         itemAttributeCollectorComponent: ItemCharacterAttributeCollector,   //todo: В декоратор.
     ) {
-        super();
         this._equipSlot = equipSlot;
         this._heroComponent = heroComponent;
         this._itemAttributeCollectionComponent = itemAttributeCollectorComponent;
@@ -49,8 +48,7 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
     }
 
     canPlaceItem(item: Item): boolean {
-        // this._equipSlot.canEquipItem(item, this.gameObject.getComponentByName<HeroComponent>(HeroComponent.name))
-        this._equipSlot.canEquipItem(item, this._heroComponent);
+        // this._equipSlot.canEquipItem(item, this._heroComponent);
         if (!this.isFree()) {
             throw new AppError('Слот занят. Сначала его нужно освободить.');
         }
@@ -66,8 +64,6 @@ export default class EquipSlotComponent extends Component implements ItemStackPl
         this.canPlaceItem(itemStack.item);
         this._itemStack = itemStack;
         this._itemAttributeCollectionComponent.addItem(itemStack.item);
-
-        this.update();
     }
 
     //todo: Сделать один интерфейс.

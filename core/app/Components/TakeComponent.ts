@@ -16,33 +16,27 @@ export default class TakeComponent {
         this._owner = null;
     }
 
-    take<T>(options?: {
-        owner?: T,
-    }): void {
+    take<T>(owner?: T): void {
         if (this._state !== TakeComponentState.Free) {
             throw new AppError('Объект уже занят.');
         }
 
         this._state = TakeComponentState.Busy;
-        this._owner = options.owner;
-        // debug('log')('Объект заняли.');
+        this._owner = owner;
     }
 
-    release<T>(options: {
-        owner?: T,
-    } = {}): void {
+    release<T>(owner?: T): void {
         //todo: Или ничего не должно происходить? Просто return;?
         if (this._state !== TakeComponentState.Busy) {
             throw new AppError('Объект не занят.');
         }
 
-        if (this._owner && !options.owner) {
-            throw new AppError('Владелец объекта не указан.');
+        if (this._owner && !owner) {
+            throw new AppError('Владелец указанный при занятии объекта указан не верно.');
         }
 
         this._state = TakeComponentState.Free;
         this._owner = null;
-        // debug('log')('Объект освободили.');
     }
 
     isFree(): boolean {

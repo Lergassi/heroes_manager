@@ -7,8 +7,8 @@ import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterfac
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import {unsigned} from '../types.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {unsigned} from '../../types/types.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
@@ -39,13 +39,13 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     private _createItemStorages() {
         // this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
         // this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-        this.container.get<MainItemStorageListComponent>(ContainerKey.MainItemStorageList).create(
+        this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
             DEFAULT_ITEM_STORAGE_SIZE,
-            this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory),
+            this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory),
         );
-        this.container.get<MainItemStorageListComponent>(ContainerKey.MainItemStorageList).create(
+        this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
             DEFAULT_ITEM_STORAGE_SIZE,
-            this.container.get<ItemStorageFactoryInterface>(ContainerKey.ItemStorageFactory),
+            this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory),
         );
     }
 
@@ -83,14 +83,14 @@ export default class CreateStartPlayerObjectsCommand extends Command {
 
         for (let i = 0; i < items.length; i++) {
             //todo: Отдельный класс для подобной логики.
-            let item = this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Item>(EntityID.Item, items[i].itemID);
+            let item = this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, items[i].itemID);
             if (!item) {
                 debug(DebugNamespaceID.Warring)(sprintf('Предмет ID(%s) начального набора предметов не найден и не будет добавлен в сумки.', items[i].itemID));
                 continue;
             }
 
-            this.container.get<ItemStorageManager>(ContainerKey.ItemStorageManager).addItemStack(
-                this.container.get<ItemStackFactory>(ContainerKey.ItemStackFactory).create(item, items[i].count),
+            this.container.get<ItemStorageManager>(ContainerID.ItemStorageManager).addItemStack(
+                this.container.get<ItemStackFactory>(ContainerID.ItemStackFactory).create(item, items[i].count),
             );
         }
     }
@@ -163,15 +163,15 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         ];
 
         for (let i = 0; i < heroPatterns.length; i++) {
-            let hero = this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
-                heroClass: heroPatterns[i].heroClassID,
-                level: 1,
-                heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
-            });
+            let hero = this.container.get<MainHeroListComponent>(ContainerID.MainHeroList).createHero(
+                heroPatterns[i].heroClassID,
+                1,
+                this.container.get<HeroFactory>(ContainerID.HeroFactory),
+            );
 
             //Начальная экипировка.
             for (const equipSlotID in heroPatterns[i].equip) {
-                let item = this.container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Item>(EntityID.Item, heroPatterns[i].equip[equipSlotID]);
+                let item = this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, heroPatterns[i].equip[equipSlotID]);
                 if (!item) {
                     debug(DebugNamespaceID.Warring)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
                     continue;
@@ -182,20 +182,20 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                     ?.createItemStack(
                         item,
                         1,
-                        this.container.get<ItemStackFactory>(ContainerKey.ItemStackFactory),
+                        this.container.get<ItemStackFactory>(ContainerID.ItemStackFactory),
                     );
             }
         }
 
-        this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
-            heroClass: HeroClassID.Warrior,
-            level: 1,
-            heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
-        });
-        this.container.get<MainHeroListComponent>(ContainerKey.MainHeroListComponent).createHero({
-            heroClass: HeroClassID.Warrior,
-            level: 1,
-            heroFactory: this.container.get<HeroFactory>(ContainerKey.HeroFactory),
-        });
+        this.container.get<MainHeroListComponent>(ContainerID.MainHeroList).createHero(
+            HeroClassID.Warrior,
+            1,
+            this.container.get<HeroFactory>(ContainerID.HeroFactory),
+        );
+        this.container.get<MainHeroListComponent>(ContainerID.MainHeroList).createHero(
+            HeroClassID.Warrior,
+            1,
+            this.container.get<HeroFactory>(ContainerID.HeroFactory),
+        );
     }
 }

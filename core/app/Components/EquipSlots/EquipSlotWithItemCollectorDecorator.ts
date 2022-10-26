@@ -1,7 +1,7 @@
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
 import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
 import Item from '../../Entities/Item.js';
-import {unsigned} from '../../types.js';
+import {unsigned} from '../../../types/types.js';
 import ItemStackFactory from '../../Factories/ItemStackFactory.js';
 import ItemStack from '../../RuntimeObjects/ItemStack.js';
 

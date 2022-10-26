@@ -2,7 +2,7 @@ import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
 import {debugGameObjectStorage} from '../../../debug/debug_functions.js';
 import GameObjectStorage from '../../../source/GameObjectStorage.js';
-import {ContainerKey} from '../../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../../types/enums/ContainerID.js';
 
 export default class DebugGameObjectStorageCommand extends Command {
     get name(): string {
@@ -10,6 +10,6 @@ export default class DebugGameObjectStorageCommand extends Command {
     }
 
     async execute(input: Input) {
-        debugGameObjectStorage(this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage));
+        debugGameObjectStorage(this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage));
     }
 }

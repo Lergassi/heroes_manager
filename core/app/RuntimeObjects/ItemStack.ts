@@ -1,6 +1,6 @@
 import Item from '../Entities/Item.js';
 import AppError from '../../source/Errors/AppError.js';
-import {assertNotNil} from '../../source/assert.js';
+import {assertInRange, assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 
 export interface ItemStackPlaceInterface {
     /**
@@ -12,7 +12,6 @@ export interface ItemStackPlaceInterface {
 }
 
 export default class ItemStack {
-    private readonly _id: string;
     private readonly _item: Item;
     private _count: number;
 
@@ -41,17 +40,17 @@ export default class ItemStack {
         this._count = value;
     }
 
-    constructor(id: string, item: Item, count: number = 1) {
-        assertNotNil(id);
+    constructor(item: Item, count: number = 1) {
         assertNotNil(item);
+        assertIsInstanceOf(item, Item);
         assertNotNil(count);
+        assertInRange(count, 0, item.stackSize, 'Размер стека для предмета не верный.');
 
-        this._id = id;
         this._item = item;
         this._count = count;
-        if (this._count <= 0 || this._count > this._item.stackSize) {
-            throw AppError.itemStackSizeWrong(this._item);
-        }
+        // if (this._count <= 0 || this._count > this._item.stackSize) {
+        //     throw AppError.itemStackSizeWrong(this._item);
+        // }
     }
 
     containsItem(item: Item): boolean {

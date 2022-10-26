@@ -49,7 +49,6 @@ export default class EquipSlotFactory {
         heroClass: HeroClass,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
     ): EquipSlotInterface {
-        // let leftHand: EquipSlotInterface = new LeftHand();
         let leftHand: EquipSlotInterface = new DefaultEquipSlot();
 
         leftHand = new EquipSlotWithItemCollectorDecorator(
@@ -69,7 +68,7 @@ export default class EquipSlotFactory {
         equipSlotData: EquipSlot,
         heroClass: HeroClass,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
-    ) {
+    ): EquipSlotInterface {
         // let rightHand : EquipSlotInterface = new RightHand(leftHand);
         let rightHand : EquipSlotInterface = new DefaultEquipSlot();
 

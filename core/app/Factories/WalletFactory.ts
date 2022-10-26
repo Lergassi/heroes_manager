@@ -1,8 +1,9 @@
 import WalletComponent from '../Components/WalletComponent.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import Currency from '../Entities/Currency.js';
-import {assertNotNil} from '../../source/assert.js';
+import {assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../source/assert.js';
+import GameObject from '../../source/GameObject.js';
 
 export default class WalletFactory {
     private readonly _gameObjectFactory: GameObjectFactory;
@@ -13,25 +14,21 @@ export default class WalletFactory {
         this._gameObjectFactory = options.gameObjectFactory;
     }
 
-    create(options: {
+    create(
         currency: Currency,
         value: unsigned,
-    }) {
-        assertNotNil(options);
-        assertNotNil(options.currency);
-        assertNotNil(options.value);
-
+    ): GameObject {
         let wallet = this._gameObjectFactory.create();
 
         wallet.name = 'Wallet';
-        wallet.addTags([    //todo: Всё равно тегов не будет.
+        wallet.addTags([
             '#wallet',
-            '#wallet.' + options.currency['_id'],   //todo: Доступ.
+            '#wallet.' + currency['_id'],   //todo: Доступ.
         ]);
 
         wallet.set(WalletComponent.name, new WalletComponent(
-            options.currency,
-            options.value,
+            currency,
+            value,
         ));
 
         return wallet;

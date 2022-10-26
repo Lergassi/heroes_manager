@@ -5,7 +5,7 @@ import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import Item from '../Entities/Item.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 

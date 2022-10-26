@@ -1,5 +1,5 @@
 import Component from '../../source/Component.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import GameObject from '../../source/GameObject.js';
 import LocationFactory, {LocationFactoryCreateOptions} from '../Factories/LocationFactory.js';
 import EventSystem from '../../source/EventSystem.js';
@@ -26,10 +26,19 @@ export default class MainLocationListComponent extends Component {
         this._max = max;
     }
 
-    create(options: LocationFactoryCreateOptions, locationFactory: LocationFactory): GameObject {
+    create(
+        level: unsigned,
+        locationFactory: LocationFactory,   //todo: Должен быть в конце. Возможно тут стоит использовать options или отдельный аргумент для зависимостей.
+        internalItemStorageSize?: unsigned,
+        heroGroupSize?: unsigned,
+    ): GameObject {
         this.canCreateLocation();
 
-        let location = locationFactory.create(options);
+        let location = locationFactory.create(
+            level,
+            internalItemStorageSize,
+            heroGroupSize,
+        );
 
         this._locations.push(location);
         EventSystem.event(MainLocationListComponentEventCode.CreateLocation, this);

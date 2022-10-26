@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import {ContainerKey} from '../../types/enums/ContainerKey.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
 import {assertNotNil} from '../../source/assert.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import TakeComponent from '../Components/TakeComponent.js';
@@ -20,7 +20,7 @@ export default class KillHeroCommand extends Command {
 
     async execute(input: Input) {
         let heroID = parseInt(input.getArgument('hero_id'), 10);
-        let hero = this.container.get<GameObjectStorage>(ContainerKey.GameObjectStorage).getOneByID(heroID);
+        let hero = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(heroID);
         assertNotNil(hero);
 
         //todo: Неверно. Нужно искать в главном списке и проверять возможность убить командой. Но пока так.

@@ -3,6 +3,7 @@ import Command from '../../../core/source/GameConsole/Command.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import chalk from 'chalk';
 import debug from 'debug';
+import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export default class ListCommand extends Command {
     get name(): string {
@@ -14,7 +15,7 @@ export default class ListCommand extends Command {
     }
 
     async execute(input: Input) {
-        debug('info')('GameConsole. Все доступные команды.');
+        debug(DebugNamespaceID.Info)('GameConsole. Все доступные команды.');
         let gameConsole = this.container.get<GameConsole>('gameConsole');
         let names = gameConsole.names;
         for (let i = 0; i < names.length; i++) {

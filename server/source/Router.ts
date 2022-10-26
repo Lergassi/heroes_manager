@@ -8,6 +8,7 @@ import _ from 'lodash';
 import RouterGroup from './RouterGroup.js';
 import debug from 'debug';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
+import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 
 export default class Router {
     private readonly _container: ContainerInterface;
@@ -79,7 +80,7 @@ export default class Router {
         let urlParsed = url.split('?');
 
         //todo: Убрать в другое место.
-        debug('http')(sprintf('%s: %s', req.method, urlParsed[0]));
+        debug(DebugNamespaceID.Http)(sprintf('%s: %s', req.method, urlParsed[0]));
 
         let route = this._getRoute(req.method, urlParsed[0]);
         await route.run(req, res);
@@ -102,7 +103,7 @@ export default class Router {
     }
 
     debug() {
-        debug('debug')('routes.length', this._routes.length);
+        debug(DebugNamespaceID.Debug)('routes.length', this._routes.length);
         for (let i = 0; i < this._routes.length; i++) {
             this._routes[i].debug();
         }

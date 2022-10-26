@@ -3,6 +3,7 @@ import Input from '../../../core/source/GameConsole/Input.js';
 import debug from 'debug';
 import Security from '../../source/Security.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
+import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export default class UnloadUserEnvironmentCommand extends Command {
     get name(): string {
@@ -17,6 +18,6 @@ export default class UnloadUserEnvironmentCommand extends Command {
         }
         this.container.get<Security>('server.security').logoutUser();
 
-        debug('info')('Окружение пользователя выгружено.');
+        debug(DebugNamespaceID.Info)('Окружение пользователя выгружено.');
     }
 }

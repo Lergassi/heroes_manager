@@ -7,10 +7,10 @@ import LocationComponent, {
 import GameObjectFactory from './GameObjectFactory.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStackFactory from './ItemStackFactory.js';
-import ItemDatabase from '../ItemDatabase.js';
+import ItemDatabase from '../../source/ItemDatabase.js';
 import Random from '../Services/Random.js';
 import ItemCategory from '../Entities/ItemCategory.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
 import AppError from '../../source/Errors/AppError.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
@@ -24,27 +24,10 @@ import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export type LocationFactoryCreateOptions = {
-    // level: LevelRange;
     level: unsigned;
     internalItemStorageSize?: unsigned;
     heroGroupSize?: unsigned;
 }
-
-// interface HeroGroupComponentFactoryInterface {
-//     create: (options: {
-//         location: GameObject;
-//         size: number;
-//     }) => HeroGroupComponent;
-// }
-//
-// class HeroGroupComponentFactory implements HeroGroupComponentFactoryInterface {
-//     create(options: { location: GameObject; size: number }): HeroGroupComponent {
-//         return new HeroGroupComponent(
-//             42,
-//             options.size,
-//         );
-//     }
-// }
 
 export type GatheringItemPointPattern = {
     [GatheringItemPointID.low]: number;
@@ -66,25 +49,29 @@ export default class LocationFactory {
         heroGroupSize: 5,
     };
 
-    constructor(options: {
-        gameObjectFactory: GameObjectFactory;
-        itemStackFactory: ItemStackFactory;
-        entityManager: EntityManagerInterface;
-        itemDatabase: ItemDatabase;
-        itemStorageFactory: ItemStorageFactory;
-    }) {
+    constructor(
+        gameObjectFactory: GameObjectFactory,
+        itemStackFactory: ItemStackFactory,
+        entityManager: EntityManagerInterface,
+        itemDatabase: ItemDatabase,
+        itemStorageFactory: ItemStorageFactory,
+    ) {
         this._maxGatheringItemPointsCount = 3;
 
-        this._gameObjectFactory = options.gameObjectFactory;
-        this._itemStackFactory = options.itemStackFactory;
-        this._entityManager = options.entityManager;
-        this._itemDatabase = options.itemDatabase;
-        this._itemStorageFactory = options.itemStorageFactory;
+        this._gameObjectFactory = gameObjectFactory;
+        this._itemStackFactory = itemStackFactory;
+        this._entityManager = entityManager;
+        this._itemDatabase = itemDatabase;
+        this._itemStorageFactory = itemStorageFactory;
     }
 
-    create(options: LocationFactoryCreateOptions): GameObject {
-        let internalItemStorageSize = options.internalItemStorageSize ?? this._defaultOptions.internalItemStorageSize;
-        let heroGroupSize = options.heroGroupSize ?? this._defaultOptions.heroGroupSize;
+    create(
+        level: unsigned,
+        internalItemStorageSize?: unsigned,
+        heroGroupSize?: unsigned,
+    ): GameObject {
+        internalItemStorageSize = internalItemStorageSize ?? this._defaultOptions.internalItemStorageSize;
+        heroGroupSize = heroGroupSize ?? this._defaultOptions.heroGroupSize;
 
         let location = this._gameObjectFactory.create();
 
@@ -145,7 +132,7 @@ export default class LocationFactory {
             heroGroupComponent: heroGroupComponent,
             internalItemStorageComponent: itemStorageComponent,
             itemStackFactory: this._itemStackFactory,
-            level: options.level,
+            level: level,
         }));
 
         return location;

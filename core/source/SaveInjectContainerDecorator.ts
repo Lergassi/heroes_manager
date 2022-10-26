@@ -2,6 +2,7 @@ import ContainerInterface from './ContainerInterface.js';
 import Serializer, {DataInterface} from './Serializer.js';
 import _ from 'lodash';
 import debug from 'debug';
+import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
 
 export default class SaveInjectContainerDecorator implements ContainerInterface {
     private readonly _container: ContainerInterface;
@@ -22,7 +23,7 @@ export default class SaveInjectContainerDecorator implements ContainerInterface 
         });
 
         if (data) {
-            debug('log')('Контейнер установлен из сохранений %s.', data.classname);
+            debug(DebugNamespaceID.Log)('Контейнер установлен из сохранений %s.', data.classname);
             this._container.set(key, this._serializer.unserialize(data));
         } else {
             this._container.set(key, value);

@@ -1,10 +1,10 @@
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import _ from 'lodash';
 import Component from '../../source/Component.js';
 import WalletComponent from './WalletComponent.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 
-export default class GoldLootGeneratorComponent extends Component {
+export default class GoldLootGeneratorComponent {
     private readonly _min: unsigned;
     private readonly _max: unsigned;
 
@@ -12,7 +12,6 @@ export default class GoldLootGeneratorComponent extends Component {
         min: unsigned,
         max: unsigned,
     }) {
-        super();
         this._min = options.min;
         this._max = options.max;
     }

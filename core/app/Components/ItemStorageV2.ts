@@ -2,7 +2,7 @@ import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import {assertIsGreaterThanOrEqual, assertIsInstanceOf} from '../../source/assert.js';
 import EventSystem from '../../source/EventSystem.js';
 import {ItemStorageComponentEventCode} from './ItemStorageComponent.js';

@@ -1,6 +1,6 @@
 import GameObjectFactory from './GameObjectFactory.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
-import {unsigned} from '../types.js';
+import {unsigned} from '../../types/types.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
 import EntityManager from '../../source/EntityManager.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
@@ -20,33 +20,20 @@ import StateController from '../Components/StateController.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-// import assert from 'assert';
-
-// export type EnemyFactoryOptions = {
-//     gameObjectFactory: GameObjectFactory;
-//     entityManager: EntityManager;
-//     playerExperienceComponent: ExperienceComponent;
-//     playerWalletComponent: WalletComponent;
-// };
-
-export type EnemyFactoryCreateOptions = {
-    level: unsigned;
-    enemyTypeID: EnemyID;
-};
 
 export default class EnemyFactory {
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _entityManager: EntityManagerInterface;
     private readonly _characterAttributeFactory: CharacterAttributeFactory;
 
-    constructor(options: {
+    constructor(
         gameObjectFactory: GameObjectFactory,
         entityManager: EntityManagerInterface,
-        characterAttributeFactory: CharacterAttributeFactory;
-    }) {
-        this._gameObjectFactory = options.gameObjectFactory;
-        this._entityManager = options.entityManager;
-        this._characterAttributeFactory = options.characterAttributeFactory;
+        characterAttributeFactory: CharacterAttributeFactory,
+    ) {
+        this._gameObjectFactory = gameObjectFactory;
+        this._entityManager = entityManager;
+        this._characterAttributeFactory = characterAttributeFactory;
     }
 
     create(

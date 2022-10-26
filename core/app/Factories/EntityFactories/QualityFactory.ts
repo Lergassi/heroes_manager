@@ -13,13 +13,11 @@ export default class QualityFactory {
     create(
         id: string,
         name: string,
-        description: string,
         sort: number,
     ) {
         return this._entityManager.add<Quality>(EntityID.Quality, id, new Quality(
             id,
             name,
-            description,
             sort,
         ));
     }

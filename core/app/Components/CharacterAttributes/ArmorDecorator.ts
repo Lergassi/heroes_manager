@@ -1,5 +1,5 @@
 import CharacterAttribute from '../CharacterAttribute.js';
-import {float, integer, unsigned} from '../../types.js';
+import {float, integer, unsigned} from '../../../types/types.js';
 import _ from 'lodash';
 import {assert, assertNotNil, assertIsPositive} from '../../../source/assert.js';
 import HealthPointsComponent from '../HealthPointsComponent.js';
@@ -7,6 +7,7 @@ import DamageControllerInterface from '../../Interfaces/DamageControllerInterfac
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import CharacterAttributeInterface from '../../Decorators/CharacterAttributeInterface.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 
 export default class ArmorDecorator implements DamageControllerInterface {
     private readonly _healthPoints: DamageControllerInterface;
@@ -17,7 +18,6 @@ export default class ArmorDecorator implements DamageControllerInterface {
     constructor(
         healthPoints: DamageControllerInterface,
         protection: CharacterAttributeInterface,
-        // stateController: CharacterAttributeInterface,
     ) {
         assertNotNil(healthPoints);
         assertNotNil(protection);
@@ -38,7 +38,7 @@ export default class ArmorDecorator implements DamageControllerInterface {
 
         //todo: Нужно решить задачу с сообщением и расчетами. Если герой мертвый, то нанести урон нельзя и расчеты сделаны зря. А после урона вывести сообщение нельзя иначе сначала будет сообщение об уроне, а потом про блокировку. Можно вообще не выводить сообщения. И сообщения только для разработчика. Для пользователя можно сделать другую систему сообщений с передачей через метод.
         //todo: Или можно сделать отдельный класс для урона и методы для уменьшения урона. И в конце будет метод print() и метод печатает блокированный урон и сколько дошло до цели.
-        debug('log')(sprintf('Блокировано урона (%f): %d/%d.', this._calcProtectionModifier(), damage - finalDamage, damage));
+        debug(DebugNamespaceID.Log)(sprintf('Блокировано урона (%f): %d/%d.', this._calcProtectionModifier(), damage - finalDamage, damage));
         this._healthPoints.damage(finalDamage);
     }
 

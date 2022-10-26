@@ -8,6 +8,7 @@ import {Pool} from 'mysql';
 import debug from 'debug';
 import Security from '../../source/Security.js';
 import PathResolver from '../../source/PathResolver.js';
+import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export default class CreateUserEnvironmentCommand extends Command {
     get name(): string {
@@ -45,7 +46,7 @@ export default class CreateUserEnvironmentCommand extends Command {
             })
                 .then(() => {
                     //todo: Делать проверки перед всеми операциями и только в конце их выполнять. canCreateUserSaveDir(), etc.
-                    debug('info')('Пользователь создан: ', userDBObject['_id']);
+                    debug(DebugNamespaceID.Info)('Пользователь создан: ', userDBObject['_id']);
 
                     //todo: Сделать все доступные пути. test
                     let userSaveDir = this.container.get<PathResolver>('server.pathResolver').resolve(
@@ -55,7 +56,7 @@ export default class CreateUserEnvironmentCommand extends Command {
                     fs.mkdirSync(userSaveDir);
                     fs.chownSync(userSaveDir, 1001, 1001);
 
-                    debug('info')('Директория создана: ' + userSaveDir);
+                    debug(DebugNamespaceID.Info)('Директория создана: ' + userSaveDir);
 
                     //Сохранение в файл.
                     // let userSave = new Save(new Date(), userGameObject.save());
@@ -74,7 +75,7 @@ export default class CreateUserEnvironmentCommand extends Command {
                     this.container.get<Security>('server.security').loginUser(userDBObject);
                 })
                 .catch((error) => {
-                    debug('error')(error);
+                    debug(DebugNamespaceID.Error)(error);
                     connection.rollback();
                 })
             ;
