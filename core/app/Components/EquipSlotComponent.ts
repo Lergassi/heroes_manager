@@ -7,7 +7,7 @@ import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
 import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
 import EventSystem from '../../source/EventSystem.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {assert} from '../../source/assert.js';
 

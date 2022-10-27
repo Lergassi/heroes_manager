@@ -1,5 +1,5 @@
 import CharacterAttribute from '../../Components/CharacterAttribute.js';
-import {unsigned} from '../../../types/types.js';
+import {unsigned} from '../../../types/main.js';
 import ItemCharacterAttributeCollector from '../../Components/ItemCharacterAttributeCollector.js';
 import _ from 'lodash';
 import DefaultCharacterAttributeStartValueGenerator from './DefaultCharacterAttributeStartValueGenerator.js';

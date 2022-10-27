@@ -1,16 +1,20 @@
 import AppError from '../../source/Errors/AppError.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
-import ItemStackPattern from '../RuntimeObjects/ItemStackPattern.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import Item from '../Entities/Item.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
-//todo: Переименовать и переделать. Сделать класс для простого объединения нескольких ItemStorage.
-export default class ItemStorageManager {
+/**
+ * @deprecated
+ */
+export default class ItemStorageManager implements ItemStorageInterface {
     private _gameObjectStorage: GameObjectStorage;
 
     /**
@@ -53,21 +57,8 @@ export default class ItemStorageManager {
         freeItemStorageSlotComponent.placeItemStack(itemStack);
     }
 
-    /**
-     * @deprecated
-     * @param itemStackPattern
-     */
-    addItem(itemStackPattern: ItemStackPattern) {
-        let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
-        if (!freeItemStorageSlotComponent) {
-            throw AppError.freeItemStorageSlotNotFound();
-        }
-
-        freeItemStorageSlotComponent.placeItemStack(itemStackPattern.build());
-    }
-
-    addItem2(item: Item, count: unsigned) {
-
+    addItem(item: Item, count: unsigned): unsigned {
+        return ItemStorageComponent.addItemToItemStorages(this.itemStorages, item, count);
     }
 
     createItemStack(options: {

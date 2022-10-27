@@ -1,4 +1,4 @@
-import {unsigned} from '../../../types/types.js';
+import {unsigned} from '../../../types/main.js';
 import ItemCharacterAttributeCollector from '../../Components/ItemCharacterAttributeCollector.js';
 import CharacterAttribute from '../../Components/CharacterAttribute.js';
 import _ from 'lodash';

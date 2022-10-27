@@ -1,4 +1,4 @@
-import {Loot, unsigned} from '../../types/types.js';
+import {Loot, unsigned} from '../../types/main.js';
 import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';

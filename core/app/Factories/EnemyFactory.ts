@@ -1,6 +1,6 @@
 import GameObjectFactory from './GameObjectFactory.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
 import EntityManager from '../../source/EntityManager.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';

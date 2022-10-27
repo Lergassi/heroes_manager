@@ -1,4 +1,4 @@
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import Item from '../Entities/Item.js';
 
 export default interface AddItemInterface {

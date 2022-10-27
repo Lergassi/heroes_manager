@@ -1,6 +1,7 @@
 import Item from '../Entities/Item.js';
 import AppError from '../../source/Errors/AppError.js';
 import {assertInRange, assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
+import {unsigned} from '../../types/main.js';
 
 export interface ItemStackPlaceInterface {
     /**
@@ -69,6 +70,9 @@ export default class ItemStack {
         return this._count >= this._item.stackSize;
     }
 
+    /**
+     * Недостаток до полного стека.
+     */
     flawCount(): number {
         return this._item.stackSize - this._count;
     }
@@ -78,9 +82,34 @@ export default class ItemStack {
      * @param count Положительное число.
      * @return Остаток.
      */
-    add(count: number): number {
-        if (count <= 0) {
-            return 0;
+    add(count: unsigned, item?: Item): unsigned {
+    //todo: add(item:Item, count: number): number {
+        assertIsGreaterThanOrEqual(count, 1);
+        if (item && this._item !== item) {
+            return count;
+        }
+
+        let flaw = this.flawCount();
+        if (count <= flaw) {
+            this._count += count;
+            count = 0;
+        } else {
+            this._count += flaw;
+            count -= flaw;
+        }
+
+        return count;
+    }
+
+    addWithItem(item:Item, count: unsigned): unsigned {
+        assertIsGreaterThanOrEqual(count, 1);
+
+        if (this._item !== item) {
+            return count;
+        }
+
+        if (this._count >= this._item.stackSize) {
+            return count;
         }
 
         let flaw = this.flawCount();

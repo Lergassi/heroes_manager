@@ -1,4 +1,4 @@
-import {Loot, unsigned} from '../../types/types.js';
+import {Loot, unsigned} from '../../types/main.js';
 import ItemStorageComponent from './ItemStorageComponent.js';
 
 export default class ItemLootGeneratorComponent {

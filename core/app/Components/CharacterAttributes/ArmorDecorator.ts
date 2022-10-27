@@ -1,5 +1,5 @@
 import CharacterAttribute from '../CharacterAttribute.js';
-import {float, integer, unsigned} from '../../../types/types.js';
+import {float, integer, unsigned} from '../../../types/main.js';
 import _ from 'lodash';
 import {assert, assertNotNil, assertIsPositive} from '../../../source/assert.js';
 import HealthPointsComponent from '../HealthPointsComponent.js';

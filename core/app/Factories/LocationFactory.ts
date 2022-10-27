@@ -10,7 +10,7 @@ import ItemStackFactory from './ItemStackFactory.js';
 import ItemDatabase from '../../source/ItemDatabase.js';
 import Random from '../Services/Random.js';
 import ItemCategory from '../Entities/ItemCategory.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
 import AppError from '../../source/Errors/AppError.js';
 import ItemStorageFactory from './ItemStorageFactory.js';

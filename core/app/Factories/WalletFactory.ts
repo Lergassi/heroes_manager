@@ -1,6 +1,6 @@
 import WalletComponent from '../Components/WalletComponent.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import Currency from '../Entities/Currency.js';
 import {assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../source/assert.js';
 import GameObject from '../../source/GameObject.js';

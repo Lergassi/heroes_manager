@@ -9,16 +9,11 @@ import {assert} from './assert.js';
 import {GameObjectKey} from '../types/enums/GameObjectKey.js';
 
 export default class GameObject implements AssignRComponentInterface {
-    // private readonly _id: number = this['_generateID'];
     private readonly _id: number;
-    // private readonly _id: number;
     private _name: string;
     private readonly _tags: string[];
     private readonly _components;
-    // private readonly _components: [];
-    // private readonly _components: any[];
     private readonly _componentNames: {[name: string]: Object};
-    // private _rComponentBridge: RComponentBridge;
     private _rComponentBridges: RComponentBridge[];
     private _assignedRComponents: RComponentUpdateInterface[];
 

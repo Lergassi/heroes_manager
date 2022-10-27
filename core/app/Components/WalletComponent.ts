@@ -1,6 +1,6 @@
 import Component from '../../source/Component.js';
 import Currency from '../Entities/Currency.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../source/assert.js';

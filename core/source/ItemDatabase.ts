@@ -1,6 +1,7 @@
 import Item, {ItemFilterCondition} from '../app/Entities/Item.js';
 import _ from 'lodash';
 import ItemCategory from '../app/Entities/ItemCategory.js';
+import {assertIsString, assertNotEmpty} from './assert.js';
 
 /**
  * todo: В будущем это будет полноценная бд.
@@ -19,6 +20,8 @@ export default class ItemDatabase {
     // }
 
     get(ID: string): Item | undefined {
+        assertIsString(ID);
+        assertNotEmpty(ID);
         // for (let i = 0; i < this._items.length; i++) {
         //     if (this._items[i].id === ID) { //todo: Доступ.
         //         return this._items[i];

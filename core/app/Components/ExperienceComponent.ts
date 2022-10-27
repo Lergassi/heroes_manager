@@ -1,5 +1,5 @@
 import Component from '../../source/Component.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import debug from 'debug';
 import MaxLevelReachedError from '../../source/Errors/MaxLevelReachedError.js';
 import MaxIterationsReachedError from '../../source/Errors/MaxIterationsReachedError.js';

@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
@@ -20,6 +20,9 @@ export default class CreateItemStorageCommand extends Command {
     async execute(input: Input) {
         let size: unsigned = parseInt(input.getArgument('size'), 10);
 
-        this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(size, this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory));
+        this
+            .container
+            .get<MainItemStorageListComponent>(ContainerID.MainItemStorageList)
+            .create(size, this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory));
     }
 }

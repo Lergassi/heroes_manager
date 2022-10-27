@@ -1,11 +1,13 @@
 export enum CommandNameID {
     new_game = 'new_game',
     create_player_env = 'create_player_env',
-    create_player_start_objects = 'create_player_start_objects',
+    create_start_player_objects = 'create_start_player_objects',
+    create_start_player_items = 'create_start_player_items',
 
     create_item_storage = 'create_item_storage',
     clear_item_storage_slot = 'clear_item_storage_slot',
     create_item = 'create_item',
+    create_item_kit = 'create_item_kit',
 
     create_hero = 'create_hero',
     delete_hero = 'delete_hero',

@@ -4,7 +4,7 @@ import HeroClass from '../Entities/HeroClass.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import EntityManager from '../../source/EntityManager.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import {EntityID} from '../../types/enums/EntityID.js';

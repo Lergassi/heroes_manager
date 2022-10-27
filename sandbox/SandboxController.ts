@@ -7,24 +7,19 @@ import _ from 'lodash';
 import ItemDatabase from '../core/source/ItemDatabase.js';
 import Item from '../core/app/Entities/Item.js';
 import {ItemID} from '../core/types/enums/ItemID.js';
-import ItemCategoryFactory from '../core/app/Factories/EntityFactories/ItemCategoryFactory.js';
-import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
 import EntityManager from '../core/source/EntityManager.js';
-import HeroClassFactory from '../core/app/Factories/EntityFactories/HeroClassFactory.js';
 import {HeroClassID} from '../core/types/enums/HeroClassID.js';
-import {HeroRoleID} from '../core/types/enums/HeroRoleID.js';
-import {ArmorMaterialID} from '../core/types/enums/ArmorMaterialID.js';
-import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
 import EntityManagerBuilder from '../core/app/Services/EntityManagerBuilder.js';
 import {ContainerID} from '../core/types/enums/ContainerID.js';
-import EquipSlotEntityFactory from '../core/app/Factories/EntityFactories/EquipSlotEntityFactory.js';
-import {EquipSlotID} from '../core/types/enums/EquipSlotID.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 import AddItemInterface from '../core/app/Interfaces/AddItemInterface.js';
-import {unsigned} from '../core/types/types.js';
-import ArmorMaterial from '../core/app/Entities/ArmorMaterial.js';
-import {assertIsArray, assertNotEmpty} from '../core/source/assert.js';
+import {unsigned} from '../core/types/main.js';
+import {DEFAULT_STACK_SIZE} from '../core/app/consts.js';
+import ItemStorageFactoryInterface from '../core/app/Factories/ItemStorageFactoryInterface.js';
+import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
+import {GameObjectKey} from '../core/types/enums/GameObjectKey.js';
+import ItemStorageInterface from '../core/app/Interfaces/ItemStorageInterface.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -45,8 +40,9 @@ export default class SandboxController {
         // this.devNewItemStorage();
         // this._devItemDatabase();
         // this._devInstanceofInterface();
+        this._devItemKit();
 
-        this._testVanillaJS();
+        // this._testVanillaJS();
         // this._testLodash();
         // this._test1();
         // this._testNewEntityManager();
@@ -173,5 +169,27 @@ export default class SandboxController {
     private _testVanillaJS() {
         console.log(null === null);
         console.log(typeof null);
+    }
+
+    private _devItemKit() {
+        // let itemKit = new ItemKit([
+        //     {item: ItemID.Wood, count: DEFAULT_STACK_SIZE},
+        //     {item: ItemID.IronOre, count: DEFAULT_STACK_SIZE},
+        //     {item: ItemID.IronBar, count: DEFAULT_STACK_SIZE},
+        //     {item: ItemID.Herb_1, count: DEFAULT_STACK_SIZE},
+        //     {item: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
+        //     {item: ItemID.Leather_01, count: DEFAULT_STACK_SIZE},
+        //     {item: ItemID.BoarMeat, count: DEFAULT_STACK_SIZE},
+        //     {item: ItemID.MagicResources_01, count: DEFAULT_STACK_SIZE},
+        // ]);
+        //
+        // let itemStorage = this._container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory).create(20);
+        //
+        // itemKit.build(
+        //     this._container.get<ItemDatabase>(ContainerID.ItemDatabase),
+        //     this._container.get<ItemStackFactory>(ContainerID.ItemStackFactory),
+        //     itemStorage.get<ItemStorageInterface>(GameObjectKey.ItemStorageComponent),
+        // );
+        // console.log(itemStorage);
     }
 }

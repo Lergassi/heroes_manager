@@ -13,7 +13,6 @@ import EquipSlot from '../Entities/EquipSlot.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
-import ItemStackSlot from '../RuntimeObjects/ItemStackSlot.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import HeroComponent from '../Components/HeroComponent.js';
 import LevelRange from '../Components/ExperienceComponent.js';

@@ -9,7 +9,7 @@ import AppError from '../../source/Errors/AppError.js';
 import debug from 'debug';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
-import {Seconds, unsigned} from '../../types/types.js';
+import {Seconds, unsigned} from '../../types/main.js';
 import {sprintf} from 'sprintf-js';
 import EventSystem from '../../source/EventSystem.js';
 import ExperienceComponent from './ExperienceComponent.js';

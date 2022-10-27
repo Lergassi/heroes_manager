@@ -1,5 +1,5 @@
 import Item from '../Entities/Item.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 
 //todo: Заготовка.
 export default interface ItemCountCollectorInterface {

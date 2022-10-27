@@ -1,4 +1,4 @@
-import {Milliseconds, Seconds} from '../types/types.js';
+import {Milliseconds, Seconds} from '../types/main.js';
 
 export const ONE_SECOND_IN_MILLISECONDS: Milliseconds = 1000;
 

@@ -51,7 +51,7 @@ export default class ClientRender {
                     container={this._container}
                     executeUrl={'http://api.heroes.sd44.ru/game_console/execute'}
                     maxHistoryLength={100}
-                    commandNames={this._container.get<GameConsole>('gameConsole').names}
+                    commandNames={this._container.get<GameConsole>(ContainerID.GameConsole).names}
                 />
                 <SandboxRComponent
 

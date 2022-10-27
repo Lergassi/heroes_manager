@@ -1,5 +1,5 @@
 import Component from '../../source/Component.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
 import CharacterAttributeCollector from './CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';

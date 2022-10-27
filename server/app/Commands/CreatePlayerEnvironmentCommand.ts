@@ -3,7 +3,6 @@ import Input from '../../../core/source/GameConsole/Input.js';
 import debug from 'debug';
 import fs from 'fs';
 import Currency from '../../../core/app/Entities/Currency.js';
-import ItemStackPattern from '../../../core/app/RuntimeObjects/ItemStackPattern.js';
 import Item from '../../../core/app/Entities/Item.js';
 import PlayerFactory from '../../../core/app/Factories/PlayerFactory.js';
 import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
@@ -96,7 +95,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                     this._createStartHeroes();
 
                     //todo: Сохранение должно происходить отдельно. При создании игрока нужно производить только подготовку: директории.
-                    await this.container.get<GameConsole>('gameConsole').run('save_player_env');
+                    await this.container.get<GameConsole>(ContainerID.GameConsole).run('save_player_env');
 
                     connection.commit();
                 })

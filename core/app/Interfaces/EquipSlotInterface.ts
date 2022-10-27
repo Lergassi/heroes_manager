@@ -1,5 +1,5 @@
 import Item from '../Entities/Item.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 

@@ -1,5 +1,5 @@
 import ExperienceComponent from '../Components/ExperienceComponent.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 
 export type ExperienceComponentFactoryCreateOptions = {
     level: unsigned;

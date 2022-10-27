@@ -4,11 +4,15 @@ import ItemStack from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import GameObject from '../../source/GameObject.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import AppError from '../../source/Errors/AppError.js';
 import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import EventSystem from '../../source/EventSystem.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {sprintf} from 'sprintf-js';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export enum ItemStorageComponentEventCode {
     AddItem = 'ItemStorageComponent.AddItem',
@@ -19,7 +23,7 @@ export enum ItemStorageComponentEventCode {
 /**
  * todo: Вообще переделать. Убрать слоты с новыми идеями.
  */
-export default class ItemStorageComponent extends Component {
+export default class ItemStorageComponent implements ItemStorageInterface {
     private readonly _size: number;
     private readonly _slots: {[key: string]: ItemStorageSlotComponent};
     private readonly _itemStackFactory: ItemStackFactory;
@@ -28,7 +32,6 @@ export default class ItemStorageComponent extends Component {
         slots: ItemStorageSlotComponent[],
         itemStackFactory: ItemStackFactory,
     ) {
-        super();
         this._size = slots.length;
         this._slots = {};
         for (let i = 0; i < slots.length; i++) {
@@ -115,14 +118,23 @@ export default class ItemStorageComponent extends Component {
      * @param count
      * @return Остаток.
      */
-    addItem(item: Item, count: number = 1): number {
+    addItem(item: Item, count: unsigned): unsigned {
         assertIsInstanceOf(item, Item);
         assertIsGreaterThanOrEqual(count, 1);
 
         let currentCount = count;
+        // for (const slotsKey in this._slots) {
+        //     if (this._slots[slotsKey].isFree()) {
+        //         this._slots[slotsKey].createItemStack({
+        //             item: item,
+        //         });
+        //     }
+        // }
+
         let slotsWithItem = this.getItemStorageSlotComponentsWithItem(item);
         let freeSlots = this.getFreeItemStorageSlotComponents();
         while (currentCount > 0) {
+            //todo: Надо по слотам идти по порядку.
             for (let i = 0; i < slotsWithItem.length; i++) {
                 if (slotsWithItem[i].itemStack.isFull()) {
                     continue;
@@ -155,7 +167,9 @@ export default class ItemStorageComponent extends Component {
             }
         }
 
-        EventSystem.event(ItemStorageComponentEventCode.Update, this);
+        if (count > 0 && currentCount < count) {
+            EventSystem.event(ItemStorageComponentEventCode.Update, this);
+        }
 
         return currentCount;
     }
@@ -167,20 +181,30 @@ export default class ItemStorageComponent extends Component {
      * @param count Остаток.
      */
     static addItemToItemStorages(itemStorages: GameObject[], item: Item, count: number): unsigned {
+        let originCount = count;
         for (let i = 0; i < itemStorages.length; i++) {
             if (!itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent)) {
                 throw AppError.componentNotFound(GameObjectKey.ItemStorageComponent);
             }
 
-            count -= count - itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).addItem(item, count);
+            // count -= count - itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).addItem(item, count);
+            count -= count - itemStorages[i].get<ItemStorageInterface>(GameObjectKey.ItemStorageComponent).addItem(item, count);
             if (count <= 0) {
                 break;
             }
         }
 
+        if (originCount > 0 && count > 0) {
+            debug(DebugNamespaceID.Warring)(sprintf('Предметы не добавлены %d - не хватило места.', count));
+        }
+
         return count;
     }
 
+    /**
+     * @deprecated Использовать метод move.
+     * @param itemStack
+     */
     addItemStack(itemStack: ItemStack) /* todo: return ID или остаток */ {
         let slot = this.getFirstFreeItemStorageSlotComponent();
         if (slot) {

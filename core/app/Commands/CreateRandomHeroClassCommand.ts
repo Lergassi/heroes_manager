@@ -19,12 +19,13 @@ export default class CreateRandomHeroClassCommand extends Command {
     }
 
     async execute(input: Input) {
-        let count = input.getArgument('count');
-        if (count === 'max') {
-            count = 100_000; //todo: Настройки или ооп.
-        } else {
-            count = parseInt(count, 10);
-        }
+        let count = parseInt(input.getArgument('count'), 10);
+        // let count = input.getArgument('count');
+        // if (count === 'max') {
+        //     count = 100_000; //todo: Настройки или ооп.
+        // } else {
+        //     count = parseInt(count, 10);
+        // }
 
         assertIsGreaterThanOrEqual(count, 1);
 

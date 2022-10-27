@@ -1,4 +1,4 @@
-import {unsigned} from '../types/types.js';
+import {unsigned} from '../types/main.js';
 
 export default class LevelRange {
     private readonly _min: unsigned;

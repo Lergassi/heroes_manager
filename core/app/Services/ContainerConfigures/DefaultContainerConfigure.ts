@@ -35,6 +35,8 @@ import CreateRandomHeroClassCommand from '../../Commands/CreateRandomHeroClassCo
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import _ from 'lodash';
+import CreateItemKitCommand from '../../Commands/CreateItemKitCommand.js';
+import {ContainerID} from '../../../types/enums/ContainerID.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -45,7 +47,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
             DebugNamespaceID.Error,
             DebugNamespaceID.Log,
             DebugNamespaceID.Warring,
-            DebugNamespaceID.Load,
+            // DebugNamespaceID.Load,
             // 'debug:*',
             // 'error:*',
             // 'log:*',
@@ -55,7 +57,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         ];
         debug.enable(_.join(debugNamespaces, ','));
 
-        container.set<GameConsole>('gameConsole', (container) => {
+        container.set<GameConsole>(ContainerID.GameConsole, (container) => {
             return new GameConsole();
         });
         // container.set('gameConsole', container.get<GameConsole>('server.gameConsole'));    //alias
@@ -69,7 +71,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
     }
 
     private _gameConsoleConfigure(container: ContainerInterface) {
-        let gameConsole: GameConsole = container.get<GameConsole>('gameConsole');
+        let gameConsole: GameConsole = container.get<GameConsole>(ContainerID.GameConsole);
 
         gameConsole.register(new HelpCommand(container));
         gameConsole.register(new ListCommand(container));
@@ -82,6 +84,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new CreateItemStorageCommand(container));
         gameConsole.register(new CreateItemCommand(container));
         gameConsole.register(new ClearItemStorageSlotCommand(container));
+        gameConsole.register(new CreateItemKitCommand(container));
 
         gameConsole.register(new CreateHeroCommand(container));
         gameConsole.register(new DeleteHeroCommand(container));

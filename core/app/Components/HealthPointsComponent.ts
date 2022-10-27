@@ -1,7 +1,7 @@
 import Component from '../../source/Component.js';
 import debug from 'debug';
 import EventSystem from '../../source/EventSystem.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import AppError from '../../source/Errors/AppError.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {assertNotNil, assertIsPositive} from '../../source/assert.js';

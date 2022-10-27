@@ -4,7 +4,7 @@ import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
 import AppError from '../../source/Errors/AppError.js';
 import HeroFactory from '../Factories/HeroFactory.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import EventSystem from '../../source/EventSystem.js';
 import HeroClass from '../Entities/HeroClass.js';

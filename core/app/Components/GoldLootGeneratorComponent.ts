@@ -1,4 +1,4 @@
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import _ from 'lodash';
 import Component from '../../source/Component.js';
 import WalletComponent from './WalletComponent.js';

@@ -1,5 +1,5 @@
 import CharacterAttributeInterface from '../../Decorators/CharacterAttributeInterface.js';
-import {unsigned} from '../../../types/types.js';
+import {unsigned} from '../../../types/main.js';
 import _ from 'lodash'
 import CharacterAttribute from '../CharacterAttribute.js';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';

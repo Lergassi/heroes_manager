@@ -3,7 +3,7 @@ import GameObject from '../../source/GameObject.js';
 import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import HeroComponent from './HeroComponent.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import {assert} from '../../source/assert.js';
 import TakeComponent from './TakeComponent.js';
 import EventSystem from '../../source/EventSystem.js';

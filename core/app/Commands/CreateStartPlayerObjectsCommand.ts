@@ -7,7 +7,7 @@ import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterfac
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
@@ -20,10 +20,11 @@ import {EntityID} from '../../types/enums/EntityID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import GameConsole from '../../source/GameConsole/GameConsole.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
-        return CommandNameID.create_player_start_objects;
+        return CommandNameID.create_start_player_objects;
     }
 
     get description(): string {
@@ -37,8 +38,6 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     }
 
     private _createItemStorages() {
-        // this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
-        // this.container.get<ItemStorageFactoryInterface>('player.itemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE);
         this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
             DEFAULT_ITEM_STORAGE_SIZE,
             this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory),
@@ -49,50 +48,9 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         );
     }
 
-    private _createItems() {
-        let items = [
-            {
-                itemID: ItemID.Wood,
-                count: 10,
-            },
-            {
-                itemID: ItemID.IronOre,
-                count: 10,
-            },
-            {
-                itemID: ItemID.OneHandedSword_01,
-                count: 1,
-            },
-            {
-                itemID: ItemID.OneHandedSword_01,
-                count: 1,
-            },
-            {
-                itemID: ItemID.PlateHelmet_01,
-                count: 1,
-            },
-            {
-                itemID: ItemID.PlateBoots_01,
-                count: 1,
-            },
-            {
-                itemID: ItemID.Shield_01,
-                count: 1,
-            },
-        ];
-
-        for (let i = 0; i < items.length; i++) {
-            //todo: Отдельный класс для подобной логики.
-            let item = this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, items[i].itemID);
-            if (!item) {
-                debug(DebugNamespaceID.Warring)(sprintf('Предмет ID(%s) начального набора предметов не найден и не будет добавлен в сумки.', items[i].itemID));
-                continue;
-            }
-
-            this.container.get<ItemStorageManager>(ContainerID.ItemStorageManager).addItemStack(
-                this.container.get<ItemStackFactory>(ContainerID.ItemStackFactory).create(item, items[i].count),
-            );
-        }
+    private async _createItems() {
+        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandNameID.create_item_kit, ['start_resources']);
+        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandNameID.create_item_kit, ['start_materials']);
     }
 
     private _createHeroes() {

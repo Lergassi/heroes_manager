@@ -17,7 +17,7 @@ import TotalCharacterAttributeValueCollectorComponent
     from '../../../core/app/Components/TotalCharacterAttributeValueCollectorComponent.js';
 import AttackPower from '../../../core/app/Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
 import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
-import {CharacterAttributes} from '../../../core/types/types.js';
+import {CharacterAttributes} from '../../../core/types/main.js';
 import {GameObjectKey} from '../../../core/types/enums/GameObjectKey.js';
 import TakeComponent from '../../../core/app/Components/TakeComponent.js';
 

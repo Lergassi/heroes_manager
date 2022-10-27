@@ -38,6 +38,7 @@ import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import PathResolver from '../source/PathResolver.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
+import {ContainerID} from '../../core/types/enums/ContainerID.js';
 
 export default class ServerContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -115,7 +116,7 @@ export default class ServerContainerConfigure implements ContainerConfigureInter
     //todo: Команды не имеют смысла без загрузки ядра.
     private _gameConsoleConfigure(container: ContainerInterface) {
         // let gameConsole: GameConsole = container.get<GameConsole>('server.gameConsole');
-        let gameConsole: GameConsole = container.get<GameConsole>('gameConsole');
+        let gameConsole: GameConsole = container.get<GameConsole>(ContainerID.GameConsole);
 
         gameConsole.register(new HelpCommand(container));
         gameConsole.register(new ListCommand(container));

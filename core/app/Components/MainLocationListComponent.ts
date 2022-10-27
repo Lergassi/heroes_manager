@@ -1,5 +1,5 @@
 import Component from '../../source/Component.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import GameObject from '../../source/GameObject.js';
 import LocationFactory, {LocationFactoryCreateOptions} from '../Factories/LocationFactory.js';
 import EventSystem from '../../source/EventSystem.js';

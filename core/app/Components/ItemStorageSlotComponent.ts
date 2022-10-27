@@ -5,7 +5,7 @@ import Item from '../Entities/Item.js';
 import _ from 'lodash';
 import AppError from '../../source/Errors/AppError.js';
 import {AssignRComponentInterface} from '../../../client/source/RComponentBridge.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import EventSystem from '../../source/EventSystem.js';
 
@@ -34,6 +34,7 @@ export default class ItemStorageSlotComponent implements ItemStackPlaceInterface
     }
 
     /**
+     * todo: Метод не удобный. И itemStackFactory тоже не удобный инструмент.
      * Создает ItemStack. Если count > stackSize генерируется исключение. Для добавления и объединения предметов использовать другие методы.
      * @param options
      */

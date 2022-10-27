@@ -4,6 +4,7 @@ export enum ContainerID {
     // EntityManagerFacade = 'core.facade.entityManager',
     ItemFactory = 'core.ItemFactory',
     ItemDatabase = 'core.ItemDatabase',
+    GameConsole = 'core.GameConsole',
 
     //player
     EventSystem = 'core.EventSystem',

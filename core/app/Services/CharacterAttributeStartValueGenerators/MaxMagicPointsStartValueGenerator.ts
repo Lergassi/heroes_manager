@@ -1,5 +1,5 @@
 import CharacterAttributeStartValueGeneratorInterface from '../../Interfaces/CharacterAttributeStartValueGeneratorInterface.js';
-import {unsigned} from '../../../types/types.js';
+import {unsigned} from '../../../types/main.js';
 import {assertIsGreaterThanOrEqual} from '../../../source/assert.js';
 import Random from '../Random.js';
 import _ from 'lodash';

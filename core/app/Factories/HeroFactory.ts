@@ -12,7 +12,7 @@ import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import {CharacterAttributes, unsigned} from '../../types/types.js';
+import {CharacterAttributes, unsigned} from '../../types/main.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import TakeComponent from '../Components/TakeComponent.js';

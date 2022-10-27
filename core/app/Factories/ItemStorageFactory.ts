@@ -5,7 +5,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 
 export default class ItemStorageFactory implements ItemStorageFactoryInterface {

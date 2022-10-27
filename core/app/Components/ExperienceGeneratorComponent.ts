@@ -1,4 +1,4 @@
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import Component from '../../source/Component.js';
 import ExperienceComponent from './ExperienceComponent.js';
 import {round} from 'lodash';

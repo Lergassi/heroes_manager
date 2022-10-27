@@ -1,6 +1,6 @@
 import Component from '../../source/Component.js';
 import CharacterAttribute from './CharacterAttribute.js';
-import {unsigned} from '../../types/types.js';
+import {unsigned} from '../../types/main.js';
 import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
 import _, {curryRight, round} from 'lodash';
 import {assert} from '../../source/assert.js';

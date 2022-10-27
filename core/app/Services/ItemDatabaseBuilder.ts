@@ -354,7 +354,7 @@ export default class ItemDatabaseBuilder {
                     'Магический ресурс 1',
                     ItemCategoryID.Resources,
                     {
-                        stackSize: DEFAULT_STACK_SIZE,
+                        stackSize: 1,
                     },
                 )
         );
@@ -363,10 +363,10 @@ export default class ItemDatabaseBuilder {
             (new ItemBuilder(this._entityManager))
                 .default(
                     ItemID.MagicMaterial_01,
-                    'Магический предмет 1',
+                    'Магический материал 1',
                     ItemCategoryID.Materials,
                     {
-                        stackSize: DEFAULT_STACK_SIZE,
+                        stackSize: 1,
                     },
                 )
         );

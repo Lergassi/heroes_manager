@@ -29,11 +29,11 @@ export function assertIsPositive(value: number, message?: string) {
  * @param message
  */
 export function assertNotEmpty(value: any, message?: string) {
-    assert(!_.isEmpty(value), 'Значение не должно быть пустым.');  //todo: 0?
+    assert(!_.isEmpty(value), 'Значение не должно быть пустым.');
 }
 
 // export function assertObjectKey(value: any, message?: string) {
-//     assert(_.isString(value) || _.isNumber(value), 'Значение не должно быть пустым.');  //todo: 0?
+//     assert(_.isString(value) || _.isNumber(value), 'Значение не должно быть пустым.');
 // }
 
 // export function assertIsObject(value: any, message?: string) {

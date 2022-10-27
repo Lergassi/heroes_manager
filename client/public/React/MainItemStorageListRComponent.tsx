@@ -1,7 +1,10 @@
-import MainItemStorageListComponent from '../../../core/app/Components/MainItemStorageListComponent.js';
+import MainItemStorageListComponent, {
+    MainItemStorageListComponentEventCode
+} from '../../../core/app/Components/MainItemStorageListComponent.js';
 import React from 'react';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStorageRComponent from './ItemStorageRComponent.js';
+import EventSystem from '../../../core/source/EventSystem.js';
 
 export interface ItemStorageCollectionRComponentProps {
     itemStorageCollection: MainItemStorageListComponent;
@@ -18,7 +21,23 @@ export default class MainItemStorageListRComponent extends React.Component<ItemS
         this.state = {
             itemStorageCollection: props.itemStorageCollection,
         };
-        // this.state.itemStorageCollection.assignRComponent(this);
+
+        EventSystem.addListener({
+                codes: [
+                    MainItemStorageListComponentEventCode.Update,
+                ],
+                listener: {
+                    callback: (target) => {
+                        return this.setState((state) => {
+                            return {
+                                itemStorageCollection: state.itemStorageCollection,
+                            };
+                        });
+                    },
+                    target: props.itemStorageCollection,
+                },
+            }
+        );
     }
 
     render() {

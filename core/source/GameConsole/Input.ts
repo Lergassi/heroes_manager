@@ -8,7 +8,7 @@ export default class Input {
         this._inputCommandArguments = inputCommandArguments;
     }
 
-    getArgument(name) {
+    getArgument(name): string {
         if (!this.hasArgument(name)) {
             throw new AppError(sprintf('Аргумент %s не указан.', name));
         }
@@ -16,7 +16,7 @@ export default class Input {
         return this._inputCommandArguments[name].value;
     }
 
-    hasArgument(name) {
+    hasArgument(name): boolean {
         return this._inputCommandArguments.hasOwnProperty(name);
     }
 }
