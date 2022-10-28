@@ -34,13 +34,13 @@ export default class CreateItemKitCommand extends Command {
             // {item: ItemID.Herb_3, count: DEFAULT_STACK_SIZE},
             {item: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.BoarMeat, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.MagicResources_01, count: 4},
+            {item: ItemID.MagicResources_01, count: 2},
         ],
         start_materials: [
             {item: ItemID.IronBar, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.CopperBar, count: DEFAULT_STACK_SIZE},
             {item: ItemID.Leather_01, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.MagicMaterial_01, count: 2},
+            {item: ItemID.MagicMaterial_01, count: 1},
         ],
         start_plate_armor: [
             {item: ItemID.PlateHelmet_01, count: 1},

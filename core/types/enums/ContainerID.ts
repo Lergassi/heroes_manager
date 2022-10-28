@@ -1,3 +1,5 @@
+import HeroCharacterAttributeFactory from '../../app/Factories/HeroCharacterAttributeFactory.js';
+
 export enum ContainerID {
     //core
     EntityManager = 'core.EntityManager',
@@ -21,7 +23,8 @@ export enum ContainerID {
     LocationFactory = 'player.LocationFactory',
     EnemyFactory = 'player.EnemyFactory',
     ItemStackFactory = 'player.ItemStackFactory',
-    CharacterAttributeFactory = 'player.CharacterAttributeFactory',
+    HeroCharacterAttributeFactory = 'player.HeroCharacterAttributeFactory',
+    EnemyCharacterAttributeFactory = 'player.EnemyCharacterAttributeFactory',
 
     //компоненты из GameObject
     MainItemStorageList = 'player.MainItemStorageList',

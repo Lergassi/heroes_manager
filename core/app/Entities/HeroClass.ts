@@ -10,9 +10,10 @@ export default class HeroClass {
     private readonly _name: string;
     private readonly _sort: number;
     private readonly _heroRole: HeroRole;
-    private readonly _availableWeaponItemCategories: ItemCategory[];
     private readonly _availableArmorMaterials: ArmorMaterial[];
     private readonly _mainCharacterAttributes: CharacterAttributeEntity[];
+    private readonly _rightHandItemCategories: ItemCategory[];
+    private readonly _leftHandItemCategories: ItemCategory[];
 
     get id(): string {
         return this._id;
@@ -30,10 +31,6 @@ export default class HeroClass {
         return this._heroRole;
     }
 
-    get availableWeaponItemCategories(): ItemCategory[] {
-        return this._availableWeaponItemCategories;
-    }
-
     get availableArmorMaterials(): ArmorMaterial[] {
         return this._availableArmorMaterials;
     }
@@ -42,22 +39,32 @@ export default class HeroClass {
         return this._mainCharacterAttributes;
     }
 
+    get rightHandItemCategories(): ItemCategory[] {
+        return this._rightHandItemCategories;
+    }
+
+    get leftHandItemCategories(): ItemCategory[] {
+        return this._leftHandItemCategories;
+    }
+
     constructor(
         id: string,
         name: string,
         sort: number,
         heroRole: HeroRole,
-        availableWeaponItemCategories: ItemCategory[],
         availableArmorMaterials: ArmorMaterial[],
         mainCharacterAttributes: CharacterAttributeEntity[],
+        rightHandItemCategories: ItemCategory[],
+        leftHandItemCategories: ItemCategory[],
     ) {
         this._id = id;
         this._name = name;
         this._sort = sort;
         this._heroRole = heroRole;
-        this._availableWeaponItemCategories = availableWeaponItemCategories;
         this._availableArmorMaterials = availableArmorMaterials;
         this._mainCharacterAttributes = mainCharacterAttributes;
+        this._rightHandItemCategories = rightHandItemCategories;
+        this._leftHandItemCategories = leftHandItemCategories;  //todo: Вообще правильно если не указаны предметы - в слот нельзя экипировать предметы. Может тут выводить сообщение предупреждение, что возможно тут ошибка и нужно проверить? Например забыл у стрелка для левой руки указать правило.
     }
 
     availableArmorMaterial(armorMaterial: ArmorMaterial): boolean {

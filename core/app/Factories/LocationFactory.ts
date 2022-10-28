@@ -103,7 +103,7 @@ export default class LocationFactory {
         // let items = this._itemDatabase.filter({
         let items = this._itemDatabase.getByItemCategory(this._entityManager.get<ItemCategory>(EntityID.ItemCategory, ItemCategoryID.Resources));
         if (items.length < this._maxGatheringItemPointsCount) {
-            debug(DebugNamespaceID.Warring)('Предметов не достаточно для создании локации.');
+            debug(DebugNamespaceID.Warning)('Предметов не достаточно для создании локации.');
             // throw new AppError('indev: Предметов не достаточно для создании локации.');
         }
         items = Random.some(items, this._maxGatheringItemPointsCount, {unique: true});

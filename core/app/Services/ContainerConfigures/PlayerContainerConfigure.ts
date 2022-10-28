@@ -31,10 +31,11 @@ import {ContainerID} from '../../../types/enums/ContainerID.js';
 import {CurrencyID} from '../../../types/enums/CurrencyID.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
 import CharacterAttributeStartValueGenerator from '../CharacterAttributeStartValueGenerator.js';
-import CharacterAttributeFactory from '../../Factories/CharacterAttributeFactory.js';
+import EnemyCharacterAttributeFactory from '../../Factories/EnemyCharacterAttributeFactory.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import HeroCharacterAttributeFactory from '../../Factories/HeroCharacterAttributeFactory.js';
 
 /**
  * todo: Временно не актуально.
@@ -118,9 +119,15 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<CharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator, (container) => {
             return new CharacterAttributeStartValueGenerator(container.get<CharacterAttributeValueGenerator>(ContainerID.CharacterAttributeValueGenerator));
+            // return new CharacterAttributeStartValueGenerator();
         });
-        container.set<CharacterAttributeFactory>(ContainerID.CharacterAttributeFactory, (container) => {
-            return new CharacterAttributeFactory(
+        container.set<HeroCharacterAttributeFactory>(ContainerID.HeroCharacterAttributeFactory, (container) => {
+            return new HeroCharacterAttributeFactory(
+                // container.get<CharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator),
+            );
+        });
+        container.set<EnemyCharacterAttributeFactory>(ContainerID.EnemyCharacterAttributeFactory, (container) => {
+            return new EnemyCharacterAttributeFactory(
                 container.get<CharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator),
             );
         });
@@ -129,7 +136,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EntityManagerInterface>(ContainerID.EntityManager),
                 container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
                 container.get<ExperienceComponentFactory>(ContainerID.ExperienceComponentFactory),
-                container.get<CharacterAttributeFactory>(ContainerID.CharacterAttributeFactory),
+                // container.get<EnemyCharacterAttributeFactory>(ContainerID.CharacterAttributeFactory),
+                container.get<HeroCharacterAttributeFactory>(ContainerID.HeroCharacterAttributeFactory),
             );
         });
         container.set<ItemStackFactory>(ContainerID.ItemStackFactory, (container) => {
@@ -195,7 +203,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new EnemyFactory(
                 container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
                 container.get<EntityManagerInterface>(ContainerID.EntityManager),
-                container.get<CharacterAttributeFactory>(ContainerID.CharacterAttributeFactory),
+                container.get<EnemyCharacterAttributeFactory>(ContainerID.EnemyCharacterAttributeFactory),
             );
         });
 

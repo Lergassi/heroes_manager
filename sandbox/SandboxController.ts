@@ -17,9 +17,11 @@ import AddItemInterface from '../core/app/Interfaces/AddItemInterface.js';
 import {unsigned} from '../core/types/main.js';
 import {DEFAULT_STACK_SIZE} from '../core/app/consts.js';
 import ItemStorageFactoryInterface from '../core/app/Factories/ItemStorageFactoryInterface.js';
-import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
-import {GameObjectKey} from '../core/types/enums/GameObjectKey.js';
-import ItemStorageInterface from '../core/app/Interfaces/ItemStorageInterface.js';
+import ItemKit from '../core/app/Services/ItemKit.js';
+import CharacterAttributeValueGeneratorByConfig from '../core/app/Services/CharacterAttributeValueGeneratorByConfig.js';
+import {startCharacterAttributeConfig} from '../core/config/start_character_values.js';
+import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
+import HeroFactory from '../core/app/Factories/HeroFactory.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -40,7 +42,8 @@ export default class SandboxController {
         // this.devNewItemStorage();
         // this._devItemDatabase();
         // this._devInstanceofInterface();
-        this._devItemKit();
+        // this._devItemKit();
+        this._devCharacterAttributeGenerator();
 
         // this._testVanillaJS();
         // this._testLodash();
@@ -123,7 +126,7 @@ export default class SandboxController {
         debug(DebugNamespaceID.Debug)('this is ' + DebugNamespaceID.Debug);
         debug(DebugNamespaceID.Log)('this is ' + DebugNamespaceID.Log);
         debug(DebugNamespaceID.Info)('this is ' + DebugNamespaceID.Info);
-        debug(DebugNamespaceID.Warring)('this is ' + DebugNamespaceID.Warring);
+        debug(DebugNamespaceID.Warning)('this is ' + DebugNamespaceID.Warning);
         debug(DebugNamespaceID.Error)('this is ' + DebugNamespaceID.Error);
     }
 
@@ -172,24 +175,44 @@ export default class SandboxController {
     }
 
     private _devItemKit() {
-        // let itemKit = new ItemKit([
-        //     {item: ItemID.Wood, count: DEFAULT_STACK_SIZE},
-        //     {item: ItemID.IronOre, count: DEFAULT_STACK_SIZE},
-        //     {item: ItemID.IronBar, count: DEFAULT_STACK_SIZE},
-        //     {item: ItemID.Herb_1, count: DEFAULT_STACK_SIZE},
-        //     {item: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
-        //     {item: ItemID.Leather_01, count: DEFAULT_STACK_SIZE},
-        //     {item: ItemID.BoarMeat, count: DEFAULT_STACK_SIZE},
-        //     {item: ItemID.MagicResources_01, count: DEFAULT_STACK_SIZE},
-        // ]);
-        //
-        // let itemStorage = this._container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory).create(20);
-        //
-        // itemKit.build(
-        //     this._container.get<ItemDatabase>(ContainerID.ItemDatabase),
-        //     this._container.get<ItemStackFactory>(ContainerID.ItemStackFactory),
+        let itemKit = new ItemKit([
+            {item: ItemID.Wood, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.IronOre, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.IronBar, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.Herb_1, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.Leather_01, count: DEFAULT_STACK_SIZE},
+            // {item: ItemID.BoarMeat, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.MagicResources_01, count: 1},
+        ]);
+
+        let itemStorage = this._container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory).create(20);
+
+        // itemKit.create(
         //     itemStorage.get<ItemStorageInterface>(GameObjectKey.ItemStorageComponent),
+        //     this._container.get<ItemDatabase>(ContainerID.ItemDatabase),
+        //
         // );
         // console.log(itemStorage);
+    }
+
+    private _devCharacterAttributeGenerator() {
+        let heroFactory = this._container.get<HeroFactory>(ContainerID.HeroFactory);
+
+        let generator = new CharacterAttributeValueGeneratorByConfig(startCharacterAttributeConfig);
+        console.log(generator);
+
+        // console.log(generator.generate(HeroClassID.Warrior, CharacterAttributeID.Strength));
+        // console.log(generator.generate(HeroClassID.Rogue, CharacterAttributeID.Strength));
+        // console.log(generator.generate(HeroClassID.Gunslinger, CharacterAttributeID.Strength));
+
+        console.log(generator.generate(HeroClassID.Warrior, CharacterAttributeID.MaxHealthPoints));
+        console.log(generator.generate(HeroClassID.Rogue, CharacterAttributeID.MaxHealthPoints));
+        console.log(generator.generate(HeroClassID.Gunslinger, CharacterAttributeID.MaxHealthPoints));
+        console.log(generator.generate(HeroClassID.FireMage, CharacterAttributeID.MaxHealthPoints));
+        console.log(generator.generate(HeroClassID.Paladin, CharacterAttributeID.MaxHealthPoints));
+
+        console.log(heroFactory.create(HeroClassID.Warrior, 1));
+        console.log(heroFactory.create(HeroClassID.Paladin, 1));
     }
 }

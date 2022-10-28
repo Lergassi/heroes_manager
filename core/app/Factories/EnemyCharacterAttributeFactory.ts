@@ -8,13 +8,13 @@ import CharacterAttributeStartValueGenerator, {
 } from '../Services/CharacterAttributeStartValueGenerator.js';
 import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
 
-export default class CharacterAttributeFactory {
-    private readonly _characterAttributeStartValueGenerator: CharacterAttributeStartValueGenerator;
+export default class EnemyCharacterAttributeFactory {
+    private readonly _characterAttributeStartValueFactory: CharacterAttributeStartValueGenerator;
 
     constructor(
         characterAttributeStartValueGenerator: CharacterAttributeStartValueGenerator,
     ) {
-        this._characterAttributeStartValueGenerator = characterAttributeStartValueGenerator;
+        this._characterAttributeStartValueFactory = characterAttributeStartValueGenerator;
     }
 
     create(
@@ -23,17 +23,17 @@ export default class CharacterAttributeFactory {
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,   //todo: В декоратор.
         options?: { //todo: Времено пока в разработке. Далее для каждого класса будет своя логика без передачи из вне.
             baseValue?: number,
-            baseValueModifier?: CharacterAttributeValueModifier,
-            increaseValueModifier?: CharacterAttributeValueModifier,
+            // baseValueModifier?: CharacterAttributeValueModifier,
+            // increaseValueModifier?: CharacterAttributeValueModifier,
         },
     ) {
         let characterAttribute = new CharacterAttribute(
             ID,
             itemCharacterAttributeCollector,
-            options?.baseValue ?? this._characterAttributeStartValueGenerator.generate(
+            options?.baseValue ?? this._characterAttributeStartValueFactory.generate(
                 ID,
                 level,
-                options?.baseValueModifier,
+                // options?.baseValueModifier,
             )
         );
 

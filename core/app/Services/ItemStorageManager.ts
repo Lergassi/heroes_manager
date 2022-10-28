@@ -47,6 +47,10 @@ export default class ItemStorageManager implements ItemStorageInterface {
         return undefined;
     }
 
+    /**
+     * @deprecated
+     * @param itemStack
+     */
     addItemStack(itemStack: ItemStack) {
         let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot();
         // let freeItemStorageSlotComponent = this.getFirstFreeItemStorageSlot(itemStorages);
@@ -57,10 +61,19 @@ export default class ItemStorageManager implements ItemStorageInterface {
         freeItemStorageSlotComponent.placeItemStack(itemStack);
     }
 
+    /**
+     * @deprecated
+     * @param item
+     * @param count
+     */
     addItem(item: Item, count: unsigned): unsigned {
         return ItemStorageComponent.addItemToItemStorages(this.itemStorages, item, count);
     }
 
+    /**
+     * @deprecated
+     * @param options
+     */
     createItemStack(options: {
         item: Item,
         count: unsigned,
@@ -78,6 +91,10 @@ export default class ItemStorageManager implements ItemStorageInterface {
         });
     }
 
+    /**
+     * @deprecated
+     * @param itemStorageComponent
+     */
     moveFrom(itemStorageComponent: ItemStorageComponent): void {
         let slots = itemStorageComponent.itemStorageSlotComponents;
         for (let i = 0; i < slots.length; i++) {

@@ -98,7 +98,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                 },
             },
             {
-                heroClassID: HeroClassID.Mage,
+                heroClassID: HeroClassID.FireMage,
                 level: 1,
                 equip: {
                     [EquipSlotID.Chest]: ItemID.ClothBreastplate_01,
@@ -131,7 +131,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
             for (const equipSlotID in heroPatterns[i].equip) {
                 let item = this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, heroPatterns[i].equip[equipSlotID]);
                 if (!item) {
-                    debug(DebugNamespaceID.Warring)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
+                    debug(DebugNamespaceID.Warning)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
                     continue;
                 }
 

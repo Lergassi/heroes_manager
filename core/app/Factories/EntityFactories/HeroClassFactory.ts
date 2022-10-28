@@ -24,23 +24,29 @@ export default class HeroClassFactory {
         name: string,
         sort: number,
         heroRoleID: HeroRoleID,
-        availableWeaponItemCategoryIDs: ItemCategoryID[],
         availableArmorMaterialIds: ArmorMaterialID[],
         mainCharacterAttributeIds: CharacterAttributeID[],
+        rightHandItemCategories: ItemCategoryID[],
+        leftHandItemCategories: ItemCategoryID[] = [],
     ) {
         return this._entityManager.add<HeroClass>(EntityID.HeroClass, id, new HeroClass(
             id,
             name,
             sort,
             this._entityManager.get<HeroRole>(EntityID.HeroRole, heroRoleID),
-            _.map(availableWeaponItemCategoryIDs, (itemCategoryID) => {
-                return this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
-            }),
-            _.map(availableArmorMaterialIds, (armorMaterialId) => {
-                return this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, armorMaterialId);
+
+            _.map(availableArmorMaterialIds, (armorMaterialID) => {
+                return this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, armorMaterialID);
             }),
             _.map(mainCharacterAttributeIds, (characterAttributeID) => {
                 return this._entityManager.get<CharacterAttributeEntity>(EntityID.CharacterAttribute, characterAttributeID);
+            }),
+            _.map(rightHandItemCategories, (itemCategoryID) => {
+                return this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
+            }),
+            //todo: Может без сущностей?
+            _.map(leftHandItemCategories, (itemCategoryID) => {
+                return this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
             }),
         ));
     }

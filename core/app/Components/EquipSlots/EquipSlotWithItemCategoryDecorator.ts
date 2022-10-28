@@ -6,43 +6,32 @@ import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import ItemCategory from '../../Entities/ItemCategory.js';
 import _ from 'lodash';
 import AppError from '../../../source/Errors/AppError.js';
-import {assertIsArray, assertIsMinLength} from '../../../source/assert.js';
+import {assertIsArray, assertIsMinLength, assertNotNil} from '../../../source/assert.js';
 
 //todo: Далее внутри, без зависимостей, может быть компонент вообще без правил, просто для размещения предмета.
 export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInterface {
-    // private _itemStack: ItemStack;
-    private _equipSlot: EquipSlotInterface;
+    private readonly _equipSlot: EquipSlotInterface;
     private readonly _availableItemCategories: ItemCategory[];
 
-    //todo: Пока без ID.
     constructor(equipSlot: EquipSlotInterface, availableItemCategories: ItemCategory[]) {
-        // assertMinLength(availableItemCategories, 1);
+        assertNotNil(equipSlot);
         assertIsArray(availableItemCategories);
 
         this._equipSlot = equipSlot;
         this._availableItemCategories = availableItemCategories;
-        // this._itemStack = null;
     }
 
     createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
         this._assertCanEquip(item);
 
-        // this._itemStack = itemStackFactory.create(item, count);
         this._equipSlot.createItemStack(item, count, itemStackFactory);
-
-        // return true;
     }
 
     clear(): void {
-        // this._itemStack = null;
-
         this._equipSlot.clear();
-
-        // return true;
     }
 
     isFree(): boolean {
-        // return _.isNil(this._itemStack);
         return this._equipSlot.isFree();
     }
 

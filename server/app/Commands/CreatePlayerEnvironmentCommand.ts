@@ -194,7 +194,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
                 },
             },
             {
-                heroClassID: HeroClassID.Mage,
+                heroClassID: HeroClassID.FireMage,
                 level: 1,
                 equip: {
                     chest: ItemID.ClothBreastplate_01,

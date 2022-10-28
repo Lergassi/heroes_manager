@@ -1,4 +1,3 @@
-import EntityManager from '../../source/EntityManager.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
 import Item from '../Entities/Item.js';
 import ContainerInterface from '../../source/ContainerInterface.js';
@@ -58,7 +57,11 @@ export default class EntityManagerBuilder {
 
         this._createEnemyEntities();
 
+        // this._calcHeroConfig();
+        this._initHeroConfig();
+
         debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.End');
+        debug(DebugNamespaceID.LoadDebug)(this._entityManager);
 
         return this._entityManager;
     }
@@ -392,15 +395,18 @@ export default class EntityManagerBuilder {
             'Воин',
             500,
             HeroRoleID.Tank,
+            [                   //Может не HeroClass, а отдельный параметр у героя ArmorMaterial
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+            ],
             [
                 ItemCategoryID.OneHandedSwords,
                 ItemCategoryID.OneHandedAxes,
             ],
             [
-                ArmorMaterialID.Plate,
-            ],
-            [
-                CharacterAttributeID.Strength,
+                ItemCategoryID.Shields,
             ],
         );
         heroClassFactory.create(
@@ -409,9 +415,134 @@ export default class EntityManagerBuilder {
             510,
             HeroRoleID.Tank,
             [
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+                CharacterAttributeID.Intelligence,
+            ],
+            [
                 ItemCategoryID.OneHandedSwords,
                 ItemCategoryID.OneHandedAxes,
             ],
+            [
+                ItemCategoryID.Shields,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.Tank1,
+            HeroClassID.Tank1,
+            500,    //todo: Не удобно. Надо в отдельный файл переносить.
+            HeroRoleID.Tank,
+            [
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+            ],
+            [
+                ItemCategoryID.OneHandedSwords,
+            ],
+            [
+                ItemCategoryID.Shields,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.Tank2,
+            HeroClassID.Tank2,
+            500,
+            HeroRoleID.Tank,
+            [
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+            ],
+            [
+                ItemCategoryID.OneHandedSwords,
+            ],
+            [
+                ItemCategoryID.Shields,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.Tank3,
+            HeroClassID.Tank3,
+            500,
+            HeroRoleID.Tank,
+            [
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+            ],
+            [
+                ItemCategoryID.OneHandedSwords,
+            ],
+            [
+                ItemCategoryID.Shields,
+            ],
+        );
+        //dd plate
+        heroClassFactory.create(
+            HeroClassID.Gladiator,
+            'Гладиатор',
+            530,
+            HeroRoleID.DamageDealer,
+            [
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+            ],
+            [
+                ItemCategoryID.OneHandedSwords,
+            ],
+            [
+                ItemCategoryID.OneHandedSwords,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
+            HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
+            500,
+            HeroRoleID.DamageDealer,
+            [
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+            ],
+            [
+                ItemCategoryID.TwoHandedSwords,
+                ItemCategoryID.TwoHandedAxes,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
+            HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
+            500,
+            HeroRoleID.DamageDealer,
+            [
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+            ],
+            [
+                ItemCategoryID.TwoHandedSwords,
+                ItemCategoryID.TwoHandedAxes,
+            ],
+            [
+                ItemCategoryID.TwoHandedSwords,
+                ItemCategoryID.TwoHandedAxes,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.PlateDamageDealer1,
+            HeroClassID.PlateDamageDealer1,
+            500,
+            HeroRoleID.DamageDealer,
             [
                 ArmorMaterialID.Plate,
             ],
@@ -419,36 +550,49 @@ export default class EntityManagerBuilder {
                 CharacterAttributeID.Strength,
                 CharacterAttributeID.Intelligence,
             ],
+            [
+                ItemCategoryID.OneHandedSwords,
+                ItemCategoryID.OneHandedAxes,
+            ],
+            [
+                ItemCategoryID.OneHandedSwords,
+                ItemCategoryID.OneHandedAxes,
+            ],
         );
+        heroClassFactory.create(
+            HeroClassID.PlateDamageDealer2,
+            HeroClassID.PlateDamageDealer2,
+            500,
+            HeroRoleID.DamageDealer,
+            [
+                ArmorMaterialID.Plate,
+            ],
+            [
+                CharacterAttributeID.Strength,
+                CharacterAttributeID.Intelligence,
+            ],
+            [
+                ItemCategoryID.TwoHandedSwords,
+            ],
+        );
+        //dd leather
         heroClassFactory.create(
             HeroClassID.Rogue,
             'Разбойник',
             520,
             HeroRoleID.DamageDealer,
             [
-                ItemCategoryID.Daggers,
-            ],
-            [
                 ArmorMaterialID.Leather,
             ],
             [
                 CharacterAttributeID.Agility,
             ],
-        );
-        heroClassFactory.create(
-            HeroClassID.Gladiator,
-            'Гладиатор',
-            530,
-            HeroRoleID.DamageDealer,
             [
-                ItemCategoryID.OneHandedSwords,
+                ItemCategoryID.Daggers,
             ],
             [
-                ArmorMaterialID.Plate,
-            ],
-            [
-                CharacterAttributeID.Strength,
-            ],
+                ItemCategoryID.Daggers,
+            ]
         );
         heroClassFactory.create(
             HeroClassID.Archer,
@@ -456,14 +600,14 @@ export default class EntityManagerBuilder {
             540,
             HeroRoleID.DamageDealer,
             [
-                ItemCategoryID.Bows,
-                ItemCategoryID.Crossbows,
-            ],
-            [
                 ArmorMaterialID.Leather,
             ],
             [
                 CharacterAttributeID.Agility,
+            ],
+            [
+                ItemCategoryID.Bows,
+                ItemCategoryID.Crossbows,
             ],
         );
         heroClassFactory.create(
@@ -472,8 +616,24 @@ export default class EntityManagerBuilder {
             550,
             HeroRoleID.DamageDealer,
             [
+                ArmorMaterialID.Leather,
+            ],
+            [
+                CharacterAttributeID.Agility,
+                CharacterAttributeID.Intelligence,
+            ],
+            [
                 ItemCategoryID.Revolvers,
             ],
+            [
+                ItemCategoryID.Revolvers,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.LeatherDamageDealer1,
+            HeroClassID.LeatherDamageDealer1,
+            550,
+            HeroRoleID.DamageDealer,
             [
                 ArmorMaterialID.Leather,
             ],
@@ -481,21 +641,87 @@ export default class EntityManagerBuilder {
                 CharacterAttributeID.Agility,
                 CharacterAttributeID.Intelligence,
             ],
+            [
+                ItemCategoryID.OneHandedSwords,
+            ],
+            [
+
+            ],
         );
         heroClassFactory.create(
-            HeroClassID.Mage,
-            'Маг',
-            560,
+            HeroClassID.LeatherDamageDealer2,
+            HeroClassID.LeatherDamageDealer2,
+            550,
             HeroRoleID.DamageDealer,
             [
-                ItemCategoryID.Staffs,
-                ItemCategoryID.Wands,
+                ArmorMaterialID.Leather,
             ],
+            [
+                CharacterAttributeID.Agility,
+            ],
+            [
+                ItemCategoryID.OneHandedAxes,
+            ],
+            [
+                ItemCategoryID.OneHandedAxes,
+            ],
+        );
+        //dd cloth
+        heroClassFactory.create(
+            HeroClassID.FireMage,
+            HeroClassID.FireMage,
+            560,
+            HeroRoleID.DamageDealer,
             [
                 ArmorMaterialID.Cloth,
             ],
             [
                 CharacterAttributeID.Intelligence,
+            ],
+            [
+                ItemCategoryID.Staffs,  //todo: Перчакти вместо оружия.
+                ItemCategoryID.Wands,
+            ],
+            [
+                ItemCategoryID.Wands,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.Mage1,
+            HeroClassID.Mage1,
+            560,
+            HeroRoleID.DamageDealer,
+            [
+                ArmorMaterialID.Cloth,
+            ],
+            [
+                CharacterAttributeID.Intelligence,
+            ],
+            [
+                ItemCategoryID.Staffs,
+                ItemCategoryID.Wands,
+            ],
+            [
+                ItemCategoryID.Wands,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.Mage2,
+            HeroClassID.Mage2,
+            560,
+            HeroRoleID.DamageDealer,
+            [
+                ArmorMaterialID.Cloth,
+            ],
+            [
+                CharacterAttributeID.Intelligence,
+            ],
+            [
+                ItemCategoryID.Staffs,
+                ItemCategoryID.Wands,
+            ],
+            [
+                ItemCategoryID.Wands,
             ],
         );
         heroClassFactory.create(
@@ -504,30 +730,53 @@ export default class EntityManagerBuilder {
             570,
             HeroRoleID.DamageDealer,
             [
+                ArmorMaterialID.Cloth,
+            ],
+            [
+                CharacterAttributeID.Intelligence,
+            ],
+            [
                 ItemCategoryID.Staffs,
                 ItemCategoryID.Wands,
             ],
+            [
+                ItemCategoryID.Wands,
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.Necromancer,
+            HeroClassID.Necromancer,
+            560,
+            HeroRoleID.DamageDealer,
             [
                 ArmorMaterialID.Cloth,
             ],
             [
                 CharacterAttributeID.Intelligence,
             ],
+            [
+                ItemCategoryID.Staffs,
+            ],
+            [
+
+            ],
         );
+        //support
         heroClassFactory.create(
             HeroClassID.Priest,
             'Священик',
             560,
             HeroRoleID.Support,
             [
-                ItemCategoryID.Staffs,
-                ItemCategoryID.Wands,
-            ],
-            [
                 ArmorMaterialID.Cloth,
             ],
             [
                 CharacterAttributeID.Intelligence,
+            ],
+            [
+                ItemCategoryID.Staffs,
+            ],
+            [
             ],
         );
         heroClassFactory.create(
@@ -536,16 +785,72 @@ export default class EntityManagerBuilder {
             560,
             HeroRoleID.Support,
             [
-                ItemCategoryID.Staffs,
-                ItemCategoryID.Wands,
+                ArmorMaterialID.Cloth,
             ],
+            [
+                CharacterAttributeID.Intelligence,
+            ],
+            [
+                ItemCategoryID.Staffs,
+            ],
+            [
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.Support1,
+            HeroClassID.Support1,
+            560,
+            HeroRoleID.Support,
             [
                 ArmorMaterialID.Cloth,
             ],
             [
                 CharacterAttributeID.Intelligence,
             ],
+            [
+                ItemCategoryID.Staffs,
+            ],
+            [
+
+            ],
         );
+        heroClassFactory.create(
+            HeroClassID.Support2,
+            HeroClassID.Support2,
+            560,
+            HeroRoleID.Support,
+            [
+                ArmorMaterialID.Cloth,
+            ],
+            [
+                CharacterAttributeID.Intelligence,
+            ],
+            [
+                ItemCategoryID.Staffs,
+            ],
+            [
+
+            ],
+        );
+        heroClassFactory.create(
+            HeroClassID.Support3,
+            HeroClassID.Support3,
+            560,
+            HeroRoleID.Support,
+            [
+                ArmorMaterialID.Cloth,
+            ],
+            [
+                CharacterAttributeID.Intelligence,
+            ],
+            [
+                ItemCategoryID.Staffs,
+            ],
+            [
+
+            ],
+        );
+
 
         debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.HeroClass');
     }
@@ -674,7 +979,7 @@ export default class EntityManagerBuilder {
                 [HeroClassID.Gunslinger]: [
                     ItemCategoryID.Revolvers,
                 ],
-                [HeroClassID.Mage]: [
+                [HeroClassID.FireMage]: [
                     ItemCategoryID.Staffs,
                     ItemCategoryID.Wands,
                 ],
@@ -715,7 +1020,7 @@ export default class EntityManagerBuilder {
                 [HeroClassID.Gunslinger]: [
                     ItemCategoryID.Revolvers,
                 ],
-                [HeroClassID.Mage]: [
+                [HeroClassID.FireMage]: [
                     ItemCategoryID.Wands,
                 ],
                 [HeroClassID.Warlock]: [
@@ -844,4 +1149,61 @@ export default class EntityManagerBuilder {
 
         debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.EnemyEntity');
     }
+
+    // private _calcHeroConfig() {
+    //     let defaultMainCharacterMultiplier = 0.5;
+    //     let tankHealthPointsMultiplier = 1;
+    //
+    //     let characterAttributeRange = {
+    //         [CharacterAttributeID.Strength]: 3,
+    //         [CharacterAttributeID.Agility]: 3,
+    //         [CharacterAttributeID.Intelligence]: 3,
+    //         [CharacterAttributeID.MaxHealthPoints]: 40,
+    //         [CharacterAttributeID.Protection]: 50,
+    //         [CharacterAttributeID.AttackPower]: 10,
+    //     };
+    //     let defaultCharacterAttributes = {
+    //         [CharacterAttributeID.Strength]: [6, 6 + characterAttributeRange[CharacterAttributeID.Strength]],
+    //         [CharacterAttributeID.Agility]: [6, 6 + characterAttributeRange[CharacterAttributeID.Agility]],
+    //         [CharacterAttributeID.Intelligence]: [6, 6 + characterAttributeRange[CharacterAttributeID.Intelligence]],
+    //
+    //         [CharacterAttributeID.MaxHealthPoints]: [80, 80 + characterAttributeRange[CharacterAttributeID.MaxHealthPoints]],
+    //         [CharacterAttributeID.Protection]: [0, 0 + characterAttributeRange[CharacterAttributeID.Protection]],    //3-5%
+    //         // [CharacterAttributeID.Stamina]: [0, 0],
+    //
+    //         // [CharacterAttributeID.MaxMagicPoints]: [100, 100],
+    //
+    //         [CharacterAttributeID.AttackPower]: [16, 16 + characterAttributeRange[CharacterAttributeID.AttackPower]],
+    //         // [CharacterAttributeID.AttackSpeed]: [0, 0],
+    //         // [CharacterAttributeID.CriticalStrike]: [0, 0],
+    //
+    //         // [CharacterAttributeID.Luck]: [0, 0],
+    //     };
+    //
+    //     let startCharacterAttributeConfig = {
+    //         [HeroClassID.Warrior]: {
+    //             [CharacterAttributeID.Strength]: [
+    //                 defaultCharacterAttributes[CharacterAttributeID.Strength][0] + defaultCharacterAttributes[CharacterAttributeID.Strength][0] * defaultMainCharacterMultiplier,
+    //                 defaultCharacterAttributes[CharacterAttributeID.Strength][0] + defaultCharacterAttributes[CharacterAttributeID.Strength][0] * defaultMainCharacterMultiplier + characterAttributeRange
+    //             ],
+    //             [CharacterAttributeID.Protection]: [
+    //                 200,
+    //                 300
+    //             ],
+    //             //todo: Если так просто умножать, то получается слишком большой разброс значений: 160-240. Может быть 160/170/180/190/200/210/220/230/240 - 9 вариантов.
+    //             [CharacterAttributeID.MaxHealthPoints]: [
+    //                 defaultCharacterAttributes[CharacterAttributeID.MaxHealthPoints][0] + defaultCharacterAttributes[CharacterAttributeID.MaxHealthPoints][0] * tankHealthPointsMultiplier,
+    //                 defaultCharacterAttributes[CharacterAttributeID.MaxHealthPoints][1] + defaultCharacterAttributes[CharacterAttributeID.MaxHealthPoints][1] * tankHealthPointsMultiplier
+    //             ],
+    //             // [CharacterAttributeID.Agility]: [6, 9],
+    //             // [CharacterAttributeID.Intelligence]: [6, 9],
+    //         },
+    //     };
+    //     console.log(defaultCharacterAttributes);
+    //     console.log(startCharacterAttributeConfig);
+    // }
+
+    //Без расчетов. Только в ручную заданные все параметры. todo: Автоматизация позже.
+    private _initHeroConfig() {
+    }//end method
 }

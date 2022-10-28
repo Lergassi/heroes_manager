@@ -37,7 +37,7 @@ export default class CreateRandomHeroClassCommand extends Command {
             HeroClassID.Gladiator,
             HeroClassID.Archer,
             HeroClassID.Gunslinger,
-            HeroClassID.Mage,
+            HeroClassID.FireMage,
             HeroClassID.Warlock,
             HeroClassID.Priest,
             HeroClassID.Druid,

@@ -34,6 +34,7 @@ export default class EquipSlotFactory {
         );
         equipSlot = new EquipSlotWithItemCategoryDecorator(
             equipSlot,
+            // equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
             equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
         );
         equipSlot = new EquipSlotWithArmorMaterialDecorator(
@@ -42,25 +43,6 @@ export default class EquipSlotFactory {
         );
 
         return equipSlot;
-    }
-
-    createLeftHand(
-        equipSlotData: EquipSlot,
-        heroClass: HeroClass,
-        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
-    ): EquipSlotInterface {
-        let leftHand: EquipSlotInterface = new DefaultEquipSlot();
-
-        leftHand = new EquipSlotWithItemCollectorDecorator(
-            leftHand,
-            itemCharacterAttributeCollector,
-        );
-        leftHand = new EquipSlotWithItemCategoryDecorator(
-            leftHand,
-            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
-        );
-
-        return leftHand;
     }
 
     createRightHand(
@@ -78,9 +60,30 @@ export default class EquipSlotFactory {
         );
         rightHand = new EquipSlotWithItemCategoryDecorator(
             rightHand,
-            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
+            // equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
+            heroClass.rightHandItemCategories,
         );
 
         return rightHand;
+    }
+
+    createLeftHand(
+        equipSlotData: EquipSlot,
+        heroClass: HeroClass,
+        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
+    ): EquipSlotInterface {
+        let leftHand: EquipSlotInterface = new DefaultEquipSlot();
+
+        leftHand = new EquipSlotWithItemCollectorDecorator(
+            leftHand,
+            itemCharacterAttributeCollector,
+        );
+        leftHand = new EquipSlotWithItemCategoryDecorator(
+            leftHand,
+            // equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
+            heroClass.leftHandItemCategories,
+        );
+
+        return leftHand;
     }
 }

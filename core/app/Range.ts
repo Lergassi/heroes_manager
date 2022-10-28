@@ -1,19 +1,26 @@
 import AppError from '../source/Errors/AppError.js';
 
 export default class Range {
-    private readonly _min: number;
-    private readonly _max: number;
+    private readonly _left: number;
+    private readonly _right: number;
 
-    constructor(min: number, max: number) {
-        this._min = min;
-        this._max = max;
+    constructor(left: number, right: number) {
+        this._left = left;
+        this._right = right;
 
-        if (this._min > this._max) {
-            throw new AppError('Значение min не может быть больше значения max.');
+        if (this._left > this._right) {
+            throw new AppError('Значение left не может быть больше значения right.');
         }
     }
     //
     // inRange(n: number): boolean {
-    //     return _.inRange(n, this._min, this._max + 1);
+    //     return _.inRange(n, this._left, this._right + 1);
     // }
+
+    multiply(value: number): number[] {
+        return [
+            this._left * value,
+            this._right * value,
+        ];
+    }
 }

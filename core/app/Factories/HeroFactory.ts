@@ -2,63 +2,48 @@ import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
 import ExperienceComponent from '../Components/ExperienceComponent.js';
-import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import EquipSlot from '../Entities/EquipSlot.js';
-import CharacterAttribute from '../Components/CharacterAttribute.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
 import AttackController from '../Components/AttackController.js';
 import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
-import GameObjectStorage from '../../source/GameObjectStorage.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import {CharacterAttributes, unsigned} from '../../types/main.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import TakeComponent from '../Components/TakeComponent.js';
 import _ from 'lodash';
-import CharacterAttributeStartValueGenerator from '../Services/CharacterAttributeStartValueGenerator.js';
-import CharacterAttributeCollector from '../Components/CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import AttackPowerDependentIncreaserDecorator
     from '../Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
-import CharacterAttributeFactory from './CharacterAttributeFactory.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {assert, assertNotNil} from '../../source/assert.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
-import DefaultEquipSlot from '../Components/EquipSlots/DefaultEquipSlot.js';
-import EquipSlotWithItemCategoryDecorator from '../Components/EquipSlots/EquipSlotWithItemCategoryDecorator.js';
-import ItemCategory from '../Entities/ItemCategory.js';
-import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
-import EquipSlotWithArmorMaterialDecorator from '../Components/EquipSlots/EquipSlotWithArmorMaterialDecorator.js';
-import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
-import RightHand from '../Components/EquipSlots/RightHand.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
-import EquipSlotWithItemCollectorDecorator from '../Components/EquipSlots/EquipSlotWithItemCollectorDecorator.js';
 import EquipSlotFactory from './EquipSlotFactory.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
 import StateController from '../Components/StateController.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import HeroCharacterAttributeFactory from './HeroCharacterAttributeFactory.js';
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManagerInterface;
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _experienceComponentFactory: ExperienceComponentFactory;
-    private readonly _characterAttributeFactory: CharacterAttributeFactory;
+    private readonly _characterAttributeFactory: HeroCharacterAttributeFactory;
 
     constructor(
         entityManager: EntityManagerInterface,
         gameObjectFactory: GameObjectFactory,
         experienceComponentFactory: ExperienceComponentFactory,
-        characterAttributeFactory: CharacterAttributeFactory,
+        characterAttributeFactory: HeroCharacterAttributeFactory,
     ) {
         assertNotNil(entityManager);
         assertNotNil(gameObjectFactory);
@@ -193,10 +178,8 @@ export default class HeroFactory {
         //todo: Переделать хранение главных атрибутов у классов.
         let mainCharacterAttributes = heroClass.mainCharacterAttributes;
         //todo: Переделать при создании логики создания разных показателей для каждого класса.
-        let modifiers = {
-            main: function (value) {
-                return value + _.ceil(value * 0.5); //todo: Для каждого класса нужно уникальное значение. Особено где зависимость от двух атрибутов.
-            },
+        let modifier = function (value) {
+            return value + _.ceil(value * 0.5); //todo: Для каждого класса нужно уникальное значение. Особено где зависимость от двух атрибутов.
         };
 
         for (let i = 0; i < characterAttributeIDs.length; i++) {
@@ -204,14 +187,15 @@ export default class HeroFactory {
             if (_.filter(mainCharacterAttributes, (value) => {
                 return value.id === characterAttributeIDs[i];
             }).length) {
-                baseValueModifier = modifiers.main;
+                baseValueModifier = modifier;
             }
             characterAttributes[characterAttributeIDs[i]] = hero.set<CharacterAttributeInterface>(characterAttributeIDs[i], this._characterAttributeFactory.create(
+                heroClass.id as HeroClassID,
                 characterAttributeIDs[i] as CharacterAttributeID,
                 level,
                 itemCharacterAttributeCollector,
                 {
-                    baseValueModifier: baseValueModifier,
+                    // baseValueModifier: baseValueModifier,
                 },
             ));
         }
@@ -222,7 +206,6 @@ export default class HeroFactory {
             dependentCharacterAttributes: _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {   //todo: Через индекс.
                 return hero.get<CharacterAttributeInterface>(characterAttribute.id);    //todo: Доступ.
             }), value => value != undefined),
-            // dependentCharacterAttributes: [],
         }));
 
         //К компоненту с очками здоровья возможно не будет доступа вообще.

@@ -41,7 +41,7 @@ export default {
                 [CharacterAttributeID.Intelligence]: 5,
             }
         },
-        [HeroClassID.Mage]: {
+        [HeroClassID.FireMage]: {
             max_level: 100,
             [CharacterAttributeID.MaxHealthPoints]: 70,
             [CharacterAttributeID.MaxMagicPoints]: 200,

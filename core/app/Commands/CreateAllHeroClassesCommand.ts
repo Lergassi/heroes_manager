@@ -15,14 +15,33 @@ export default class CreateAllHeroClassesCommand extends Command {
         let heroClasses = [
             HeroClassID.Warrior,
             HeroClassID.Paladin,
-            HeroClassID.Rogue,
+            HeroClassID.Tank1,
+            HeroClassID.Tank2,
+            HeroClassID.Tank3,
+
             HeroClassID.Gladiator,
+            HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
+            HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
+            HeroClassID.PlateDamageDealer1,
+            HeroClassID.PlateDamageDealer2,
+
+            HeroClassID.Rogue,
             HeroClassID.Archer,
             HeroClassID.Gunslinger,
-            HeroClassID.Mage,
+            HeroClassID.LeatherDamageDealer1,
+            HeroClassID.LeatherDamageDealer2,
+
+            HeroClassID.FireMage,
+            HeroClassID.Mage1,
+            HeroClassID.Mage2,
             HeroClassID.Warlock,
+            HeroClassID.Necromancer,
+
             HeroClassID.Priest,
             HeroClassID.Druid,
+            HeroClassID.Support1,
+            HeroClassID.Support2,
+            HeroClassID.Support3,
         ];
 
         let heroFactory = this.container.get<HeroFactory>(ContainerID.HeroFactory);

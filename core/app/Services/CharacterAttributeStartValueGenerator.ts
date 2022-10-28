@@ -21,13 +21,17 @@ export default class CharacterAttributeStartValueGenerator {
         [CharacterAttributeID.Strength]: new StrengthStartValueGenerator(),
         [CharacterAttributeID.Agility]: new AgilityStartValueGenerator(),
         [CharacterAttributeID.Intelligence]: new IntelligenceStartValueGenerator(),
+
         [CharacterAttributeID.MaxHealthPoints]: new MaxHealthPointsStartValueGenerator(),
         [CharacterAttributeID.Protection]: new ProtectionStartValueGenerator(),
         [CharacterAttributeID.Stamina]: new DefaultCharacterAttributeStartValueGenerator(),
+
         [CharacterAttributeID.MaxMagicPoints]: new MaxMagicPointsStartValueGenerator(),
+
         [CharacterAttributeID.AttackPower]: new AttackPowerStartValueGenerator(),
         [CharacterAttributeID.AttackSpeed]: new DefaultCharacterAttributeStartValueGenerator(),
         [CharacterAttributeID.CriticalStrike]: new DefaultCharacterAttributeStartValueGenerator(),
+
         [CharacterAttributeID.Luck]: new DefaultCharacterAttributeStartValueGenerator(),
     };
     private readonly _characterAttributeValueGenerator: CharacterAttributeValueGenerator;
@@ -36,16 +40,16 @@ export default class CharacterAttributeStartValueGenerator {
         characterAttributeValueGenerator: CharacterAttributeValueGenerator,
     ) {
         assertNotNil(characterAttributeValueGenerator);
-
         this._characterAttributeValueGenerator = characterAttributeValueGenerator;
     }
 
     generate(
         characterAttributeID: CharacterAttributeID,
         level: unsigned,
-        baseValueModifier?: CharacterAttributeValueModifier,
+        // baseValueModifier?: CharacterAttributeValueModifier,
     ): number {
-        return (this._characterAttributeStartValueGenerators[characterAttributeID]?.generate(baseValueModifier) ?? 0) +
+        // return (this._characterAttributeStartValueGenerators[characterAttributeID]?.generate() ?? 0)
+        return (this._characterAttributeStartValueGenerators[characterAttributeID]?.generate() ?? 0) +
             this._characterAttributeValueGenerator.increase(characterAttributeID, level)
             ;
     }

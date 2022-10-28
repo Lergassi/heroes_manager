@@ -175,7 +175,7 @@ export default class ItemStorageComponent implements ItemStorageInterface {
     }
 
     /**
-     *
+     * @deprecated
      * @param itemStorages
      * @param item
      * @param count Остаток.
@@ -195,7 +195,7 @@ export default class ItemStorageComponent implements ItemStorageInterface {
         }
 
         if (originCount > 0 && count > 0) {
-            debug(DebugNamespaceID.Warring)(sprintf('Предметы не добавлены %d - не хватило места.', count));
+            debug(DebugNamespaceID.Warning)(sprintf('Предметы не добавлены %d - не хватило места.', count));
         }
 
         return count;

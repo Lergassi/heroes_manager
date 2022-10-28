@@ -154,11 +154,11 @@ export default class _SandboxController {
                 1,
             ),
             heroFactory.create(
-                em.get<HeroClass>(HeroClass, HeroClassID.Mage),
+                em.get<HeroClass>(HeroClass, HeroClassID.FireMage),
                 1,
             ),
             heroFactory.create(
-                em.get<HeroClass>(HeroClass, HeroClassID.Mage),
+                em.get<HeroClass>(HeroClass, HeroClassID.FireMage),
                 1,
             ),
             heroFactory.create(
@@ -689,11 +689,11 @@ export default class _SandboxController {
                 1,
             ),
             heroFactory.create(
-                em.get<HeroClass>(HeroClass, HeroClassID.Mage),
+                em.get<HeroClass>(HeroClass, HeroClassID.FireMage),
                 1,
             ),
             heroFactory.create(
-                em.get<HeroClass>(HeroClass, HeroClassID.Mage),
+                em.get<HeroClass>(HeroClass, HeroClassID.FireMage),
                 1,
             ),
         ];

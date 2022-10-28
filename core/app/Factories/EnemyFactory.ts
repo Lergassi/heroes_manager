@@ -14,7 +14,7 @@ import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttribut
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import CharacterAttributeFactory from './CharacterAttributeFactory.js';
+import EnemyCharacterAttributeFactory from './EnemyCharacterAttributeFactory.js';
 import AttackController from '../Components/AttackController.js';
 import StateController from '../Components/StateController.js';
 import {EntityID} from '../../types/enums/EntityID.js';
@@ -24,12 +24,12 @@ import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 export default class EnemyFactory {
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _entityManager: EntityManagerInterface;
-    private readonly _characterAttributeFactory: CharacterAttributeFactory;
+    private readonly _characterAttributeFactory: EnemyCharacterAttributeFactory;
 
     constructor(
         gameObjectFactory: GameObjectFactory,
         entityManager: EntityManagerInterface,
-        characterAttributeFactory: CharacterAttributeFactory,
+        characterAttributeFactory: EnemyCharacterAttributeFactory,
     ) {
         this._gameObjectFactory = gameObjectFactory;
         this._entityManager = entityManager;
