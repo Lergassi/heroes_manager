@@ -18,7 +18,7 @@ import TotalCharacterAttributeValueCollectorComponent
 import AttackPower from '../../../core/app/Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
 import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
 import {CharacterAttributes} from '../../../core/types/main.js';
-import {GameObjectKey} from '../../../core/types/enums/GameObjectKey.js';
+import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import TakeComponent from '../../../core/app/Components/TakeComponent.js';
 
 export type HeroTableRowRComponentProps = {
@@ -76,11 +76,11 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                 <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_maxHealthPoints']['value']()}</td>
                 <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_isDead'] ? 'Мертвый' : 'Живой'}</td>
                 {/*<td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>*/}
-                <td>{hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).AttackPower.value()}</td>
+                <td>{hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).AttackPower.value()}</td>
                 <td>
-                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Strength.value()}/
-                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Agility.value()}/
-                    {hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Intelligence.value()}
+                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Strength.value()}/
+                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Agility.value()}/
+                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Intelligence.value()}
                 </td>
                 <td>
                     {hero.get<TakeComponent>(TakeComponent.name)['_state']}

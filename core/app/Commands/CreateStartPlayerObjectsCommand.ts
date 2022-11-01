@@ -35,6 +35,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         this._createItemStorages();
         this._createItems();
         this._createHeroes();
+        this._createLocations();
     }
 
     private _createItemStorages() {
@@ -155,5 +156,9 @@ export default class CreateStartPlayerObjectsCommand extends Command {
             1,
             this.container.get<HeroFactory>(ContainerID.HeroFactory),
         );
+    }
+
+    private async _createLocations() {
+        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandNameID.create_location, ['1']);
     }
 }

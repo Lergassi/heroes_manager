@@ -15,7 +15,7 @@ import AttackPowerStartValueGenerator from './CharacterAttributeStartValueGenera
 import DefaultCharacterAttributeValueGenerator
     from './CharacterAttributeValueGenerators/DefaultCharacterAttributeValueGenerator.js';
 import {unsigned} from '../../types/main.js';
-import {CharacterAttributeValueModifier} from './CharacterAttributeStartValueGenerator.js';
+import {CharacterAttributeValueModifier} from './EnemyCharacterAttributeStartValueGenerator.js';
 import CharacterAttributeValueGeneratorInterface from '../Interfaces/CharacterAttributeValueGeneratorInterface.js';
 
 //todo: Временно. Переделать когда будет прокачка героев. Далее станет более понятно какой нужен интерфейс у классов отвечающих за генерацию прибавки к атрибутам.

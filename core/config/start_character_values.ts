@@ -4,7 +4,9 @@ import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
 // type __ = Pick<CharacterAttributeID, CharacterAttributeID.Strength>;
 // export type CharacterAttributeConfig = {[id in HeroClassID]?: {[id in CharacterAttributeID]?: number[]}};
 // export type CharacterAttributeConfig = {[id in HeroClassID]?: {[id in __]?: number[]}};
-export type StartCharacterAttributeConfig = {[id in HeroClassID]?: {[id in CharacterAttributeID]?: number[]}};
+export type CharacterAttributeConfig = {[id in CharacterAttributeID]?: number[]};
+// export type StartCharacterAttributeConfig = {[id in HeroClassID]?: {[id in CharacterAttributeID]?: number[]}};
+export type StartCharacterAttributeConfig = {[id in HeroClassID]?: CharacterAttributeConfig};
 
 let defaultValues = {
     [CharacterAttributeID.Strength]: [6, 9],
@@ -214,6 +216,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
     },
     [HeroClassID.Priest]: {
         [CharacterAttributeID.Strength]: [6, 9],
+        [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],
         [CharacterAttributeID.Protection]: [100, 100],
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],

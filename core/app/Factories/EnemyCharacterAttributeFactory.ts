@@ -3,37 +3,34 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import {unsigned} from '../../types/main.js';
-import CharacterAttributeStartValueGenerator, {
+import EnemyCharacterAttributeStartValueGenerator, {
     CharacterAttributeValueModifier
-} from '../Services/CharacterAttributeStartValueGenerator.js';
+} from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
 import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
 
 export default class EnemyCharacterAttributeFactory {
-    private readonly _characterAttributeStartValueFactory: CharacterAttributeStartValueGenerator;
+    private readonly _enemyCharacterAttributeStartValueFactory: EnemyCharacterAttributeStartValueGenerator;
 
     constructor(
-        characterAttributeStartValueGenerator: CharacterAttributeStartValueGenerator,
+        characterAttributeStartValueGenerator: EnemyCharacterAttributeStartValueGenerator,
     ) {
-        this._characterAttributeStartValueFactory = characterAttributeStartValueGenerator;
+        this._enemyCharacterAttributeStartValueFactory = characterAttributeStartValueGenerator;
     }
 
     create(
         ID: CharacterAttributeID,
         level: unsigned,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,   //todo: В декоратор.
-        options?: { //todo: Времено пока в разработке. Далее для каждого класса будет своя логика без передачи из вне.
+        options?: {
             baseValue?: number,
-            // baseValueModifier?: CharacterAttributeValueModifier,
-            // increaseValueModifier?: CharacterAttributeValueModifier,
         },
     ) {
         let characterAttribute = new CharacterAttribute(
             ID,
             itemCharacterAttributeCollector,
-            options?.baseValue ?? this._characterAttributeStartValueFactory.generate(
+            options?.baseValue ?? this._enemyCharacterAttributeStartValueFactory.generate(
                 ID,
                 level,
-                // options?.baseValueModifier,
             )
         );
 

@@ -1,8 +1,9 @@
 import {unsigned} from '../../types/main.js';
 import _ from 'lodash';
-import Component from '../../source/Component.js';
 import WalletComponent from './WalletComponent.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export default class GoldLootGeneratorComponent {
     private readonly _min: unsigned;
@@ -21,6 +22,8 @@ export default class GoldLootGeneratorComponent {
     }
 
     transfer(wallet: WalletInterface) {
-        wallet.add(this._generate());
+        let gold = this._generate();
+        debug(DebugNamespaceID.Log)('Генерация золота в луте: ' + gold);
+        wallet.add(gold);
     }
 }

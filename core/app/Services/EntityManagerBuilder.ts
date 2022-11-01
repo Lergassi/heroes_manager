@@ -61,7 +61,7 @@ export default class EntityManagerBuilder {
         this._initHeroConfig();
 
         debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.End');
-        debug(DebugNamespaceID.LoadDebug)(this._entityManager);
+        debug(DebugNamespaceID.DebugDump)(this._entityManager);
 
         return this._entityManager;
     }

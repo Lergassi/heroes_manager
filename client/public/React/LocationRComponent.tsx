@@ -8,7 +8,7 @@ import ItemStorageComponent from '../../../core/app/Components/ItemStorageCompon
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
-import {GameObjectKey} from '../../../core/types/enums/GameObjectKey.js';
+import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 
 export interface LocationRComponentProps {
     container: ContainerInterface;
@@ -32,9 +32,9 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
                 LocationComponentEventCode.AddHero,
                 LocationComponentEventCode.RemoveHero,
                 LocationComponentEventCode.Start,
-                LocationComponentEventCode.Start,
                 LocationComponentEventCode.ItemsGenerated,
                 LocationComponentEventCode.GetItems,
+                LocationComponentEventCode.Update,
             ],
             listener: {
                 callback: (target) => {
@@ -76,7 +76,7 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
 
         //todo: Отдельный класс.
         let itemsElementTableRows = [];
-        location.get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).render((values) => {
+        location.get<ItemStorageComponent>(ComponentID.ItemStorageComponent).render((values) => {
             _.map(values.slots, (value, index) => {
                 itemsElementTableRows.push((<tr key={index}>
                     <td>

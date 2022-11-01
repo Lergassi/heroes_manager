@@ -5,7 +5,7 @@ import Item from '../Entities/Item.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import GameObject from '../../source/GameObject.js';
 import {unsigned} from '../../types/main.js';
-import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 import AppError from '../../source/Errors/AppError.js';
 import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import EventSystem from '../../source/EventSystem.js';
@@ -120,7 +120,7 @@ export default class ItemStorageComponent implements ItemStorageInterface {
      */
     addItem(item: Item, count: unsigned): unsigned {
         assertIsInstanceOf(item, Item);
-        assertIsGreaterThanOrEqual(count, 1);
+        assertIsGreaterThanOrEqual(count, 0);
 
         let currentCount = count;
         // for (const slotsKey in this._slots) {
@@ -183,12 +183,12 @@ export default class ItemStorageComponent implements ItemStorageInterface {
     static addItemToItemStorages(itemStorages: GameObject[], item: Item, count: number): unsigned {
         let originCount = count;
         for (let i = 0; i < itemStorages.length; i++) {
-            if (!itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent)) {
-                throw AppError.componentNotFound(GameObjectKey.ItemStorageComponent);
+            if (!itemStorages[i].get<ItemStorageComponent>(ComponentID.ItemStorageComponent)) {
+                throw AppError.componentNotFound(ComponentID.ItemStorageComponent);
             }
 
             // count -= count - itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).addItem(item, count);
-            count -= count - itemStorages[i].get<ItemStorageInterface>(GameObjectKey.ItemStorageComponent).addItem(item, count);
+            count -= count - itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).addItem(item, count);
             if (count <= 0) {
                 break;
             }

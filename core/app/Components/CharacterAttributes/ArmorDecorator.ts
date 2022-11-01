@@ -30,7 +30,7 @@ export default class ArmorDecorator implements DamageControllerInterface {
 
     //todo: Далее можно сделать механику модификации урона в виде цепочки или декораторов .damage(42) где урон проходит через все привязаные методы.
     //todo: Если урон < 10, то логика защиты практически не работает. Рашить далее.
-    damage(damage: unsigned): void {
+    takeDamage(damage: unsigned, afterDiedCallback?): void {
         assertIsPositive(damage);
 
         let protectDamage = _.ceil(+((damage * this._calcProtectionModifier()).toFixed(4)), 0);
@@ -39,12 +39,16 @@ export default class ArmorDecorator implements DamageControllerInterface {
         //todo: Нужно решить задачу с сообщением и расчетами. Если герой мертвый, то нанести урон нельзя и расчеты сделаны зря. А после урона вывести сообщение нельзя иначе сначала будет сообщение об уроне, а потом про блокировку. Можно вообще не выводить сообщения. И сообщения только для разработчика. Для пользователя можно сделать другую систему сообщений с передачей через метод.
         //todo: Или можно сделать отдельный класс для урона и методы для уменьшения урона. И в конце будет метод print() и метод печатает блокированный урон и сколько дошло до цели.
         debug(DebugNamespaceID.Log)(sprintf('Блокировано урона (%f): %d/%d.', this._calcProtectionModifier(), damage - finalDamage, damage));
-        this._healthPoints.damage(finalDamage);
+        this._healthPoints.takeDamage(finalDamage, afterDiedCallback);
     }
 
     private _calcProtectionModifier(): number {
         let protection = +(this._protection.value() / this._onePercentArmorProtectionValue / 100).toFixed(4);
 
         return protection <= this._maxProtection ? protection : this._maxProtection;
+    }
+
+    canTakeDamage(): boolean {
+        return this._healthPoints.canTakeDamage();
     }
 }

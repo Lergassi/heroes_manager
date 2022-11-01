@@ -16,7 +16,7 @@ import TakeComponent from '../Components/TakeComponent.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 import AttackPowerDependentIncreaserDecorator
     from '../Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
@@ -28,10 +28,11 @@ import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import EquipSlotFactory from './EquipSlotFactory.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
-import StateController from '../Components/StateController.js';
+import CharacterStateController from '../Components/CharacterStateController.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import HeroCharacterAttributeFactory from './HeroCharacterAttributeFactory.js';
+import EnemyFactory from './EnemyFactory.js';
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -60,16 +61,19 @@ export default class HeroFactory {
         heroClass: HeroClassID | HeroClass,
         level: unsigned,
         // characterAttributeCollector?: CharacterAttributeCollector;
+        //todo: Нужнен доступ к смене начальных атрибутов.
+        options?: {
+            baseCharacterAttributeValues?: {[id in CharacterAttributeID]?: number},
+        },
     ): GameObject {
         heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(EntityID.HeroClass, heroClass) : heroClass;
 
-        //todo: Если ниже будут ошибки, в программе останется не используемый объект.
         let hero = this._gameObjectFactory.create();
 
         hero.name = 'Hero: ' + heroClass.name;
         hero.addTags('#hero');
 
-        let stateController = new StateController();
+        let stateController = new CharacterStateController();
 
         let heroComponent = hero.set(HeroComponent.name, new HeroComponent(
             heroClass.name,
@@ -143,7 +147,7 @@ export default class HeroFactory {
         hero.set<EquipSlotInterface>(EquipSlotID.RightHand, rightHand);
         hero.set<EquipSlotInterface>(EquipSlotID.LeftHand, leftHand);
 
-        hero.set<Partial<Record<EquipSlotID, EquipSlotInterface>>>(GameObjectKey.EquipSlots, equipSlotComponents);
+        hero.set<Partial<Record<EquipSlotID, EquipSlotInterface>>>(ComponentID.EquipSlots, equipSlotComponents);
 
         //end equipSlots
 
@@ -173,7 +177,7 @@ export default class HeroFactory {
          */
         //todo: Временно.
         let characterAttributes: CharacterAttributes = {};
-        hero.set<CharacterAttributes>(GameObjectKey.CharacterAttributes, characterAttributes);
+        hero.set<CharacterAttributes>(ComponentID.CharacterAttributes, characterAttributes);
 
         //todo: Переделать хранение главных атрибутов у классов.
         let mainCharacterAttributes = heroClass.mainCharacterAttributes;
@@ -195,7 +199,7 @@ export default class HeroFactory {
                 level,
                 itemCharacterAttributeCollector,
                 {
-                    // baseValueModifier: baseValueModifier,
+                    baseValue: options?.baseCharacterAttributeValues?.[characterAttributeIDs[i]],
                 },
             ));
         }
@@ -210,15 +214,15 @@ export default class HeroFactory {
 
         //К компоненту с очками здоровья возможно не будет доступа вообще.
         let healthPointsComponent = new HealthPointsComponent(
-            hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).MaxHealthPoints,
+            hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxHealthPoints,
             stateController,
         );
         let damageController = new ArmorDecorator(
             healthPointsComponent as DamageControllerInterface,
-            hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).Protection,
+            hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Protection,
         );
         hero.set<HealthPointsComponent>(HealthPointsComponent.name, healthPointsComponent); //Пока только для рендера.
-        hero.set<DamageControllerInterface>(GameObjectKey.DamageController, damageController);
+        hero.set<DamageControllerInterface>(ComponentID.DamageController, damageController);
 
         //todo: Очки магии добавляются только для магов. Магов надо помечать или настраивать для каждого класса по отдельности.
         /*
@@ -228,10 +232,10 @@ export default class HeroFactory {
          */
 
         let magicPointsComponent = hero.set(MagicPointsComponent.name, new MagicPointsComponent(
-            hero.get<CharacterAttributes>(GameObjectKey.CharacterAttributes).MaxMagicPoints,
+            hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxMagicPoints,
         ));
 
-        let attackPowerComponent = hero.set<AttackControllerInterface>(GameObjectKey.AttackController, new AttackController(
+        let attackPowerComponent = hero.set<AttackControllerInterface>(ComponentID.AttackController, new AttackController(
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             stateController,
             // _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {
@@ -247,5 +251,9 @@ export default class HeroFactory {
         hero.set(TakeComponent.name, new TakeComponent());
 
         return hero;
+    }
+
+    createSome() {
+
     }
 }

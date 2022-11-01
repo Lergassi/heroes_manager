@@ -116,7 +116,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         _.map(currencyIDs, (currencyID) => {
-            this.container.get<WalletFactory>('player.walletFactory').create(
+            this.container.get<WalletFactory>(ContainerID.WalletFactory).create(
                 this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, currencyID),
                 config['start_wallet_values'][currencyID]['value'],
             )

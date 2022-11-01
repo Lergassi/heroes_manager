@@ -77,4 +77,15 @@ export enum ItemID {
     Staff_01 = 'Staff_01',
     Wand_01 = 'Wand_01',
     Revolver_01 = 'Revolver_01',
+
+    Stub01 = 'Stub01',
+    Stub02 = 'Stub02',
+    Stub03 = 'Stub03',
+    Stub04 = 'Stub04',
+    Stub05 = 'Stub05',
+    // Stub06 = 'Stub06',
+    // Stub07 = 'Stub07',
+    // Stub08 = 'Stub08',
+    // Stub09 = 'Stub09',
+    // Stub10 = 'Stub10',
 }

@@ -9,7 +9,7 @@ import {assert, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
-import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 
 export default class EquipCommand extends Command {
@@ -38,7 +38,7 @@ export default class EquipCommand extends Command {
         let itemStorage = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(itemStorageID);
         console.log(itemStorage);
         // assertIsInstanceOf(itemStorage, GameObject);
-        let itemStorageSlotComponent = itemStorage.get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).getItemStorageSlot(itemStorageSlotIndex);
+        let itemStorageSlotComponent = itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent).getItemStorageSlot(itemStorageSlotIndex);
         console.log(itemStorageSlotComponent);
         // assert(itemStorageSlotComponent instanceof ItemStorageSlotComponent);
 

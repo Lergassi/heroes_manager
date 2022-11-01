@@ -9,7 +9,7 @@ import MainItemStorageListComponent from '../../../core/app/Components/MainItemS
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import ItemStorageSlotRComponent from './ItemStorageSlotRComponent.js';
 import _ from 'lodash';
-import {GameObjectKey} from '../../../core/types/enums/GameObjectKey.js';
+import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 
 export interface ItemStorageRComponentProps {
@@ -44,7 +44,7 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
                         };
                     });
                 },
-                target: this._itemStorage.get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent)
+                target: this._itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent)
             },
         });
     }
@@ -57,7 +57,7 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
         // let itemStorageSlotComponents = itemStorage.get<ItemStorageSlotComponent>(ItemStorageSlotComponent);
 
         let itemsElementTableRows = [];
-        itemStorage.get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).render((values) => {
+        itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent).render((values) => {
             _.map(values.slots, (itemStorageSlotComponent, index) => {
                 itemsElementTableRows.push((<ItemStorageSlotRComponent
                     key={index}

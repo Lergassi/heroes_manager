@@ -1,4 +1,4 @@
-export enum GameObjectKey {
+export enum ComponentID {
     EquipSlots = 'EquipSlots',
     CharacterAttributes = 'CharacterAttributes',
     AttackController = 'AttackController',

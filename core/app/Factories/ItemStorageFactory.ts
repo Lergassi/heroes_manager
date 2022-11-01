@@ -6,7 +6,7 @@ import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import {unsigned} from '../../types/main.js';
-import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class ItemStorageFactory implements ItemStorageFactoryInterface {
     private readonly _gameObjectStorage: GameObjectStorage;
@@ -49,7 +49,7 @@ export default class ItemStorageFactory implements ItemStorageFactoryInterface {
             gameObject.set(slotIDPrefix + i.toString(), slot);
         }
 
-        let itemStorageComponent = gameObject.set<ItemStorageComponent>(GameObjectKey.ItemStorageComponent, new ItemStorageComponent(
+        let itemStorageComponent = gameObject.set<ItemStorageComponent>(ComponentID.ItemStorageComponent, new ItemStorageComponent(
             slots,
             this._itemStackFactory,
         ));

@@ -25,6 +25,7 @@ export enum ContainerID {
     ItemStackFactory = 'player.ItemStackFactory',
     HeroCharacterAttributeFactory = 'player.HeroCharacterAttributeFactory',
     EnemyCharacterAttributeFactory = 'player.EnemyCharacterAttributeFactory',
+    WalletFactory = 'player.WalletFactory',
 
     //компоненты из GameObject
     MainItemStorageList = 'player.MainItemStorageList',

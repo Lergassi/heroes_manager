@@ -4,7 +4,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
-import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class ClearItemStorageSlotCommand extends Command {
     get name(): string {
@@ -26,7 +26,7 @@ export default class ClearItemStorageSlotCommand extends Command {
             .container
             .get<GameObjectStorage>(ContainerID.GameObjectStorage)
             .getOneByID(itemStorageID)
-            ?.get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent)
+            ?.get<ItemStorageComponent>(ComponentID.ItemStorageComponent)
             ?.clearSlot(itemStorageSlotIndex)
         ;
     }

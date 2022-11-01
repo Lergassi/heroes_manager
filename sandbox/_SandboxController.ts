@@ -45,7 +45,7 @@ import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
 import ArmorDecorator from '../core/app/Components/CharacterAttributes/ArmorDecorator.js';
 import Decimal from 'decimal.js';
 import DamageControllerInterface from '../core/app/Interfaces/DamageControllerInterface.js';
-import {GameObjectKey} from '../core/types/enums/GameObjectKey.js';
+import {ComponentID} from '../core/types/enums/ComponentID.js';
 import {testPrototypeInherit} from './include2.js';
 import Fight from '../core/app/Components/Fight.js';
 import EquipSlotWithItemCategoryDecorator from '../core/app/Components/EquipSlots/EquipSlotWithItemCategoryDecorator.js';
@@ -60,7 +60,7 @@ import LeftHand from '../core/app/Components/EquipSlots/LeftHand.js';
 import FightController from '../core/app/Components/FightController.js';
 import AttackController from '../core/app/Components/AttackController.js';
 import AttackControllerInterface from '../core/app/Interfaces/AttackControllerInterface.js';
-import StateController from '../core/app/Components/StateController.js';
+import CharacterStateController from '../core/app/Components/CharacterStateController.js';
 import MainItemStorageListComponent from '../core/app/Components/MainItemStorageListComponent.js';
 import ItemStorageUnion from '../core/app/Components/ItemStorageUnion.js';
 import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
@@ -132,7 +132,7 @@ export default class _SandboxController {
         );
         console.log(hero);
         // console.log(hero.get<HealthPointsComponent>(HealthPointsComponent.name));
-        console.log(hero.get<DamageControllerInterface>(GameObjectKey.DamageController));
+        console.log(hero.get<DamageControllerInterface>(ComponentID.DamageController));
     }
 
     devLocationFactory() {
@@ -317,7 +317,7 @@ export default class _SandboxController {
         let itemStackFactory: ItemStackFactory = this._container.get(ContainerID.ItemStackFactory);
 
         let itemStorage = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(10);
-        let itemStorageComponent = itemStorage.getComponent<ItemStorageComponent>(GameObjectKey.ItemStorageComponent);
+        let itemStorageComponent = itemStorage.getComponent<ItemStorageComponent>(ComponentID.ItemStorageComponent);
         // console.log(itemStorageComponent);
         // debugItemStorage(itemStorage);
 
@@ -364,7 +364,7 @@ export default class _SandboxController {
         let itemStorage = itemStorageFactory.create(20);
         // console.log(itemStorage);
         // debugNewItemStorage(itemStorage);
-        let controller = itemStorage.getComponent<ItemStorageComponent>(GameObjectKey.ItemStorageComponent);
+        let controller = itemStorage.getComponent<ItemStorageComponent>(ComponentID.ItemStorageComponent);
         controller.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 24);
         debugItemStorage(itemStorage);
         // let itemStorage = new ItemStorageComponent();
@@ -484,9 +484,9 @@ export default class _SandboxController {
         let heroGroup = this._container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
 
         let size = 5;
-        let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroupComponent({
-            size: 5,
-        }));
+        let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroupComponent(
+            5,
+        ));
         // console.log(heroGroup);
 
         // heroGroupComponent.setHero(heroes[0]);
@@ -647,10 +647,10 @@ export default class _SandboxController {
         // console.log(enemy);
         // console.log(enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name));
         // enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).kill();
-        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).damage(42);
-        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).damage(42);
-        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).damage(42);
-        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).damage(42);
+        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).takeDamage(42);
+        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).takeDamage(42);
+        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).takeDamage(42);
+        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).takeDamage(42);
         enemies[1].getComponent<HealthPointsComponent>(HealthPointsComponent.name).kill();
         // enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name).resurrect();
     }
@@ -702,11 +702,11 @@ export default class _SandboxController {
 
         let hero = this._container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
 
-        let heroGroupComponent: HeroGroupInterface = new HeroGroupComponent({
+        let heroGroupComponent: HeroGroupInterface = new HeroGroupComponent(
         // let heroGroupComponent = new HeroGroupComponent({
         // let heroGroupComponent = new HeroGroupComponent({
-            size: 5,
-        });
+            5,
+        );
         // console.log(heroGroupComponent);
         // hero.set<HeroGroupComponent>(HeroGroupComponent.name, heroGroupComponent);
         // let heroGroupCharacterAttributeCollectorProxy = new HeroGroupCharacterAttributeCollector({
@@ -888,7 +888,7 @@ export default class _SandboxController {
                     new ItemCharacterAttributeCollector(),
                     0,
                 ),
-                new StateController(),
+                new CharacterStateController(),
             ),
             protection,
         );
@@ -910,7 +910,7 @@ export default class _SandboxController {
 
         console.log(defence);
         for (let i = 0; i < damage.length; i++) {
-            console.log(damage[i], defence.damage(damage[i]));
+            console.log(damage[i], defence.takeDamage(damage[i]));
         }
         // console.log(defence.finalDamage(100.123));
         // console.log(defence.finalDamage(-100));
@@ -1066,7 +1066,7 @@ export default class _SandboxController {
         let healthPoints: DamageControllerInterface = new HealthPointsComponent(
         // let healthPoints = new HealthPointsComponent(
             maxHealthPoints,
-            new StateController(),
+            new CharacterStateController(),
         );
 
         let protection = new CharacterAttribute(
@@ -1099,10 +1099,10 @@ export default class _SandboxController {
         // damageController.damage(damage);
         // console.log(damageController);
 
-        healthPoints.damage(damage);
-        healthPoints.damage(damage);
-        healthPoints.damage(damage);
-        healthPoints.damage(damage);
+        healthPoints.takeDamage(damage);
+        healthPoints.takeDamage(damage);
+        healthPoints.takeDamage(damage);
+        healthPoints.takeDamage(damage);
     }
 
     private devEnemyArmor() {
@@ -1110,7 +1110,7 @@ export default class _SandboxController {
 
         let enemy = enemyFactory.create(EnemyID.Bear, 1);
         console.log(enemy);
-        console.log(enemy.get<DamageControllerInterface>(GameObjectKey.DamageController));
+        console.log(enemy.get<DamageControllerInterface>(ComponentID.DamageController));
         console.log(enemy.get<HealthPointsComponent>(HealthPointsComponent.name));
 
         // let damage = 100;
@@ -1125,50 +1125,50 @@ export default class _SandboxController {
     }
 
     private devFight() {
-        let heroFactory = this._container.get<HeroFactory>(ContainerID.HeroFactory);
-        let enemyFactory = this._container.get<EnemyFactory>(ContainerID.EnemyFactory);
-
-        let hero = heroFactory.create(HeroClassID.Warrior, 1);
-        let enemy = enemyFactory.create(EnemyID.Bear, 1, {
-            characterAttributeValues: {
-                [CharacterAttributeID.AttackPower]: 1000042,
-            },
-        });
-        console.log(hero);
-        console.log(enemy);
-
-        let heroAttackController = new FightController(
-            hero.get<AttackControllerInterface>(GameObjectKey.AttackController),
-            hero.get<DamageControllerInterface>(GameObjectKey.DamageController),
-        );
-        let enemyAttackController = new FightController(
-            enemy.get<AttackControllerInterface>(GameObjectKey.AttackController),
-            enemy.get<DamageControllerInterface>(GameObjectKey.DamageController),
-        );
-        console.log(heroAttackController);
-        console.log(enemyAttackController);
-
-        // let maxHits = 10_000;
-        // let currentHit = 0;
-        // while (currentHit < maxHits) {
-        //     heroAttackController.hit(enemyAttackController);
-        //     ++currentHit;
-        // }
-        // heroAttackController.hit(enemyAttackController);
-        // enemyAttackController.hit(heroAttackController);
-        // heroAttackController.exchangeHits(enemyAttackController);
-        // heroAttackController.exchangeHits(enemyAttackController);
-        // heroAttackController.exchangeHits(enemyAttackController);
-        // heroAttackController.exchangeHits(enemyAttackController);
-        // heroAttackController.exchangeHits(enemyAttackController);
-        // heroAttackController.exchangeHits(enemyAttackController);
-        // heroAttackController.exchangeHits(enemyAttackController);
-        // heroAttackController.exchangeHits(enemyAttackController);
-
-        // heroAttackController.hit(enemyAttackController);
-        heroAttackController.fightToDead(enemyAttackController);
-        console.log(heroAttackController);
-        console.log(enemyAttackController);
+        // let heroFactory = this._container.get<HeroFactory>(ContainerID.HeroFactory);
+        // let enemyFactory = this._container.get<EnemyFactory>(ContainerID.EnemyFactory);
+        //
+        // let hero = heroFactory.create(HeroClassID.Warrior, 1);
+        // let enemy = enemyFactory.create(EnemyID.Bear, 1, {
+        //     characterAttributeValues: {
+        //         [CharacterAttributeID.AttackPower]: 1000042,
+        //     },
+        // });
+        // console.log(hero);
+        // console.log(enemy);
+        //
+        // let heroAttackController = new FightController(
+        //     hero.get<AttackControllerInterface>(GameObjectKey.AttackController),
+        //     hero.get<DamageControllerInterface>(GameObjectKey.DamageController),
+        // );
+        // let enemyAttackController = new FightController(
+        //     enemy.get<AttackControllerInterface>(GameObjectKey.AttackController),
+        //     enemy.get<DamageControllerInterface>(GameObjectKey.DamageController),
+        // );
+        // console.log(heroAttackController);
+        // console.log(enemyAttackController);
+        //
+        // // let maxHits = 10_000;
+        // // let currentHit = 0;
+        // // while (currentHit < maxHits) {
+        // //     heroAttackController.hit(enemyAttackController);
+        // //     ++currentHit;
+        // // }
+        // // heroAttackController.hit(enemyAttackController);
+        // // enemyAttackController.hit(heroAttackController);
+        // // heroAttackController.exchangeHits(enemyAttackController);
+        // // heroAttackController.exchangeHits(enemyAttackController);
+        // // heroAttackController.exchangeHits(enemyAttackController);
+        // // heroAttackController.exchangeHits(enemyAttackController);
+        // // heroAttackController.exchangeHits(enemyAttackController);
+        // // heroAttackController.exchangeHits(enemyAttackController);
+        // // heroAttackController.exchangeHits(enemyAttackController);
+        // // heroAttackController.exchangeHits(enemyAttackController);
+        //
+        // // heroAttackController.hit(enemyAttackController);
+        // heroAttackController.fightToDead(enemyAttackController);
+        // console.log(heroAttackController);
+        // console.log(enemyAttackController);
     }
 
     private devNewEquipSlotSystem() {

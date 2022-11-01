@@ -12,7 +12,6 @@ import Random from '../Services/Random.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import {unsigned} from '../../types/main.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
-import AppError from '../../source/Errors/AppError.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import Currency from '../Entities/Currency.js';
@@ -22,6 +21,10 @@ import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import EnemyFactory from './EnemyFactory.js';
+import {EnemyID} from '../../types/enums/EnemyID.js';
+import WalletFactory from './WalletFactory.js';
+import WalletInterface from '../Interfaces/WalletInterface.js';
 
 export type LocationFactoryCreateOptions = {
     level: unsigned;
@@ -36,18 +39,24 @@ export type GatheringItemPointPattern = {
 }
 
 export default class LocationFactory {
+    private readonly _maxGatheringItemPointsCount: number;
+    private readonly _internalItemStorageSize: number;
+    private readonly _heroGroupSize: number;
+    private readonly _enemyGroupSize: number[];
+
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _itemStackFactory: ItemStackFactory;
     private readonly _entityManager: EntityManagerInterface;
     private readonly _itemDatabase: ItemDatabase;
+
     private readonly _itemStorageFactory: ItemStorageFactory;
+    private readonly _walletFactory: WalletFactory;
 
-    private readonly _maxGatheringItemPointsCount: number;
-
-    private readonly _defaultOptions: Partial<LocationFactoryCreateOptions> = {
-        internalItemStorageSize: 5,
-        heroGroupSize: 5,
-    };
+    // private readonly _defaultOptions: Partial<LocationFactoryCreateOptions> = {
+    //     internalItemStorageSize: 5,
+    //     heroGroupSize: 5,
+    // };
+    private _enemyFactory: EnemyFactory;
 
     constructor(
         gameObjectFactory: GameObjectFactory,
@@ -55,23 +64,33 @@ export default class LocationFactory {
         entityManager: EntityManagerInterface,
         itemDatabase: ItemDatabase,
         itemStorageFactory: ItemStorageFactory,
+        walletFactory: WalletFactory,
+        enemyFactory: EnemyFactory,
     ) {
         this._maxGatheringItemPointsCount = 3;
+        this._internalItemStorageSize = 5;
+        this._heroGroupSize = 5;
+        this._enemyGroupSize = [1, 5];
 
         this._gameObjectFactory = gameObjectFactory;
         this._itemStackFactory = itemStackFactory;
         this._entityManager = entityManager;
         this._itemDatabase = itemDatabase;
+        this._enemyFactory = enemyFactory;
+
         this._itemStorageFactory = itemStorageFactory;
+        this._walletFactory = walletFactory;
     }
 
     create(
         level: unsigned,
-        internalItemStorageSize?: unsigned,
-        heroGroupSize?: unsigned,
+        // internalItemStorageSize?: unsigned,
+        // heroGroupSize?: unsigned,
     ): GameObject {
-        internalItemStorageSize = internalItemStorageSize ?? this._defaultOptions.internalItemStorageSize;
-        heroGroupSize = heroGroupSize ?? this._defaultOptions.heroGroupSize;
+        //internalItemStorageSize = internalItemStorageSize ?? this._defaultOptions.internalItemStorageSize;
+        //heroGroupSize = heroGroupSize ?? this._defaultOptions.heroGroupSize;
+        // let internalItemStorageSize = this._defaultOptions.internalItemStorageSize;
+        // let heroGroupSize = this._defaultOptions.heroGroupSize;
 
         let location = this._gameObjectFactory.create();
 
@@ -80,11 +99,11 @@ export default class LocationFactory {
             this._entityManager.get<Currency>(EntityID.Currency, CurrencyID.Gold),
             0,
         ));
-        let heroGroupComponent = location.set<HeroGroupComponent>('heroGroupComponent', new HeroGroupComponent({
-            size: 5,
-        }));
+        let heroGroupComponent = location.set<HeroGroupComponent>('heroGroupComponent', new HeroGroupComponent(
+            5,
+        ));
 
-        let itemStorageComponent = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(internalItemStorageSize, location));
+        let itemStorageComponent = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(this._internalItemStorageSize, location));
 
         //todo: Переделать всё что с жилами. Разделить, сделать удобнее. Не понятно что тут происходит.
         //todo: В периоде нет смысла если он используется только при выводе для игрока.
@@ -126,14 +145,20 @@ export default class LocationFactory {
             }
         }
 
-        let locationComponent = location.set<LocationComponent>(LocationComponent.name, new LocationComponent({
-            created: new Date(),
-            gatheringItemPoints: gatheringItemPoints,
-            heroGroupComponent: heroGroupComponent,
-            internalItemStorageComponent: itemStorageComponent,
-            itemStackFactory: this._itemStackFactory,
-            level: level,
-        }));
+        let locationComponent = location.set<LocationComponent>(LocationComponent.name, new LocationComponent(
+            new Date(),
+            level,
+            gatheringItemPoints,
+            // heroGroupComponent,
+            this._itemStackFactory,
+            itemStorageComponent,
+            this._walletFactory.create(CurrencyID.Gold).get<WalletInterface>(WalletComponent.name), //Можно передать любой кошелек.
+            //@test
+            [
+                this._enemyFactory.create(EnemyID.Bear, 1),
+            ],
+        ));
+        console.log(locationComponent);
 
         return location;
     }

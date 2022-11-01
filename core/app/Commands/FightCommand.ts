@@ -8,7 +8,7 @@ import {assertNotNil} from '../../source/assert.js';
 import FightController from '../Components/FightController.js';
 import AttackController from '../Components/AttackController.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import {GameObjectKey} from '../../types/enums/GameObjectKey.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
 
@@ -30,25 +30,25 @@ export default class FightCommand extends Command {
         console.log(hero);
 
         let enemy = this.container.get<EnemyFactory>(ContainerID.EnemyFactory).create(EnemyID.Bear, 1, {
-            characterAttributeValues: {
+            baseCharacterAttributeValues: {
                 [CharacterAttributeID.AttackPower]: 1000,
             },
         });
         console.log(enemy);
 
         let heroAttackController = new FightController(
-            hero.get<AttackController>(GameObjectKey.AttackController),
-            hero.get<DamageControllerInterface>(GameObjectKey.DamageController),
+            hero.get<AttackController>(ComponentID.AttackController),
+            hero.get<DamageControllerInterface>(ComponentID.DamageController),
         );
         let enemyAttackController = new FightController(
-            enemy.get<AttackController>(GameObjectKey.AttackController),
-            enemy.get<DamageControllerInterface>(GameObjectKey.DamageController),
+            enemy.get<AttackController>(ComponentID.AttackController),
+            enemy.get<DamageControllerInterface>(ComponentID.DamageController),
         );
         console.log(heroAttackController);
         console.log(enemyAttackController);
 
         // heroAttackController.hit(enemyAttackController);
         // heroAttackController.fightToDead(enemyAttackController);
-        enemyAttackController.fightToDead(heroAttackController);
+        // enemyAttackController.fightToDead(heroAttackController);
     }
 }

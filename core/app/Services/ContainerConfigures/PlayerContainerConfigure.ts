@@ -30,7 +30,7 @@ import _ from 'lodash';
 import {ContainerID} from '../../../types/enums/ContainerID.js';
 import {CurrencyID} from '../../../types/enums/CurrencyID.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
-import CharacterAttributeStartValueGenerator from '../CharacterAttributeStartValueGenerator.js';
+import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
 import EnemyCharacterAttributeFactory from '../../Factories/EnemyCharacterAttributeFactory.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
@@ -94,10 +94,11 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             return playerFactory;
         });
-        container.set<WalletFactory>('player.walletFactory', (container) => {
-            let walletFactory = new WalletFactory({
-                gameObjectFactory: container.get<GameObjectFactory>(ContainerID.GameObjectFactory)
-            });
+        container.set<WalletFactory>(ContainerID.WalletFactory, (container) => {
+            let walletFactory = new WalletFactory(
+                container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
+                container.get<EntityManagerInterface>(ContainerID.EntityManager),
+            );
 
             //todo: player_env_indev
             let currencies = [
@@ -117,8 +118,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         container.set<CharacterAttributeValueGenerator>(ContainerID.CharacterAttributeValueGenerator, (container) => {
             return new CharacterAttributeValueGenerator();
         });
-        container.set<CharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator, (container) => {
-            return new CharacterAttributeStartValueGenerator(container.get<CharacterAttributeValueGenerator>(ContainerID.CharacterAttributeValueGenerator));
+        container.set<EnemyCharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator, (container) => {
+            return new EnemyCharacterAttributeStartValueGenerator(container.get<CharacterAttributeValueGenerator>(ContainerID.CharacterAttributeValueGenerator));
             // return new CharacterAttributeStartValueGenerator();
         });
         container.set<HeroCharacterAttributeFactory>(ContainerID.HeroCharacterAttributeFactory, (container) => {
@@ -128,7 +129,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<EnemyCharacterAttributeFactory>(ContainerID.EnemyCharacterAttributeFactory, (container) => {
             return new EnemyCharacterAttributeFactory(
-                container.get<CharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator),
+                container.get<EnemyCharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator),
             );
         });
         container.set<HeroFactory>(ContainerID.HeroFactory, (container) => {
@@ -190,6 +191,13 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
             );
         });
+        container.set<EnemyFactory>(ContainerID.EnemyFactory, (container) => {
+            return new EnemyFactory(
+                container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
+                container.get<EntityManagerInterface>(ContainerID.EntityManager),
+                container.get<EnemyCharacterAttributeFactory>(ContainerID.EnemyCharacterAttributeFactory),
+            );
+        });
         container.set<LocationFactory>(ContainerID.LocationFactory, (container) => {
             return new LocationFactory(
                 container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
@@ -197,13 +205,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EntityManagerInterface>(ContainerID.EntityManager),
                 container.get<ItemDatabase>(ContainerID.ItemDatabase),
                 container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
-            );
-        });
-        container.set<EnemyFactory>(ContainerID.EnemyFactory, (container) => {
-            return new EnemyFactory(
-                container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
-                container.get<EntityManagerInterface>(ContainerID.EntityManager),
-                container.get<EnemyCharacterAttributeFactory>(ContainerID.EnemyCharacterAttributeFactory),
+                container.get<WalletFactory>(ContainerID.WalletFactory),
+                container.get<EnemyFactory>(ContainerID.EnemyFactory),
             );
         });
 

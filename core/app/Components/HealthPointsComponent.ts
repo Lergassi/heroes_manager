@@ -1,15 +1,16 @@
-import Component from '../../source/Component.js';
 import debug from 'debug';
 import EventSystem from '../../source/EventSystem.js';
 import {unsigned} from '../../types/main.js';
 import AppError from '../../source/Errors/AppError.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import {assertNotNil, assertIsPositive} from '../../source/assert.js';
+import {assertNotNil, assertIsPositive, assert, assertAction} from '../../source/assert.js';
 import ArmorDecorator from './CharacterAttributes/ArmorDecorator.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import CharacterIsDeadError from '../../source/Errors/CharacterIsDeadError.js';
-import StateController from './StateController.js';
+import CharacterStateController, {CharacterStateCode} from './CharacterStateController.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {sprintf} from 'sprintf-js';
+import _ from 'lodash';
 
 export enum HealthPointsComponentEventCode {
     TakeDamage = 'HealthPointsComponent.TakeDamage',
@@ -22,11 +23,13 @@ export default class HealthPointsComponent implements DamageControllerInterface 
     // private _maxHealthPoints: unsigned;
     private readonly _maxHealthPoints: CharacterAttributeInterface;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
-    private readonly _stateController: StateController;
+    private readonly _stateController: CharacterStateController;
+    private readonly _afterDiedCallback: Function;
 
     constructor(
         maxHealthPoints: CharacterAttributeInterface,
-        stateController: StateController,
+        stateController: CharacterStateController,
+        afterDiedCallback?: Function,
     ) {
         assertNotNil(maxHealthPoints);
         assertNotNil(stateController);
@@ -37,21 +40,26 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         this._currentHealthPoints = maxHealthPoints.value();
         this._isDead = false;
         this._stateController = stateController;
+        this._afterDiedCallback = afterDiedCallback;
+        console.log('this._afterDiedCallback', this._afterDiedCallback);
     }
 
-    damage(damage: unsigned): void {
+    takeDamage(damage: unsigned, afterThisDiedCallback?): void {
         assertIsPositive(damage);
+        damage = _.floor(damage, 0);
+        //todo: Округление. Выбрать место.
 
-        this._canModify();
-
-        debug(DebugNamespaceID.Log)('Персонаж получил урон: ' + damage);
-        EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
+        if (this._stateController.hasState(CharacterStateCode.Dead)) {
+            debug(DebugNamespaceID.Throw)('asdadasd');
+            return;
+        }
 
         let healthPoints = this._currentHealthPoints - damage;
-        if (healthPoints <= 0) {
-            this.kill();
-        } else {
-            this._currentHealthPoints = healthPoints;
+        this._currentHealthPoints = healthPoints <= 0 ? 0 : healthPoints;
+        debug(DebugNamespaceID.Log)(sprintf('Получено урона: %s (%s/%s)', damage, this._currentHealthPoints, this._maxHealthPoints.value()));
+        EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
+        if (this._currentHealthPoints <= 0) {
+            this.kill(afterThisDiedCallback);
         }
     }
 
@@ -62,15 +70,27 @@ export default class HealthPointsComponent implements DamageControllerInterface 
     //     this._currentHealthPoints = healthPoints >= this._maxHealthPoints ? this._maxHealthPoints : healthPoints;
     // }
 
-    kill(): void {
-        this._canModify();
-        this._stateController.assertAnyAction();
+    kill(afterDiedCallback?): void {
+        if (!this.canKill()) {
+            debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
+            return;
+        }
 
         this._currentHealthPoints = 0;
         this._isDead = true;
         debug(DebugNamespaceID.Log)('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
-        this._stateController.state('Dead', 'Персонаж мертвый.');
+        // this._stateController.state('Dead', 'State message: Персонаж мертвый.');
+        this._stateController.addState(CharacterStateCode.Dead);
         EventSystem.event(HealthPointsComponentEventCode.Died, this);
+        console.log('kill this._afterDiedCallback', this._afterDiedCallback);
+        console.log('kill afterDiedCallback', afterDiedCallback);
+        console.log('this._afterDiedCallback && afterDiedCallback', this._afterDiedCallback && afterDiedCallback);
+        if (this._afterDiedCallback && afterDiedCallback) {
+            this._afterDiedCallback(afterDiedCallback);
+        }
+        // if (afterDiedCallback) {
+        //     afterDiedCallback();
+        // }
         /*
             В вов:
                 Опыт добавляется игрокам.
@@ -82,14 +102,24 @@ export default class HealthPointsComponent implements DamageControllerInterface 
          */
     }
 
+    canKill(): boolean {
+        return !this._stateController.hasState(CharacterStateCode.Dead);
+    }
+
     resurrect(): void {
-        if (!this._isDead) {
-            throw AppError.isNotDead();
-        }
+        // if (!this._isDead) {
+        //     throw AppError.isNotDead();
+        // }
+        assertAction(this._stateController.hasState(CharacterStateCode.Dead));
+        // if (this._stateController.hasState(CharacterStateCode.Dead)) {
+        //     debug(DebugNamespaceID.Throw)('Персонаж мертвый.');
+        //     return;
+        // }
 
         this._currentHealthPoints = this._maxHealthPoints.value();
         this._isDead = false;
-        this._stateController.removeState();
+        // this._stateController.removeState();
+        this._stateController.removeState(CharacterStateCode.Dead);
         debug(DebugNamespaceID.Log)('Персонаж воскрес.');
         EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
     }
@@ -99,6 +129,14 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         //     // throw AppError.isDead();
         //     throw new CharacterIsDeadError();
         // }
-        this._stateController.assertAnyAction();
+        assertAction(!this._stateController.hasState(CharacterStateCode.Dead));
+    }
+
+    canTakeDamage(): boolean {
+        return !this._stateController.hasState(CharacterStateCode.Dead);
+    }
+
+    isDead(): boolean {
+        return this._isDead;
     }
 }

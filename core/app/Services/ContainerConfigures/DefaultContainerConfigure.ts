@@ -24,7 +24,7 @@ import AddHeroToLocationCommand from '../../Commands/AddHeroToLocationCommand.js
 import RemoveHeroFromLocationCommand from '../../Commands/RemoveHeroFromLocationCommand.js';
 import DeleteLocationCommand from '../../Commands/DeleteLocationCommand.js';
 import ToggleLocationCommand from '../../Commands/ToggleLocationCommand.js';
-import GetItemsFromLocationCommand from '../../Commands/GetItemsFromLocationCommand.js';
+import GetRewardFromLocationCommand from '../../Commands/GetRewardFromLocationCommand.js';
 import ClearItemStorageSlotCommand from '../../Commands/ClearItemStorageSlotCommand.js';
 import CreateAllHeroClassesCommand from '../../Commands/CreateAllHeroClassesCommand.js';
 import FightCommand from '../../Commands/FightCommand.js';
@@ -48,7 +48,11 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
             DebugNamespaceID.Log,
             DebugNamespaceID.Warning,
             // DebugNamespaceID.Load,
-            DebugNamespaceID.LoadDebug,
+            DebugNamespaceID.DebugLog,
+            DebugNamespaceID.DebugDump,
+            DebugNamespaceID.DebugAssertThrow,
+            DebugNamespaceID.Throw,
+            DebugNamespaceID.Indev,
             // 'debug:*',
             // 'error:*',
             // 'log:*',
@@ -102,7 +106,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new AddHeroToLocationCommand(container));
         gameConsole.register(new RemoveHeroFromLocationCommand(container));
         gameConsole.register(new ToggleLocationCommand(container));
-        gameConsole.register(new GetItemsFromLocationCommand(container));
+        gameConsole.register(new GetRewardFromLocationCommand(container));
 
         gameConsole.register(new FightCommand(container));
 

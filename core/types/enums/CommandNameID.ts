@@ -23,7 +23,7 @@ export enum CommandNameID {
     add_hero_to_location = 'add_hero_to_location',
     remove_hero_from_location = 'remove_hero_from_location',
     toggle_location = 'toggle_location',
-    get_items_from_location = 'get_items_from_location',
+    get_reward_from_location = 'get_reward_from_location',
 
     fight = 'fight',
 

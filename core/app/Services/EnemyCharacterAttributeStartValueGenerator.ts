@@ -15,8 +15,7 @@ import {assertNotNil} from '../../source/assert.js';
 
 export type CharacterAttributeValueModifier = (value: number) => number;
 
-//todo: Многие атрибуты должны зависить от класса. У магов, например, минимальное условное значение, разное здоровье и тд. Только не от класса, а скорее от роли. Так как используется и для врагов.
-export default class CharacterAttributeStartValueGenerator {
+export default class EnemyCharacterAttributeStartValueGenerator {
     private readonly _characterAttributeStartValueGenerators: Record<CharacterAttributeID, CharacterAttributeStartValueGeneratorInterface> = {
         [CharacterAttributeID.Strength]: new StrengthStartValueGenerator(),
         [CharacterAttributeID.Agility]: new AgilityStartValueGenerator(),
@@ -46,9 +45,7 @@ export default class CharacterAttributeStartValueGenerator {
     generate(
         characterAttributeID: CharacterAttributeID,
         level: unsigned,
-        // baseValueModifier?: CharacterAttributeValueModifier,
     ): number {
-        // return (this._characterAttributeStartValueGenerators[characterAttributeID]?.generate() ?? 0)
         return (this._characterAttributeStartValueGenerators[characterAttributeID]?.generate() ?? 0) +
             this._characterAttributeValueGenerator.increase(characterAttributeID, level)
             ;

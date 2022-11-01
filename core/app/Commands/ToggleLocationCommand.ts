@@ -4,6 +4,9 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import LocationComponent from '../Components/LocationComponent.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CurrencyID} from '../../types/enums/CurrencyID.js';
+import WalletInterface from '../Interfaces/WalletInterface.js';
+import WalletComponent from '../Components/WalletComponent.js';
 
 export default class ToggleLocationCommand extends Command {
     get name(): string {
@@ -22,6 +25,11 @@ export default class ToggleLocationCommand extends Command {
             .get<GameObjectStorage>(ContainerID.GameObjectStorage)
             .getOneByID(locationID)
             ?.get<LocationComponent>(LocationComponent.name)
-            .toggleState();
+            .toggleState({
+                wallet: this.container
+                    .get<GameObjectStorage>(ContainerID.GameObjectStorage)
+                    .getOneByTag('#wallet.' + CurrencyID.Gold)
+                    .get<WalletInterface>(WalletComponent.name)
+            });
     }
 }

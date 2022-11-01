@@ -6,13 +6,14 @@ import MaxIterationsReachedError from '../../source/Errors/MaxIterationsReachedE
 import EventSystem from '../../source/EventSystem.js';
 import {sprintf} from 'sprintf-js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
 
 export enum ExperienceComponentEventCode {
     AddExp = 'ExperienceComponent.AddExp',
     AddLevel = 'ExperienceComponent.AddLevel',
 }
 
-export default class ExperienceComponent {
+export default class ExperienceComponent implements ExperienceDistributorInterface {
     private _level: unsigned;
     private readonly _maxLevel: unsigned;
     private _exp: unsigned;
@@ -62,7 +63,7 @@ export default class ExperienceComponent {
         }
 
         this._exp += value;
-        debug(DebugNamespaceID.Log)(sprintf('Добавлено опыта: %s.', this._exp));   //todo: Не надо выводить у героев. Только у игрока. Сделать отдельный компоненты.
+        debug(DebugNamespaceID.Log)(sprintf('Получено опыта: %d.', this._exp));   //todo: Не надо выводить у героев. Только у игрока. Сделать отдельный компоненты.
         EventSystem.event(ExperienceComponentEventCode.AddExp, this);    //todo: Это на каждую переменную придется делать, которая отображается в ui. Надо по другому.
         //todo: Повышение нескольких уровней объединить в одно действие. И через события передавать в дополнительной переменной.
         if (this._exp >= this._totalExpForNextLevel()) {

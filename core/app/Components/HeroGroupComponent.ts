@@ -1,13 +1,13 @@
-import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
-import HeroComponent from './HeroComponent.js';
 import {unsigned} from '../../types/main.js';
-import {assert} from '../../source/assert.js';
+import {assert, assertIsPositive} from '../../source/assert.js';
 import TakeComponent from './TakeComponent.js';
 import EventSystem from '../../source/EventSystem.js';
 import HeroGroupInterface from '../Interfaces/HeroGroupInterface.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
+import HealthPointsComponent from './HealthPointsComponent.js';
 
 //todo: В будущем универсальный слот с _container: Container<T>. Слот может быть без логики или с изменением статуса занимаемого объекта.
 //todo: Убрать слоты.
@@ -46,10 +46,10 @@ export enum HeroGroupComponentEventCode {
 
 //todo: Группа героев и слоты под герои - разные компоненты. Группа должна быть только группой, а слоты - только для UI. Тоже надо разделить. Иначе классов плодиться много бесполезных и логика усложняется.
 export default class HeroGroupComponent implements HeroGroupInterface {
+    private readonly _heroesArray: GameObject[];
     private readonly _heroes: {[position: string]: HeroSlot};
     private readonly _size: number;
     private _isBlock: boolean;
-    private _stateOwner;
 
     get heroesCount(): number {
         let count = 0;
@@ -62,14 +62,29 @@ export default class HeroGroupComponent implements HeroGroupInterface {
         return count;
     }
 
-    get partOfMaxHeroesCount(): number {
-        return this.heroesCount / this._size;
+    get size(): number {
+        return this._size;
     }
 
-    constructor(options: {
-        size: unsigned;
-    }) {
-        this._size = options.size;
+    get length(): number {
+        return this._heroesArray.length;
+    }
+
+    get lengthOf() {
+        return this._size === 0 ? 0 : this._heroesArray.length / this._size;
+    }
+
+    // get partOfMaxHeroesCount(): number {
+    //     // return this.heroesCount / this._size;
+    //     return this._heroesArray.length / this._size;
+    // }
+
+    constructor(
+        size: unsigned,
+    ) {
+        assertIsPositive(size);
+
+        this._size = size;
         this._isBlock = false;
 
         let position = 0;
@@ -78,10 +93,11 @@ export default class HeroGroupComponent implements HeroGroupInterface {
             this._heroes[position] = new HeroSlot();
             ++position;
         }
+        this._heroesArray = [];
     }
 
     _setHero(heroSlot: HeroSlot, hero: GameObject): void {
-        if (!hero.get<TakeComponent>(TakeComponent.name).isFree()) {
+        if (hero.get<TakeComponent>(TakeComponent.name) && !hero.get<TakeComponent>(TakeComponent.name)?.isFree()) {
             throw new AppError('Герой занят.');
         }
 
@@ -104,6 +120,9 @@ export default class HeroGroupComponent implements HeroGroupInterface {
         hero.getComponent<TakeComponent>(TakeComponent.name)?.take<HeroGroupComponent>(
             this,
         );
+        if (!_.includes(this._heroesArray, hero)) {
+            this._heroesArray.push(hero);
+        }
         EventSystem.event(HeroGroupComponentEventCode.AddHero, this);
     }
 
@@ -147,6 +166,7 @@ export default class HeroGroupComponent implements HeroGroupInterface {
         hero.getComponent<TakeComponent>(TakeComponent.name)?.release<HeroGroupComponent>(
             this,
         );
+        _.pull(this._heroesArray, hero);
         EventSystem.event(HeroGroupComponentEventCode.RemoveHero, this);
     }
 
@@ -208,5 +228,12 @@ export default class HeroGroupComponent implements HeroGroupInterface {
         }
 
         return undefined;
+    }
+
+    //todo: @move Пока тут.
+    isLifeHeroesCount(): number {
+        return _.sum(_.map(this._heroesArray, (hero) => {
+            return Number(!hero.get<HealthPointsComponent>(HealthPointsComponent.name).isDead());
+        }));
     }
 }

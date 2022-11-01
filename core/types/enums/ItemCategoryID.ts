@@ -29,4 +29,6 @@ export enum ItemCategoryID {
 
     Resources = 'Resources',
     Materials = 'Materials',
+
+    Stubs = 'Stubs',
 }

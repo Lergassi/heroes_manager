@@ -58,8 +58,8 @@ export default class EnemyEntity {
     }
 
     createExperienceLootGenerator() {
-        return new ExperienceGeneratorComponent({
-            exp: this._exp,
-        });
+        return new ExperienceGeneratorComponent(
+            this._exp,
+        );
     }
 }

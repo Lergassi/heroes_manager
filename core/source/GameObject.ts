@@ -6,7 +6,7 @@ import RComponentBridge, {
     RComponentUpdateInterface
 } from '../../client/source/RComponentBridge.js';
 import {assert} from './assert.js';
-import {GameObjectKey} from '../types/enums/GameObjectKey.js';
+import {ComponentID} from '../types/enums/ComponentID.js';
 
 export default class GameObject implements AssignRComponentInterface {
     private readonly _id: number;
@@ -223,7 +223,7 @@ export default class GameObject implements AssignRComponentInterface {
      * @param key Только строки из enum GameObjectKey.
      * @param component
      */
-    set<T>(key: string | GameObjectKey, component: T): T {
+    set<T>(key: string | ComponentID, component: T): T {
     // set<T>(key: GameObjectKey, component: T): T {
         assert(typeof key === 'string');
         // assert(key.length > 0);
@@ -238,10 +238,14 @@ export default class GameObject implements AssignRComponentInterface {
      * Получить компонент по ключу как в контейнере. Только строки из enum GameObjectKey.
      * @indev
      */
-    get<T>(key: string | GameObjectKey): T {
+    get<T>(key: string | ComponentID): T {
         assert(typeof key === 'string');
         // assert(key.length > 0);
 
         return <T>this._componentNames[key];
     }
+
+    // has(key: string | string[]): {
+    //
+    // }
 }

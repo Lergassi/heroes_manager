@@ -26,6 +26,7 @@ export default class ItemDatabaseBuilder {
         debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.Start');
 
         // this._createItems();
+        this._createStubItems();
         this._createResources();
         this._createArmor();
         this._createWeapons();
@@ -35,9 +36,29 @@ export default class ItemDatabaseBuilder {
         return this._entityManager;
     }
 
-    // private _createItems() {
-    //
-    // }
+    private _createStubItems() {
+        let stubIDs = [
+            ItemID.Stub01,
+            ItemID.Stub02,
+            ItemID.Stub03,
+            ItemID.Stub04,
+            ItemID.Stub05,
+        ];
+        // _.map(stubIDs, (ID) => {
+        //     this._itemFactory.createByBuilder(
+        //         ID,
+        //         (new ItemBuilder(this._entityManager))
+        //             .default(
+        //                 ID,
+        //                 ID,
+        //                 ItemCategoryID.Stubs,
+        //                 {
+        //
+        //                 },
+        //             )
+        //     );
+        // });
+    }
 
     private _createResources() {
         this._itemFactory.createByBuilder(

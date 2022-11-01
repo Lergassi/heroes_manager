@@ -3,16 +3,16 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import {unsigned} from '../../types/main.js';
-import CharacterAttributeStartValueGenerator, {
+import EnemyCharacterAttributeStartValueGenerator, {
     CharacterAttributeValueModifier
-} from '../Services/CharacterAttributeStartValueGenerator.js';
+} from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
 import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import CharacterAttributeValueGeneratorByConfig from '../Services/CharacterAttributeValueGeneratorByConfig.js';
 import {startCharacterAttributeConfig} from '../../config/start_character_values.js';
 
 export default class HeroCharacterAttributeFactory {
-    private readonly _characterAttributeStartValueFactory: CharacterAttributeStartValueGenerator;
+    private readonly _characterAttributeStartValueFactory: EnemyCharacterAttributeStartValueGenerator;
     private readonly _generatorByConfig: CharacterAttributeValueGeneratorByConfig;
 
     constructor(

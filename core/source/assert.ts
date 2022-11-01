@@ -15,6 +15,7 @@ export function assert(condition: boolean, message?: string) {
 // }
 
 /**
+ * Включая ноль.
  * @param value
  * @param message
  */
@@ -85,4 +86,8 @@ export function assertIsArray(value: any, message?: string) {
 
 export function assertIsInstanceOf(value: any, target: any, message?: string) {
     assert(value instanceof target, message || 'Объект неверного типа (instanceof).');
+}
+
+export function assertAction(condition: boolean, message?: string) {
+    assert(condition, 'Действие не доступно.');
 }

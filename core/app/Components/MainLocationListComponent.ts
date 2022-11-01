@@ -29,15 +29,15 @@ export default class MainLocationListComponent extends Component {
     create(
         level: unsigned,
         locationFactory: LocationFactory,   //todo: Должен быть в конце. Возможно тут стоит использовать options или отдельный аргумент для зависимостей.
-        internalItemStorageSize?: unsigned,
-        heroGroupSize?: unsigned,
+        // internalItemStorageSize?: unsigned,
+        // heroGroupSize?: unsigned,
     ): GameObject {
         this.canCreateLocation();
 
         let location = locationFactory.create(
             level,
-            internalItemStorageSize,
-            heroGroupSize,
+            // internalItemStorageSize,
+            // heroGroupSize,
         );
 
         this._locations.push(location);
