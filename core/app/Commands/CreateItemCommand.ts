@@ -14,6 +14,7 @@ import {assertNotEmpty, assertNotNil} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export default class CreateItemCommand extends Command {
     get name(): string {
@@ -35,10 +36,11 @@ export default class CreateItemCommand extends Command {
         assertNotNil(item, sprintf('Предмет ID(%s) не найден.', itemID));
 
         //todo: Со статичным методом уже удобнее, но возможно можно лучше. И геттер.
-        ItemStorageComponent.addItemToItemStorages(
-            this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).itemStorages,
-            item,
-            count,
-        );
+        // ItemStorageComponent.addItemToItemStorages(
+        //     this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).itemStorages,
+        //     item,
+        //     count,
+        // );
+        this.container.get<ItemStorageInterface>(ContainerID.ItemStorageController).addItem(item, count);
     }
 }

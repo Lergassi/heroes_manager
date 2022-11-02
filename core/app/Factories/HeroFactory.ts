@@ -6,8 +6,6 @@ import EquipSlot from '../Entities/EquipSlot.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
 import AttackController from '../Components/AttackController.js';
-import AppError from '../../source/Errors/AppError.js';
-import {sprintf} from 'sprintf-js';
 import GameObjectFactory from './GameObjectFactory.js';
 import {CharacterAttributes, unsigned} from '../../types/main.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
@@ -23,7 +21,7 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import {assert, assertNotNil} from '../../source/assert.js';
+import {assertNotNil} from '../../source/assert.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import EquipSlotFactory from './EquipSlotFactory.js';
@@ -32,7 +30,7 @@ import CharacterStateController from '../Components/CharacterStateController.js'
 import {EntityID} from '../../types/enums/EntityID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import HeroCharacterAttributeFactory from './HeroCharacterAttributeFactory.js';
-import EnemyFactory from './EnemyFactory.js';
+import Gatherer from '../Components/Gatherer.js';
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -73,7 +71,8 @@ export default class HeroFactory {
         hero.name = 'Hero: ' + heroClass.name;
         hero.addTags('#hero');
 
-        let stateController = new CharacterStateController();
+        let stateController = hero.set(ComponentID.StateController, new CharacterStateController());
+        hero.set(TakeComponent.name, new TakeComponent());
 
         let heroComponent = hero.set(HeroComponent.name, new HeroComponent(
             heroClass.name,
@@ -248,7 +247,7 @@ export default class HeroFactory {
         //     equipSlotComponents,
         // ));
 
-        hero.set(TakeComponent.name, new TakeComponent());
+        hero.set(ComponentID.Gatherer, new Gatherer(stateController));
 
         return hero;
     }

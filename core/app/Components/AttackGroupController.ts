@@ -36,7 +36,7 @@ export default class AttackGroupController implements AttackControllerInterface 
             sum += this._attackControllers[i].generateAttack();
             ++length;
         }
-        debug(DebugNamespaceID.DebugLog)(sprintf('Суммарный урон: %d (персонажей: %d).', sum, length));
+        debug(DebugNamespaceID.Log)(sprintf('Суммарный урон: %d (персонажей: %d).', sum, length));
 
         return sum;
     }
@@ -50,7 +50,7 @@ export default class AttackGroupController implements AttackControllerInterface 
     attackTo(target: DamageControllerInterface, afterDiedTargetCallback?): boolean {
         if (!this.canAttack()) {
             debug(DebugNamespaceID.Throw)('Группа мертва и не может атаковать.');
-            return;
+            return false;
         }
 
         for (let i = 0; i < this._attackControllers.length; i++) {

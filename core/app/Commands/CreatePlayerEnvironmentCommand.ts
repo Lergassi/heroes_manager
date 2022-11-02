@@ -13,6 +13,8 @@ import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import _ from 'lodash';
+import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
+import GameConsole from '../../source/GameConsole/GameConsole.js';
 
 /**
  * Команда отвечает за обязательные настраиваемые объекты без которых игра не работает. Кошельки, 1 контейнер и тд.
@@ -23,16 +25,16 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     async execute(input: Input) {
-        this._createItemStorages(); //todo: Игра может работать без контейнера, но это не удобно. Придётся его каждый раз создавать вручную. Еще 1 команда?
+        await this._createItemStorages(); //todo: Игра может работать без контейнера, но это не удобно. Придётся его каждый раз создавать вручную. Еще 1 команда?
         // this._createWallets();   //Пока создается в ...ContainerConfigure из-за зависимостей друг от друга.
     }
 
-    private _createItemStorages() {
-        this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
-            DEFAULT_ITEM_STORAGE_SIZE,
-            // 50,
-            this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory),
-        );
+    private async _createItemStorages() {
+        // this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
+        //     DEFAULT_ITEM_STORAGE_SIZE,
+        //     this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
+        // );
+        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandNameID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
     }
 
     private _createWallets() {

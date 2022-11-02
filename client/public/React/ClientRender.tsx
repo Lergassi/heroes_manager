@@ -11,6 +11,7 @@ import MainLocationListRComponent from './MainLocationListRComponent.js';
 import MainLocationListComponent from '../../../core/app/Components/MainLocationListComponent.js';
 import MainItemStorageListRComponent from './MainItemStorageListRComponent.js';
 import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import ItemStorageControllerInterface from '../../../core/app/Interfaces/ItemStorageControllerInterface.js';
 
 export default class ClientRender {
     private readonly _container: ContainerInterface;
@@ -72,7 +73,8 @@ export default class ClientRender {
                     mainLocationListComponent={this._container.get<MainLocationListComponent>(ContainerID.MainLocationList)}
                 />
                 <MainItemStorageListRComponent
-                    itemStorageCollection={this._container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList)}
+                    // itemStorageController={this._container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList)}
+                    itemStorageController={this._container.get<ItemStorageControllerInterface>(ContainerID.ItemStorageController)}
                 />
             </div>
         );

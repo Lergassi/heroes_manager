@@ -8,7 +8,8 @@ export default interface ItemStorageInterface {
     /**
      *
      * @param item
-     * @param count Остаток.
+     * @param count
+     * @return Остаток.
      */
     addItem(item: Item, count: unsigned): unsigned;
 
@@ -19,13 +20,10 @@ export default interface ItemStorageInterface {
     //  */
     // removeItem(item: Item, count: unsigned): unsigned;
 
-    /**
-     * В том числе не stackable.
-     * @param item
-     */
     // totalItemCount(item: Item): boolean;
     // containsItem(item: Item): boolean;
     // containsItemCount(item: Item, count: unsigned): boolean;
     // takeItem(item: Item, count: unsigned): boolean;
     // hasFreeSlot(): boolean;
+    // moveTo(itemStorage: ItemStorageInterface);
 }

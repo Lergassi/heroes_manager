@@ -85,8 +85,7 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
         return (
             <div className={'block'}>
                 <div className={'block__title'}>
-                    <span>ItemStorage</span>
-                    <span>id: {this.state.itemStorage.ID}, {this.state.itemStorage.getComponent<ItemStorageComponent>(ItemStorageComponent).busyItemStorageSlotCount}/{this.state.itemStorage.getComponent<ItemStorageComponent>(ItemStorageComponent)['_size']}</span>
+                    <span>ItemStorage, id: {this.state.itemStorage.ID}, {this.state.itemStorage.getComponent<ItemStorageComponent>(ItemStorageComponent).busyItemStorageSlotCount}/{this.state.itemStorage.getComponent<ItemStorageComponent>(ItemStorageComponent)['_size']}</span>
                 </div>
                 <div className={'block__content'}>
                     {/*{itemStorageSlots}*/}

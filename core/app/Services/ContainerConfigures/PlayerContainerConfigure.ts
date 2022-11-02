@@ -36,6 +36,7 @@ import {EntityID} from '../../../types/enums/EntityID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import HeroCharacterAttributeFactory from '../../Factories/HeroCharacterAttributeFactory.js';
+import ItemStorageControllerWithLimit from '../../Components/ItemStorageControllerWithLimit.js';
 
 /**
  * todo: Временно не актуально.
@@ -147,44 +148,23 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EntityManagerInterface>(ContainerID.EntityManager),
             );
         });
-        //todo: Только не player а core.
-        // container.set<BasicItemStorageFactory>('player.basicItemStorageFactory', (container) => {
-        //     return new BasicItemStorageFactory(
-        //         container,
-        //         container.get<IDGeneratorInterface>('player.realtimeObjectIdGenerator'),
-        //     );
+        // container.set<MainItemStorageListComponent>(ContainerID.MainItemStorageList, (container) => {
+        //     let itemStorageCollectionGameObject = container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
+        //
+        //     //todo: Не удобно. Игровые обязательные объекты должны быть вынесены в другое место.
+        //     let itemStorageCollectionComponent = itemStorageCollectionGameObject.addComponent<MainItemStorageListComponent>(new MainItemStorageListComponent(
+        //         4,
+        //         [
+        //             // container.get<ItemStorageFactoryInterface>('player.techItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE),
+        //         ],
+        //     ));
+        //
+        //     return itemStorageCollectionComponent;
         // });
-        // container.set<TechItemStorageFactory>('player.techItemStorageFactory', (container) => {
-        //     return new TechItemStorageFactory(
-        //         container.get<ItemStorageFactoryInterface>('player.basicItemStorageFactory'),
-        //         container,
-        //     );
-        // });
-        container.set<MainItemStorageListComponent>(ContainerID.MainItemStorageList, (container) => {
-            let itemStorageCollectionGameObject = container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
-
-            //todo: Не удобно. Игровые обязательные объекты должны быть вынесены в другое место.
-            let itemStorageCollectionComponent = itemStorageCollectionGameObject.addComponent<MainItemStorageListComponent>(new MainItemStorageListComponent(
-                4,
-                [
-                    // container.get<ItemStorageFactoryInterface>('player.techItemStorageFactory').create(DEFAULT_ITEM_STORAGE_SIZE),
-                ],
-            ));
-
-            return itemStorageCollectionComponent;
+        container.set(ContainerID.ItemStorageController, (container) => {
+            return new ItemStorageControllerWithLimit(4);
         });
-        // container.set<PlayerItemStorageFactory>('player.playerItemStorageFactory', (container) => {
-        //     return new PlayerItemStorageFactory(
-        //         container.get<ItemStorageFactoryInterface>('player.techItemStorageFactory'),
-        //         container,
-        //         container.get<ItemStorageListComponent>(ContainerKey.MainItemStorageList),
-        //     );
-        // });
-        // //alias
-        // container.set<ItemStorageFactoryInterface>('player.itemStorageFactory', (container) => {
-        //     return container.get<ItemStorageFactoryInterface>('player.playerItemStorageFactory');
-        // });
-        container.set<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory, (container) => {
+        container.set<ItemStorageFactory>(ContainerID.ItemStorageFactory, (container) => {
             return new ItemStorageFactory(
                 container.get<GameObjectStorage>(ContainerID.GameObjectStorage),
                 container.get<ItemStackFactory>(ContainerID.ItemStackFactory),
@@ -211,9 +191,9 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
 
         //Фасады
-        container.set<ItemStorageManager>(ContainerID.ItemStorageManager, (container) => {
-            return new ItemStorageManager(container.get<GameObjectStorage>(ContainerID.GameObjectStorage));
-        });
+        // container.set<ItemStorageManager>(ContainerID.ItemStorageManager, (container) => {
+        //     return new ItemStorageManager(container.get<GameObjectStorage>(ContainerID.GameObjectStorage));
+        // });
 
         container.set<MainHeroListComponent>(ContainerID.MainHeroList, (container) => {
             let heroListControllerGameObject = container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();

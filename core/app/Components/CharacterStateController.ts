@@ -28,7 +28,7 @@ export default class CharacterStateController {
 
         if (!_.includes(this._codes, code)) {
             this._codes.push(code);
-            debug(DebugNamespaceID.DebugLog)('Добавлено состояние: ' + code);
+            debug(DebugNamespaceID.Log)('Добавлено состояние: ' + code);
         }
     }
 
@@ -36,7 +36,7 @@ export default class CharacterStateController {
         let prevLength = this._codes.length;
         let codes = _.pull(this._codes, code);
         if (prevLength !== this._codes.length) {
-            debug(DebugNamespaceID.DebugLog)('Удалено состояние: ' + code);
+            debug(DebugNamespaceID.Log)('Удалено состояние: ' + code);
         }
     }
 

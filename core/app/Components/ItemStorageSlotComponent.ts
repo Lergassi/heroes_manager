@@ -14,9 +14,12 @@ export enum ItemStorageSlotComponentEventCode {
     Update = 'ItemStorageSlotComponent.Update',
 }
 
-export default class ItemStorageSlotComponent implements ItemStackPlaceInterface {
+export default class ItemStorageSlotComponent implements ItemStackPlaceInterface /* todo: ItemStackController */ {
     private _itemStack: ItemStack;
 
+    /**
+     * @deprecated
+     */
     get itemStack(): ItemStack | undefined {
         return this._itemStack;
     }

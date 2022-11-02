@@ -5,13 +5,18 @@ import React from 'react';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStorageRComponent from './ItemStorageRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
+import ItemStorageControllerInterface from '../../../core/app/Interfaces/ItemStorageControllerInterface.js';
+import _ from 'lodash';
+import {EventCode} from '../../../core/types/enums/EventCode.js';
 
 export interface ItemStorageCollectionRComponentProps {
-    itemStorageCollection: MainItemStorageListComponent;
+    // itemStorageCollection: MainItemStorageListComponent;
+    itemStorageController: ItemStorageControllerInterface;
 }
 
 export interface ItemStorageCollectionRComponentState {
-    itemStorageCollection: MainItemStorageListComponent;
+    // itemStorageController: MainItemStorageListComponent;
+    itemStorageController: ItemStorageControllerInterface;
 }
 
 export default class MainItemStorageListRComponent extends React.Component<ItemStorageCollectionRComponentProps, ItemStorageCollectionRComponentState> implements RComponentUpdateInterface {
@@ -19,41 +24,55 @@ export default class MainItemStorageListRComponent extends React.Component<ItemS
         super(props);
 
         this.state = {
-            itemStorageCollection: props.itemStorageCollection,
+            itemStorageController: props.itemStorageController,
         };
 
-        EventSystem.addListener({
-                codes: [
-                    MainItemStorageListComponentEventCode.Update,
-                ],
-                listener: {
-                    callback: (target) => {
-                        return this.setState((state) => {
-                            return {
-                                itemStorageCollection: state.itemStorageCollection,
-                            };
-                        });
-                    },
-                    target: props.itemStorageCollection,
-                },
-            }
+        props.itemStorageController.addListener(
+            EventCode.ItemStorageController_Update,
+            (target) => {
+                return this.setState((state) => {
+                    return {
+                        itemStorageController: state.itemStorageController,
+                    };
+                });
+            },
         );
+        // EventSystem.addListener({
+        //         codes: [
+        //             // MainItemStorageListComponentEventCode.Update,
+        //             EventCode.ItemStorageController_Update,
+        //         ],
+        //         listener: {
+        //             callback: (target) => {
+        //                 return this.setState((state) => {
+        //                     return {
+        //                         itemStorageController: state.itemStorageController,
+        //                     };
+        //                 });
+        //             },
+        //             target: props.itemStorageController,
+        //         },
+        //     }
+        // );
     }
 
     render() {
-        return (<div>
-            {this.state.itemStorageCollection['_itemStorages'].map((itemStorage) => (   //todo: Доступ.
-                <ItemStorageRComponent
+        let result;
+        {this.state.itemStorageController.render((itemStorages) => {
+            {result = _.map(itemStorages, (itemStorage) => {
+                return <ItemStorageRComponent
                     key={itemStorage['_id']}
                     itemStorage={itemStorage}
                 />
-            ))}
-        </div>);
+            })}
+        })}
+
+        return <span>{_.isEmpty(result) ? <span>empty</span> : result}</span>
     }
 
     update(): void {
         this.setState(state => ({
-            itemStorageCollection: state.itemStorageCollection,
+            itemStorageController: state.itemStorageController,
         }));
     }
 }

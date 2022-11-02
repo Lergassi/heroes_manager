@@ -13,6 +13,8 @@ import {
 } from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
 import EventSystem from '../../source/EventSystem.js';
+import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export enum MainItemStorageListComponentEventCode {
     Update = 'MainItemStorageListComponent.Update',
@@ -49,7 +51,7 @@ export default class MainItemStorageListComponent {
         return true;
     }
 
-    create(size: unsigned, itemStorageFactory: ItemStorageFactoryInterface): GameObject {
+    create(size: unsigned, itemStorageFactory: ItemStorageFactory): GameObject {
         assertNotNil(itemStorageFactory);
 
         this._canAddItemStorage();

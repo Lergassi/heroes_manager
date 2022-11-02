@@ -21,6 +21,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import GameConsole from '../../source/GameConsole/GameConsole.js';
+import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -32,21 +33,23 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     }
 
     async execute(input: Input) {
-        this._createItemStorages();
-        this._createItems();
-        this._createHeroes();
-        this._createLocations();
+        await this._createItemStorages();
+        await this._createItems();
+        await this._createHeroes();
+        await this._createLocations();
     }
 
-    private _createItemStorages() {
-        this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
-            DEFAULT_ITEM_STORAGE_SIZE,
-            this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory),
-        );
-        this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
-            DEFAULT_ITEM_STORAGE_SIZE,
-            this.container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory),
-        );
+    private async _createItemStorages() {
+        // this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
+        //     DEFAULT_ITEM_STORAGE_SIZE,
+        //     this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
+        // );
+        // this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
+        //     DEFAULT_ITEM_STORAGE_SIZE,
+        //     this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
+        // );
+        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandNameID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
+        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandNameID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
     }
 
     private async _createItems() {

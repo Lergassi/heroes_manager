@@ -1,6 +1,7 @@
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
+import _ from 'lodash';
 
 export type ListenerType = Readonly<{
     // code: string;
@@ -33,12 +34,15 @@ export default class EventSystem {
             }
 
             EventSystem._listeners[codes[i]].push(options.listener);
+            debug(DebugNamespaceID.EventSystem)(sprintf('Добавлен listener для %s.', _.join(codes, ', ')));
         }
     }
 
     static event(code: string, target: any): void {
-        // debug('log:event_system')(sprintf('Сработало событие: %s', code));
-        debug(DebugNamespaceID.EventSystem)(sprintf('Сработало событие: %s', code));
+        debug(DebugNamespaceID.EventSystem)(sprintf('Сработало событие: %s.', code));
+        // debug(DebugNamespaceID.DebugDump)(sprintf('Сработало событие: %s, target: ', code), target);
+        debug(DebugNamespaceID.Dump)('event.target', target);
+        console.log(EventSystem._listeners);
         if (!EventSystem._listeners.hasOwnProperty(code)) {
             return;
         }

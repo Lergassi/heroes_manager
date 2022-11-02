@@ -8,7 +8,7 @@ import GameObjectFactory from './GameObjectFactory.js';
 import {unsigned} from '../../types/main.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 
-export default class ItemStorageFactory implements ItemStorageFactoryInterface {
+export default class ItemStorageFactory {
     private readonly _gameObjectStorage: GameObjectStorage;
     private readonly _itemStackFactory: ItemStackFactory;
     private readonly _gameObjectFactory: GameObjectFactory;
@@ -45,7 +45,6 @@ export default class ItemStorageFactory implements ItemStorageFactoryInterface {
         for (let i = 0; i < size; i++) {
             let slot = new ItemStorageSlotComponent();
             slots.push(slot);
-            // gameObject.addComponent(slot);
             gameObject.set(slotIDPrefix + i.toString(), slot);
         }
 

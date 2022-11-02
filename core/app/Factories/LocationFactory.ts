@@ -1,8 +1,8 @@
 import HeroGroupComponent from '../Components/HeroGroupComponent.js';
 import LocationComponent, {
     GatheringItemPoint,
-    GatheringItemPointID,
-    GatheringItemPointTypeValues
+    GatheringItemPointTypeValues,
+    GatheringPointTypeID
 } from '../Components/LocationComponent.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import GameObject from '../../source/GameObject.js';
@@ -25,6 +25,9 @@ import EnemyFactory from './EnemyFactory.js';
 import {EnemyID} from '../../types/enums/EnemyID.js';
 import WalletFactory from './WalletFactory.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
+import GatheringPoint from '../Components/GatheringPoint.js';
+import {ItemID} from '../../types/enums/ItemID.js';
+import _ from 'lodash';
 
 export type LocationFactoryCreateOptions = {
     level: unsigned;
@@ -33,9 +36,9 @@ export type LocationFactoryCreateOptions = {
 }
 
 export type GatheringItemPointPattern = {
-    [GatheringItemPointID.low]: number;
-    [GatheringItemPointID.normal]: number;
-    [GatheringItemPointID.high]: number;
+    [GatheringPointTypeID.low]: number;
+    [GatheringPointTypeID.normal]: number;
+    [GatheringPointTypeID.high]: number;
 }
 
 export default class LocationFactory {
@@ -105,60 +108,80 @@ export default class LocationFactory {
 
         let itemStorageComponent = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(this._internalItemStorageSize, location));
 
-        //todo: Переделать всё что с жилами. Разделить, сделать удобнее. Не понятно что тут происходит.
         //todo: В периоде нет смысла если он используется только при выводе для игрока.
-        let gatheringItemPointTypeValues: Readonly<GatheringItemPointTypeValues> = {
-            [GatheringItemPointID.low]: {value: 2 * 3600, period: ONE_HOUR_IN_SECONDS},
-            [GatheringItemPointID.normal]: {value: 4 * 3600, period: ONE_HOUR_IN_SECONDS},
-            [GatheringItemPointID.high]: {value: 8 * 3600, period: ONE_HOUR_IN_SECONDS},
-        };
-        let gatheringItemPointPatterns: GatheringItemPointPattern[] = [
-            {[GatheringItemPointID.low]: 0, [GatheringItemPointID.normal]: 3, [GatheringItemPointID.high]: 0},
-            {[GatheringItemPointID.low]: 0, [GatheringItemPointID.normal]: 2, [GatheringItemPointID.high]: 1},
-            {[GatheringItemPointID.low]: 1, [GatheringItemPointID.normal]: 2, [GatheringItemPointID.high]: 0},
-        ];
+        // let gatheringItemPointTypeValues: Readonly<GatheringItemPointTypeValues> = {
+        //     [GatheringPointTypeID.low]: {value: 2 * 3600, period: ONE_HOUR_IN_SECONDS},
+        //     [GatheringPointTypeID.normal]: {value: 4 * 3600, period: ONE_HOUR_IN_SECONDS},
+        //     [GatheringPointTypeID.high]: {value: 8 * 3600, period: ONE_HOUR_IN_SECONDS},
+        // };
+        // let gatheringItemPointPatterns: GatheringItemPointPattern[] = [
+        //     {[GatheringPointTypeID.low]: 0, [GatheringPointTypeID.normal]: 3, [GatheringPointTypeID.high]: 0},
+        //     {[GatheringPointTypeID.low]: 0, [GatheringPointTypeID.normal]: 2, [GatheringPointTypeID.high]: 1},
+        //     {[GatheringPointTypeID.low]: 1, [GatheringPointTypeID.normal]: 2, [GatheringPointTypeID.high]: 0},
+        // ];
 
         //todo: Предметы должны устаналиваться более строго. А вдруг в бд не будет предметов категории? Надо чтобы items всегда был в рабочем состоянии.
-        // let items = this._itemDatabase.filter({
         let items = this._itemDatabase.getByItemCategory(this._entityManager.get<ItemCategory>(EntityID.ItemCategory, ItemCategoryID.Resources));
         if (items.length < this._maxGatheringItemPointsCount) {
             debug(DebugNamespaceID.Warning)('Предметов не достаточно для создании локации.');
-            // throw new AppError('indev: Предметов не достаточно для создании локации.');
         }
         items = Random.some(items, this._maxGatheringItemPointsCount, {unique: true});
-        let selectedGatheringItemPointPattern = Random.one(gatheringItemPointPatterns);
+        // let selectedGatheringItemPointPattern = Random.one(gatheringItemPointPatterns);
 
-        let index = 0;
-        let gatheringItemPoints: GatheringItemPoint[] = [];
-        for (const selectedGatheringItemPointPatternKey in selectedGatheringItemPointPattern) {
-            let i = 0;
-            while (i < selectedGatheringItemPointPattern[selectedGatheringItemPointPatternKey]) {
-                if (items[index]) {
-                    gatheringItemPoints.push({
-                        item: items[index],
-                        count: gatheringItemPointTypeValues[selectedGatheringItemPointPatternKey],
-                        type: <GatheringItemPointID>selectedGatheringItemPointPatternKey,
-                    });
-                }
-                ++i;
-                ++index;
-            }
-        }
+        // let index = 0;
+        // let gatheringItemPoints: GatheringItemPoint[] = [];
+        // for (const selectedGatheringItemPointPatternKey in selectedGatheringItemPointPattern) {
+        //     let i = 0;
+        //     while (i < selectedGatheringItemPointPattern[selectedGatheringItemPointPatternKey]) {
+        //         if (items[index]) {
+        //             gatheringItemPoints.push({
+        //                 item: items[index],
+        //                 count: gatheringItemPointTypeValues[selectedGatheringItemPointPatternKey],
+        //                 type: <GatheringPointTypeID>selectedGatheringItemPointPatternKey,
+        //             });
+        //         }
+        //         ++i;
+        //         ++index;
+        //     }
+        // }
+
+        let types = [
+            GatheringPointTypeID.low,
+            GatheringPointTypeID.normal,
+            GatheringPointTypeID.high,
+        ];
+        let gatheringTypeValues = {
+            [GatheringPointTypeID.low]: 16,
+            [GatheringPointTypeID.normal]: 32,
+            [GatheringPointTypeID.high]: 64,
+        };
 
         let locationComponent = location.set<LocationComponent>(LocationComponent.name, new LocationComponent(
             new Date(),
             level,
-            gatheringItemPoints,
-            // heroGroupComponent,
+            // gatheringItemPoints,
+            [
+                new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.Wood), 32),
+                new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.Cotton), 32),
+                new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.IronOre), 32),
+            ],
+            // _.map(items, (item) => {
+            //     let type = Random.one(types);
+            //     // return new GatheringPoint(GatheringPointTypeID.normal, item, 32);
+            //     return new GatheringPoint(type, item, gatheringTypeValues[type]);
+            // }),
             this._itemStackFactory,
             itemStorageComponent,
             this._walletFactory.create(CurrencyID.Gold).get<WalletInterface>(WalletComponent.name), //Можно передать любой кошелек.
             //@test
             [
                 this._enemyFactory.create(EnemyID.Bear, 1),
+                // this._enemyFactory.create(EnemyID.Bear, 1),
+                // this._enemyFactory.create(EnemyID.Bear, 1),
+                // this._enemyFactory.create(EnemyID.Bear, 1),
+                // this._enemyFactory.create(EnemyID.Bear, 1),
             ],
         ));
-        console.log(locationComponent);
 
         return location;
     }

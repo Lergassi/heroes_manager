@@ -1,4 +1,3 @@
-import Component from '../../source/Component.js';
 import ItemStorageSlotComponent from './ItemStorageSlotComponent.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';
@@ -167,41 +166,17 @@ export default class ItemStorageComponent implements ItemStorageInterface {
             }
         }
 
+        //todo: Нужно отдельное сообщение если предметы не добавлены.
+        // debug(DebugNamespaceID.Log)(sprintf('В сумку добавлено предметов "%s": %s из %s.', item.name, count - currentCount, count));
         if (count > 0 && currentCount < count) {
             EventSystem.event(ItemStorageComponentEventCode.Update, this);
+            debug(DebugNamespaceID.Log)(sprintf('В сумку добавлено предметов "%s": %s из %s.', item.name, count - currentCount, count));
         }
 
         return currentCount;
     }
 
-    /**
-     * @deprecated
-     * @param itemStorages
-     * @param item
-     * @param count Остаток.
-     */
-    static addItemToItemStorages(itemStorages: GameObject[], item: Item, count: number): unsigned {
-        let originCount = count;
-        for (let i = 0; i < itemStorages.length; i++) {
-            if (!itemStorages[i].get<ItemStorageComponent>(ComponentID.ItemStorageComponent)) {
-                throw AppError.componentNotFound(ComponentID.ItemStorageComponent);
-            }
-
-            // count -= count - itemStorages[i].get<ItemStorageComponent>(GameObjectKey.ItemStorageComponent).addItem(item, count);
-            count -= count - itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).addItem(item, count);
-            if (count <= 0) {
-                break;
-            }
-        }
-
-        if (originCount > 0 && count > 0) {
-            debug(DebugNamespaceID.Warning)(sprintf('Предметы не добавлены %d - не хватило места.', count));
-        }
-
-        return count;
-    }
-
-    /**
+     /**
      * @deprecated Использовать метод move.
      * @param itemStack
      */
@@ -249,5 +224,16 @@ export default class ItemStorageComponent implements ItemStorageInterface {
         callback({
             slots: this._slots,
         });
+    }
+
+    //todo: @indev До появления StackController и пока есть геттеры у слотов и стеков.
+    moveTo(itemStorage: ItemStorageInterface) {
+        for (const slotKey in this._slots) {
+            if (!this._slots[slotKey].isFree()) {
+                if (!itemStorage.addItem(this._slots[slotKey].itemStack.item, this._slots[slotKey].itemStack.count)) {
+                    this._slots[slotKey].destroyItemStack();
+                }
+            }
+        }
     }
 }

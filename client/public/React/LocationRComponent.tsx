@@ -32,7 +32,7 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
                 LocationComponentEventCode.AddHero,
                 LocationComponentEventCode.RemoveHero,
                 LocationComponentEventCode.Start,
-                LocationComponentEventCode.ItemsGenerated,
+                LocationComponentEventCode.GatheringItems,
                 LocationComponentEventCode.GetItems,
                 LocationComponentEventCode.Update,
             ],
@@ -95,7 +95,7 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
 
         //todo: Временно.
         // console.log(location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints']);
-        let gatheringItemPointsRows = location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints'].map((value, index) => {
+        let gatheringItemPointsRows = location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints']?.map((value, index) => {
             return (
                 <tr key={index}>
                     <td>{value.item.name}</td>

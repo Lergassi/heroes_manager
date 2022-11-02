@@ -14,7 +14,6 @@ export enum ContainerID {
     GameObjectStorage = 'player.GameObjectStorage',
     GameObjectFactory = 'player.GameObjectFactory',
     ItemStorageFactory = 'player.ItemStorageFactory',
-    ItemStorageManager = 'player.ItemStorageManager',
     CharacterAttributeStartValueGenerator = 'player.CharacterAttributeStartValueGenerator',
     CharacterAttributeValueGenerator = 'player.CharacterAttributeValueGenerator',
 
@@ -28,6 +27,7 @@ export enum ContainerID {
     WalletFactory = 'player.WalletFactory',
 
     //компоненты из GameObject
+    ItemStorageController = 'player.ItemStorageController',
     MainItemStorageList = 'player.MainItemStorageList',
     MainHeroList = 'player.MainHeroList',
     MainLocationList = 'player.MainLocationList',

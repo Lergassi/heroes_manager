@@ -1,4 +1,3 @@
-import Component from '../../source/Component.js';
 import Item from '../Entities/Item.js';
 import HeroGroupComponent from './HeroGroupComponent.js';
 import GameObject from '../../source/GameObject.js';
@@ -10,37 +9,31 @@ import debug from 'debug';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
 import {Seconds, unsigned} from '../../types/main.js';
-import {sprintf} from 'sprintf-js';
 import EventSystem from '../../source/EventSystem.js';
 import ExperienceComponent from './ExperienceComponent.js';
-import {assert, assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
+import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import FightControllerInterface, {EnemyRewardOptions} from '../Interfaces/FightControllerInterface.js';
-import AttackGroupController from './AttackGroupController.js';
-import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import DamageGroupController from './DamageGroupController.js';
-import FightController from './FightController.js';
+import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
 import CharacterFightGroup from '../CharacterFightGroup.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
+import GatheringPoint from './GatheringPoint.js';
+import Gatherer from './Gatherer.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import WalletFactory from '../Factories/WalletFactory.js';
-import {CurrencyID} from '../../types/enums/CurrencyID.js';
-import WalletComponent from './WalletComponent.js';
-import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
 
 export enum LocationState {
     Waiting = 'Waiting',
     Hunting = 'Hunting',
 }
 
-export enum GatheringItemPointID {
+export enum GatheringPointTypeID {
     low = 'low',
     normal = 'normal',
     high = 'high',
 }
 
 export type GatheringItemPointTypeValues = {
-    readonly [key in GatheringItemPointID]: GatheringItemValue;
+    readonly [key in GatheringPointTypeID]: GatheringItemValue;
 };
 
 /**
@@ -54,7 +47,7 @@ export type GatheringItemValue = {  //todo: Только не сбор, а в ц
 export type GatheringItemPoint = {
     readonly item: Item;
     readonly count: GatheringItemValue;
-    readonly type: GatheringItemPointID;
+    readonly type: GatheringPointTypeID;
 }
 
 export enum LocationComponentEventCode {
@@ -62,7 +55,7 @@ export enum LocationComponentEventCode {
     Stop = 'LocationComponent.Stop',
     AddHero = 'LocationComponent.AddHero',
     RemoveHero = 'LocationComponent.RemoveHero',
-    ItemsGenerated = 'LocationComponent.ItemsGenerated',
+    GatheringItems = 'LocationComponent.GatheringItems',
     GetItems = 'LocationComponent.GetItems',
     Update = 'LocationComponent.Update',
 }
@@ -70,10 +63,11 @@ export enum LocationComponentEventCode {
 export default class LocationComponent {
     private readonly _created: Date;
     private readonly _level: unsigned;
-    private readonly _gatheringItemPoints: GatheringItemPoint[];
-    private readonly _heroGroupComponent: HeroGroupComponent;               //Каждый компонент, который использует группу сам решает как его отобразить.
+    // private readonly _gatheringItemPoints: GatheringItemPoint[];
+    private readonly _gatheringPoints: GatheringPoint[];
     private readonly _itemStackFactory: ItemStackFactory;
 
+    private readonly _heroes: GameObject[];
     private readonly _heroFightGroup: CharacterFightGroup;
     private readonly _enemyFightGroup: CharacterFightGroup;
 
@@ -88,24 +82,25 @@ export default class LocationComponent {
 
     private readonly _options = {
         heroGroupSize: 5,
-        enemiesMax: 5,      //todo: Пока враги используют один компоненты с героями HeroGroup. Далее групп у врагов не будет.
         intervalPeriod: 1,  //todo: В будущем настраиваемый игрой.
     };
 
     constructor(
         created: Date,
         level: unsigned,
-        gatheringItemPoints: GatheringItemPoint[],
-        // heroGroupComponent: HeroGroupComponent,
+        // gatheringItemPoints: GatheringItemPoint[],
+        gatheringPoints: GatheringPoint[],
         itemStackFactory: ItemStackFactory,         //todo: Убрать в генератор лута.
         itemStorage: ItemStorageComponent,
         // walletFactory: WalletFactory,
         wallet: WalletInterface,
         enemies: GameObject[] = [],
+        // options?: {сумка или фабрика, кошелек или фабрика}
     ) {
         assertNotNil(created);
         assertIsGreaterThanOrEqual(level, 1);
-        assertNotNil(gatheringItemPoints);
+        // assertNotNil(gatheringItemPoints);
+        assertNotNil(gatheringPoints);
         assertNotNil(itemStorage);
         assertNotNil(itemStackFactory);
 
@@ -113,17 +108,13 @@ export default class LocationComponent {
 
         this._created = created;
         this._level = level;
-        this._gatheringItemPoints = gatheringItemPoints;
-        // this._heroGroupComponent = heroGroupComponent;
+        // this._gatheringItemPoints = gatheringItemPoints;
+        this._gatheringPoints = gatheringPoints;
         this._itemStackFactory = itemStackFactory;
-        // this._enemyGroup = enemyGroup;
 
-        // this._attackGroupController = new AttackGroupController();
-        // this._damageGroupController = new DamageGroupController();
-        // this._fightController = new FightController(this._attackGroupController, this._damageGroupController);
-        this._heroGroupComponent = new HeroGroupComponent(this._options.heroGroupSize);
+        this._heroes = [];
         this._heroFightGroup = new CharacterFightGroup(this._options.heroGroupSize);
-        this._enemyFightGroup = new CharacterFightGroup(this._options.enemiesMax);
+        this._enemyFightGroup = new CharacterFightGroup(enemies.length);
         for (let i = 0; i < enemies.length; i++) {
             this._enemyFightGroup.addCharacter(enemies[i]);
         }
@@ -141,28 +132,22 @@ export default class LocationComponent {
             throw new AppError('Охота уже запущена.');   //todo: Одна ошибка на подобные действия.
         }
 
-        // if (this._heroGroupComponent.heroesCount === 0) {
+        // if (this._heroFightGroup.heroesCount === 0) {
         //     throw new AppError('В группе должен быть хотя бы 1 герой.');
         // }
 
         this._state = LocationState.Hunting;
-        this._heroGroupComponent.block(this);
-        //todo: Тут будет дальше единый механизм на всю игру. С учетом онлайн игры.
-        let callback = () => {
-            console.log('CALLBACK FOR ENEMY DIE');
-        }
-        let afterTargetDiedOptions: EnemyRewardOptions = {
+        // this._heroGroupComponent.block(this);
+        let afterTargetDiedOptions: RewardOptions = {
             // wallet: options?.wallet,
             wallet: this._wallet,
             itemStorage: this._itemStorage,
         };
         this._intervalID = setInterval(() => {
-            this._generateItems();
+            this._gather();
 
             if (this._heroFightGroup.canAttack() && this._enemyFightGroup.canAttack()) {
-                // this._heroFightGroup.attackTo(this._enemyFightGroup);
                 this._heroFightGroup.attackTo(this._enemyFightGroup, afterTargetDiedOptions);
-                // this._heroFightGroup.attackTo(this._enemyFightGroup, callback);
                 this._enemyFightGroup.attackTo(this._heroFightGroup);
             }
             //И другие действия...
@@ -177,7 +162,7 @@ export default class LocationComponent {
         }
 
         this._state = LocationState.Waiting;
-        this._heroGroupComponent.unblock(this);
+        // this._heroGroupComponent.unblock(this);
         clearInterval(this._intervalID);
         debug(DebugNamespaceID.Log)('Охота остановлена.');
         EventSystem.event(LocationComponentEventCode.Stop, this);
@@ -195,25 +180,29 @@ export default class LocationComponent {
         }
     }
 
-    /**
-     * Перемещает объекты в сумки. Если слотов не хватает, остатки остаются в локации. Технически: перемещение между сумками.
-     * @param itemStorageManager
-     */
-    moveItems(itemStorageManager: ItemStorageManager) {
-        this.canModify();
-
-        itemStorageManager.moveFrom(this._itemStorage);
-        // debug('log')('Предметы перемещены.');
-        // EventSystem.event(LocationComponentEventCode.GetItems, this)
-        EventSystem.event(LocationComponentEventCode.Update, this);
-    }
+    // /**
+    //  * Перемещает объекты в сумки. Если слотов не хватает, остатки остаются в локации. Технически: перемещение между сумками.
+    //  * @param itemStorageManager
+    //  */
+    // moveItems(itemStorageManager: ItemStorageManager) {
+    //     this.canModify();
+    //
+    //     itemStorageManager.moveFrom(this._itemStorage);
+    //     // debug('log')('Предметы перемещены.');
+    //     // EventSystem.event(LocationComponentEventCode.GetItems, this)
+    //     EventSystem.event(LocationComponentEventCode.Update, this);
+    // }
 
     getReward(rewardOptions: {
-        itemStorage?: ItemStorageManager,
+        // itemStorage?: ItemStorageManager,
+        itemStorage?: ItemStorageInterface,
         wallet?: WalletInterface,
         //Опыт для игрока если будет. Пока только для героев.
     }): void {
-        if (rewardOptions.itemStorage) rewardOptions.itemStorage.moveFrom(this._itemStorage);
+        if (!this._canModify()) return;
+
+        // if (rewardOptions.itemStorage) rewardOptions.itemStorage.moveFrom(this._itemStorage);
+        if (rewardOptions.itemStorage) this._itemStorage.moveTo(rewardOptions.itemStorage);
         if (rewardOptions.wallet) this._wallet.moveTo(rewardOptions.wallet);
         EventSystem.event(LocationComponentEventCode.Update, this);
     }
@@ -222,9 +211,23 @@ export default class LocationComponent {
      * todo: В отдельный класс. За сбор ресурсов будет отвечать другой объект. Т.е. локация тут вообще ничего делать не будет. Gathering
      * @private
      */
-    private _generateItems() {
-        this._heroFightGroup.gather(this._gatheringItemPoints, this._itemStorage, this._options.intervalPeriod);
-        EventSystem.event(LocationComponentEventCode.ItemsGenerated, this);
+    private _gather(): void {
+        if (!this._gatheringPoints.length) return;
+
+        // this._heroFightGroup.gather(this._gatheringItemPoints, this._itemStorage, this._options.intervalPeriod);
+        for (let i = 0; i < this._heroes.length; i++) {
+            for (let j = 0; j < this._gatheringPoints.length; j++) {
+                if (this._gatheringPoints[j].isEmpty()) continue;
+
+                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._gatheringPoints[j], this._itemStorage);
+                // if (this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._gatheringPoints[j], this._itemStorage)) {
+                    EventSystem.event(LocationComponentEventCode.GatheringItems, this);
+                // }
+                // if (this._gatheringPoints[j].gather3(this._itemStorage)) {
+                //     EventSystem.event(LocationComponentEventCode.GatheringItems, this);
+                // }
+            }
+        }
     }
 
     addHero(hero: GameObject) {
@@ -235,6 +238,7 @@ export default class LocationComponent {
 
         // this._heroGroupComponent.addHero(hero);
         this._heroFightGroup.addCharacter(hero);
+        this._heroes.push(hero);    //todo: Не будет работать после удаления исключений.
         EventSystem.event(LocationComponentEventCode.AddHero, this);    //todo: Или достаточно события из группы? Может как то связать их? "Цепочка" событыий.
     }
 
@@ -246,6 +250,7 @@ export default class LocationComponent {
 
         // this._heroGroupComponent.removeHero(hero);
         this._heroFightGroup.removeCharacter(hero);
+        _.pull(this._heroes, hero);
         EventSystem.event(LocationComponentEventCode.RemoveHero, this);
     }
 
@@ -253,6 +258,15 @@ export default class LocationComponent {
         if (this._state !== LocationState.Waiting) {
             throw new AppError('Нельзя редактировать локацию во время охоты.');
         }
+    }
+
+    private _canModify(): boolean {
+        if (this._state !== LocationState.Waiting) {
+            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
+            return false;
+        }
+
+        return true;
     }
 
     canDelete(): void {
@@ -281,9 +295,11 @@ export default class LocationComponent {
     }>) => void) {
         callback({
             level: this._level,
-            gatheringItemPoints: this._gatheringItemPoints,
+            // gatheringItemPoints: this._gatheringItemPoints,
+            gatheringItemPoints: [],
             internalItemStorageComponent: this._itemStorage,
-            heroGroupComponent: this._heroGroupComponent,
+            // heroGroupComponent: this._heroGroupComponent,
+            heroGroupComponent: undefined,
         });
     }
 

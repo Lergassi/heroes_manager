@@ -1,7 +1,10 @@
 import {unsigned} from '../../types/main.js';
-import {EnemyRewardOptions} from './FightControllerInterface.js';
+import {RewardOptions} from './FightControllerInterface.js';
 
 export default interface DamageControllerInterface {
-    takeDamage(value: unsigned, afterDiedThisOptions?: EnemyRewardOptions): void;
+    takeDamage(value: unsigned, afterDiedThisOptions?: RewardOptions): void;
+    /**
+     * @deprecated
+     */
     canTakeDamage(): boolean;
 }

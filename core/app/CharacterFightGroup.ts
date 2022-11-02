@@ -47,7 +47,9 @@ export default class CharacterFightGroup {
             return;
         }
 
-        this._fightController.attackTo(characterFightGroup._fightController, afterTargetDiedCallback/* todo: Здесь FightController должен передавать данные для опыта со всех атакующих. */);
+        //todo: Здесь FightController должен передавать данные для опыта со всех атакующих.
+        // this._fightController.attackTo(characterFightGroup._fightController, afterTargetDiedCallback);
+        this._fightController.attackTo(characterFightGroup._fightController, afterTargetDiedCallback);
     }
 
     canAttack(): boolean {
@@ -56,16 +58,11 @@ export default class CharacterFightGroup {
 
     //todo: @move Пока тут.
     gather(gatheringItemPoints: GatheringItemPoint[], itemStorageComponent: ItemStorageComponent, interval: number) {
-        // let partOfMaxPeriodGathering = this._heroGroup.partOfMaxHeroesCount;    //todo: Только живые.
         let partOfMaxPeriodGathering = this._heroGroup.isLifeHeroesCount() / this._heroGroup.size;  //todo: isLifeHeroesCount доступ явно должен быть както иначе сделан, а не в группе. Для общих свойств нужен отдельный класс.
         console.log('partOfMaxPeriodGathering', partOfMaxPeriodGathering);
         for (let i = 0; i < gatheringItemPoints.length; i++) {
             if (!partOfMaxPeriodGathering) continue;
 
-            // console.log('gatheringItemPoints[i].count.value', gatheringItemPoints[i].count.value);
-            // console.log('gatheringItemPoints[i].count.period', gatheringItemPoints[i].count.period);
-            // console.log('interval', interval);
-            // console.log('partOfMaxPeriodGathering', partOfMaxPeriodGathering);
             let count = _.ceil(gatheringItemPoints[i].count.value / gatheringItemPoints[i].count.period * interval * partOfMaxPeriodGathering);
             if (count <= 0) {
                 debug(DebugNamespaceID.Warning)('Количество предметов в gatheringItemPoint за период получилось равное или меньше нуля.');

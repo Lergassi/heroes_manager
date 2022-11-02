@@ -79,7 +79,7 @@ export default class ItemStack {
 
     /**
      *
-     * @param count Положительное число.
+     * @param count
      * @return Остаток.
      */
     add(count: unsigned, item?: Item): unsigned {

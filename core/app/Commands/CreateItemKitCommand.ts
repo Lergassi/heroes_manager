@@ -15,6 +15,8 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import {parseInt} from 'lodash';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import ItemDatabase from '../../source/ItemDatabase.js';
 
 export default class CreateItemKitCommand extends Command {
     private readonly _kits: {[key: string]: ItemPackInterface[]} = {
@@ -113,9 +115,13 @@ export default class CreateItemKitCommand extends Command {
         assertIsGreaterThanOrEqual(multiplier, 1);
 
         for (let i = 0; i < this._kits[name].length; i++) {
-            ItemStorageComponent.addItemToItemStorages(
-                this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).itemStorages,
-                this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, this._kits[name][i].item),
+            // ItemStorageComponent.addItemToItemStorages(
+            //     this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).itemStorages,
+            //     this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, this._kits[name][i].item),
+            //     this._kits[name][i].count * multiplier,
+            // );
+            this.container.get<ItemStorageInterface>(ContainerID.ItemStorageController).addItem(
+                this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(this._kits[name][i].item),
                 this._kits[name][i].count * multiplier,
             );
         }

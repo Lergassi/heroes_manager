@@ -12,7 +12,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import AppError from '../../source/Errors/AppError.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import {EnemyRewardOptions} from '../Interfaces/FightControllerInterface.js';
+import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
 
 export default class AttackController implements AttackControllerInterface {
     private readonly _rangeSide: unsigned;
@@ -66,10 +66,10 @@ export default class AttackController implements AttackControllerInterface {
         return !this._stateController.hasState(CharacterStateCode.Dead);
     }
 
-    attackTo(target: DamageControllerInterface, afterDiedTargetCallback?: EnemyRewardOptions): boolean {
+    attackTo(target: DamageControllerInterface, afterDiedTargetCallback?: RewardOptions): boolean {
         if (!this.canAttack()) {
             debug(DebugNamespaceID.Throw)('Персонаж не может атаковать.');
-            return;
+            return false;
         }
 
         let damage = this.generateAttack();

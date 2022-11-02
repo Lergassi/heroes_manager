@@ -4,11 +4,13 @@ import DamageControllerInterface from '../Interfaces/DamageControllerInterface.j
 import CharacterIsDeadError from '../../source/Errors/CharacterIsDeadError.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import FightControllerInterface, {EnemyRewardOptions} from '../Interfaces/FightControllerInterface.js';
+import FightControllerInterface, {RewardOptions} from '../Interfaces/FightControllerInterface.js';
+import {unsigned} from '../../types/main.js';
 
-export default class FightController implements FightControllerInterface {
-    private _attackController: AttackControllerInterface;
-    private _damageController: DamageControllerInterface;
+// export default class FightController implements FightControllerInterface {
+export default class FightController {
+    private readonly _attackController: AttackControllerInterface;
+    private readonly _damageController: DamageControllerInterface;
 
     constructor(
         attackController: AttackControllerInterface,
@@ -21,21 +23,36 @@ export default class FightController implements FightControllerInterface {
         this._damageController = damageController;
     }
 
-    takeHit(attackController: AttackControllerInterface, afterDiedOptions?): void {    //todo: Или просто число?
-        attackController.attackTo(this._damageController, afterDiedOptions);
+    // takeHit(attackController: AttackControllerInterface, rewardOptions?: RewardOptions): void {    //todo: Или просто число?
+    //     attackController.attackTo(this._damageController, rewardOptions);
+    // }
+    //
+    // hit(damageController: DamageControllerInterface, rewardOptions?: RewardOptions) {
+    //     this._attackController.attackTo(damageController, rewardOptions);
+    // }
+    //
+    // attackTo(target: FightControllerInterface, rewardOptions?: RewardOptions): void {
+    //     target.takeHit(this._attackController, rewardOptions);
+    //     // target.attackTo(this._damageController, rewardOptions);
+    // }
+    //
+    // attackFrom(target: FightControllerInterface, rewardOptions?: RewardOptions): void {
+    //     target.hit(this._damageController, rewardOptions);
+    // }
+
+    // attackTo(target: DamageControllerInterface, rewardOptions?: RewardOptions): void {
+    // attackTo2(target: FightController, rewardOptions?: RewardOptions): void {
+    attackTo(target: FightController, rewardOptions?: RewardOptions): void {
+        this._attackController.attackTo(target._damageController, rewardOptions);
+        // target.takeDamage(this._damageController);
+        // target.attackTo(this._damageController, rewardOptions);
     }
 
-    hit(damageController: DamageControllerInterface, afterDiedOptions?) {
-        this._attackController.attackTo(damageController, afterDiedOptions);
-    }
-
-    attackTo(target: FightControllerInterface, afterTargetDiedOptions?: EnemyRewardOptions): void {
-        target.takeHit(this._attackController, afterTargetDiedOptions);
-    }
-
-    attackFrom(target: FightControllerInterface, afterThisDiedOptions?: EnemyRewardOptions): void {
-        target.hit(this._damageController, afterThisDiedOptions);
-    }
+    // takeDamage2(value: unsigned, afterDiedThisOptions?: RewardOptions): void {
+    // takeDamage2(target, FightController, afterDiedThisOptions?: RewardOptions): void {
+    //     // this._damageController.takeDamage(value, afterDiedThisOptions);
+    //     this._damageController.takeDamage(target._, afterDiedThisOptions);
+    // }
 
     // exchangeHits(target: FightControllerInterface) {
     //     this.attackTo(target);

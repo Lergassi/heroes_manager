@@ -11,6 +11,7 @@ import CharacterStateController, {CharacterStateCode} from './CharacterStateCont
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
+import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
 
 export enum HealthPointsComponentEventCode {
     TakeDamage = 'HealthPointsComponent.TakeDamage',
@@ -41,10 +42,9 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         this._isDead = false;
         this._stateController = stateController;
         this._afterDiedCallback = afterDiedCallback;
-        console.log('this._afterDiedCallback', this._afterDiedCallback);
     }
 
-    takeDamage(damage: unsigned, afterThisDiedCallback?): void {
+    takeDamage(damage: unsigned, enemyRewardOptions?: RewardOptions): void {
         assertIsPositive(damage);
         damage = _.floor(damage, 0);
         //todo: Округление. Выбрать место.
@@ -59,7 +59,7 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         debug(DebugNamespaceID.Log)(sprintf('Получено урона: %s (%s/%s)', damage, this._currentHealthPoints, this._maxHealthPoints.value()));
         EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
         if (this._currentHealthPoints <= 0) {
-            this.kill(afterThisDiedCallback);
+            this.kill(enemyRewardOptions);
         }
     }
 
@@ -70,7 +70,7 @@ export default class HealthPointsComponent implements DamageControllerInterface 
     //     this._currentHealthPoints = healthPoints >= this._maxHealthPoints ? this._maxHealthPoints : healthPoints;
     // }
 
-    kill(afterDiedCallback?): void {
+    kill(enemyRewardOptions?: RewardOptions): void {
         if (!this.canKill()) {
             debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
             return;
@@ -82,15 +82,9 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         // this._stateController.state('Dead', 'State message: Персонаж мертвый.');
         this._stateController.addState(CharacterStateCode.Dead);
         EventSystem.event(HealthPointsComponentEventCode.Died, this);
-        console.log('kill this._afterDiedCallback', this._afterDiedCallback);
-        console.log('kill afterDiedCallback', afterDiedCallback);
-        console.log('this._afterDiedCallback && afterDiedCallback', this._afterDiedCallback && afterDiedCallback);
-        if (this._afterDiedCallback && afterDiedCallback) {
-            this._afterDiedCallback(afterDiedCallback);
+        if (this._afterDiedCallback && enemyRewardOptions) {
+            this._afterDiedCallback(enemyRewardOptions);
         }
-        // if (afterDiedCallback) {
-        //     afterDiedCallback();
-        // }
         /*
             В вов:
                 Опыт добавляется игрокам.

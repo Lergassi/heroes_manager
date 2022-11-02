@@ -4,4 +4,6 @@ export enum ComponentID {
     AttackController = 'AttackController',
     DamageController = 'DamageController',
     ItemStorageComponent = 'ItemStorageComponent',
+    StateController = 'StateController',
+    Gatherer = 'Gatherer',
 }

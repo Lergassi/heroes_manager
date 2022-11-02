@@ -16,7 +16,6 @@ import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 import AddItemInterface from '../core/app/Interfaces/AddItemInterface.js';
 import {unsigned} from '../core/types/main.js';
 import {DEFAULT_STACK_SIZE} from '../core/app/consts.js';
-import ItemStorageFactoryInterface from '../core/app/Factories/ItemStorageFactoryInterface.js';
 import ItemKit from '../core/app/Services/ItemKit.js';
 import CharacterAttributeValueGeneratorByConfig from '../core/app/Services/CharacterAttributeValueGeneratorByConfig.js';
 import {startCharacterAttributeConfig} from '../core/config/start_character_values.js';
@@ -29,7 +28,7 @@ import AttackControllerInterface from '../core/app/Interfaces/AttackControllerIn
 import {ComponentID} from '../core/types/enums/ComponentID.js';
 import DamageControllerInterface from '../core/app/Interfaces/DamageControllerInterface.js';
 import LocationFactory from '../core/app/Factories/LocationFactory.js';
-import LocationComponent from '../core/app/Components/LocationComponent.js';
+import LocationComponent, {GatheringPointTypeID} from '../core/app/Components/LocationComponent.js';
 import AttackGroupController from '../core/app/Components/AttackGroupController.js';
 import DamageGroupController from '../core/app/Components/DamageGroupController.js';
 import HealthPointsComponent from '../core/app/Components/HealthPointsComponent.js';
@@ -37,12 +36,17 @@ import {extractHealthPoints, separator} from '../core/app/indev.js';
 import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
 import CharacterStateController, {CharacterStateCode} from '../core/app/Components/CharacterStateController.js';
-import FightControllerInterface from '../core/app/Interfaces/FightControllerInterface.js';
 import CharacterFightGroup from '../core/app/CharacterFightGroup.js';
 import {CurrencyID} from '../core/types/enums/CurrencyID.js';
 import WalletFactory from '../core/app/Factories/WalletFactory.js';
 import WalletComponent from '../core/app/Components/WalletComponent.js';
 import ExperienceComponent from '../core/app/Components/ExperienceComponent.js';
+import GatheringPoint from '../core/app/Components/GatheringPoint.js';
+import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
+import Gatherer from '../core/app/Components/Gatherer.js';
+import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
+import ItemStorageControllerWithLimit from '../core/app/Components/ItemStorageControllerWithLimit.js';
+import ItemStorageInterface from '../core/app/Interfaces/ItemStorageInterface.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -70,12 +74,14 @@ export default class SandboxController {
         // this._devInstanceofInterface();
         // this._devItemKit();
         // this._devCharacterAttributeGenerator();
-        this._devFight();
+        // this._devFight();
         // this._devFightGroup();
         // this._devGroupFight();
         // this._devFullLocation();
         // this._devCharacterGroup();
         // this._devStateSystemV2();
+        this._devGather();
+        // this._devItemStorageCollection();
 
         // this._testVanillaJS();
         // this._testLodash();
@@ -218,7 +224,7 @@ export default class SandboxController {
             {item: ItemID.MagicResources_01, count: 1},
         ]);
 
-        let itemStorage = this._container.get<ItemStorageFactoryInterface>(ContainerID.ItemStorageFactory).create(20);
+        let itemStorage = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20);
 
         // itemKit.create(
         //     itemStorage.get<ItemStorageInterface>(GameObjectKey.ItemStorageComponent),
@@ -371,7 +377,7 @@ export default class SandboxController {
         // console.log(extractHealthPoints(heroes));
         // // console.log(extractHealthPoints());
 
-        let checkEndFightCallback = (fightController: FightControllerInterface) => {
+        let checkEndFightCallback = (fightController: FightController) => {
             return !fightController.canAttack();
         };
 
@@ -395,10 +401,14 @@ export default class SandboxController {
             //     enemy.get<ExperienceGeneratorComponent>(ExperienceGeneratorComponent.name).distribute(hero.get<ExperienceComponent>(ExperienceComponent.name));
             //     // heroAttackGroupController.remove(hero - нет доступа);
             // });
+            // heroFightController.attackTo(enemyFightController, {
+            //     wallet: this._container.get<WalletFactory>(ContainerID.WalletFactory).create(CurrencyID.Gold).get<WalletComponent>(WalletComponent.name),
+            //     experienceDistributor: new ExperienceComponent(1, 100),
+            // });
+            // heroFightController.attackTo2(enemyFightController, {
             heroFightController.attackTo(enemyFightController, {
                 wallet: this._container.get<WalletFactory>(ContainerID.WalletFactory).create(CurrencyID.Gold).get<WalletComponent>(WalletComponent.name),
                 experienceDistributor: new ExperienceComponent(1, 100),
-                // itemStorage: ,
             });
             console.log(separator('enemyFightController атакует heroFightController'));
             console.log('heroes', extractHealthPoints(heroes));
@@ -406,7 +416,8 @@ export default class SandboxController {
             // heroFightController.attackFrom(enemyFightController, () => {
             //     console.log('this is afterDiedCallback. Враг получает награду.');
             // });
-            heroFightController.attackFrom(enemyFightController);
+            // heroFightController.attackFrom(enemyFightController);
+            enemyFightController.attackTo(heroFightController);
             // heroFightController.exchangeHits(enemyFightController);
 
             if (checkEndFightCallback(heroFightController) || checkEndFightCallback(enemyFightController)) {
@@ -688,6 +699,98 @@ export default class SandboxController {
         });
         console.log(heroFightGroup);
         console.log(enemyFightGroup);
+
+    }
+
+    private _devGather() {
+        let entityManager = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let itemDatabase = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+
+        let itemStorage = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(10).get<ItemStorageInterface>(ComponentID.ItemStorageComponent);
+        // let itemStorageManager = this._container.get<ItemStorageManager>(ContainerID.ItemStorageManager);
+        // itemStorageManager.addItem(itemDatabase.get(ItemID.Wood), 12);
+        // console.log(itemStorageManager);
+
+        let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 32);
+        // let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 1);
+
+        let stateController = new CharacterStateController();
+        // stateController.addState(CharacterStateCode.Dead);
+        // let gatherer = new Gatherer(stateController, itemStorageManager);
+        let gatherer = new Gatherer(stateController, itemStorage);
+
+        // for (let i = 0; i < 1000; i++) {
+        //     if (!gatheringPoint.gather(gatherer)) {
+        //         break;
+        //     }
+        // }
+        // gatheringPoint.gather(gatherer);
+        // gatheringPoint.gather(gatherer);
+        // gatheringPoint.gather(gatherer);
+
+        // console.log(gatheringPoint.gather2());
+        // for (let i = 0; i < 100; i++) {
+        //     // console.log(gatheringPoint.gather2());
+        //     if (!gatheringPoint.gather2()) {
+        //         break;
+        //     }
+        // }
+
+        // gatherer.gather3(gatheringPoint);
+        for (let i = 0; i < 100; i++) {
+            // if (!gatherer.gather3(gatheringPoint)) break;    //todo: А что если жила вернет 0 при добычи? -> Когда значение жилы опуститься до нуля другая часть программы удалит её. Тут цикл просто для теста.
+            // if (!gatherer.gather3(gatheringPoint, itemStorageManager)) break;
+            if (!gatherer.gather3(gatheringPoint, itemStorage)) break;
+            // if (!gatheringPoint.gather2()) {
+            //     break;
+            // }
+        }
+
+        console.log(gatheringPoint);
+        console.log(gatherer);
+        console.log(itemStorage);
+    }
+
+    private _devItemStorageCollection() {
+        let itemStorageFactory = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory);
+        let itemDatabase = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+
+        let itemStorages = [
+            itemStorageFactory.create(10),
+            itemStorageFactory.create(10),
+            itemStorageFactory.create(10),
+            itemStorageFactory.create(10),
+            itemStorageFactory.create(10),
+        ]
+
+        // let itemStorageController = new ItemStorageController([
+        //     itemStorageFactory.create(2),
+        //     // itemStorages[0],
+        //     // itemStorages[1],
+        // ]);
+        let maxItemStorages = 5;
+        let itemStorageController = new ItemStorageControllerWithLimit(maxItemStorages);
+        itemStorageController.addItemStorage(itemStorageFactory.create(2));
+        // itemStorageController.addItemStorage(itemStorages[3]);
+        // itemStorageController.addItemStorage(itemStorages[4]);
+        // itemStorageController.addItemStorage(itemStorages[4]);
+        // itemStorageController.addItemStorage(itemStorages[4]);
+
+        console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
+        console.log(itemStorageController);
+    }
+
+    private _createItemStorageController() {
 
     }
 }
