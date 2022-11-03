@@ -28,6 +28,7 @@ import WalletInterface from '../Interfaces/WalletInterface.js';
 import GatheringPoint from '../Components/GatheringPoint.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import _ from 'lodash';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export type LocationFactoryCreateOptions = {
     level: unsigned;
@@ -172,7 +173,7 @@ export default class LocationFactory {
             // }),
             this._itemStackFactory,
             itemStorageComponent,
-            this._walletFactory.create(CurrencyID.Gold).get<WalletInterface>(WalletComponent.name), //Можно передать любой кошелек.
+            this._walletFactory.create(CurrencyID.Gold).get<WalletInterface>(ComponentID.Wallet), //Можно передать любой кошелек.
             //@test
             [
                 this._enemyFactory.create(EnemyID.Bear, 1),

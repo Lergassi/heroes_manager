@@ -47,6 +47,12 @@ import Gatherer from '../core/app/Components/Gatherer.js';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
 import ItemStorageControllerWithLimit from '../core/app/Components/ItemStorageControllerWithLimit.js';
 import ItemStorageInterface from '../core/app/Interfaces/ItemStorageInterface.js';
+import {EntityID} from '../core/types/enums/EntityID.js';
+import Currency from '../core/app/Entities/Currency.js';
+import EventSystem from '../core/source/EventSystem.js';
+import {EventCode} from '../core/types/enums/EventCode.js';
+import TestGenerics from '../test/TestGenerics.js';
+import EventSystem2 from '../core/source/EventSystem2.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -67,7 +73,8 @@ export default class SandboxController {
         // console.log(_.sum([false + 0]));
         // console.log(_.sum([<number>(false)]));
         // this._testSumBoolean();
-        //-this._testLodashEvery();
+        //this._testLodashEvery();
+        // this._testGenerics();
 
         // this.devNewItemStorage();
         // this._devItemDatabase();
@@ -80,8 +87,10 @@ export default class SandboxController {
         // this._devFullLocation();
         // this._devCharacterGroup();
         // this._devStateSystemV2();
-        this._devGather();
+        // this._devGather();
         // this._devItemStorageCollection();
+        // this._devEventSystemWithoutStatic();
+        this._devEventSystemWithoutTarget();
 
         // this._testVanillaJS();
         // this._testLodash();
@@ -407,7 +416,7 @@ export default class SandboxController {
             // });
             // heroFightController.attackTo2(enemyFightController, {
             heroFightController.attackTo(enemyFightController, {
-                wallet: this._container.get<WalletFactory>(ContainerID.WalletFactory).create(CurrencyID.Gold).get<WalletComponent>(WalletComponent.name),
+                wallet: this._container.get<WalletFactory>(ContainerID.WalletFactory).create(CurrencyID.Gold).get<WalletComponent>(ComponentID.Wallet),
                 experienceDistributor: new ExperienceComponent(1, 100),
             });
             console.log(separator('enemyFightController атакует heroFightController'));
@@ -792,5 +801,77 @@ export default class SandboxController {
 
     private _createItemStorageController() {
 
+    }
+
+    private _devEventSystemWithoutStatic() {
+        // let itemStorageFactory = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory);
+        // let itemDatabase = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        //
+        // let eventSystem = new EventSystem();
+        // // console.log(eventSystem);
+        // // console.log(EventSystem['_listeners']);
+        //
+        // let i = 0;
+        // let maxItemStorages = 5;
+        // console.log(i++);
+        // let itemStorageController = new ItemStorageControllerWithLimit(maxItemStorages, eventSystem);
+        // console.log(i++);
+        // // let itemStorageController2 = new ItemStorageControllerWithLimit(maxItemStorages, eventSystem);
+        // // let itemStorageController = new ItemStorageController([], eventSystem);
+        //
+        // let callback = (target) => {
+        //     console.log('Hello, World!');
+        // };
+        // /*
+        //     Вызов .event(code, target) ничего не знает о внешнем мире и вызывается с target = this.
+        //  */
+        // console.log(i++);
+        // eventSystem.addListener({
+        //     codes: [EventCode.ItemStorageController_AddItemStorage],
+        //     listener: {
+        //         target: itemStorageController,
+        //         callback: callback,
+        //     },
+        // });
+        // // itemStorageController.addListener([EventCode.ItemStorageController_AddItemStorage], callback);
+        //
+        // console.log(i++);
+        // itemStorageController.addItemStorage(itemStorageFactory.create(2));
+        // // console.log(i++);
+        // // itemStorageController2.addItemStorage(itemStorageFactory.create(12));
+        // // itemStorageController.addItemStorage(itemStorageFactory.create(2));
+        // // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        // // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        // // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        // // console.log(itemStorageController);
+    }
+
+    private _devEventSystemWithoutTarget() {
+        EventSystem2.init();
+
+        let wallet = new WalletComponent(this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, CurrencyID.Gold));
+        let wallet2 = new WalletComponent(this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, CurrencyID.Gold));
+
+        EventSystem2.addListener([EventCode.Wallet_AddCurrency], (target) => {
+            console.log('target', target);
+            console.log('новый вариант');
+        });
+        // EventSystem.addListener({codes: [EventCode.Wallet_AddCurrency], listener: {target: wallet, callback: (target) => {console.log('старый вариант');}}});
+
+        wallet.add(10);
+        wallet.add(10);
+        wallet.add(10);
+
+        wallet2.add(100);
+        wallet2.add(100);
+        wallet2.add(100);
+    }
+
+    private _testGenerics() {
+        let testGenerics = new TestGenerics();
+        testGenerics.test();
+        testGenerics.test('asd', (target) => {});
+        testGenerics.test(['asd'], (target) => {});
+        testGenerics.test({codes: [], listener: (target) => {}});
     }
 }

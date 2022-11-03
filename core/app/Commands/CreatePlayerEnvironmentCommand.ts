@@ -30,10 +30,6 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     private async _createItemStorages() {
-        // this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
-        //     DEFAULT_ITEM_STORAGE_SIZE,
-        //     this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
-        // );
         await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandNameID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
     }
 

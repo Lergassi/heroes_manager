@@ -6,4 +6,5 @@ export enum ComponentID {
     ItemStorageComponent = 'ItemStorageComponent',
     StateController = 'StateController',
     Gatherer = 'Gatherer',
+    Wallet = 'Wallet',
 }

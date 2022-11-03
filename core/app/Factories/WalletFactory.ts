@@ -7,6 +7,7 @@ import GameObject from '../../source/GameObject.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import {EntityID} from '../../types/enums/EntityID.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class WalletFactory {
     private readonly _gameObjectFactory: GameObjectFactory;
@@ -36,7 +37,8 @@ export default class WalletFactory {
             '#wallet.' + currency['_id'],   //todo: Доступ.
         ]);
 
-        wallet.set(WalletComponent.name, new WalletComponent(
+        // wallet.set(WalletComponent.name, new WalletComponent(
+        wallet.set(ComponentID.Wallet, new WalletComponent(
             currency,
             value,
         ));

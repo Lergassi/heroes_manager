@@ -7,6 +7,7 @@ import {CommandNameID} from '../../types/enums/CommandNameID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import WalletComponent from '../Components/WalletComponent.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class ToggleLocationCommand extends Command {
     get name(): string {
@@ -29,7 +30,7 @@ export default class ToggleLocationCommand extends Command {
                 wallet: this.container
                     .get<GameObjectStorage>(ContainerID.GameObjectStorage)
                     .getOneByTag('#wallet.' + CurrencyID.Gold)
-                    .get<WalletInterface>(WalletComponent.name)
+                    .get<WalletInterface>(ComponentID.Wallet)
             });
     }
 }

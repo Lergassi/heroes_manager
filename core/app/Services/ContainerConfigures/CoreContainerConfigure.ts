@@ -19,12 +19,16 @@ import {ItemID} from '../../../types/enums/ItemID.js';
 import _ from 'lodash';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import EventSystemFactory from '../EventSystemFactory.js';
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
         container.set<object>('core.config', config);
 
-        EventSystem.init();
+        EventSystem.init(); //todo: В фабрику?
+        container.set(ContainerID.EventSystemFactory, (container) => {
+            return new EventSystemFactory();
+        });
 
         //Тут не save_inject, а просто загрузка данных из файла. На сервере из файла, на клиенте через import и webpack.
         container.set<MetadataManager>('core.metadataManager', (container) => {

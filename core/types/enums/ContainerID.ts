@@ -2,6 +2,8 @@ import HeroCharacterAttributeFactory from '../../app/Factories/HeroCharacterAttr
 
 export enum ContainerID {
     //core
+    EventSystem = 'core.EventSystem',
+    EventSystemFactory = 'core.EventSystemFactory',
     EntityManager = 'core.EntityManager',
     // EntityManagerFacade = 'core.facade.entityManager',
     ItemFactory = 'core.ItemFactory',
@@ -9,7 +11,6 @@ export enum ContainerID {
     GameConsole = 'core.GameConsole',
 
     //player
-    EventSystem = 'core.EventSystem',
     IDGenerator = 'player.realtimeObjectIdGenerator',
     GameObjectStorage = 'player.GameObjectStorage',
     GameObjectFactory = 'player.GameObjectFactory',

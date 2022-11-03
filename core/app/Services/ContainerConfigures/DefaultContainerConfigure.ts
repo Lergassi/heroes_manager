@@ -37,6 +37,7 @@ import debug from 'debug';
 import _ from 'lodash';
 import CreateItemKitCommand from '../../Commands/CreateItemKitCommand.js';
 import {ContainerID} from '../../../types/enums/ContainerID.js';
+import AddGoldCommand from '../../Commands/AddGoldCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -49,7 +50,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
             DebugNamespaceID.Warning,
             // DebugNamespaceID.Load,
             // DebugNamespaceID.DebugLog,
-            DebugNamespaceID.Dump,
+            // DebugNamespaceID.Dump,
             // DebugNamespaceID.DebugAssertThrow,
             DebugNamespaceID.Throw,
             DebugNamespaceID.Indev,
@@ -85,6 +86,8 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new NewGameCommand(container));
         gameConsole.register(new CreatePlayerEnvironmentCommand(container));
         gameConsole.register(new CreateStartPlayerObjectsCommand(container));
+
+        gameConsole.register(new AddGoldCommand(container));
 
         gameConsole.register(new CreateItemStorageCommand(container));
         gameConsole.register(new CreateItemCommand(container));

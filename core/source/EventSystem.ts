@@ -17,6 +17,10 @@ export default class EventSystem {
 
     private constructor() {}
 
+    // constructor() {
+    //     // EventSystem.init();
+    // }
+
     static init(): EventSystem {
         EventSystem._listeners = {};
 
@@ -24,25 +28,41 @@ export default class EventSystem {
     }
 
     static addListener(options: {
-        codes: string | string[],
+        codes: string[],
         listener: ListenerType,
     }): void {
-        let codes = typeof options.codes === 'string' ? [options.codes] : options.codes;
-        for (let i = 0; i < codes.length; i++) {
-            if (!EventSystem._listeners.hasOwnProperty(codes[i])) {
-                EventSystem._listeners[codes[i]] = [];
+        for (let i = 0; i < options.codes.length; i++) {
+            if (!EventSystem._listeners.hasOwnProperty(options.codes[i])) {
+                EventSystem._listeners[options.codes[i]] = [];
             }
 
-            EventSystem._listeners[codes[i]].push(options.listener);
-            debug(DebugNamespaceID.EventSystem)(sprintf('Добавлен listener для %s.', _.join(codes, ', ')));
+            EventSystem._listeners[options.codes[i]].push(options.listener);
+            debug(DebugNamespaceID.EventSystem)(sprintf('Добавлен listener для %s.', options.codes[i]));
         }
     }
 
+    // static addListener(codes: string[], callback: (target) => void): void;
+    // static addListener(options: { codes: string[], listener: ListenerType}): void;
+    // static addListener(codeOrOptions: string[] | { codes: string | string[], listener: ListenerType}, callback?: (target) => void): void
+    // {
+    //     if (typeof codeOrOptions === 'object' && !_.isArray(codeOrOptions)) {
+    //         let codes = codeOrOptions.codes;
+    //         for (let i = 0; i < codes.length; i++) {
+    //             if (!EventSystem._listeners.hasOwnProperty(codes[i])) {
+    //                 EventSystem._listeners[codes[i]] = [];
+    //             }
+    //
+    //             EventSystem._listeners[codes[i]].push(codeOrOptions.listener);
+    //             debug(DebugNamespaceID.EventSystem)(sprintf('Добавлен listener для %s.', _.join(codes, ', ')));
+    //         }
+    //     } else {
+    //         //...
+    //     }
+    // // static addListener(codes: string | string[], callback: (target) => void): void {
+    // }
+
     static event(code: string, target: any): void {
         debug(DebugNamespaceID.EventSystem)(sprintf('Сработало событие: %s.', code));
-        // debug(DebugNamespaceID.DebugDump)(sprintf('Сработало событие: %s, target: ', code), target);
-        debug(DebugNamespaceID.Dump)('event.target', target);
-        console.log(EventSystem._listeners);
         if (!EventSystem._listeners.hasOwnProperty(code)) {
             return;
         }
@@ -52,6 +72,8 @@ export default class EventSystem {
             if (EventSystem._listeners[code][i].target) {
                 if (EventSystem._listeners[code][i].target === target) {
                     EventSystem._listeners[code][i].callback(target);
+                } else {
+
                 }
             } else {
                 EventSystem._listeners[code][i].callback(target);

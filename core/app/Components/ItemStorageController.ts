@@ -10,34 +10,29 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
 
-// export enum ItemStorageControllerEventCode {
-//
-// }
-
 export default class ItemStorageController implements ItemStorageControllerInterface, ItemStorageInterface {
     private readonly _itemStorages: GameObject[];
 
-    constructor(itemStorages: GameObject[] = []) {
-        this._itemStorages = itemStorages;
+    constructor() {
+        this._itemStorages = [];
     }
 
-    addItemStorage(itemStorage: GameObject): unsigned {
-        if (!_.includes(this._itemStorages, itemStorage)) {
-            this._itemStorages.push(itemStorage);
-            debug(DebugNamespaceID.Log)('Добавлен ItemStorage.');
-            EventSystem.event(EventCode.ItemStorageController_Update, this);
-        }
+    addItemStorage(itemStorage: GameObject): number {
+        if (_.includes(this._itemStorages, itemStorage)) return -1;
+
+        this._itemStorages.push(itemStorage);
+        debug(DebugNamespaceID.Log)('Добавлен ItemStorage.');
+        EventSystem.event(EventCode.ItemStorageController_AddItemStorage, this);
 
         return this._itemStorages.length;
     }
 
-    removeItemStorage(itemStorage: GameObject): unsigned {
-        let prevLength = this._itemStorages.length
+    removeItemStorage(itemStorage: GameObject): number {
+        if (!_.includes(this._itemStorages, itemStorage)) return -1;
+
         _.pull(this._itemStorages, itemStorage);
-        if (prevLength !== this._itemStorages.length) {
-            debug(DebugNamespaceID.Log)('Удален ItemStorage.');
-            EventSystem.event(EventCode.ItemStorageController_Update, this);
-        }
+        debug(DebugNamespaceID.Log)('Удален ItemStorage.');
+        EventSystem.event(EventCode.ItemStorageController_RemoveItemStorage, this);
 
         return this._itemStorages.length;
     }
@@ -66,13 +61,20 @@ export default class ItemStorageController implements ItemStorageControllerInter
         callback(this._itemStorages);
     }
 
-    addListener(code, callback) {
-        EventSystem.addListener({
-            codes: code,
-            listener: {
-                callback: callback,
-                target: this,
-            },
-        });
-    }
+    // addListener(codes: string | string[], callback: (target) => void) {
+    //     EventSystem.addListener({
+    //         codes: codes,
+    //         listener: {
+    //             callback: callback,
+    //             target: this,
+    //         },
+    //     });
+    //     // this._eventSystem.addListener({
+    //     //     codes: codes,
+    //     //     listener: {
+    //     //         callback: callback,
+    //     //         target: this,
+    //     //     },
+    //     // });
+    // }
 }

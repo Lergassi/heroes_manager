@@ -16,4 +16,6 @@ export default interface WalletInterface {
     //todo:
     // remove(value: unsigned): unsigned;
     // has(value: unsigned): boolean;
+    // render(callb);
+    // addListener();
 }

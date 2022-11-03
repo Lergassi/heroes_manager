@@ -4,6 +4,8 @@ export enum CommandNameID {
     create_start_player_objects = 'create_start_player_objects',
     create_start_player_items = 'create_start_player_items',
 
+    add_gold = 'add_gold',
+
     create_item_storage = 'create_item_storage',
     clear_item_storage_slot = 'clear_item_storage_slot',
     create_item = 'create_item',

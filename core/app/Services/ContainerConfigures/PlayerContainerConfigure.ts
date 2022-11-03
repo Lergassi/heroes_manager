@@ -102,15 +102,15 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             );
 
             //todo: player_env_indev
-            let currencies = [
-                CurrencyID.Gold,
-                CurrencyID.ResearchPoints,
-            ];
+            let currencies = {
+                [CurrencyID.Gold]: 1000,
+                [CurrencyID.ResearchPoints]: 10,
+            };
 
-            _.map(currencies, (currencyAlias) => {
+            _.map(currencies, (value, currencyID) => {
                 walletFactory.create(
-                    container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, currencyAlias),
-                    1000,
+                    container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, currencyID),
+                    value,
                 );
             });
 

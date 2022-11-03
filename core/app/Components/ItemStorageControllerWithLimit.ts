@@ -24,24 +24,25 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
 
         this._maxItemStorages = maxItemStorages;
         // this._itemStorageController = itemStorageController;
-        this._itemStorageController = new ItemStorageController();
         this._itemStorages = [];
+        this._itemStorageController = new ItemStorageController();
     }
 
-    addItemStorage(itemStorage: GameObject): unsigned {
+    addItemStorage(itemStorage: GameObject): number {
         //todo: Всё равно идея не окончательная и будет развиваться. Идея: Контроллер по принципу http, а этот класс будет Collection или вообще не будет.
-        // if (!this._canAddItemStorage()) return -1;
-        if (!this._canAddItemStorage()) return this._itemStorages.length;
+        if (!this._canAddItemStorage()) return -1;
 
-        this._itemStorageController.addItemStorage(itemStorage);
-        this._itemStorages.push(itemStorage);
+        if (this._itemStorageController.addItemStorage(itemStorage) !== -1) {
+            this._itemStorages.push(itemStorage);
+        }
 
         return this._itemStorages.length;
     }
 
-    removeItemStorage(itemStorage: GameObject): unsigned {
-        this._itemStorageController.removeItemStorage(itemStorage);
-        _.pull(this._itemStorages, itemStorage);
+    removeItemStorage(itemStorage: GameObject): number {
+        if (this._itemStorageController.removeItemStorage(itemStorage) !== -1) {
+            _.pull(this._itemStorages, itemStorage);
+        }
 
         return this._itemStorages.length
     }
@@ -63,14 +64,14 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
         callback(this._itemStorages);
     }
 
-    addListener(code, callback) {
-        // EventSystem.addListener({
-        //     codes: code,
-        //     listener: {
-        //         callback: callback,
-        //         target: this._itemStorageController,
-        //     },
-        // });
-        this._itemStorageController.addListener(code, callback);
-    }
+    // addListener(codes: string | string[], callback: (target) => void) {
+    //     EventSystem.addListener({
+    //         codes: codes,
+    //         listener: {
+    //             callback: callback,
+    //             target: this._itemStorageController,
+    //         },
+    //     });
+    //     // this._itemStorageController.addListener(codes, callback);
+    // }
 }

@@ -20,6 +20,7 @@ import Item from '../app/Entities/Item.js';
 import {ContainerID} from '../types/enums/ContainerID.js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
+import {ComponentID} from '../types/enums/ComponentID.js';
 
 export function debugEntity(entity) {
     debug(DebugNamespaceID.Debug)('%j', {
@@ -277,7 +278,7 @@ export function debugItemStorages(itemStorages: GameObject[]) {
 
 export function debugWallet(wallet: GameObject) {
     debugGameObject(wallet);
-    let walletComponent = wallet.getComponentByName(WalletComponent.name);
+    let walletComponent = wallet.getComponentByName(ComponentID.Wallet);
     debug(DebugNamespaceID.Debug)('%j', {
         component: WalletComponent.name,
         _id: walletComponent['_id'],
