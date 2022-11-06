@@ -1,6 +1,7 @@
 import AppError from './Errors/AppError.js';
 import AssertError from './Errors/AssertError.js';
 import _ from 'lodash';
+import {sprintf} from 'sprintf-js';
 
 export function assert(condition: boolean, message?: string) {
     if (!condition) {
@@ -85,7 +86,7 @@ export function assertIsArray(value: any, message?: string) {
 }
 
 export function assertIsInstanceOf(value: any, target: any, message?: string) {
-    assert(value instanceof target, message || 'Объект неверного типа (instanceof).');
+    assert(value instanceof target, message || sprintf('Неверный тип (instanceof). Ожидаемый тип: %s.', target.name ?? String(target)));
 }
 
 export function assertAction(condition: boolean, message?: string) {

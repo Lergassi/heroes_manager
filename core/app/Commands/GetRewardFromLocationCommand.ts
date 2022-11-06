@@ -4,7 +4,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import LocationComponent from '../Components/LocationComponent.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import WalletComponent from '../Components/WalletComponent.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
@@ -12,7 +12,7 @@ import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class GetRewardFromLocationCommand extends Command {
     get name(): string {
-        return CommandNameID.get_reward_from_location;
+        return CommandID.get_reward_from_location;
     }
 
     configure() {

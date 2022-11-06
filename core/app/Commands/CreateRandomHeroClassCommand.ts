@@ -1,6 +1,6 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {assertIsGreaterThan, assertIsGreaterThanOrEqual, assertIsPositive} from '../../source/assert.js';
 import HeroFactory from '../Factories/HeroFactory.js';
@@ -10,7 +10,7 @@ import Random from '../Services/Random.js';
 
 export default class CreateRandomHeroClassCommand extends Command {
     get name(): string {
-        return CommandNameID.create_random_hero_class;
+        return CommandID.create_random_hero_class;
     }
 
     configure() {

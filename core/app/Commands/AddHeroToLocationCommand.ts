@@ -5,11 +5,11 @@ import {assert} from '../../source/assert.js';
 import _ from 'lodash';
 import LocationComponent from '../Components/LocationComponent.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 
 export default class AddHeroToLocationCommand extends Command {
     get name(): string {
-        return CommandNameID.add_hero_to_location;
+        return CommandID.add_hero_to_location;
     }
 
     configure() {

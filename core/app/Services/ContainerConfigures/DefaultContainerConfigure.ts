@@ -29,7 +29,7 @@ import ClearItemStorageSlotCommand from '../../Commands/ClearItemStorageSlotComm
 import CreateAllHeroClassesCommand from '../../Commands/CreateAllHeroClassesCommand.js';
 import FightCommand from '../../Commands/FightCommand.js';
 import ResurrectHeroCommand from '../../Commands/ResurrectHeroCommand.js';
-import {CommandNameID} from '../../../types/enums/CommandNameID.js';
+import {CommandID} from '../../../types/enums/CommandID.js';
 import KillHeroCommand from '../../Commands/KillHeroCommand.js';
 import CreateRandomHeroClassCommand from '../../Commands/CreateRandomHeroClassCommand.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
@@ -38,6 +38,7 @@ import _ from 'lodash';
 import CreateItemKitCommand from '../../Commands/CreateItemKitCommand.js';
 import {ContainerID} from '../../../types/enums/ContainerID.js';
 import AddGoldCommand from '../../Commands/AddGoldCommand.js';
+import DebugItemDatabaseCommand from '../../Commands/DebugCommands/DebugItemDatabaseCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -59,7 +60,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
             // 'log:*',
 
             // DebugNamespaceID.GameConsole,
-            DebugNamespaceID.EventSystem,
+            // DebugNamespaceID.EventSystem,
         ];
         debug.enable(_.join(debugNamespaces, ','));
 
@@ -118,6 +119,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new DebugContainerCommand(container));
         gameConsole.register(new DebugGameObjectStorageCommand(container));
         gameConsole.register(new InspectGameObjectCommand(container));
+        gameConsole.register(new DebugItemDatabaseCommand(container));
 
         gameConsole.register(new DebugUserEnvironmentCommand(container));
         gameConsole.register(new DebugPlayerEnvironmentCommand(container));

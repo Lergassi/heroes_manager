@@ -10,15 +10,16 @@ export function Example() {
     console.log(value);
     console.log(handleClick);
 
-    const [count, setCount] = useState(0);
-    console.log(42);
+    // const [count, setCount] = useState(0);
+    // console.log(42);
 
     return (
         <div>
-            <p>You clicked {count} times</p>
-            <button onClick={() => setCount(count + 1)}>
+            <p>You clicked {value} times</p>
+            <button onClick={() => handleClick(value + 1)}>
                 Click me
             </button>
+            {/*<Element value={value} onClick={handleClick(value + 1)} />*/}
         </div>
     );
 }

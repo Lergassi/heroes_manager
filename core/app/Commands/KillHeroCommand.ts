@@ -1,6 +1,6 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {assertNotNil} from '../../source/assert.js';
@@ -10,7 +10,7 @@ import AppError from '../../source/Errors/AppError.js';
 
 export default class KillHeroCommand extends Command {
     get name(): string {
-        return CommandNameID.kill_hero;
+        return CommandID.kill_hero;
     }
 
     configure() {

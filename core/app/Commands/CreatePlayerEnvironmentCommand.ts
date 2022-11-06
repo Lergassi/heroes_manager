@@ -9,7 +9,7 @@ import MainItemStorageListComponent from '../Components/MainItemStorageListCompo
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import _ from 'lodash';
@@ -21,7 +21,7 @@ import GameConsole from '../../source/GameConsole/GameConsole.js';
  */
 export default class CreatePlayerEnvironmentCommand extends Command {
     get name(): string {
-        return CommandNameID.create_player_env;
+        return CommandID.create_player_env;
     }
 
     async execute(input: Input) {
@@ -30,7 +30,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     private async _createItemStorages() {
-        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandNameID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
+        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
     }
 
     private _createWallets() {

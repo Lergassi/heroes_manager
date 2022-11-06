@@ -2,7 +2,7 @@ import Item from '../Entities/Item.js';
 import {unsigned} from '../../types/main.js';
 
 /**
- * Для сумки и коллекции сумок.
+ * Для сумки и коллекции сумок, стеков и других мест где нужно добавлять предметы.
  */
 export default interface ItemStorageInterface {
     /**

@@ -8,6 +8,7 @@ import {AssignRComponentInterface} from '../../../client/source/RComponentBridge
 import {unsigned} from '../../types/main.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import EventSystem from '../../source/EventSystem.js';
+import {EventCode} from '../../types/enums/EventCode.js';
 
 export enum ItemStorageSlotComponentEventCode {
     CreateItemStack = 'ItemStorageSlotComponent.CreateItemStack',
@@ -38,6 +39,7 @@ export default class ItemStorageSlotComponent implements ItemStackPlaceInterface
 
     /**
      * todo: Метод не удобный. И itemStackFactory тоже не удобный инструмент.
+     * @deprecated Далее использовать addItem. Слот или ItemStackController сам разбереться что делать.
      * Создает ItemStack. Если count > stackSize генерируется исключение. Для добавления и объединения предметов использовать другие методы.
      * @param options
      */
@@ -52,6 +54,10 @@ export default class ItemStorageSlotComponent implements ItemStackPlaceInterface
         EventSystem.event(ItemStorageSlotComponentEventCode.Update, this);
     }
 
+    /**
+     * @deprecated addItem
+     * @param itemStack
+     */
     placeItemStack(itemStack: ItemStack): void {
         this.canPlaceItem(itemStack.item);
 
@@ -67,9 +73,17 @@ export default class ItemStorageSlotComponent implements ItemStackPlaceInterface
         return !this.isBusy();
     }
 
+    /**
+     * @deprecated Использовать clear() или addItem/moveItem и очищать слот если вернули 0 (остаток).
+     */
     destroyItemStack(): void {
         this._itemStack = null;
-        EventSystem.event(ItemStorageSlotComponentEventCode.Update, this);
+        EventSystem.event(EventCode.ItemStorageSlot_Clear, this);
+    }
+
+    clear() {
+        this._itemStack = null;
+        EventSystem.event(EventCode.ItemStorageSlot_Clear, this);
     }
 
     containsItem(item: Item): boolean {
@@ -80,14 +94,6 @@ export default class ItemStorageSlotComponent implements ItemStackPlaceInterface
         itemStack: ItemStack,
     }) => void) {
         callback({
-            itemStack: this._itemStack,
-        });
-    }
-
-    render2(callback: (values: {
-        itemStack: ItemStack,
-    }) => any) {
-        return callback({
             itemStack: this._itemStack,
         });
     }

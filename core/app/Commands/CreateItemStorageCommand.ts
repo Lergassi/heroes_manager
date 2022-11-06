@@ -4,14 +4,14 @@ import MainItemStorageListComponent from '../Components/MainItemStorageListCompo
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import {unsigned} from '../../types/main.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 import ItemStorageControllerInterface from '../Interfaces/ItemStorageControllerInterface.js';
 
 export default class CreateItemStorageCommand extends Command {
     get name(): string {
-        return CommandNameID.create_item_storage;
+        return CommandID.create_item_storage;
     }
 
     configure() {

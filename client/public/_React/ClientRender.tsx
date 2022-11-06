@@ -19,6 +19,9 @@ import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
 import WalletComponent from '../../../core/app/Components/WalletComponent.js';
 import {Example} from './Test/Example.js';
 import useCustomHook from './Test/test.js';
+import PlayerItemStorage from '../PlayerItemStorage.js';
+import WalletRC2 from './WalletRC2.js';
+import Currency from '../../../core/app/Entities/Currency.js';
 
 export default class ClientRender {
     private readonly _container: ContainerInterface;
@@ -55,9 +58,16 @@ export default class ClientRender {
     }
 
     private _renderPreGameUI(root) {
+        // console.log('_renderPreGameUI');
+        let wallets = {
+            player: new WalletComponent(new Currency('золото игрока', 'золото', 500), 0),
+            npc: new WalletComponent(new Currency('золото персонажа', 'золото', 500), 100),
+            location: new WalletComponent(new Currency('золото локации', 'золото', 500), 200),
+        };
+        console.log(wallets);
+        window['_wallets'] = wallets;
 
         root.render(
-
             <div className={'wrapper'}>
                 <GameConsoleRComponent
                     container={this._container}
@@ -65,10 +75,13 @@ export default class ClientRender {
                     maxHistoryLength={100}
                     commandNames={this._container.get<GameConsole>(ContainerID.GameConsole).names}
                 />
-                <SandboxRComponent
+                {/*<SandboxRComponent*/}
+
+                {/*/>*/}
+                {/*<Example/>*/}
+                <WalletRC2
 
                 />
-                <Example/>
             </div>
         );
     }

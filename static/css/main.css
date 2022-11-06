@@ -6,6 +6,11 @@
 /*    margin: 0;*/
 /*}*/
 
+* {
+    padding: 0;
+    margin: 0;
+}
+
 .basic-table {
     border-collapse: collapse;
     border: 1px solid #ddd;
@@ -69,4 +74,41 @@
 
 .hide {
     display: none;
+}
+
+.clearfix {
+    clear: both;
+}
+
+/*ItemStorage для игрока*/
+.player-item-storage-slot-row {
+    position: relative;
+}
+
+.player-item-storage-slot {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    margin: 1px;
+
+    background: orange; /*цвет для технических целей*/
+    /*background: orangered;*/
+
+    /*float: left;*/
+    vertical-align: top;
+}
+
+.player-item-storage-slot_icon {
+    /*background-image: url("/images/icons/bordered/64x64/question01.png");*/
+    background-repeat: no-repeat;
+    background-size: 50px;
+}
+
+.player-item-storage-slot_clear {
+
+}
+
+/*debug*/
+.clear-bg-image {
+
 }

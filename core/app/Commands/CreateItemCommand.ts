@@ -6,7 +6,7 @@ import EntityManager from '../../source/EntityManager.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import ItemDatabase from '../../source/ItemDatabase.js';
@@ -18,7 +18,7 @@ import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export default class CreateItemCommand extends Command {
     get name(): string {
-        return CommandNameID.create_item;
+        return CommandID.create_item;
     }
 
     configure() {

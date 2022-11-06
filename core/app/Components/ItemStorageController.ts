@@ -60,21 +60,4 @@ export default class ItemStorageController implements ItemStorageControllerInter
     render(callback: (itemStorages: GameObject[]) => void) {
         callback(this._itemStorages);
     }
-
-    // addListener(codes: string | string[], callback: (target) => void) {
-    //     EventSystem.addListener({
-    //         codes: codes,
-    //         listener: {
-    //             callback: callback,
-    //             target: this,
-    //         },
-    //     });
-    //     // this._eventSystem.addListener({
-    //     //     codes: codes,
-    //     //     listener: {
-    //     //         callback: callback,
-    //     //         target: this,
-    //     //     },
-    //     // });
-    // }
 }

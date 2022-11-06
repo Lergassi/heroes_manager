@@ -1,4 +1,4 @@
-export enum CommandNameID {
+export enum CommandID {
     new_game = 'new_game',
     create_player_env = 'create_player_env',
     create_start_player_objects = 'create_start_player_objects',
@@ -30,5 +30,5 @@ export enum CommandNameID {
     fight = 'fight',
 
     debug_entity_manager = 'debug_entity_manager',
-    debug_items = 'debug_items',
+    debug_item_database = 'debug_item_database',
 }

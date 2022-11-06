@@ -6,13 +6,13 @@ import EntityManager from '../../source/EntityManager.js';
 import MainHeroListComponent from '../Components/MainHeroListComponent.js';
 import {unsigned} from '../../types/main.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class CreateHeroCommand extends Command {
     get name(): string {
-        return CommandNameID.create_hero;
+        return CommandID.create_hero;
     }
 
     configure() {

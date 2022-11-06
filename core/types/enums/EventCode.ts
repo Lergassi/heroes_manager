@@ -5,4 +5,6 @@ export enum EventCode {
     Wallet_AddCurrency = 'Wallet_AddCurrency',
     Wallet_RemoveCurrency = 'Wallet_RemoveCurrency',
     // Wallet_Update = 'Wallet_Update',
+
+    ItemStorageSlot_Clear = 'ItemStorageSlot_Clear',
 }

@@ -10,6 +10,7 @@ import {ItemID} from '../../types/enums/ItemID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {IconID} from '../../types/enums/IconID.js';
 
 export default class ItemDatabaseBuilder {
     private readonly _entityManager: EntityManagerInterface;
@@ -61,7 +62,7 @@ export default class ItemDatabaseBuilder {
     }
 
     private _createResources() {
-        this._itemFactory.createByBuilder(
+        let wood = this._itemFactory.createByBuilder(
             ItemID.Wood,
             (new ItemBuilder(this._entityManager))
                 .default(
@@ -73,6 +74,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
+                        iconID: IconID.Wood,
                     },
                 )
         );
@@ -112,6 +114,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
+                        iconID: IconID.Ore,
                     },
                 )
         );
@@ -124,6 +127,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
+                        iconID: IconID.Bar,
                     },
                 )
         );
@@ -139,6 +143,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
+                        iconID: IconID.Ore,
                     },
                 )
         );
@@ -151,6 +156,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
+                        iconID: IconID.Bar,
                     },
                 )
         );
@@ -166,6 +172,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
+                        iconID: IconID.Ore,
                     },
                 )
         );
@@ -178,6 +185,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
+                        iconID: IconID.Bar,
                     },
                 )
         );
@@ -190,6 +198,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
+                        iconID: IconID.Bar,
                     },
                 )
         );
@@ -205,6 +214,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
+                        iconID: IconID.Herb01,
                     },
                 )
         );
@@ -220,6 +230,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
+                        iconID: IconID.Herb01,
                     },
                 )
         );
@@ -235,6 +246,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
+                        iconID: IconID.Herb01,
                     },
                 )
         );

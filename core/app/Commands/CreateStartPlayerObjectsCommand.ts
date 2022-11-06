@@ -14,7 +14,7 @@ import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
@@ -25,7 +25,7 @@ import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 
 export default class CreateStartPlayerObjectsCommand extends Command {
     get name(): string {
-        return CommandNameID.create_start_player_objects;
+        return CommandID.create_start_player_objects;
     }
 
     get description(): string {
@@ -48,13 +48,13 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         //     DEFAULT_ITEM_STORAGE_SIZE,
         //     this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
         // );
-        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandNameID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
-        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandNameID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
+        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
+        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
     }
 
     private async _createItems() {
-        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandNameID.create_item_kit, ['start_resources']);
-        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandNameID.create_item_kit, ['start_materials']);
+        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item_kit, ['start_resources']);
+        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item_kit, ['start_materials']);
     }
 
     private _createHeroes() {
@@ -162,6 +162,6 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     }
 
     private async _createLocations() {
-        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandNameID.create_location, ['1']);
+        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_location, ['1']);
     }
 }

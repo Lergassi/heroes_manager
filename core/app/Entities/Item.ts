@@ -5,6 +5,14 @@ import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import Icon from './Icon.js';
+import {
+    assertIsGreaterThanOrEqual,
+    assertIsInstanceOf,
+    assertIsNumber,
+    assertIsString,
+    assertNotNil
+} from '../../source/assert.js';
 
 /**
  * Может быть несколько типов одновременно. Или без типов.
@@ -44,6 +52,7 @@ export default class Item {                             //private or public? Ф�
     private readonly _id: string;                        //Пока не понятно как пользоваться.
     private readonly _name: string;                      //Много где но в основном тоже только для игрока при выводе.
     private readonly _description: string;               //Для игрока в тултипе.
+    private readonly _icon: Icon;
     private readonly _itemLevel: number;                 //Нужно только для информирования игрока при рендере.
     private readonly _sort: number;                      //Пока не используется. Даже если будет нужен - не понятно как использовать. Сортировать массив/объект который в EntityManager/ItemDatabase? А с другими полями как? Допустим на аукционе. А по другим полям. !!!->>> Это же общий список на всю игру - его не надо сортировать. Для этого будет другой класс. Пока скрыто.
     private readonly _getTypes: ItemGetType[];           //Может в дальнейшем использоваться для генерации лута.
@@ -63,6 +72,10 @@ export default class Item {                             //private or public? Ф�
 
     get description(): string {
         return this._description;
+    }
+
+    get icon(): Icon {
+        return this._icon;
     }
 
     get itemLevel(): number {
@@ -101,6 +114,7 @@ export default class Item {                             //private or public? Ф�
         id: string,
         name: string,
         description: string,
+        icon: Icon,
         stackSize: number,
         itemLevel: number,
         sort: number,
@@ -110,9 +124,23 @@ export default class Item {                             //private or public? Ф�
         characterAttributes: Partial<CharacterAttributeRecord>,
         options: Partial<ItemOptions> = {},
     ) {
+        assertIsString(id);
+        assertIsString(name);
+        assertIsString(description);
+        assertIsInstanceOf(icon, Icon);
+        assertIsGreaterThanOrEqual(stackSize, 1);
+        assertIsGreaterThanOrEqual(itemLevel, 0);
+        assertIsNumber(sort);
+        assertIsInstanceOf(itemCategory, ItemCategory);
+        assertIsInstanceOf(quality, Quality);
+        assertNotNil(properties);
+        assertNotNil(characterAttributes);
+        assertNotNil(options);
+
         this._id = id;
         this._name = name;
         this._description = description;
+        this._icon = icon;
         this._itemLevel = itemLevel;
         this._sort = sort;
         this._itemCategory = itemCategory;

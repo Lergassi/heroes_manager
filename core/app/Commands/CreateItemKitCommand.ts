@@ -3,7 +3,7 @@ import Input from '../../source/GameConsole/Input.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import ItemPackInterface from '../Interfaces/ItemPackInterface.js';
 import {DEFAULT_STACK_SIZE} from '../consts.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import {assertIsGreaterThanOrEqual, assertIsNumber, assertNotEmpty, assertNotNil} from '../../source/assert.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
@@ -97,7 +97,7 @@ export default class CreateItemKitCommand extends Command {
     };
 
     get name(): string {
-        return CommandNameID.create_item_kit;
+        return CommandID.create_item_kit;
     }
 
     configure() {

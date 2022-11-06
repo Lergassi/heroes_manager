@@ -5,6 +5,7 @@ import React from 'react';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
+import {EventCode} from '../../../core/types/enums/EventCode.js';
 
 export interface ItemStorageSlotRComponentProps {
     itemStorageSlotComponent: ItemStorageSlotComponent;
@@ -15,20 +16,19 @@ export interface ItemStorageSlotRComponentState {
     itemStorageSlotComponent: ItemStorageSlotComponent;
 }
 
-/**
- * Только для слота в сумках. todo: Для других случаях нужен другой компонент.
- */
-export default class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRComponentProps, ItemStorageSlotRComponentState> implements RComponentUpdateInterface {
+export default class ItemStorageSlotRComponent extends React.Component<ItemStorageSlotRComponentProps, ItemStorageSlotRComponentState> {
     constructor(props: ItemStorageSlotRComponentProps) {
         super(props);
 
         this.state = {
             itemStorageSlotComponent: props.itemStorageSlotComponent,
         };
-        // this.state.itemStorageSlotComponent.assignRComponent(this); qweqweqwe
 
         EventSystem.addListener({
-            codes: [ItemStorageSlotComponentEventCode.Update],
+            codes: [
+                ItemStorageSlotComponentEventCode.Update,
+                EventCode.ItemStorageSlot_Clear,
+            ],
             listener: {
                 target: props.itemStorageSlotComponent,
                 callback: (target) => {
@@ -44,28 +44,43 @@ export default class ItemStorageSlotRComponent extends React.Component<ItemStora
         this.clearHandler = this.clearHandler.bind(this);
     }
 
-    update(): void {
-        this.setState(state => ({
-            itemStorageSlotComponent: state.itemStorageSlotComponent,
-        }));
-    }
-
     clearHandler() {
         this.state.itemStorageSlotComponent.destroyItemStack();
     }
 
     render() {
+        let itemStorageSlot = this.state.itemStorageSlotComponent;
+
+        // return (
+        //     <tr>
+        //         <td>{this.props.ID}</td>
+        //         <td>
+        //             <ItemStackTextRComponent
+        //                 itemStack={itemStorageSlot.itemStack}
+        //             />
+        //         </td>
+        //         <td><button onClick={this.clearHandler}>Очистить</button></td>
+        //     </tr>
+        // );
+        return this.template1(this.props.ID, itemStorageSlot);
+        // return this.template2(this.props.ID, itemStorageSlot);
+    }
+
+    template1(ID, itemStorageSlot) {
         return (
             <tr>
-                {/*<td>{this.state.itemStorageSlotComponent['_id']}</td>*/}
-                <td>{this.props.ID}</td>
+                <td>{ID}</td>
                 <td>
                     <ItemStackTextRComponent
-                        itemStack={this.state.itemStorageSlotComponent.itemStack}
+                        itemStack={itemStorageSlot.itemStack}
                     />
                 </td>
                 <td><button onClick={this.clearHandler}>Очистить</button></td>
-        </tr>
-    );
+            </tr>
+        );
+    }
+
+    template2(ID, itemStorageSlot) {
+        return <div>42</div>
     }
 }

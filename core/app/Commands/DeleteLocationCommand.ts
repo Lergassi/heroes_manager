@@ -3,11 +3,11 @@ import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import MainLocationListComponent from '../Components/MainLocationListComponent.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 
 export default class DeleteLocationCommand extends Command {
     get name(): string {
-        return CommandNameID.delete_location;
+        return CommandID.delete_location;
     }
 
     configure() {

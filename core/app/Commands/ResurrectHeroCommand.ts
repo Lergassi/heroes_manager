@@ -4,11 +4,11 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {assertNotNil} from '../../source/assert.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 
 export default class ResurrectHeroCommand extends Command {
     get name(): string {
-        return CommandNameID.resurrect_hero;
+        return CommandID.resurrect_hero;
     }
 
     configure() {

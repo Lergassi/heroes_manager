@@ -1,4 +1,5 @@
 export enum EntityID {
+    Icon = 'Icon',
     ArmorMaterial = 'ArmorMaterial',
     Currency = 'Currency',
     CharacterAttribute = 'CharacterAttribute',

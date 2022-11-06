@@ -11,20 +11,15 @@ import _ from 'lodash';
 import EventSystem from '../../source/EventSystem.js';
 
 export default class ItemStorageControllerWithLimit implements ItemStorageControllerInterface, ItemStorageInterface {
-// export default class ItemStorageControllerProxy implements ItemStorageControllerInterface {
     private readonly _maxItemStorages: unsigned;
-    // private readonly _itemStorageController: ItemStorageControllerInterface;
     private readonly _itemStorageController: ItemStorageController;
     private readonly _itemStorages: GameObject[];
 
-    // constructor(itemStorageController: ItemStorageControllerInterface, max: unsigned) {
     constructor(maxItemStorages: unsigned) {
-        // assertNotNil(itemStorageController);
         assertIsPositive(maxItemStorages);
 
         this._maxItemStorages = maxItemStorages;
-        // this._itemStorageController = itemStorageController;
-        this._itemStorages = [];
+        this._itemStorages = [];    //todo: Возможно это не правильно и нужно иметь доступ к
         this._itemStorageController = new ItemStorageController();
     }
 
@@ -63,15 +58,4 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
     render(callback: (itemStorages: GameObject[]) => void) {
         callback(this._itemStorages);
     }
-
-    // addListener(codes: string | string[], callback: (target) => void) {
-    //     EventSystem.addListener({
-    //         codes: codes,
-    //         listener: {
-    //             callback: callback,
-    //             target: this._itemStorageController,
-    //         },
-    //     });
-    //     // this._itemStorageController.addListener(codes, callback);
-    // }
 }

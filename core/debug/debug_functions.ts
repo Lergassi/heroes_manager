@@ -21,6 +21,8 @@ import {ContainerID} from '../types/enums/ContainerID.js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
 import {ComponentID} from '../types/enums/ComponentID.js';
+import Icon from '../app/Entities/Icon.js';
+import {assert, assertNotNil} from '../source/assert.js';
 
 export function debugEntity(entity) {
     debug(DebugNamespaceID.Debug)('%j', {
@@ -31,18 +33,15 @@ export function debugEntity(entity) {
     });
 }
 
-export function debugItem(item) {
+export function debugItem(item: Item) {
+    assertNotNil(item);
     debug(DebugNamespaceID.Debug)('%j', {
-        classname: item.constructor.name,
-        _id: item['_id'],
-        _name: item['_name'],
-        _alias: item['_alias'],
-        _itemCategory: {    //todo: Для дебага с ссылкой на объект сделать отдельный класс.
-            _id: item['_itemCategory']['_id'],
-            _name: item['_itemCategory']['_name'],
-        },
-        _stackSize: item['_stackSize'],
-        _itemLevel: item['_itemLevel'],
+        id: item['_id'],
+        itemCategoryId: item['_itemCategory']?.['_id'],
+        stackSize: item['_stackSize'],
+        icon: item['_icon']?.['_id'],
+        quality: item['_quality']?.['_id'],
+        // attributes: item['_characterAttributes']?.['_id'],
     });
 }
 

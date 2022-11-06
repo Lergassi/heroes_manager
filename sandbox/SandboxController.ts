@@ -53,6 +53,10 @@ import EventSystem from '../core/source/EventSystem.js';
 import {EventCode} from '../core/types/enums/EventCode.js';
 import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
+import {useState} from 'react';
+import ItemStackController from '../core/app/Components/ItemStackController.js';
+import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
+import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -90,7 +94,9 @@ export default class SandboxController {
         // this._devGather();
         // this._devItemStorageCollection();
         // this._devEventSystemWithoutStatic();
-        this._devEventSystemWithoutTarget();
+        // this._devEventSystemWithoutTarget();
+        // this._devNewRender();
+        this._devItemStackController();
 
         // this._testVanillaJS();
         // this._testLodash();
@@ -117,26 +123,6 @@ export default class SandboxController {
         });
         console.log(a);
         console.log(o);
-    }
-
-    private _devItemDatabase() {
-        let itemDatabase = new ItemDatabase({
-            'Wood': new Item(
-                'Wood',
-                '',
-                '',
-                11,
-                11,
-                11,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-            ),
-        });
-        console.log(itemDatabase);
-        console.log(itemDatabase.get(ItemID.Wood));
-        console.log(itemDatabase.get(ItemID.IronOre));
     }
 
     private _testNewEntityManager() {
@@ -873,5 +859,33 @@ export default class SandboxController {
         testGenerics.test('asd', (target) => {});
         testGenerics.test(['asd'], (target) => {});
         testGenerics.test({codes: [], listener: (target) => {}});
+    }
+
+    private _devNewRender() {
+
+    }
+
+    private _devItemStackController() {
+        let itemDatabase = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+
+        // let itemStackController = new ItemStackController();
+        // console.log(itemStackController.addItem(itemDatabase.get(ItemID.Wood), 12), itemStackController);
+        // console.log(itemStackController.addItem(itemDatabase.get(ItemID.Wood), 12), itemStackController);
+        // console.log(itemStackController.addItem(itemDatabase.get(ItemID.Wood), 12), itemStackController);
+        // console.log(itemStackController.addItem(itemDatabase.get(ItemID.Wood), 12), itemStackController);
+        // console.log(itemStackController.addItem(itemDatabase.get(ItemID.Wood), 12), itemStackController);
+        // console.log(itemStackController.addItem(itemDatabase.get(ItemID.Wood), 12), itemStackController);
+        // console.log(itemStackController.addItem(itemDatabase.get(ItemID.Wood), 12), itemStackController);
+        // console.log(itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 12), itemStackController);
+
+        let itemStorage = new ItemStorageV2([
+            new ItemStackController(),
+            new ItemStackController(),
+        ]);
+        //equip slotIDFrom slotIDTo
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
     }
 }

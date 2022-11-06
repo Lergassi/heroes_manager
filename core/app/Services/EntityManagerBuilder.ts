@@ -25,6 +25,11 @@ import EnemyEntityFactory from '../Factories/EntityFactories/EnemyEntityFactory.
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import Icon from '../Entities/Icon.js';
+import {IconID} from '../../types/enums/IconID.js';
+import {sprintf} from 'sprintf-js';
+import {env} from 'yargs';
+import dotenv from 'dotenv';
 
 export default class EntityManagerBuilder {
     private readonly _container: ContainerInterface;
@@ -43,6 +48,8 @@ export default class EntityManagerBuilder {
 
     build(): EntityManagerInterface {
         debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Start');
+
+        this._createIcons();
 
         this._createArmorMaterials();
         this._createCharacterAttributes();
@@ -1206,4 +1213,41 @@ export default class EntityManagerBuilder {
     //Без расчетов. Только в ручную заданные все параметры. todo: Автоматизация позже.
     private _initHeroConfig() {
     }//end method
+
+    private _createIcons() {
+        let webPathPattern = '/images/icons/bordered/64x64/%s.png';
+
+        let p: any = '';
+        // path = Path('/to/folder', {root: '/home/hosting', isExists = true});
+
+        this._entityManager.add<Icon>(EntityID.Icon, IconID.BackgroundSlot, new Icon(
+            IconID.BackgroundSlot,
+            sprintf(webPathPattern, IconID.BackgroundSlot),
+            // path вместо строки
+        ));
+        this._entityManager.add<Icon>(EntityID.Icon, IconID.Question01, new Icon(
+            IconID.Question01,
+            sprintf(webPathPattern, IconID.Question01),
+        ));
+        this._entityManager.add<Icon>(EntityID.Icon, IconID.Question02, new Icon(
+            IconID.Question02,
+            sprintf(webPathPattern, IconID.Question02),
+        ));
+        this._entityManager.add<Icon>(EntityID.Icon, IconID.Question03, new Icon(
+            IconID.Question03,
+            sprintf(webPathPattern, IconID.Question03),
+        ));
+        this._entityManager.add<Icon>(EntityID.Icon, IconID.Wood, new Icon(
+            IconID.Wood,
+            sprintf(webPathPattern, IconID.Wood),
+        ));
+        this._entityManager.add<Icon>(EntityID.Icon, IconID.Ore, new Icon(
+            IconID.Ore,
+            sprintf(webPathPattern, IconID.Ore),
+        ));
+        this._entityManager.add<Icon>(EntityID.Icon, IconID.Bar, new Icon(
+            IconID.Bar,
+            sprintf(webPathPattern, IconID.Bar),
+        ));
+    }
 }

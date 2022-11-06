@@ -14,9 +14,12 @@ import {QualityID} from '../../types/enums/QualityID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import {IconID} from '../../types/enums/IconID.js';
+import Icon from '../Entities/Icon.js';
 
 export interface ItemBuilderOptions {
     description: string;
+    iconID: IconID;
     stackSize: number;
     itemLevel: number;
     sort: number;
@@ -58,6 +61,7 @@ export default class ItemBuilder {
     private _id: string;
     private _name: string;
     private _description: string;
+    private _icon: Icon;
     private _itemLevel: number;
     private _sort: number;
     private _itemCategory: ItemCategory;
@@ -73,6 +77,7 @@ export default class ItemBuilder {
         quality: QualityID.Common,
         sort: 500,
         stackSize: 1,   //todo: Может как stackable лучше указать как default?
+        iconID: IconID.Question01,
     };
 
     constructor(entityManager: EntityManagerInterface) {
@@ -96,6 +101,12 @@ export default class ItemBuilder {
         this._name = name;
         this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
         this._description = options.description ?? this._default.description;
+        this._icon = options.iconID ?
+            (this._entityManager.get<Icon>(EntityID.Icon, options.iconID) ?? this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)) :
+            this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)
+        ;
+        // console.log(options.iconID);
+        // console.log((this._entityManager.get<Icon>(EntityID.Icon, options.iconID) ?? this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)));
         this._itemLevel = options.itemLevel ?? this._default.itemLevel;
         this._sort = options.sort ?? this._default.sort;
         this._quality = options.quality ?
@@ -123,6 +134,7 @@ export default class ItemBuilder {
             this._id,
             this._name,
             this._description,
+            this._icon,
             this._stackSize,
             this._itemLevel,
             this._sort,

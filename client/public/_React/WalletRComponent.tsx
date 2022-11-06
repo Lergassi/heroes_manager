@@ -90,26 +90,26 @@ export class WalletRComponent extends React.Component<WalletRComponentProps, Wal
         // let eventSystemFactory = this.props.container.get<EventSystemFactory>(ContainerID.EventSystemFactory);
         // eventSystemFactory.addRenderListener<WalletRComponent>(this.props.wallet, [EventCode.Wallet_AddCurrency, EventCode.Wallet_RemoveCurrency], this, ['wallet']);
 
-        EventSystem.addListener({
-            codes: [
-                EventCode.Wallet_AddCurrency,
-                EventCode.Wallet_RemoveCurrency,
-            ],
-            listener: {
-                callback: (target) => {
-                    this.setState((state) => {
-                        return {
-                            wallet: state.wallet,
-                        };
-                    });
-                },
-            },
-        });
+        // EventSystem.addListener({
+        //     codes: [
+        //         EventCode.Wallet_AddCurrency,
+        //         EventCode.Wallet_RemoveCurrency,
+        //     ],
+        //     listener: {
+        //         callback: (target) => {
+        //             this.setState((state) => {
+        //                 return {
+        //                     wallet: state.wallet,
+        //                 };
+        //             });
+        //         },
+        //     },
+        // });
     }
 
     render() {
-        // let wallet = this.state.wallet;
-        let wallet = this.props.wallet;
+        let wallet = this.state.wallet;
+        // let wallet = this.props.wallet;
 
         let result;
         wallet.render((options) => {

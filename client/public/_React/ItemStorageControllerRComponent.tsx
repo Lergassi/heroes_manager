@@ -11,6 +11,9 @@ import {EventCode} from '../../../core/types/enums/EventCode.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import EventSystemFactory from '../../../core/app/Services/EventSystemFactory.js';
 import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import PlayerItemStorage from '../PlayerItemStorage.js';
+import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
+import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 
 export interface ItemStorageControllerRComponentProps {
     container: ContainerInterface;
@@ -49,11 +52,16 @@ export default class ItemStorageControllerRComponent extends React.Component<Ite
     render() {
         let result;
         {this.state.itemStorageController.render((itemStorages) => {
-            console.log(itemStorages);
+            // console.log(itemStorages);
             {result = _.map(itemStorages, (itemStorage) => {
-                return <ItemStorageRComponent
+                // return <ItemStorageRComponent
+                //     key={itemStorage['_id']}
+                //     itemStorage={itemStorage}
+                // />
+                return <PlayerItemStorage
                     key={itemStorage['_id']}
-                    itemStorage={itemStorage}
+                    container={this.props.container}
+                    itemStorage={itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent)}
                 />
             })}
         })}

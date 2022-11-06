@@ -10,6 +10,8 @@ import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
 import RenderInterface from '../Interfaces/RenderInterface.js';
 import EventSystem2 from '../../source/EventSystem2.js';
+import useCustomHook from '../../../client/public/_React/Test/test.js';
+import Func = jest.Func;
 
 export interface WalletComponentRenderOptions {
     value: number,
@@ -18,6 +20,7 @@ export interface WalletComponentRenderOptions {
 
 //todo: Проблема: если не знать что внутри - будет не удобно. add(currency, value)?
 export default class WalletComponent implements WalletInterface, RenderInterface<WalletComponentRenderOptions> {
+// export default class WalletComponent implements WalletInterface, RenderInterface {
     private readonly _currency: Currency;
     private _value: unsigned;
 
@@ -43,6 +46,9 @@ export default class WalletComponent implements WalletInterface, RenderInterface
         debug(DebugNamespaceID.Log)(sprintf('Добавлена валюта (%s): %s. Итого: %s', this._currency.name, value, this._value));
         EventSystem.event(EventCode.Wallet_AddCurrency, this);
         // this.update();
+        // this._setValue(this._value);
+        console.log('add', this._target);
+        this._target?.updateValue(this, this._value);
 
         return 0;
     }
@@ -66,7 +72,12 @@ export default class WalletComponent implements WalletInterface, RenderInterface
         return this._value;
     }
 
-    // render(callback: (options: ) => void): void {
+    // render(callback: (options: WalletComponentRenderOptions) => void): void {
+    //     callback({
+    //         value: this._value,
+    //         currency: this._currency,
+    //     });
+    // }
     render(callback: (options: WalletComponentRenderOptions) => void): void {
         callback({
             value: this._value,
@@ -81,5 +92,29 @@ export default class WalletComponent implements WalletInterface, RenderInterface
             },
             currency: this._currency,
         });
+    }
+
+    private _target: any;
+    private _callbacks: any;
+    /*
+        target - Это окно. Точнее не окно, а интерфейс взаимодействия.
+     */
+    attach(target /*: WalletUI updateValue()*/): void {
+        // let attachFactory: any;
+        // // this._target = attachFactory.attach(this);
+        // this._attachFactory = attachFactory.attach(this);
+
+        // console.log('attach', target);
+        // console.log('attach this', this);
+        this._target = target;
+        // this._target.attach(this);  //Так точно нельзя делать. 1. Нужно будет каждый раз вспоминать что нунжно написать. 2. А потом нужно будет вызвать несколько методов и тд. 3. Изменять всё это в каждом методе не удобно будет.
+        target?.updateValue(this, this._value);
+    }
+
+    detach(): void {
+        this._target = null;
+        this._callbacks = null;
+        // target.detach(this);
+        //Должно происходить закрытие окна.
     }
 }

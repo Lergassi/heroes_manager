@@ -12,6 +12,7 @@ import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import RenderInterface from '../Interfaces/RenderInterface.js';
 
 export enum ItemStorageComponentEventCode {
     AddItem = 'ItemStorageComponent.AddItem',
@@ -22,7 +23,9 @@ export enum ItemStorageComponentEventCode {
 /**
  * todo: Вообще переделать. Убрать слоты с новыми идеями.
  */
+// export default class ItemStorageComponent implements ItemStorageInterface, RenderInterface<{slots: {[key: string]: ItemStorageSlotComponent}}> {
 export default class ItemStorageComponent implements ItemStorageInterface {
+// export default class ItemStorageComponent implements ItemStorageInterface, RenderInterface {
     private readonly _size: number;
     private readonly _slots: {[key: string]: ItemStorageSlotComponent};
     private readonly _itemStackFactory: ItemStackFactory;
@@ -37,6 +40,109 @@ export default class ItemStorageComponent implements ItemStorageInterface {
             this._slots[i.toString()] = slots[i];
         }
         this._itemStackFactory = itemStackFactory;
+    }
+
+    /**
+     * todo: Может только itemStack?
+     * @param item
+     * @param count
+     * @return Остаток.
+     */
+    addItem(item: Item, count: unsigned): unsigned {
+        assertIsInstanceOf(item, Item);
+        assertIsGreaterThanOrEqual(count, 0);
+
+        let currentCount = count;
+
+        let slotsWithItem = this.getItemStorageSlotComponentsWithItem(item);
+        let freeSlots = this.getFreeItemStorageSlotComponents();
+        while (currentCount > 0) {
+            //todo: Надо по слотам идти по порядку.
+            for (let i = 0; i < slotsWithItem.length; i++) {
+                if (slotsWithItem[i].itemStack.isFull()) {
+                    continue;
+                }
+
+                let flawCount = slotsWithItem[i].itemStack.flawCount();
+                if (currentCount <= flawCount) {
+                    slotsWithItem[i].itemStack.add(currentCount);
+                    currentCount = 0;
+                } else {
+                    slotsWithItem[i].itemStack.add(flawCount);
+                    currentCount -= flawCount;
+                }
+            }
+
+            if (currentCount > 0) {
+                if (!freeSlots.length) {
+                    break;
+                }
+
+                for (let j = 0; j < freeSlots.length; j++) {
+                    let stackSize = currentCount <= item.stackSize ? currentCount : item.stackSize;
+                    freeSlots[j].placeItemStack(this._itemStackFactory.create(item, stackSize));
+                    currentCount -= stackSize;
+                    if (currentCount <= 0) {
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        //todo: Нужно отдельное сообщение если предметы не добавлены.
+        // debug(DebugNamespaceID.Log)(sprintf('В сумку добавлено предметов "%s": %s из %s.', item.name, count - currentCount, count));
+        if (count > 0 && currentCount < count) {
+            EventSystem.event(ItemStorageComponentEventCode.Update, this);
+        }
+        debug(DebugNamespaceID.Log)(sprintf('В сумку добавлено предметов "%s": %s из %s.', item.name, count - currentCount, count));    //todo: Оставить это сообщение для контроллера или логгера.
+
+        return currentCount;
+    }
+
+    clear(): void {
+        for (const slotsKey in this._slots) {
+            this._slots[slotsKey].destroyItemStack();
+        }
+
+        EventSystem.event(ItemStorageComponentEventCode.Update, this);
+    }
+
+    render(callback: (options: {
+        slots: {[key: string]: ItemStorageSlotComponent},
+    }) => void) {
+        callback({
+            slots: this._slots,
+        });
+    }
+
+    // render(callback) {
+    //     callback({
+    //         slots: this._slots,
+    //         a: 42,
+    //     });
+    // }
+
+    //todo: @indev До появления StackController и пока есть геттеры у слотов и стеков.
+    moveTo(itemStorage: ItemStorageInterface) {
+        for (const slotKey in this._slots) {
+            if (!this._slots[slotKey].isFree()) {
+                if (!itemStorage.addItem(this._slots[slotKey].itemStack.item, this._slots[slotKey].itemStack.count)) {
+                    this._slots[slotKey].destroyItemStack();
+                }
+            }
+        }
+    }
+
+    //----------------------------------------------------------------
+    // deprecated:
+    //----------------------------------------------------------------
+
+    /**
+     * @deprecated
+     */
+    get freeItemStorageSlotCount(): number {
+        return this._size - this.busyItemStorageSlotCount;
     }
 
     /**
@@ -61,10 +167,6 @@ export default class ItemStorageComponent implements ItemStorageInterface {
         }
 
         return count;
-    }
-
-    get freeItemStorageSlotCount(): number {
-        return this._size - this.busyItemStorageSlotCount;
     }
 
     /**
@@ -111,72 +213,6 @@ export default class ItemStorageComponent implements ItemStorageInterface {
     }
 
     /**
-     * Добавляет предметы объединяя с другими стеками.
-     * todo: Может только itemStack?
-     * @param item
-     * @param count
-     * @return Остаток.
-     */
-    addItem(item: Item, count: unsigned): unsigned {
-        assertIsInstanceOf(item, Item);
-        assertIsGreaterThanOrEqual(count, 0);
-
-        let currentCount = count;
-        // for (const slotsKey in this._slots) {
-        //     if (this._slots[slotsKey].isFree()) {
-        //         this._slots[slotsKey].createItemStack({
-        //             item: item,
-        //         });
-        //     }
-        // }
-
-        let slotsWithItem = this.getItemStorageSlotComponentsWithItem(item);
-        let freeSlots = this.getFreeItemStorageSlotComponents();
-        while (currentCount > 0) {
-            //todo: Надо по слотам идти по порядку.
-            for (let i = 0; i < slotsWithItem.length; i++) {
-                if (slotsWithItem[i].itemStack.isFull()) {
-                    continue;
-                }
-
-                let flawCount = slotsWithItem[i].itemStack.flawCount();
-                if (currentCount <= flawCount) {
-                    slotsWithItem[i].itemStack.add(currentCount);
-                    currentCount = 0;
-                } else {
-                    slotsWithItem[i].itemStack.add(flawCount);
-                    currentCount -= flawCount;
-                }
-            }
-
-            if (currentCount > 0) {
-                if (!freeSlots.length) {
-                    break;
-                }
-
-                for (let j = 0; j < freeSlots.length; j++) {
-                    let stackSize = currentCount <= item.stackSize ? currentCount : item.stackSize;
-                    freeSlots[j].placeItemStack(this._itemStackFactory.create(item, stackSize));
-                    currentCount -= stackSize;
-                    if (currentCount <= 0) {
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-
-        //todo: Нужно отдельное сообщение если предметы не добавлены.
-        // debug(DebugNamespaceID.Log)(sprintf('В сумку добавлено предметов "%s": %s из %s.', item.name, count - currentCount, count));
-        if (count > 0 && currentCount < count) {
-            EventSystem.event(ItemStorageComponentEventCode.Update, this);
-            debug(DebugNamespaceID.Log)(sprintf('В сумку добавлено предметов "%s": %s из %s.', item.name, count - currentCount, count));
-        }
-
-        return currentCount;
-    }
-
-     /**
      * @deprecated Использовать метод move.
      * @param itemStack
      */
@@ -184,14 +220,6 @@ export default class ItemStorageComponent implements ItemStorageInterface {
         let slot = this.getFirstFreeItemStorageSlotComponent();
         if (slot) {
             slot.placeItemStack(itemStack);
-        }
-
-        EventSystem.event(ItemStorageComponentEventCode.Update, this);
-    }
-
-    clear(): void {
-        for (const slotsKey in this._slots) {
-            this._slots[slotsKey].destroyItemStack();
         }
 
         EventSystem.event(ItemStorageComponentEventCode.Update, this);
@@ -216,24 +244,5 @@ export default class ItemStorageComponent implements ItemStorageInterface {
         assertNotNil(this._slots[index], 'ItemStorageSlot не найден.');
 
         return this._slots[index];
-    }
-
-    render(callback: (values: {
-        slots: {[key: string]: ItemStorageSlotComponent},
-    }) => void) {
-        callback({
-            slots: this._slots,
-        });
-    }
-
-    //todo: @indev До появления StackController и пока есть геттеры у слотов и стеков.
-    moveTo(itemStorage: ItemStorageInterface) {
-        for (const slotKey in this._slots) {
-            if (!this._slots[slotKey].isFree()) {
-                if (!itemStorage.addItem(this._slots[slotKey].itemStack.item, this._slots[slotKey].itemStack.count)) {
-                    this._slots[slotKey].destroyItemStack();
-                }
-            }
-        }
     }
 }

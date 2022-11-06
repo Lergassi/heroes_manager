@@ -1,6 +1,6 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
@@ -9,7 +9,7 @@ import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class AddGoldCommand extends Command {
     get name(): string {
-        return CommandNameID.add_gold;
+        return CommandID.add_gold;
     }
 
     configure() {

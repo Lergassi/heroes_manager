@@ -7,14 +7,14 @@ import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {assert, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
-import {CommandNameID} from '../../types/enums/CommandNameID.js';
+import {CommandID} from '../../types/enums/CommandID.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 
 export default class EquipCommand extends Command {
     get name(): string {
-        return CommandNameID.equip_from_item_storage_slot;
+        return CommandID.equip_from_item_storage_slot;
     }
 
     configure() {
