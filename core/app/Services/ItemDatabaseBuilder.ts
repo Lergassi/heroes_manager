@@ -74,7 +74,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
-                        iconID: IconID.Wood,
+                        iconID: IconID.Wood01,
                     },
                 )
         );
@@ -114,7 +114,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
-                        iconID: IconID.Ore,
+                        iconID: IconID.Ore01,
                     },
                 )
         );
@@ -127,7 +127,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
-                        iconID: IconID.Bar,
+                        iconID:IconID.Question01,
                     },
                 )
         );
@@ -143,7 +143,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
-                        iconID: IconID.Ore,
+                        iconID: IconID.Ore01,
                     },
                 )
         );
@@ -156,7 +156,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
-                        iconID: IconID.Bar,
+                        iconID:IconID.Question01,
                     },
                 )
         );
@@ -172,7 +172,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
-                        iconID: IconID.Ore,
+                        iconID: IconID.Ore01,
                     },
                 )
         );
@@ -185,7 +185,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
-                        iconID: IconID.Bar,
+                        iconID:IconID.Question01,
                     },
                 )
         );
@@ -198,7 +198,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
-                        iconID: IconID.Bar,
+                        iconID:IconID.Question01,
                     },
                 )
         );
@@ -214,7 +214,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
-                        iconID: IconID.Herb01,
+                        iconID: IconID.Plant01,
                     },
                 )
         );
@@ -230,7 +230,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
-                        iconID: IconID.Herb01,
+                        iconID: IconID.Plant01,
                     },
                 )
         );
@@ -246,7 +246,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
-                        iconID: IconID.Herb01,
+                        iconID: IconID.Plant01,
                     },
                 )
         );
@@ -262,6 +262,7 @@ export default class ItemDatabaseBuilder {
                         getTypes: [
                             ItemGetType.Gathering,
                         ],
+                        iconID: IconID.Flower01,
                     },
                 )
         );
@@ -274,6 +275,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
+                        iconID: IconID.Thread01,
                     },
                 )
         );
@@ -286,6 +288,7 @@ export default class ItemDatabaseBuilder {
                     ItemCategoryID.Materials,
                     {
                         stackSize: DEFAULT_STACK_SIZE,
+                        iconID: IconID.Fabric01,
                     },
                 )
         );
@@ -512,7 +515,7 @@ export default class ItemDatabaseBuilder {
                 .default(
                     ItemID.PlateBracer_01,
                     'Латный браслет 01',
-                    ItemCategoryID.Bracers,
+                    ItemCategoryID.Bracelets,
                     {
                         properties: {
                             armorMaterialID: ArmorMaterialID.Plate,
@@ -624,7 +627,7 @@ export default class ItemDatabaseBuilder {
                 .default(
                     ItemID.LeatherBracer_01,
                     'Кожаный браслет 01',
-                    ItemCategoryID.Bracers,
+                    ItemCategoryID.Bracelets,
                     {
                         properties: {
                             armorMaterialID: ArmorMaterialID.Leather,
@@ -736,7 +739,7 @@ export default class ItemDatabaseBuilder {
                 .default(
                     ItemID.ClothBracer_01,
                     'Тканевый браслет 01',
-                    ItemCategoryID.Bracers,
+                    ItemCategoryID.Bracelets,
                     {
                         properties: {
                             armorMaterialID: ArmorMaterialID.Cloth,

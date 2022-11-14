@@ -11,6 +11,8 @@ import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
 import {ArmorMaterialID} from '../../../types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
+import {IconID} from '../../../types/enums/IconID.js';
+import Icon from '../../Entities/Icon.js';
 
 export default class HeroClassFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -22,6 +24,7 @@ export default class HeroClassFactory {
     create(
         id: string,
         name: string,
+        icon: IconID,
         sort: number,
         heroRoleID: HeroRoleID,
         availableArmorMaterialIds: ArmorMaterialID[],
@@ -32,6 +35,7 @@ export default class HeroClassFactory {
         return this._entityManager.add<HeroClass>(EntityID.HeroClass, id, new HeroClass(
             id,
             name,
+            this._entityManager.get<Icon>(EntityID.Icon, icon),
             sort,
             this._entityManager.get<HeroRole>(EntityID.HeroRole, heroRoleID),
 

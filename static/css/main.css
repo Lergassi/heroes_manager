@@ -1,114 +1,562 @@
-/*html,*/
-/*body,*/
-/*div*/
-/*{*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*}*/
+/****************************************************************/
+/* colors */
+/*
+    primary: #474544        //Пока основной цвет темы.
+    info: #57b5e3
+    success: #65b951
+    warring: #f4b400
+    danger: #d73d32
 
+    text: #444
+    menu: #737373
+    menu:hover: #262626
+*/
+/****************************************************************/
+
+/****************************************************************/
+/* reset */
+/****************************************************************/
+
+/****************************************************************/
+/* site */
+/****************************************************************/
 * {
     padding: 0;
     margin: 0;
+    font-family: "Exo 2", sans-serif;
 }
 
-.basic-table {
-    border-collapse: collapse;
-    border: 1px solid #ddd;
+/* todo: Заменить когда у заголовков будут определены размеры. */
+*:not(h1, h2, h3, h4, h5, h6) {
+    font-size: 14px;
 }
 
-.basic-table th {
-    text-align: left;
+body {
+    background-color: #eee;
 }
 
-.basic-table th,
-.basic-table td {
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-    padding: 4px 8px;
-}
-
-.basic-table__full-width {
-    width: 100%;
-}
-
-.block {
-    /*padding: 15px;*/
+/****************************************************************/
+/* theme */
+/****************************************************************/
+/****************************************************************/
+/* typographic */
+/****************************************************************/
+.m-bottom {
     margin-bottom: 15px;
 }
 
-.block__title {
-    margin-bottom: 5px;
+/****************************************************************/
+/* columns */
+/****************************************************************/
+.row {
+    /*margin-left: -15px;*/
+    /*margin-right: -15px;*/
+    margin-bottom: 15px;
 }
 
-.block__content {
-
-}
-
-.debug {
-
-}
-
-.debug_hide {
-    display: none;
-}
-
-/*GameConsole*/
-.game-console {
-
-}
-
-.game-console__input {
-    width: 500px;
-    height: 24px;
-}
-
-.list-without-types {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-}
-
-.game-console-autocomplete-list__selected {
-    text-decoration: underline;
-}
-
-.hide {
-    display: none;
-}
-
-.clearfix {
+.row:after {
+    content: '';
     clear: both;
+    display: block;
 }
 
-/*ItemStorage для игрока*/
-.player-item-storage-slot-row {
+.col {
+    float: left;
+}
+
+.col:not(:first-child) {
+/*.col {*/
+    padding-left: 15px;
+    /*padding-right: 15px;*/
+    box-sizing: border-box;
+}
+
+.col:not(:last-child) {
+    /*margin-right: 15px;*/
+}
+
+.col-25 {
+    width: 25%;
+}
+
+.col-50 {
+    width: 50%;
+}
+
+/****************************************************************/
+/* buttons */
+/****************************************************************/
+.btn {
+    background-color: white;
+    border: none;
+    box-sizing: border-box;
+    border-radius: 2px;
+    color: white;
+    padding: 6px 12px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn_default {
+    background-color: white;
+    color: #444;
+    border: 1px solid #ccc;
+}
+.btn_default:hover {
+    background-color: #e6e6e6;
+}
+
+.btn_primary {
+    background-color: #474544;
+    border: 1px solid #474544;
+}
+.btn_primary:hover {
+    background-color: #5b5958;
+}
+
+.btn_info {
+    background-color: #57b5e3;
+    border: 1px solid #57b5e3;
+}
+.btn_info:hover {
+     background-color: #6abce2;
+ }
+
+.btn_success {
+    background-color: #53a93f;
+    border: 1px solid #53a93f;
+}
+.btn_success:hover {
+    background-color: #65b951;
+}
+
+.btn_warring {
+    background-color: #f4b400;
+    border: 1px solid #f4b400;
+}
+.btn_warring:hover {
+    background-color: #f6c12a;
+}
+
+.btn_danger {
+    background-color: #d73d32;
+    border: 1px solid #d73d32;
+}
+.btn_danger:hover {
+    background-color: #e74b37;
+}
+
+/****************************************************************/
+/* widget */
+/****************************************************************/
+.widget {
+    margin-bottom: 15px;
+    background-color: white;
+    box-shadow: 0px 0px 4px -1px #938787;
+}
+
+.widget__title {
+    height: 36px;
+    line-height: 36px;
+    /*box-shadow: 1px 1px 1px 1px;*/
+    padding: 0 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+.widget__title_bold {
+    font-weight: bold;
+}
+
+.widget__content {
+    padding: 15px;
+}
+
+/****************************************************************/
+/* progress-bar */
+/****************************************************************/
+.progress-bar-wrapper,
+.progress-bar {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+.progress-bar,
+.progress-bar__max-value,
+.progress-bar__current-value {
+    height: 18px;
+    line-height: 18px;
+    border-radius: 2px;
+}
+
+.progress-bar__max-value,
+.progress-bar__current-value {
+    position: absolute;
+    display: inline-block;
+    width: 100%;
+    line-height: 18px;
+}
+
+.progress-bar__max-value {
+    background-color: #e5e5e5;
+}
+
+.progress-bar__current-value {
+    background-color: #474544;
+}
+
+.hero-list-table-row__level {
+    /*float: left;*/
+    position: absolute;
+    right: 5px;
+    /*display: inline-block;*/
+}
+
+.hero-list__progress-bar-wrapper {
+    display: inline-block;
+    width: 80%;
+}
+
+/****************************************************************/
+/* элементы сайта */
+/****************************************************************/
+/****************************************************************/
+/* header */
+/****************************************************************/
+.header {
+    /*background-color: red;*/
+    height: 46px;
+    background-color: #474544;
+    color: white;
+    line-height: 46px;
+    position: relative;
+    z-index: 200;
+}
+
+.header__site-title {
+    width: 220px;
+    /*background-color: red;*/
+    /*text-align: center;*/
+    padding-left: 25px;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/****************************************************************/
+/* left sidebar */
+/****************************************************************/
+.left-sidebar {
+    background-color: orange;
+    width: 220px;
+    position: absolute;
+    display: block;
+    margin-left: 4px;
+    margin-top: 5px;
+}
+
+.left-sidebar:before {
+    content: "";
+    width: 220px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    /*background-color: red;*/
+    background-color: white;
+    display: block;
+    z-index: 1;
+}
+
+.left-sidebar__item {
+    z-index: 123;
+    position: relative;
+    height: 38px;
+    line-height: 38px;
+    /*border-left: 4px solid red;*/
+    /*border-left: 4px solid red;*/
+    /*border-left: 4px solid white;*/
+}
+
+.left-sidebar__icon-wrapper {
+    position: absolute;
+}
+
+.left-sidebar__item > a {
+    /*background-color: orange;*/
+    text-decoration: none;
+    height: 38px;
+    line-height: 38px;
+    display: inline-block;
+    padding-left: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid #f3f3f3;
+    color: #737373; /*todo: scss*/
+}
+
+.left-sidebar__menu-text {
+    padding-left: 47px;
+}
+
+.left-sidebar__item:hover > a {
+    color: #262626;
+    /*color: blue;*/
+}
+
+.left-sidebar__item:before {
+    display: none;
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -4px;
+    width: 4px;
+    max-width: 4px;
+    overflow: hidden;
+    border-left: 4px solid #d73d32;
+}
+
+.left-sidebar__item:hover:before {
+    display: block;
+}
+
+/****************************************************************/
+/* content */
+/****************************************************************/
+.content {
+    margin-left: 220px;
+    /*padding-left: 15px;*/
+    padding: 15px;
+}
+
+.container {
     position: relative;
 }
 
-.player-item-storage-slot {
+/****************************************************************/
+/* item slot */
+/****************************************************************/
+.item-slot {
+    position: relative;
     width: 50px;
     height: 50px;
     display: inline-block;
-    margin: 1px;
-
-    background: orange; /*цвет для технических целей*/
-    /*background: orangered;*/
-
-    /*float: left;*/
     vertical-align: top;
+    margin: 1px;
 }
 
-.player-item-storage-slot_icon {
-    /*background-image: url("/images/icons/bordered/64x64/question01.png");*/
+.item-slot__item {
+    /*width: 50px;*/
+    /*height: 50px;*/
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.item-slot__count {
+    position: absolute;
+    background: orange;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+/* todo: Сделать универсальные методы или убодный спобос реализации в scss. */
+.size_32 {
+    height: 32px;
+    width: 32px;
+}
+
+/****************************************************************/
+/* itemStorage для игрока */
+/****************************************************************/
+.item-storage {
+    display: inline-block;
+    /*background-color: orange;*/
+    background-color: #474544;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.item-storage-row {
+    position: relative;
+}
+
+.item-storage-slot {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 1px;
+}
+
+.item-storage-slot__item {
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.item-storage-slot__count {
+    position: absolute;
+    background: orange;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+/****************************************************************/
+/* hero list */
+/****************************************************************/
+.hero-list-wrapper {
+
+}
+
+.hero-list-table {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.hero-list-table-row {
+    /*vertical-align: bottom;*/
+    /*line-height: 50px;*/
+    /*line-height: 36px;*/
+    height: 36px;
+    position: relative;
+}
+
+.hero-list-table th,
+.hero-list-table td {
+    border: 1px solid #ddd;
+    padding: 0 10px;
+    height: 36px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.hero-list-table-row__icon-wrapper {
+    top: 2px;
+    /*position: relative;*/
+    position: absolute;
+}
+
+.hero-list-table-row__name {
+    margin-left: 64px;
+}
+
+/*.hero-list-table {*/
+
+/*}*/
+
+/*.hero-list-table-row {*/
+/*    !*float: left;*!*/
+/*    position: relative;*/
+/*}*/
+
+/*.hero-list-table-row:after {*/
+/*    !*clear: both;*!*/
+/*}*/
+
+/*.hero-list-table__cell {*/
+/*    float: left;*/
+/*}*/
+
+/****************************************************************/
+/* hero detail */
+/****************************************************************/
+.equip-slot {
+    line-height: 50px;
+}
+
+/****************************************************************/
+/* icons */
+/*
+    Как работаю на данный момент.
+    Иконка имеет фон слота. "Подмешивая" к иконке модификатор добавляется иконка предмета (через :before). Каждая иконка по отдельности.
+    todo: Сейчас для всех слотов пока по две иконки. Слот (просто .icon) и сам предмет. Предмет с учетом верстки это отдельный объект с классом .icon.
+*/
+/****************************************************************/
+
+.icon {
+    height: 64px;
+    width: 64px;
+    display: inline-block;
+    position: absolute;
+    /*top: 3px;*/   /*Зачем это?*/
+    background-image: url('/images/icons/BackgroundSlot02.png');
     background-repeat: no-repeat;
-    background-size: 50px;
+    background-size: 100%;
 }
 
-.player-item-storage-slot_clear {
-
+.icon:before {
+    content: '';
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: 64%;
+    top: 18%;
+    left: 18%;
 }
 
-/*debug*/
-.clear-bg-image {
+.icon_16,
+.icon_16:before {
+    height: 16px;
+    width: 16px;
+}
 
+.icon_32,
+.icon_32:before {
+    height: 32px;
+    width: 32px;
+}
+
+.icon_40,
+.icon_40:before {
+    height: 40px;
+    width: 40px;
+}
+
+.icon_50,
+.icon_50:before {
+    height: 50px;
+    width: 50px;
+}
+
+.icon_64,
+.icon_64:before {
+    height: 64px;
+    width: 64px;
+}
+
+.icon_block {
+    position: relative;
+}
+
+/****************************************************************/
+/* tests */
+/****************************************************************/
+.test-icon {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    background-image: url('/images/icons/BackgroundSlot02.png');
+}
+
+/*.test-icon_sword > .test-icon:before {*/
+.test-icon_sword:before {
+    content: '';
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+    /*border: 1px solid black;*/
+    position: absolute;
+    /*float: left;*/
+    top: 0;
+    left: 0;
+    /*background-color: red;*/
+    background-image: url('/images/icons/white/Sword01.png');
+    /*background-image: url('/images/icons/black/Sword01.png');*/
+    background-size: 100%;
 }

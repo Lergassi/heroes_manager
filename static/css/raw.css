@@ -1,0 +1,104 @@
+/*
+    background-color: #474544;
+*/
+
+/*html,*/
+/*body,*/
+/*div*/
+/*{*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*}*/
+
+/*fix*/
+input {
+    position: relative;
+}
+/*end fix*/
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 14px;
+}
+
+
+.header {
+    background-color: red;
+    height: 46px;
+    z-index: 200;
+    position: relative;
+}
+
+.container {
+    position: static;
+}
+
+.page-container {
+    position: relative;
+}
+
+.page-content {
+    display: block;
+    margin-left: 224px;
+    margin-right: 0;
+    margin-top: 0;
+    min-height: 100%;
+    padding: 0;
+}
+
+.sidebar {
+    background-color: yellow;
+    /*width: 220px;*/
+    /*position: absolute;*/
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 220px;
+    display: block;
+}
+
+.sidebar:before {
+    content: "";
+    position: fixed;
+    display: block;
+    width: 219px;
+    bottom: 0;
+    top: 0;
+    left: 5px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+    -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+    z-index: 1;
+}
+
+.content {
+    background-color: gray;
+    margin-left: 220px;
+}
+
+.list {
+    /*z-index: 123;*/
+    /*position: relative;*/
+}
+
+.list-item {
+    /*z-index: 123;*/
+}
+.list a {
+    display: block;
+    height: 38px;
+    line-height: 36px;
+    margin: 0;
+    padding: 0 16px 0 7px;
+    -webkit-text-shadow: none !important;
+    text-shadow: none !important;
+    font-size: 13px;
+    text-decoration: none;
+    color: #737373;
+    /*z-index: 123;*/
+    /*position: relative;*/
+}

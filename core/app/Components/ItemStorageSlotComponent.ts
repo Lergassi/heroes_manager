@@ -9,14 +9,19 @@ import {unsigned} from '../../types/main.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
+import ItemStackControllerInterface from '../Interfaces/ItemStackControllerInterface.js';
+import ItemStackController from './ItemStackController.js';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export enum ItemStorageSlotComponentEventCode {
     CreateItemStack = 'ItemStorageSlotComponent.CreateItemStack',
     Update = 'ItemStorageSlotComponent.Update',
 }
 
-export default class ItemStorageSlotComponent implements ItemStackPlaceInterface /* todo: ItemStackController */ {
+// export default class ItemStorageSlotComponent implements ItemStackPlaceInterface /* todo: ItemStackController */ {
+export default class ItemStorageSlotComponent implements ItemStackControllerInterface /* todo: ItemStackController */ {
     private _itemStack: ItemStack;
+    private _itemStackController: ItemStackControllerInterface;
 
     /**
      * @deprecated
@@ -27,8 +32,33 @@ export default class ItemStorageSlotComponent implements ItemStackPlaceInterface
 
     constructor() {
         this._itemStack = null;
+        this._callbacks = {};
+        this._itemStackController = new ItemStackController();
     }
 
+    addItem(item: Item, count: unsigned): unsigned {
+        EventSystem.event(ItemStorageSlotComponentEventCode.Update, this);
+        return this._itemStackController.addItem(item, count);
+    }
+
+    moveTo(itemStorage: ItemStorageInterface): void {
+        throw AppError.notImplements();
+    }
+
+    render(callback: (values: {
+        itemStack: ItemStack,
+    }) => void) {
+        callback({
+            itemStack: this._itemStack,
+        });
+    }
+
+    ////////////////////////////
+
+    /**
+     * @deprecated
+     * @param item
+     */
     canPlaceItem(item: Item): boolean {
         if (!this.isFree()) {
             throw new AppError('Слот занят. Сначала его нужно освободить.');
@@ -52,6 +82,7 @@ export default class ItemStorageSlotComponent implements ItemStackPlaceInterface
 
         this._itemStack = options.itemStackFactory.create(options.item, options.count);
         EventSystem.event(ItemStorageSlotComponentEventCode.Update, this);
+        // this._callbacks?.updateItem(this._itemStack?.item, this._itemStack?.count);
     }
 
     /**
@@ -90,11 +121,14 @@ export default class ItemStorageSlotComponent implements ItemStackPlaceInterface
         return this._itemStack && this._itemStack.containsItem(item);
     }
 
-    render(callback: (values: {
-        itemStack: ItemStack,
-    }) => void) {
-        callback({
-            itemStack: this._itemStack,
-        });
+    private _callbacks: {
+        updateItem?: (item: Item, count: number) => void,
+    };
+
+    attach(target: {
+        updateItem: (item: Item, count: number) => void,
+    }) {
+        this._callbacks = target;
+        this._callbacks.updateItem(this._itemStack?.item, this._itemStack?.count);
     }
 }

@@ -72,7 +72,7 @@ export default class LocationComponent {
     private readonly _enemyFightGroup: CharacterFightGroup;
 
     //лут
-    private readonly _itemStorage: ItemStorageComponent;   //Визуально может никак не быть связанным с сумками.
+    private readonly _itemStorage: ItemStorageInterface;   //Визуально может никак не быть связанным с сумками.
     private readonly _wallet: WalletInterface;
     // private readonly _exp: ;
 
@@ -91,7 +91,8 @@ export default class LocationComponent {
         // gatheringItemPoints: GatheringItemPoint[],
         gatheringPoints: GatheringPoint[],
         itemStackFactory: ItemStackFactory,         //todo: Убрать в генератор лута.
-        itemStorage: ItemStorageComponent,
+        // itemStorage: ItemStorageComponent,
+        itemStorage: ItemStorageInterface,
         // walletFactory: WalletFactory,
         wallet: WalletInterface,
         enemies: GameObject[] = [],
@@ -297,7 +298,8 @@ export default class LocationComponent {
             level: this._level,
             // gatheringItemPoints: this._gatheringItemPoints,
             gatheringItemPoints: [],
-            internalItemStorageComponent: this._itemStorage,
+            // internalItemStorageComponent: this._itemStorage,
+            internalItemStorageComponent: undefined,
             // heroGroupComponent: this._heroGroupComponent,
             heroGroupComponent: undefined,
         });

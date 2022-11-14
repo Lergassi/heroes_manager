@@ -1,0 +1,16 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table th {
+    text-align: left;
+}
+
+ol, ul {
+    list-style: none;
+}

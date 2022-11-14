@@ -33,6 +33,8 @@ export default class WalletComponent implements WalletInterface, RenderInterface
 
         this._currency = currency;
         this._value = value;
+
+        this._callbacks = [];
     }
 
     add(value: unsigned): unsigned {
@@ -47,8 +49,11 @@ export default class WalletComponent implements WalletInterface, RenderInterface
         EventSystem.event(EventCode.Wallet_AddCurrency, this);
         // this.update();
         // this._setValue(this._value);
-        console.log('add', this._target);
-        this._target?.updateValue(this, this._value);
+        // console.log('add', this._target);
+        // this._target?.updateValue(this, this._value);
+        for (let i = 0; i < this._callbacks.length; i++) {
+            this._callbacks[i](this._value);
+        }
 
         return 0;
     }
@@ -94,26 +99,29 @@ export default class WalletComponent implements WalletInterface, RenderInterface
         });
     }
 
-    private _target: any;
+    // private _targets: any;
     private _callbacks: any;
     /*
         target - Это окно. Точнее не окно, а интерфейс взаимодействия.
      */
-    attach(target /*: WalletUI updateValue()*/): void {
+    // attach(target /*: WalletUI updateValue()*/): void {
+    attach(callback): void {
         // let attachFactory: any;
         // // this._target = attachFactory.attach(this);
         // this._attachFactory = attachFactory.attach(this);
 
         // console.log('attach', target);
         // console.log('attach this', this);
-        this._target = target;
+        // this._target = target;
         // this._target.attach(this);  //Так точно нельзя делать. 1. Нужно будет каждый раз вспоминать что нунжно написать. 2. А потом нужно будет вызвать несколько методов и тд. 3. Изменять всё это в каждом методе не удобно будет.
-        target?.updateValue(this, this._value);
+        // target?.updateValue(this, this._value);
+        this._callbacks.push(callback);
+        callback(this._value);
     }
 
     detach(): void {
-        this._target = null;
-        this._callbacks = null;
+        // this._target = null;
+        // this._callbacks = null;
         // target.detach(this);
         //Должно происходить закрытие окна.
     }

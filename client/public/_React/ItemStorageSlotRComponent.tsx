@@ -33,6 +33,7 @@ export default class ItemStorageSlotRComponent extends React.Component<ItemStora
                 target: props.itemStorageSlotComponent,
                 callback: (target) => {
                     this.setState((state) => {
+                        console.log(42);
                         return {
                             itemStorageSlotComponent: state.itemStorageSlotComponent,
                         };

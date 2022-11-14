@@ -71,7 +71,7 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
         this.setState((state) => ({
             selectedHero: hero,
         }));
-        window['sandbox']['showHero']();    //todo: Пока так. От чего будет зависеть окно отображение героя пока не ясно.
+        window['_sandbox']['showHero']();    //todo: Пока так. От чего будет зависеть окно отображение героя пока не ясно.
     }
 
     async deleteHero(hero: GameObject) {

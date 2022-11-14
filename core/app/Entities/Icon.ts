@@ -3,20 +3,20 @@ import debug from 'debug';
 
 export default class Icon {
     private readonly _id: string;
-    private readonly _path: string;
 
     get id(): string {
         return this._id;
     }
 
-    get path(): string {
-        return this._path;
-    }
-
-    constructor(id: string, path: string) {
+    constructor(id: string) {
         this._id = id;
-        this._path = path;
 
         //todo: Проверка наличия иконки.
     }
+
+    // render(target: any) {
+    //     target.setIconClass('icon_' + this._id);
+    // }
+    //todo:
+    // generateCssSelector() {}
 }

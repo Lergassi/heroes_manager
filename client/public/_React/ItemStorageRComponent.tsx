@@ -44,7 +44,6 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
                         };
                     });
                 },
-                // target: this._itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent)
             },
         });
     }

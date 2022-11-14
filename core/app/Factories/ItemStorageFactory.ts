@@ -7,6 +7,8 @@ import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import {unsigned} from '../../types/main.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
+import ItemStorageV2 from '../Components/ItemStorageV2.js';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export default class ItemStorageFactory {
     private readonly _gameObjectStorage: GameObjectStorage;
@@ -52,6 +54,9 @@ export default class ItemStorageFactory {
             slots,
             this._itemStackFactory,
         ));
+        // let itemStorageComponent = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorageComponent, new ItemStorageV2(
+        //     20,
+        // ));
 
         return itemStorageComponent;    //todo: Тут будет контроллер.
     }

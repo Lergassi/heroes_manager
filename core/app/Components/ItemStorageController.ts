@@ -9,9 +9,14 @@ import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
+import AppError from '../../source/Errors/AppError.js';
 
 export default class ItemStorageController implements ItemStorageControllerInterface, ItemStorageInterface {
     private readonly _itemStorages: GameObject[];
+
+    get length(): number {
+        return this._itemStorages.length;
+    }
 
     constructor() {
         this._itemStorages = [];
@@ -50,11 +55,17 @@ export default class ItemStorageController implements ItemStorageControllerInter
         }
 
         for (let i = 0; i < this._itemStorages.length; i++) {
-            count -= count - this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent)?.addItem(item, count);
+            // count -= count - this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent)?.addItem(item, count);
+            count = this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent)?.addItem(item, count);
             if (count <= 0) break;
         }
+        // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
 
         return count;
+    }
+
+    moveTo(itemStorage: ItemStorageInterface): void {
+        throw AppError.notImplements();
     }
 
     render(callback: (itemStorages: GameObject[]) => void) {

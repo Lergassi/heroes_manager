@@ -9,11 +9,16 @@ import {assertIsPositive, assertNotNil} from '../../source/assert.js';
 import ItemStorageController from './ItemStorageController.js';
 import _ from 'lodash';
 import EventSystem from '../../source/EventSystem.js';
+import AppError from '../../source/Errors/AppError.js';
 
 export default class ItemStorageControllerWithLimit implements ItemStorageControllerInterface, ItemStorageInterface {
     private readonly _maxItemStorages: unsigned;
     private readonly _itemStorageController: ItemStorageController;
     private readonly _itemStorages: GameObject[];
+
+    get length(): number {
+        return this._itemStorageController.length;
+    }
 
     constructor(maxItemStorages: unsigned) {
         assertIsPositive(maxItemStorages);
@@ -46,6 +51,14 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
         return this._itemStorageController.addItem(item, count);
     }
 
+    moveTo(itemStorage: ItemStorageInterface): void {
+        throw AppError.notImplements();
+    }
+
+    render(callback: (itemStorages: GameObject[]) => void) {
+        callback(this._itemStorages);
+    }
+
     private _canAddItemStorage(): boolean {
         if (this._itemStorages.length >= this._maxItemStorages) {
             debug(DebugNamespaceID.Throw)('Нельзя добавить больше itemStorage больше .');
@@ -53,9 +66,5 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
         }
 
         return true;
-    }
-
-    render(callback: (itemStorages: GameObject[]) => void) {
-        callback(this._itemStorages);
     }
 }

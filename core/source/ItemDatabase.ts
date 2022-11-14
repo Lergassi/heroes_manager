@@ -2,6 +2,8 @@ import Item, {ItemFilterCondition} from '../app/Entities/Item.js';
 import _ from 'lodash';
 import ItemCategory from '../app/Entities/ItemCategory.js';
 import {assertIsString, assertNotEmpty} from './assert.js';
+import Random from '../app/Services/Random.js';
+import {number} from 'yargs';
 
 /**
  * todo: В будущем это будет полноценная бд.
@@ -20,6 +22,14 @@ export default class ItemDatabase {
         return this._items[ID];
     }
 
+    randomOne() {
+        return _.sample(this._items);
+    }
+
+    // randomSome(count: number) {
+    //     return _.sampleSize(this._items, count);
+    // }
+
     //todo: А зачем такой метод?
     // all(): Item[] {
     all(): {[ID: string]: Item} {
@@ -36,5 +46,9 @@ export default class ItemDatabase {
         }
 
         return result;
+    }
+
+    getBy(condition, filter, callback = undefined) {
+
     }
 }

@@ -34,8 +34,8 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
         this.hide = this.hide.bind(this);
         this.updateHandler = this.updateHandler.bind(this);
 
-        window['sandbox']['showHero'] = this.show;
-        window['sandbox']['hideHero'] = this.hide;
+        window['_sandbox']['showHero'] = this.show;
+        window['_sandbox']['hideHero'] = this.hide;
     }
 
     update(): void {

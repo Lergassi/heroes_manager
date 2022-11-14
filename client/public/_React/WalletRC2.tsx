@@ -26,7 +26,7 @@ export default class WalletRC2 extends React.Component<WalletRC2Props, WalletRC2
             // wallet: null,
             value: 0,
         };
-        window['_walletrc2'] = this;
+        // window['_walletrc2'] = this;
     }
 
     // updateValue(target, value) {

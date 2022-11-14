@@ -19,7 +19,7 @@ import {
  */
 export enum ItemGetType {
     Gathering = 'Gathering',
-    Hunting = 'Hunting',    //Имеется ввиду добыча с лута из убитый врагов.
+    Hunting = 'Hunting',    //Имеется ввиду добыча с лута из убитый врагов. todo: Придумать другое название. С трупа, с врагов...
     Crafting = 'Crafting',
     Purchased = 'Purchased',
 }

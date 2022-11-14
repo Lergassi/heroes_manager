@@ -35,12 +35,6 @@ export default class CreateItemCommand extends Command {
         let item = this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(itemID);
         assertNotNil(item, sprintf('Предмет ID(%s) не найден.', itemID));
 
-        //todo: Со статичным методом уже удобнее, но возможно можно лучше. И геттер.
-        // ItemStorageComponent.addItemToItemStorages(
-        //     this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).itemStorages,
-        //     item,
-        //     count,
-        // );
         this.container.get<ItemStorageInterface>(ContainerID.ItemStorageController).addItem(item, count);
     }
 }

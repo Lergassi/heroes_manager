@@ -16,7 +16,7 @@ export enum ItemCategoryID {
     ShoulderPads = 'ShoulderPads',
     Breastplates = 'Breastplates',
     Gloves = 'Gloves',
-    Bracers = 'Bracers',
+    Bracelets = 'Bracelets',
     Belts = 'Belts',
     Pants = 'Pants',
     Boots = 'Boots',

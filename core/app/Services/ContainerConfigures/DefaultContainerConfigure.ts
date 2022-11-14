@@ -60,7 +60,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
             // 'log:*',
 
             // DebugNamespaceID.GameConsole,
-            // DebugNamespaceID.EventSystem,
+            DebugNamespaceID.EventSystem,
         ];
         debug.enable(_.join(debugNamespaces, ','));
 

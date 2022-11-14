@@ -3,6 +3,7 @@ import {unsigned} from '../../types/main.js';
 
 /**
  * Для сумки и коллекции сумок, стеков и других мест где нужно добавлять предметы.
+ * todo: Разделить на сумки и просто классы для управления предметов типа слот экипировки. Выделить отдельно интерфейс только на добавление предметов.
  */
 export default interface ItemStorageInterface {
     /**
@@ -25,5 +26,5 @@ export default interface ItemStorageInterface {
     // containsItemCount(item: Item, count: unsigned): boolean;
     // takeItem(item: Item, count: unsigned): boolean;
     // hasFreeSlot(): boolean;
-    // moveTo(itemStorage: ItemStorageInterface);
+    moveTo(itemStorage: ItemStorageInterface): void;
 }

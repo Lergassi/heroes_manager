@@ -61,7 +61,7 @@ import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
 export default class SandboxController {
     private _container: ContainerInterface;
 
-    init() {
+    private _init() {
         this._container = new Container();
         (new DefaultContainerConfigure()).configure(this._container);
         (new CoreContainerConfigure()).configure(this._container);
@@ -69,6 +69,7 @@ export default class SandboxController {
     }
 
     run() {
+        this._init();
         this.main();
     }
 
@@ -878,14 +879,21 @@ export default class SandboxController {
         // console.log(itemStackController.addItem(itemDatabase.get(ItemID.Wood), 12), itemStackController);
         // console.log(itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 12), itemStackController);
 
-        let itemStorage = new ItemStorageV2([
-            new ItemStackController(),
-            new ItemStackController(),
-        ]);
+        // let itemStorage = new ItemStorageV2([
+        //     new ItemStackController(),
+        //     new ItemStackController(),
+        // ]);
+        let itemStorage = new ItemStorageV2(2);
         //equip slotIDFrom slotIDTo
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
+        // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        console.log(itemStorage);
+        itemStorage.show();
     }
 }

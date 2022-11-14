@@ -1,12 +1,12 @@
 import React from 'react';
-import ContainerInterface from '../../core/source/ContainerInterface.js';
-import ItemStorageComponent from '../../core/app/Components/ItemStorageComponent.js';
+import ContainerInterface from '../../../core/source/ContainerInterface.js';
+import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
 import PlayerItemStorageSlot from './PlayerItemStorageSlot.js';
-import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
-import Icon from '../../core/app/Entities/Icon.js';
-import {EntityID} from '../../core/types/enums/EntityID.js';
-import {IconID} from '../../core/types/enums/IconID.js';
+import EntityManagerInterface from '../../../core/app/Interfaces/EntityManagerInterface.js';
+import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import Icon from '../../../core/app/Entities/Icon.js';
+import {EntityID} from '../../../core/types/enums/EntityID.js';
+import {IconID} from '../../../core/types/enums/IconID.js';
 
 export interface PlayerItemStorageProps {
     container: ContainerInterface;
@@ -40,7 +40,7 @@ export default class PlayerItemStorage extends React.Component<PlayerItemStorage
             for (const slotKey in options.slots) {
                 rows.push(<PlayerItemStorageSlot
                     key={slotKey}
-                    backgroundIcon={this.props.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Icon>(EntityID.Icon, IconID.BackgroundSlot)}
+                    backgroundIcon={this.props.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Icon>(EntityID.Icon, IconID.BackgroundSlot01)}
                     itemStorageSlot={options.slots[slotKey]}
                 />)
 

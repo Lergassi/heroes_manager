@@ -218,16 +218,19 @@ export default class EntityManagerBuilder {
             HeroRoleID.Tank,
             'Танк',
             500,
-        );
-        heroRoleFactory.create(
-            HeroRoleID.Support,
-            'Поддержка',
-            510,
+            IconID.Shield01,
         );
         heroRoleFactory.create(
             HeroRoleID.DamageDealer,
             'Боец',
+            510,
+            IconID.Sword01,
+        );
+        heroRoleFactory.create(
+            HeroRoleID.Support,
+            'Поддержка',
             520,
+            IconID.Plus01,
         );
 
         debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.HeroRole');
@@ -350,7 +353,7 @@ export default class EntityManagerBuilder {
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
-            ItemCategoryID.Bracers,
+            ItemCategoryID.Bracelets,
             'Браслеты',
             500,
             ItemCategoryID.Armor,
@@ -399,7 +402,8 @@ export default class EntityManagerBuilder {
         let heroClassFactory = new HeroClassFactory(this._entityManager);
         heroClassFactory.create(
             HeroClassID.Warrior,
-            'Воин',
+            HeroClassID.Warrior,
+            IconID.Question01,
             500,
             HeroRoleID.Tank,
             [                   //Может не HeroClass, а отдельный параметр у героя ArmorMaterial
@@ -418,7 +422,8 @@ export default class EntityManagerBuilder {
         );
         heroClassFactory.create(
             HeroClassID.Paladin,
-            'Паладин',
+            HeroClassID.Paladin,
+            IconID.Question01,
             510,
             HeroRoleID.Tank,
             [
@@ -439,6 +444,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Tank1,
             HeroClassID.Tank1,
+            IconID.Question01,
             500,    //todo: Не удобно. Надо в отдельный файл переносить.
             HeroRoleID.Tank,
             [
@@ -457,6 +463,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Tank2,
             HeroClassID.Tank2,
+            IconID.Question01,
             500,
             HeroRoleID.Tank,
             [
@@ -475,6 +482,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Tank3,
             HeroClassID.Tank3,
+            IconID.Question01,
             500,
             HeroRoleID.Tank,
             [
@@ -493,7 +501,8 @@ export default class EntityManagerBuilder {
         //dd plate
         heroClassFactory.create(
             HeroClassID.Gladiator,
-            'Гладиатор',
+            HeroClassID.Gladiator,
+            IconID.Sword02,
             530,
             HeroRoleID.DamageDealer,
             [
@@ -512,6 +521,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
             HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
+            IconID.Sword02,
             500,
             HeroRoleID.DamageDealer,
             [
@@ -528,6 +538,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
             HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
+            IconID.Sword02,
             500,
             HeroRoleID.DamageDealer,
             [
@@ -548,6 +559,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.PlateDamageDealer1,
             HeroClassID.PlateDamageDealer1,
+            IconID.Sword02,
             500,
             HeroRoleID.DamageDealer,
             [
@@ -569,6 +581,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.PlateDamageDealer2,
             HeroClassID.PlateDamageDealer2,
+            IconID.Sword02,
             500,
             HeroRoleID.DamageDealer,
             [
@@ -585,7 +598,8 @@ export default class EntityManagerBuilder {
         //dd leather
         heroClassFactory.create(
             HeroClassID.Rogue,
-            'Разбойник',
+            HeroClassID.Rogue,
+            IconID.Sword01,
             520,
             HeroRoleID.DamageDealer,
             [
@@ -603,7 +617,8 @@ export default class EntityManagerBuilder {
         );
         heroClassFactory.create(
             HeroClassID.Archer,
-            'Лучник',
+            HeroClassID.Archer,
+            IconID.Sword01,
             540,
             HeroRoleID.DamageDealer,
             [
@@ -619,7 +634,8 @@ export default class EntityManagerBuilder {
         );
         heroClassFactory.create(
             HeroClassID.Gunslinger,
-            'Стрелок',
+            HeroClassID.Gunslinger,
+            IconID.Sword01,
             550,
             HeroRoleID.DamageDealer,
             [
@@ -639,6 +655,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.LeatherDamageDealer1,
             HeroClassID.LeatherDamageDealer1,
+            IconID.Sword01,
             550,
             HeroRoleID.DamageDealer,
             [
@@ -658,6 +675,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.LeatherDamageDealer2,
             HeroClassID.LeatherDamageDealer2,
+            IconID.Sword01,
             550,
             HeroRoleID.DamageDealer,
             [
@@ -677,6 +695,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.FireMage,
             HeroClassID.FireMage,
+            IconID.Question01,
             560,
             HeroRoleID.DamageDealer,
             [
@@ -696,6 +715,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Mage1,
             HeroClassID.Mage1,
+            IconID.Question01,
             560,
             HeroRoleID.DamageDealer,
             [
@@ -715,6 +735,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Mage2,
             HeroClassID.Mage2,
+            IconID.Question01,
             560,
             HeroRoleID.DamageDealer,
             [
@@ -733,7 +754,8 @@ export default class EntityManagerBuilder {
         );
         heroClassFactory.create(
             HeroClassID.Warlock,
-            'Чернокнижник',
+            HeroClassID.Warlock,
+            IconID.Question01,
             570,
             HeroRoleID.DamageDealer,
             [
@@ -753,6 +775,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Necromancer,
             HeroClassID.Necromancer,
+            IconID.Question01,
             560,
             HeroRoleID.DamageDealer,
             [
@@ -771,7 +794,8 @@ export default class EntityManagerBuilder {
         //support
         heroClassFactory.create(
             HeroClassID.Priest,
-            'Священик',
+            HeroClassID.Priest,
+            IconID.Question01,
             560,
             HeroRoleID.Support,
             [
@@ -788,7 +812,8 @@ export default class EntityManagerBuilder {
         );
         heroClassFactory.create(
             HeroClassID.Druid,
-            'Друид',
+            HeroClassID.Druid,
+            IconID.Question01,
             560,
             HeroRoleID.Support,
             [
@@ -806,6 +831,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Support1,
             HeroClassID.Support1,
+            IconID.Question01,
             560,
             HeroRoleID.Support,
             [
@@ -824,6 +850,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Support2,
             HeroClassID.Support2,
+            IconID.Question01,
             560,
             HeroRoleID.Support,
             [
@@ -842,6 +869,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Support3,
             HeroClassID.Support3,
+            IconID.Question01,
             560,
             HeroRoleID.Support,
             [
@@ -893,7 +921,7 @@ export default class EntityManagerBuilder {
             'Запястье',
             530,
             [
-                ItemCategoryID.Bracers,
+                ItemCategoryID.Bracelets,
             ],
         );
         equipSlotFactory.createArmorSlot(
@@ -1217,37 +1245,78 @@ export default class EntityManagerBuilder {
     private _createIcons() {
         let webPathPattern = '/images/icons/bordered/64x64/%s.png';
 
-        let p: any = '';
+        // let p: any = '';
         // path = Path('/to/folder', {root: '/home/hosting', isExists = true});
 
-        this._entityManager.add<Icon>(EntityID.Icon, IconID.BackgroundSlot, new Icon(
-            IconID.BackgroundSlot,
-            sprintf(webPathPattern, IconID.BackgroundSlot),
-            // path вместо строки
-        ));
-        this._entityManager.add<Icon>(EntityID.Icon, IconID.Question01, new Icon(
+        //todo: в бд
+        let iconIDs = [
+            IconID.Adventure01,
+            IconID.Ares01,
+            IconID.Bear01,
+            IconID.BearPawPrint01,
+            IconID.Boar01,
+            IconID.Board01,
+            IconID.Bow01,
+            IconID.Brain01,
+            IconID.Coins01,
+            IconID.CowboyHat01,
+            IconID.Dagger01,
+            IconID.Fabric01,
+            IconID.Fire01,
+            IconID.Fist01,
+            IconID.Flash01,
+            IconID.Flower01,
+            IconID.Helmet01,
+            IconID.Ingot01,
+            IconID.Leather01,
+            IconID.Leather02,
+            IconID.Leather03,
+            IconID.MageHat01,
+            IconID.Monster01,
+            IconID.Monster02,
+            IconID.Ore01,
+            IconID.Plant01,
+            IconID.Plus01,
             IconID.Question01,
-            sprintf(webPathPattern, IconID.Question01),
-        ));
-        this._entityManager.add<Icon>(EntityID.Icon, IconID.Question02, new Icon(
             IconID.Question02,
-            sprintf(webPathPattern, IconID.Question02),
-        ));
-        this._entityManager.add<Icon>(EntityID.Icon, IconID.Question03, new Icon(
             IconID.Question03,
-            sprintf(webPathPattern, IconID.Question03),
-        ));
-        this._entityManager.add<Icon>(EntityID.Icon, IconID.Wood, new Icon(
-            IconID.Wood,
-            sprintf(webPathPattern, IconID.Wood),
-        ));
-        this._entityManager.add<Icon>(EntityID.Icon, IconID.Ore, new Icon(
-            IconID.Ore,
-            sprintf(webPathPattern, IconID.Ore),
-        ));
-        this._entityManager.add<Icon>(EntityID.Icon, IconID.Bar, new Icon(
-            IconID.Bar,
-            sprintf(webPathPattern, IconID.Bar),
-        ));
+            IconID.Question04,
+            IconID.Shield01,
+            IconID.Sword01,
+            IconID.Sword02,
+            IconID.Sword03,
+            IconID.Sword04,
+            IconID.Sword05,
+            IconID.Sword06,
+            IconID.Sword07,
+            IconID.Sword08,
+            IconID.Sword09,
+            IconID.Sword10,
+            IconID.Sword11,
+            IconID.Target01,
+            IconID.Target02,
+            IconID.Thread01,
+            IconID.Warrior01,
+            IconID.Wood01,
+            IconID.BackgroundSlot01,
+            IconID.BackgroundSlot02,
+            IconID.Amulet01,
+            IconID.Belt01,
+            IconID.Boot01,
+            IconID.Bracelet01,
+            IconID.Breastplate01,
+            IconID.Gloves01,
+            IconID.Gloves02,
+            IconID.Pants01,
+            IconID.Ring01,
+            IconID.ShoulderPads01,
+            IconID.Trinket01,
+        ];
+
+        for (let i = 0; i < iconIDs.length; i++) {
+            this._entityManager.add<Icon>(EntityID.Icon, iconIDs[i], new Icon(
+                iconIDs[i],
+            ));
+        }
     }
 }

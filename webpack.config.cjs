@@ -20,6 +20,8 @@ module.exports = {
     entry: {
         client: './dist/client/index.js',
         sandbox: './dist/client/sandbox.js',
+        sandbox_ui: './dist/client/sandbox_ui.js',
+        dev: './dist/client/dev.js',
     },
     output: {
         // filename: 'bundle.js',

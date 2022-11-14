@@ -114,4 +114,8 @@ export default class AppError extends Error {
     static deprecated() {
         return new AppError('Код устарел и больше не работает.');
     }
+
+    static notImplements() {
+        return new AppError('Метод еще не реализован.');
+    }
 }

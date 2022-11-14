@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import PlayerContainerConfigure from '../Services/ContainerConfigures/PlayerContainerConfigure.js';
 import GameConsole from '../../source/GameConsole/GameConsole.js';
-import ClientRender from '../../../client/public/_React/ClientRender.js';
+import ClientRender from '../../../client/public/ClientRender.js';
 import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import {CommandID} from '../../types/enums/CommandID.js';

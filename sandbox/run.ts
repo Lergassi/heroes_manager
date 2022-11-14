@@ -11,7 +11,7 @@ debug.enable(process.env['DEBUG']);
 // const argv = yargs(hideBin(process.argv)).argv
 
 let sandbox = new SandboxController();
-sandbox.init();
+sandbox.run();
 
 type Command = {
     name: string,

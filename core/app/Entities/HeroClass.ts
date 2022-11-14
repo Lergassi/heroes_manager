@@ -4,10 +4,12 @@ import ArmorMaterial from './ArmorMaterial.js';
 import CharacterAttributeEntity from './CharacterAttributeEntity.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
+import Icon from './Icon.js';
 
 export default class HeroClass {
     private readonly _id: string;
     private readonly _name: string;
+    private readonly _icon: Icon;
     private readonly _sort: number;
     private readonly _heroRole: HeroRole;
     private readonly _availableArmorMaterials: ArmorMaterial[];
@@ -21,6 +23,10 @@ export default class HeroClass {
 
     get name(): string {
         return this._name;
+    }
+
+    get icon(): Icon {
+        return this._icon;
     }
 
     get sort(): number {
@@ -50,6 +56,7 @@ export default class HeroClass {
     constructor(
         id: string,
         name: string,
+        icon: Icon,
         sort: number,
         heroRole: HeroRole,
         availableArmorMaterials: ArmorMaterial[],
@@ -59,6 +66,7 @@ export default class HeroClass {
     ) {
         this._id = id;
         this._name = name;
+        this._icon = icon;
         this._sort = sort;
         this._heroRole = heroRole;
         this._availableArmorMaterials = availableArmorMaterials;

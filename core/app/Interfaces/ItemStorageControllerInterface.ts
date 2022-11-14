@@ -17,6 +17,7 @@ export default interface ItemStorageControllerInterface {
      */
     removeItemStorage(itemStorage: GameObject): number;
     render(callback: (itemStorages: GameObject[]) => void);
+    get length(): number;
 
     // addListener(code, callback);
 }
