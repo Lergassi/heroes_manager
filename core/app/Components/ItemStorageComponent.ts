@@ -147,10 +147,6 @@ export default class ItemStorageComponent implements ItemStorageInterface {
         }
     }
 
-    // attach() {
-    //
-    // }
-
     //----------------------------------------------------------------
     // deprecated:
     //----------------------------------------------------------------

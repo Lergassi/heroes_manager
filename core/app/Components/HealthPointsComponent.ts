@@ -21,7 +21,6 @@ export enum HealthPointsComponentEventCode {
 
 export default class HealthPointsComponent implements DamageControllerInterface {
     private _currentHealthPoints: unsigned;
-    // private _maxHealthPoints: unsigned;
     private readonly _maxHealthPoints: CharacterAttributeInterface;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
     private readonly _stateController: CharacterStateController;
@@ -60,6 +59,9 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
         if (this._currentHealthPoints <= 0) {
             this.kill(enemyRewardOptions);
+        }
+        for (let i = 0; i < this._handlers.length; i++) {
+            this._handlers[i].updateHandler(this, this._currentHealthPoints, this._maxHealthPoints);
         }
     }
 
@@ -132,5 +134,15 @@ export default class HealthPointsComponent implements DamageControllerInterface 
 
     isDead(): boolean {
         return this._isDead;
+    }
+
+    _handlers: {
+        updateHandler: (target: HealthPointsComponent, currentHealthPoints, maxHealthPoints) => void,
+    }[] = [];
+
+    attach(handlers: {
+        updateHandler: (target: HealthPointsComponent, currentHealthPoints, maxHealthPoints) => void,
+    }) {
+        this._handlers.push(handlers);
     }
 }

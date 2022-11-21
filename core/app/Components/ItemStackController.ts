@@ -8,21 +8,16 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ItemStackControllerInterface from '../Interfaces/ItemStackControllerInterface.js';
 import AppError from '../../source/Errors/AppError.js';
 
-// export default class ItemStackController implements ItemStorageInterface {
 export default class ItemStackController implements ItemStackControllerInterface {
     private _item: Item;
     private _count: unsigned;
 
-    private _callbacks;
-
     constructor() {
         this._item = null;  //todo: Далее тут может быть ItemStack без ограничений через композицию.
         this._count = null;
-
-        this._callbacks = [];
     }
 
-    addItem(item: Item, count: unsigned): unsigned {
+    addItem(item: Item, count: unsigned, updateHandler?: any): unsigned {
         assertNotNil(item);
         assertIsGreaterThanOrEqual(count, 0);
 
@@ -51,11 +46,26 @@ export default class ItemStackController implements ItemStackControllerInterface
             this._item = item;
         }
 
-        for (let i = 0; i < this._callbacks.length; i++) {
-            this._callbacks[i]();
+        /*
+            this._updateHandlers(this._item, this._count);
+
+            addCallback((item, count) => {
+                    this.updateSlot(index, item, count);
+            });
+            removeCallback();
+         */
+
+        for (let i = 0; i < this._handlers.length; i++) {
+            this._handlers[i].updateHandler(this._item, this._count);
         }
 
         return count;
+    }
+
+    _onChange;
+
+    onChange(callback) {
+        this._onChange = callback;
     }
 
     moveTo(itemStorage: ItemStorageInterface): void {
@@ -68,7 +78,15 @@ export default class ItemStackController implements ItemStackControllerInterface
         debug(DebugNamespaceID.Debug)('%j', this._item ? {item: this._item.id, count: this._count} : 'пусто');
     }
 
-    attach(callback: any) {
-        this._callbacks.push(callback);
+    _handlers = [];
+
+    attach(handlers: {
+        updateHandler: Function,
+    }) {
+        this._handlers.push(handlers);
+        // console.log(handlers);
+        handlers.updateHandler(this._item, this._count);
     }
+
+    detach() {}
 }

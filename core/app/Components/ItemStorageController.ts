@@ -28,6 +28,9 @@ export default class ItemStorageController implements ItemStorageControllerInter
         this._itemStorages.push(itemStorage);
         debug(DebugNamespaceID.Log)('Добавлен ItemStorage.');
         EventSystem.event(EventCode.ItemStorageController_AddItemStorage, this);
+        for (let i = 0; i < this._handlers.length; i++) {
+            this._handlers[i].addItemStorage(this, this._itemStorages);
+        }
 
         return this._itemStorages.length;
     }
@@ -70,5 +73,16 @@ export default class ItemStorageController implements ItemStorageControllerInter
 
     render(callback: (itemStorages: GameObject[]) => void) {
         callback(this._itemStorages);
+    }
+
+    _handlers: {
+        addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
+    }[] = [];
+
+    attach(handlers: {
+        addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
+    }) {
+        this._handlers.push(handlers);
+        handlers.addItemStorage(this, this._itemStorages);
     }
 }

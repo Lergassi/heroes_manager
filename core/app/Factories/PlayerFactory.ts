@@ -7,6 +7,7 @@ import ExperienceComponent from '../Components/ExperienceComponent.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import {unsigned} from '../../types/main.js';
 import GameObjectFactory from './GameObjectFactory.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export type PlayerFactoryConfig = {
     maxLevel: number;
@@ -39,7 +40,7 @@ export default class PlayerFactory {
 
         ));
 
-        playerGameObject.set(ExperienceComponent.name, this._experienceComponentFactory.create({
+        playerGameObject.set(ComponentID.Experience, this._experienceComponentFactory.create({
             level: 1,
         }));
 

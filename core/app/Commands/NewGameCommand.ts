@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import PlayerContainerConfigure from '../Services/ContainerConfigures/PlayerContainerConfigure.js';
 import GameConsole from '../../source/GameConsole/GameConsole.js';
-import ClientRender from '../../../client/public/ClientRender.js';
+import ClientUI from '../../../client/public/ClientUI.js';
 import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import {CommandID} from '../../types/enums/CommandID.js';
@@ -34,6 +34,6 @@ export default class NewGameCommand extends Command {
             await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(this._scenarios[scenario]).run();
         }
 
-        this.container.get<ClientRender>('client.clientRender').buildGameUI();
+        this.container.get<ClientUI>('client.clientRender').buildGameUI();
     }
 }

@@ -67,4 +67,10 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
 
         return true;
     }
+
+    attach(handlers: {
+        addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
+    }) {
+        this._itemStorageController.attach(handlers);
+    }
 }

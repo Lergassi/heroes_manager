@@ -49,14 +49,11 @@ import ItemStorageControllerWithLimit from '../core/app/Components/ItemStorageCo
 import ItemStorageInterface from '../core/app/Interfaces/ItemStorageInterface.js';
 import {EntityID} from '../core/types/enums/EntityID.js';
 import Currency from '../core/app/Entities/Currency.js';
-import EventSystem from '../core/source/EventSystem.js';
 import {EventCode} from '../core/types/enums/EventCode.js';
 import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
-import {useState} from 'react';
-import ItemStackController from '../core/app/Components/ItemStackController.js';
-import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
 import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
+import ItemStackController from '../core/app/Components/ItemStackController.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -97,7 +94,9 @@ export default class SandboxController {
         // this._devEventSystemWithoutStatic();
         // this._devEventSystemWithoutTarget();
         // this._devNewRender();
-        this._devItemStackController();
+
+        // this._devItemStackController();
+        this._devItemStorageV2();
 
         // this._testVanillaJS();
         // this._testLodash();
@@ -895,5 +894,32 @@ export default class SandboxController {
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
         console.log(itemStorage);
         itemStorage.show();
+    }
+
+    private _devItemStorageV2() {
+        let itemDatabase = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+
+        let itemStorage = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20);
+
+        let itemStorageComponent = itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent);
+
+        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.IronOre), 24));
+        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 24));
+        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 24));
+        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.IronOre), 24));
+        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 24));
+
+        console.log(itemStorageComponent);
+        itemStorageComponent.show();
+
+        // let itemStackController = new ItemStackController();
+        // itemStackController.onChange((target, item, count) => {
+        //     console.log('Hello, World!!!');
+        //     console.log(target, item, count);
+        // });
+        //
+        // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
+        // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
+        // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
     }
 }

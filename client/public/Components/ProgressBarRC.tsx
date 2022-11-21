@@ -2,30 +2,31 @@ import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {assertIsGreaterThanOrEqual} from '../../../core/source/assert.js';
 
 export interface ProgressBarRCProps {
-    maxValue?: number;
-    currentValue?: number;
-}
-
-export interface ProgressBarRCState {
     maxValue: number;
     currentValue: number;
 }
 
+export interface ProgressBarRCState {
+
+}
+
 export default class ProgressBarRC extends React.Component<ProgressBarRCProps, ProgressBarRCState> {
     constructor(props: ProgressBarRCProps) {
-        super(props);
+        assertIsGreaterThanOrEqual(props.currentValue, 0);
+        assertIsGreaterThanOrEqual(props.maxValue, 1);
 
-        this.state = {
-            maxValue: props.maxValue,
-            currentValue: props.currentValue,
-        };
+        super(props);
     }
 
     render() {
+        let maxValue = this.props.maxValue;
+        let currentValue = this.props.currentValue;
+
         let style = {
-            width: _.random(20, 80) + '%',
+            width: currentValue > maxValue ? '100%' : (currentValue / maxValue * 100) + '%',
         };
 
         return (

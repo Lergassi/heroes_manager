@@ -279,7 +279,7 @@ export default class LocationComponent {
     private _canAddHero(hero: GameObject): void {
         this.canModify();
 
-        if (hero.getComponent<ExperienceComponent>(ExperienceComponent.name).level < this._level) {
+        if (hero.getComponent<ExperienceComponent>(ComponentID.Experience).level < this._level) {
             throw new AppError('Уровень героя слишком низкий для данной локации.');
         }
     }
@@ -296,20 +296,9 @@ export default class LocationComponent {
     }>) => void) {
         callback({
             level: this._level,
-            // gatheringItemPoints: this._gatheringItemPoints,
             gatheringItemPoints: [],
-            // internalItemStorageComponent: this._itemStorage,
             internalItemStorageComponent: undefined,
-            // heroGroupComponent: this._heroGroupComponent,
             heroGroupComponent: undefined,
         });
     }
-
-    // render2(o) {
-    //     let o = <asdasd>o;
-    //     o.set({
-    //         a: 1,
-    //         //...
-    //     });
-    // }
 }

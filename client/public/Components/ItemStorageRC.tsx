@@ -9,21 +9,25 @@ import ItemStorageV2 from '../../../core/app/Components/ItemStorageV2.js';
 import Item from '../../../core/app/Entities/Item.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 import ItemSlotRC from './ItemSlotRC.js';
+import ContainerInterface from '../../../core/source/ContainerInterface.js';
+import ItemDatabase from '../../../core/source/ItemDatabase.js';
+import {ItemID} from '../../../core/types/enums/ItemID.js';
+import {ContainerID} from '../../../core/types/enums/ContainerID.js';
 
 export interface ItemStorageUIProps {
     size: number;
     columns: number;
-    // itemStorage?: ItemStorageV2;    //todo: Вопрос: интерфейс или класс?
+    itemStorage?: ItemStorageV2;    //todo: Вопрос: интерфейс или класс? Или вообще другой интерфейс никак не связанный с объектом.
 }
 
 export interface ItemStorageUIState {
-    slots: any;
+    slots: {item: Item, count: number}[];
+    // itemStorage: ItemStorageV2;
 }
 
 export default class ItemStorageRC extends React.Component<ItemStorageUIProps, ItemStorageUIState> {
     private readonly _size: number;
     private readonly _columns: number;
-    private readonly _slots: any;
 
     constructor(props: ItemStorageUIProps) {
         assertIsGreaterThanOrEqual(props.size, 1);
@@ -33,13 +37,56 @@ export default class ItemStorageRC extends React.Component<ItemStorageUIProps, I
         super(props);
 
         //todo: Возможно стоит сделать правило в кратности строк и колонок размеру сумки.
-        this._slots = [];
         this._size = props.size;
         this._columns = props.columns;
+
+        this.state = {
+            slots: _.map(_.range(0, this._size), (index) => {
+                return {
+                    item: undefined,
+                    count: undefined,
+                };
+            }),
+            // itemStorage: props.itemStorage,
+        };
+
+        // let delay = 1;
+        // let delayStep = 2000;
+        // setTimeout(() => {
+        //     // this.updateSlot(2, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
+        //     // this.updateSlot(4, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
+        //     // this.updateSlot(10, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
+        //     // this.updateSlot(10222, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
+        //     // this.updateSlot(1, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
+        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 3);
+        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_2), 20);
+        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_3), 10);
+        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_3), 10);
+        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_3), 10);
+        // }, delay++ * delayStep);
     }
 
-    updateSlot(item: Item, count: number, index: string) {
+    componentDidMount() {
+        this.props.itemStorage?.attach({
+            updateHandler: (index, item, count) => {
+                this.updateSlot(index, item, count);
+            },
+        });
+    }
 
+    //todo: Позже класс будет универсальный и не будет зависить от предмета, а для предмета будет другой класс.
+    updateSlot(index: number, item: Item, count: number) {
+        let slots = [...this.state.slots];
+        assertNotNil(slots[index], 'Слот не найден.');
+
+        slots[index].item = item;
+        slots[index].count = count;
+
+        this.setState((state) => {
+            return {
+                slots: slots,
+            };
+        });
     }
 
     render() {
@@ -50,13 +97,11 @@ export default class ItemStorageRC extends React.Component<ItemStorageUIProps, I
         while (slotIndex < this._size) {
             let row = [];
             while (columnIndex < this._columns && slotIndex < this._size) {
-                // row.push(<ItemStorageSlotRC
-                //     key={slotIndex}
-                // />);
                 row.push(<ItemSlotRC
                     key={slotIndex}
                     showCount={true}
-                    // blockSize={50}
+                    item={this.state.slots[slotIndex].item}
+                    count={this.state.slots[slotIndex].count}
                 />);
                 ++columnIndex;
                 ++slotIndex;

@@ -10,6 +10,7 @@ import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttribute
 import HealthPointsComponent from '../../../core/app/Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../../../core/app/Components/MagicPointsComponent.js';
 import AttackController from '../../../core/app/Components/AttackController.js';
+import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 
 export interface HeroDetailRComponentProps {
     hero?: GameObject,
@@ -97,11 +98,11 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                     </tr>
                     <tr>
                         <td>Уровень (опыт)</td>
-                        <td>{hero.get<ExperienceComponent>(ExperienceComponent.name).level} ({hero.get<ExperienceComponent>(ExperienceComponent.name).exp})</td>
+                        <td>{hero.get<ExperienceComponent>(ComponentID.Experience).level} ({hero.get<ExperienceComponent>(ComponentID.Experience).exp})</td>
                     </tr>
                     <tr>
                         <td>Класс</td>
-                        <td>{hero.get<HeroComponent>(HeroComponent.name)['_heroClass']['_name']}</td>
+                        <td>{hero.get<HeroComponent>(ComponentID.Hero)['_heroClass']['_name']}</td>
                     </tr>
                     <tr>
                         <td>Сила</td>

@@ -9,6 +9,8 @@ import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
+import ItemStorageV2 from '../../../core/app/Components/ItemStorageV2.js';
+import ItemStorageRC from '../Components/ItemStorageRC.js';
 
 export interface LocationRComponentProps {
     container: ContainerInterface;
@@ -74,24 +76,25 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
             </table>
         );
 
-        //todo: Отдельный класс.
-        let itemsElementTableRows = [];
-        location.get<ItemStorageComponent>(ComponentID.ItemStorageComponent).render((values) => {
-            _.map(values.slots, (value, index) => {
-                itemsElementTableRows.push((<tr key={index}>
-                    <td>
-                        <ItemStackTextRComponent
-                            itemStack={value['_itemStack']}
-                        ></ItemStackTextRComponent>
-                    </td>
-                </tr>));
-            });
-        });
-        let itemsElementTable = (
-            <table className={'basic-table'}>
-                <tbody>{itemsElementTableRows}</tbody>
-            </table>
-        );
+        // let itemsElementTableRows = [];
+        // location.get<ItemStorageComponent>(ComponentID.ItemStorageComponent).render((values) => {
+        //     _.map(values.slots, (value, index) => {
+        //         itemsElementTableRows.push((<tr key={index}>
+        //             <td>
+        //                 <ItemStackTextRComponent
+        //                     itemStack={value['_itemStack']}
+        //                 ></ItemStackTextRComponent>
+        //             </td>
+        //         </tr>));
+        //     });
+        // });
+        // let itemsElementTable = (
+        //     <table className={'basic-table'}>
+        //         <tbody>{itemsElementTableRows}</tbody>
+        //     </table>
+        // );
+
+        // location.get<ItemStorageV2>(ComponentID.ItemStorageComponent).atta
 
         //todo: Временно.
         // console.log(location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints']);
@@ -111,15 +114,21 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
         );
 
         return (
-            <div className={'block'}>
-                <div className={'block__title'}>{locationComponentElement}</div>
-                <div className={'block__content'}>
+            <div className={'widget'}>
+                <div className={'widget__title'}>{locationComponentElement}</div>
+                <div className={'widget__content'}>
                     <div>GatheringItemPoints:</div>
                     {gatheringItemPointsTable}
                     <div>HeroGroupComponent:</div>
                     {heroGroupComponentTable}
                     <div>Items:</div>
-                    {itemsElementTable}
+                    {/*{itemsElementTable}*/}
+                    {/*{items}*/}
+                    <ItemStorageRC
+                        size={5}
+                        columns={5}
+                        itemStorage={location.get<ItemStorageV2>(ComponentID.ItemStorageComponent)}
+                    />
                 </div>
             </div>
         );

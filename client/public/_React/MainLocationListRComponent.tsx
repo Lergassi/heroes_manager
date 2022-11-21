@@ -56,9 +56,12 @@ export default class MainLocationListRComponent extends React.Component<MainLoca
         });
 
         return (
-            <div className={'block'}>
-                <div className={'block__title'}>Locations</div>
-                <div className={'block__content'}>{list}</div>
+            // <div className={'block'}>
+            //     <div className={'block__title'}>Locations</div>
+            //     <div className={'block__content'}>{list}</div>
+            // </div>
+            <div>
+                {list}
             </div>
         );
     }

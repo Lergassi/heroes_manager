@@ -39,6 +39,7 @@ import CreateItemKitCommand from '../../Commands/CreateItemKitCommand.js';
 import {ContainerID} from '../../../types/enums/ContainerID.js';
 import AddGoldCommand from '../../Commands/AddGoldCommand.js';
 import DebugItemDatabaseCommand from '../../Commands/DebugCommands/DebugItemDatabaseCommand.js';
+import CreateStubObjectsCommand from '../../Commands/CreateStubObjectsCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -123,5 +124,8 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
 
         gameConsole.register(new DebugUserEnvironmentCommand(container));
         gameConsole.register(new DebugPlayerEnvironmentCommand(container));
+
+        /* STUB OBJECTS */
+        gameConsole.register(new CreateStubObjectsCommand(container));
     }
 }

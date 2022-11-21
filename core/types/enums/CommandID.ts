@@ -31,4 +31,5 @@ export enum CommandID {
 
     debug_entity_manager = 'debug_entity_manager',
     debug_item_database = 'debug_item_database',
+    create_stub_objects = 'create_stub_objects',
 }

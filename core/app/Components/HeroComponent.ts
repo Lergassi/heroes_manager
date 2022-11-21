@@ -27,4 +27,10 @@ export default class HeroComponent {
         this._name = name;
         this._heroClass = heroClass;
     }
+
+    attach(callbacks: {
+        readHeroClass: (heroClass: HeroClass) => void,
+    }) {
+        callbacks.readHeroClass(this._heroClass);
+    }
 }

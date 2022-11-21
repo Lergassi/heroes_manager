@@ -20,4 +20,8 @@ export default interface ItemStorageControllerInterface {
     get length(): number;
 
     // addListener(code, callback);
+
+    attach(handlers: {
+        addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
+    });
 }

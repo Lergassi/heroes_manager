@@ -150,9 +150,11 @@ body {
 /* widget */
 /****************************************************************/
 .widget {
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
+    margin: 15px;
     background-color: white;
     box-shadow: 0px 0px 4px -1px #938787;
+    /*padding: 15px;*/
 }
 
 .widget__title {
@@ -419,9 +421,9 @@ body {
 
 .hero-list-table-row {
     /*vertical-align: bottom;*/
-    /*line-height: 50px;*/
-    /*line-height: 36px;*/
-    height: 36px;
+    /*line-height: 52px;*/
+    line-height: 36px;
+    /*height: 36px;*/
     position: relative;
 }
 
@@ -435,8 +437,7 @@ body {
 }
 
 .hero-list-table-row__icon-wrapper {
-    top: 2px;
-    /*position: relative;*/
+    top: 1px;
     position: absolute;
 }
 
@@ -482,7 +483,6 @@ body {
     width: 64px;
     display: inline-block;
     position: absolute;
-    /*top: 3px;*/   /*Зачем это?*/
     background-image: url('/images/icons/BackgroundSlot02.png');
     background-repeat: no-repeat;
     background-size: 100%;
@@ -510,6 +510,24 @@ body {
 .icon_32:before {
     height: 32px;
     width: 32px;
+}
+
+.icon_34,
+.icon_34:before {
+    height: 34px;
+    width: 34px;
+}
+
+.icon_36,
+.icon_36:before {
+    height: 36px;
+    width: 36px;
+}
+
+.icon_36,
+.icon_36:before {
+    height: 36px;
+    width: 36px;
 }
 
 .icon_40,

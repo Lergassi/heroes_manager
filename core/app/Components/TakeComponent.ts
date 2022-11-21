@@ -7,6 +7,9 @@ enum TakeComponentState {
     Busy = 'Busy',
 }
 
+/**
+ * @deprecated Не нужен. Использовать StateController
+ */
 export default class TakeComponent {
     private _state: TakeComponentState;
     private _owner;

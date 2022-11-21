@@ -154,7 +154,10 @@ export default class LocationRC extends React.Component<LocationRCProps, Locatio
                         </div>
                         <div className={'block'}>
                             <h3 className={'block'}>Добыча</h3>
-                            <ItemStorageRC size={10} columns={5}/>
+                            <ItemStorageRC
+                                size={10}
+                                columns={5}
+                            />
                         </div>
                     </div>
                 </div>

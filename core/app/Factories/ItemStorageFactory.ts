@@ -42,22 +42,22 @@ export default class ItemStorageFactory {
      * @param gameObject
      */
     createIn(size: unsigned, gameObject: GameObject) {
-        let slots = [];
-        let slotIDPrefix = 'slot_';
-        for (let i = 0; i < size; i++) {
-            let slot = new ItemStorageSlotComponent();
-            slots.push(slot);
-            gameObject.set(slotIDPrefix + i.toString(), slot);
-        }
+        // let slots = [];
+        // let slotIDPrefix = 'slot_';
+        // for (let i = 0; i < size; i++) {
+        //     let slot = new ItemStorageSlotComponent();
+        //     slots.push(slot);
+        //     gameObject.set(slotIDPrefix + i.toString(), slot);
+        // }
 
-        let itemStorageComponent = gameObject.set<ItemStorageComponent>(ComponentID.ItemStorageComponent, new ItemStorageComponent(
-            slots,
-            this._itemStackFactory,
-        ));
-        // let itemStorageComponent = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorageComponent, new ItemStorageV2(
-        //     20,
+        // let itemStorage = gameObject.set<ItemStorageComponent>(ComponentID.ItemStorageComponent, new ItemStorageComponent(
+        //     slots,
+        //     this._itemStackFactory,
         // ));
+        let itemStorage = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorageComponent, new ItemStorageV2(
+            size,
+        ));
 
-        return itemStorageComponent;    //todo: Тут будет контроллер.
+        return itemStorage;    //todo: Тут будет контроллер.
     }
 }

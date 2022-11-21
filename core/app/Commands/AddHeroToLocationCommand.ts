@@ -24,8 +24,10 @@ export default class AddHeroToLocationCommand extends Command {
 
         let hero = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(heroID);
         let location = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(locationID);
+        console.log(location);
 
         location
-            ?.get<LocationComponent>(LocationComponent.name).addHero(hero);
+            ?.get<LocationComponent>(LocationComponent.name)
+            .addHero(hero);
     }
 }

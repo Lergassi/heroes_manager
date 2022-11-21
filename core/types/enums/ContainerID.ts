@@ -5,7 +5,6 @@ export enum ContainerID {
     EventSystem = 'core.EventSystem',
     EventSystemFactory = 'core.EventSystemFactory',
     EntityManager = 'core.EntityManager',
-    // EntityManagerFacade = 'core.facade.entityManager',
     ItemFactory = 'core.ItemFactory',
     ItemDatabase = 'core.ItemDatabase',
     GameConsole = 'core.GameConsole',
@@ -29,10 +28,22 @@ export enum ContainerID {
 
     //компоненты из GameObject
     ItemStorageController = 'player.ItemStorageController',
+    /**
+     * @deprecated
+     */
     MainItemStorageList = 'player.MainItemStorageList',
     MainHeroList = 'player.MainHeroList',
     MainLocationList = 'player.MainLocationList',
 
     //player Фабрики компонентов (class Component).
     ExperienceComponentFactory = 'player.ExperienceComponentFactory',
+
+    //stubs
+    StubItemStorage01 = 'player.stubs.ItemStorage01',
+
+    //ui
+    //components
+    UI_MainItemStorageList = 'player.ui.MainItemStorageList',
+    UI_MainHeroList = 'player.ui.MainHeroList',
+    UI_MainLocationList = 'player.ui.MainLocationList',
 }

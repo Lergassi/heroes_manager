@@ -13,6 +13,12 @@ export enum ExperienceComponentEventCode {
     AddLevel = 'ExperienceComponent.AddLevel',
 }
 
+export type ExperienceComponentCallbacks = {
+    updateExp: (value: number) => void;
+    updateTotalExpToLevelUp: (value: number) => void;
+    updateLevel: (value: number) => void;
+}
+
 export default class ExperienceComponent implements ExperienceDistributorInterface {
     private _level: unsigned;
     private readonly _maxLevel: unsigned;
@@ -76,7 +82,7 @@ export default class ExperienceComponent implements ExperienceDistributorInterfa
                 }
 
                 this._exp = this._exp - this._totalExpForNextLevel();
-                //todo: И так каждый раз try/catch? Ошибка должна не просто прерывать программу дл ближайшего блока, а делать определенные действия.
+                //todo: И так каждый раз try/catch? Ошибка должна не просто прерывать программу до ближайшего блока, а делать определенные действия.
                 try {
                     this._addLevel();
                 } catch (e) {
@@ -86,6 +92,10 @@ export default class ExperienceComponent implements ExperienceDistributorInterfa
                     }
                 }
             }
+        }
+
+        for (let i = 0; i < this._callbacks.length; i++) {
+            this._callbacks[i].updateExp(this._exp);
         }
     }
 
@@ -98,6 +108,11 @@ export default class ExperienceComponent implements ExperienceDistributorInterfa
         // this._resetExp();
         debug(DebugNamespaceID.Log)(sprintf('Уровень повышен: %s.', this._level));
         EventSystem.event(ExperienceComponentEventCode.AddLevel, this);
+        for (let i = 0; i < this._callbacks.length; i++) {
+            this._callbacks[i].updateLevel(this._level);
+            // this._callbacks[i].updateTotalExpToLevelUp(this._increaseExpForNextLevel);   //todo: Не удобно. Не понятно что использовать. Сначала использовал свойство, а потом увидел что нужно через метод.
+            this._callbacks[i].updateTotalExpToLevelUp(this._totalExpForNextLevel());
+        }
     }
 
     private _totalExpForNextLevel(): unsigned {
@@ -114,5 +129,14 @@ export default class ExperienceComponent implements ExperienceDistributorInterfa
 
     private _nextLevel(): unsigned {
         return this._level + 1;
+    }
+
+    _callbacks: ExperienceComponentCallbacks[] = []
+
+    attach(callbacks: ExperienceComponentCallbacks) {
+        callbacks.updateExp(this._exp);
+        callbacks.updateTotalExpToLevelUp(this._totalExpForNextLevel());
+        callbacks.updateLevel(this._level);
+        this._callbacks.push(callbacks);
     }
 }

@@ -14,16 +14,21 @@ import {ContainerID} from '../../core/types/enums/ContainerID.js';
 import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
-import DetailHeroListRC from './Components/DetailHeroListRC.js';
+import MainHeroListRC from './Components/MainHeroListRC.js';
 import LeftSidebarRC from './Components/LeftSidebarRC.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import Icon from '../../core/app/Entities/Icon.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import {IconID} from '../../core/types/enums/IconID.js';
-import LoremRC from './Components/LoremRC.js';
-import LocationRC from './Components/LocationRC.js';
-import Buttons from './UI/Buttons.js';
-import DetailHeroRC from './Components/DetailHeroRC.js';
+import GameConsole from '../../core/source/GameConsole/GameConsole.js';
+import {CommandID} from '../../core/types/enums/CommandID.js';
+import GameObject from '../../core/source/GameObject.js';
+import ItemStorageControllerInterface from '../../core/app/Interfaces/ItemStorageControllerInterface.js';
+import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
+import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
+import MainHeroListComponent from '../../core/app/Components/MainHeroListComponent.js';
+import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
+import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 
 function Hello(props) {
     console.log('Hello.this', this);
@@ -52,18 +57,22 @@ export default class SandboxUI {
         // window['_sandbox']['ui'] = {};
     }
 
-    run() {
+    async run() {
         let domContainer = document.getElementById('root');
         if (!domContainer) {
             throw AppError.rootElementNotFound()
         }
         this._root = ReactDOM.createRoot(domContainer);
 
+        await this._container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_stub_objects);
+
         // this.uiGetStarted();
         // this.testWithoutJSX();
 
-        this.devLayout();
-        // this.devHeroList();
+        // this.devLayout();
+        // this.devItemStorage();
+        // this._renderItemStorageController();
+        this.devHeroList();
     }
 
     uiGetStarted() {
@@ -133,14 +142,6 @@ export default class SandboxUI {
         root.render(element);
     }
 
-    private devHeroList() {
-        this._root.render(
-            <div>
-                <DetailHeroListRC/>
-            </div>
-        );
-    }
-
     private devLayout() {
         let menuItems = [
             {name: 'Главная', icon: this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Icon>(EntityID.Icon, IconID.Shield01),},
@@ -177,6 +178,7 @@ export default class SandboxUI {
                         {/*        <Buttons/>*/}
                         {/*    </div>*/}
                         {/*</div>*/}
+
                         {/*<div className={'widget'}>*/}
                         {/*    <div className={'widget__title'}>*/}
                         {/*        Хранилище*/}
@@ -195,17 +197,6 @@ export default class SandboxUI {
                         {/*    </div>*/}
                         {/*    <div className={'widget__content'}>*/}
                         {/*        <DetailHeroListRC*/}
-
-                        {/*        />*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
-                        {/*<div className={'widget'}>*/}
-                        {/*    <div className={'widget__title'}>*/}
-                        {/*        Герой*/}
-                        {/*    </div>*/}
-                        {/*    <div className={'widget__content'}>*/}
-                        {/*        <DetailHeroRC*/}
 
                         {/*        />*/}
                         {/*    </div>*/}
@@ -253,6 +244,94 @@ export default class SandboxUI {
                         {/*</div>*/}
                     </div>{/*content*/}
                 </div>{/*container*/}
+            </div>
+        );
+    }
+
+    private devItemStorage() {
+        let itemStorage = this._container.get<GameObject>(ContainerID.StubItemStorage01);
+
+        this._root.render(
+            <div>
+                <div className={'widget'}>
+                    <div className={'widget__title'}>
+                        Хранилище
+                    </div>
+                    <div className={'widget__content'}>
+                        <ItemStorageRC
+                            size={20}
+                            columns={4}
+                            itemStorage={itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent)}  /* todo: Не удобно: внутри дальше планируются только интерфейсы. */
+                        />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    private async _renderItemStorageController() {
+        let itemStorageController = new ItemStorageController();
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
+
+        itemStorageController.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorageController.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorageController.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorageController.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.IronOre), 12);
+        itemStorageController.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorageController.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.IronOre), 12);
+        itemStorageController.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 12);
+
+        this._root.render(
+            <div>
+                <ItemStorageControllerRC
+                    itemStorageController={itemStorageController}
+                />
+            </div>
+        );
+    }
+
+    private async _renderItemStorageControllerFromContainer() {
+        let itemStorageController = this._container.get<ItemStorageControllerInterface>(ContainerID.ItemStorageController);
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
+
+        await this._container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item, [ItemID.Wood, '12']);
+        await this._container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item, [ItemID.Wood, '12']);
+        await this._container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item, [ItemID.IronOre, '42']);
+        await this._container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item, [ItemID.IronOre, '42']);
+        await this._container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item, [ItemID.IronOre, '42']);
+        await this._container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item, [ItemID.IronOre, '300']);
+
+        this._root.render(
+            <div>
+                <ItemStorageControllerRC
+                    itemStorageController={itemStorageController}
+                />
+            </div>
+        );
+    }
+
+    private devHeroList() {
+        let mainHeroList = new MainHeroListComponent(5);
+        mainHeroList.createHero(HeroClassID.Warrior, 1, this._container.get<HeroFactory>(ContainerID.HeroFactory));
+        mainHeroList.createHero(HeroClassID.FireMage, 1, this._container.get<HeroFactory>(ContainerID.HeroFactory));
+        // mainHeroList.createHero(HeroClassID.Rogue, 1, this._container.get<HeroFactory>(ContainerID.HeroFactory));
+        // mainHeroList.createHero(HeroClassID.Gunslinger, 1, this._container.get<HeroFactory>(ContainerID.HeroFactory));
+        // mainHeroList.createHero(HeroClassID.Priest, 1, this._container.get<HeroFactory>(ContainerID.HeroFactory));
+
+        this._root.render(
+            <div>
+                <div className={'widget'}>
+                    <div className={'widget__title'}>Главный список героев</div>
+                    <div className={'widget__content'}>
+                        <MainHeroListRC
+                            mainHeroList={mainHeroList}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }

@@ -403,7 +403,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Warrior,
             HeroClassID.Warrior,
-            IconID.Question01,
+            IconID.Ares01,
             500,
             HeroRoleID.Tank,
             [                   //Может не HeroClass, а отдельный параметр у героя ArmorMaterial
@@ -635,7 +635,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Gunslinger,
             HeroClassID.Gunslinger,
-            IconID.Sword01,
+            IconID.Question01,
             550,
             HeroRoleID.DamageDealer,
             [
@@ -695,7 +695,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.FireMage,
             HeroClassID.FireMage,
-            IconID.Question01,
+            IconID.Fire01,
             560,
             HeroRoleID.DamageDealer,
             [
@@ -715,7 +715,7 @@ export default class EntityManagerBuilder {
         heroClassFactory.create(
             HeroClassID.Mage1,
             HeroClassID.Mage1,
-            IconID.Question01,
+            IconID.Fire01,
             560,
             HeroRoleID.DamageDealer,
             [

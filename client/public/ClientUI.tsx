@@ -23,8 +23,10 @@ import PlayerItemStorage from './_React/PlayerItemStorage.js';
 import WalletRC2 from './_React/WalletRC2.js';
 import Currency from '../../core/app/Entities/Currency.js';
 import ItemStorageRC from './Components/ItemStorageRC.js';
+import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
+import MainHeroListRC from './Components/MainHeroListRC.js';
 
-export default class ClientRender {
+export default class ClientUI {
     private readonly _container: ContainerInterface;
 
     constructor(container: ContainerInterface) {
@@ -99,16 +101,23 @@ export default class ClientRender {
                 {/*    container={this._container}*/}
                 {/*    wallet={this._container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByTag('#wallet.'  + CurrencyID.ResearchPoints).get<WalletComponent>(ComponentID.Wallet)}*/}
                 {/*/>*/}
-                <MainHeroListRComponent
-                    heroListComponent={this._container.get<MainHeroListComponent>(ContainerID.MainHeroList)}
-                    container={this._container}
-                />
+                {/*<MainHeroListRComponent*/}
+                {/*    heroListComponent={this._container.get<MainHeroListComponent>(ContainerID.MainHeroList)}*/}
+                {/*    container={this._container}*/}
+                {/*/>*/}
+                <div className={'widget'}>
+                    <div className={'widget__title'}>Герои</div>
+                    <div className={'widget__content'}>
+                        <MainHeroListRC
+                            mainHeroList={this._container.get<MainHeroListComponent>(ContainerID.MainHeroList)}
+                        />
+                    </div>
+                </div>
                 <MainLocationListRComponent
                     container={this._container}
                     mainLocationListComponent={this._container.get<MainLocationListComponent>(ContainerID.MainLocationList)}
                 />
-                <ItemStorageControllerRComponent
-                    container={this._container}
+                <ItemStorageControllerRC
                     itemStorageController={this._container.get<ItemStorageControllerInterface>(ContainerID.ItemStorageController)}
                 />
             </div>

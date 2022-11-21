@@ -9,24 +9,31 @@ import {sprintf} from 'sprintf-js';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
 
-export default class ItemStorageV2 implements ItemStorageInterface {
+interface ItemStorageUIInterface {
+    readSlot(callback);
+    updateSlot(callback);
+    // readSlot2(): {item, count, ...};
+    setUpdateHandler(callback);
+}
+
+// export interface ItemStorageV2Events {
+//
+// }
+
+export default class ItemStorageV2 implements ItemStorageInterface /* ItemStorageUIInterface */ {
     private readonly _size: number;
     private readonly _itemStackControllers: ItemStackController[];
 
-    private _callbacks;
-
-    // constructor(itemStackControllers: ItemStackController[]) {
     constructor(size: number) {
         assertIsGreaterThanOrEqual(size, 1);
         // this._itemStackControllers = itemStackControllers;
         // this._size = itemStackControllers.length;
 
+        this._size = size;
         this._itemStackControllers = [];
-        for (let i = 0; i < size; i++) {
+        for (let i = 0; i < this._size; i++) {
             this._itemStackControllers.push(new ItemStackController());
         }
-
-        this._callbacks = [];
     }
 
     addItem(item: Item, count: unsigned): unsigned {
@@ -38,17 +45,19 @@ export default class ItemStorageV2 implements ItemStorageInterface {
         let originCount = count;
         for (let i = 0; i < this._itemStackControllers.length; i++) {
             count = this._itemStackControllers[i].addItem(item, count);
+            // this._onChange(index, this._item, this._count);
         }
 
         if (originCount !== count) {
             debug(DebugNamespaceID.Log)(sprintf('В сумку добавлено предметов %s %s из %s.', item.name, originCount - count, originCount));
         }
 
-        // for (let i = 0; i < this._callbacks.length; i++) {
-        //     this._callbacks[i]();
-        // }
         //todo: Можно ввести уровень сообщений.
         // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
+        // this._updateHandler?.(this._itemStackControllers);
+        // for (let i = 0; i < this._handlers.length; i++) {
+        //     this._handlers[i].updateSlotHandler();
+        // }
 
         return count;
     }
@@ -63,47 +72,34 @@ export default class ItemStorageV2 implements ItemStorageInterface {
             this._itemStackControllers[i].show();
         }
     }
-}
 
-class ItemStorageAsContainer {
-    _slots;
-    _itemStorage;
-    _;
+    _handlers = [];
 
-    constructor(slots) {
-        this._ = {};
-        // this._itemStorage = new ItemStorageV2(slots);
-        this._itemStorage = new ItemStorageV2(20);
-        this._slots = slots;
-        for (let i = 0; i < slots.length; i++) {
-            this._[i] = slots;
+    /*
+        Вариант: передать сюда 20 (50, 100, ...) методов отслеживания на каждый слот.
+     */
+    // attach<asd>(ui /*: ItemStorageUI*/) {
+    attach(handlers: {
+        updateHandler: any,
+    }) {
+        /*
+            render(target)
+            render(slots[])
+            for (let i = 0; i < this._itemStackControllers.length; i++) {
+                //ui.updateSlot(i, this._itemStackControllers[i].item, this._itemStackControllers[i].count); //с геттерами
+
+                this._itemStackControllers[i].attach((item, count) => {
+                    ui.updateSlot(i, item, count);
+                })
+            }
+         */
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            let index = i;
+            this._itemStackControllers[i].attach({
+                updateHandler: (item, count) => {
+                    handlers.updateHandler(index, item, count);
+                },
+            });
         }
     }
-
-    getSlot(id) {
-        return this._[id];
-    }
 }
-
-// class ItemStackStrategy {
-//     _item;
-//     _count;
-//
-//     addItem(item, count) {
-//         //проверка на стеки
-//     }
-// }
-//
-// class ItemWithoutStackStrategy {
-//     _item;
-//     _count;
-//
-//     addItem(item, count) {
-//         this._count += count;
-//     }
-// }
-//
-// class Slot {
-//     constructor(strategy) {
-//     }
-// }

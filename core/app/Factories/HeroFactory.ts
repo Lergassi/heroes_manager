@@ -74,12 +74,12 @@ export default class HeroFactory {
         let stateController = hero.set(ComponentID.StateController, new CharacterStateController());
         hero.set(TakeComponent.name, new TakeComponent());
 
-        let heroComponent = hero.set(HeroComponent.name, new HeroComponent(
+        let heroComponent = hero.set(ComponentID.Hero, new HeroComponent(
             heroClass.name,
             heroClass,
         ));
 
-        hero.set<ExperienceComponent>(ExperienceComponent.name, this._experienceComponentFactory.create({
+        hero.set<ExperienceComponent>(ComponentID.Experience, this._experienceComponentFactory.create({
             level: level,
         }));
 

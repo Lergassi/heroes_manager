@@ -6,6 +6,10 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import {assert, assertIsNumber, assertNotNil, assertIsPositive} from '../../source/assert.js';
 
+export type CharacterAttributeCallbacks = {
+    updateValue: (value: number) => void,
+};
+
 /**
  * Все значения атрибутов в игре представлены в виде одного значения. Далее уже они используюся для вычисления других значений, например сила атаки это число, которое по своей логике преобразуется в диапазон.
  */
@@ -41,5 +45,12 @@ export default class CharacterAttribute implements CharacterAttributeInterface {
         return this._baseValue +
             this._itemCharacterAttributeCollector.value(this._characterAttributeID)
             ;
+    }
+
+    private _callbacks: CharacterAttributeCallbacks[] = [];
+
+    attach(callbacks: CharacterAttributeCallbacks) {
+        callbacks.updateValue(this.value());
+        this._callbacks.push(callbacks);
     }
 }

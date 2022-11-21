@@ -67,10 +67,10 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
         return (
             <tr key={hero.ID}>
                 <td>{hero.ID}</td>
-                <td>{hero.get<HeroComponent>(HeroComponent.name)['_heroClass']['_name']}</td>
+                <td>{hero.get<HeroComponent>(ComponentID.Hero)['_heroClass']['_name']}</td>
                 <td>
                     <ExperienceTextRenderRComponent
-                        experienceComponent={hero.get<ExperienceComponent>(ExperienceComponent.name)}
+                        experienceComponent={hero.get<ExperienceComponent>(ComponentID.Experience)}
                     />
                 </td>
                 <td>{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_maxHealthPoints']['value']()}</td>

@@ -15,11 +15,13 @@ export interface ItemSlotRCProps {
     blockSize?: number;
     showCount?: boolean;
     backgroundIconID?: string;
+
+    item?: Item;
+    count?: number;
 }
 
 export interface ItemSlotRCState {
-    item: Item;
-    count: number;
+
 }
 
 export default class ItemSlotRC extends React.Component<ItemSlotRCProps, ItemSlotRCState> {
@@ -33,33 +35,11 @@ export default class ItemSlotRC extends React.Component<ItemSlotRCProps, ItemSlo
         this._blockSize = props.blockSize || 50;    /* todo: Наличие стилей нужно контролировать также как сущности. */
         this._showCount = props.showCount || false;
         this._backgroundIconID = props.backgroundIconID || IconID.BackgroundSlot02;
-
-        this.state = {
-            item: null,
-            count: null,
-        };
-
-        // let delay = 1;
-        // let delayStep = 1000;
-        // setTimeout(() => {
-        //     this.updateItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).randomOne(), 12);
-        //     console.log('setTimeout updateItem');
-        // }, delay++ * delayStep);
-    }
-
-    updateItem(item: Item, count: number) {
-        this.setState((state) => {
-            return {
-                item: item,
-                count: count,
-            };
-        });
     }
 
     render() {
         return (
-            <div className={'item-slot size_' + this._blockSize}>
-                {/*<div className={'icon icon_' + this._blockSize}></div>*/}
+            <div className={'item-slot icon_' + this._blockSize}>
                 <div className={_.join(['icon', 'icon_' + this._blockSize, 'icon_' + this._backgroundIconID], ' ')}></div>
                 {this._renderItem()}
             </div>
@@ -67,10 +47,10 @@ export default class ItemSlotRC extends React.Component<ItemSlotRCProps, ItemSlo
     }
 
     private _renderItem() {
-        if (!this.state.item) return undefined;
+        if (!this.props.item) return undefined;
 
-        let item = this.state.item;
-        let count = this.state.count;
+        let item = this.props.item;
+        let count = this.props.count;
 
         return (
             <div className={'item-slot__item'}>
