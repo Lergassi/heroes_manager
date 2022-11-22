@@ -54,6 +54,7 @@ import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
 import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
+import InversifyJSGetStarted from './Actions/InversifyJSGetStarted.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -71,12 +72,10 @@ export default class SandboxController {
     }
 
     main() {
-        // console.log(_.sum([Number(false)]));
-        // console.log(_.sum([false + 0]));
-        // console.log(_.sum([<number>(false)]));
         // this._testSumBoolean();
-        //this._testLodashEvery();
+        // this._testLodashEvery();
         // this._testGenerics();
+        this._inversifyjsGetStarted();
 
         // this.devNewItemStorage();
         // this._devItemDatabase();
@@ -96,7 +95,7 @@ export default class SandboxController {
         // this._devNewRender();
 
         // this._devItemStackController();
-        this._devItemStorageV2();
+        // this._devItemStorageV2();
 
         // this._testVanillaJS();
         // this._testLodash();
@@ -104,6 +103,7 @@ export default class SandboxController {
         // this._testNewEntityManager();
         // this._testEnumKey();
         // this._testDebugNamespace();
+
     }
 
     private _test1() {
@@ -921,5 +921,9 @@ export default class SandboxController {
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
+    }
+
+    private _inversifyjsGetStarted() {
+        (new InversifyJSGetStarted()).run();
     }
 }
