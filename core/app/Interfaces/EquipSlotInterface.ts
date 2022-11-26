@@ -14,4 +14,7 @@ export default interface EquipSlotInterface {
     isFree(): boolean;
     render(callback: (values: {item: Item}) => void);
     // moveTo(target: ItemSlotInterface): void;
+    view(callback: (data: {
+        item: string,
+    }) => void);
 }

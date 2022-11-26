@@ -7,6 +7,7 @@ import {assertNotNil} from '../../source/assert.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import TakeComponent from '../Components/TakeComponent.js';
 import AppError from '../../source/Errors/AppError.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class KillHeroCommand extends Command {
     get name(): string {
@@ -28,6 +29,6 @@ export default class KillHeroCommand extends Command {
             throw new AppError();
         }
 
-        hero.get<HealthPointsComponent>(HealthPointsComponent.name).kill();
+        hero.get<HealthPointsComponent>(ComponentID.HealthPoints).kill();
     }
 }

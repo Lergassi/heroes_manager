@@ -8,11 +8,16 @@ import EventSystem from '../../source/EventSystem.js';
 import HeroGroupInterface from '../Interfaces/HeroGroupInterface.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import HealthPointsComponent from './HealthPointsComponent.js';
+import HeroListViewer from '../Viwers/HeroListViewer.js';
 
 //todo: В будущем универсальный слот с _container: Container<T>. Слот может быть без логики или с изменением статуса занимаемого объекта.
 //todo: Убрать слоты.
 export class HeroSlot {
     private _hero: GameObject;
+
+    get hero(): GameObject {
+        return this._hero;
+    }
 
     constructor() {
         this._hero = null;
@@ -233,7 +238,23 @@ export default class HeroGroupComponent implements HeroGroupInterface {
     //todo: @move Пока тут.
     isLifeHeroesCount(): number {
         return _.sum(_.map(this._heroesArray, (hero) => {
-            return Number(!hero.get<HealthPointsComponent>(HealthPointsComponent.name).isDead());
+            return Number(!hero.get<HealthPointsComponent>(ComponentID.HealthPoints).isDead());
         }));
+    }
+
+    view(callback: (data: any) => void) {
+        let heroes: GameObject[] = [];
+        for (const heroKey in this._heroes) {
+            if (this._heroes[heroKey].hero) {
+                heroes.push(this._heroes[heroKey].hero);
+            }
+        }
+
+        // let heroListViewer = new HeroListViewer();
+        // heroListViewer.view(heroes);
+
+        callback({
+            characters: heroes,
+        });
     }
 }

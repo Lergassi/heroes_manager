@@ -25,7 +25,7 @@ export default class ToggleLocationCommand extends Command {
         this.container
             .get<GameObjectStorage>(ContainerID.GameObjectStorage)
             .getOneByID(locationID)
-            ?.get<LocationComponent>(LocationComponent.name)
+            ?.get<LocationComponent>(ComponentID.Location)
             .toggleState({
                 wallet: this.container
                     .get<GameObjectStorage>(ContainerID.GameObjectStorage)

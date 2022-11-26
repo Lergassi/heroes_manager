@@ -7,6 +7,10 @@ import _ from 'lodash';
 import EventSystem from '../../../source/EventSystem.js';
 import {EquipSlotComponentEventCode} from '../EquipSlotComponent.js';
 import AppError from '../../../source/Errors/AppError.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import {DebugFormatterID} from '../../../types/enums/DebugFormatterID.js';
+import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 
 export default class DefaultEquipSlot implements EquipSlotInterface {
     private _itemStack: ItemStack;
@@ -57,5 +61,23 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         this._assertCanCreateItemStack();
 
         this._itemStack = itemStack;
+    }
+
+    view(callback: (data: {
+        item: string,
+    }) => void) {
+        // callback(this._itemStack?.item?.id ?? null);
+        callback({
+            item: this._itemStack?.item?.id ?? null,
+        });
+        // debug(DebugNamespaceID.Info)(DebugFormatterID.Json, {
+        //     ID: this._ID,
+        //     item: this._itemStack?.item?.id ?? null,
+        // });
+        /*
+            logger.write(this._);
+            this._equipSlot.view(logger)
+            logger.write('item: ' + this._itemStack?.item?.id ?? null);
+         */
     }
 }

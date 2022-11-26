@@ -10,13 +10,15 @@ class Katana implements Weapon {
     private _hits: number = 0;
 
     constructor(
-        @inject(TYPES.ID) ID: number,
-        // damage: number,
+        // @inject(TYPES.ID) ID: number,
+        // damage: number = 42,
+        damage: number,
     )
     {
-        console.log(ID);
+        // console.log(ID);
+        console.log(damage);
     // constructor(damage: number) {
-    //     this._damage = damage;
+        this._damage = damage;
         // this._damage = 42;
     }
 

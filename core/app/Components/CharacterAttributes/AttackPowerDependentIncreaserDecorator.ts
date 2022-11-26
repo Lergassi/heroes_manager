@@ -30,4 +30,12 @@ export default class AttackPowerDependentIncreaserDecorator implements Character
             }))
             ;
     }
+
+    view(callback: (data: {
+        ID: string,
+        baseValue: number,
+        value: number,
+    }) => void) {
+        this._attackPower.view(callback);
+    }
 }

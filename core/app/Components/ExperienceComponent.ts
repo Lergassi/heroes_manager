@@ -7,6 +7,7 @@ import EventSystem from '../../source/EventSystem.js';
 import {sprintf} from 'sprintf-js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
+import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 
 export enum ExperienceComponentEventCode {
     AddExp = 'ExperienceComponent.AddExp',
@@ -138,5 +139,25 @@ export default class ExperienceComponent implements ExperienceDistributorInterfa
         callbacks.updateTotalExpToLevelUp(this._totalExpForNextLevel());
         callbacks.updateLevel(this._level);
         this._callbacks.push(callbacks);
+    }
+
+    view(callback: (data: {
+        exp: number,
+        totalExpForLevelUp: number,
+        level: number,
+        maxLevel: number,
+    }) => void) {
+        // debug(DebugNamespaceID.Info)(DebugFormatterID.Json, {
+        //     exp: this._exp,
+        //     totalExpForLevelUp: this._totalExpForNextLevel(),
+        //     level: this._level,
+        //     maxLevel: this._maxLevel,
+        // });
+        callback({
+            exp: this._exp,
+            totalExpForLevelUp: this._totalExpForNextLevel(),
+            level: this._level,
+            maxLevel: this._maxLevel,
+        });
     }
 }

@@ -7,6 +7,7 @@ import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ItemStackControllerInterface from '../Interfaces/ItemStackControllerInterface.js';
 import AppError from '../../source/Errors/AppError.js';
+import Viewer from '../../source/Viewer.js';
 
 export default class ItemStackController implements ItemStackControllerInterface {
     private _item: Item;
@@ -89,4 +90,25 @@ export default class ItemStackController implements ItemStackControllerInterface
     }
 
     detach() {}
+
+    view(viewer: Viewer) {
+
+    }
+
+    view2(callback: (data: {
+        itemID: string,
+        count: number,
+    }) => void) {
+        if (this._item) {
+            callback({
+                itemID: this._item.id,
+                count: this._count,
+            });
+        } else {
+            callback({
+                itemID: null,
+                count: null,
+            });
+        }
+    }
 }

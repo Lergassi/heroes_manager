@@ -47,4 +47,10 @@ export default class EquipSlotWithArmorMaterialDecorator implements EquipSlotInt
             throw AppError.equipNotAvailableByArmorMaterial();
         }
     }
+
+    view(callback: (data: {
+        item: string,
+    }) => void) {
+        this._equipSlot.view(callback);
+    }
 }

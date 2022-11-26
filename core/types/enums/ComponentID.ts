@@ -1,6 +1,8 @@
 export enum ComponentID {
+    //ItemStorage
     ItemStorageComponent = 'ItemStorageComponent',
 
+    //Hero
     Hero = 'Hero',
     Experience = 'Experience',
     EquipSlots = 'EquipSlots',
@@ -19,5 +21,6 @@ export enum ComponentID {
 
     Wallet = 'Wallet',
 
-
+    //Location
+    Location = 'Location',
 }

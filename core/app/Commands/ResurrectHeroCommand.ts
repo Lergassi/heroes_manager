@@ -5,6 +5,7 @@ import {ContainerID} from '../../types/enums/ContainerID.js';
 import {assertNotNil} from '../../source/assert.js';
 import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import {CommandID} from '../../types/enums/CommandID.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class ResurrectHeroCommand extends Command {
     get name(): string {
@@ -21,6 +22,6 @@ export default class ResurrectHeroCommand extends Command {
         let hero = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(heroID);
         assertNotNil(hero);
 
-        hero.get<HealthPointsComponent>(HealthPointsComponent.name).resurrect();
+        hero.get<HealthPointsComponent>(ComponentID.HealthPoints).resurrect();
     }
 }

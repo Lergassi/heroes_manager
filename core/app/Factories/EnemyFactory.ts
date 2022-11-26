@@ -75,7 +75,7 @@ export default class EnemyFactory {
         let goldLootGeneratorComponent = enemy.set<GoldLootGeneratorComponent>(GoldLootGeneratorComponent.name, enemyEntity.createGoldLootGenerator());
         let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ItemLootGeneratorComponent.name, enemyEntity.createLootGenerator());
 
-        let healthPointsComponent = enemy.set<HealthPointsComponent>(HealthPointsComponent.name, new HealthPointsComponent(
+        let healthPointsComponent = enemy.set<HealthPointsComponent>(ComponentID.HealthPoints, new HealthPointsComponent(
             this._enemyCharacterAttributeFactory.create(
                 CharacterAttributeID.MaxHealthPoints,
                 level,

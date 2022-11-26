@@ -131,9 +131,9 @@ export function debugHero(hero: GameObject) {
 
     debugLevelComponent(hero.getComponentByName<LevelRange>(LevelRange.name));
 
-    let healthPointsComponent: HealthPointsComponent = <HealthPointsComponent>hero.getComponentByName(HealthPointsComponent.name);
+    let healthPointsComponent: HealthPointsComponent = <HealthPointsComponent>hero.getComponentByName(ComponentID.HealthPoints);
     debug(DebugNamespaceID.Debug)('%j', {
-        component: HealthPointsComponent.name,
+        component: ComponentID.HealthPoints,
         _id: healthPointsComponent['_id'],
         _currentHealthPoints: healthPointsComponent['_currentHealthPoints'],
         _maxHealthPoints: healthPointsComponent['_maxHealthPoints'],

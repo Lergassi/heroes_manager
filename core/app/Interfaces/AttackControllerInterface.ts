@@ -11,4 +11,7 @@ export default interface AttackControllerInterface {
      * @deprecated
      */
     canAttack(): boolean;
+    view(callback: (data: {
+        value: {left: number; right: number},
+    }) => void);
 }

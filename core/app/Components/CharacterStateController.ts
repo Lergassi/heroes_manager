@@ -3,6 +3,7 @@ import StateError from '../../source/Errors/StateError.js';
 import _ from 'lodash';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 
 export enum CharacterStateCode {
     // Free = 'Free',
@@ -56,5 +57,11 @@ export default class CharacterStateController {
         }
 
         return false;
+    }
+
+    view(callback: (data: {codes: string[]}) => void) {
+        callback({
+            codes: this._codes,
+        });
     }
 }

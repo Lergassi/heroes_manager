@@ -7,4 +7,9 @@ export default interface CharacterAttributeInterface {
      */
     increaseBaseValue(value: unsigned): void;   //todo: Возможно стоит оставить только value(), а increaseBaseValue только там где хранится атрибут.
     value(): number;
+    view(callback: (data: {
+        ID: string,
+        baseValue: number,
+        value: number,
+    }) => void);
 }

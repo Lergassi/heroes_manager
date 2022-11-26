@@ -54,7 +54,7 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
         let location = this.state.location;
 
         let locationComponentElement;
-        let locationComponent = location.getComponent<LocationComponent>(LocationComponent.name);
+        let locationComponent = location.getComponent<LocationComponent>(ComponentID.Location);
         locationComponent.render((values) => {
             locationComponentElement = (
                 <div className={'block__title'}>Location ({location['_id']}), level: {values.level}</div>
@@ -98,7 +98,7 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
 
         //todo: Временно.
         // console.log(location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints']);
-        let gatheringItemPointsRows = location.get<LocationComponent>(LocationComponent.name)['_gatheringItemPoints']?.map((value, index) => {
+        let gatheringItemPointsRows = location.get<LocationComponent>(ComponentID.Location)['_gatheringItemPoints']?.map((value, index) => {
             return (
                 <tr key={index}>
                     <td>{value.item.name}</td>

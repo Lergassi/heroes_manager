@@ -8,6 +8,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
+import Viewer from '../../source/Viewer.js';
 
 interface ItemStorageUIInterface {
     readSlot(callback);
@@ -99,6 +100,38 @@ export default class ItemStorageV2 implements ItemStorageInterface /* ItemStorag
                 updateHandler: (item, count) => {
                     handlers.updateHandler(index, item, count);
                 },
+            });
+        }
+    }
+
+    view(viewer: Viewer) {
+        let rows: string[] = [];
+        // for (let i = 0; i < this._itemStackControllers.length; i++) {
+        //     this._itemStackControllers[i].view2((item: Item, count: number) => {
+        //         console.log(item, count);
+        //         if (item) {
+        //             rows.push(sprintf('%s: %s - %s', i, item.name, count));
+        //         } else {
+        //             rows.push(sprintf('%s: пусто', i));
+        //         }
+        //     });
+        // }
+        console.log(rows);
+    }
+
+    view2(callback: (data: {
+        index: number,
+        itemID: string,
+        count: number,
+    }) => void) {
+        let rows: string[] = [];
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            this._itemStackControllers[i].view2((data) => {
+                callback({
+                    index: i,
+                    itemID: data.itemID,
+                    count: data.count,
+                });
             });
         }
     }

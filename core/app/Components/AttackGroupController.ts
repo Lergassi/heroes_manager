@@ -5,6 +5,7 @@ import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
+import AppError from '../../source/Errors/AppError.js';
 
 export default class AttackGroupController implements AttackControllerInterface {
     private readonly _attackControllers: AttackControllerInterface[];
@@ -61,5 +62,11 @@ export default class AttackGroupController implements AttackControllerInterface 
         }
 
         return true;
+    }
+
+    view(callback: (data: {
+        value: {left: number; right: number},
+    }) => void) {
+        throw AppError.notImplements();
     }
 }

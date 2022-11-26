@@ -41,7 +41,6 @@ export default class Gatherer implements GathererInterface {
     gather3(gatheringPoint: GatheringPoint, itemStorage: ItemStorageInterface): unsigned {
         if (!this.canGather()) return 0;
 
-        // return gatheringPoint.gather3(this._itemStorage);
         return gatheringPoint.gather3(itemStorage);
     }
 

@@ -31,6 +31,7 @@ import {EntityID} from '../../types/enums/EntityID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import HeroCharacterAttributeFactory from './HeroCharacterAttributeFactory.js';
 import Gatherer from '../Components/Gatherer.js';
+import Hero from '../Hero.js';
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -64,8 +65,10 @@ export default class HeroFactory {
             baseCharacterAttributeValues?: {[id in CharacterAttributeID]?: number},
         },
     ): GameObject {
+    // ): Hero {
         heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(EntityID.HeroClass, heroClass) : heroClass;
 
+        // let hero = <Hero>this._gameObjectFactory.create();
         let hero = this._gameObjectFactory.create();
 
         hero.name = 'Hero: ' + heroClass.name;
@@ -100,8 +103,6 @@ export default class HeroFactory {
             EquipSlotID.Finger_1,
             EquipSlotID.Finger_2,
             EquipSlotID.Trinket,
-            // EquipSlotID.RightHand,
-            // EquipSlotID.LeftHand,
         ];
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
@@ -159,9 +160,6 @@ export default class HeroFactory {
             CharacterAttributeID.MaxMagicPoints,
             CharacterAttributeID.AttackPower,
             CharacterAttributeID.Protection,
-            // CharacterAttributeID.Stamina,
-            // CharacterAttributeID.CriticalStrike,
-            // CharacterAttributeID.Luck,
         ];
 
         /*
@@ -220,7 +218,7 @@ export default class HeroFactory {
             healthPointsComponent as DamageControllerInterface,
             hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Protection,
         );
-        hero.set<HealthPointsComponent>(HealthPointsComponent.name, healthPointsComponent); //Пока только для рендера.
+        hero.set<HealthPointsComponent>(ComponentID.HealthPoints, healthPointsComponent); //Пока только для рендера.
         hero.set<DamageControllerInterface>(ComponentID.DamageController, damageController);
 
         //todo: Очки магии добавляются только для магов. Магов надо помечать или настраивать для каждого класса по отдельности.
@@ -237,9 +235,6 @@ export default class HeroFactory {
         let attackPowerComponent = hero.set<AttackControllerInterface>(ComponentID.AttackController, new AttackController(
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             stateController,
-            // _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {
-            //     return hero.get<CharacterAttributeInterface>(characterAttribute.id);    //todo: Доступ.
-            // }), value => value != undefined),
         ));
 
         //Controllers

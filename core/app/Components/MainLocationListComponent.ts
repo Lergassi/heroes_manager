@@ -8,6 +8,7 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import _ from 'lodash';
 import LocationComponent from './LocationComponent.js';
 import {assert} from '../../source/assert.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export enum MainLocationListComponentEventCode {
     CreateLocation = 'MainLocationListComponent.CreateLocation',
@@ -67,7 +68,7 @@ export default class MainLocationListComponent extends Component {
     }
 
     canDeleteLocation(location: GameObject): void {
-        location.get<LocationComponent>(LocationComponent.name).canDelete();
+        location.get<LocationComponent>(ComponentID.Location).canDelete();
     }
 
     render(callback: ({}: Readonly<{

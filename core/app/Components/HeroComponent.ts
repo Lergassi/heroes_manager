@@ -1,5 +1,9 @@
 import Component from '../../source/Component.js';
 import HeroClass from '../Entities/HeroClass.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
+import {HeroClassID} from '../../types/enums/HeroClassID.js';
 
 /**
  * todo: Убрать. Получается, что это класс только для хранения HeroClass.
@@ -32,5 +36,19 @@ export default class HeroComponent {
         readHeroClass: (heroClass: HeroClass) => void,
     }) {
         callbacks.readHeroClass(this._heroClass);
+    }
+
+    view(callback: (data: {
+        heroClass: string,
+    }) => void) {
+        callback({
+            heroClass: this._heroClass.id,
+        });
+        // viewer.view({
+        //     heroClass: this._heroClass.id,
+        // });
+        // debug(DebugNamespaceID.Info)(DebugFormatterID.Json, {
+        //     heroClass: this._heroClass.id,
+        // });
     }
 }

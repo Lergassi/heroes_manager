@@ -6,6 +6,7 @@ import _ from 'lodash';
 import LocationComponent from '../Components/LocationComponent.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class RemoveHeroFromLocationCommand extends Command {
     get name(): string {
@@ -26,6 +27,6 @@ export default class RemoveHeroFromLocationCommand extends Command {
         let location = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(locationID);
 
         location
-            ?.get<LocationComponent>(LocationComponent.name).removeHero(hero);
+            ?.get<LocationComponent>(ComponentID.Location).removeHero(hero);
     }
 }

@@ -60,4 +60,10 @@ export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInte
 
         this._equipSlot.equip(itemStack);
     }
+
+    view(callback: (data: {
+        item: string,
+    }) => void) {
+        this._equipSlot.view(callback);
+    }
 }

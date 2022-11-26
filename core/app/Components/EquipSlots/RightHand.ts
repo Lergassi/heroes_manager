@@ -6,6 +6,7 @@ import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import LeftHand from './LeftHand.js';
 import DefaultEquipSlot from './DefaultEquipSlot.js';
 import {assertNotNil} from '../../../source/assert.js';
+import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 
 export default class RightHand implements EquipSlotInterface {
     private readonly _equipSlot: EquipSlotInterface;
@@ -43,5 +44,11 @@ export default class RightHand implements EquipSlotInterface {
 
     equip(itemStack: ItemStack) {
         this._equipSlot.equip(itemStack);
+    }
+
+    view(callback: (data: {
+        item: string,
+    }) => void) {
+        this._equipSlot.view(callback);
     }
 }

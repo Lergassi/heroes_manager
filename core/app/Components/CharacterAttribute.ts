@@ -5,6 +5,9 @@ import CharacterAttributeCollector from './CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import {assert, assertIsNumber, assertNotNil, assertIsPositive} from '../../source/assert.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 
 export type CharacterAttributeCallbacks = {
     updateValue: (value: number) => void,
@@ -52,5 +55,22 @@ export default class CharacterAttribute implements CharacterAttributeInterface {
     attach(callbacks: CharacterAttributeCallbacks) {
         callbacks.updateValue(this.value());
         this._callbacks.push(callbacks);
+    }
+
+    view(callback: (data: {
+        ID: string,
+        baseValue: number,
+        value: number,
+    }) => void) {
+        // debug(DebugNamespaceID.Info)(DebugFormatterID.Json, {
+        //     ID: this._characterAttributeID,
+        //     baseValue: this._baseValue,
+        //     finalValue: this.value(),
+        // });
+        callback({
+            ID: this._characterAttributeID,
+            baseValue: this._baseValue,
+            value: this.value(),
+        });
     }
 }

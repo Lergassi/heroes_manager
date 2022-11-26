@@ -54,7 +54,8 @@ import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
 import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
-import InversifyJSGetStarted from './Actions/InversifyJSGetStarted.js';
+import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
+import DevUISystemController from './SandboxControllers/DevUISystemController.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -72,10 +73,14 @@ export default class SandboxController {
     }
 
     main() {
+        // this._inversifyjsGetStarted();
+        // this._devUISystem();
+        // (new InversifyJSGetStarted()).run();
+        (new DevUISystemController(this._container)).run();
+
         // this._testSumBoolean();
         // this._testLodashEvery();
         // this._testGenerics();
-        this._inversifyjsGetStarted();
 
         // this.devNewItemStorage();
         // this._devItemDatabase();
@@ -474,7 +479,7 @@ export default class SandboxController {
         ];
         console.log(heroes);
         console.log(_.map(heroes, (hero) => {
-            return hero.get<HealthPointsComponent>(HealthPointsComponent.name)['_currentHealthPoints'];
+            return hero.get<HealthPointsComponent>(ComponentID.HealthPoints)['_currentHealthPoints'];
         }));
         // console.log(heroes[0].get<AttackControllerInterface>(GameObjectKey.AttackController).attack());
         // console.log(heroes[1].get<AttackControllerInterface>(GameObjectKey.AttackController).attack());
@@ -584,7 +589,7 @@ export default class SandboxController {
         let heroFactory = this._container.get<HeroFactory>(ContainerID.HeroFactory);
 
         let location = locationFactory.create(1);
-        let locationComponent = location.get<LocationComponent>(LocationComponent.name);
+        let locationComponent = location.get<LocationComponent>(ComponentID.Location);
 
         locationComponent.addHero(heroFactory.create(HeroClassID.Warrior, 1));
         locationComponent.addHero(heroFactory.create(HeroClassID.Rogue, 1));
@@ -921,9 +926,5 @@ export default class SandboxController {
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
-    }
-
-    private _inversifyjsGetStarted() {
-        (new InversifyJSGetStarted()).run();
     }
 }

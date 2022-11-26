@@ -32,7 +32,7 @@ export default class GetRewardFromLocationCommand extends Command {
         this
             .container.get<GameObjectStorage>(ContainerID.GameObjectStorage)
             .getOneByID(locationID)
-            ?.get<LocationComponent>(LocationComponent.name)
+            ?.get<LocationComponent>(ComponentID.Location)
             ?.getReward({
                 // itemStorage: this.container.get<ItemStorageManager>(ContainerID.ItemStorageManager),
                 itemStorage: this.container.get<ItemStorageInterface>(ContainerID.ItemStorageController),

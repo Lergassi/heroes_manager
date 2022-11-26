@@ -125,4 +125,8 @@ export default class WalletComponent implements WalletInterface, RenderInterface
         // target.detach(this);
         //Должно происходить закрытие окна.
     }
+
+    view(callback) {
+        callback(this._value);
+    }
 }

@@ -12,6 +12,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
+import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 
 export enum HealthPointsComponentEventCode {
     TakeDamage = 'HealthPointsComponent.TakeDamage',
@@ -144,5 +145,32 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         updateHandler: (target: HealthPointsComponent, currentHealthPoints, maxHealthPoints) => void,
     }) {
         this._handlers.push(handlers);
+    }
+
+    view(callback: (data: {
+        currentHealthPoints: number,
+        maxHealthPoints: number,
+        isDead: boolean,
+    }) => void) {
+        // debug(DebugNamespaceID.Info)(DebugFormatterID.Json, {
+        //     currentHealthPoints: this._currentHealthPoints,
+        //     maxHealthPoints: this._maxHealthPoints.value(),
+        //     isDead: this._isDead,
+        // });
+        let data: any = {
+            currentHealthPoints: this._currentHealthPoints,
+            isDead: this._isDead,
+        };
+        this._maxHealthPoints.view((_data) => {
+            data.maxHealthPoints = _data.value;
+        });
+        callback(data);
+        // callback({
+        //     currentHealthPoints: this._currentHealthPoints,
+        //     maxHealthPoints: this._maxHealthPoints.view((data) => {
+        //
+        //     }),
+        //     isDead: this._isDead,
+        // });
     }
 }

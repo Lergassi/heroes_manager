@@ -45,4 +45,10 @@ export default class EquipSlotWithItemCollectorDecorator implements EquipSlotInt
         this._itemCharacterAttributeCollection.addItem(itemStack.item);
         this._item = itemStack.item;
     }
+
+    view(callback: (data: {
+        item: string,
+    }) => void) {
+        this._equipSlot.view(callback);
+    }
 }

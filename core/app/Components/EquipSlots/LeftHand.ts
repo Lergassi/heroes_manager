@@ -5,7 +5,7 @@ import ItemStackFactory from '../../Factories/ItemStackFactory.js';
 import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import DefaultEquipSlot from './DefaultEquipSlot.js';
 import AppError from '../../../source/Errors/AppError.js';
-import RightHand from './RightHand.js';
+import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 
 export default class LeftHand implements EquipSlotInterface {
     private _equipSlot: EquipSlotInterface
@@ -57,5 +57,11 @@ export default class LeftHand implements EquipSlotInterface {
 
     equip(itemStack: ItemStack) {
         this._equipSlot.equip(itemStack);
+    }
+
+    view(callback: (data: {
+        item: string,
+    }) => void) {
+        this._equipSlot.view(callback);
     }
 }

@@ -13,9 +13,10 @@ import debug from 'debug';
 import AppError from '../../source/Errors/AppError.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
+import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 
 export default class AttackController implements AttackControllerInterface {
-    private readonly _rangeSide: unsigned;
+    private readonly _rangeSide: unsigned;  //todo: Диапазон должен быть задан, а не вычисляемым.
     private readonly _attackPowerCharacterAttribute: CharacterAttributeInterface;
     private readonly _stateController: CharacterStateController;
 
@@ -77,5 +78,16 @@ export default class AttackController implements AttackControllerInterface {
         target.takeDamage(damage, afterDiedTargetCallback);
 
         return true;
+    }
+
+    view(callback: (data: {
+        value: {left: number; right: number},
+    }) => void) {
+        // debug(DebugNamespaceID.Info)(DebugFormatterID.Json, {
+        //     attackPower: this.value(),
+        // });
+        callback({
+            value: this.value(),
+        });
     }
 }

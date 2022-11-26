@@ -180,7 +180,7 @@ export default class _SandboxController {
         });
         // console.log(location);
 
-        let locationComponent = location.getComponent<LocationComponent>(LocationComponent.name);
+        let locationComponent = location.getComponent<LocationComponent>(ComponentID.Location);
         // console.log(locationComponent);
         // console.log(heroes[0]);
         locationComponent.addHero(heroes[0]);
@@ -647,11 +647,11 @@ export default class _SandboxController {
         // console.log(enemy);
         // console.log(enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name));
         // enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).kill();
-        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).takeDamage(42);
-        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).takeDamage(42);
-        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).takeDamage(42);
-        enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).takeDamage(42);
-        enemies[1].getComponent<HealthPointsComponent>(HealthPointsComponent.name).kill();
+        enemies[0].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[0].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[0].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[0].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[1].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).kill();
         // enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name).resurrect();
     }
 
@@ -1111,7 +1111,7 @@ export default class _SandboxController {
         let enemy = enemyFactory.create(EnemyID.Bear, 1);
         console.log(enemy);
         console.log(enemy.get<DamageControllerInterface>(ComponentID.DamageController));
-        console.log(enemy.get<HealthPointsComponent>(HealthPointsComponent.name));
+        console.log(enemy.get<HealthPointsComponent>(ComponentID.HealthPoints));
 
         // let damage = 100;
         let damage = 24;

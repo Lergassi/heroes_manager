@@ -20,6 +20,7 @@ import GatheringPoint from './GatheringPoint.js';
 import Gatherer from './Gatherer.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import HeroListViewer from '../Viwers/HeroListViewer.js';
 
 export enum LocationState {
     Waiting = 'Waiting',
@@ -232,12 +233,10 @@ export default class LocationComponent {
     }
 
     addHero(hero: GameObject) {
-        // assert(hero instanceof GameObject);
         assertNotNil(hero);
 
         this._canAddHero(hero);
 
-        // this._heroGroupComponent.addHero(hero);
         this._heroFightGroup.addCharacter(hero);
         this._heroes.push(hero);    //todo: Не будет работать после удаления исключений.
         EventSystem.event(LocationComponentEventCode.AddHero, this);    //todo: Или достаточно события из группы? Может как то связать их? "Цепочка" событыий.
@@ -300,5 +299,33 @@ export default class LocationComponent {
             internalItemStorageComponent: undefined,
             heroGroupComponent: undefined,
         });
+    }
+
+    view(callback: (data: {
+        level: unsigned,
+        // heroGroupComponent: HeroGroupComponent,
+        // heroGroupViewer: (heroes: GameObject[]) => void,
+        heroGroupComponent: GameObject[],
+        enemyGroupComponent: GameObject[],
+        gatheringItemPoints: GatheringItemPoint[],
+        internalItemStorageComponent: ItemStorageComponent,
+    }) => void) {
+        let data: any = {
+            level: this._level,
+            heroGroupComponent: [],
+            enemyGroupComponent: [],
+            gatheringItemPoints: undefined,
+            internalItemStorageComponent: undefined,
+        };
+
+        this._heroFightGroup.view((datum) => {
+            data.heroGroupComponent = datum.characters;
+        });
+
+        this._enemyFightGroup.view((datum) => {
+            data.enemyGroupComponent = datum.characters;
+        });
+
+        callback(data);
     }
 }

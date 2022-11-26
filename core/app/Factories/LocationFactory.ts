@@ -157,7 +157,7 @@ export default class LocationFactory {
             [GatheringPointTypeID.high]: 64,
         };
 
-        let locationComponent = location.set<LocationComponent>(LocationComponent.name, new LocationComponent(
+        let locationComponent = location.set<LocationComponent>(ComponentID.Location, new LocationComponent(
             new Date(),
             level,
             // gatheringItemPoints,

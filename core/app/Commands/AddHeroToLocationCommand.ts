@@ -6,6 +6,7 @@ import _ from 'lodash';
 import LocationComponent from '../Components/LocationComponent.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class AddHeroToLocationCommand extends Command {
     get name(): string {
@@ -27,7 +28,7 @@ export default class AddHeroToLocationCommand extends Command {
         console.log(location);
 
         location
-            ?.get<LocationComponent>(LocationComponent.name)
+            ?.get<LocationComponent>(ComponentID.Location)
             .addHero(hero);
     }
 }

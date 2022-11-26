@@ -8,9 +8,7 @@ import EquipSlotWithArmorMaterialDecorator from '../Components/EquipSlots/EquipS
 import HeroClass from '../Entities/HeroClass.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
-import EntityManager from '../../source/EntityManager.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
-import RightHand from '../Components/EquipSlots/RightHand.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class EquipSlotFactory {
