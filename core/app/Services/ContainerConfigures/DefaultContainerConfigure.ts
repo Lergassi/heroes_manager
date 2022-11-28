@@ -56,6 +56,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
             // DebugNamespaceID.DebugAssertThrow,
             DebugNamespaceID.Throw,
             DebugNamespaceID.Indev,
+            DebugNamespaceID.Replace,
             // 'debug:*',
             // 'error:*',
             // 'log:*',

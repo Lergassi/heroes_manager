@@ -30,6 +30,10 @@ import {IconID} from '../../types/enums/IconID.js';
 import {sprintf} from 'sprintf-js';
 import {env} from 'yargs';
 import dotenv from 'dotenv';
+import LoadItems from './LoadItems.js';
+import LoadItemCategories from './LoadItemCategories.js';
+import {ContainerID} from '../../types/enums/ContainerID.js';
+import ItemFactory from '../Factories/ItemFactory.js';
 
 export default class EntityManagerBuilder {
     private readonly _container: ContainerInterface;
@@ -56,8 +60,10 @@ export default class EntityManagerBuilder {
         this._createCurrencies();
         this._createQualities();
         this._createHeroRoles();
-        this._createItemCategories();
-        this._createItems();    //ItemDatabase
+        // this._createItemCategories();
+        this._loadItemCategories();         //ItemDatabase
+        // this._createItems();
+        this._loadItems();                  //ItemDatabase
         // this._createRecipes();
         this._createHeroClasses();
         this._createEquipSlots();
@@ -75,6 +81,14 @@ export default class EntityManagerBuilder {
 
     private _createItems() {
         (new ItemDatabaseBuilder(this._entityManager)).build();
+    }
+
+    private _loadItemCategories() {
+        (new LoadItemCategories()).load(this._entityManager, this._container.get<ItemCategoryFactory>(ContainerID.ItemCategoryFactory));
+    }
+
+    private _loadItems() {
+        (new LoadItems()).load(this._entityManager, this._container.get<ItemFactory>(ContainerID.ItemFactory));
     }
 
     private _createArmorMaterials() {
@@ -238,6 +252,13 @@ export default class EntityManagerBuilder {
 
     private _createItemCategories() {
         let itemCategoryFactory = new ItemCategoryFactory(this._entityManager);
+
+        itemCategoryFactory.create(
+            ItemCategoryID.Others,
+            'Остальное',
+            500,
+            null,
+        );
         itemCategoryFactory.create(
             ItemCategoryID.Weapons,
             'Оружие',
@@ -1160,7 +1181,7 @@ export default class EntityManagerBuilder {
                 // {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
                 // {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
                 // {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
-                {enemyLevel: [50, 100], item: this._entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword_01), count: [1, 1], chance: 1},
+                {enemyLevel: [50, 100], item: this._entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01), count: [1, 1], chance: 1},
             ],
             20,
             [10, 20],
@@ -1176,7 +1197,7 @@ export default class EntityManagerBuilder {
                 // {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
                 // {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
                 // {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
-                {enemyLevel: [50, 100], item: this._entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword_01), count: [1, 1], chance: 1},
+                {enemyLevel: [50, 100], item: this._entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01), count: [1, 1], chance: 1},
             ],
             20,
             [10, 20],

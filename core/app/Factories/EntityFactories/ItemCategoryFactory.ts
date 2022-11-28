@@ -22,7 +22,7 @@ export default class ItemCategoryFactory {
             id,
             name,
             sort,
-            (_.isNil(parent)) ? null : this._entityManager.get<ItemCategory>(EntityID.ItemCategory, parent),
+            (!parent || _.isNil(parent)) ? null : this._entityManager.get<ItemCategory>(EntityID.ItemCategory, parent),
         ));
     }
 }

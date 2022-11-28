@@ -12,4 +12,6 @@ export default abstract class AbstractSandboxController {
     constructor(container: ContainerInterface) {
         this._container = container;
     }
+
+    abstract run(): void;
 }

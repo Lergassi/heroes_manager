@@ -1,4 +1,6 @@
 export enum ItemCategoryID {
+    Others = 'Others',
+
     Weapons = 'Weapons',
     OneHandedSwords = 'OneHandedSwords',
     TwoHandedSwords = 'TwoHandedSwords',

@@ -257,7 +257,7 @@ export default class _SandboxController {
         resources = [
             // itemDatabase.get(ItemID.IronOre),
             itemDatabase.get(ItemID.IronOre),
-            itemDatabase.get(ItemID.IronBar),
+            itemDatabase.get(ItemID.IronIngot),
             itemDatabase.get(ItemID.CopperOre),
         ];
         // console.log(ItemCategoryAlias.Resources, resources);
@@ -838,18 +838,18 @@ export default class _SandboxController {
         let items = [
             this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.Wood),
             this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.IronOre),
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01),
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01),
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01),
+            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
+            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
+            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
         ];
         console.log(items);
 
         // _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01));
-        console.log(_.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01)));
+        console.log(_.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
         console.log(items);
     }
 
@@ -1239,11 +1239,11 @@ export default class _SandboxController {
         // mageRightHand = new RightHandDecorator(mageRightHand);    //Логика должна быть привяза к правой руке. А левая ничего не делает. У неё нет логики никакой. Её нельзя разблокировать.
         // mageLeftHand = new Decorator(mageLeftHand, mageRightHand);    //Логика должна быть привяза к правой руке. А левая ничего не делает. У неё нет логики никакой. Её нельзя разблокировать.
 
-        mageRightHand.createItemStack(itemDatabase.get(ItemID.Staff_01),1, itemStackFactory);
+        mageRightHand.createItemStack(itemDatabase.get(ItemID.Staff01),1, itemStackFactory);
         // mageRightHand.destroyItemStack();
         // mageRightHand.createItemStack(itemDatabase.get(ItemID.Wand_01),1, itemStackFactory);
         // mageLeftHand.createItemStack(itemDatabase.get(ItemID.Staff_01),1, itemStackFactory);
-        mageLeftHand.createItemStack(itemDatabase.get(ItemID.Wand_01),1, itemStackFactory);
+        mageLeftHand.createItemStack(itemDatabase.get(ItemID.Wand01),1, itemStackFactory);
         console.log(mageRightHand);
         console.log(mageLeftHand);
 

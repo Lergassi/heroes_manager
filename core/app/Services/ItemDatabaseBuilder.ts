@@ -11,6 +11,11 @@ import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {IconID} from '../../types/enums/IconID.js';
+import itemsData from '../../data/items.json';
+
+interface ItemData {
+
+}
 
 export default class ItemDatabaseBuilder {
     private readonly _entityManager: EntityManagerInterface;
@@ -26,11 +31,10 @@ export default class ItemDatabaseBuilder {
     build(): EntityManagerInterface {
         debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.Start');
 
-        // this._createItems();
-        this._createStubItems();
-        this._createResources();
-        this._createArmor();
-        this._createWeapons();
+        // this._createStubItems();
+        // this._createResources();
+        // this._createArmor();
+        // this._createWeapons();
 
         debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.End');
 
@@ -119,10 +123,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.IronBar,
+            ItemID.IronIngot,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.IronBar,
+                    ItemID.IronIngot,
                     'Железный слиток',
                     ItemCategoryID.Materials,
                     {
@@ -148,10 +152,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.CopperBar,
+            ItemID.CopperIngot,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.CopperBar,
+                    ItemID.CopperIngot,
                     'Медный слиток',
                     ItemCategoryID.Materials,
                     {
@@ -177,10 +181,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.TinBar,
+            ItemID.TinIngot,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.TinBar,
+                    ItemID.TinIngot,
                     'Оловянный слиток',
                     ItemCategoryID.Materials,
                     {
@@ -190,10 +194,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.GoldBar,
+            ItemID.GoldIngot,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.GoldBar,
+                    ItemID.GoldIngot,
                     'Золотой слиток',
                     ItemCategoryID.Materials,
                     {
@@ -203,10 +207,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Herb_1,
+            ItemID.Herb01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Herb_1,
+                    ItemID.Herb01,
                     'Трава 1',
                     ItemCategoryID.Resources,
                     {
@@ -219,10 +223,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Herb_2,
+            ItemID.Herb02,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Herb_2,
+                    ItemID.Herb02,
                     'Трава 2',
                     ItemCategoryID.Resources,
                     {
@@ -235,10 +239,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Herb_3,
+            ItemID.Herb03,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Herb_3,
+                    ItemID.Herb03,
                     'Трава 3',
                     ItemCategoryID.Resources,
                     {
@@ -368,10 +372,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Leather_01,
+            ItemID.Leather01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Leather_01,
+                    ItemID.Leather01,
                     'Кожа',
                     ItemCategoryID.Materials,
                     {
@@ -383,10 +387,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.MagicResources_01,
+            ItemID.MagicResources01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.MagicResources_01,
+                    ItemID.MagicResources01,
                     'Магический ресурс 1',
                     ItemCategoryID.Resources,
                     {
@@ -395,10 +399,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.MagicMaterial_01,
+            ItemID.MagicMaterial01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.MagicMaterial_01,
+                    ItemID.MagicMaterial01,
                     'Магический материал 1',
                     ItemCategoryID.Materials,
                     {
@@ -448,10 +452,10 @@ export default class ItemDatabaseBuilder {
 
     private _createArmor() {
         this._itemFactory.createByBuilder(
-            ItemID.PlateHelmet_01,
+            ItemID.PlateHelmet01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlateHelmet_01,
+                    ItemID.PlateHelmet01,
                     'Латный шлем 01',
                     ItemCategoryID.Helmets,
                     {
@@ -462,10 +466,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.PlateHelmet_02,
+            ItemID.PlateHelmet02,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlateHelmet_02,
+                    ItemID.PlateHelmet02,
                     'Латный шлем 02',
                     ItemCategoryID.Helmets,
                     {
@@ -482,10 +486,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.PlateShoulders_01,
+            ItemID.PlateShoulders01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlateShoulders_01,
+                    ItemID.PlateShoulders01,
                     'Латные наплечники 01',
                     ItemCategoryID.ShoulderPads,
                     {
@@ -496,10 +500,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.PlateBreastplate_01,
+            ItemID.PlateBreastplate01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlateBreastplate_01,
+                    ItemID.PlateBreastplate01,
                     'Латный нагрудник 01',
                     ItemCategoryID.Breastplates,
                     {
@@ -510,10 +514,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.PlateBracer_01,
+            ItemID.PlateBracer01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlateBracer_01,
+                    ItemID.PlateBracer01,
                     'Латный браслет 01',
                     ItemCategoryID.Bracelets,
                     {
@@ -524,10 +528,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.PlateGloves_01,
+            ItemID.PlateGloves01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlateGloves_01,
+                    ItemID.PlateGloves01,
                     'Латные перчатки 01',
                     ItemCategoryID.Gloves,
                     {
@@ -538,10 +542,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.PlateBelt_01,
+            ItemID.PlateBelt01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlateBelt_01,
+                    ItemID.PlateBelt01,
                     'Латный пояс 01',
                     ItemCategoryID.Belts,
                     {
@@ -552,10 +556,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.PlatePants_01,
+            ItemID.PlatePants01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlatePants_01,
+                    ItemID.PlatePants01,
                     'Латный штаны 01',
                     ItemCategoryID.Pants,
                     {
@@ -566,10 +570,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.PlateBoots_01,
+            ItemID.PlateBoots01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.PlateBoots_01,
+                    ItemID.PlateBoots01,
                     'Латный сапоги 01',
                     ItemCategoryID.Boots,
                     {
@@ -580,10 +584,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.LeatherHelmet_01,
+            ItemID.LeatherHelmet01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.LeatherHelmet_01,
+                    ItemID.LeatherHelmet01,
                     'Кожаный шлем 01',
                     ItemCategoryID.Helmets,
                     {
@@ -594,10 +598,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.LeatherShoulders_01,
+            ItemID.LeatherShoulders01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.LeatherShoulders_01,
+                    ItemID.LeatherShoulders01,
                     'Кожаные наплечники 01',
                     ItemCategoryID.ShoulderPads,
                     {
@@ -608,10 +612,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.LeatherBreastplate_01,
+            ItemID.LeatherBreastplate01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.LeatherBreastplate_01,
+                    ItemID.LeatherBreastplate01,
                     'Кожаный нагрудник 01',
                     ItemCategoryID.Breastplates,
                     {
@@ -622,10 +626,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.LeatherBracer_01,
+            ItemID.LeatherBracer01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.LeatherBracer_01,
+                    ItemID.LeatherBracer01,
                     'Кожаный браслет 01',
                     ItemCategoryID.Bracelets,
                     {
@@ -636,10 +640,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.LeatherGloves_01,
+            ItemID.LeatherGloves01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.LeatherGloves_01,
+                    ItemID.LeatherGloves01,
                     'Кожаные перчатки 01',
                     ItemCategoryID.Gloves,
                     {
@@ -650,10 +654,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.LeatherBelt_01,
+            ItemID.LeatherBelt01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.LeatherBelt_01,
+                    ItemID.LeatherBelt01,
                     'Кожаный пояс 01',
                     ItemCategoryID.Belts,
                     {
@@ -664,10 +668,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.LeatherPants_01,
+            ItemID.LeatherPants01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.LeatherPants_01,
+                    ItemID.LeatherPants01,
                     'Кожаный штаны 01',
                     ItemCategoryID.Pants,
                     {
@@ -678,10 +682,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.LeatherBoots_01,
+            ItemID.LeatherBoots01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.LeatherBoots_01,
+                    ItemID.LeatherBoots01,
                     'Кожаный сапоги 01',
                     ItemCategoryID.Boots,
                     {
@@ -692,10 +696,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.ClothHelmet_01,
+            ItemID.ClothHelmet01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.ClothHelmet_01,
+                    ItemID.ClothHelmet01,
                     'Тканевый шлем 01',
                     ItemCategoryID.Helmets,
                     {
@@ -720,10 +724,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.ClothBreastplate_01,
+            ItemID.ClothBreastplate01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.ClothBreastplate_01,
+                    ItemID.ClothBreastplate01,
                     'Тканевый нагрудник 01',
                     ItemCategoryID.Breastplates,
                     {
@@ -734,10 +738,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.ClothBracer_01,
+            ItemID.ClothBracer01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.ClothBracer_01,
+                    ItemID.ClothBracer01,
                     'Тканевый браслет 01',
                     ItemCategoryID.Bracelets,
                     {
@@ -748,10 +752,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.ClothGloves_01,
+            ItemID.ClothGloves01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.ClothGloves_01,
+                    ItemID.ClothGloves01,
                     'Тканевые перчатки 01',
                     ItemCategoryID.Gloves,
                     {
@@ -762,10 +766,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.ClothBelt_01,
+            ItemID.ClothBelt01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.ClothBelt_01,
+                    ItemID.ClothBelt01,
                     'Тканевый пояс 01',
                     ItemCategoryID.Belts,
                     {
@@ -776,10 +780,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.ClothPants_01,
+            ItemID.ClothPants01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.ClothPants_01,
+                    ItemID.ClothPants01,
                     'Тканевый штаны 01',
                     ItemCategoryID.Pants,
                     {
@@ -790,10 +794,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.ClothBoots_01,
+            ItemID.ClothBoots01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.ClothBoots_01,
+                    ItemID.ClothBoots01,
                     'Тканевый сапоги 01',
                     ItemCategoryID.Boots,
                     {
@@ -804,10 +808,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Shield_01,
+            ItemID.Shield01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Shield_01,
+                    ItemID.Shield01,
                     'Щит',
                     ItemCategoryID.Shields,
                     {
@@ -816,10 +820,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Amulet_01,
+            ItemID.Amulet01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Amulet_01,
+                    ItemID.Amulet01,
                     'Амулет 01',
                     ItemCategoryID.Amulets,
                     {
@@ -828,10 +832,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Ring_01,
+            ItemID.Ring01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Ring_01,
+                    ItemID.Ring01,
                     'Кольцо 01',
                     ItemCategoryID.Rings,
                     {
@@ -840,10 +844,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Trinket_01,
+            ItemID.Trinket01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Trinket_01,
+                    ItemID.Trinket01,
                     'Тринкет',
                     ItemCategoryID.Trinkets,
                     {
@@ -857,10 +861,10 @@ export default class ItemDatabaseBuilder {
 
     private _createWeapons() {
         this._itemFactory.createByBuilder(
-            ItemID.OneHandedSword_01,
+            ItemID.OneHandedSword01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.OneHandedSword_01,
+                    ItemID.OneHandedSword01,
                     'Одноручный меч 01',
                     ItemCategoryID.OneHandedSwords,
                     {
@@ -869,10 +873,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.TwoHandedSword_01,
+            ItemID.TwoHandedSword01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.TwoHandedSword_01,
+                    ItemID.TwoHandedSword01,
                     'Двуручный меч 01',
                     ItemCategoryID.TwoHandedSwords,
                     {
@@ -883,10 +887,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.Dagger_01,
+            ItemID.Dagger01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Dagger_01,
+                    ItemID.Dagger01,
                     'Кинжал 01',
                     ItemCategoryID.Daggers,
                     {
@@ -895,10 +899,10 @@ export default class ItemDatabaseBuilder {
                 ),
         );
         this._itemFactory.createByBuilder(
-            ItemID.OneHandedAxe_01,
+            ItemID.OneHandedAxe01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.OneHandedAxe_01,
+                    ItemID.OneHandedAxe01,
                     'Одноручный топор 01',
                     ItemCategoryID.OneHandedAxes,
                     {
@@ -907,10 +911,10 @@ export default class ItemDatabaseBuilder {
                 ),
         );
         this._itemFactory.createByBuilder(
-            ItemID.TwoHandedAxe_01,
+            ItemID.TwoHandedAxe01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.TwoHandedAxe_01,
+                    ItemID.TwoHandedAxe01,
                     'Двуручный топор 01',
                     ItemCategoryID.TwoHandedAxes,
                     {
@@ -919,10 +923,10 @@ export default class ItemDatabaseBuilder {
                 ),
         );
         this._itemFactory.createByBuilder(
-            ItemID.Staff_01,
+            ItemID.Staff01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Staff_01,
+                    ItemID.Staff01,
                     'Посох 01',
                     ItemCategoryID.Staffs,
                     {
@@ -933,10 +937,10 @@ export default class ItemDatabaseBuilder {
                 ),
         );
         this._itemFactory.createByBuilder(
-            ItemID.Wand_01,
+            ItemID.Wand01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Wand_01,
+                    ItemID.Wand01,
                     'Жезл 01',
                     ItemCategoryID.Wands,
                     {
@@ -945,10 +949,10 @@ export default class ItemDatabaseBuilder {
                 ),
         );
         this._itemFactory.createByBuilder(
-            ItemID.Revolver_01,
+            ItemID.Revolver01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.Revolver_01,
+                    ItemID.Revolver01,
                     'Револьвер 01',
                     ItemCategoryID.Revolvers,
                     {

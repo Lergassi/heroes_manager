@@ -90,8 +90,8 @@ export default class SandboxUI {
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 12);
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.WoodBoards), 12);
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.IronOre), 12);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.OneHandedSword_01), 5);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.PlateHelmet_01), 5);
+        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.OneHandedSword01), 5);
+        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.PlateHelmet01), 5);
 
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).show();
         // itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorageComponent).show();

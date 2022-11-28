@@ -16,9 +16,13 @@ import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import {IconID} from '../../types/enums/IconID.js';
 import Icon from '../Entities/Icon.js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {sprintf} from 'sprintf-js';
+import debug from 'debug';
 
 export interface ItemBuilderOptions {
     description: string;
+    itemCategoryID: ItemCategoryID;
     iconID: IconID;
     stackSize: number;
     itemLevel: number;
@@ -73,6 +77,7 @@ export default class ItemBuilder {
 
     private _default: Partial<ItemBuilderOptions> = {
         description: '',
+        itemCategoryID: ItemCategoryID.Others,
         itemLevel: 1,
         quality: QualityID.Common,
         sort: 500,
@@ -100,18 +105,21 @@ export default class ItemBuilder {
         this._id = id;
         this._name = name;
         this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
+        if (!this._itemCategory) {
+            debug(DebugNamespaceID.Replace)(sprintf('Категория %s не найдена и будет заменена на %s.', itemCategoryID, this._default.itemCategoryID));
+            this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, this._default.itemCategoryID);
+        }
         this._description = options.description ?? this._default.description;
         this._icon = options.iconID ?
-            (this._entityManager.get<Icon>(EntityID.Icon, options.iconID) ?? this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)) :
-            this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)
+            (this._entityManager.get<Icon>(EntityID.Icon, options.iconID) ??
+                this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)) :
+                this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)
         ;
-        // console.log(options.iconID);
-        // console.log((this._entityManager.get<Icon>(EntityID.Icon, options.iconID) ?? this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)));
         this._itemLevel = options.itemLevel ?? this._default.itemLevel;
         this._sort = options.sort ?? this._default.sort;
         this._quality = options.quality ?
             this._entityManager.get<Quality>(EntityID.Quality, options.quality) :
-            this._entityManager.get<Quality>(EntityID.Quality, this._default.quality)  //или poor?
+            this._entityManager.get<Quality>(EntityID.Quality, this._default.quality)
         ;
         this._stackSize = options.stackSize ?? this._default.stackSize;
 

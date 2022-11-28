@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
   "scripts": {
     "start_server": "sudo node -r dotenv/config dist/server/index.js",
     "start_server_nodemon": "sudo node_modules/nodemon/bin/nodemon.js -r dotenv/config dist/server/index.js",
@@ -20,12 +23,10 @@
     "test_raw": "sudo node -r dotenv/config _tests/main.js",
     "test": "jest --config=dist/jest.config.js"
   },
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@types/serialize-javascript": "^5.0.2",
     "chalk": "^4.1.2",
+    "convert-csv-to-json": "^1.4.0",
+    "csv-parse": "^5.3.2",
     "date-fns": "^2.28.0",
     "debug": "^4.3.4",
     "decimal.js": "^10.4.2",
@@ -60,6 +61,7 @@
     "@types/sprintf-js": "^1.1.2",
     "@types/uuid": "^8.3.4",
     "@types/yargs": "^17.0.11",
+    "@types/serialize-javascript": "^5.0.2",
     "babel-loader": "^8.2.5",
     "jest": "^28.1.1",
     "nodemon": "^2.0.16",

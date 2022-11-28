@@ -24,13 +24,13 @@ export default class CreateStubObjectsCommand extends Command {
         itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 50);
         itemStorageComponent.addItem(itemDatabase.get(ItemID.IronOre), 50);
         itemStorageComponent.addItem(itemDatabase.get(ItemID.Cotton), 50);
-        itemStorageComponent.addItem(itemDatabase.get(ItemID.Leather_01), 50);
-        itemStorageComponent.addItem(itemDatabase.get(ItemID.Herb_1), 50);
-        itemStorageComponent.addItem(itemDatabase.get(ItemID.OneHandedSword_01), 1);
-        itemStorageComponent.addItem(itemDatabase.get(ItemID.Shield_01), 1);
-        itemStorageComponent.addItem(itemDatabase.get(ItemID.PlateBreastplate_01), 1);
-        itemStorageComponent.addItem(itemDatabase.get(ItemID.PlatePants_01), 1);
-        itemStorageComponent.addItem(itemDatabase.get(ItemID.PlateBoots_01), 1);
+        itemStorageComponent.addItem(itemDatabase.get(ItemID.Leather01), 50);
+        itemStorageComponent.addItem(itemDatabase.get(ItemID.Herb01), 50);
+        itemStorageComponent.addItem(itemDatabase.get(ItemID.OneHandedSword01), 1);
+        itemStorageComponent.addItem(itemDatabase.get(ItemID.Shield01), 1);
+        itemStorageComponent.addItem(itemDatabase.get(ItemID.PlateBreastplate01), 1);
+        itemStorageComponent.addItem(itemDatabase.get(ItemID.PlatePants01), 1);
+        itemStorageComponent.addItem(itemDatabase.get(ItemID.PlateBoots01), 1);
 
         this.container.set(ContainerID.StubItemStorage01, itemStorage);
     }

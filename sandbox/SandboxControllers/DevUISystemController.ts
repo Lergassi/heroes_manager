@@ -40,7 +40,7 @@ export default class DevUISystemController extends AbstractSandboxController {
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood),12);
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood),12);
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.IronOre),12);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.OneHandedSword_01),2);
+        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).addItem(this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.OneHandedSword01),2);
         // console.log(itemStorage);
 
         // itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).view(viewer);

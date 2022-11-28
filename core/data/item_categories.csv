@@ -1,0 +1,28 @@
+Name;ID;ParentID
+Остальное;Others;
+Оружие;Weapons;
+Одноручные мечи;OneHandedSwords;Weapons
+Двуручные мечи;TwoHandedSwords;Weapons
+Одноручные топоры;OneHandedAxes;Weapons
+Двуручные топоры;TwoHandedAxes;Weapons
+Посохи;Staffs;Weapons
+Жезлы;Wands;Weapons
+Кинжалы;Daggers;Weapons
+Луки;Bows;Weapons
+Арбалеты;Crossbows;Weapons
+Револьверы;Revolvers;Weapons
+Броня;Armor;
+Шлемы;Helmets;Armor
+Нагрудники;Breastplates;Armor
+Сапоги;Boots;Armor
+Перчатки;Gloves;Armor
+Штаны;Pants;Armor
+Наплечники;ShoulderPads;Armor
+Поясы;Belts;Armor
+Браслеты;Bracelets;Armor
+Амулеты;Amulets;Armor
+Кольца;Rings;Armor
+Аксессуары;Trinkets;Armor
+Щиты;Shields;Armor
+Ресурсы;Resources;
+Материалы;Materials;

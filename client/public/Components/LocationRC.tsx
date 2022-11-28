@@ -77,8 +77,8 @@ export default class LocationRC extends React.Component<LocationRCProps, Locatio
 
         let veins = [
             {item: ItemID.IronOre, count: _.random(20, 40)},
-            {item: ItemID.Herb_1, count: _.random(20, 40)},
-            {item: ItemID.Herb_2, count: _.random(20, 40)},
+            {item: ItemID.Herb01, count: _.random(20, 40)},
+            {item: ItemID.Herb02, count: _.random(20, 40)},
             {item: ItemID.Wood, count: _.random(20, 40)},
             {item: ItemID.Cotton, count: _.random(20, 40)},
         ];

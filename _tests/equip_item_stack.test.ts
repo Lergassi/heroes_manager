@@ -22,7 +22,7 @@ let container = new Container();
 
 let heroClass = container.get<EntityManagerInterface>(ContainerID.EntityManager).getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
 let equipSlot = container.get<EntityManagerInterface>(ContainerID.EntityManager).getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(EquipSlotID.Head);
-let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateHelmet_01);
+let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateHelmet01);
 
 let hero = container.get<HeroFactory>(ContainerID.HeroFactory).create(
     heroClass,
@@ -43,13 +43,13 @@ describe('Test available item category.', () => {
 
 
 describe.each([
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateBreastplate_01)],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateBelt_01)],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateBracer_01)],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateGloves_01)],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateShoulders_01)],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateBoots_01)],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlatePants_01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateBreastplate01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateBelt01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateBracer01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateGloves01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateShoulders01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateBoots01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlatePants01)],
 ])('Test not available item category.', (a) => {
     // test(sprintf('ItemStack with item "%s" not available for equip slot "%s".', a.item.name, equipSlotComponent.equipSlot.name), () => {
     // test(sprintf('ItemStack with item "%s" not available for equip slot "%s".', a.item.name, equipSlotComponent.equipSlot['_name']/*todo: Доступ.*/), () => {
@@ -61,7 +61,7 @@ describe.each([
 });
 
 describe.each([
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateHelmet_01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateHelmet01)],
     // [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.LeatherHelmet_01)],
 ])('Test available armor material.', (a) => {
     // test(sprintf('ItemStack with armor material "%s" available for hero class "%s".', a.item.armorMaterial.name, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClass.name), () => {
@@ -75,8 +75,8 @@ describe.each([
 
 describe.each([
     // [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateHelmet_01)],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.LeatherHelmet_01)],
-    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.ClothHelmet_01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.LeatherHelmet01)],
+    [container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.ClothHelmet01)],
 ])('Test not available armor material.', (a) => {
     // test(sprintf('ItemStack with armor material "%s" not available for hero class "%s".', a.item.armorMaterial.name, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClass.name), () => {
     test(sprintf('ItemStack with armor material "%s" not available for hero class "%s".', undefined, hero.getComponentByName<HeroComponent>(HeroComponent.name).heroClassID.name), () => {

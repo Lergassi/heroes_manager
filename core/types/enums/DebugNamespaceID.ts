@@ -18,6 +18,7 @@ export enum DebugNamespaceID {
      */
     Throw = 'THROW',
     Indev = 'INDEV',
+    Replace = 'REPLACE',
 
     //core
     Http = 'HTTP',

@@ -20,6 +20,7 @@ import _ from 'lodash';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import EventSystemFactory from '../EventSystemFactory.js';
+import ItemCategoryFactory from '../../Factories/EntityFactories/ItemCategoryFactory.js';
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -36,6 +37,12 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         });
         container.set<EntityManager>(ContainerID.EntityManager, (container) => {
             return new EntityManager();
+        });
+        container.set<ItemFactory>(ContainerID.ItemFactory, (container) => {
+            return new ItemFactory(container.get<EntityManagerInterface>(ContainerID.EntityManager));
+        });
+        container.set<ItemCategoryFactory>(ContainerID.ItemCategoryFactory, (container) => {
+            return new ItemCategoryFactory(container.get<EntityManagerInterface>(ContainerID.EntityManager));
         });
         (new EntityManagerBuilder(
             container,

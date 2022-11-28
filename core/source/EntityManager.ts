@@ -13,6 +13,12 @@ export default class EntityManager implements EntityManagerInterface {
         this._entities = {};
     }
 
+    /**
+     * todo: Убрать, оставить только чтение.
+     * @param entityID
+     * @param ID
+     * @param entity
+     */
     add<T>(entityID: EntityID, ID: string, entity: T): T {
         assertIsString(entityID);   //Или значение приведенное к string.
         assertNotEmpty(entityID);

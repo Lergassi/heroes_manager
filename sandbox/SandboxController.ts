@@ -56,11 +56,12 @@ import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
 import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
 import DevUISystemController from './SandboxControllers/DevUISystemController.js';
+import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseController.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
 
-    private _init() {
+    private _initContainer() {
         this._container = new Container();
         (new DefaultContainerConfigure()).configure(this._container);
         (new CoreContainerConfigure()).configure(this._container);
@@ -68,7 +69,7 @@ export default class SandboxController {
     }
 
     run() {
-        this._init();
+        this._initContainer();
         this.main();
     }
 
@@ -76,7 +77,8 @@ export default class SandboxController {
         // this._inversifyjsGetStarted();
         // this._devUISystem();
         // (new InversifyJSGetStarted()).run();
-        (new DevUISystemController(this._container)).run();
+        // (new DevUISystemController(this._container)).run();
+        (new LoadItemDatabaseController(this._container)).run();
 
         // this._testSumBoolean();
         // this._testLodashEvery();
@@ -216,12 +218,12 @@ export default class SandboxController {
         let itemKit = new ItemKit([
             {item: ItemID.Wood, count: DEFAULT_STACK_SIZE},
             {item: ItemID.IronOre, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.IronBar, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.Herb_1, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.IronIngot, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.Herb01, count: DEFAULT_STACK_SIZE},
             {item: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.Leather_01, count: DEFAULT_STACK_SIZE},
+            {item: ItemID.Leather01, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.BoarMeat, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.MagicResources_01, count: 1},
+            {item: ItemID.MagicResources01, count: 1},
         ]);
 
         let itemStorage = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20);
