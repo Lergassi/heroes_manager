@@ -7,9 +7,6 @@ export default interface AttackControllerInterface {
      */
     generateAttack(): number;   //todo: Надо как-то придумать названия для генерации УРОНА и получение урона. А то сейчас оба метода damage() и damage(damage)
     attackTo(target: DamageControllerInterface, afterDiedTargetOptions?: RewardOptions): boolean;   //todo: Надо как-то придумать названия для генерации УРОНА и получение урона. А то сейчас оба метода damage() и damage(damage)
-    /**
-     * @deprecated
-     */
     canAttack(): boolean;
     view(callback: (data: {
         value: {left: number; right: number},

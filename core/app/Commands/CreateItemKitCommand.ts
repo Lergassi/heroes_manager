@@ -17,9 +17,11 @@ import MainItemStorageListComponent from '../Components/MainItemStorageListCompo
 import {parseInt} from 'lodash';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import ItemDatabase from '../../source/ItemDatabase.js';
+import ItemStackBlankInterface from '../Interfaces/ItemStackBlankInterface.js';
 
 export default class CreateItemKitCommand extends Command {
-    private readonly _kits: {[key: string]: ItemPackInterface[]} = {
+    //todo: Для ID вместо сущности использовать отдельный класс или фабрику.
+    private readonly _kits: {[key: string]: ItemStackBlankInterface[]} = {
         // start_items: [
         //     {item: ItemID.Wood, count: DEFAULT_STACK_SIZE},
         //     {item: ItemID.IronOre, count: DEFAULT_STACK_SIZE},

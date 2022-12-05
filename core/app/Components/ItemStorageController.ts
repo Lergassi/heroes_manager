@@ -10,6 +10,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
 import AppError from '../../source/Errors/AppError.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 
 export default class ItemStorageController implements ItemStorageControllerInterface, ItemStorageInterface {
     private readonly _itemStorages: GameObject[];
@@ -22,6 +23,7 @@ export default class ItemStorageController implements ItemStorageControllerInter
         this._itemStorages = [];
     }
 
+    //todo: Убрать GameObject.
     addItemStorage(itemStorage: GameObject): number {
         if (_.includes(this._itemStorages, itemStorage)) return -1;
 
@@ -84,5 +86,32 @@ export default class ItemStorageController implements ItemStorageControllerInter
     }) {
         this._handlers.push(handlers);
         handlers.addItemStorage(this, this._itemStorages);
+    }
+
+    // totalItem(ID: ItemID): number {
+    //     let totalCount = 0;
+    //     for (let i = 0; i < this._itemStorages.length; i++) {
+    //         totalCount += this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).totalItem(ID);
+    //     }
+    //
+    //     return totalCount;
+    // }
+
+    removeItem(ID: ItemID, count: number): number {
+        let originCount = count;
+        for (let i = 0; i < this._itemStorages.length; i++) {
+            count -= this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).removeItem(ID, count);
+            if (count <= 0) break;
+        }
+
+        return originCount - count;
+    }
+
+    containItem(ID: ItemID, count: number): boolean {
+        for (let i = 0; i < this._itemStorages.length; i++) {
+            if (this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).containItem(ID, count)) return true;
+        }
+
+        return false;
     }
 }

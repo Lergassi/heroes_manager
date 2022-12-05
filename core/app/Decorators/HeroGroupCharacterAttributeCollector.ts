@@ -1,5 +1,5 @@
 import HeroGroupInterface from '../Interfaces/HeroGroupInterface.js';
-import HeroGroupComponent from '../Components/HeroGroupComponent.js';
+import HeroGroup from '../Components/HeroGroup.js';
 import {assert} from '../../source/assert.js';
 import _ from 'lodash';
 import GameObject from '../../source/GameObject.js';

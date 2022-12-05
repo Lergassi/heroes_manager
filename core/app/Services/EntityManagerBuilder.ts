@@ -30,10 +30,12 @@ import {IconID} from '../../types/enums/IconID.js';
 import {sprintf} from 'sprintf-js';
 import {env} from 'yargs';
 import dotenv from 'dotenv';
-import LoadItems from './LoadItems.js';
-import LoadItemCategories from './LoadItemCategories.js';
+import ItemsLoader from './Loadres/ItemsLoader.js';
+import ItemCategoriesLoader from './Loadres/ItemCategoriesLoader.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import ItemFactory from '../Factories/ItemFactory.js';
+import RecipesLoader from './Loadres/RecipesLoader.js';
+import RecipeFactory from '../Factories/EntityFactories/RecipeFactory.js';
 
 export default class EntityManagerBuilder {
     private readonly _container: ContainerInterface;
@@ -61,10 +63,10 @@ export default class EntityManagerBuilder {
         this._createQualities();
         this._createHeroRoles();
         // this._createItemCategories();
-        this._loadItemCategories();         //ItemDatabase
+        this._loadItemCategories();
         // this._createItems();
-        this._loadItems();                  //ItemDatabase
-        // this._createRecipes();
+        this._loadItems();
+        this._loadRecipes();
         this._createHeroClasses();
         this._createEquipSlots();
 
@@ -84,11 +86,15 @@ export default class EntityManagerBuilder {
     }
 
     private _loadItemCategories() {
-        (new LoadItemCategories()).load(this._entityManager, this._container.get<ItemCategoryFactory>(ContainerID.ItemCategoryFactory));
+        (new ItemCategoriesLoader()).load(this._entityManager, this._container.get<ItemCategoryFactory>(ContainerID.ItemCategoryFactory));
     }
 
     private _loadItems() {
-        (new LoadItems()).load(this._entityManager, this._container.get<ItemFactory>(ContainerID.ItemFactory));
+        (new ItemsLoader()).load(this._entityManager, this._container.get<ItemFactory>(ContainerID.ItemFactory));
+    }
+
+    private _loadRecipes() {
+        (new RecipesLoader()).load(this._entityManager, this._container.get<RecipeFactory>(ContainerID.RecipeFactory));
     }
 
     private _createArmorMaterials() {
@@ -1261,6 +1267,7 @@ export default class EntityManagerBuilder {
 
     //Без расчетов. Только в ручную заданные все параметры. todo: Автоматизация позже.
     private _initHeroConfig() {
+
     }//end method
 
     private _createIcons() {

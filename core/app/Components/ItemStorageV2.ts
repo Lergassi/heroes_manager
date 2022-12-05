@@ -9,6 +9,8 @@ import {sprintf} from 'sprintf-js';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
 import Viewer from '../../source/Viewer.js';
+import {ItemID} from '../../types/enums/ItemID.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 
 interface ItemStorageUIInterface {
     readSlot(callback);
@@ -63,8 +65,10 @@ export default class ItemStorageV2 implements ItemStorageInterface /* ItemStorag
         return count;
     }
 
-    moveTo(itemStorage: ItemStorageInterface): void {
-        throw AppError.notImplements();
+    moveTo(target: ItemStorageInterface): void {
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            this._itemStackControllers[i].moveTo(target);
+        }
     }
 
     show() {
@@ -134,5 +138,32 @@ export default class ItemStorageV2 implements ItemStorageInterface /* ItemStorag
                 });
             });
         }
+    }
+
+    totalItem(ID: ItemID): number {
+        let total = 0;
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            total += this._itemStackControllers[i].totalItem(ID);
+        }
+
+        return total;
+    }
+
+    removeItem(ID: ItemID, count: number): number {
+        let originCount = count;
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            count -= this._itemStackControllers[i].removeItem(ID, count);
+            if (count <= 0) break;
+        }
+
+        return originCount - count;
+    }
+
+    containItem(ID: ItemID, count: number): boolean {
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            if (this._itemStackControllers[i].containItem(ID, count)) return true;
+        }
+
+        return false;
     }
 }

@@ -10,7 +10,7 @@ import AppError from '../../source/Errors/AppError.js';
 import Viewer from '../../source/Viewer.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 
-export default class ItemStackController implements ItemStackControllerInterface {
+export default class InfinityItemStackController implements ItemStackControllerInterface {
     private _item: Item;
     private _count: unsigned;
 
@@ -29,52 +29,45 @@ export default class ItemStackController implements ItemStackControllerInterface
             return count;
         }
 
-        let flaw = 0;
         if (!this._item) {
-            flaw = item.stackSize;
-        } else {
-            flaw = item.stackSize - this._count;
-        }
-
-        if (count <= flaw) {
-            this._count += count;
-            count = 0;
-        } else {
-            this._count += flaw;
-            count -= flaw;
-        }
-
-        if (this._count > 0) {
             this._item = item;
         }
 
-        /*
-            this._updateHandlers(this._item, this._count);
+        this._count += count;
 
-            addCallback((item, count) => {
-                    this.updateSlot(index, item, count);
-            });
-            removeCallback();
-         */
-
-        for (let i = 0; i < this._handlers.length; i++) {
-            this._handlers[i].updateHandler(this._item, this._count);
-        }
-
-        return count;
+        return 0;
     }
 
-    _onChange;
+    moveTo(itemStorage: ItemStorageInterface): void {
+        throw AppError.notImplements();
+    }
+
+    removeItem(ID: ItemID, count: number): number {
+        if (!this.containItem(ID, count)) return 0;
+        if (count <= 0) return 0;   //todo: Или исключение?
+
+        let reminder = 0;
+        if (this._count >= count) {
+            this._count -= count;
+            reminder = count;
+        } else {
+            reminder = this._count;
+            this._count = 0;
+        }
+
+        return reminder;
+    }
+
+    containItem(ID: ItemID, count: number): boolean {
+        if (count <= 0) return false;
+
+        return !_.isNil(this._item) && this._item.id === ID && this._count >= count;
+    }
+
+    private _onChange;
 
     onChange(callback) {
         this._onChange = callback;
-    }
-
-    moveTo(target: ItemStorageInterface): void {
-        if (this.isFree()) return;
-
-        let reminder = this._count - target.addItem(this._item, this._count);
-        this.removeItem(<ItemID>this._item.id, reminder);
     }
 
     show() {
@@ -114,42 +107,5 @@ export default class ItemStackController implements ItemStackControllerInterface
                 count: null,
             });
         }
-    }
-
-    totalItem(ID: ItemID): number {
-        return (this._item && !_.isNil(ID) && this._item.id === ID) ? this._count : 0;
-    }
-
-    removeItem(ID: ItemID, count: number): number {
-        if (!this.totalItem(ID)) return 0;
-        if (count <= 0) return 0;   //todo: Или исключение?
-
-        let reminder = count;
-        if (this._count >= count) {
-            this._count -= count;
-
-            reminder = count;
-        } else {
-            reminder = this._count;
-            this._count = 0;
-        }
-
-        if (this._count <= 0) {
-            this._item = null;
-        }
-
-        return reminder;
-    }
-
-    containItem(ID: ItemID, count: number): boolean {
-        if (count <= 0) return false;
-
-        // console.log('!_.isNil(this._item)', !_.isNil(this._item));
-        // console.log('this._count >= count', this._count >= count);
-        return !_.isNil(this._item) && this._item.id === ID && this._count >= count;
-    }
-
-    isFree(): boolean {
-        return _.isNil(this._item);
     }
 }

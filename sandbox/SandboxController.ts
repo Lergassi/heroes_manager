@@ -36,7 +36,7 @@ import {extractHealthPoints, separator} from '../core/app/indev.js';
 import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
 import CharacterStateController, {CharacterStateCode} from '../core/app/Components/CharacterStateController.js';
-import CharacterFightGroup from '../core/app/CharacterFightGroup.js';
+import CharacterFightGroup from '../core/app/Components/CharacterFightGroup.js';
 import {CurrencyID} from '../core/types/enums/CurrencyID.js';
 import WalletFactory from '../core/app/Factories/WalletFactory.js';
 import WalletComponent from '../core/app/Components/WalletComponent.js';
@@ -57,6 +57,10 @@ import ItemStackController from '../core/app/Components/ItemStackController.js';
 import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
 import DevUISystemController from './SandboxControllers/DevUISystemController.js';
 import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseController.js';
+import FightSandboxController from './SandboxControllers/FightSandboxController.js';
+import BagSandboxController from './SandboxControllers/BagSandboxController.js';
+import CraftSystemSandboxController from './SandboxControllers/CraftSystemSandboxController.js';
+import RecipesSandboxController from './SandboxControllers/RecipesSandboxController.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -66,6 +70,10 @@ export default class SandboxController {
         (new DefaultContainerConfigure()).configure(this._container);
         (new CoreContainerConfigure()).configure(this._container);
         (new PlayerContainerConfigure()).configure(this._container);
+
+        if (window) {
+            window['container'] = this._container;
+        }
     }
 
     run() {
@@ -78,11 +86,16 @@ export default class SandboxController {
         // this._devUISystem();
         // (new InversifyJSGetStarted()).run();
         // (new DevUISystemController(this._container)).run();
-        (new LoadItemDatabaseController(this._container)).run();
+        // (new LoadItemDatabaseController(this._container)).run();
+        // (new FightSandboxController(this._container)).run();
+        // (new BagSandboxController(this._container)).run();
+        (new CraftSystemSandboxController(this._container)).run();
+        // (new RecipesSandboxController(this._container)).run();
 
         // this._testSumBoolean();
         // this._testLodashEvery();
         // this._testGenerics();
+        // this._testClearTimeout();
 
         // this.devNewItemStorage();
         // this._devItemDatabase();
@@ -928,5 +941,13 @@ export default class SandboxController {
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
         // itemStackController.addItem(itemDatabase.get(ItemID.IronOre), 24);
+    }
+
+    private _testClearTimeout() {
+        let id = setTimeout(() => {
+            console.log('timeout');
+        }, 2000);
+        console.log(id);
+        clearTimeout(id);
     }
 }

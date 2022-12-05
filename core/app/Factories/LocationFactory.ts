@@ -1,4 +1,4 @@
-import HeroGroupComponent from '../Components/HeroGroupComponent.js';
+import HeroGroup from '../Components/HeroGroup.js';
 import LocationComponent, {
     GatheringItemPoint,
     GatheringItemPointTypeValues,
@@ -103,7 +103,7 @@ export default class LocationFactory {
             this._entityManager.get<Currency>(EntityID.Currency, CurrencyID.Gold),
             0,
         ));
-        let heroGroupComponent = location.set<HeroGroupComponent>('heroGroupComponent', new HeroGroupComponent(
+        let heroGroupComponent = location.set<HeroGroup>('heroGroupComponent', new HeroGroup(
             5,
         ));
 

@@ -1,5 +1,5 @@
 import Item from '../Entities/Item.js';
-import HeroGroupComponent from './HeroGroupComponent.js';
+import HeroGroup from './HeroGroup.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageComponent from './ItemStorageComponent.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
@@ -14,7 +14,7 @@ import ExperienceComponent from './ExperienceComponent.js';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
-import CharacterFightGroup from '../CharacterFightGroup.js';
+import CharacterFightGroup from './CharacterFightGroup.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import GatheringPoint from './GatheringPoint.js';
 import Gatherer from './Gatherer.js';
@@ -89,19 +89,14 @@ export default class LocationComponent {
     constructor(
         created: Date,
         level: unsigned,
-        // gatheringItemPoints: GatheringItemPoint[],
         gatheringPoints: GatheringPoint[],
         itemStackFactory: ItemStackFactory,         //todo: Убрать в генератор лута.
-        // itemStorage: ItemStorageComponent,
         itemStorage: ItemStorageInterface,
-        // walletFactory: WalletFactory,
         wallet: WalletInterface,
         enemies: GameObject[] = [],
-        // options?: {сумка или фабрика, кошелек или фабрика}
     ) {
         assertNotNil(created);
         assertIsGreaterThanOrEqual(level, 1);
-        // assertNotNil(gatheringItemPoints);
         assertNotNil(gatheringPoints);
         assertNotNil(itemStorage);
         assertNotNil(itemStackFactory);
@@ -110,7 +105,6 @@ export default class LocationComponent {
 
         this._created = created;
         this._level = level;
-        // this._gatheringItemPoints = gatheringItemPoints;
         this._gatheringPoints = gatheringPoints;
         this._itemStackFactory = itemStackFactory;
 
@@ -123,7 +117,6 @@ export default class LocationComponent {
 
         //лут
         this._itemStorage = itemStorage;
-        // this._wallet = walletFactory.create(CurrencyID.Gold).get<WalletInterface>(WalletComponent.name);    //todo: Убрать GameObject.
         this._wallet = wallet;
     }
 
@@ -139,9 +132,7 @@ export default class LocationComponent {
         // }
 
         this._state = LocationState.Hunting;
-        // this._heroGroupComponent.block(this);
         let afterTargetDiedOptions: RewardOptions = {
-            // wallet: options?.wallet,
             wallet: this._wallet,
             itemStorage: this._itemStorage,
         };
@@ -182,28 +173,12 @@ export default class LocationComponent {
         }
     }
 
-    // /**
-    //  * Перемещает объекты в сумки. Если слотов не хватает, остатки остаются в локации. Технически: перемещение между сумками.
-    //  * @param itemStorageManager
-    //  */
-    // moveItems(itemStorageManager: ItemStorageManager) {
-    //     this.canModify();
-    //
-    //     itemStorageManager.moveFrom(this._itemStorage);
-    //     // debug('log')('Предметы перемещены.');
-    //     // EventSystem.event(LocationComponentEventCode.GetItems, this)
-    //     EventSystem.event(LocationComponentEventCode.Update, this);
-    // }
-
     getReward(rewardOptions: {
-        // itemStorage?: ItemStorageManager,
         itemStorage?: ItemStorageInterface,
         wallet?: WalletInterface,
-        //Опыт для игрока если будет. Пока только для героев.
     }): void {
         if (!this._canModify()) return;
 
-        // if (rewardOptions.itemStorage) rewardOptions.itemStorage.moveFrom(this._itemStorage);
         if (rewardOptions.itemStorage) this._itemStorage.moveTo(rewardOptions.itemStorage);
         if (rewardOptions.wallet) this._wallet.moveTo(rewardOptions.wallet);
         EventSystem.event(LocationComponentEventCode.Update, this);
@@ -291,7 +266,7 @@ export default class LocationComponent {
         level: unsigned,
         gatheringItemPoints: GatheringItemPoint[],
         internalItemStorageComponent: ItemStorageComponent,
-        heroGroupComponent: HeroGroupComponent,
+        heroGroupComponent: HeroGroup,
     }>) => void) {
         callback({
             level: this._level,

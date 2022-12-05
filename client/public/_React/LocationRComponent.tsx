@@ -2,7 +2,7 @@ import React from 'react';
 import GameObject from '../../../core/source/GameObject.js';
 import LocationComponent, {LocationComponentEventCode} from '../../../core/app/Components/LocationComponent.js';
 import LevelRange from '../../../core/app/LevelRange.js';
-import HeroGroupComponent from '../../../core/app/Components/HeroGroupComponent.js';
+import HeroGroup from '../../../core/app/Components/HeroGroup.js';
 import _, {values} from 'lodash';
 import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
@@ -19,6 +19,7 @@ export interface LocationRComponentProps {
 
 export interface LocationRComponentState {
     location: GameObject;
+    heroes: {ID: number}[];
 }
 
 export class LocationRComponent extends React.Component<LocationRComponentProps, LocationRComponentState> {
@@ -27,6 +28,13 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
 
         this.state = {
             location: props.location,
+            heroes: [
+                {ID: undefined},
+                {ID: undefined},
+                {ID: undefined},
+                {ID: undefined},
+                {ID: undefined},
+            ],
         };
 
         EventSystem.addListener({
@@ -50,8 +58,24 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
         });
     }
 
+    componentDidMount() {
+        this.props.location.getComponent<HeroGroup>('heroGroupComponent').render((index, ID) => {
+            this.setState((state) => {
+                let heroes = [...this.state.heroes];
+                heroes[index].ID = ID;
+
+                return {
+                    location: state.location,
+                    heroes: heroes,
+                };
+            });
+        });
+    }
+
     render() {
         let location = this.state.location;
+        let heroes = this.state.heroes;
+        console.log('heroes', heroes);
 
         let locationComponentElement;
         let locationComponent = location.getComponent<LocationComponent>(ComponentID.Location);
@@ -61,15 +85,28 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
             );
         });
 
-        let heroGroupComponent = location.getComponent<HeroGroupComponent>('heroGroupComponent');
+        let heroGroupComponent = location.getComponent<HeroGroup>('heroGroupComponent');
         let heroGroupComponentTableRows = [];
-        heroGroupComponent.render((values) => {
-            for (const position in values.heroes) {
-                heroGroupComponentTableRows.push(<tr key={position}>
-                    <td>{values.heroes[position].isBusy() ? (<span>{values.heroes[position]['_hero']['_id']}</span>) : 'free'}</td>
-                </tr>);
-            }
-        });
+        let template = (index, ID) => {
+            return <tr key={index}>
+                <td>{ID ? (<span>{ID}</span>) : 'free'}*</td>
+            </tr>
+        };
+        // heroGroupComponent.render((values) => {
+        //     for (const position in values.heroes) {
+        //         heroGroupComponentTableRows.push(<tr key={position}>
+        //             <td>{values.heroes[position].isBusy() ? (<span>{values.heroes[position]['_hero']['_id']}</span>) : 'free'}</td>
+        //         </tr>);
+        //     }
+        // });
+
+        // heroGroupComponent.render((index, ID) => {
+        //     heroGroupComponentTableRows.push(template(index, ID));
+        // });
+        for (let i = 0; i < heroes.length; i++) {
+            heroGroupComponentTableRows.push(template(i, heroes[i].ID));
+        }
+
         let heroGroupComponentTable = (
             <table className={'basic-table'}>
                 <tbody>{heroGroupComponentTableRows}</tbody>

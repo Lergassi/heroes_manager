@@ -41,30 +41,6 @@ export default class ItemDatabaseBuilder {
         return this._entityManager;
     }
 
-    private _createStubItems() {
-        let stubIDs = [
-            ItemID.Stub01,
-            ItemID.Stub02,
-            ItemID.Stub03,
-            ItemID.Stub04,
-            ItemID.Stub05,
-        ];
-        // _.map(stubIDs, (ID) => {
-        //     this._itemFactory.createByBuilder(
-        //         ID,
-        //         (new ItemBuilder(this._entityManager))
-        //             .default(
-        //                 ID,
-        //                 ID,
-        //                 ItemCategoryID.Stubs,
-        //                 {
-        //
-        //                 },
-        //             )
-        //     );
-        // });
-    }
-
     private _createResources() {
         let wood = this._itemFactory.createByBuilder(
             ItemID.Wood,

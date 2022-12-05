@@ -12,6 +12,7 @@ import {EventCode} from '../../types/enums/EventCode.js';
 import ItemStackControllerInterface from '../Interfaces/ItemStackControllerInterface.js';
 import ItemStackController from './ItemStackController.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 
 export enum ItemStorageSlotComponentEventCode {
     CreateItemStack = 'ItemStorageSlotComponent.CreateItemStack',
@@ -133,5 +134,17 @@ export default class ItemStorageSlotComponent implements ItemStackControllerInte
     }) {
         this._callbacks = target;
         this._callbacks.updateItem(this._itemStack?.item, this._itemStack?.count);
+    }
+
+    totalItem(ID: ItemID): number {
+        return 0;
+    }
+
+    removeItem(ID: ItemID, count: number): number {
+        return 0;
+    }
+
+    containItem(ID: ItemID, count: number): boolean {
+        return false;
     }
 }

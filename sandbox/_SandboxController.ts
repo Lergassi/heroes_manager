@@ -26,7 +26,7 @@ import ItemSlot from '../core/app/Components_v2/ItemSlot.js';
 import ItemStorageController from '../core/app/Components_v2/ItemStorageController.js';
 import HeroClass from '../core/app/Entities/HeroClass.js';
 import GameObject from '../core/source/GameObject.js';
-import HeroGroupComponent from '../core/app/Components/HeroGroupComponent.js';
+import HeroGroup from '../core/app/Components/HeroGroup.js';
 import EnemyFactory from '../core/app/Factories/EnemyFactory.js';
 import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponentFactory.js';
 import EnemyEntity from '../core/app/Entities/EnemyEntity.js';
@@ -484,7 +484,7 @@ export default class _SandboxController {
         let heroGroup = this._container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
 
         let size = 5;
-        let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroupComponent(
+        let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroup(
             5,
         ));
         // console.log(heroGroup);
@@ -702,7 +702,7 @@ export default class _SandboxController {
 
         let hero = this._container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
 
-        let heroGroupComponent: HeroGroupInterface = new HeroGroupComponent(
+        let heroGroupComponent: HeroGroupInterface = new HeroGroup(
         // let heroGroupComponent = new HeroGroupComponent({
         // let heroGroupComponent = new HeroGroupComponent({
             5,
@@ -853,7 +853,7 @@ export default class _SandboxController {
         console.log(items);
     }
 
-    addHeroGroupDecorator(heroGroup: HeroGroupComponent) {
+    addHeroGroupDecorator(heroGroup: HeroGroup) {
 
     }
 

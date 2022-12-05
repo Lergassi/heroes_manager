@@ -5,6 +5,10 @@ import AppError from './Errors/AppError.js';
 import {EntityID} from '../types/enums/EntityID.js';
 import {sprintf} from 'sprintf-js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
+import {clearLine} from 'readline';
+import {ItemID} from '../types/enums/ItemID.js';
+import Item from '../app/Entities/Item.js';
+import Recipe from '../app/Entities/Recipe.js';
 
 export default class EntityManager implements EntityManagerInterface {
     private readonly _entities;
@@ -31,7 +35,7 @@ export default class EntityManager implements EntityManagerInterface {
         }
 
         if (this._entities[entityID].hasOwnProperty(ID)) {
-            throw new AppError(sprintf('Сущность с таким ID(%s) уже существует.', ID));
+            throw new AppError(sprintf('Сущность с ID "%s" уже существует.', ID));
         }
 
         this._entities[entityID][ID] = entity;
@@ -50,5 +54,15 @@ export default class EntityManager implements EntityManagerInterface {
         assertNotEmpty(ID);
 
         return this._entities[entityID]?.[ID];
+    }
+
+    /*
+        @indev todo: Фильтры пока тут. Позже переделать.
+     */
+
+    getRecipeByResultItem(resultItem: ItemID) {
+        return _.filter<Recipe>(this._entities[EntityID.Recipe], (recipe) => {
+            return recipe.resultItem.id === resultItem;
+        })[0];
     }
 }

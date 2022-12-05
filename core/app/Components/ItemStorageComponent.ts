@@ -13,6 +13,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import RenderInterface from '../Interfaces/RenderInterface.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 
 export enum ItemStorageComponentEventCode {
     AddItem = 'ItemStorageComponent.AddItem',
@@ -22,6 +23,7 @@ export enum ItemStorageComponentEventCode {
 
 /**
  * todo: Вообще переделать. Убрать слоты с новыми идеями.
+ * @deprecated Использовать ItemStorageV2.
  */
 // export default class ItemStorageComponent implements ItemStorageInterface, RenderInterface<{slots: {[key: string]: ItemStorageSlotComponent}}> {
 export default class ItemStorageComponent implements ItemStorageInterface {
@@ -257,5 +259,17 @@ export default class ItemStorageComponent implements ItemStorageInterface {
         assertNotNil(this._slots[index], 'ItemStorageSlot не найден.');
 
         return this._slots[index];
+    }
+
+    totalItem(item: ItemID): number {
+        return 0;
+    }
+
+    removeItem(ID: ItemID, count: number): number {
+        return 0;
+    }
+
+    containItem(ID: ItemID, count: number): boolean {
+        return false;
     }
 }

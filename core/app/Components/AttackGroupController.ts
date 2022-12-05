@@ -14,10 +14,6 @@ export default class AttackGroupController implements AttackControllerInterface 
         this._attackControllers = attackControllers;
     }
 
-    //constructor(attackControllers: AttackControllerInterface[])
-    //constructor(characterGroup: CharacterGroup)   //И надеяться что у объектов будет AttackControllerInterface. И с каждым объектом разбираться есть ли у него нужный интерфейс.
-    //add/remove
-
     add(attackController: AttackControllerInterface) {
         if (!_.isNil(attackController) && !_.includes(this._attackControllers, attackController)) {
             this._attackControllers.push(attackController);
@@ -50,13 +46,14 @@ export default class AttackGroupController implements AttackControllerInterface 
 
     attackTo(target: DamageControllerInterface, afterDiedTargetCallback?): boolean {
         if (!this.canAttack()) {
-            debug(DebugNamespaceID.Throw)('Группа мертва и не может атаковать.');
+            debug(DebugNamespaceID.Throw)('Все участники группы мертвы и не могут атаковать.');
             return false;
         }
 
         for (let i = 0; i < this._attackControllers.length; i++) {
             //todo: А зачем вообще суммировать урон если можно сделать так? А получательУрона сам разберется как его распределить: на одну цель или группу. И логика объединения исходящего урона не логичная. Если очень надо его можно объединить при получении или гдето между.
-            if (!this._attackControllers[i].canAttack() || !target.canTakeDamage()) continue;
+            // if (!this._attackControllers[i].canAttack() || !target.canTakeDamage()) continue;
+            if (!this._attackControllers[i].canAttack()) continue;
 
             this._attackControllers[i].attackTo(target, afterDiedTargetCallback);
         }

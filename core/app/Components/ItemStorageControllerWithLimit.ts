@@ -10,6 +10,7 @@ import ItemStorageController from './ItemStorageController.js';
 import _ from 'lodash';
 import EventSystem from '../../source/EventSystem.js';
 import AppError from '../../source/Errors/AppError.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 
 export default class ItemStorageControllerWithLimit implements ItemStorageControllerInterface, ItemStorageInterface {
     private readonly _maxItemStorages: unsigned;
@@ -72,5 +73,13 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
         addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
     }) {
         this._itemStorageController.attach(handlers);
+    }
+
+    removeItem(ID: ItemID, count: number): number {
+        return this._itemStorageController.removeItem(ID, count);
+    }
+
+    containItem(ID: ItemID, count: number): boolean {
+        return this._itemStorageController.containItem(ID, count);
     }
 }

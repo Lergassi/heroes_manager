@@ -6,6 +6,7 @@ export enum ContainerID {
     EventSystemFactory = 'core.EventSystemFactory',
     EntityManager = 'core.EntityManager',
     ItemFactory = 'core.ItemFactory',
+    RecipeFactory = 'core.RecipeFactory',
     ItemCategoryFactory = 'ItemCategoryFactory',
     ItemDatabase = 'core.ItemDatabase',
     GameConsole = 'core.GameConsole',
@@ -40,7 +41,8 @@ export enum ContainerID {
     ExperienceComponentFactory = 'player.ExperienceComponentFactory',
 
     //stubs
-    StubItemStorage01 = 'player.stubs.ItemStorage01',
+    // StubItemStorage01 = 'player.stubs.ItemStorage01',
+    StubFactory = 'StubFactory',
 
     //ui
     //components

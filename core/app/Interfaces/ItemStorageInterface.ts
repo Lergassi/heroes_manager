@@ -1,5 +1,6 @@
 import Item from '../Entities/Item.js';
 import {unsigned} from '../../types/main.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 
 /**
  * Для сумки и коллекции сумок, стеков и других мест где нужно добавлять предметы.
@@ -14,17 +15,15 @@ export default interface ItemStorageInterface {
      */
     addItem(item: Item, count: unsigned): unsigned;
 
-    // /**
-    //  *
-    //  * @param item
-    //  * @param count Кол-во не удаленных предметов.
-    //  */
-    // removeItem(item: Item, count: unsigned): unsigned;
-
-    // totalItemCount(item: Item): boolean;
-    // containsItem(item: Item): boolean;
-    // containsItemCount(item: Item, count: unsigned): boolean;
-    // takeItem(item: Item, count: unsigned): boolean;
+    // totalItem(ID: ItemID): number;
+    containItem(ID: ItemID, count: number): boolean;
+    /**
+     * Удаляет предметы из хранилища. Стекуемые и не стекуемые.
+     * @param ID
+     * @param count
+     * @return Кол-во удаленных предметов.
+     */
+    removeItem(ID: ItemID, count: number): number;
     // hasFreeSlot(): boolean;
     moveTo(itemStorage: ItemStorageInterface): void;
 }

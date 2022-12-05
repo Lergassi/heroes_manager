@@ -37,6 +37,41 @@ import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import HeroCharacterAttributeFactory from '../../Factories/HeroCharacterAttributeFactory.js';
 import ItemStorageControllerWithLimit from '../../Components/ItemStorageControllerWithLimit.js';
+import GameConsole from '../../../source/GameConsole/GameConsole.js';
+import HelpCommand from '../../../../server/app/Commands/HelpCommand.js';
+import ListCommand from '../../../../server/app/Commands/ListCommand.js';
+import NewGameCommand from '../../Commands/NewGameCommand.js';
+import CreatePlayerEnvironmentCommand from '../../Commands/CreatePlayerEnvironmentCommand.js';
+import CreateStartPlayerObjectsCommand from '../../Commands/CreateStartPlayerObjectsCommand.js';
+import DebugEntityManagerCommand from '../../Commands/DebugCommands/DebugEntityManagerCommand.js';
+import DebugContainerCommand from '../../../../server/app/Commands/DebugCommands/DebugContainerCommand.js';
+import DebugGameObjectStorageCommand from '../../Commands/DebugCommands/DebugGameObjectStorageCommand.js';
+import InspectGameObjectCommand from '../../Commands/DebugCommands/InspectGameObjectCommand.js';
+import DebugItemDatabaseCommand from '../../Commands/DebugCommands/DebugItemDatabaseCommand.js';
+import DebugUserEnvironmentCommand from '../../../../server/app/Commands/DebugCommands/DebugUserEnvironmentCommand.js';
+import DebugPlayerEnvironmentCommand from '../../Commands/DebugCommands/DebugPlayerEnvironmentCommand.js';
+import CreateStubObjectsCommand from '../../Commands/CreateStubObjectsCommand.js';
+import AddGoldCommand from '../../Commands/AddGoldCommand.js';
+import CreateItemStorageCommand from '../../Commands/CreateItemStorageCommand.js';
+import CreateItemCommand from '../../Commands/CreateItemCommand.js';
+import ClearItemStorageSlotCommand from '../../Commands/ClearItemStorageSlotCommand.js';
+import CreateItemKitCommand from '../../Commands/CreateItemKitCommand.js';
+import CreateHeroCommand from '../../Commands/CreateHeroCommand.js';
+import DeleteHeroCommand from '../../Commands/DeleteHeroCommand.js';
+import KillHeroCommand from '../../Commands/KillHeroCommand.js';
+import ResurrectHeroCommand from '../../Commands/ResurrectHeroCommand.js';
+import CreateAllHeroClassesCommand from '../../Commands/CreateAllHeroClassesCommand.js';
+import CreateRandomHeroClassCommand from '../../Commands/CreateRandomHeroClassCommand.js';
+import EquipCommand from '../../Commands/EquipCommand.js';
+import RemoveEquipCommand from '../../Commands/RemoveEquipCommand.js';
+import CreateLocationCommand from '../../Commands/CreateLocationCommand.js';
+import DeleteLocationCommand from '../../Commands/DeleteLocationCommand.js';
+import AddHeroToLocationCommand from '../../Commands/AddHeroToLocationCommand.js';
+import RemoveHeroFromLocationCommand from '../../Commands/RemoveHeroFromLocationCommand.js';
+import ToggleLocationCommand from '../../Commands/ToggleLocationCommand.js';
+import GetRewardFromLocationCommand from '../../Commands/GetRewardFromLocationCommand.js';
+import FightCommand from '../../Commands/FightCommand.js';
+import StubFactory from '../StubFactory.js';
 
 /**
  * todo: Временно не актуально.
@@ -219,6 +254,10 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             ));
 
             return mainLocationListComponent;
+        });
+
+        container.set(ContainerID.StubFactory, (container) => {
+            return new StubFactory(container);
         });
 
         debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));

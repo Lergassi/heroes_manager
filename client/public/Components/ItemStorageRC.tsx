@@ -13,11 +13,13 @@ import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemDatabase from '../../../core/source/ItemDatabase.js';
 import {ItemID} from '../../../core/types/enums/ItemID.js';
 import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 
 export interface ItemStorageUIProps {
     size: number;
     columns: number;
-    itemStorage?: ItemStorageV2;    //todo: Вопрос: интерфейс или класс? Или вообще другой интерфейс никак не связанный с объектом.
+    // itemStorage?: ItemStorageV2;    //todo: Вопрос: интерфейс или класс? Или вообще другой интерфейс никак не связанный с объектом.
+    itemStorage?: ItemStorageInterface;    //todo: Вопрос: интерфейс или класс? Или вообще другой интерфейс никак не связанный с объектом.
 }
 
 export interface ItemStorageUIState {
@@ -67,11 +69,11 @@ export default class ItemStorageRC extends React.Component<ItemStorageUIProps, I
     }
 
     componentDidMount() {
-        this.props.itemStorage?.attach({
-            updateHandler: (index, item, count) => {
-                this.updateSlot(index, item, count);
-            },
-        });
+        // this.props.itemStorage?.attach({
+        //     updateHandler: (index, item, count) => {
+        //         this.updateSlot(index, item, count);
+        //     },
+        // });
     }
 
     //todo: Позже класс будет универсальный и не будет зависить от предмета, а для предмета будет другой класс.

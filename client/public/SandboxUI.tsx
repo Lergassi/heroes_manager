@@ -29,6 +29,7 @@ import ItemStorageController from '../../core/app/Components/ItemStorageControll
 import MainHeroListComponent from '../../core/app/Components/MainHeroListComponent.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
+import StubFactory from '../../core/app/Services/StubFactory.js';
 
 function Hello(props) {
     console.log('Hello.this', this);
@@ -249,7 +250,9 @@ export default class SandboxUI {
     }
 
     private devItemStorage() {
-        let itemStorage = this._container.get<GameObject>(ContainerID.StubItemStorage01);
+        // let itemStorage = this._container.get<GameObject>(ContainerID.StubItemStorage01);
+        let itemStorage = this._container.get<StubFactory>(ContainerID.StubFactory).createDefaultItemStorage();
+        // let itemStorage = new ItemStorageV2(20);
 
         this._root.render(
             <div>
@@ -261,7 +264,8 @@ export default class SandboxUI {
                         <ItemStorageRC
                             size={20}
                             columns={4}
-                            itemStorage={itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent)}  /* todo: Не удобно: внутри дальше планируются только интерфейсы. */
+                            // itemStorage={itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent)}  /* todo: Не удобно: внутри дальше планируются только интерфейсы. */
+                            itemStorage={itemStorage}  /* todo: Не удобно: внутри дальше планируются только интерфейсы. */
                         />
                     </div>
                 </div>
