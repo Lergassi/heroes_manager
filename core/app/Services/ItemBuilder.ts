@@ -19,6 +19,7 @@ import Icon from '../Entities/Icon.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import debug from 'debug';
+import _ from 'lodash';
 
 export interface ItemBuilderOptions {
     description: string;
@@ -27,6 +28,8 @@ export interface ItemBuilderOptions {
     stackSize: number;
     itemLevel: number;
     sort: number;
+    defaultBuyPrice: number;
+    defaultSellPrice: number;
     quality: string;
     getTypes: ItemGetType[];
     properties: ItemPropertiesBuilderOptions;
@@ -127,12 +130,11 @@ export default class ItemBuilder {
         this._options = {};
         this._options.getTypes = options.getTypes ?? [];
 
-        this._properties = (new ItemPropertiesBuilder({
-            armorMaterial: options?.properties?.armorMaterialID ?
-                this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, options.properties.armorMaterialID) :
-                undefined,
-            twoHandWeapon: options?.properties?.twoHandWeapon,
-        })).build();
+        this._properties = {};
+        if (options.properties?.armorMaterialID) this._properties['armorMaterial'] = this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, options.properties.armorMaterialID);
+        if (options.properties?.twoHandWeapon) this._properties['twoHandWeapon'] = options.properties.twoHandWeapon;
+        if (options.properties?.defaultBuyPrice) this._properties['defaultBuyPrice'] = options.properties.defaultBuyPrice;
+        if (options.properties?.defaultSellPrice) this._properties['defaultSellPrice'] = options.properties.defaultSellPrice;
 
         return this;
     }

@@ -92,3 +92,7 @@ export function assertIsInstanceOf(value: any, target: any, message?: string) {
 export function assertAction(condition: boolean, message?: string) {
     assert(condition, 'Действие не доступно.');
 }
+
+export function assertIsInteger(value: number, message?: string) {
+    assert(_.isInteger(value), 'Значение должно быть целым числом.');
+}

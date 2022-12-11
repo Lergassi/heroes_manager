@@ -1,20 +1,26 @@
 import {unsigned} from '../../types/main.js';
 
 export default interface WalletInterface {
+    get value(): number;
+
     /**
      * @param value
      * @return Остаток.
      */
-    add(value: unsigned): unsigned;
+    add(value: number): number;
 
+    /**
+     *
+     * @param value
+     * @return Кол-во удаленных единиц валюты.
+     */
+    remove(value: number): number;
     /**
      *
      * @param target
      * @return Остаток в кошельке.
      */
     moveTo(target: WalletInterface): number;
-    //todo:
-    // remove(value: unsigned): unsigned;
     // has(value: unsigned): boolean;
     // render(callb);
     // addListener();

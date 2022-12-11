@@ -12,7 +12,10 @@ import EventSystem from '../../source/EventSystem.js';
 import AppError from '../../source/Errors/AppError.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 
-export default class ItemStorageControllerWithLimit implements ItemStorageControllerInterface, ItemStorageInterface {
+/**
+ * @deprecated
+ */
+export default class ItemStorageControllerWithLimit {
     private readonly _maxItemStorages: unsigned;
     private readonly _itemStorageController: ItemStorageController;
     private readonly _itemStorages: GameObject[];
@@ -26,7 +29,7 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
 
         this._maxItemStorages = maxItemStorages;
         this._itemStorages = [];    //todo: Возможно это не правильно и нужно иметь доступ к
-        this._itemStorageController = new ItemStorageController();
+        this._itemStorageController = new ItemStorageController(maxItemStorages);
     }
 
     addItemStorage(itemStorage: GameObject): number {
@@ -79,7 +82,11 @@ export default class ItemStorageControllerWithLimit implements ItemStorageContro
         return this._itemStorageController.removeItem(ID, count);
     }
 
-    containItem(ID: ItemID, count: number): boolean {
-        return this._itemStorageController.containItem(ID, count);
+    containItem(ID: ItemID): number {
+        return this._itemStorageController.containItem(ID);
+    }
+
+    canAddItem(item: Item, count: number): number {
+        return 0;
     }
 }

@@ -33,6 +33,12 @@ export default class ItemsLoader {
                             iconID: data[i].IconID,
                             itemLevel: Number(data[i].ItemLevel),
                             characterAttributes: characterAttributes,
+                            properties: {
+                                armorMaterialID: data[i].ArmorMaterialID,
+                                twoHandWeapon: Boolean(data[i].TwoHandWeapon),
+                                defaultBuyPrice: Number(data[i].DefaultBuyPrice),
+                                defaultSellPrice: Number(data[i].DefaultSellPrice),
+                            },
                         },
                     )
             );

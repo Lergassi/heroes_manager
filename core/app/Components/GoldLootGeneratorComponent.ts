@@ -1,6 +1,6 @@
 import {unsigned} from '../../types/main.js';
 import _ from 'lodash';
-import WalletComponent from './WalletComponent.js';
+import Wallet from './Wallet.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';

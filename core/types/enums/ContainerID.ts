@@ -19,6 +19,9 @@ export enum ContainerID {
     CharacterAttributeStartValueGenerator = 'player.CharacterAttributeStartValueGenerator',
     CharacterAttributeValueGenerator = 'player.CharacterAttributeValueGenerator',
 
+    Shop = 'player.Shop',
+    Fence = 'player.Fence',
+
     //фабрики
     HeroFactory = 'player.HeroFactory',
     LocationFactory = 'player.LocationFactory',

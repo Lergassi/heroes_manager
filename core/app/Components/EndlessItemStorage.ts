@@ -7,6 +7,9 @@ import {ItemID} from '../../types/enums/ItemID.js';
 import AppError from '../../source/Errors/AppError.js';
 import {assertIsGreaterThanOrEqual} from '../../source/assert.js';
 
+/**
+ * @deprecated Неудачное решение.
+ */
 export default class EndlessItemStorage implements ItemStorageInterface {
     addItem(item: Item, count: unsigned): unsigned {
         assertIsGreaterThanOrEqual(count, 0);
@@ -24,10 +27,11 @@ export default class EndlessItemStorage implements ItemStorageInterface {
         return count;
     }
 
-    containItem(ID: ItemID, count: number): boolean {
-        assertIsGreaterThanOrEqual(count, 0);
-        if (count <= 0) return false;
+    containItem(ID: ItemID): number {
+        return 2147483647;
+    }
 
-        return true;
+    canAddItem(item: Item, count: number): number {
+        return count;
     }
 }

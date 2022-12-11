@@ -65,4 +65,13 @@ export default class EntityManager implements EntityManagerInterface {
             return recipe.resultItem.id === resultItem;
         })[0];
     }
+
+    map<T>(entityID: EntityID, callback: (entity: T) => void) {
+        assertNotNil(this._entities[entityID]);
+        assertNotNil(callback);
+
+        _.map(this._entities[entityID], (entity) => {
+            callback(entity);
+        });
+    }
 }

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
-import WalletComponent from '../../../core/app/Components/WalletComponent.js';
+import Wallet from '../../../core/app/Components/Wallet.js';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
 import {assert, assertNotNil} from '../../../core/source/assert.js';
 
@@ -16,7 +16,7 @@ export interface WalletRC2State {
 }
 
 export default class WalletRC2 extends React.Component<WalletRC2Props, WalletRC2State> {
-    private _target: WalletComponent;
+    private _target: Wallet;
 
     constructor(props: WalletRC2Props) {
         super(props);
@@ -51,24 +51,24 @@ export default class WalletRC2 extends React.Component<WalletRC2Props, WalletRC2
     // }
 
 
-    attach(target: WalletComponent) {
+    attach(target: Wallet) {
     // attach(target: AttachInterface) {
         if (this._target && this._target !== target) {
             // this._target.detach();
-            this.detach();
+            // this.detach();
         }
 
         if (this._target && this._target === target) return;
 
         this._target = target;
-        target.attach(this);
+        // target.attach(this);
         console.log('окно открывается');
     }
 
     detach() {
         if (!this._target) return;
 
-        this._target.detach();
+        // this._target.detach();
         this._target = null;
         console.log('окно закрывается');
     }

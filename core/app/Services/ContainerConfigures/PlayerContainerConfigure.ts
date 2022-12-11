@@ -24,7 +24,7 @@ import MainLocationListComponent from '../../Components/MainLocationListComponen
 import ExperienceComponentFactory from '../../Factories/ExperienceComponentFactory.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
 import ExperienceComponent from '../../Components/ExperienceComponent.js';
-import WalletComponent from '../../Components/WalletComponent.js';
+import Wallet from '../../Components/Wallet.js';
 import Currency from '../../Entities/Currency.js';
 import _ from 'lodash';
 import {ContainerID} from '../../../types/enums/ContainerID.js';
@@ -72,6 +72,10 @@ import ToggleLocationCommand from '../../Commands/ToggleLocationCommand.js';
 import GetRewardFromLocationCommand from '../../Commands/GetRewardFromLocationCommand.js';
 import FightCommand from '../../Commands/FightCommand.js';
 import StubFactory from '../StubFactory.js';
+import ItemStorageController from '../../Components/ItemStorageController.js';
+import Shop from '../../Components/Shop.js';
+import Item from '../../Entities/Item.js';
+import Fence from '../../Components/Fence.js';
 
 /**
  * todo: Временно не актуально.
@@ -144,7 +148,6 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             _.map(currencies, (value, currencyID) => {
                 walletFactory.create(
-                    container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, currencyID),
                     value,
                 );
             });
@@ -197,7 +200,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //     return itemStorageCollectionComponent;
         // });
         container.set(ContainerID.ItemStorageController, (container) => {
-            return new ItemStorageControllerWithLimit(4);
+            let max = 4;
+            return new ItemStorageController(max);
         });
         container.set<ItemStorageFactory>(ContainerID.ItemStorageFactory, (container) => {
             return new ItemStorageFactory(
@@ -254,6 +258,23 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             ));
 
             return mainLocationListComponent;
+        });
+
+        container.set(ContainerID.Shop, (container) => {
+            let shop = new Shop();
+            container.get<EntityManagerInterface>(ContainerID.EntityManager).map<Item>(EntityID.Item, (item) => {
+                shop.config(item, item.getProperty('defaultBuyPrice'));
+            });
+
+            return shop;
+        });
+        container.set(ContainerID.Fence, (container) => {
+            let fence = new Fence();
+            container.get<EntityManagerInterface>(ContainerID.EntityManager).map<Item>(EntityID.Item, (item) => {
+                fence.config(item, item.getProperty('defaultSellPrice'));
+            });
+
+            return fence;
         });
 
         container.set(ContainerID.StubFactory, (container) => {

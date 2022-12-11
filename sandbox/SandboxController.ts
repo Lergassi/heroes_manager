@@ -39,7 +39,7 @@ import CharacterStateController, {CharacterStateCode} from '../core/app/Componen
 import CharacterFightGroup from '../core/app/Components/CharacterFightGroup.js';
 import {CurrencyID} from '../core/types/enums/CurrencyID.js';
 import WalletFactory from '../core/app/Factories/WalletFactory.js';
-import WalletComponent from '../core/app/Components/WalletComponent.js';
+import Wallet from '../core/app/Components/Wallet.js';
 import ExperienceComponent from '../core/app/Components/ExperienceComponent.js';
 import GatheringPoint from '../core/app/Components/GatheringPoint.js';
 import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
@@ -61,6 +61,9 @@ import FightSandboxController from './SandboxControllers/FightSandboxController.
 import BagSandboxController from './SandboxControllers/BagSandboxController.js';
 import CraftSystemSandboxController from './SandboxControllers/CraftSystemSandboxController.js';
 import RecipesSandboxController from './SandboxControllers/RecipesSandboxController.js';
+import ShopSandboxController from './SandboxControllers/ShopSandboxController.js';
+import WalletInterface from '../core/app/Interfaces/WalletInterface.js';
+import EntityManagerSandboxController from './SandboxControllers/EntityManagerSandboxController.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -89,13 +92,16 @@ export default class SandboxController {
         // (new LoadItemDatabaseController(this._container)).run();
         // (new FightSandboxController(this._container)).run();
         // (new BagSandboxController(this._container)).run();
-        (new CraftSystemSandboxController(this._container)).run();
+        // (new CraftSystemSandboxController(this._container)).run();
         // (new RecipesSandboxController(this._container)).run();
+        (new ShopSandboxController(this._container)).run();
+        // (new EntityManagerSandboxController(this._container)).run();
 
         // this._testSumBoolean();
         // this._testLodashEvery();
         // this._testGenerics();
         // this._testClearTimeout();
+        // this._testIndexArray();
 
         // this.devNewItemStorage();
         // this._devItemDatabase();
@@ -422,7 +428,7 @@ export default class SandboxController {
             // });
             // heroFightController.attackTo2(enemyFightController, {
             heroFightController.attackTo(enemyFightController, {
-                wallet: this._container.get<WalletFactory>(ContainerID.WalletFactory).create(CurrencyID.Gold).get<WalletComponent>(ComponentID.Wallet),
+                wallet: this._container.get<WalletFactory>(ContainerID.WalletFactory).create().get<WalletInterface>(ComponentID.Wallet),
                 experienceDistributor: new ExperienceComponent(1, 100),
             });
             console.log(separator('enemyFightController атакует heroFightController'));
@@ -852,26 +858,26 @@ export default class SandboxController {
         // // console.log(itemStorageController);
     }
 
-    private _devEventSystemWithoutTarget() {
-        EventSystem2.init();
-
-        let wallet = new WalletComponent(this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, CurrencyID.Gold));
-        let wallet2 = new WalletComponent(this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, CurrencyID.Gold));
-
-        EventSystem2.addListener([EventCode.Wallet_AddCurrency], (target) => {
-            console.log('target', target);
-            console.log('новый вариант');
-        });
-        // EventSystem.addListener({codes: [EventCode.Wallet_AddCurrency], listener: {target: wallet, callback: (target) => {console.log('старый вариант');}}});
-
-        wallet.add(10);
-        wallet.add(10);
-        wallet.add(10);
-
-        wallet2.add(100);
-        wallet2.add(100);
-        wallet2.add(100);
-    }
+    // private _devEventSystemWithoutTarget() {
+    //     EventSystem2.init();
+    //
+    //     let wallet = new WalletComponent(this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, CurrencyID.Gold));
+    //     let wallet2 = new WalletComponent(this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Currency>(EntityID.Currency, CurrencyID.Gold));
+    //
+    //     EventSystem2.addListener([EventCode.Wallet_AddCurrency], (target) => {
+    //         console.log('target', target);
+    //         console.log('новый вариант');
+    //     });
+    //     // EventSystem.addListener({codes: [EventCode.Wallet_AddCurrency], listener: {target: wallet, callback: (target) => {console.log('старый вариант');}}});
+    //
+    //     wallet.add(10);
+    //     wallet.add(10);
+    //     wallet.add(10);
+    //
+    //     wallet2.add(100);
+    //     wallet2.add(100);
+    //     wallet2.add(100);
+    // }
 
     private _testGenerics() {
         let testGenerics = new TestGenerics();
@@ -949,5 +955,14 @@ export default class SandboxController {
         }, 2000);
         console.log(id);
         clearTimeout(id);
+    }
+
+    private _testIndexArray() {
+        let a = [1,2,3, undefined, 5];
+        console.log(a);
+        console.log(a[0]);
+        console.log(a[3]);
+        console.log(a[4]);
+        console.log(a[10]);
     }
 }

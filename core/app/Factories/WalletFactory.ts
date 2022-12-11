@@ -1,4 +1,4 @@
-import WalletComponent from '../Components/WalletComponent.js';
+import Wallet from '../Components/Wallet.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import {unsigned} from '../../types/main.js';
 import Currency from '../Entities/Currency.js';
@@ -22,24 +22,16 @@ export default class WalletFactory {
     }
 
     create(
-        currency: Currency | CurrencyID,
         value: unsigned = 0,
     ): GameObject {
-        if (!(currency instanceof Currency)) {
-            currency = this._entityManager.get<Currency>(EntityID.Currency, currency);
-        }
-
         let wallet = this._gameObjectFactory.create();
 
         wallet.name = 'Wallet';
         wallet.addTags([
             '#wallet',
-            '#wallet.' + currency['_id'],   //todo: Доступ.
         ]);
 
-        // wallet.set(WalletComponent.name, new WalletComponent(
-        wallet.set(ComponentID.Wallet, new WalletComponent(
-            currency,
+        wallet.set(ComponentID.Wallet, new Wallet(
             value,
         ));
 

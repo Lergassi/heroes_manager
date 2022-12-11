@@ -274,7 +274,7 @@ export default class SandboxUI {
     }
 
     private async _renderItemStorageController() {
-        let itemStorageController = new ItemStorageController();
+        let itemStorageController = new ItemStorageController(1);
         itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
         itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
         itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));

@@ -25,7 +25,8 @@ export default class ItemStorageSlotComponent implements ItemStackControllerInte
      * @private
      */
     private _itemStack: ItemStack;
-    private _itemStackController: ItemStackControllerInterface;
+    // private _itemStackController: ItemStackControllerInterface;
+    private _itemStackController: ItemStackController;
 
     /**
      * @deprecated
@@ -146,5 +147,9 @@ export default class ItemStorageSlotComponent implements ItemStackControllerInte
 
     containItem(ID: ItemID, count: number): boolean {
         return false;
+    }
+
+    canAddItem(item: Item, count: number): number {
+        return 0;
     }
 }

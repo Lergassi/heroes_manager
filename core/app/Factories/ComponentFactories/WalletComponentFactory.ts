@@ -1,4 +1,4 @@
-import WalletComponent from '../../Components/WalletComponent.js';
+import Wallet from '../../Components/Wallet.js';
 import Currency from '../../Entities/Currency.js';
 import {unsigned} from '../../../types/main.js';
 
@@ -6,9 +6,8 @@ export default class WalletComponentFactory {
     create(options: {
         currency: Currency,
         value: unsigned,
-    },): WalletComponent {
-        return new WalletComponent(
-            options.currency,
+    },): Wallet {
+        return new Wallet(
             options.value,
         );
     }

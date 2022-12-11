@@ -11,21 +11,31 @@ import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
 import AppError from '../../source/Errors/AppError.js';
 import {ItemID} from '../../types/enums/ItemID.js';
+import {assertIsGreaterThanOrEqual, assertIsPositive} from '../../source/assert.js';
 
 export default class ItemStorageController implements ItemStorageControllerInterface, ItemStorageInterface {
     private readonly _itemStorages: GameObject[];
+    private readonly _max: number;
 
     get length(): number {
         return this._itemStorages.length;
     }
 
-    constructor() {
+    constructor(max: number) {
+        assertIsPositive(max)
+
         this._itemStorages = [];
+        this._max = max;
     }
 
     //todo: Убрать GameObject.
+    //todo: Учесть в будущем, что создание itemStorage происходит за пределами контроллера.
     addItemStorage(itemStorage: GameObject): number {
         if (_.includes(this._itemStorages, itemStorage)) return -1;
+        if (this._itemStorages.length >= this._max) {
+            debug(DebugNamespaceID.Throw)('У игрока максимальное кол-во сумок.');
+            return -1;
+        }
 
         this._itemStorages.push(itemStorage);
         debug(DebugNamespaceID.Log)('Добавлен ItemStorage.');
@@ -107,11 +117,16 @@ export default class ItemStorageController implements ItemStorageControllerInter
         return originCount - count;
     }
 
-    containItem(ID: ItemID, count: number): boolean {
+    containItem(ID: ItemID): number {
+        let count = 0;
         for (let i = 0; i < this._itemStorages.length; i++) {
-            if (this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).containItem(ID, count)) return true;
+            count += this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).containItem(ID);
         }
 
-        return false;
+        return count;
+    }
+
+    canAddItem(item: Item, count: number): number {
+        return 0;
     }
 }

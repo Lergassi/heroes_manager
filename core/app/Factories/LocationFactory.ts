@@ -13,7 +13,7 @@ import ItemCategory from '../Entities/ItemCategory.js';
 import {unsigned} from '../../types/main.js';
 import {ONE_HOUR_IN_SECONDS} from '../consts.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
-import WalletComponent from '../Components/WalletComponent.js';
+import Wallet from '../Components/Wallet.js';
 import Currency from '../Entities/Currency.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
@@ -99,8 +99,7 @@ export default class LocationFactory {
         let location = this._gameObjectFactory.create();
 
         //todo: Доступ к кошельку нужно сделать удобнее, а не по ID валюты из контейнера.
-        location.set<WalletComponent>(CurrencyID.Gold, new WalletComponent(
-            this._entityManager.get<Currency>(EntityID.Currency, CurrencyID.Gold),
+        location.set<Wallet>(CurrencyID.Gold, new Wallet(
             0,
         ));
         let heroGroupComponent = location.set<HeroGroup>('heroGroupComponent', new HeroGroup(
@@ -173,7 +172,7 @@ export default class LocationFactory {
             // }),
             this._itemStackFactory,
             itemStorageComponent,
-            this._walletFactory.create(CurrencyID.Gold).get<WalletInterface>(ComponentID.Wallet), //Можно передать любой кошелек.
+            this._walletFactory.create().get<WalletInterface>(ComponentID.Wallet), //Можно передать любой кошелек.
             //@test
             [
                 this._enemyFactory.create(EnemyID.Bear, 1),

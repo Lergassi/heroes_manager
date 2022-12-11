@@ -10,7 +10,7 @@ import MagicPointsComponent from '../app/Components/MagicPointsComponent.js';
 import HeroComponent from '../app/Components/HeroComponent.js';
 import ItemStack from '../app/RuntimeObjects/ItemStack.js';
 import ItemStorageSlotComponent from '../app/Components/ItemStorageSlotComponent.js';
-import WalletComponent from '../app/Components/WalletComponent.js';
+import Wallet from '../app/Components/Wallet.js';
 import ItemStorageComponent from '../app/Components/ItemStorageComponent.js';
 import GameObjectStorage from '../source/GameObjectStorage.js';
 import ContainerInterface from '../source/ContainerInterface.js';
@@ -279,7 +279,7 @@ export function debugWallet(wallet: GameObject) {
     debugGameObject(wallet);
     let walletComponent = wallet.getComponentByName(ComponentID.Wallet);
     debug(DebugNamespaceID.Debug)('%j', {
-        component: WalletComponent.name,
+        component: Wallet.name,
         _id: walletComponent['_id'],
         name: walletComponent['_currency']['_name'],
         value: walletComponent['_value'],

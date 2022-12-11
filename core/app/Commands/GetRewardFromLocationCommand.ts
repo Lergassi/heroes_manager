@@ -6,9 +6,10 @@ import ItemStorageManager from '../Services/ItemStorageManager.js';
 import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
-import WalletComponent from '../Components/WalletComponent.js';
+import Wallet from '../Components/Wallet.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
+import WalletInterface from '../Interfaces/WalletInterface.js';
 
 export default class GetRewardFromLocationCommand extends Command {
     get name(): string {
@@ -36,7 +37,7 @@ export default class GetRewardFromLocationCommand extends Command {
             ?.getReward({
                 // itemStorage: this.container.get<ItemStorageManager>(ContainerID.ItemStorageManager),
                 itemStorage: this.container.get<ItemStorageInterface>(ContainerID.ItemStorageController),
-                wallet: this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByTag('#wallet.' + CurrencyID.Gold).get<WalletComponent>(ComponentID.Wallet),
+                wallet: this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByTag('#wallet').get<WalletInterface>(ComponentID.Wallet),
             })
         ;
     }

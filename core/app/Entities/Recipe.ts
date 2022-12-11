@@ -50,7 +50,7 @@ export default class Recipe {
 
     containRequireItems(itemStorage: ItemStorageInterface): boolean {
         for (let i = 0; i < this._requireItems.length; i++) {
-            if (!itemStorage.containItem(<ItemID>this._requireItems[i].item.id, this._requireItems[i].count)) return false;
+            if (itemStorage.containItem(<ItemID>this._requireItems[i].item.id) < this._requireItems[i].count) return false;
         }
 
         return true;
@@ -59,7 +59,7 @@ export default class Recipe {
     /**
      *
      * @param itemStorage
-     * @return Остаток
+     * @return Остаток.
      */
     createItem(itemStorage: ItemStorageInterface): number {
         return itemStorage.addItem(this._resultItem, this._resultCount);
@@ -67,17 +67,15 @@ export default class Recipe {
 
     createRequireItems(itemStorage: ItemStorageInterface): void {
         for (let i = 0; i < this._requireItems.length; i++) {
+            //todo: Нужно учитывать, что может не хватить места. Что делать в таком случае? Проверка и ничего не делать? callback и/или отдельный класс?
             itemStorage.addItem(this._requireItems[i].item, this._requireItems[i].count);
         }
     }
 
     removeRequireItems(itemStorage: ItemStorageInterface): void {
         for (let i = 0; i < this._requireItems.length; i++) {
+            //todo: Нужна ли реакция на отсутствие предметов?
             itemStorage.removeItem(<ItemID>this._requireItems[i].item.id, this._requireItems[i].count);
         }
     }
-
-    // removeRequireItems(itemStorage: ItemStorageInterface) {
-    //
-    // }
 }

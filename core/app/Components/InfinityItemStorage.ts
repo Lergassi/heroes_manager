@@ -19,7 +19,7 @@ export default class InfinityItemStorage implements ItemStorageInterface {
     }
 
     addItem(item: Item, count: unsigned): unsigned {
-        if (!this.containItem(<ItemID>item.id, 1)) {
+        if (!this.containItem(<ItemID>item.id)) {
             this._items[<ItemID>item.id] = new InfinityItemStackController();
         }
 
@@ -28,8 +28,8 @@ export default class InfinityItemStorage implements ItemStorageInterface {
         return 0;
     }
 
-    containItem(ID: ItemID, count: number): boolean {
-        return this._items.hasOwnProperty(ID) && this._items[ID].containItem(ID, count);
+    containItem(ID: ItemID): number {
+        return this._items.hasOwnProperty(ID) ? this._items[ID].containItem(ID) : 0;
     }
 
     moveTo(itemStorage: ItemStorageInterface): void {
@@ -37,14 +37,18 @@ export default class InfinityItemStorage implements ItemStorageInterface {
     }
 
     removeItem(ID: ItemID, count: number): number {
-        if (!this.containItem(ID, count)) return 0;
+        if (!this.containItem(ID)) return 0;
 
         let originCount = count;
         count -= this._items[ID].removeItem(ID, count);
-        if (!this._items[ID].containItem(ID, 1)) {
+        if (!this._items[ID].containItem(ID)) {
             delete this._items[ID];
         }
 
         return originCount - count;
+    }
+
+    canAddItem(item: Item, count: number): number {
+        return 0;
     }
 }

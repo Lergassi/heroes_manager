@@ -22,7 +22,7 @@ import HealthPointsComponent from '../Components/HealthPointsComponent.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
 import AttackController from '../Components/AttackController.js';
 import PlayerComponent from '../Components/PlayerComponent.js';
-import WalletComponent from '../Components/WalletComponent.js';
+import Wallet from '../Components/Wallet.js';
 import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
 
 export default class MetadataManagerCreator {

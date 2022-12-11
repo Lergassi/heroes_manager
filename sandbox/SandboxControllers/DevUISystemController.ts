@@ -8,7 +8,7 @@ import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import WalletFactory from '../../core/app/Factories/WalletFactory.js';
 import {CurrencyID} from '../../core/types/enums/CurrencyID.js';
-import WalletComponent from '../../core/app/Components/WalletComponent.js';
+import Wallet from '../../core/app/Components/Wallet.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import HeroComponent from '../../core/app/Components/HeroComponent.js';
@@ -52,13 +52,13 @@ export default class DevUISystemController extends AbstractSandboxController {
     }
 
     private _wallet() {
-        let wallet = this.container.get<WalletFactory>(ContainerID.WalletFactory).create(CurrencyID.Gold, 100);
-        wallet.get<WalletComponent>(ComponentID.Wallet).add(12);
-        wallet.get<WalletComponent>(ComponentID.Wallet).add(12);
-        wallet.get<WalletComponent>(ComponentID.Wallet).add(12);
+        let wallet = this.container.get<WalletFactory>(ContainerID.WalletFactory).create(100);
+        wallet.get<Wallet>(ComponentID.Wallet).add(12);
+        wallet.get<Wallet>(ComponentID.Wallet).add(12);
+        wallet.get<Wallet>(ComponentID.Wallet).add(12);
         console.log(wallet);
 
-        wallet.get<WalletComponent>(ComponentID.Wallet).view((value: number) => {
+        wallet.get<Wallet>(ComponentID.Wallet).view((value: number) => {
             console.log(value);
         });
     }

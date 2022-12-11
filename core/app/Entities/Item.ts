@@ -9,7 +9,7 @@ import Icon from './Icon.js';
 import {
     assertIsGreaterThanOrEqual,
     assertIsInstanceOf,
-    assertIsNumber,
+    assertIsNumber, assertIsPositive,
     assertIsString,
     assertNotNil
 } from '../../source/assert.js';
@@ -36,9 +36,17 @@ export type ItemFilterCondition = Readonly<Partial<{
 /**
  * Не обязательные свойства. Атрибуты отдельно.
  */
-export interface ItemProperties {
+// export interface ItemProperties {
+//     armorMaterial?: ArmorMaterial;
+//     twoHandWeapon?: boolean;    //Всё оружие по умолчанию одноручное.
+//     defaultBuyPrice?: number;
+//     defaultSellPrice?: number;
+// }
+export type ItemProperties = {
     armorMaterial?: ArmorMaterial;
     twoHandWeapon?: boolean;    //Всё оружие по умолчанию одноручное.
+    defaultBuyPrice?: number;
+    defaultSellPrice?: number;
 }
 
 export type CharacterAttributeRecord = {[ID in CharacterAttributeID]: number};
@@ -180,5 +188,12 @@ export default class Item {                             //private or public? Ф�
     //todo: Метод должен быть в свойствах.
     isTwoHandWeapon(): boolean {
         return Boolean(this.properties.twoHandWeapon);
+    }
+
+    getProperty<T>(key: string): T {
+    // getProperty<T extends keyof ItemProperties>(key: keyof ItemProperties): T {
+    // getProperty(key: keyof ItemProperties) {
+    // getProperty<T>(key: keyof ItemProperties): T {
+        return this._properties[key];
     }
 }

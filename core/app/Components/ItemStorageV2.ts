@@ -23,7 +23,7 @@ interface ItemStorageUIInterface {
 //
 // }
 
-export default class ItemStorageV2 implements ItemStorageInterface /* ItemStorageUIInterface */ {
+export default class ItemStorageV2 implements ItemStorageInterface {
     private readonly _size: number;
     private readonly _itemStackControllers: ItemStackController[];
 
@@ -52,7 +52,7 @@ export default class ItemStorageV2 implements ItemStorageInterface /* ItemStorag
         }
 
         if (originCount !== count) {
-            debug(DebugNamespaceID.Log)(sprintf('В сумку добавлено предметов %s %s из %s.', item.name, originCount - count, originCount));
+            debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
         }
 
         //todo: Можно ввести уровень сообщений.
@@ -151,19 +151,31 @@ export default class ItemStorageV2 implements ItemStorageInterface /* ItemStorag
 
     removeItem(ID: ItemID, count: number): number {
         let originCount = count;
-        for (let i = 0; i < this._itemStackControllers.length; i++) {
+        for (let i = this._itemStackControllers.length - 1; i >= 0; i--) {
             count -= this._itemStackControllers[i].removeItem(ID, count);
             if (count <= 0) break;
         }
+        let removeItemsCount = originCount - count;
+        debug(DebugNamespaceID.Log)(sprintf('Удалено предметов "%s": %s из %s.', ID, removeItemsCount, originCount));
 
-        return originCount - count;
+        return removeItemsCount;
     }
 
-    containItem(ID: ItemID, count: number): boolean {
+    containItem(ID: ItemID): number {
+        let count = 0;
         for (let i = 0; i < this._itemStackControllers.length; i++) {
-            if (this._itemStackControllers[i].containItem(ID, count)) return true;
+            count += this._itemStackControllers[i].containItem(ID);
         }
 
-        return false;
+        return count;
+    }
+
+    canAddItem(item: Item, count: number): number {
+        let reminder = count;
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            reminder = this._itemStackControllers[i].canAddItem(item, reminder);
+        }
+
+        return reminder;
     }
 }

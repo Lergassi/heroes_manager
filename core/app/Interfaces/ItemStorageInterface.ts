@@ -16,7 +16,8 @@ export default interface ItemStorageInterface {
     addItem(item: Item, count: unsigned): unsigned;
 
     // totalItem(ID: ItemID): number;
-    containItem(ID: ItemID, count: number): boolean;
+    // containItem(ID: ItemID, count: number): boolean;
+    containItem(ID: ItemID): number;
     /**
      * Удаляет предметы из хранилища. Стекуемые и не стекуемые.
      * @param ID
@@ -24,6 +25,13 @@ export default interface ItemStorageInterface {
      * @return Кол-во удаленных предметов.
      */
     removeItem(ID: ItemID, count: number): number;
-    // hasFreeSlot(): boolean;
+
     moveTo(itemStorage: ItemStorageInterface): void;
+    /**
+     *
+     * @param item
+     * @param count
+     * @return Остаток.
+     */
+    canAddItem(item: Item, count: number): number;
 }

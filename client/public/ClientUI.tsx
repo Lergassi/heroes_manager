@@ -16,7 +16,7 @@ import GameObjectStorage from '../../core/source/GameObjectStorage.js';
 import {CurrencyID} from '../../core/types/enums/CurrencyID.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import WalletInterface from '../../core/app/Interfaces/WalletInterface.js';
-import WalletComponent from '../../core/app/Components/WalletComponent.js';
+import Wallet from '../../core/app/Components/Wallet.js';
 import {Example} from './_React/Test/Example.js';
 import useCustomHook from './_React/Test/test.js';
 import PlayerItemStorage from './_React/PlayerItemStorage.js';
@@ -60,9 +60,9 @@ export default class ClientUI {
 
     private _renderPreGameUI(root) {
         let wallets = {
-            player: new WalletComponent(new Currency('золото игрока', 'золото', 500), 0),
-            npc: new WalletComponent(new Currency('золото персонажа', 'золото', 500), 100),
-            location: new WalletComponent(new Currency('золото локации', 'золото', 500), 200),
+            player: new Wallet(0),
+            npc: new Wallet(100),
+            location: new Wallet(200),
         };
         // console.log('wallets', wallets);
         window['_wallets'] = wallets;

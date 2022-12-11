@@ -26,7 +26,8 @@ export enum ItemStorageComponentEventCode {
  * @deprecated Использовать ItemStorageV2.
  */
 // export default class ItemStorageComponent implements ItemStorageInterface, RenderInterface<{slots: {[key: string]: ItemStorageSlotComponent}}> {
-export default class ItemStorageComponent implements ItemStorageInterface {
+// export default class ItemStorageComponent implements ItemStorageInterface {
+export default class ItemStorageComponent {
 // export default class ItemStorageComponent implements ItemStorageInterface, RenderInterface {
     private readonly _size: number;
     private readonly _slots: {[key: string]: ItemStorageSlotComponent};
@@ -271,5 +272,9 @@ export default class ItemStorageComponent implements ItemStorageInterface {
 
     containItem(ID: ItemID, count: number): boolean {
         return false;
+    }
+
+    canAddItem(item: Item, count: number): number {
+        return 0;
     }
 }

@@ -141,15 +141,20 @@ export default class ItemStackController implements ItemStackControllerInterface
         return reminder;
     }
 
-    containItem(ID: ItemID, count: number): boolean {
-        if (count <= 0) return false;
-
-        // console.log('!_.isNil(this._item)', !_.isNil(this._item));
-        // console.log('this._count >= count', this._count >= count);
-        return !_.isNil(this._item) && this._item.id === ID && this._count >= count;
+    containItem(ID: ItemID): number {
+        return !_.isNil(this._item) && this._item.id === ID ? this._count : 0;
     }
 
     isFree(): boolean {
         return _.isNil(this._item);
+    }
+
+    canAddItem(item: Item, count: number): number {
+        if (!this._item) return item.stackSize >= count ? 0 : count - item.stackSize;
+        if (this._item && this._item !== item) return count;
+
+        let reminder = this._item.stackSize - this._count;
+
+        return reminder >= count ? 0 : count - reminder;
     }
 }

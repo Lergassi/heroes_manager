@@ -6,7 +6,7 @@ import {ContainerID} from '../../types/enums/ContainerID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
-import WalletComponent from '../Components/WalletComponent.js';
+import Wallet from '../Components/Wallet.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class ToggleLocationCommand extends Command {
