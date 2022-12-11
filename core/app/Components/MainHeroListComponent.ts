@@ -6,7 +6,7 @@ import {unsigned} from '../../types/main.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import EventSystem from '../../source/EventSystem.js';
 import HeroClass from '../Entities/HeroClass.js';
-import {assertIsInstanceOf} from '../../source/assert.js';
+import {assertIsInstanceOf, assertIsPositive, assertNotNil} from '../../source/assert.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import TakeComponent from './TakeComponent.js';
 import ExperienceComponent from './ExperienceComponent.js';
@@ -17,6 +17,8 @@ import HeroComponent from './HeroComponent.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import {sprintf} from 'sprintf-js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export enum MainHeroListComponentEventCode {
     CreateHero = 'MainHeroListComponent.CreateHero',
@@ -61,9 +63,11 @@ export default class MainHeroListComponent {
         level: unsigned,
         heroFactory: HeroFactory,
     ): GameObject {
-        this.canCreateHero();
+        assertNotNil(heroClass);
+        assertIsPositive(level);
+        assertNotNil(heroFactory);
 
-        // let level = options.level ?? 1;
+        if (!this.canCreateHero()) return null;
 
         let hero = heroFactory.create(
             heroClass,
@@ -95,10 +99,13 @@ export default class MainHeroListComponent {
         }
     }
 
-    canCreateHero(): void {
+    canCreateHero(): boolean {
         if (this._heroes.length + 1 > this._max) {
-            throw AppError.playerHasMaxHeroes();
+            debug(DebugNamespaceID.Throw)('У игрока максимальное кол-во героев.');
+            return false;
         }
+
+        return true;
     }
 
     canDeleteHero(hero: GameObject): void {

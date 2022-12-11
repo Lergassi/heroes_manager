@@ -64,6 +64,7 @@ import RecipesSandboxController from './SandboxControllers/RecipesSandboxControl
 import ShopSandboxController from './SandboxControllers/ShopSandboxController.js';
 import WalletInterface from '../core/app/Interfaces/WalletInterface.js';
 import EntityManagerSandboxController from './SandboxControllers/EntityManagerSandboxController.js';
+import TavernSandboxController from './SandboxControllers/TavernSandboxController.js';
 
 export default class SandboxController {
     private _container: ContainerInterface;
@@ -94,8 +95,9 @@ export default class SandboxController {
         // (new BagSandboxController(this._container)).run();
         // (new CraftSystemSandboxController(this._container)).run();
         // (new RecipesSandboxController(this._container)).run();
-        (new ShopSandboxController(this._container)).run();
+        // (new ShopSandboxController(this._container)).run();
         // (new EntityManagerSandboxController(this._container)).run();
+        (new TavernSandboxController(this._container)).run();
 
         // this._testSumBoolean();
         // this._testLodashEvery();

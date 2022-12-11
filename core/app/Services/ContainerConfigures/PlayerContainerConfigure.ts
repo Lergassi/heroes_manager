@@ -176,7 +176,6 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EntityManagerInterface>(ContainerID.EntityManager),
                 container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
                 container.get<ExperienceComponentFactory>(ContainerID.ExperienceComponentFactory),
-                // container.get<EnemyCharacterAttributeFactory>(ContainerID.CharacterAttributeFactory),
                 container.get<HeroCharacterAttributeFactory>(ContainerID.HeroCharacterAttributeFactory),
             );
         });
