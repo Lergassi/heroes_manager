@@ -176,8 +176,8 @@ export default class HealthPoints implements DamageControllerInterface {
     }
 
     renderByRequest(ui: HealthPointsRender): void {
-        ui.updateHealthPoints(this._currentHealthPoints, this._maxHealthPoints.finalValue);
-        ui.updateDeadState(this.isDead);
+        ui.updateHealthPoints?.(this._currentHealthPoints, this._maxHealthPoints.finalValue);
+        ui.updateDeadState?.(this.isDead);
     }
 
     private _canModify(): void {

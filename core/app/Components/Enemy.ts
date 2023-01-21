@@ -18,6 +18,6 @@ export default class Enemy {
     }
 
     renderByRequest(ui: EnemyComponentRender): void {
-        ui.updateType(this._enemyEntity.id);
+        ui.updateType?.(this._enemyEntity.id);
     }
 }

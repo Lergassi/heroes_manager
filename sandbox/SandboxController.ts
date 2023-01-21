@@ -247,7 +247,7 @@ export default class SandboxController {
             {item: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
             {item: ItemID.Leather01, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.BoarMeat, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.MagicResources01, count: 1},
+            {item: ItemID.MagicResource01, count: 1},
         ]);
 
         let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20);

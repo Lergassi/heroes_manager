@@ -1,16 +1,18 @@
 export enum CommandID {
+    //user/player
     new_game = 'new_game',
     create_player_env = 'create_player_env',
     create_start_player_objects = 'create_start_player_objects',
     create_start_player_items = 'create_start_player_items',
 
-    add_gold = 'add_gold',
-
+    //player
+    add_money = 'add_money',
     create_item_storage = 'create_item_storage',
     clear_item_storage_slot = 'clear_item_storage_slot',
     create_item = 'create_item',
     create_item_kit = 'create_item_kit',
 
+    //hero
     create_hero = 'create_hero',
     delete_hero = 'delete_hero',
     create_random_hero_class = 'create_random_hero_class',
@@ -20,6 +22,7 @@ export enum CommandID {
     equip_from_item_storage_slot = 'equip_from_item_storage_slot',
     remove_equip_to_item_storage_slot = 'remove_equip_to_item_storage_slot',
 
+    //location
     create_location = 'create_location',
     delete_location = 'delete_location',
     add_hero_to_location = 'add_hero_to_location',
@@ -29,7 +32,12 @@ export enum CommandID {
 
     fight = 'fight',
 
+    //debug
     debug_entity_manager = 'debug_entity_manager',
     debug_item_database = 'debug_item_database',
     create_stub_objects = 'create_stub_objects',
+
+    //ui
+    ui_detail_hero = 'ui_detail_hero',
+    ui_detail_location = 'ui_detail_location',
 }

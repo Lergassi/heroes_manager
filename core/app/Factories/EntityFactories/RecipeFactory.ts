@@ -29,7 +29,7 @@ export default class RecipeFactory {
             craftTimeInSeconds,
             _.map(requireItems, (requireItemData) => {
                 return {
-                    item: this._entityManager.get<Item>(EntityID.Item, requireItemData.item),
+                    item: this._entityManager.get<Item>(EntityID.Item, requireItemData.itemID),
                     count: requireItemData.count,
                 };
             }),

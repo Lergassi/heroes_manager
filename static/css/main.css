@@ -182,6 +182,10 @@ body {
     border-bottom: 2px solid #ddd;
 }
 
+.widget__close {
+    float: right;
+}
+
 .widget__title_bold {
     font-weight: bold;
 }

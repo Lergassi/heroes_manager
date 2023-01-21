@@ -1,9 +1,11 @@
 import ContainerConfigureInterface from '../../core/source/ContainerConfigureInterface.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import config from '../config/main.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
+import UIController from './UIController.js';
 
 export default class ClientContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -15,6 +17,8 @@ export default class ClientContainerConfigure implements ContainerConfigureInter
         //     return new GameConsole();
         // });
         // container.set('gameConsole', container.get<GameConsole>('client.gameConsole'));    //alias
+
+        container.set(ServiceID.UI_Controller, new UIController(container));
 
         debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
 

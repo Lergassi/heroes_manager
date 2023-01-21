@@ -35,6 +35,7 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     async execute(input: Input) {
         await this._createItemStorages();
         await this._createItems();
+        await this._addMoney();
         await this._createHeroes();
         await this._createLocations();
     }
@@ -159,5 +160,9 @@ export default class CreateStartPlayerObjectsCommand extends Command {
 
     private async _createLocations() {
         await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+    }
+
+    private async _addMoney() {
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['1000']);
     }
 }

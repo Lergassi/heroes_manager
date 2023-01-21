@@ -10,8 +10,8 @@ import {UI_ItemCount} from '../../../core/types/main.js';
 import ItemStorageRC from './ItemStorageRC.js';
 
 export interface ItemStorageControllerRCProps {
-    itemStorageController: ItemStorageController;
     container: ContainerInterface;
+    itemStorageController: ItemStorageController;
 }
 
 export interface ItemStorageControllerRCState {
@@ -30,14 +30,6 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
 
         this.props.container.set<ItemStorageControllerRC>(ServiceID.UI_ItemStorageController, this);
     }
-
-    // componentDidMount() {
-    //     this.props.itemStorageController.attach({
-    //         addItemStorage: (itemStorageController, itemStorages) => {
-    //             this.updateItemStorages(itemStorages);
-    //         }
-    //     });
-    // }
 
     updateByRequest(): void {
         this.state.itemStorageController.renderAllByRequest(this);

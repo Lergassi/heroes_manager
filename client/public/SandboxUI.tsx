@@ -89,7 +89,6 @@ export default class SandboxUI {
                 this._container.get<MainHeroListRC>(ServiceID.UI_MainHeroList)?.updateByRequest();
                 this._container.get<DetailLocationRC>(ServiceID.UI_DetailLocation)?.updateByRequest();
                 this._container.get<MainLocationListRC>(ServiceID.UI_MainLocationList)?.updateByRequest();
-                // this._container.get<ItemStorageRC>(ServiceID.UI_ItemStorage + '.0')?.updateByRequest();
             }, 100);
         };
         window['app']['ui']['stopUpdate'] = () => {

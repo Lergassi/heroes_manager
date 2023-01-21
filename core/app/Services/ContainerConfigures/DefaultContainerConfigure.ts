@@ -4,6 +4,8 @@ import GameConsole from '../../../source/GameConsole/GameConsole.js';
 import Kernel from '../../../source/Kernel.js';
 import HelpCommand from '../../../../server/app/Commands/HelpCommand.js';
 import ListCommand from '../../../../server/app/Commands/ListCommand.js';
+import DetailHeroCommand from '../../Commands/DetailHeroCommand.js';
+import DetailLocationCommand from '../../Commands/DetailLocationCommand.js';
 import NewGameCommand from '../../Commands/NewGameCommand.js';
 import CreateStartPlayerObjectsCommand from '../../Commands/CreateStartPlayerObjectsCommand.js';
 import CreateItemCommand from '../../Commands/CreateItemCommand.js';
@@ -37,7 +39,7 @@ import debug from 'debug';
 import _ from 'lodash';
 import CreateItemKitCommand from '../../Commands/CreateItemKitCommand.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
-import AddGoldCommand from '../../Commands/AddGoldCommand.js';
+import AddMoneyCommand from '../../Commands/AddMoneyCommand.js';
 import DebugItemDatabaseCommand from '../../Commands/DebugCommands/DebugItemDatabaseCommand.js';
 import CreateStubObjectsCommand from '../../Commands/CreateStubObjectsCommand.js';
 
@@ -90,7 +92,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new CreatePlayerEnvironmentCommand(container));
         gameConsole.register(new CreateStartPlayerObjectsCommand(container));
 
-        gameConsole.register(new AddGoldCommand(container));
+        gameConsole.register(new AddMoneyCommand(container));
 
         gameConsole.register(new CreateItemStorageCommand(container));
         gameConsole.register(new CreateItemCommand(container));
@@ -115,6 +117,10 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new GetRewardFromLocationCommand(container));
 
         gameConsole.register(new FightCommand(container));
+
+        /* UI */
+        gameConsole.register(new DetailHeroCommand(container));
+        gameConsole.register(new DetailLocationCommand(container));
 
         /* DEBUG */
         gameConsole.register(new DebugEntityManagerCommand(container));

@@ -46,7 +46,7 @@ export default class MainHeroList {
     };
 
     get totalPages(): number {
-        return _.ceil((this._heroes.length - 1) / this._options.heroesForPage);
+        return _.ceil((this._heroes.length) / this._options.heroesForPage);
     }
 
     constructor(
@@ -133,9 +133,10 @@ export default class MainHeroList {
         } else {
             startIndex = (options.page - 1) * this._options.heroesForPage - 1;
         }
+
         let endIndex = startIndex + this._options.heroesForPage;
-        if (endIndex > this._heroes.length - 1) {
-            endIndex = this._heroes.length - 1;
+        if (endIndex > this._heroes.length) {
+            endIndex = this._heroes.length ? this._heroes.length : 0;
         }
 
         let heroes: MainHeroListRCElement[] = [];
@@ -219,7 +220,7 @@ export default class MainHeroList {
             heroes.push(hero);
         }//end for
 
-        ui.updateHeroes(heroes);
+        ui.updateHeroes?.(heroes);
         ui.updatePagination?.(options.page, this.totalPages);
         ui.updateTotalHeroes?.(this._heroes.length);
     }

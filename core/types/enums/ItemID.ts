@@ -32,7 +32,7 @@ export enum ItemID {
 
     Leather01 = 'Leather01',
 
-    MagicResources01 = 'MagicResources01',
+    MagicResource01 = 'MagicResource01',
     MagicMaterial01 = 'MagicMaterial01',
 
     BoarMeat = 'BoarMeat',

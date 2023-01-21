@@ -99,7 +99,7 @@ export default class GatheringPoint {
     }
 
     renderByRequest(ui: GatheringPointRender): void {
-        ui.update({
+        ui.update?.({
             itemName: this._item.id,
             startCount: this._startCount,
             count: this._count,

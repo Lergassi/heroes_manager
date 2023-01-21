@@ -1,3 +1,5 @@
+import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
+import UIController from '../app/UIController.js';
 import GameConsoleRComponent from './_React/GameConsoleRComponent.js';
 import ReactDOM from 'react-dom/client';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
@@ -22,9 +24,14 @@ import useCustomHook from './_React/Test/test.js';
 import PlayerItemStorage from './_React/PlayerItemStorage.js';
 import WalletRC2 from './_React/WalletRC2.js';
 import Currency from '../../core/app/Entities/Currency.js';
+import DetailHeroRC from './Components/DetailHeroRC.js';
+import DetailLocationRC from './Components/DetailLocationRC.js';
 import ItemStorageRC_Legacy from './Components/ItemStorageRC_Legacy.js';
 import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
+import MainHeroListRC from './Components/MainHeroListRC.js';
 import MainHeroListRC_Legacy from './Components/MainHeroListRC_Legacy.js';
+import MainLocationListRC from './Components/MainLocationListRC.js';
+import WalletRC from './Components/WalletRC.js';
 
 export default class GameUI {
     private readonly _container: ContainerInterface;
@@ -57,6 +64,8 @@ export default class GameUI {
 
         let gameRoot = ReactDOM.createRoot(gameDomContainer);
         this._renderGameUI(gameRoot);
+
+        this._container.get<UIController>(ServiceID.UI_Controller).run();
     }
 
     private _renderPreGameUI(root) {
@@ -75,7 +84,28 @@ export default class GameUI {
     private _renderGameUI(root) {
         root.render(
             <div>
-
+                <MainHeroListRC
+                    container={this._container}
+                    mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
+                />
+                <DetailHeroRC
+                    container={this._container}
+                />
+                <MainLocationListRC
+                    container={this._container}
+                    mainLocationList={this._container.get<MainLocationList>(ServiceID.MainLocationList)}
+                />
+                <DetailLocationRC
+                    container={this._container}
+                />
+                <WalletRC
+                    container={this._container}
+                    wallet={this._container.get<WalletInterface>(ServiceID.Wallet)}
+                />
+                <ItemStorageControllerRC
+                    container={this._container}
+                    itemStorageController={this._container.get<ItemStorageController>(ServiceID.ItemStorageController)}
+                />
             </div>
         );
     }

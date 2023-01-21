@@ -107,6 +107,6 @@ export default class ItemStackController implements ItemStackControllerInterface
     }
 
     renderByRequest(ui: ItemStackControllerInterfaceRender): void {
-        ui.updateItem(this._item ? this._item.id : undefined, this._count > 0 ? this._count : null);
+        ui.updateItem?.(this._item ? this._item.id : undefined, this._count > 0 ? this._count : null);
     }
 }

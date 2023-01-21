@@ -17,6 +17,6 @@ export default class Level implements LevelInterface {
     }
 
     renderByRequest(ui: LevelInterfaceRender): void {
-        ui.updateLevel(this._level);
+        ui.updateLevel?.(this._level);
     }
 }

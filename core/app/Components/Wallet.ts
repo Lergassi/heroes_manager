@@ -25,9 +25,7 @@ export default class Wallet implements WalletInterface {
         return this._value;
     }
 
-    constructor(
-        value: number = 0,
-    ) {
+    constructor(value: number = 0) {
         assertIsPositive(value);
 
         this._value = value;
@@ -84,11 +82,7 @@ export default class Wallet implements WalletInterface {
         return this._value;
     }
 
-    view(callback) {
-        callback(this._value);
-    }
-
     renderByRequest(ui: WalletInterfaceRender): void {
-        ui.updateValue(this._value);
+        ui.updateValue?.(this._value);
     }
 }

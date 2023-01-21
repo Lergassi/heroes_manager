@@ -58,9 +58,9 @@ export default class DevUISystemController extends AbstractSandboxController {
         wallet.get<Wallet>(ComponentID.Wallet).add(12);
         console.log(wallet);
 
-        wallet.get<Wallet>(ComponentID.Wallet).view((value: number) => {
-            console.log(value);
-        });
+        // wallet.get<Wallet>(ComponentID.Wallet).view((value: number) => {
+        //     console.log(value);
+        // });
     }
 
     private _hero() {

@@ -18,6 +18,7 @@ export enum ServiceID {
     ItemStorageFactory = 'player.ItemStorageFactory',
     CharacterAttributeStartValueGenerator = 'player.CharacterAttributeStartValueGenerator',
     CharacterAttributeValueGenerator = 'player.CharacterAttributeValueGenerator',
+    Wallet = 'player.Wallet',
 
     Shop = 'player.Shop',
     Fence = 'player.Fence',
@@ -49,8 +50,10 @@ export enum ServiceID {
 
     //ui
     UI_Game = 'core.ui.game',
+    UI_Controller = 'core.ui.Controller',
 
     //React components
+    UI_Wallet = 'player.ui.Wallet',
     UI_ItemStorage = 'player.ui.PlayerItemStorage',
     UI_ItemStorageController = 'player.ui.ItemStorageController',
     UI_DetailHero = 'player.ui.DetailHero',

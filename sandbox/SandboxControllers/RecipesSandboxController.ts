@@ -47,8 +47,8 @@ export default class RecipesSandboxController extends AbstractSandboxController 
             1,
             60,
             [
-                {item: ItemID.IronIngot, count: 10},
-                {item: ItemID.Coal, count: 2},
+                {itemID: ItemID.IronIngot, count: 10},
+                {itemID: ItemID.Coal, count: 2},
             ],
         ));
         entityManager.add(EntityID.Recipe, RecipeID.TwoHandedSword01, recipeFactory.create(
@@ -57,9 +57,9 @@ export default class RecipesSandboxController extends AbstractSandboxController 
             1,
             60,
             [
-                {item: ItemID.IronIngot, count: 20},
-                {item: ItemID.CopperOre, count: 10},
-                {item: ItemID.Coal, count: 10},
+                {itemID: ItemID.IronIngot, count: 20},
+                {itemID: ItemID.CopperOre, count: 10},
+                {itemID: ItemID.Coal, count: 10},
             ],
         ));
         entityManager.add(EntityID.Recipe, RecipeID.Leather01, recipeFactory.create(
@@ -68,7 +68,7 @@ export default class RecipesSandboxController extends AbstractSandboxController 
             1,
             60,
             [
-                {item: ItemID.Skin01, count: 5},
+                {itemID: ItemID.Skin01, count: 5},
             ],
         ));
         console.log(entityManager);

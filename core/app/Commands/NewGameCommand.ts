@@ -8,6 +8,7 @@ import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
+import _ from 'lodash';
 
 export default class NewGameCommand extends Command {
     private readonly _scenarios = {
@@ -25,9 +26,10 @@ export default class NewGameCommand extends Command {
 
     async execute(input: Input) {
         let scenario = input.getArgument('scenario');
-        if (scenario !== null && !this._scenarios.hasOwnProperty(scenario)) {
+        if (!_.isNil(scenario) && !this._scenarios.hasOwnProperty(scenario)) {
             throw new AppError(sprintf('Сценарий %s не найден.', scenario));
         }
+
         (new PlayerContainerConfigure()).configure(this.container);
 
         await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(CommandID.create_player_env).run();

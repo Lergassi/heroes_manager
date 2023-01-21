@@ -148,15 +148,6 @@ export default class LocationFactory {
             [GatheringPointTypeID.high]: 64,
         };
 
-        let enemies = [
-            // this._enemyFactory.create(EnemyID.Bear, 1),
-            // this._enemyFactory.create(EnemyID.Bear, 2),
-            // this._enemyFactory.create(EnemyID.Bear, 3),
-            // this._enemyFactory.create(EnemyID.Bear, 4),
-            // this._enemyFactory.create(EnemyID.Bear, 5),
-        ];
-        // enemies[2].get<HealthPoints>(ComponentID.HealthPoints).kill();
-
         let locationComponent = location.set<Location>(ComponentID.Location, new Location(
             new Date(),
             level,
@@ -177,6 +168,12 @@ export default class LocationFactory {
             //@test
             // enemies,
         ));
+
+        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
+        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
+        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
+        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
+        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
 
         return location;
     }

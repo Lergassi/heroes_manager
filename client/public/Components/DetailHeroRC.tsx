@@ -19,7 +19,6 @@ import {UI_ItemCount} from '../../../core/types/main.js';
 
 export interface DetailHeroRCProps {
     container: ContainerInterface;
-    // hero: GameObject;
 }
 
 export interface DetailHeroRCState {
@@ -154,15 +153,11 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
 
         this.props.container.set<DetailHeroRC>(ServiceID.UI_DetailHero, this);
 
-        window['app']['sandbox'][ServiceID.UI_DetailHero] = {};
-        window['app']['sandbox'][ServiceID.UI_DetailHero]['updateHero'] = (hero: GameObject) => {
-            this.updateHero(hero);
-            this.show();
-        };
-    }
-
-    componentDidMount() {
-
+        // window['app']['sandbox'][ServiceID.UI_DetailHero] = {};
+        // window['app']['sandbox'][ServiceID.UI_DetailHero]['updateHero'] = (hero: GameObject) => {
+        //     this.updateHero(hero);
+        //     this.show();
+        // };
     }
 
     updateByRequest(): void {
@@ -345,7 +340,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Герой</div>
+                    <div className={'widget__title'}>Герой<span className={'widget__close'}>x</span></div>
                     <div className={'widget__content'}>
                         <div>{this.state.heroClassName}, {this.state.level} ({this.state.exp}/{this.state.totalExpToLevelUp})</div>
                         <div>Здоровье: {this.state.currentHealthPoints}/{this.state.maxHealthPoints}</div>

@@ -114,6 +114,6 @@ export default class ItemStorageV2 implements ItemStorageInterface {
             });
         }
 
-        ui.updateItems(items);
+        ui.updateItems?.(items);
     }
 }

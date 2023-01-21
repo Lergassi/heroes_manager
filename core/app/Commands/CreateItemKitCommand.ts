@@ -30,71 +30,71 @@ export default class CreateItemKitCommand extends Command {
         //     {item: ItemID.MagicResources_01, count: 2},
         // ],
         start_resources: [
-            {item: ItemID.Wood, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.IronOre, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.Wood, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.IronOre, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.CopperOre, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.Herb01, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.Herb01, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.Herb_2, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.Herb_3, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.BoarMeat, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.MagicResources01, count: 2},
+            {itemID: ItemID.MagicResource01, count: 2},
         ],
         start_materials: [
-            {item: ItemID.IronIngot, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.IronIngot, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.CopperBar, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.Leather01, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.MagicMaterial01, count: 1},
+            {itemID: ItemID.Leather01, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.MagicMaterial01, count: 1},
         ],
         start_plate_armor: [
-            {item: ItemID.PlateHelmet01, count: 1},
-            {item: ItemID.PlateShoulders01, count: 1},
-            {item: ItemID.PlateBreastplate01, count: 1},
-            {item: ItemID.PlateBracer01, count: 1},
-            {item: ItemID.PlateGloves01, count: 1},
-            {item: ItemID.PlateBelt01, count: 1},
-            {item: ItemID.PlatePants01, count: 1},
-            {item: ItemID.PlateBoots01, count: 1},
+            {itemID: ItemID.PlateHelmet01, count: 1},
+            {itemID: ItemID.PlateShoulders01, count: 1},
+            {itemID: ItemID.PlateBreastplate01, count: 1},
+            {itemID: ItemID.PlateBracer01, count: 1},
+            {itemID: ItemID.PlateGloves01, count: 1},
+            {itemID: ItemID.PlateBelt01, count: 1},
+            {itemID: ItemID.PlatePants01, count: 1},
+            {itemID: ItemID.PlateBoots01, count: 1},
         ],
         start_leather_armor: [
-            {item: ItemID.LeatherHelmet01, count: 1},
-            {item: ItemID.LeatherShoulders01, count: 1},
-            {item: ItemID.LeatherBreastplate01, count: 1},
-            {item: ItemID.LeatherBracer01, count: 1},
-            {item: ItemID.LeatherGloves01, count: 1},
-            {item: ItemID.LeatherBelt01, count: 1},
-            {item: ItemID.LeatherPants01, count: 1},
-            {item: ItemID.LeatherBoots01, count: 1},
+            {itemID: ItemID.LeatherHelmet01, count: 1},
+            {itemID: ItemID.LeatherShoulders01, count: 1},
+            {itemID: ItemID.LeatherBreastplate01, count: 1},
+            {itemID: ItemID.LeatherBracer01, count: 1},
+            {itemID: ItemID.LeatherGloves01, count: 1},
+            {itemID: ItemID.LeatherBelt01, count: 1},
+            {itemID: ItemID.LeatherPants01, count: 1},
+            {itemID: ItemID.LeatherBoots01, count: 1},
         ],
         start_cloth_armor: [
-            {item: ItemID.ClothHelmet01, count: 1},
-            {item: ItemID.ClothShoulders_01, count: 1},
-            {item: ItemID.ClothBreastplate01, count: 1},
-            {item: ItemID.ClothBracer01, count: 1},
-            {item: ItemID.ClothGloves01, count: 1},
-            {item: ItemID.ClothBelt01, count: 1},
-            {item: ItemID.ClothPants01, count: 1},
-            {item: ItemID.ClothBoots01, count: 1},
+            {itemID: ItemID.ClothHelmet01, count: 1},
+            {itemID: ItemID.ClothShoulders_01, count: 1},
+            {itemID: ItemID.ClothBreastplate01, count: 1},
+            {itemID: ItemID.ClothBracer01, count: 1},
+            {itemID: ItemID.ClothGloves01, count: 1},
+            {itemID: ItemID.ClothBelt01, count: 1},
+            {itemID: ItemID.ClothPants01, count: 1},
+            {itemID: ItemID.ClothBoots01, count: 1},
         ],
         start_jewelry: [
-            {item: ItemID.Ring01, count: 1},
-            {item: ItemID.Ring01, count: 1},
-            {item: ItemID.Amulet01, count: 1},
-            {item: ItemID.Trinket01, count: 1},    //Пока тут.
+            {itemID: ItemID.Ring01, count: 1},
+            {itemID: ItemID.Ring01, count: 1},
+            {itemID: ItemID.Amulet01, count: 1},
+            {itemID: ItemID.Trinket01, count: 1},    //Пока тут.
         ],
         start_weapons: [
-            {item: ItemID.OneHandedSword01, count: 2},
-            {item: ItemID.TwoHandedSword01, count: 1},
-            {item: ItemID.OneHandedAxe01, count: 2},
-            {item: ItemID.TwoHandedAxe01, count: 1},
-            {item: ItemID.Dagger01, count: 2},
-            {item: ItemID.Staff01, count: 1},
-            {item: ItemID.Wand01, count: 2},
-            {item: ItemID.Revolver01, count: 2},
+            {itemID: ItemID.OneHandedSword01, count: 2},
+            {itemID: ItemID.TwoHandedSword01, count: 1},
+            {itemID: ItemID.OneHandedAxe01, count: 2},
+            {itemID: ItemID.TwoHandedAxe01, count: 1},
+            {itemID: ItemID.Dagger01, count: 2},
+            {itemID: ItemID.Staff01, count: 1},
+            {itemID: ItemID.Wand01, count: 2},
+            {itemID: ItemID.Revolver01, count: 2},
         ],
         //Будет несколько щитов.
         start_shields: [
-            {item: ItemID.Shield01, count: 1},
+            {itemID: ItemID.Shield01, count: 1},
         ],
     };
 
@@ -122,7 +122,14 @@ export default class CreateItemKitCommand extends Command {
             //     this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, this._kits[name][i].item),
             //     this._kits[name][i].count * multiplier,
             // );
-            this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(this._kits[name][i].item), this._kits[name][i].count * multiplier);
+            this.container
+                .get<ItemStorageInterface>(ServiceID.ItemStorageController)
+                .addItem(
+                    this.container
+                        .get<ItemDatabase>(ServiceID.ItemDatabase)
+                        .get(this._kits[name][i].itemID),
+                    this._kits[name][i].count * multiplier
+                );
         }
     }
 }

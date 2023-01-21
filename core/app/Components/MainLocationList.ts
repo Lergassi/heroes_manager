@@ -111,7 +111,7 @@ export default class MainLocationList {
         let locations: MainLocationListRCElement[] = [];
         for (let i = 0; i < this._locations.length; i++) {
             let locationData: MainLocationListRCElement = {
-                ID: '',
+                ID: String(this._locations[i].ID),
                 level: 0,
                 lifeEnemiesCount: 0,
                 lifeHeroesCount: 0,
@@ -157,6 +157,6 @@ export default class MainLocationList {
             locations.push(locationData);
         }
 
-        ui.updateLocations(locations);
+        ui.updateLocations?.(locations);
     }
 }

@@ -1,7 +1,7 @@
 import Input from '../../source/GameConsole/Input.js';
 import Command from '../../source/GameConsole/Command.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import {assert} from '../../source/assert.js';
+import {assert, assertNotNil} from '../../source/assert.js';
 import _ from 'lodash';
 import Location from '../Components/Location.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
@@ -25,7 +25,9 @@ export default class AddHeroToLocationCommand extends Command {
 
         let hero = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(heroID);
         let location = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(locationID);
-        console.log(location);
+
+        assertNotNil(hero);
+        assertNotNil(location);
 
         location
             ?.get<Location>(ComponentID.Location)

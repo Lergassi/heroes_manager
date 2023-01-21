@@ -363,10 +363,10 @@ export default class ItemDatabaseBuilder {
                 )
         );
         this._itemFactory.createByBuilder(
-            ItemID.MagicResources01,
+            ItemID.MagicResource01,
             (new ItemBuilder(this._entityManager))
                 .default(
-                    ItemID.MagicResources01,
+                    ItemID.MagicResource01,
                     'Магический ресурс 1',
                     ItemCategoryID.Resources,
                     {

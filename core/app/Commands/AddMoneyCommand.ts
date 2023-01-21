@@ -7,9 +7,9 @@ import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 
-export default class AddGoldCommand extends Command {
+export default class AddMoneyCommand extends Command {
     get name(): string {
-        return CommandID.add_gold;
+        return CommandID.add_money;
     }
 
     configure() {
@@ -22,9 +22,7 @@ export default class AddGoldCommand extends Command {
 
         this
             .container
-            .get<GameObjectStorage>(ServiceID.GameObjectStorage)
-            ?.getOneByTag('#wallet.' + CurrencyID.Gold)
-            ?.get<WalletInterface>(ComponentID.Wallet)
+            .get<WalletInterface>(ServiceID.Wallet)
             .add(value)
         ;
     }

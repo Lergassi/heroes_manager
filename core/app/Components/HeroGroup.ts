@@ -132,13 +132,13 @@ export default class HeroGroup implements HeroGroupInterface {
     //     EventSystem.event(HeroGroupComponentEventCode.AddHero, this);
     // }
 
-    addHero(hero: GameObject): void {
+    addHero(hero: GameObject): boolean {
         // this._canEditGroup();
         assert(hero instanceof GameObject);
 
         if (this._hasHero(hero)) {
-            // throw new AppError('Герой уже в группе.');
             debug(DebugNamespaceID.Throw)('Герой уже в группе.');
+            return false;
         }
 
         let heroSlot = this._getFirstFreeHeroSlot();
@@ -148,10 +148,8 @@ export default class HeroGroup implements HeroGroupInterface {
 
         // this._setHero(heroSlot, hero);
         this._heroes[heroSlot] = hero;
-        // console.log('this._update', this._update);
-        // for (let i = 0; i < this._update.length; i++) {
-        //     this._update[i](i, this._heroes[i]?.ID);
-        // }
+
+        return true;
     }
 
     _clearPosition(position: number): void {

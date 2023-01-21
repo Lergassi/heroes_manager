@@ -51,10 +51,6 @@ export default class MainLocationListRC extends React.Component<MainLocationList
         this.props.container.set<MainLocationListRC>(ServiceID.UI_MainLocationList, this);
     }
 
-    componentDidMount() {
-
-    }
-
     updateByRequest(): void {
         if (!this.state.window.show) return;
 
@@ -62,13 +58,13 @@ export default class MainLocationListRC extends React.Component<MainLocationList
     }
 
     updateLocations(locations: MainLocationListRCElement[]): void {
-        // console.log('updateLocations', locations);
         this.setState((state) => {
             return {
                 locations: locations,
             } as MainLocationListRCState;
         });
     }
+
     updatePagination(activePage: number, totalPages: number): void {}
 
     render() {
@@ -80,6 +76,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                         <table className={'basic-table'}>
                             <tbody>
                                 <tr>
+                                    <th>ID</th>
                                     <th>level</th>
                                     <th>state</th>
                                     <th>heroes (L/T)</th>
@@ -90,7 +87,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                 </tr>
                                 {_.map(this.state.locations, (location, index) => {
                                     return <tr key={index}>
-                                        {/*<td>{location.ID}</td>*/}
+                                        <td>{location.ID}</td>
                                         <td>{location.level}</td>
                                         <td>{location.state}</td>
                                         <td>{location.lifeHeroesCount}/{location.totalHeroesCount}</td>

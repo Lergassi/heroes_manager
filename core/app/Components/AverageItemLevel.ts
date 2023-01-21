@@ -16,6 +16,7 @@ export default class AverageItemLevel {
 
     constructor() {
         this._items = [];
+        this._value = 0;
     }
 
     addItem(item: Item): void {

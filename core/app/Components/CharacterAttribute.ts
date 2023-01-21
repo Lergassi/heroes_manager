@@ -59,6 +59,6 @@ export default class CharacterAttribute implements CharacterAttributeInterface {
     }
 
     renderByRequest(ui: CharacterAttributeInterfaceRender): void {
-        ui.updateCharacterAttributeFinalValue(this._ID, this.finalValue);
+        ui.updateCharacterAttributeFinalValue?.(this._ID, this.finalValue);
     }
 }

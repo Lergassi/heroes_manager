@@ -30,10 +30,13 @@ export default class CharacterFightGroup {
         this._fightController = new FightController(this._attackController, this._damageController);
     }
 
-    addCharacter(character: GameObject) {
-        this._heroGroup.addHero(character);
+    addCharacter(character: GameObject): boolean {
+        if (!this._heroGroup.addHero(character)) return false;
+
         this._attackController.add(character.get<AttackControllerInterface>(ComponentID.AttackController));
         this._damageController.add(character.get<DamageControllerInterface>(ComponentID.DamageController));
+
+        return true;
     }
 
     removeCharacter(character: GameObject) {

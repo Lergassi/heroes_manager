@@ -73,6 +73,7 @@ export enum LocationEventCode {
 }
 
 export interface LocationRender {
+    updateID?(ID: string): void;
     updateState?(state: string): void;
     updateLevel?(level: number): void;   //todo: Тут наверное нужно все данные которые не изменяются передать и метод назвать set/init.
     updateHeroes?(heroes: DetailLocationRCHeroElement[]): void;
@@ -234,14 +235,17 @@ export default class Location {
         }
     }
 
-    addHero(hero: GameObject) {
+    addHero(hero: GameObject): boolean {
         assertNotNil(hero);
 
         this._canAddHero(hero);
 
-        this._heroFightGroup.addCharacter(hero);
+        if (!this._heroFightGroup.addCharacter(hero)) return false;
+
         this._heroes.push(hero);    //todo: Не будет работать после удаления исключений.
         EventSystem.event(LocationEventCode.AddHero, this);    //todo: Или достаточно события из группы? Может как то связать их? "Цепочка" событыий.
+
+        return true;
     }
 
     removeHero(hero: GameObject) {
@@ -290,9 +294,6 @@ export default class Location {
      * @param ui
      */
     renderByRequest(ui: LocationRender): void {
-        ui.updateState(this._state);
-        ui.updateLevel(this._level);
-
         let heroes: DetailLocationRCHeroElement[] = [];
         for (let i = 0; i < this._heroes.length; i++) {
             let data: DetailLocationRCHeroElement = {
@@ -335,7 +336,6 @@ export default class Location {
 
             heroes.push(data);
         }
-        ui.updateHeroes(heroes);
 
         let enemies: DetailLocationRCEnemyElement[] = [];
         for (let i = 0; i < this._enemies.length; i++) {
@@ -375,8 +375,6 @@ export default class Location {
             enemies.push(data);
         }
 
-        ui.updateEnemies(enemies);
-
         let items: UI_VeinItemCount[] = [];
         for (let i = 0; i < this._gatheringPoints.length; i++) {
             this._gatheringPoints[i].renderByRequest({
@@ -385,17 +383,22 @@ export default class Location {
                 },
             });
         }
-        ui.updateVeins(items);
+
+        ui.updateState?.(this._state);
+        ui.updateLevel?.(this._level);
+        ui.updateHeroes?.(heroes);
+        ui.updateEnemies?.(enemies);
+        ui.updateVeins?.(items);
 
         this._wallet.renderByRequest({
             updateValue(value: number) {
-                ui.updateMoney(value);
+                ui.updateMoney?.(value);
             }
         });
 
         this._itemStorage.renderByRequest({
             updateItems(items: UI_ItemCount[]) {
-                ui.updateLoot(items);
+                ui.updateLoot?.(items);
             }
         });
     }
