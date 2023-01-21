@@ -9,7 +9,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export interface GatheringPointRender {
-    update(item: UI_VeinItemCount);
+    update?(item: UI_VeinItemCount);
 }
 
 export default class GatheringPoint {

@@ -143,7 +143,6 @@ export default class SandboxUI {
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 5);
         itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.PlateHelmet01), 5);
 
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).show();
         // itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorageComponent).show();
         // console.log(itemStorage);
 

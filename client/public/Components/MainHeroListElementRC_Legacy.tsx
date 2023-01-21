@@ -59,7 +59,7 @@ export interface MainHeroListElementRCState {
     [CharacterAttributeID.AttackPower]: number;
 }
 
-export default class MainHeroListElementRC extends React.Component<MainHeroListElementRCProps, MainHeroListElementRCState> {
+export default class MainHeroListElementRC_Legacy extends React.Component<MainHeroListElementRCProps, MainHeroListElementRCState> {
     constructor(props: MainHeroListElementRCProps) {
         super(props);
         // console.log('props.hero', props.hero);
@@ -86,99 +86,91 @@ export default class MainHeroListElementRC extends React.Component<MainHeroListE
             [CharacterAttributeID.AttackPower]: 0,
         };
 
-        this.updateHero = this.updateHero.bind(this);
-        this.updateHeroClassName = this.updateHeroClassName.bind(this);
-        this.updateExperience = this.updateExperience.bind(this);
-        this.updateCharacterAttribute = this.updateCharacterAttribute.bind(this);
-        this.updateItemLevel = this.updateItemLevel.bind(this);
+        // this.updateHero = this.updateHero.bind(this);
+        // this.updateHeroClassName = this.updateHeroClassName.bind(this);
+        // this.updateExperience = this.updateExperience.bind(this);
+        // this.updateCharacterAttribute = this.updateCharacterAttribute.bind(this);
+        // this.updateItemLevel = this.updateItemLevel.bind(this);
     }
 
-    componentDidMount() {
-        this.updateHero(this.props.hero);
-    }
-
-    componentWillUnmount() {
-
-    }
-
-    updateHero(hero: GameObject = undefined) {
-        console.log('updateHero hero', hero);
-        if (!hero) return;
-        if (this.state.hero && this.state.hero === hero) return;
-
-        // if (this.state.hero) {
-        //     this.removeHero();
-        // }
-        this.removeHero();
-
-        this.setState((state) => {
-            return {
-                hero: hero,
-            };
-        });
-
-        hero.get<HeroComponent>(ComponentID.Hero).render(this.updateHeroClassName);
-        hero.get<Experience>(ComponentID.Experience).render(this.updateExperience);
-        hero.get<CharacterAttributeInterface>(CharacterAttributeID.Strength).render(this.updateCharacterAttribute);
-        hero.get<CharacterAttributeInterface>(CharacterAttributeID.Agility).render(this.updateCharacterAttribute);
-        hero.get<CharacterAttributeInterface>(CharacterAttributeID.Intelligence).render(this.updateCharacterAttribute);
-        hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower).render(this.updateCharacterAttribute);
-        hero.get<AverageItemLevel>(ComponentID.AverageItemLevel).render(this.updateItemLevel);
-    }
-
-    removeHero(): void {
-        if (!this.state.hero) return;
-
-        this.state.hero.get<HeroComponent>(ComponentID.Hero).removeRender(this.updateHeroClassName);
-        this.state.hero.get<Experience>(ComponentID.Experience).removeRender(this.updateExperience);
-        this.state.hero.get<CharacterAttributeInterface>(CharacterAttributeID.Strength).removeRender(this.updateCharacterAttribute);
-        this.state.hero.get<CharacterAttributeInterface>(CharacterAttributeID.Agility).removeRender(this.updateCharacterAttribute);
-        this.state.hero.get<CharacterAttributeInterface>(CharacterAttributeID.Intelligence).removeRender(this.updateCharacterAttribute);
-        this.state.hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower).removeRender(this.updateCharacterAttribute);
-        this.state.hero.get<AverageItemLevel>(ComponentID.AverageItemLevel).removeRender(this.updateItemLevel);
-
-        this.setState((state) => {
-            return {
-                hero: undefined,
-            };
-        });
-    }
-
-    updateHeroClassName(heroClassName: string): void {
-        this.setState((state) => {
-            return {
-                heroClassName: heroClassName,
-            };
-        });
-    }
-
-    updateExperience(level: number, exp: number, totalExpToLevelUp: number): void {
-        // console.log('MainHeroListElementRC.updateExperience');
-        this.setState((state) => {
-            return {
-                level: level,
-                exp: exp,
-                totalExpToLevelUp: totalExpToLevelUp,
-            };
-        });
-    }
-
-    updateCharacterAttribute(ID: CharacterAttributeID, value: number): void {
-        this.setState((state) => {
-            let newState = {} as MainHeroListElementRCState;
-            newState[ID] = value;
-
-            return newState;
-        });
-    }
-
-    updateItemLevel(value: number): void {
-        this.setState((state) => {
-            return {
-                itemLevel: value,
-            };
-        });
-    }
+    // componentDidMount() {
+    //     this.updateHero(this.props.hero);
+    // }
+    //
+    // componentWillUnmount() {
+    //
+    // }
+    //
+    // updateHero(hero: GameObject = undefined) {
+    //     console.log('updateHero hero', hero);
+    //     if (!hero) return;
+    //     if (this.state.hero && this.state.hero === hero) return;
+    //
+    //     // if (this.state.hero) {
+    //     //     this.removeHero();
+    //     // }
+    //     this.removeHero();
+    //
+    //     this.setState((state) => {
+    //         return {
+    //             hero: hero,
+    //         };
+    //     });
+    // }
+    //
+    // removeHero(): void {
+    //     if (!this.state.hero) return;
+    //
+    //     this.state.hero.get<HeroComponent>(ComponentID.Hero).removeRender(this.updateHeroClassName);
+    //     this.state.hero.get<Experience>(ComponentID.Experience).removeRender(this.updateExperience);
+    //     this.state.hero.get<CharacterAttributeInterface>(CharacterAttributeID.Strength).removeRender(this.updateCharacterAttribute);
+    //     this.state.hero.get<CharacterAttributeInterface>(CharacterAttributeID.Agility).removeRender(this.updateCharacterAttribute);
+    //     this.state.hero.get<CharacterAttributeInterface>(CharacterAttributeID.Intelligence).removeRender(this.updateCharacterAttribute);
+    //     this.state.hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower).removeRender(this.updateCharacterAttribute);
+    //     this.state.hero.get<AverageItemLevel>(ComponentID.AverageItemLevel).removeRender(this.updateItemLevel);
+    //
+    //     this.setState((state) => {
+    //         return {
+    //             hero: undefined,
+    //         };
+    //     });
+    // }
+    //
+    // updateHeroClassName(heroClassName: string): void {
+    //     this.setState((state) => {
+    //         return {
+    //             heroClassName: heroClassName,
+    //         };
+    //     });
+    // }
+    //
+    // updateExperience(level: number, exp: number, totalExpToLevelUp: number): void {
+    //     // console.log('MainHeroListElementRC.updateExperience');
+    //     this.setState((state) => {
+    //         return {
+    //             level: level,
+    //             exp: exp,
+    //             totalExpToLevelUp: totalExpToLevelUp,
+    //         };
+    //     });
+    // }
+    //
+    // updateCharacterAttribute(ID: CharacterAttributeID, value: number): void {
+    //     this.setState((state) => {
+    //         let newState = {} as MainHeroListElementRCState;
+    //         newState[ID] = value;
+    //
+    //         return newState;
+    //     });
+    // }
+    //
+    // updateItemLevel(value: number): void {
+    //     this.setState((state) => {
+    //         return {
+    //             itemLevel: value,
+    //         };
+    //     });
+    // }
 
     render() {
         if (!this.state.hero) return;

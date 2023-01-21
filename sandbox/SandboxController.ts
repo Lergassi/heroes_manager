@@ -925,7 +925,6 @@ export default class SandboxController {
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
         console.log(itemStorage);
-        itemStorage.show();
     }
 
     private _devItemStorageV2() {
@@ -942,7 +941,6 @@ export default class SandboxController {
         console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 24));
 
         console.log(itemStorageComponent);
-        itemStorageComponent.show();
 
         // let itemStackController = new ItemStackController();
         // itemStackController.onChange((target, item, count) => {

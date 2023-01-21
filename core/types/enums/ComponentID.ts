@@ -4,21 +4,22 @@ export enum ComponentID {
     EquipController = 'EquipController',    //todo: Или экипировка только у героев, а у врагов проще?
 
     //Hero
-    Hero = 'Hero',
+    Hero = 'Hero',  //Пока это HeroComponent.
+
     Experience = 'Experience',
+    AverageItemLevel = 'AverageItemLevel',
+
     // EquipSlots = 'EquipSlots',
     CharacterAttributes = 'CharacterAttributes',
     AttackController = 'AttackController',
     DamageController = 'DamageController',
     HealthPoints = 'HealthPoints',
     MagicPoints = 'MagicPoints',
-    AverageItemLevel = 'AverageItemLevel',
 
     StateController = 'StateController',
     TakeController = 'TakeController',
 
     ItemCharacterAttributeCollector = 'ItemCharacterAttributeCollector',
-
     Gatherer = 'Gatherer',
 
     //Enemy

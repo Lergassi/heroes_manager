@@ -10,42 +10,22 @@ export default class AverageItemLevel {
     private readonly _items: Item[];
     private _value: number;
 
-    private _callbacks;
-
     get value(): number {
         return this._value;
     }
 
     constructor() {
         this._items = [];
-        this._callbacks = [];
     }
 
     addItem(item: Item): void {
         this._items.push(item);
-        this.updateUI();
+        this._calculate();
     }
 
     removeItem(item: Item): void {
         _.pullAt(this._items, _.indexOf(this._items, item));
-        this.updateUI();
-    }
-
-    render(callback: (value: number) => void) {
-        if (!_.includes(this._callbacks, callback)) {
-            this._callbacks.push(callback);
-        }
-        this.updateUI();
-    }
-
-    removeRender(callback: (value: number) => void) {
-        _.pull(this._callbacks, callback);
-    }
-
-    updateUI() {
-        for (let i = 0; i < this._callbacks.length; i++) {
-            this._callbacks[i](this.value);
-        }
+        this._calculate();
     }
 
     renderByRequest(ui: AverageItemLevelRender): void {
@@ -67,6 +47,6 @@ export default class AverageItemLevel {
             ++count;
         }
 
-        this._value = count === 0 ? 0 : _.floor(sum / count);
+        this._value = sum === 0 ? 0 : _.floor(sum / count);
     }
 }

@@ -73,14 +73,13 @@ export enum LocationEventCode {
 }
 
 export interface LocationRender {
-    updateState(state: string): void;
-    updateLevel(level: number): void;   //todo: Тут наверное нужно все данные которые не изменяются передать и метод назвать set/init.
-    updateHeroes(heroes: DetailLocationRCHeroElement[]): void;
-    updateEnemies(enemies: DetailLocationRCEnemyElement[]): void;
-    // updateVeins(veins: DetailLocationRCVeinElement[]): void;
-    updateVeins(veins: UI_VeinItemCount[]): void;
-    updateLoot(loot: UI_ItemCount[]): void;
-    updateMoney(value: number): void;
+    updateState?(state: string): void;
+    updateLevel?(level: number): void;   //todo: Тут наверное нужно все данные которые не изменяются передать и метод назвать set/init.
+    updateHeroes?(heroes: DetailLocationRCHeroElement[]): void;
+    updateEnemies?(enemies: DetailLocationRCEnemyElement[]): void;
+    updateVeins?(veins: UI_VeinItemCount[]): void;
+    updateLoot?(loot: UI_ItemCount[]): void;
+    updateMoney?(value: number): void;
 }
 
 export default class Location {
@@ -142,8 +141,6 @@ export default class Location {
         //лут
         this._itemStorage = itemStorage;    //todo: Убрать. Если нужно передать из вне - логику поменять, а не делать чтото на всякий случай. И кошелек тоже.
         this._wallet = wallet;
-
-        this._ui = [];
     }
 
     start(options?: {
@@ -265,15 +262,6 @@ export default class Location {
         }
     }
 
-    private _canModify(): boolean {
-        if (this._state !== LocationState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
-            return false;
-        }
-
-        return true;
-    }
-
     canDelete(): boolean {
         if (this._state !== LocationState.Waiting) {
             debug(DebugNamespaceID.Throw)('Нельзя удалить локацию во время охоты.');
@@ -283,66 +271,24 @@ export default class Location {
         return true;
     }
 
-    private _canAddHero(hero: GameObject): void {
-        this.canModify();
+    addEnemy(enemy: GameObject): boolean {
+        if (_.includes(this._enemies, enemy)) return false;
 
-        if (hero.getComponent<Experience>(ComponentID.Experience).level < this._level) {
-            throw new AppError('Уровень героя слишком низкий для данной локации.');
-        }
+        this._enemies.push(enemy);
+        this._enemyFightGroup.addCharacter(enemy);
+
+        return true;
     }
 
-    private _canRemoveHero(): void {
-        this.canModify();
-    }
-
-    // render(callback: ({}: Readonly<{
-    //     level: unsigned,
-    //     gatheringItemPoints: GatheringItemPoint[],
-    //     internalItemStorageComponent: ItemStorageComponent,
-    //     heroGroupComponent: HeroGroup,
-    // }>) => void) {
-    //     callback({
-    //         level: this._level,
-    //         gatheringItemPoints: [],
-    //         internalItemStorageComponent: undefined,
-    //         heroGroupComponent: undefined,
-    //     });
+    //todo: Нельзя просто так удалить врага. Тут явно нужно очень много логики делать.
+    // removeEnemy(): boolean {
+    //     return true;
     // }
 
-    private _ui: LocationRender[];
-
-    /*
-        Детальное отображение.
-        Список.
-        У локации есть информация доступная для интерфейса.
+    /**
+     * todo: Сборку данных перенести в отдельный класс.
+     * @param ui
      */
-    render(ui: LocationRender) {
-        if (!_.includes(this._ui, ui)) {
-            this._ui.push(ui);
-        }
-        this.updateUI();
-        // console.log('render');
-    }
-
-    removeRender(ui: LocationRender): void {
-
-    }
-
-    updateUI(): void {
-        // this._
-
-        // this._heroFightGroup.render();
-
-        for (let i = 0; i < this._ui.length; i++) {
-            this._ui[i].updateLevel(this._level);
-            // this._ui[i].updateHeroes();
-        }
-    }
-
-    _updateHeroClassName = function (value: string) {
-
-    }
-
     renderByRequest(ui: LocationRender): void {
         ui.updateState(this._state);
         ui.updateLevel(this._level);
@@ -454,17 +400,24 @@ export default class Location {
         });
     }
 
-    addEnemy(enemy: GameObject): boolean {
-        if (_.includes(this._enemies, enemy)) return false;
+    private _canAddHero(hero: GameObject): void {
+        this.canModify();
 
-        this._enemies.push(enemy);
-        this._enemyFightGroup.addCharacter(enemy);
+        if (hero.getComponent<Experience>(ComponentID.Experience).level < this._level) {
+            throw new AppError('Уровень героя слишком низкий для данной локации.');
+        }
+    }
+
+    private _canRemoveHero(): void {
+        this.canModify();
+    }
+
+    private _canModify(): boolean {
+        if (this._state !== LocationState.Waiting) {
+            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
+            return false;
+        }
 
         return true;
     }
-
-    //todo: Нельзя просто так удалить врага. Тут явно нужно очень много логики делать.
-    // removeEnemy(): boolean {
-    //     return true;
-    // }
 }

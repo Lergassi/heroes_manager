@@ -78,14 +78,4 @@ export default class CharacterFightGroup {
             }
         }
     }
-
-    view(callback: (data: any) => void) {
-        // this._heroGroup.view((data) => {
-        //     callback(data);
-        // });
-    }
-
-    render(ui) {
-
-    }
 }

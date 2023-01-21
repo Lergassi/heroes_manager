@@ -59,17 +59,17 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
     }
 
     componentDidMount() {
-        this.props.location.getComponent<HeroGroup>('heroGroupComponent').render((index, ID) => {
-            this.setState((state) => {
-                let heroes = [...this.state.heroes];
-                heroes[index].ID = ID;
-
-                return {
-                    location: state.location,
-                    heroes: heroes,
-                };
-            });
-        });
+        // this.props.location.getComponent<HeroGroup>('heroGroupComponent').render((index, ID) => {
+        //     this.setState((state) => {
+        //         let heroes = [...this.state.heroes];
+        //         heroes[index].ID = ID;
+        //
+        //         return {
+        //             location: state.location,
+        //             heroes: heroes,
+        //         };
+        //     });
+        // });
     }
 
     render() {

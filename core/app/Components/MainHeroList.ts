@@ -41,10 +41,7 @@ export interface MainHeroListRender {
 export default class MainHeroList {
     private readonly _heroes: GameObject[];
     private _max: unsigned; //todo: Значение нужно увеличить с ростом уровня игрока.
-
-    private readonly _callbacks;
-
-    private _options = {
+    private readonly _options = {
         heroesForPage: 10,
     };
 
@@ -57,7 +54,6 @@ export default class MainHeroList {
     ) {
         this._heroes = [];
         this._max = max;
-        this._callbacks = [];
     }
 
     createHero(
@@ -118,104 +114,6 @@ export default class MainHeroList {
         }
     }
 
-    renderPage() {}
-
-    // render(callback: (heroes: MainHeroListElement[]) => void, options: Partial<{
-    //     page: number;
-    // }> = {}) {
-    //     if (!_.includes(this._callbacks, callback)) {
-    //         this._callbacks.push(callback);
-    //     }
-    //
-    //     for (let i = 0; i < this._heroes.length; i++) {
-    //         this._heroes[i].get<Experience>(ComponentID.Experience).render((level, exp, totalExpToLevelUp) => {
-    //             this.updateUI();
-    //         });
-    //     }
-    //
-    //     this.updateUI();
-    // }
-
-    render2(page: number, callbacks: {
-        updateHeroes: (heroes: GameObject[]) => void;
-        updatePagination: (pages: number, activePage: number, totalHeroes: number) => void;
-    }): void {
-        let heroes = [];
-        let startIndex = 0;
-        if (page <= 1) {
-            startIndex = 0;
-        } else if (page > this.totalPages) {
-            startIndex = this._heroes.length - 1;
-        } else {
-            startIndex = (page - 1) * this._options.heroesForPage - 1;
-        }
-        let endIndex = startIndex + this._options.heroesForPage;
-        if (endIndex > this._heroes.length - 1) {
-            endIndex = this._heroes.length - 1;
-        }
-        console.log('pages', this.totalPages);
-        console.log('page', page);
-        console.log('startIndex', startIndex);
-        console.log('endIndex', endIndex);
-
-        for (let i = startIndex; i < endIndex; i++) {
-            heroes.push(this._heroes[i]);
-        }
-        callbacks.updateHeroes(heroes);
-        callbacks.updatePagination(this.totalPages, page, this._heroes.length);
-        //todo: Обновление страниц.
-    }
-
-    render(callback: (heroes: MainHeroListRCElement_Legacy[]) => void, options: Partial<{
-        page: number;
-    }> = {}): void {
-        if (!_.includes(this._callbacks, callback)) {
-            this._callbacks.push(callback);
-        }
-
-        for (let i = 0; i < this._heroes.length; i++) {
-            this._heroes[i].get<Experience>(ComponentID.Experience).render((level, exp, totalExpToLevelUp) => {
-                this.updateUI();
-            });
-        }
-
-        this.updateUI();
-    }
-
-    updateUI(): void {
-        let heroes: MainHeroListRCElement_Legacy[] = [];
-        for (let i = 0; i < this._heroes.length; i++) {
-            let data = {} as MainHeroListRCElement_Legacy;
-
-            // this._heroes[i].get<Experience>(ComponentID.Experience).render((level, exp, totalExpToLevelUp) => {
-            //     data.level = level;
-            //     data.exp = exp;
-            //     data.totalExpToLevelUp = totalExpToLevelUp;
-            // });
-            // this._heroes[i].get<Experience>(ComponentID.Experience).read((level, exp, totalExpToLevelUp) => {
-            //     data.level = level;
-            //     data.exp = exp;
-            //     data.totalExpToLevelUp = totalExpToLevelUp;
-            // });
-            // this._heroes[i].get<HeroComponent>(ComponentID.Hero).read((heroClassName) => {
-            //     data.heroClassName = heroClassName;
-            // });
-            data.strength = this._heroes[i].get<CharacterAttributes>(ComponentID.CharacterAttributes).Strength.finalValue;
-            data.agility = this._heroes[i].get<CharacterAttributes>(ComponentID.CharacterAttributes).Agility.finalValue;
-            data.intelligence = this._heroes[i].get<CharacterAttributes>(ComponentID.CharacterAttributes).Intelligence.finalValue;
-            data.attackPower = this._heroes[i].get<CharacterAttributes>(ComponentID.CharacterAttributes).AttackPower.finalValue;
-            data.currentHealthPoints = this._heroes[i].get<HealthPoints>(ComponentID.HealthPoints).currentHealthPoints;
-            data.maxHealthPoints = this._heroes[i].get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxHealthPoints.finalValue;
-            data.itemLevel = 0;
-
-            heroes.push(data);
-        }
-
-        for (let i = 0; i < this._callbacks.length; i++) {
-            this._callbacks[i](heroes);
-        }
-    }
-
     map(callback: (hero: GameObject) => void) {
         _.map(this._heroes, (hero) => {
             callback(hero);
@@ -239,11 +137,6 @@ export default class MainHeroList {
         if (endIndex > this._heroes.length - 1) {
             endIndex = this._heroes.length - 1;
         }
-        // console.log('totalPages', this.totalPages);
-        // console.log('activePage', options.page);
-        // console.log('startIndex', startIndex);
-        // console.log('endIndex', endIndex);
-        // console.log('-------------------',);
 
         let heroes: MainHeroListRCElement[] = [];
         for (let i = startIndex; i < endIndex; i++) {

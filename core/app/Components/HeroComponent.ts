@@ -1,3 +1,4 @@
+import {assertNotNil} from '../../source/assert.js';
 import Component from '../../source/Component.js';
 import HeroClass from '../Entities/HeroClass.js';
 import debug from 'debug';
@@ -19,8 +20,6 @@ export default class HeroComponent {
     private readonly _name: string;
     private readonly _heroClass: HeroClass;
 
-    private _callbacks;
-
     get name(): string {
         return this._name;
     }
@@ -36,33 +35,10 @@ export default class HeroComponent {
         name: string,
         heroClass: HeroClass,
     ) {
+        assertNotNil(heroClass);
+
         this._name = name;
         this._heroClass = heroClass;
-
-        this._callbacks = [];
-    }
-
-    view(logger) {
-        debug(DebugNamespaceID.Info)(DebugFormatterID.Json, {
-            heroClassName: this._heroClass.id,
-        });
-    }
-
-    render(callback: (heroClassName: string) => void) {
-        if (!_.includes(this._callbacks, callback)) {
-            this._callbacks.push(callback);
-        }
-        this.updateUI();
-    }
-
-    removeRender(callback: (heroClassName: string) => void) {
-        _.pull(this._callbacks, callback)
-    }
-
-    updateUI() {
-        for (let i = 0; i < this._callbacks.length; i++) {
-            this._callbacks[i](this._heroClass.name);   //todo: Возможно тут должен быть только ID, а другие компоненты сами разберуться как получить остальные данные.
-        }
     }
 
     renderByRequest(ui: HeroComponentRender): void {

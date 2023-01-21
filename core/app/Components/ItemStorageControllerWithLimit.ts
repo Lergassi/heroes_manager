@@ -59,8 +59,12 @@ export default class ItemStorageControllerWithLimit {
         throw AppError.notImplements();
     }
 
-    render(callback: (itemStorages: GameObject[]) => void) {
-        callback(this._itemStorages);
+    containItem(ID: ItemID): number {
+        return this._itemStorageController.containItem(ID);
+    }
+
+    canAddItem(item: Item, count: number): number {
+        return 0;
     }
 
     private _canAddItemStorage(): boolean {
@@ -70,23 +74,5 @@ export default class ItemStorageControllerWithLimit {
         }
 
         return true;
-    }
-
-    attach(handlers: {
-        addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
-    }) {
-        // this._itemStorageController.attach(handlers);
-    }
-
-    removeItem(ID: ItemID, count: number): number {
-        return this._itemStorageController.removeItem(ID, count);
-    }
-
-    containItem(ID: ItemID): number {
-        return this._itemStorageController.containItem(ID);
-    }
-
-    canAddItem(item: Item, count: number): number {
-        return 0;
     }
 }

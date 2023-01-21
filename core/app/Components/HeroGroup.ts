@@ -59,8 +59,6 @@ export default class HeroGroup implements HeroGroupInterface {
     private readonly _size: number;
     // private _isBlock: boolean;
 
-    private _ui;
-
     // get heroesCount(): number {
     //     let count = 0;
     //     for (const position in this._heroes) {
@@ -102,8 +100,6 @@ export default class HeroGroup implements HeroGroupInterface {
             ++position;
         }
         // this._heroesArray = [];
-
-        this._ui = [];
     }
 
     // _setHero(heroSlot: HeroSlot, hero: GameObject): void {
@@ -282,18 +278,4 @@ export default class HeroGroup implements HeroGroupInterface {
             callback(hero);
         });
     }
-
-    render(ui): void {
-        // this._ui.push(ui);
-        for (let i = 0; i < this._heroes.length; i++) {
-            // this._heroes[i].
-        }
-    }
-
-    removeRender(ui): void {}
-    // updateUI(): void {
-    //     for (let i = 0; i < this._ui.length; i++) {
-    //         // this._ui[i].update(this._heroes);
-    //     }
-    // }
 }

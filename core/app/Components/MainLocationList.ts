@@ -21,8 +21,8 @@ export enum MainLocationListComponentEventCode {
 }
 
 export interface MainLocationListRender {
-    updateLocations(locations: MainLocationListRCElement[]): void;
-    updatePagination(activePage: number, totalPages: number): void;
+    updateLocations?(locations: MainLocationListRCElement[]): void;
+    updatePagination?(activePage: number, totalPages: number): void;
 }
 
 export default class MainLocationList {

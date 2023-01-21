@@ -1,8 +1,9 @@
+import {assertNotNil} from '../../source/assert.js';
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import PlayerContainerConfigure from '../Services/ContainerConfigures/PlayerContainerConfigure.js';
 import GameConsole from '../../source/GameConsole/GameConsole.js';
-import ClientUI from '../../../client/public/ClientUI.js';
+import GameUI from '../../../client/public/GameUI.js';
 import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import {CommandID} from '../../types/enums/CommandID.js';
@@ -34,6 +35,9 @@ export default class NewGameCommand extends Command {
             await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(this._scenarios[scenario]).run();
         }
 
-        this.container.get<ClientUI>('client.clientRender').buildGameUI();
+        let gameUI = this.container.get<GameUI>(ServiceID.UI_Game);
+        assertNotNil(gameUI);
+
+        gameUI.buildGameUI();
     }
 }

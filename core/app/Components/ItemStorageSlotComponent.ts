@@ -39,7 +39,6 @@ export default class ItemStorageSlotComponent implements ItemStackControllerInte
 
     constructor() {
         this._itemStack = null;
-        this._callbacks = {};
         this._itemStackController = new ItemStackController();
     }
 
@@ -51,16 +50,6 @@ export default class ItemStorageSlotComponent implements ItemStackControllerInte
     moveTo(itemStorage: ItemStorageInterface): void {
         throw AppError.notImplements();
     }
-
-    render(callback: (values: {
-        itemStack: ItemStack,
-    }) => void) {
-        callback({
-            itemStack: this._itemStack,
-        });
-    }
-
-    ////////////////////////////
 
     /**
      * @deprecated
@@ -126,17 +115,6 @@ export default class ItemStorageSlotComponent implements ItemStackControllerInte
 
     containsItem(item: Item): boolean {
         return this._itemStack && this._itemStack.containsItem(item);
-    }
-
-    private _callbacks: {
-        updateItem?: (item: Item, count: number) => void,
-    };
-
-    attach(target: {
-        updateItem: (item: Item, count: number) => void,
-    }) {
-        this._callbacks = target;
-        this._callbacks.updateItem(this._itemStack?.item, this._itemStack?.count);
     }
 
     totalItem(ID: ItemID): number {

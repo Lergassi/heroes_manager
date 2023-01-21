@@ -54,26 +54,7 @@ export default class ItemStackController implements ItemStackControllerInterface
             this._item = item;
         }
 
-        /*
-            this._updateHandlers(this._item, this._count);
-
-            addCallback((item, count) => {
-                    this.updateSlot(index, item, count);
-            });
-            removeCallback();
-         */
-
-        for (let i = 0; i < this._handlers.length; i++) {
-            this._handlers[i].updateHandler(this._item, this._count);
-        }
-
         return count;
-    }
-
-    _onChange;
-
-    onChange(callback) {
-        this._onChange = callback;
     }
 
     moveTo(target: ItemStorageInterface): void {
@@ -81,45 +62,6 @@ export default class ItemStackController implements ItemStackControllerInterface
 
         let reminder = this._count - target.addItem(this._item, this._count);
         this.removeItem(<ItemID>this._item.id, reminder);
-    }
-
-    show() {
-        // debug(DebugNamespaceID.Debug)('%j', {item: this._item?.id ?? '', count: this._count});
-        //todo: Группировка явно лишняя в браузере.
-        debug(DebugNamespaceID.Debug)('%j', this._item ? {item: this._item.id, count: this._count} : 'пусто');
-    }
-
-    _handlers = [];
-
-    attach(handlers: {
-        updateHandler: Function,
-    }) {
-        this._handlers.push(handlers);
-        // console.log(handlers);
-        handlers.updateHandler(this._item, this._count);
-    }
-
-    detach() {}
-
-    view(viewer: Viewer) {
-
-    }
-
-    view2(callback: (data: {
-        itemID: string,
-        count: number,
-    }) => void) {
-        if (this._item) {
-            callback({
-                itemID: this._item.id,
-                count: this._count,
-            });
-        } else {
-            callback({
-                itemID: null,
-                count: null,
-            });
-        }
     }
 
     totalItem(ID: ItemID): number {

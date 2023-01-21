@@ -21,8 +21,8 @@ export enum HealthPointsComponentEventCode {
 }
 
 export interface HealthPointsRender {
-    updateHealthPoints(currentHealthPoints: number, maxHealthPoints: number): void;
-    updateDeadState(isDead: boolean): void;
+    updateHealthPoints?(currentHealthPoints: number, maxHealthPoints: number): void;
+    updateDeadState?(isDead: boolean): void;
 }
 
 export default class HealthPoints implements DamageControllerInterface {
@@ -83,9 +83,6 @@ export default class HealthPoints implements DamageControllerInterface {
         EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
         if (this._currentHealthPoints <= 0) {
             this.kill(enemyRewardOptions);
-        }
-        for (let i = 0; i < this._handlers.length; i++) {
-            this._handlers[i].updateHandler(this, this._currentHealthPoints, this._maxHealthPoints);
         }
     }
 
@@ -174,57 +171,20 @@ export default class HealthPoints implements DamageControllerInterface {
         return true;
     }
 
+    canTakeDamage(): boolean {
+        return !this._stateController.hasState(CharacterStateCode.Dead);
+    }
+
+    renderByRequest(ui: HealthPointsRender): void {
+        ui.updateHealthPoints(this._currentHealthPoints, this._maxHealthPoints.finalValue);
+        ui.updateDeadState(this.isDead);
+    }
+
     private _canModify(): void {
         // if (this._isDead) {
         //     // throw AppError.isDead();
         //     throw new CharacterIsDeadError();
         // }
         assertAction(!this._stateController.hasState(CharacterStateCode.Dead));
-    }
-
-    canTakeDamage(): boolean {
-        return !this._stateController.hasState(CharacterStateCode.Dead);
-    }
-
-    _handlers: {
-        updateHandler: (target: HealthPoints, currentHealthPoints, maxHealthPoints) => void,
-    }[] = [];
-
-    attach(handlers: {
-        updateHandler: (target: HealthPoints, currentHealthPoints, maxHealthPoints) => void,
-    }) {
-        this._handlers.push(handlers);
-    }
-
-    view(callback: (data: {
-        currentHealthPoints: number,
-        maxHealthPoints: number,
-        isDead: boolean,
-    }) => void) {
-        // debug(DebugNamespaceID.Info)(DebugFormatterID.Json, {
-        //     currentHealthPoints: this._currentHealthPoints,
-        //     maxHealthPoints: this._maxHealthPoints.value(),
-        //     isDead: this._isDead,
-        // });
-        let data: any = {
-            currentHealthPoints: this._currentHealthPoints,
-            isDead: this._isDead,
-        };
-        this._maxHealthPoints.view((_data) => {
-            data.maxHealthPoints = _data.value;
-        });
-        callback(data);
-        // callback({
-        //     currentHealthPoints: this._currentHealthPoints,
-        //     maxHealthPoints: this._maxHealthPoints.view((data) => {
-        //
-        //     }),
-        //     isDead: this._isDead,
-        // });
-    }
-
-    renderByRequest(ui: HealthPointsRender): void {
-        ui.updateHealthPoints(this._currentHealthPoints, this._maxHealthPoints.finalValue);
-        ui.updateDeadState(this.isDead);
     }
 }

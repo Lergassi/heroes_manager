@@ -5,7 +5,7 @@ import {EnemyID} from '../../types/enums/EnemyID.js';
 
 //Остальные данные пока не нужны.
 export interface EnemyComponentRender {
-    updateType(name: string): void;
+    updateType?(name: string): void;
 }
 
 export default class Enemy {

@@ -131,14 +131,6 @@ export default class ItemStorageComponent {
         EventSystem.event(ItemStorageComponentEventCode.Update, this);
     }
 
-    render(callback: (options: {
-        slots: {[key: string]: ItemStorageSlotComponent},
-    }) => void) {
-        callback({
-            slots: this._slots,
-        });
-    }
-
     //todo: @indev До появления StackController и пока есть геттеры у слотов и стеков.
     moveTo(itemStorage: ItemStorageInterface) {
         for (const slotKey in this._slots) {

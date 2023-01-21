@@ -44,9 +44,9 @@ export default class DevUISystemController extends AbstractSandboxController {
         // console.log(itemStorage);
 
         // itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).view(viewer);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).view2((rows) => {
-            console.log(rows);
-        });
+        // itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).view2((rows) => {
+        //     console.log(rows);
+        // });
         // console.log(viewer);
         // console.log(viewer);
     }

@@ -1,3 +1,4 @@
+import Level from '../Components/Level.js';
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
@@ -68,14 +69,13 @@ export default class HeroFactory {
             baseCharacterAttributeValues?: {[id in CharacterAttributeID]?: number},
         },
     ): GameObject {
-    // ): Hero {
         heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(EntityID.HeroClass, heroClass) : heroClass;
         assertNotNil(heroClass, 'HeroClass не найден.');
 
         // let hero = <Hero>this._gameObjectFactory.create();
         let hero = this._gameObjectFactory.create();
 
-        hero.name = 'Hero: ' + heroClass.name;
+        hero.name = 'Hero: ' + heroClass.id;
         hero.addTags('#hero');
 
         let stateController = hero.set(ComponentID.StateController, new CharacterStateController());

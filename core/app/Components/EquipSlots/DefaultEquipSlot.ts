@@ -24,15 +24,11 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
     private readonly _averageItemLevel: AverageItemLevel;
     private readonly _itemAttributeCollectionComponent: ItemCharacterAttributeCollector;
 
-    private readonly _callbacks;
-
     constructor(ID: EquipSlotID, averageItemLevel: AverageItemLevel, itemAttributeCollectionComponent: ItemCharacterAttributeCollector) {
         this._ID = ID;
         this._item = null;
         this._averageItemLevel = averageItemLevel;
         this._itemAttributeCollectionComponent = itemAttributeCollectionComponent;
-
-        this._callbacks = [];
     }
 
     equip(item: Item): boolean {
@@ -42,8 +38,6 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         this._averageItemLevel.addItem(item);
         this._itemAttributeCollectionComponent.addItem(item);
         debug(DebugNamespaceID.Log)('Предмет экипирован.');
-
-        this.updateUI();
 
         return true;
     }
@@ -57,8 +51,6 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         EventSystem.event(EquipSlotComponentEventCode.DestroyItemStack, this);
         debug(DebugNamespaceID.Log)('Слот экипировки очищен.');
 
-        this.updateUI();
-
         return true;
     }
 
@@ -67,11 +59,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
             return false;
         }
 
-        this.clear();
-
-        this.updateUI();
-
-        return true;
+        return this.clear();
     }
 
     isFree(): boolean {
@@ -94,30 +82,6 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         }
 
         return true;
-    }
-
-    view(logger) {
-        logger(DebugNamespaceID.Info)(DebugFormatterID.Json, {
-            ID: this._ID,
-            item: _.isNil(this._item) ? null : this._item.id,
-        });
-    }
-
-    render(callback: EquipSlotInterfaceRenderCallback): void {
-        if (!_.includes(this._callbacks, callback)) {
-            this._callbacks.push(callback);
-        }
-        this.updateUI();
-    }
-
-    removeRender(callback: EquipSlotInterfaceRenderCallback): void {
-        _.pull(this._callbacks, callback);
-    }
-
-    updateUI() {
-        for (let i = 0; i < this._callbacks.length; i++) {
-            this._callbacks[i](this._ID, this._item);
-        }
     }
 
     renderByRequest(ui: EquipSlotInterfaceRender): void {

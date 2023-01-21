@@ -40,9 +40,5 @@ export default interface EquipSlotInterface {
     moveTo(itemStorage: ItemStorageInterface): boolean;
     isFree(): boolean;
     // // moveTo(target: ItemSlotInterface): void;
-    view(logger);
-    render(callback: EquipSlotInterfaceRenderCallback): void;
-    removeRender(callback: EquipSlotInterfaceRenderCallback): void;
-    updateUI(): void;
     renderByRequest(ui: EquipSlotInterfaceRender): void;
 }

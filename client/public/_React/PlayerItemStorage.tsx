@@ -30,33 +30,33 @@ export default class PlayerItemStorage extends React.Component<PlayerItemStorage
     }
 
     render() {
-        let itemStorage = this.state.itemStorage;
-
-        let position = 0;
-        let columnIndex = 0;
-        let result = [];
-        itemStorage.render((options) => {
-            let rows = [];
-            for (const slotKey in options.slots) {
-                rows.push(<PlayerItemStorageSlot
-                    key={slotKey}
-                    backgroundIcon={this.props.container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Icon>(EntityID.Icon, IconID.BackgroundSlot01)}
-                    itemStorageSlot={options.slots[slotKey]}
-                />)
-
-                ++columnIndex;
-                if (columnIndex >= this._cols) {
-                    columnIndex = 0;
-                    result.push(<div key={position} className={'player-item-storage-slot-row clearfix'}>{rows}</div>);
-                    rows = [];
-                }
-                ++position;
-            }
-        });
+        // let itemStorage = this.state.itemStorage;
+        //
+        // let position = 0;
+        // let columnIndex = 0;
+        // let result = [];
+        // itemStorage.render((options) => {
+        //     let rows = [];
+        //     for (const slotKey in options.slots) {
+        //         rows.push(<PlayerItemStorageSlot
+        //             key={slotKey}
+        //             backgroundIcon={this.props.container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Icon>(EntityID.Icon, IconID.BackgroundSlot01)}
+        //             itemStorageSlot={options.slots[slotKey]}
+        //         />)
+        //
+        //         ++columnIndex;
+        //         if (columnIndex >= this._cols) {
+        //             columnIndex = 0;
+        //             result.push(<div key={position} className={'player-item-storage-slot-row clearfix'}>{rows}</div>);
+        //             rows = [];
+        //         }
+        //         ++position;
+        //     }
+        // });
 
         return (
             <div>
-                {result}
+                {/*{result}*/}
             </div>
         );
     }

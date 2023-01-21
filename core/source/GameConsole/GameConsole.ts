@@ -42,6 +42,10 @@ export default class GameConsole {
         return this._commands.hasOwnProperty(name);
     }
 
+    /**
+     * @deprecated Поиск лишний. Запускать сразу по имени.
+     * @param name
+     */
     getCommand(name: string) {
         if (this.hasCommand(name)) {
             return this._commands[name];

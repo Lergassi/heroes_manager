@@ -61,22 +61,6 @@ export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInte
         return true;
     }
 
-    view(logger) {
-        this._equipSlot.view(logger);
-    }
-
-    render(callback: EquipSlotInterfaceRenderCallback): void {
-        this._equipSlot.render(callback);
-    }
-
-    removeRender(callback: EquipSlotInterfaceRenderCallback): void {
-        this._equipSlot.removeRender(callback);
-    }
-
-    updateUI(): void {
-        this._equipSlot.updateUI();
-    }
-
     renderByRequest(ui: EquipSlotInterfaceRender): void {
         this._equipSlot.renderByRequest(ui);
     }

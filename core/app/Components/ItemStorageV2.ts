@@ -12,17 +12,6 @@ import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface, {ItemStorageInterfaceRender} from '../Interfaces/ItemStorageInterface.js';
 import ItemStackController from './ItemStackController.js';
 
-interface ItemStorageUIInterface {
-    readSlot(callback);
-    updateSlot(callback);
-    // readSlot2(): {item, count, ...};
-    setUpdateHandler(callback);
-}
-
-// export interface ItemStorageV2Events {
-//
-// }
-
 export default class ItemStorageV2 implements ItemStorageInterface {
     private readonly _size: number;
     private readonly _itemStackControllers: ItemStackController[];
@@ -73,75 +62,6 @@ export default class ItemStorageV2 implements ItemStorageInterface {
     moveTo(target: ItemStorageInterface): void {
         for (let i = 0; i < this._itemStackControllers.length; i++) {
             this._itemStackControllers[i].moveTo(target);
-        }
-    }
-
-    show() {
-        for (let i = 0; i < this._itemStackControllers.length; i++) {
-            // let str = 'i: {...}';
-            this._itemStackControllers[i].show();
-        }
-    }
-
-    _handlers = [];
-
-    /*
-        Вариант: передать сюда 20 (50, 100, ...) методов отслеживания на каждый слот.
-     */
-    // attach<asd>(ui /*: ItemStorageUI*/) {
-    attach(handlers: {
-        updateHandler: any,
-    }) {
-        /*
-            render(target)
-            render(slots[])
-            for (let i = 0; i < this._itemStackControllers.length; i++) {
-                //ui.updateSlot(i, this._itemStackControllers[i].item, this._itemStackControllers[i].count); //с геттерами
-
-                this._itemStackControllers[i].attach((item, count) => {
-                    ui.updateSlot(i, item, count);
-                })
-            }
-         */
-        for (let i = 0; i < this._itemStackControllers.length; i++) {
-            let index = i;
-            this._itemStackControllers[i].attach({
-                updateHandler: (item, count) => {
-                    handlers.updateHandler(index, item, count);
-                },
-            });
-        }
-    }
-
-    view(viewer: Viewer) {
-        let rows: string[] = [];
-        // for (let i = 0; i < this._itemStackControllers.length; i++) {
-        //     this._itemStackControllers[i].view2((item: Item, count: number) => {
-        //         console.log(item, count);
-        //         if (item) {
-        //             rows.push(sprintf('%s: %s - %s', i, item.name, count));
-        //         } else {
-        //             rows.push(sprintf('%s: пусто', i));
-        //         }
-        //     });
-        // }
-        console.log(rows);
-    }
-
-    view2(callback: (data: {
-        index: number,
-        itemID: string,
-        count: number,
-    }) => void) {
-        let rows: string[] = [];
-        for (let i = 0; i < this._itemStackControllers.length; i++) {
-            this._itemStackControllers[i].view2((data) => {
-                callback({
-                    index: i,
-                    itemID: data.itemID,
-                    count: data.count,
-                });
-            });
         }
     }
 

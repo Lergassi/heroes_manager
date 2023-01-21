@@ -26,7 +26,7 @@ import ItemStorageRC_Legacy from './Components/ItemStorageRC_Legacy.js';
 import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
 import MainHeroListRC_Legacy from './Components/MainHeroListRC_Legacy.js';
 
-export default class ClientUI {
+export default class GameUI {
     private readonly _container: ContainerInterface;
 
     constructor(container: ContainerInterface) {
@@ -35,7 +35,7 @@ export default class ClientUI {
         //@dev
         window['app'] = {};
         window['app']['container'] = this._container;
-        window['app']['clientRender'] = this;
+        // window['app']['clientRender'] = this;
         window['app']['sandbox'] = {};
     }
 
@@ -60,14 +60,6 @@ export default class ClientUI {
     }
 
     private _renderPreGameUI(root) {
-        let wallets = {
-            player: new Wallet(0),
-            npc: new Wallet(100),
-            location: new Wallet(200),
-        };
-        // console.log('wallets', wallets);
-        window['_wallets'] = wallets;
-
         root.render(
             <div className={'wrapper'}>
                 <GameConsoleRComponent
@@ -76,13 +68,6 @@ export default class ClientUI {
                     maxHistoryLength={100}
                     commandNames={this._container.get<GameConsole>(ServiceID.GameConsole).names}
                 />
-                {/*<SandboxRComponent*/}
-
-                {/*/>*/}
-                {/*<Example/>*/}
-                {/*<WalletRC2*/}
-
-                {/*/>*/}
             </div>
         );
     }
@@ -90,38 +75,7 @@ export default class ClientUI {
     private _renderGameUI(root) {
         root.render(
             <div>
-                <WalletRComponent
-                    // container={this._container}
-                    // wallet={this._container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByTag('#wallet.'  + CurrencyID.Gold).get<WalletComponent>(ComponentID.Wallet)}
-                />
-                {/*<WalletRComponent*/}
-                {/*    container={this._container}*/}
-                {/*    wallet={this._container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByTag('#wallet.'  + CurrencyID.Gold).get<WalletComponent>(ComponentID.Wallet)}*/}
-                {/*/>*/}
-                {/*<WalletRComponent*/}
-                {/*    container={this._container}*/}
-                {/*    wallet={this._container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByTag('#wallet.'  + CurrencyID.ResearchPoints).get<WalletComponent>(ComponentID.Wallet)}*/}
-                {/*/>*/}
-                {/*<MainHeroListRComponent*/}
-                {/*    heroListComponent={this._container.get<MainHeroListComponent>(ContainerID.MainHeroList)}*/}
-                {/*    container={this._container}*/}
-                {/*/>*/}
-                <div className={'widget'}>
-                    <div className={'widget__title'}>Герои</div>
-                    <div className={'widget__content'}>
-                        <MainHeroListRC_Legacy
-                            container={this._container}
-                            mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
-                        />
-                    </div>
-                </div>
-                <MainLocationListRComponent
-                    container={this._container}
-                    mainLocationListComponent={this._container.get<MainLocationList>(ServiceID.MainLocationList)}
-                />
-                {/*<ItemStorageControllerRC*/}
-                {/*    itemStorageController={this._container.get<ItemStorageControllerInterface>(ServiceID.ItemStorageController)}*/}
-                {/*/>*/}
+
             </div>
         );
     }

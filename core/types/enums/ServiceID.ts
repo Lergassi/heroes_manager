@@ -47,7 +47,10 @@ export enum ServiceID {
     // StubItemStorage01 = 'player.stubs.ItemStorage01',
     StubFactory = 'StubFactory',
 
-    //ui React components
+    //ui
+    UI_Game = 'core.ui.game',
+
+    //React components
     UI_ItemStorage = 'player.ui.PlayerItemStorage',
     UI_ItemStorageController = 'player.ui.ItemStorageController',
     UI_DetailHero = 'player.ui.DetailHero',
