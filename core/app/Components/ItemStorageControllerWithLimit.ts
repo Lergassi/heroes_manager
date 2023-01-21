@@ -75,7 +75,7 @@ export default class ItemStorageControllerWithLimit {
     attach(handlers: {
         addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
     }) {
-        this._itemStorageController.attach(handlers);
+        // this._itemStorageController.attach(handlers);
     }
 
     removeItem(ID: ItemID, count: number): number {

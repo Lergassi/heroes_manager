@@ -28,6 +28,22 @@ export type Loot = {
     chance: unsigned;
 }
 
+export type ItemCount = {
+    item: Item;
+    count: number;
+}
+
+export type UI_ItemCount = {
+    itemName: string;
+    count: number;
+}
+
+export type UI_VeinItemCount = {
+    itemName: string;
+    startCount: number;
+    count: number;
+}
+
 //ID = ID CurrencyAlias todo: Теги тоже в переменные?
 // export enum CurrencyWalletAlias {
 //     Gold = 'Wallet.Gold',

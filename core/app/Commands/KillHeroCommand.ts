@@ -2,9 +2,9 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import {assertNotNil} from '../../source/assert.js';
-import HealthPointsComponent from '../Components/HealthPointsComponent.js';
+import HealthPoints from '../Components/HealthPoints.js';
 import TakeComponent from '../Components/TakeComponent.js';
 import AppError from '../../source/Errors/AppError.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
@@ -21,7 +21,7 @@ export default class KillHeroCommand extends Command {
 
     async execute(input: Input) {
         let heroID = parseInt(input.getArgument('hero_id'), 10);
-        let hero = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(heroID);
+        let hero = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(heroID);
         assertNotNil(hero);
 
         //todo: Неверно. Нужно искать в главном списке и проверять возможность убить командой. Но пока так.
@@ -29,6 +29,6 @@ export default class KillHeroCommand extends Command {
             throw new AppError();
         }
 
-        hero.get<HealthPointsComponent>(ComponentID.HealthPoints).kill();
+        hero.get<HealthPoints>(ComponentID.HealthPoints).kill();
     }
 }

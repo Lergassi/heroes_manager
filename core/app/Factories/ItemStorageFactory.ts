@@ -2,6 +2,7 @@ import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
 import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
 import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
@@ -14,15 +15,18 @@ export default class ItemStorageFactory {
     private readonly _gameObjectStorage: GameObjectStorage;
     private readonly _itemStackFactory: ItemStackFactory;
     private readonly _gameObjectFactory: GameObjectFactory;
+    private readonly _entityManager: EntityManagerInterface;
 
     constructor(
         gameObjectStorage: GameObjectStorage,
         itemStackFactory: ItemStackFactory, //todo: Наверное фабрика для стеков тут не нужна.
         gameObjectFactory: GameObjectFactory,
+        entityManager: EntityManagerInterface,
     ) {
         this._gameObjectStorage = gameObjectStorage;
         this._itemStackFactory = itemStackFactory;
         this._gameObjectFactory = gameObjectFactory;
+        this._entityManager = entityManager;
     }
 
     create(size: number): GameObject {
@@ -54,8 +58,9 @@ export default class ItemStorageFactory {
         //     slots,
         //     this._itemStackFactory,
         // ));
-        let itemStorage = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorageComponent, new ItemStorageV2(
+        let itemStorage = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorage, new ItemStorageV2(
             size,
+            this._entityManager,
         ));
 
         return itemStorage;    //todo: Тут будет контроллер.

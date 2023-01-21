@@ -4,7 +4,7 @@ import EntityManager from '../../../source/EntityManager.js';
 import {debugEntityManager, debugRepository} from '../../../debug/debug_functions.js';
 import {CommandID} from '../../../types/enums/CommandID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
-import {ContainerID} from '../../../types/enums/ContainerID.js';
+import {ServiceID} from '../../../types/enums/ServiceID.js';
 
 export default class DebugEntityManagerCommand extends Command {
     get name(): string {
@@ -17,6 +17,6 @@ export default class DebugEntityManagerCommand extends Command {
     }
 
     async execute(input: Input) {
-        console.log(this.container.get<EntityManagerInterface>(ContainerID.EntityManager));
+        console.log(this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
     }
 }

@@ -3,11 +3,11 @@ import debug from 'debug';
 import AbstractSandboxController from './AbstractSandboxController.js';
 import Tavern from '../../core/app/Components/Tavern.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
-import MainHeroListComponent from '../../core/app/Components/MainHeroListComponent.js';
+import MainHeroList from '../../core/app/Components/MainHeroList.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 
 export default class TavernSandboxController extends AbstractSandboxController {
@@ -16,10 +16,10 @@ export default class TavernSandboxController extends AbstractSandboxController {
     }
 
     private _getStarted() {
-        let em = this.container.get<EntityManagerInterface>(ContainerID.EntityManager);
-        let heroFactory = this.container.get<HeroFactory>(ContainerID.HeroFactory);
+        let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
+        let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
         // let mainHeroList = this.container.get<MainHeroListComponent>(ContainerID.MainHeroList);
-        let mainHeroList = new MainHeroListComponent(3);
+        let mainHeroList = new MainHeroList(3);
 
         let tavern = new Tavern();
 

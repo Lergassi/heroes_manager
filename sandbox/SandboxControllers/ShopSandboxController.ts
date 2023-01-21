@@ -1,7 +1,7 @@
 import AbstractSandboxController from './AbstractSandboxController.js';
 import Wallet from '../../core/app/Components/Wallet.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import Shop from '../../core/app/Components/Shop.js';
 import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
@@ -17,14 +17,14 @@ export default class ShopSandboxController extends AbstractSandboxController {
     }
 
     private _shop() {
-        let em = this.container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let wallet = new Wallet(1000);
         // let wallet = new WalletComponent(21);
         console.log(wallet.value);
 
         // let itemStorage = new InfinityItemStorage();
-        let itemStorage = new ItemStorageV2(5);
+        let itemStorage = new ItemStorageV2(5, em);
 
         // console.log(wallet.remove(10));
         // console.log(wallet.remove(10));
@@ -33,7 +33,7 @@ export default class ShopSandboxController extends AbstractSandboxController {
         // console.log(wallet.value);
 
         // let shop = new Shop();
-        let shop = this.container.get<Shop>(ContainerID.Shop);
+        let shop = this.container.get<Shop>(ServiceID.Shop);
         // em.map<Item>(EntityID.Item, (item) => {
         //     shop.addPosition(item, item.getProperty('defaultBuyPrice'));
         // });
@@ -46,12 +46,12 @@ export default class ShopSandboxController extends AbstractSandboxController {
     }
 
     private _fence() {
-        let em = this.container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let wallet = new Wallet();
 
         // let fence = new Fence();
-        let fence = this.container.get<Fence>(ContainerID.Fence);
+        let fence = this.container.get<Fence>(ServiceID.Fence);
         // fence.config(em.get<Item>(EntityID.Item, ItemID.Wood), em.get<Item>(EntityID.Item, ItemID.Wood).sellPrice);
         // fence.config(em.get<Item>(EntityID.Item, ItemID.IronOre), em.get<Item>(EntityID.Item, ItemID.IronOre).sellPrice);
         // fence.config(em.get<Item>(EntityID.Item, ItemID.OneHandedSword01), em.get<Item>(EntityID.Item, ItemID.OneHandedSword01).sellPrice);
@@ -60,7 +60,7 @@ export default class ShopSandboxController extends AbstractSandboxController {
         });
         console.log(fence);
 
-        let itemStorage = new ItemStorageV2(5);
+        let itemStorage = new ItemStorageV2(5, em);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 9);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
@@ -82,8 +82,8 @@ export default class ShopSandboxController extends AbstractSandboxController {
     }
 
     private _debug() {
-        let shop = this.container.get<Shop>(ContainerID.Shop);
-        let fence = this.container.get<Fence>(ContainerID.Fence);
+        let shop = this.container.get<Shop>(ServiceID.Shop);
+        let fence = this.container.get<Fence>(ServiceID.Fence);
         console.log(shop);
         console.log(fence);
     }

@@ -13,7 +13,7 @@ import _ from 'lodash';
 import PlayerContainerConfigure from '../../../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
 import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export default class LoadPlayerEnvironmentCommand extends Command {
@@ -57,7 +57,7 @@ export default class LoadPlayerEnvironmentCommand extends Command {
         //todo: Пока сохранений данных нет - будет создаваться стартовый контейнер.
         (new PlayerContainerConfigure()).configure(this.container);
 
-        let gameObjectStorage = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage);
+        let gameObjectStorage = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage);
         for (let i = 0; i < objectData['data']['gameObjects'].length; i++) {
             gameObjectStorage.add(serializer.unserialize(objectData['data']['gameObjects'][i]));
         }

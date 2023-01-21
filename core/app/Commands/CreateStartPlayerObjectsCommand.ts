@@ -4,11 +4,11 @@ import Item from '../Entities/Item.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
-import MainHeroListComponent from '../Components/MainHeroListComponent.js';
+import MainHeroList from '../Components/MainHeroList.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import {unsigned} from '../../types/main.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
@@ -48,13 +48,13 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         //     DEFAULT_ITEM_STORAGE_SIZE,
         //     this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
         // );
-        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
-        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
     }
 
     private async _createItems() {
-        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item_kit, ['start_resources']);
-        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_item_kit, ['start_materials']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_kit, ['start_resources']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_kit, ['start_materials']);
     }
 
     private _createHeroes() {
@@ -125,15 +125,15 @@ export default class CreateStartPlayerObjectsCommand extends Command {
         ];
 
         for (let i = 0; i < heroPatterns.length; i++) {
-            let hero = this.container.get<MainHeroListComponent>(ContainerID.MainHeroList).createHero(
+            let hero = this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
                 heroPatterns[i].heroClassID,
                 1,
-                this.container.get<HeroFactory>(ContainerID.HeroFactory),
+                this.container.get<HeroFactory>(ServiceID.HeroFactory),
             );
 
             //Начальная экипировка.
             for (const equipSlotID in heroPatterns[i].equip) {
-                let item = this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, heroPatterns[i].equip[equipSlotID]);
+                let item = this.container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(EntityID.Item, heroPatterns[i].equip[equipSlotID]);
                 if (!item) {
                     debug(DebugNamespaceID.Warning)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
                     continue;
@@ -141,27 +141,23 @@ export default class CreateStartPlayerObjectsCommand extends Command {
 
                 hero
                     .get<EquipSlotInterface>(equipSlotID)
-                    ?.createItemStack(
-                        item,
-                        1,
-                        this.container.get<ItemStackFactory>(ContainerID.ItemStackFactory),
-                    );
+                    ?.equip(item);
             }
         }
 
-        this.container.get<MainHeroListComponent>(ContainerID.MainHeroList).createHero(
+        this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
             HeroClassID.Warrior,
             1,
-            this.container.get<HeroFactory>(ContainerID.HeroFactory),
+            this.container.get<HeroFactory>(ServiceID.HeroFactory),
         );
-        this.container.get<MainHeroListComponent>(ContainerID.MainHeroList).createHero(
+        this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
             HeroClassID.Warrior,
             1,
-            this.container.get<HeroFactory>(ContainerID.HeroFactory),
+            this.container.get<HeroFactory>(ServiceID.HeroFactory),
         );
     }
 
     private async _createLocations() {
-        await this.container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.create_location, ['1']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
     }
 }

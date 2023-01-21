@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import debug from 'debug';
+import EntityManager from '../../source/EntityManager.js';
 import Recipe from '../Entities/Recipe.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import ItemStorageV2 from '../Components/ItemStorageV2.js';
 import InfinityItemStorage from '../Components/InfinityItemStorage.js';
@@ -12,10 +14,10 @@ export default class CraftQueue {
     private readonly _queue: any[];
     private readonly _resourcesItemStorage: InfinityItemStorage;
 
-    constructor() {
+    constructor(entityManager: EntityManagerInterface) {
         this._size = 5;
         this._queue = [];
-        this._resourcesItemStorage = new InfinityItemStorage();
+        this._resourcesItemStorage = new InfinityItemStorage(entityManager);
     }
 
     addRecipe(recipe: Recipe, itemStorage: ItemStorageInterface): boolean {

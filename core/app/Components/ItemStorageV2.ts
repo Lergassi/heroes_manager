@@ -1,16 +1,16 @@
-import _ from 'lodash';
 import debug from 'debug';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import Item from '../Entities/Item.js';
-import {unsigned} from '../../types/main.js';
-import ItemStackController from './ItemStackController.js';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
-import AppError from '../../source/Errors/AppError.js';
 import Viewer from '../../source/Viewer.js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {EntityID} from '../../types/enums/EntityID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
+import {UI_ItemCount, unsigned} from '../../types/main.js';
+import HeroClass from '../Entities/HeroClass.js';
+import Item from '../Entities/Item.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import ItemStorageInterface, {ItemStorageInterfaceRender} from '../Interfaces/ItemStorageInterface.js';
+import ItemStackController from './ItemStackController.js';
 
 interface ItemStorageUIInterface {
     readSlot(callback);
@@ -26,11 +26,15 @@ interface ItemStorageUIInterface {
 export default class ItemStorageV2 implements ItemStorageInterface {
     private readonly _size: number;
     private readonly _itemStackControllers: ItemStackController[];
+    private _entityManager: EntityManagerInterface;
 
-    constructor(size: number) {
+    constructor(size: number, entityManager: EntityManagerInterface) {
         assertIsGreaterThanOrEqual(size, 1);
+        assertNotNil(entityManager);
         // this._itemStackControllers = itemStackControllers;
         // this._size = itemStackControllers.length;
+
+        this._entityManager = entityManager;
 
         this._size = size;
         this._itemStackControllers = [];
@@ -39,8 +43,9 @@ export default class ItemStorageV2 implements ItemStorageInterface {
         }
     }
 
-    addItem(item: Item, count: unsigned): unsigned {
-        // assertNotNil(item);
+    addItem(item: Item | ItemID, count: unsigned): unsigned {
+        item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
+        assertNotNil(item);
         // assertIsGreaterThanOrEqual(count, 0);
 
         // if (count === 0) return 0;
@@ -177,5 +182,18 @@ export default class ItemStorageV2 implements ItemStorageInterface {
         }
 
         return reminder;
+    }
+
+    renderByRequest(ui: ItemStorageInterfaceRender): void {
+        let items: UI_ItemCount[] = [];
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            this._itemStackControllers[i].renderByRequest({
+                updateItem(itemName: string, count: number): void {
+                    items.push({itemName: itemName, count: count});
+                },
+            });
+        }
+
+        ui.updateItems(items);
     }
 }

@@ -1,4 +1,7 @@
-import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import EquipSlotInterface, {
+    EquipSlotInterfaceRender,
+    EquipSlotInterfaceRenderCallback
+} from '../../Interfaces/EquipSlotInterface.js';
 import Item from '../../Entities/Item.js';
 import {unsigned} from '../../../types/main.js';
 import ItemStackFactory from '../../Factories/ItemStackFactory.js';
@@ -7,6 +10,11 @@ import ItemCategory from '../../Entities/ItemCategory.js';
 import _ from 'lodash';
 import AppError from '../../../source/Errors/AppError.js';
 import {assertIsArray, assertIsMinLength, assertNotNil} from '../../../source/assert.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import {sprintf} from 'sprintf-js';
+import {resolveObjectURL} from 'buffer';
+import debug from 'debug';
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 
 //todo: Далее внутри, без зависимостей, может быть компонент вообще без правил, просто для размещения предмета.
 export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInterface {
@@ -21,49 +29,55 @@ export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInte
         this._availableItemCategories = availableItemCategories;
     }
 
-    createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
-        this._assertCanEquip(item);
+    equip(item: Item): boolean {
+        if (!this.canEquip(item)) return false;
 
-        this._equipSlot.createItemStack(item, count, itemStackFactory);
+        return this._equipSlot.equip(item);
     }
 
-    clear(): void {
-        this._equipSlot.clear();
+    clear(): boolean {
+        return this._equipSlot.clear();
+    }
+
+    moveTo(itemStorage: ItemStorageInterface): boolean {
+        return this._equipSlot.moveTo(itemStorage);
     }
 
     isFree(): boolean {
         return this._equipSlot.isFree();
     }
 
-    private _assertCanEquip(item: Item): void {
+    canEquip(item: Item): boolean {
         if (!this.isFree()) {
-            throw new AppError('Слот уже занят.');
+            debug(DebugNamespaceID.Throw)('Слот занят.');
+            return false;
         }
 
         if (!item.hasItemCategory(this._availableItemCategories)) {
-            throw AppError.itemCategoryNotAvailable();
+            debug(DebugNamespaceID.Throw)(sprintf('Предмет категории %s нельзя экипировать в выбранный слот.', item.itemCategory.id));
+            return false;
         }
+
+        return true;
     }
 
-    render(callback: (values: {
-        item: Item,
-    }) => void) {
+    view(logger) {
+        this._equipSlot.view(logger);
+    }
+
+    render(callback: EquipSlotInterfaceRenderCallback): void {
         this._equipSlot.render(callback);
     }
 
-    /**
-     * @deprecated До тех пор, пока не будет экипировки из другого места. Использовать createItemStack.
-     * @param itemStack
-     */
-    equip(itemStack: ItemStack): void {
-        this._assertCanEquip(itemStack.item);
-
-        this._equipSlot.equip(itemStack);
+    removeRender(callback: EquipSlotInterfaceRenderCallback): void {
+        this._equipSlot.removeRender(callback);
     }
 
-    view(callback: (data: {
-        item: string,
-    }) => void) {
-        this._equipSlot.view(callback);
+    updateUI(): void {
+        this._equipSlot.updateUI();
+    }
+
+    renderByRequest(ui: EquipSlotInterfaceRender): void {
+        this._equipSlot.renderByRequest(ui);
     }
 }

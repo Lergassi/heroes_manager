@@ -59,8 +59,8 @@ export default class CharacterStateController {
         return false;
     }
 
-    view(callback: (data: {codes: string[]}) => void) {
-        callback({
+    view(logger) {
+        logger(DebugNamespaceID.Info)(DebugFormatterID.Json, {
             codes: this._codes,
         });
     }

@@ -1,7 +1,7 @@
 import AbstractSandboxController from './AbstractSandboxController.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import Recipe from '../../core/app/Entities/Recipe.js';
 import {RecipeID} from '../../core/types/enums/RecipeID.js';
 import RecipeFactory from '../../core/app/Factories/EntityFactories/RecipeFactory.js';
@@ -21,7 +21,7 @@ export default class RecipesSandboxController extends AbstractSandboxController 
     private _getStarted() {
         let itemID = ItemID.OneHandedSword01;
         // let itemID = 'asd';
-        let item = this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(itemID);
+        let item = this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(itemID);
         console.log(item);
 
         let recipe = new Recipe(
@@ -30,7 +30,7 @@ export default class RecipesSandboxController extends AbstractSandboxController 
             1,
             60,
             [
-                {item: this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.IronIngot), count: 10},
+                {item: this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronIngot), count: 10},
             ],
         );
         console.log(recipe);
@@ -38,8 +38,8 @@ export default class RecipesSandboxController extends AbstractSandboxController 
 
     private _getEntityManager() {
         // let entityManager = this.container.get<EntityManagerInterface>(ContainerID.EntityManager);
-        let entityManager: EntityManager = this.container.get<EntityManager>(ContainerID.EntityManager);
-        let recipeFactory = new RecipeFactory(this.container.get<EntityManagerInterface>(ContainerID.EntityManager));
+        let entityManager: EntityManager = this.container.get<EntityManager>(ServiceID.EntityManager);
+        let recipeFactory = new RecipeFactory(this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
 
         entityManager.add(EntityID.Recipe, RecipeID.OneHandedSword01, recipeFactory.create(
             RecipeID.OneHandedSword01,
@@ -91,8 +91,8 @@ export default class RecipesSandboxController extends AbstractSandboxController 
 
     private _load() {
         let loadRecipe = new RecipesLoader();
-        loadRecipe.load(this.container.get(ContainerID.EntityManager), new RecipeFactory(this.container.get(ContainerID.EntityManager)));
+        loadRecipe.load(this.container.get(ServiceID.EntityManager), new RecipeFactory(this.container.get(ServiceID.EntityManager)));
         // console.log(loadRecipe);
-        console.log(this.container.get(ContainerID.EntityManager));
+        console.log(this.container.get(ServiceID.EntityManager));
     }
 }

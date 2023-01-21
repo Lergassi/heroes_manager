@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import debug from 'debug';
 import Recipe from '../Entities/Recipe.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import InfinityItemStorage from '../Components/InfinityItemStorage.js';
 import ItemStorageV2 from '../Components/ItemStorageV2.js';
@@ -29,12 +30,11 @@ export default class CraftWorkbench {
     private readonly _tempResultItemSlot: ItemStackController;   //Слот производства. Заменяется при отображении.
     private _timeoutID: NodeJS.Timer;
 
-    constructor() {
+    constructor(entityManager: EntityManagerInterface) {
         this._state = CraftWorkbenchState.Free;
-        this._craftQueue = new CraftQueue();
-        this._resourcesItemStorage = new InfinityItemStorage();
-        // this._resultItemStorage = new ItemStorageV2(5);
-        this._resultItemStorage = new ItemStorageV2(1);
+        this._craftQueue = new CraftQueue(entityManager);
+        this._resourcesItemStorage = new InfinityItemStorage(entityManager);
+        this._resultItemStorage = new ItemStorageV2(1, entityManager);
         this._tempResultItemSlot = new ItemStackController();
     }
 
@@ -63,28 +63,31 @@ export default class CraftWorkbench {
         }
     }
 
+    //todo: Переделать. Не использовать лишние классы. Слот - это визуально слот, внутри можно сделать отдельный класс.
     startCraft(): boolean {
-        if (!this.canStartCraft()) return false;
-
-        this._timeoutID = setTimeout(() => {
-            debug(DebugNamespaceID.Log)('Производство предмета завершено.');
-            // if (this._activeRecipe.createItem(this._resultItemStorage) !== 0) {
-            this._activeRecipe.createItem(this._tempResultItemSlot);
-            this._tempResultItemSlot.moveTo(this._resultItemStorage);
-            if (!this._tempResultItemSlot.isFree()) {
-                console.log('this._tempResultItemSlot', this._tempResultItemSlot);
-                this._state = CraftWorkbenchState.Waiting;
-            } else {
-                this._state = CraftWorkbenchState.Free;
-                this._next();
-            }
-
-            clearTimeout(this._timeoutID);
-        },this._activeRecipe.craftTimeInSeconds * 1000);
-        // },1000);
-
-        this._state = CraftWorkbenchState.Working;
-        debug(DebugNamespaceID.Log)(sprintf('Производство предмета %s началось.', this._activeRecipe.resultItem.id));
+        // if (!this.canStartCraft()) return false;
+        //
+        // this._timeoutID = setTimeout(() => {
+        //
+        //     // if (this._activeRecipe.createItem(this._resultItemStorage) !== 0) {
+        //     this._activeRecipe.createItem(this._tempResultItemSlot);
+        //     this._tempResultItemSlot.moveTo(this._resultItemStorage);
+        //     if (!this._tempResultItemSlot.isFree()) {
+        //         console.log('this._tempResultItemSlot', this._tempResultItemSlot);
+        //         this._state = CraftWorkbenchState.Waiting;
+        //     } else {
+        //         this._state = CraftWorkbenchState.Free;
+        //         this._next();
+        //     }
+        //
+        //     debug(DebugNamespaceID.Log)('Производство предмета завершено.');
+        //
+        //     clearTimeout(this._timeoutID);
+        // },this._activeRecipe.craftTimeInSeconds * 1000);
+        // // },1000);
+        //
+        // this._state = CraftWorkbenchState.Working;
+        // debug(DebugNamespaceID.Log)(sprintf('Производство предмета %s началось.', this._activeRecipe.resultItem.id));
 
         return true;
     }

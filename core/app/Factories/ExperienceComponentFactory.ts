@@ -1,4 +1,4 @@
-import ExperienceComponent from '../Components/ExperienceComponent.js';
+import Experience from '../Components/Experience.js';
 import {unsigned} from '../../types/main.js';
 
 export type ExperienceComponentFactoryCreateOptions = {
@@ -16,8 +16,8 @@ export default class ExperienceComponentFactory {
         this._maxLevel = options.maxLevel;
     }
 
-    create(options: ExperienceComponentFactoryCreateOptions): ExperienceComponent {
-        return new ExperienceComponent(
+    create(options: ExperienceComponentFactoryCreateOptions): Experience {
+        return new Experience(
             options.level,
             this._maxLevel,
         );

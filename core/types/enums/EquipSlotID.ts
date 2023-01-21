@@ -9,8 +9,8 @@ export enum EquipSlotID {
     Foots = 'Foots',
 
     Neck = 'Neck',
-    Finger_1 = 'Finger_1',
-    Finger_2 = 'Finger_2',
+    Finger01 = 'Finger01',
+    Finger02 = 'Finger02',
 
     Trinket = 'Trinket',
 

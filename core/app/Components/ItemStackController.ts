@@ -5,13 +5,19 @@ import Item from '../Entities/Item.js';
 import {unsigned} from '../../types/main.js';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import ItemStackControllerInterface from '../Interfaces/ItemStackControllerInterface.js';
+import ItemStackControllerInterface, {
+    ItemStackControllerInterfaceRender
+} from '../Interfaces/ItemStackControllerInterface.js';
 import AppError from '../../source/Errors/AppError.js';
 import Viewer from '../../source/Viewer.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 
 export default class ItemStackController implements ItemStackControllerInterface {
     private _item: Item;
+    /**
+     * Если значение равно нулю, на рендер отдается null.
+     * @private
+     */
     private _count: unsigned;
 
     constructor() {
@@ -131,7 +137,7 @@ export default class ItemStackController implements ItemStackControllerInterface
             reminder = count;
         } else {
             reminder = this._count;
-            this._count = 0;
+            this._count = null; //Или ноль?
         }
 
         if (this._count <= 0) {
@@ -156,5 +162,9 @@ export default class ItemStackController implements ItemStackControllerInterface
         let reminder = this._item.stackSize - this._count;
 
         return reminder >= count ? 0 : count - reminder;
+    }
+
+    renderByRequest(ui: ItemStackControllerInterfaceRender): void {
+        ui.updateItem(this._item ? this._item.id : undefined, this._count > 0 ? this._count : null);
     }
 }

@@ -13,8 +13,8 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import ItemStorageComponent from './ItemStorageComponent.js';
-import {GatheringItemPoint} from './LocationComponent.js';
-import HealthPointsComponent from './HealthPointsComponent.js';
+import {GatheringItemPoint} from './Location.js';
+import HealthPoints from './HealthPoints.js';
 
 export default class CharacterFightGroup {
     private readonly _heroGroup: HeroGroup;
@@ -22,8 +22,9 @@ export default class CharacterFightGroup {
     private readonly _damageController: DamageGroupController;
     private readonly _fightController: FightController;
 
-    constructor(size) {
-        this._heroGroup = new HeroGroup(size);
+    //todo: Убрать size и группу. Это объект только для группировки урона и группа тут не нужна.
+    constructor() {
+        this._heroGroup = new HeroGroup(1000/*todo: Временно. Убрать.*/);
         this._attackController = new AttackGroupController();
         this._damageController = new DamageGroupController();
         this._fightController = new FightController(this._attackController, this._damageController);
@@ -61,7 +62,7 @@ export default class CharacterFightGroup {
         // let partOfMaxPeriodGathering = this._heroGroup.isLifeHeroesCount() / this._heroGroup.size;  //todo: isLifeHeroesCount доступ явно должен быть както иначе сделан, а не в группе. Для общих свойств нужен отдельный класс.
         let partOfMaxPeriodGathering = 0;
         this._heroGroup.map((hero) => {
-            partOfMaxPeriodGathering += Number(!hero.get<HealthPointsComponent>(ComponentID.HealthPoints).isDead());
+            partOfMaxPeriodGathering += Number(!hero.get<HealthPoints>(ComponentID.HealthPoints).isDead);
         });
         console.log('partOfMaxPeriodGathering', partOfMaxPeriodGathering);
         for (let i = 0; i < gatheringItemPoints.length; i++) {
@@ -82,5 +83,9 @@ export default class CharacterFightGroup {
         // this._heroGroup.view((data) => {
         //     callback(data);
         // });
+    }
+
+    render(ui) {
+
     }
 }

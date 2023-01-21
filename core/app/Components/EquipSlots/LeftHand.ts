@@ -1,37 +1,37 @@
-import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import EquipSlotInterface, {
+    EquipSlotInterfaceRender,
+    EquipSlotInterfaceRenderCallback
+} from '../../Interfaces/EquipSlotInterface.js';
 import Item from '../../Entities/Item.js';
-import {unsigned} from '../../../types/main.js';
-import ItemStackFactory from '../../Factories/ItemStackFactory.js';
-import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import DefaultEquipSlot from './DefaultEquipSlot.js';
-import AppError from '../../../source/Errors/AppError.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
+import AverageItemLevel from '../AverageItemLevel.js';
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
+import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
 
 export default class LeftHand implements EquipSlotInterface {
     private _equipSlot: EquipSlotInterface
-    // private _rightHand: EquipSlotInterface
     private _isBlock: boolean
 
-    constructor() {
-    // constructor(rightHand: EquipSlotInterface) {
-        this._equipSlot = new DefaultEquipSlot();
-        // this._rightHand = new DefaultEquipSlot();
+    constructor(averageItemLevel: AverageItemLevel, itemCharacterAttributeCollector: ItemCharacterAttributeCollector) {
+        this._equipSlot = new DefaultEquipSlot(EquipSlotID.LeftHand, averageItemLevel, itemCharacterAttributeCollector);
         this._isBlock = false;
     }
 
-    createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
-        this._assertCanEquip(item);
-
-        this._equipSlot.createItemStack(item, count, itemStackFactory);
+    equip(item: Item): boolean {
+        return this._equipSlot.equip(item);
     }
 
-    clear(): void {
-        this._equipSlot.clear();
+    clear(): boolean {
+        return this._equipSlot.clear();
+    }
+
+    moveTo(itemStorage: ItemStorageInterface): boolean {
+        return this._equipSlot.moveTo(itemStorage);
     }
 
     isFree(): boolean {
         return this._equipSlot.isFree();
-        // return this._equipSlot.isFree() && this._rightHand.isFree();
     }
 
     block() {
@@ -42,26 +42,23 @@ export default class LeftHand implements EquipSlotInterface {
         this._isBlock = false;
     }
 
-    private _assertCanEquip(item: Item): void {
-        if (this._isBlock) {
-        // if (!this.isFree()) {
-            throw new AppError('Слот заблокирован.');
-        }
+    view(logger) {
+        this._equipSlot.view(logger);
     }
 
-    render(callback: (values: {
-        item: Item,
-    }) => void) {
+    render(callback: EquipSlotInterfaceRenderCallback): void {
         this._equipSlot.render(callback);
     }
 
-    equip(itemStack: ItemStack) {
-        this._equipSlot.equip(itemStack);
+    removeRender(callback: EquipSlotInterfaceRenderCallback): void {
+        this._equipSlot.removeRender(callback);
     }
 
-    view(callback: (data: {
-        item: string,
-    }) => void) {
-        this._equipSlot.view(callback);
+    updateUI(): void {
+        this._equipSlot.updateUI();
+    }
+
+    renderByRequest(ui: EquipSlotInterfaceRender): void {
+        this._equipSlot.renderByRequest(ui);
     }
 }

@@ -40,14 +40,18 @@ export default class Container implements ContainerInterface {
         assert(typeof key === 'string');
         assert(key.length > 0);
 
-        if (!this.has(key)) {
-            throw new AppError(sprintf('Сервис с ключом %s не найден в контейнере.', key));
-        }
+        // if (!this.has(key)) {
+        //     throw new AppError(sprintf('Сервис с ключом %s не найден в контейнере.', key));
+        // }
 
         return this._services[key];
     }
 
-    //todo: Убрать.
+    /**
+     * @deprecated
+     * todo: Убрать.
+     * @param pattern
+     */
     getByPattern(pattern: string) {
         let result = [];
         let keySplitted = this._splitPattern(pattern);

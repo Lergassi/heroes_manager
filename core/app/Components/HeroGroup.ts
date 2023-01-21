@@ -7,7 +7,7 @@ import TakeComponent from './TakeComponent.js';
 import EventSystem from '../../source/EventSystem.js';
 import HeroGroupInterface from '../Interfaces/HeroGroupInterface.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
-import HealthPointsComponent from './HealthPointsComponent.js';
+import HealthPoints from './HealthPoints.js';
 import HeroListViewer from '../Viwers/HeroListViewer.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
@@ -59,6 +59,8 @@ export default class HeroGroup implements HeroGroupInterface {
     private readonly _size: number;
     // private _isBlock: boolean;
 
+    private _ui;
+
     // get heroesCount(): number {
     //     let count = 0;
     //     for (const position in this._heroes) {
@@ -100,6 +102,8 @@ export default class HeroGroup implements HeroGroupInterface {
             ++position;
         }
         // this._heroesArray = [];
+
+        this._ui = [];
     }
 
     // _setHero(heroSlot: HeroSlot, hero: GameObject): void {
@@ -148,10 +152,10 @@ export default class HeroGroup implements HeroGroupInterface {
 
         // this._setHero(heroSlot, hero);
         this._heroes[heroSlot] = hero;
-        console.log('this._update', this._update);
-        for (let i = 0; i < this._update.length; i++) {
-            this._update[i](i, this._heroes[i]?.ID);
-        }
+        // console.log('this._update', this._update);
+        // for (let i = 0; i < this._update.length; i++) {
+        //     this._update[i](i, this._heroes[i]?.ID);
+        // }
     }
 
     _clearPosition(position: number): void {
@@ -224,14 +228,14 @@ export default class HeroGroup implements HeroGroupInterface {
         // this._isBlock = false;
     }
 
-    _update = [];
-    render(callback: (index, ID) => void) {
-        this._update.push(callback);
-        console.log('Функция добавлена.', this._update);
-        for (let i = 0; i < this._heroes.length; i++) {
-            callback(i, this._heroes[i]?.ID);
-        }
-    }
+    // _update = [];
+    // render(callback: (index, ID) => void) {
+    //     this._update.push(callback);
+    //     console.log('Функция добавлена.', this._update);
+    //     for (let i = 0; i < this._heroes.length; i++) {
+    //         callback(i, this._heroes[i]?.ID);
+    //     }
+    // }
 
     _getHeroSlotByPosition(position: number) {
         return this._heroes[position.toString()];
@@ -278,4 +282,18 @@ export default class HeroGroup implements HeroGroupInterface {
             callback(hero);
         });
     }
+
+    render(ui): void {
+        // this._ui.push(ui);
+        for (let i = 0; i < this._heroes.length; i++) {
+            // this._heroes[i].
+        }
+    }
+
+    removeRender(ui): void {}
+    // updateUI(): void {
+    //     for (let i = 0; i < this._ui.length; i++) {
+    //         // this._ui[i].update(this._heroes);
+    //     }
+    // }
 }

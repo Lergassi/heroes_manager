@@ -6,7 +6,7 @@ import AppError from '../../source/Errors/AppError.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {assert, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
@@ -35,25 +35,20 @@ export default class EquipCommand extends Command {
         let heroID = parseInt(input.getArgument('hero_id'), 10);
         let equipSlotID = input.getArgument('equip_slot_id');
 
-        let itemStorage = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(itemStorageID);
-        console.log(itemStorage);
-        // assertIsInstanceOf(itemStorage, GameObject);
-        let itemStorageSlotComponent = itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent).getItemStorageSlot(itemStorageSlotIndex);
-        console.log(itemStorageSlotComponent);
-        // assert(itemStorageSlotComponent instanceof ItemStorageSlotComponent);
+        let itemStorage = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(itemStorageID);
+        let itemStorageSlotComponent = itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorage).getItemStorageSlot(itemStorageSlotIndex);
 
         if (itemStorageSlotComponent.isFree()) {
             throw new AppError('Исходный ItemStorageSlotComponent пустой.');
         }
 
-        let hero = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(heroID);
+        let hero = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(heroID);
         assertIsInstanceOf(hero, GameObject);
-        // let equipSlotComponent = <EquipSlotComponent>hero.get(equipSlotID);
         let equipSlotComponent = <EquipSlotInterface>hero.get(equipSlotID);
-        // assert(equipSlotComponent instanceof EquipSlotComponent);
         assertNotNil(equipSlotComponent);
 
-        equipSlotComponent.equip(itemStorageSlotComponent.itemStack);
-        itemStorageSlotComponent.destroyItemStack();
+        if (equipSlotComponent.equip(itemStorageSlotComponent.itemStack.item)) {
+            itemStorageSlotComponent.destroyItemStack();
+        }
     }
 }

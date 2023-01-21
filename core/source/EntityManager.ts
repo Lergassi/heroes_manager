@@ -48,9 +48,9 @@ export default class EntityManager implements EntityManagerInterface {
      * @param ID
      */
     get<T>(entityID: EntityID, ID: string): T | undefined {
-        assertIsString(entityID);
+        // assertIsString(entityID);
         assertNotEmpty(entityID);
-        assertIsString(ID);
+        // assertIsString(ID);
         assertNotEmpty(ID);
 
         return this._entities[entityID]?.[ID];

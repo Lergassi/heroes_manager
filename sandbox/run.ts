@@ -7,6 +7,9 @@ import debug from 'debug';
 import csvToJson from 'convert-csv-to-json';
 import fs from 'fs';
 import {sprintf} from 'sprintf-js';
+import ConventItems from '../core/app/Services/Server/ConventItems.js';
+import ConventItemCategories from '../core/app/Services/Server/ConventItemCategories.js';
+import ConventCSVDataToJson from '../core/app/Services/Server/ConventCSVDataToJson.js';
 
 dotenv.config();
 debug.enable(process.env['DEBUG']);
@@ -93,19 +96,8 @@ yargs(hideBin(process.argv))
     .command('convent_items', '', (yargs) => {
         return yargs;
     }, (argv) => {
-        let input = './core/data/items.csv';
-        let output = './core/data/items.json';
-        let json = csvToJson.getJsonFromCsv(input);
-        let string = JSON.stringify(json);
-        // console.log(json);
-        fs.writeFile(output, string, (error) => {
-            if (error) {
-                console.log('error', error);
-                return;
-            }
-
-            console.log('done: ' + output);
-        });
+        let conventItems = new ConventItems();
+        conventItems.run();
     })
     .parse()
 ;
@@ -114,19 +106,18 @@ yargs(hideBin(process.argv))
     .command('convent_item_categories', '', (yargs) => {
         return yargs;
     }, (argv) => {
-        let filename = 'item_categories';
-        let input = sprintf('./core/data/%s.csv', filename);
-        let output = sprintf('./core/data/%s.json', filename);
-        let json = csvToJson.getJsonFromCsv(input);
-        let string = JSON.stringify(json);
-        fs.writeFile(output, string, (error) => {
-            if (error) {
-                console.log('error', error);
-                return;
-            }
+        let conventItemCategories = new ConventItemCategories();
+        conventItemCategories.run();
+    })
+    .parse()
+;
 
-            console.log('done: ' + output);
-        });
+yargs(hideBin(process.argv))
+    .command('convent_data', '', (yargs) => {
+        return yargs;
+    }, (argv) => {
+        let conventCSVDataToJson = new ConventCSVDataToJson();
+        conventCSVDataToJson.run();
     })
     .parse()
 ;

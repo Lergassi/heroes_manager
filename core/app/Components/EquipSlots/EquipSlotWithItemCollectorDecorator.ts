@@ -1,54 +1,70 @@
-import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import EquipSlotInterface, {
+    EquipSlotInterfaceRender,
+    EquipSlotInterfaceRenderCallback
+} from '../../Interfaces/EquipSlotInterface.js';
 import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
 import Item from '../../Entities/Item.js';
 import {unsigned} from '../../../types/main.js';
 import ItemStackFactory from '../../Factories/ItemStackFactory.js';
 import ItemStack from '../../RuntimeObjects/ItemStack.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import debug from 'debug';
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 
 export default class EquipSlotWithItemCollectorDecorator implements EquipSlotInterface {
     private readonly _equipSlot: EquipSlotInterface;
-    private readonly _itemCharacterAttributeCollection: ItemCharacterAttributeCollector;
+    private readonly _itemAttributeCollectionComponent: ItemCharacterAttributeCollector;
     private _item: Item;
 
     constructor(equipSlot: EquipSlotInterface, itemAttributeCollectionComponent: ItemCharacterAttributeCollector) {
         this._equipSlot = equipSlot;
-        this._itemCharacterAttributeCollection = itemAttributeCollectionComponent;
+        this._itemAttributeCollectionComponent = itemAttributeCollectionComponent;
         this._item = null;
     }
 
-    createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
-        this._equipSlot.createItemStack(item, count, itemStackFactory);
-        this._itemCharacterAttributeCollection.addItem(item);
+    equip(item: Item): boolean {
+        this._itemAttributeCollectionComponent.addItem(item);
         this._item = item;
+
+        return this._equipSlot.equip(item);
     }
 
-    clear(): void {
-        if (!this.isFree()) {
-            this._equipSlot.clear();
-            this._itemCharacterAttributeCollection.removeItem(this._item);
-            this._item = null;
-        }
+    clear(): boolean {
+        if (!this._equipSlot.clear()) return false;
+
+        this._itemAttributeCollectionComponent.removeItem(this._item);
+        this._item = null;
+
+        return true;
+    }
+
+    moveTo(itemStorage: ItemStorageInterface): boolean {
+        if (!this._equipSlot.moveTo(itemStorage)) return false;
+
+        return this.clear();
     }
 
     isFree(): boolean {
         return this._equipSlot.isFree();
     }
 
-    render(callback: (values: {
-        item: Item,
-    }) => void) {
+    view(logger) {
+        this._equipSlot.view(logger);
+    }
+
+    render(callback: EquipSlotInterfaceRenderCallback): void {
         this._equipSlot.render(callback);
     }
 
-    equip(itemStack: ItemStack): void {
-        this._equipSlot.equip(itemStack);
-        this._itemCharacterAttributeCollection.addItem(itemStack.item);
-        this._item = itemStack.item;
+    removeRender(callback: EquipSlotInterfaceRenderCallback): void {
+        this._equipSlot.removeRender(callback);
     }
 
-    view(callback: (data: {
-        item: string,
-    }) => void) {
-        this._equipSlot.view(callback);
+    updateUI(): void {
+        this._equipSlot.updateUI();
+    }
+
+    renderByRequest(ui: EquipSlotInterfaceRender): void {
+        this._equipSlot.renderByRequest(ui);
     }
 }

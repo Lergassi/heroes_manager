@@ -13,6 +13,6 @@ export default class MagicPointsComponent {
         assertNotNil(maxMagicPoints);
 
         this._maxMagicPoints = maxMagicPoints;
-        this._currentMagicPoints = maxMagicPoints.value();
+        this._currentMagicPoints = maxMagicPoints.finalValue;
     }
 }

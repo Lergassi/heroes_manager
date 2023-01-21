@@ -6,7 +6,7 @@ import {DEFAULT_STACK_SIZE} from '../consts.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import {assertIsGreaterThanOrEqual, assertIsNumber, assertNotEmpty, assertNotNil} from '../../source/assert.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import Item from '../Entities/Item.js';
 import {EntityID} from '../../types/enums/EntityID.js';
@@ -122,10 +122,7 @@ export default class CreateItemKitCommand extends Command {
             //     this.container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(EntityID.Item, this._kits[name][i].item),
             //     this._kits[name][i].count * multiplier,
             // );
-            this.container.get<ItemStorageInterface>(ContainerID.ItemStorageController).addItem(
-                this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(this._kits[name][i].item),
-                this._kits[name][i].count * multiplier,
-            );
+            this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(this._kits[name][i].item), this._kits[name][i].count * multiplier);
         }
     }
 }

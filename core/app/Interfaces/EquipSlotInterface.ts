@@ -1,20 +1,48 @@
 import Item from '../Entities/Item.js';
-import {unsigned} from '../../types/main.js';
+import {UI_ItemCount, unsigned} from '../../types/main.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import ItemStack from '../RuntimeObjects/ItemStack.js';
+import ItemStorageInterface from './ItemStorageInterface.js';
+import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
+
+export type EquipSlotInterfaceRenderCallback = (ID: EquipSlotID, item: Item | undefined) => void;
+
+export interface EquipSlotInterfaceRender {
+    /**
+     * item будет в виде стека. Чтобы не делать отдельной логики.
+     * @param ID
+     * @param item
+     */
+    updateEquipSlot?(ID: EquipSlotID, item: UI_ItemCount): void;
+}
+
+// export type EquipSlotInterfaceRender = {
+//     /**
+//      * item будет в виде стека. Чтобы не делать отдельной логики.
+//      * @param ID
+//      * @param item
+//      */
+//     updateSlot?: (ID: EquipSlotID, item: UI_ItemCount) => void;
+// }
 
 export default interface EquipSlotInterface {
-    /**
-     * @deprecated Пока не понятно от куда будет экипировка, так как сумки будут переделаны. Очищать источник экипировки вручную.
-     * @param itemStack
-     */
-    equip(itemStack: ItemStack): void;
-    createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void;
-    clear(): void;
+    // equip(itemStack: ItemStack): void;
+    equip(item: Item): boolean; /*todo: Добавить ItemID.*/
+
+    // /**
+    //  * @deprecated
+    //  * @param item
+    //  * @param count
+    //  * @param itemStackFactory
+    //  */
+    // createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void;
+    clear(): boolean;
+    moveTo(itemStorage: ItemStorageInterface): boolean;
     isFree(): boolean;
-    render(callback: (values: {item: Item}) => void);
-    // moveTo(target: ItemSlotInterface): void;
-    view(callback: (data: {
-        item: string,
-    }) => void);
+    // // moveTo(target: ItemSlotInterface): void;
+    view(logger);
+    render(callback: EquipSlotInterfaceRenderCallback): void;
+    removeRender(callback: EquipSlotInterfaceRenderCallback): void;
+    updateUI(): void;
+    renderByRequest(ui: EquipSlotInterfaceRender): void;
 }

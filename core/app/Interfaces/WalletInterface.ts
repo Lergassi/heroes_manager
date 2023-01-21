@@ -1,5 +1,9 @@
 import {unsigned} from '../../types/main.js';
 
+export interface WalletInterfaceRender {
+    updateValue(value: number): void;
+}
+
 export default interface WalletInterface {
     get value(): number;
 
@@ -24,4 +28,5 @@ export default interface WalletInterface {
     // has(value: unsigned): boolean;
     // render(callb);
     // addListener();
+    renderByRequest(ui: WalletInterfaceRender): void;
 }

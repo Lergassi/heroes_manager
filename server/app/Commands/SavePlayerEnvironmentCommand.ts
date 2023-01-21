@@ -10,7 +10,7 @@ import Security from '../../source/Security.js';
 import MetadataManager from '../../../core/source/MetadataManager.js';
 import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 
 export default class SavePlayerEnvironmentCommand extends Command {
@@ -22,7 +22,7 @@ export default class SavePlayerEnvironmentCommand extends Command {
         this.container.get<Security>('server.security').assertIsUserLoaded();
         this.container.get<Security>('server.security').assertIsPlayerLoaded();
 
-        let gameObjects = this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage)['_gameObjects'];
+        let gameObjects = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage)['_gameObjects'];
         let services = this.container['_services'];
 
         let serializer = this.container.get<Serializer>('core.serializer');

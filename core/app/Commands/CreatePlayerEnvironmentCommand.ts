@@ -7,7 +7,7 @@ import Currency from '../Entities/Currency.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
@@ -30,7 +30,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     private async _createItemStorages() {
-        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
     }
 
     private _createWallets() {
@@ -42,7 +42,7 @@ export default class CreatePlayerEnvironmentCommand extends Command {
         ];
 
         _.map(currencyIDs, (currencyID) => {
-            this.container.get<WalletFactory>(ContainerID.WalletFactory).create(
+            this.container.get<WalletFactory>(ServiceID.WalletFactory).create(
                 config['start_wallet_values'][currencyID]['value'],
             )
         });

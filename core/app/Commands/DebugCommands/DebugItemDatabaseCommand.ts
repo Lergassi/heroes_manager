@@ -2,7 +2,7 @@ import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
 import {CommandID} from '../../../types/enums/CommandID.js';
 import ItemDatabase from '../../../source/ItemDatabase.js';
-import {ContainerID} from '../../../types/enums/ContainerID.js';
+import {ServiceID} from '../../../types/enums/ServiceID.js';
 import Item from '../../Entities/Item.js';
 import {assert, assertNotNil} from '../../../source/assert.js';
 import {debugItem} from '../../../debug/debug_functions.js';
@@ -16,7 +16,7 @@ export default class DebugItemDatabaseCommand extends Command {
     }
 
     async execute(input: Input) {
-        let itemDatabase = this.container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         let items = itemDatabase['_items'] as {[ID: string]: Item};
         assertNotNil(items);

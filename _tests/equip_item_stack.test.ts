@@ -13,18 +13,18 @@ import HeroComponent from '../core/app/Components/HeroComponent.js';
 import {HeroClassID} from '../core/types/enums/HeroClassID.js';
 import {EquipSlotID} from '../core/types/enums/EquipSlotID.js';
 import {ItemID} from '../core/types/enums/ItemID.js';
-import {ContainerID} from '../core/types/enums/ContainerID.js';
+import {ServiceID} from '../core/types/enums/ServiceID.js';
 import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
 
 let container = new Container();
 (new DefaultContainerConfigure()).configure(container);
 (new CoreContainerConfigure()).configure(container);
 
-let heroClass = container.get<EntityManagerInterface>(ContainerID.EntityManager).getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
-let equipSlot = container.get<EntityManagerInterface>(ContainerID.EntityManager).getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(EquipSlotID.Head);
+let heroClass = container.get<EntityManagerInterface>(ServiceID.EntityManager).getRepository<HeroClass>(HeroClass.name).getOneByAlias(HeroClassID.Warrior);
+let equipSlot = container.get<EntityManagerInterface>(ServiceID.EntityManager).getRepository<EquipSlot>(EquipSlot.name).getOneByAlias(EquipSlotID.Head);
 let availableItemStack = container.get<ItemStackFactory>('core.itemStackFactory').createByItemAlias(ItemID.PlateHelmet01);
 
-let hero = container.get<HeroFactory>(ContainerID.HeroFactory).create(
+let hero = container.get<HeroFactory>(ServiceID.HeroFactory).create(
     heroClass,
     1,
 );

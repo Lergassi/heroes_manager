@@ -1,6 +1,6 @@
 import HeroCharacterAttributeFactory from '../../app/Factories/HeroCharacterAttributeFactory.js';
 
-export enum ContainerID {
+export enum ServiceID {
     //core
     EventSystem = 'core.EventSystem',
     EventSystemFactory = 'core.EventSystemFactory',
@@ -47,9 +47,11 @@ export enum ContainerID {
     // StubItemStorage01 = 'player.stubs.ItemStorage01',
     StubFactory = 'StubFactory',
 
-    //ui
-    //components
-    UI_MainItemStorageList = 'player.ui.MainItemStorageList',
+    //ui React components
+    UI_ItemStorage = 'player.ui.PlayerItemStorage',
+    UI_ItemStorageController = 'player.ui.ItemStorageController',
+    UI_DetailHero = 'player.ui.DetailHero',
     UI_MainHeroList = 'player.ui.MainHeroList',
+    UI_DetailLocation = 'player.ui.DetailLocation',
     UI_MainLocationList = 'player.ui.MainLocationList',
 }

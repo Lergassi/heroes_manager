@@ -1,8 +1,14 @@
 import GameObject from '../../source/GameObject.js';
 import {unsigned} from '../../types/main.js';
+import {ItemStorageInterfaceRender} from './ItemStorageInterface.js';
+
+export interface ItemStorageControllerInterfaceRender {
+    updateItemStorages?(itemStorages: GameObject[]): void;
+}
 
 //todo: Придумать другое название.
 export default interface ItemStorageControllerInterface {
+    get length(): number;
     /**
      *
      * @param itemStorage
@@ -17,11 +23,5 @@ export default interface ItemStorageControllerInterface {
      */
     removeItemStorage(itemStorage: GameObject): number;
     render(callback: (itemStorages: GameObject[]) => void);
-    get length(): number;
-
-    // addListener(code, callback);
-
-    attach(handlers: {
-        addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
-    });
+    renderByRequest(ui: ItemStorageControllerInterfaceRender): void;
 }

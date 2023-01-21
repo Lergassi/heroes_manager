@@ -32,7 +32,7 @@ import {env} from 'yargs';
 import dotenv from 'dotenv';
 import ItemsLoader from './Loadres/ItemsLoader.js';
 import ItemCategoriesLoader from './Loadres/ItemCategoriesLoader.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import ItemFactory from '../Factories/ItemFactory.js';
 import RecipesLoader from './Loadres/RecipesLoader.js';
 import RecipeFactory from '../Factories/EntityFactories/RecipeFactory.js';
@@ -62,14 +62,16 @@ export default class EntityManagerBuilder {
         this._createCurrencies();
         this._createQualities();
         this._createHeroRoles();
+
         // this._createItemCategories();
-        this._loadItemCategories();
         // this._createItems();
+
+        this._loadItemCategories();
         this._loadItems();
         this._loadRecipes();
+
         this._createHeroClasses();
         this._createEquipSlots();
-
         this._createEnemyEntities();
 
         // this._calcHeroConfig();
@@ -86,15 +88,15 @@ export default class EntityManagerBuilder {
     }
 
     private _loadItemCategories() {
-        (new ItemCategoriesLoader()).load(this._entityManager, this._container.get<ItemCategoryFactory>(ContainerID.ItemCategoryFactory));
+        (new ItemCategoriesLoader()).load(this._entityManager, this._container.get<ItemCategoryFactory>(ServiceID.ItemCategoryFactory));
     }
 
     private _loadItems() {
-        (new ItemsLoader()).load(this._entityManager, this._container.get<ItemFactory>(ContainerID.ItemFactory));
+        (new ItemsLoader()).load(this._entityManager, this._container.get<ItemFactory>(ServiceID.ItemFactory));
     }
 
     private _loadRecipes() {
-        (new RecipesLoader()).load(this._entityManager, this._container.get<RecipeFactory>(ContainerID.RecipeFactory));
+        (new RecipesLoader()).load(this._entityManager, this._container.get<RecipeFactory>(ServiceID.RecipeFactory));
     }
 
     private _createArmorMaterials() {
@@ -992,7 +994,7 @@ export default class EntityManagerBuilder {
             ],
         );
         equipSlotFactory.createArmorSlot(
-            EquipSlotID.Finger_1,
+            EquipSlotID.Finger01,
             'Палец 1',
             590,
             [
@@ -1000,7 +1002,7 @@ export default class EntityManagerBuilder {
             ],
         );
         equipSlotFactory.createArmorSlot(
-            EquipSlotID.Finger_2,
+            EquipSlotID.Finger02,
             'Палец 2',
             600,
             [

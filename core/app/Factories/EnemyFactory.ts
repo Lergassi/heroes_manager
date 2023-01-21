@@ -1,29 +1,30 @@
-import GameObjectFactory from './GameObjectFactory.js';
-import HealthPointsComponent from '../Components/HealthPointsComponent.js';
-import {unsigned} from '../../types/main.js';
-import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
-import EntityManager from '../../source/EntityManager.js';
-import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
-import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
 import _ from 'lodash';
-import {assert} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
-import {EnemyID} from '../../types/enums/EnemyID.js';
+import {assert} from '../../source/assert.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
-import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
-import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
-import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import EnemyCharacterAttributeFactory from './EnemyCharacterAttributeFactory.js';
-import AttackController from '../Components/AttackController.js';
-import CharacterStateController from '../Components/CharacterStateController.js';
+import {EnemyID} from '../../types/enums/EnemyID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
+import {unsigned} from '../../types/main.js';
+import AttackController from '../Components/AttackController.js';
+import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
+import CharacterStateController from '../Components/CharacterStateController.js';
+import Enemy from '../Components/Enemy.js';
+import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
+import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
+import HealthPoints from '../Components/HealthPoints.js';
+import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
+import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
+import Level from '../Components/Level.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
+import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-import ExperienceComponent from '../Components/ExperienceComponent.js';
-import WalletInterface from '../Interfaces/WalletInterface.js';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import LevelInterface from '../Interfaces/LevelInterface.js';
+import WalletInterface from '../Interfaces/WalletInterface.js';
+import EnemyCharacterAttributeFactory from './EnemyCharacterAttributeFactory.js';
+import GameObjectFactory from './GameObjectFactory.js';
 
 export default class EnemyFactory {
     private readonly _gameObjectFactory: GameObjectFactory;
@@ -65,17 +66,12 @@ export default class EnemyFactory {
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
 
-        //todo: Потом сделаю отдельный компонент для уровня.
-        // let enemyComponent = enemy.set<EnemyComponent>(EnemyComponent.name, new EnemyComponent({
-        //     enemyEntity: enemyEntity,
-        //     level: level,
-        // }));
+        enemy.set<Enemy>(ComponentID.Enemy, new Enemy(enemyEntity));  //todo: Придумать другой способ хранение таких данных. Пока всё в одном. В процессе разработке переносить в другие места.
+        enemy.set<LevelInterface>(ComponentID.Level, new Level(level));
 
-        let experienceGeneratorComponent = enemy.set<ExperienceGeneratorComponent>(ExperienceGeneratorComponent.name, enemyEntity.createExperienceLootGenerator());
-        let goldLootGeneratorComponent = enemy.set<GoldLootGeneratorComponent>(GoldLootGeneratorComponent.name, enemyEntity.createGoldLootGenerator());
-        let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ItemLootGeneratorComponent.name, enemyEntity.createLootGenerator());
+        //Логика сражений.
 
-        let healthPointsComponent = enemy.set<HealthPointsComponent>(ComponentID.HealthPoints, new HealthPointsComponent(
+        let healthPointsComponent = enemy.set<HealthPoints>(ComponentID.HealthPoints, new HealthPoints(
             this._enemyCharacterAttributeFactory.create(
                 CharacterAttributeID.MaxHealthPoints,
                 level,
@@ -105,22 +101,25 @@ export default class EnemyFactory {
             ),
         ));
 
+        let attackPower = this._enemyCharacterAttributeFactory.create(
+            CharacterAttributeID.AttackPower,
+            level,
+            itemCharacterAttributeCollector,
+            {
+                baseValue: options?.baseCharacterAttributeValues?.AttackPower,
+            }
+        );
+        enemy.set(CharacterAttributeID.AttackPower, attackPower);
+
         enemy.set<AttackController>(ComponentID.AttackController, new AttackController(
-            // new CharacterAttribute(
-            //     CharacterAttributeID.AttackPower,
-            //     new ItemCharacterAttributeCollector(),
-            //     200,
-            // ),
-            this._enemyCharacterAttributeFactory.create(
-                CharacterAttributeID.AttackPower,
-                level,
-                itemCharacterAttributeCollector,
-                {
-                    baseValue: options?.baseCharacterAttributeValues?.AttackPower,
-                }
-            ),
+            attackPower,
             stateController,
-        ))
+        ));
+
+        //loot
+        let experienceGeneratorComponent = enemy.set<ExperienceGeneratorComponent>(ExperienceGeneratorComponent.name, enemyEntity.createExperienceLootGenerator());
+        let goldLootGeneratorComponent = enemy.set<GoldLootGeneratorComponent>(GoldLootGeneratorComponent.name, enemyEntity.createGoldLootGenerator());
+        let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ItemLootGeneratorComponent.name, enemyEntity.createLootGenerator());
 
         return enemy;
     }

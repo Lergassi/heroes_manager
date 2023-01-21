@@ -1,18 +1,21 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import ItemStorageControllerInterface from '../../../core/app/Interfaces/ItemStorageControllerInterface.js';
+import ItemStorageController from '../../../core/app/Components/ItemStorageController.js';
+import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
+import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
-import ItemStorageRC from './ItemStorageRC.js';
-import ItemStorageV2 from '../../../core/app/Components/ItemStorageV2.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
+import {UI_ItemCount} from '../../../core/types/main.js';
+import ItemStorageRC from './ItemStorageRC.js';
 
 export interface ItemStorageControllerRCProps {
-    itemStorageController: ItemStorageControllerInterface;
+    itemStorageController: ItemStorageController;
+    container: ContainerInterface;
 }
 
 export interface ItemStorageControllerRCState {
+    itemStorageController: ItemStorageController;
     itemStorages: GameObject[];
 }
 
@@ -21,24 +24,35 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
         super(props);
 
         this.state = {
+            itemStorageController: props.itemStorageController,
             itemStorages: [],
         };
+
+        this.props.container.set<ItemStorageControllerRC>(ServiceID.UI_ItemStorageController, this);
     }
 
-    componentDidMount() {
-        this.props.itemStorageController.attach({
-            addItemStorage: (itemStorageController, itemStorages) => {
-                this.updateItemStorages(itemStorages);
-            }
-        });
+    // componentDidMount() {
+    //     this.props.itemStorageController.attach({
+    //         addItemStorage: (itemStorageController, itemStorages) => {
+    //             this.updateItemStorages(itemStorages);
+    //         }
+    //     });
+    // }
+
+    updateByRequest(): void {
+        this.state.itemStorageController.renderAllByRequest(this);
     }
 
     updateItemStorages(itemStorages: GameObject[]) {
         this.setState((state) => {
             return {
                 itemStorages: itemStorages,
-            };
+            } as ItemStorageControllerRCState;
         });
+    }
+
+    updateItemStorage(index: number, items: UI_ItemCount[]): void {
+
     }
 
     render() {
@@ -47,18 +61,14 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
         return (
             <div>
                 {_.map(itemStorages, (itemStorage, index) => {
-                    return <div key={index} className={'widget'}>
-                        <div className={'widget__title'}>
-                            Хранилище
-                        </div>
-                        <div className={'widget__content'}>
-                            <ItemStorageRC
-                                size={20}
-                                columns={4}
-                                itemStorage={itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent)}
-                            />
-                        </div>
-                    </div>
+                    return <ItemStorageRC
+                        key={index}
+                        container={this.props.container}
+                        itemStorage={itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorage)}
+                        itemStorageID={String(itemStorage.ID)}
+                        size={20}
+                        ID={ServiceID.UI_ItemStorage + '.' + String(index)}
+                    />
                 })}
             </div>
         );

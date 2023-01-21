@@ -3,7 +3,7 @@ import debug from 'debug';
 import HeroClass from '../Entities/HeroClass.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import HeroFactory from '../Factories/HeroFactory.js';
-import MainHeroListComponent from './MainHeroListComponent.js';
+import MainHeroList from './MainHeroList.js';
 
 export default class Tavern {
     private readonly _heroes: {heroClass: HeroClass, level: number}[];
@@ -28,7 +28,7 @@ export default class Tavern {
         _.pullAt(this._heroes, index);
     }
 
-    hire(index: number, heroFactory: HeroFactory, target: MainHeroListComponent): void {
+    hire(index: number, heroFactory: HeroFactory, target: MainHeroList): void {
         if (_.isNil(this._heroes[index])) {
             debug(DebugNamespaceID.Error)('Герой не найден.');
             return;

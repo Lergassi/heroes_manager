@@ -1,7 +1,7 @@
 import React from 'react';
-import MainLocationListComponent, {
+import MainLocationList, {
     MainLocationListComponentEventCode
-} from '../../../core/app/Components/MainLocationListComponent.js';
+} from '../../../core/app/Components/MainLocationList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import {LocationRComponent} from './LocationRComponent.js';
@@ -9,11 +9,11 @@ import _ from 'lodash';
 
 export type MainLocationListRComponentProps = {
     container: ContainerInterface;
-    mainLocationListComponent: MainLocationListComponent;
+    mainLocationListComponent: MainLocationList;
 }
 
 export type MainLocationListRComponentState = {
-    mainLocationListComponent: MainLocationListComponent;
+    mainLocationListComponent: MainLocationList;
 }
 
 export default class MainLocationListRComponent extends React.Component<MainLocationListRComponentProps, MainLocationListRComponentState> {
@@ -26,7 +26,7 @@ export default class MainLocationListRComponent extends React.Component<MainLoca
 
         EventSystem.addListener({
             codes: [
-                MainLocationListComponentEventCode.CreateLocation,
+                MainLocationListComponentEventCode.AddLocation,
                 MainLocationListComponentEventCode.DeleteLocation,
             ],
             listener: {
@@ -43,17 +43,17 @@ export default class MainLocationListRComponent extends React.Component<MainLoca
     }
 
     render() {
-        let mainLocationListComponent = this.state.mainLocationListComponent;
-        let list = [];
-        mainLocationListComponent.render((values) => {
-            _.map(values.locations, (location, index) => {
-                list.push(<LocationRComponent
-                    key={location.ID}
-                    container={this.props.container}
-                    location={location}
-                />);
-            })
-        });
+        // let mainLocationListComponent = this.state.mainLocationListComponent;
+        // let list = [];
+        // mainLocationListComponent.render((values) => {
+        //     _.map(values.locations, (location, index) => {
+        //         list.push(<LocationRComponent
+        //             key={location.ID}
+        //             container={this.props.container}
+        //             location={location}
+        //         />);
+        //     })
+        // });
 
         return (
             // <div className={'block'}>
@@ -61,7 +61,7 @@ export default class MainLocationListRComponent extends React.Component<MainLoca
             //     <div className={'block__content'}>{list}</div>
             // </div>
             <div>
-                {list}
+                {/*{list}*/}
             </div>
         );
     }

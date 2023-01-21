@@ -13,7 +13,7 @@ import ItemFactory from '../../Factories/ItemFactory.js';
 import ItemDatabase from '../../../source/ItemDatabase.js';
 import {extractItems_dev} from '../../indev.js';
 import EventSystem from '../../../source/EventSystem.js';
-import {ContainerID} from '../../../types/enums/ContainerID.js';
+import {ServiceID} from '../../../types/enums/ServiceID.js';
 import Item from '../../Entities/Item.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
 import _ from 'lodash';
@@ -27,8 +27,13 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
     configure(container: ContainerInterface): ContainerInterface {
         container.set<object>('core.config', config);
 
+        //region preload
+        // let conventCSVDataToJson = new ConventCSVDataToJson();
+        // conventCSVDataToJson.run();
+        //endregion preload
+
         EventSystem.init(); //todo: В фабрику?
-        container.set(ContainerID.EventSystemFactory, (container) => {
+        container.set(ServiceID.EventSystemFactory, (container) => {
             return new EventSystemFactory();
         });
 
@@ -36,25 +41,25 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         container.set<MetadataManager>('core.metadataManager', (container) => {
             return (new MetadataManagerCreator()).create();
         });
-        container.set<EntityManager>(ContainerID.EntityManager, (container) => {
+        container.set<EntityManager>(ServiceID.EntityManager, (container) => {
             return new EntityManager();
         });
-        container.set<ItemFactory>(ContainerID.ItemFactory, (container) => {
-            return new ItemFactory(container.get<EntityManagerInterface>(ContainerID.EntityManager));
+        container.set<ItemFactory>(ServiceID.ItemFactory, (container) => {
+            return new ItemFactory(container.get<EntityManagerInterface>(ServiceID.EntityManager));
         });
-        container.set<RecipeFactory>(ContainerID.RecipeFactory, (container) => {
-            return new RecipeFactory(container.get<EntityManagerInterface>(ContainerID.EntityManager));
+        container.set<RecipeFactory>(ServiceID.RecipeFactory, (container) => {
+            return new RecipeFactory(container.get<EntityManagerInterface>(ServiceID.EntityManager));
         });
-        container.set<ItemCategoryFactory>(ContainerID.ItemCategoryFactory, (container) => {
-            return new ItemCategoryFactory(container.get<EntityManagerInterface>(ContainerID.EntityManager));
+        container.set<ItemCategoryFactory>(ServiceID.ItemCategoryFactory, (container) => {
+            return new ItemCategoryFactory(container.get<EntityManagerInterface>(ServiceID.EntityManager));
         });
         (new EntityManagerBuilder(
             container,
-            container.get<EntityManagerInterface>(ContainerID.EntityManager),
+            container.get<EntityManagerInterface>(ServiceID.EntityManager),
         )).build();
         //@indev
-        container.set<ItemDatabase>(ContainerID.ItemDatabase, (container) => {
-            let items = extractItems_dev(container.get<EntityManagerInterface>(ContainerID.EntityManager));
+        container.set<ItemDatabase>(ServiceID.ItemDatabase, (container) => {
+            let items = extractItems_dev(container.get<EntityManagerInterface>(ServiceID.EntityManager));
 
             return new ItemDatabase(items);
         });

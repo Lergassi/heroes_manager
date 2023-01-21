@@ -1,6 +1,6 @@
 import AbstractSandboxController from './AbstractSandboxController.js';
 import StubFactory from '../../core/app/Services/StubFactory.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import ItemStackController from '../../core/app/Components/ItemStackController.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
@@ -28,13 +28,13 @@ export default class BagSandboxController extends AbstractSandboxController {
 
     private _devItemStorage() {
         // let itemStorage = new ItemStorageV2(20);
-        let itemStorage = this.container.get<StubFactory>(ContainerID.StubFactory).createDefaultItemStorage();
-
-        this._testDefaultStubItemStorage(itemStorage);
+        // let itemStorage = this.container.get<StubFactory>(ServiceID.StubFactory).createDefaultItemStorage();
+        //
+        // this._testDefaultStubItemStorage(itemStorage);
     }
 
     private _devItemStackController() {
-        let itemDatabase = this.container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         let itemID = ItemID.Wood;
         // let itemID = ItemID.IronOre;
@@ -66,14 +66,14 @@ export default class BagSandboxController extends AbstractSandboxController {
     }
 
     private _devItemStorageController() {
-        let itemStorageController = new ItemStorageController(1);
-        itemStorageController.addItemStorage(this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
-        itemStorageController.addItemStorage(this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
-        itemStorageController.addItemStorage(this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(20));
-
-        this.container.get<StubFactory>(ContainerID.StubFactory).fillDefaultItems(itemStorageController);
-        console.log(itemStorageController);
-        this._testDefaultStubItemStorage(itemStorageController);
+        // let itemStorageController = new ItemStorageController(1);
+        // itemStorageController.addItemStorage(this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20));
+        // itemStorageController.addItemStorage(this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20));
+        // itemStorageController.addItemStorage(this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20));
+        //
+        // this.container.get<StubFactory>(ServiceID.StubFactory).fillDefaultItems(itemStorageController);
+        // console.log(itemStorageController);
+        // this._testDefaultStubItemStorage(itemStorageController);
     }
 
     private _devEndlessBag() {
@@ -94,7 +94,7 @@ export default class BagSandboxController extends AbstractSandboxController {
     }
 
     private _testEndlessItemStorage(itemStorage: EndlessItemStorage) {
-        let itemDatabase = this.container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 0) === 0);
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 1) === 0);
@@ -106,7 +106,7 @@ export default class BagSandboxController extends AbstractSandboxController {
     }
 
     private _devInfinityItemStackController() {
-        let itemDatabase = this.container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         let infinityItemStackController = new InfinityItemStackController();
         console.log(infinityItemStackController.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
@@ -130,9 +130,10 @@ export default class BagSandboxController extends AbstractSandboxController {
     }
 
     private _devInfinityBag() {
-        let itemDatabase = this.container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
+        let entityManager = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
-        let itemStorage = new InfinityItemStorage();
+        let itemStorage = new InfinityItemStorage(entityManager);
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
@@ -182,7 +183,7 @@ export default class BagSandboxController extends AbstractSandboxController {
     }
 
     private _devCanAddItem() {
-        let em = this.container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let itemStackController = new ItemStackController();
         // console.log(itemStackController.canAddItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
@@ -197,7 +198,7 @@ export default class BagSandboxController extends AbstractSandboxController {
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
 
-        let itemStorage = new ItemStorageV2(2);
+        let itemStorage = new ItemStorageV2(2, em);
 
         // console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 10));

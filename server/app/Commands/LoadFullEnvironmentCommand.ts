@@ -1,7 +1,7 @@
 import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 
 //todo: Сделать alias.
 export default class LoadFullEnvironmentCommand extends Command {
@@ -19,7 +19,7 @@ export default class LoadFullEnvironmentCommand extends Command {
         let usedID: string = input.getArgument('user_ID');
         let playerID: string = input.getArgument('player_ID');
 
-        await this.container.get<GameConsole>(ContainerID.GameConsole).run('load_user_env', [usedID]);
-        await this.container.get<GameConsole>(ContainerID.GameConsole).run('load_player_env', [playerID]);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run('load_user_env', [usedID]);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run('load_player_env', [playerID]);
     }
 }

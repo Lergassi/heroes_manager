@@ -36,7 +36,7 @@ import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import _ from 'lodash';
 import CreateItemKitCommand from '../../Commands/CreateItemKitCommand.js';
-import {ContainerID} from '../../../types/enums/ContainerID.js';
+import {ServiceID} from '../../../types/enums/ServiceID.js';
 import AddGoldCommand from '../../Commands/AddGoldCommand.js';
 import DebugItemDatabaseCommand from '../../Commands/DebugCommands/DebugItemDatabaseCommand.js';
 import CreateStubObjectsCommand from '../../Commands/CreateStubObjectsCommand.js';
@@ -66,7 +66,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         ];
         debug.enable(_.join(debugNamespaces, ','));
 
-        container.set<GameConsole>(ContainerID.GameConsole, (container) => {
+        container.set<GameConsole>(ServiceID.GameConsole, (container) => {
             return new GameConsole();
         });
         // container.set('gameConsole', container.get<GameConsole>('server.gameConsole'));    //alias
@@ -80,7 +80,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
     }
 
     private _gameConsoleConfigure(container: ContainerInterface) {
-        let gameConsole: GameConsole = container.get<GameConsole>(ContainerID.GameConsole);
+        let gameConsole: GameConsole = container.get<GameConsole>(ServiceID.GameConsole);
 
         gameConsole.register(new HelpCommand(container));
         gameConsole.register(new ListCommand(container));

@@ -5,7 +5,7 @@ import ItemStorageManager from '../Services/ItemStorageManager.js';
 import EntityManager from '../../source/EntityManager.js';
 import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import ItemStorageComponent from '../Components/ItemStorageComponent.js';
@@ -32,9 +32,9 @@ export default class CreateItemCommand extends Command {
         let count = parseInt(input.getArgument('count'), 10);
         assertNotEmpty(itemID);
 
-        let item = this.container.get<ItemDatabase>(ContainerID.ItemDatabase).get(itemID);
+        let item = this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(itemID);
         assertNotNil(item, sprintf('Предмет ID(%s) не найден.', itemID));
 
-        this.container.get<ItemStorageInterface>(ContainerID.ItemStorageController).addItem(item, count);
+        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item, count);
     }
 }

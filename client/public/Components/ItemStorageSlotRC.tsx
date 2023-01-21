@@ -6,7 +6,7 @@ import {sprintf} from 'sprintf-js';
 import {ICON_BACKGROUND_SLOT, ICON_QUESTION01} from '../../../core/app/consts.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemDatabase from '../../../core/source/ItemDatabase.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {ItemID} from '../../../core/types/enums/ItemID.js';
 
 export interface ItemStorageSlotUIProps {
@@ -32,7 +32,7 @@ export default class ItemStorageSlotRC extends React.Component<ItemStorageSlotUI
         let delayStep = 1000;
         setTimeout(() => {
             // this.updateItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 12);
-            this.updateItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).randomOne(), 12);
+            this.updateItem((window['app']['container'] as ContainerInterface).get<ItemDatabase>(ServiceID.ItemDatabase).randomOne(), 12);
             // this.updateItem(null, 12);
             console.log('setTimeout updateItem');
         }, delay++ * delayStep);

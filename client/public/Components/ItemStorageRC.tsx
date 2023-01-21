@@ -1,121 +1,85 @@
 import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
-import Icon from '../../../core/app/Entities/Icon.js';
-import {assert, assertIsGreaterThanOrEqual, assertIsNumber, assertNotNil} from '../../../core/source/assert.js';
-import ItemStorageSlotRC from './ItemStorageSlotRC.js';
-import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
-import ItemStorageV2 from '../../../core/app/Components/ItemStorageV2.js';
+import ReactDOM from 'react-dom/client';
 import Item from '../../../core/app/Entities/Item.js';
-import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
-import ItemSlotRC from './ItemSlotRC.js';
+import ItemStorageInterface, {ItemStorageInterfaceRender} from '../../../core/app/Interfaces/ItemStorageInterface.js';
+import {assertIsGreaterThanOrEqual} from '../../../core/source/assert.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import ItemDatabase from '../../../core/source/ItemDatabase.js';
-import {ItemID} from '../../../core/types/enums/ItemID.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
-import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
+import GameObject from '../../../core/source/GameObject.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
+import {UI_ItemCount} from '../../../core/types/main.js';
 
-export interface ItemStorageUIProps {
+export interface PlayerTableItemStorageRCProps {
+    ID: string;
     size: number;
-    columns: number;
-    // itemStorage?: ItemStorageV2;    //todo: Вопрос: интерфейс или класс? Или вообще другой интерфейс никак не связанный с объектом.
-    itemStorage?: ItemStorageInterface;    //todo: Вопрос: интерфейс или класс? Или вообще другой интерфейс никак не связанный с объектом.
+    itemStorage: ItemStorageInterface;
+    itemStorageID: string;
+    container: ContainerInterface;
 }
 
-export interface ItemStorageUIState {
-    slots: {item: Item, count: number}[];
-    // itemStorage: ItemStorageV2;
+export interface PlayerTableItemStorageRCState {
+    itemStorage: ItemStorageInterface;
+    // itemStorageID: string;
+    slots: UI_ItemCount[];
 }
 
-export default class ItemStorageRC extends React.Component<ItemStorageUIProps, ItemStorageUIState> {
+export default class ItemStorageRC extends React.Component<PlayerTableItemStorageRCProps, PlayerTableItemStorageRCState> implements ItemStorageInterfaceRender {
     private readonly _size: number;
-    private readonly _columns: number;
 
-    constructor(props: ItemStorageUIProps) {
+    constructor(props: PlayerTableItemStorageRCProps) {
         assertIsGreaterThanOrEqual(props.size, 1);
-        assertIsGreaterThanOrEqual(props.columns, 1);
-        // assertIsGreaterThanOrEqual(props.size % props.columns, 0, 'Кол-во колонок должно быть ');
 
         super(props);
 
-        //todo: Возможно стоит сделать правило в кратности строк и колонок размеру сумки.
         this._size = props.size;
-        this._columns = props.columns;
 
         this.state = {
             slots: _.map(_.range(0, this._size), (index) => {
                 return {
-                    item: undefined,
+                    itemName: undefined,
                     count: undefined,
                 };
             }),
-            // itemStorage: props.itemStorage,
+            itemStorage: props.itemStorage,
+            // itemStorageID: props.itemStorage.itemStorageID,
         };
 
-        // let delay = 1;
-        // let delayStep = 2000;
-        // setTimeout(() => {
-        //     // this.updateSlot(2, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
-        //     // this.updateSlot(4, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
-        //     // this.updateSlot(10, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
-        //     // this.updateSlot(10222, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
-        //     // this.updateSlot(1, (window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 10);
-        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_1), 3);
-        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_2), 20);
-        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_3), 10);
-        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_3), 10);
-        //     props.itemStorage.addItem((window['_container'] as ContainerInterface).get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Herb_3), 10);
-        // }, delay++ * delayStep);
+        // this.props.container.set<PlayerTableItemStorageRC>(ServiceID.UI_PlayerItemStorage + '.', this)
+        this.props.container.set<ItemStorageRC>(props.ID, this);
     }
 
-    componentDidMount() {
-        // this.props.itemStorage?.attach({
-        //     updateHandler: (index, item, count) => {
-        //         this.updateSlot(index, item, count);
-        //     },
-        // });
+    updateByRequest(): void {
+        this.props.itemStorage.renderByRequest(this);
     }
 
-    //todo: Позже класс будет универсальный и не будет зависить от предмета, а для предмета будет другой класс.
-    updateSlot(index: number, item: Item, count: number) {
-        let slots = [...this.state.slots];
-        assertNotNil(slots[index], 'Слот не найден.');
-
-        slots[index].item = item;
-        slots[index].count = count;
-
+    updateItems(items: UI_ItemCount[]) {
         this.setState((state) => {
             return {
-                slots: slots,
-            };
+                slots: items,
+            } as PlayerTableItemStorageRCState;
         });
     }
 
     render() {
-        let slotIndex = 0;
-        let columnIndex = 0;
-        let rowIndex = 0;
-        let rows = [];
-        while (slotIndex < this._size) {
-            let row = [];
-            while (columnIndex < this._columns && slotIndex < this._size) {
-                row.push(<ItemSlotRC
-                    key={slotIndex}
-                    showCount={true}
-                    item={this.state.slots[slotIndex].item}
-                    count={this.state.slots[slotIndex].count}
-                />);
-                ++columnIndex;
-                ++slotIndex;
-            }
-            rows.push(<div key={rowIndex} className={'item-storage-row'}>{row}</div>);
-            ++rowIndex;
-            columnIndex = 0;
-        }
-
         return (
-            <div className={'item-storage'}>
-                {rows}
+            <div>
+                <div className={'widget'}>
+                    <div className={'widget__title'}>Сумка ({this.props.itemStorageID})</div>
+                    <div className={'widget__content'}>
+                        <table className={'basic-table'}>
+                            <tbody>
+                                {_.map(this.state.slots, (slot, index) => {
+                                    return <tr key={index}>
+                                        <td>{slot.itemName}</td>
+                                        <td>{slot.count}</td>
+                                        <td>Очистить, разделить</td>
+                                    </tr>
+                                })}
+                            </tbody>
+                        </table>
+                    </div>{/*end widget__content*/}
+                </div>{/*end widget*/}
             </div>
         );
     }

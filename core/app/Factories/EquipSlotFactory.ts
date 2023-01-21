@@ -10,6 +10,7 @@ import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import AverageItemLevel from '../Components/AverageItemLevel.js';
 
 export default class EquipSlotFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -20,24 +21,37 @@ export default class EquipSlotFactory {
         this._entityManager = entityManager;
     }
 
+    create(
+        equipSlotData: EquipSlot,
+        heroClass: HeroClass,
+        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
+        averageItemLevel: AverageItemLevel,
+    ): EquipSlotInterface {
+        let equipSlot: EquipSlotInterface = new DefaultEquipSlot(<EquipSlotID>equipSlotData.id, averageItemLevel, itemCharacterAttributeCollector);
+
+        equipSlot = new EquipSlotWithItemCategoryDecorator(
+            equipSlot,
+            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
+        );
+
+        return equipSlot;
+    }
+
     createArmor(
         equipSlotData: EquipSlot,
         heroClass: HeroClass,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
+        averageItemLevel: AverageItemLevel,
     ): EquipSlotInterface {
-        let equipSlot: EquipSlotInterface = new DefaultEquipSlot();
-        equipSlot = new EquipSlotWithItemCollectorDecorator(
-            equipSlot,
-            itemCharacterAttributeCollector,
-        );
-        equipSlot = new EquipSlotWithItemCategoryDecorator(
-            equipSlot,
-            // equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
-            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
-        );
+        let equipSlot: EquipSlotInterface = new DefaultEquipSlot(<EquipSlotID>equipSlotData.id, averageItemLevel, itemCharacterAttributeCollector);
+
         equipSlot = new EquipSlotWithArmorMaterialDecorator(
             equipSlot,
             heroClass.availableArmorMaterials,
+        );
+        equipSlot = new EquipSlotWithItemCategoryDecorator(
+            equipSlot,
+            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
         );
 
         return equipSlot;
@@ -48,17 +62,12 @@ export default class EquipSlotFactory {
         equipSlotData: EquipSlot,
         heroClass: HeroClass,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
+        averageItemLevel: AverageItemLevel,
     ): EquipSlotInterface {
-        // let rightHand : EquipSlotInterface = new RightHand(leftHand);
-        let rightHand : EquipSlotInterface = new DefaultEquipSlot();
+        let rightHand : EquipSlotInterface = new DefaultEquipSlot(<EquipSlotID>equipSlotData.id, averageItemLevel, itemCharacterAttributeCollector);
 
-        rightHand = new EquipSlotWithItemCollectorDecorator(
-            rightHand,
-            itemCharacterAttributeCollector,
-        );
         rightHand = new EquipSlotWithItemCategoryDecorator(
             rightHand,
-            // equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
             heroClass.rightHandItemCategories,
         );
 
@@ -69,16 +78,12 @@ export default class EquipSlotFactory {
         equipSlotData: EquipSlot,
         heroClass: HeroClass,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
+        averageItemLevel: AverageItemLevel,
     ): EquipSlotInterface {
-        let leftHand: EquipSlotInterface = new DefaultEquipSlot();
+        let leftHand: EquipSlotInterface = new DefaultEquipSlot(<EquipSlotID>equipSlotData.id, averageItemLevel, itemCharacterAttributeCollector);
 
-        leftHand = new EquipSlotWithItemCollectorDecorator(
-            leftHand,
-            itemCharacterAttributeCollector,
-        );
         leftHand = new EquipSlotWithItemCategoryDecorator(
             leftHand,
-            // equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
             heroClass.leftHandItemCategories,
         );
 

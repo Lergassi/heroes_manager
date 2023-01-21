@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
@@ -22,7 +22,7 @@ export default class AddGoldCommand extends Command {
 
         this
             .container
-            .get<GameObjectStorage>(ContainerID.GameObjectStorage)
+            .get<GameObjectStorage>(ServiceID.GameObjectStorage)
             ?.getOneByTag('#wallet.' + CurrencyID.Gold)
             ?.get<WalletInterface>(ComponentID.Wallet)
             .add(value)

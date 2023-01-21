@@ -4,7 +4,7 @@ import {SerializeType} from './Serializer.js';
 import ContainerInterface from './ContainerInterface.js';
 import EntityManager from './EntityManager.js';
 import {EntityID} from '../types/enums/EntityID.js';
-import {ContainerID} from '../types/enums/ContainerID.js';
+import {ServiceID} from '../types/enums/ServiceID.js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
 
 export interface MappingField {
@@ -25,7 +25,7 @@ export interface Metadata {
 type FinderCallback = <T>(container: ContainerInterface, classname: string, id: number) => T;
 
 export function repositoryManagerFinderCallback<T>(container: ContainerInterface, classname: string, id: number): T {
-    return container.get<EntityManagerInterface>(ContainerID.EntityManager).get<T>(classname as EntityID/*todo: НЕ РАБОТАЕТ: classname as EntityID. Сменить выше на EntityID.*/, String(id));
+    return container.get<EntityManagerInterface>(ServiceID.EntityManager).get<T>(classname as EntityID/*todo: НЕ РАБОТАЕТ: classname as EntityID. Сменить выше на EntityID.*/, String(id));
 }
 
 export interface MetadataCollection {

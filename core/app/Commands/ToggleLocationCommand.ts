@@ -1,8 +1,8 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import LocationComponent from '../Components/LocationComponent.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import Location from '../Components/Location.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
@@ -23,12 +23,12 @@ export default class ToggleLocationCommand extends Command {
         let locationID = parseInt(input.getArgument('location_id'), 10);    //todo: Можно сделать единую "точку входа" для однотипных команд.
 
         this.container
-            .get<GameObjectStorage>(ContainerID.GameObjectStorage)
+            .get<GameObjectStorage>(ServiceID.GameObjectStorage)
             .getOneByID(locationID)
-            ?.get<LocationComponent>(ComponentID.Location)
+            ?.get<Location>(ComponentID.Location)
             .toggleState({
                 wallet: this.container
-                    .get<GameObjectStorage>(ContainerID.GameObjectStorage)
+                    .get<GameObjectStorage>(ServiceID.GameObjectStorage)
                     .getOneByTag('#wallet.' + CurrencyID.Gold)
                     .get<WalletInterface>(ComponentID.Wallet)
             });

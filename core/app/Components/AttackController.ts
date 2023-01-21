@@ -39,12 +39,12 @@ export default class AttackController implements AttackControllerInterface {
      * @deprecated Нужно сразу указывать диапазон без таких вычислений.
      */
     value(): {left: number; right: number} {
-        let left = this._attackPowerCharacterAttribute.value() -
+        let left = this._attackPowerCharacterAttribute.finalValue -
             round(this._rangeSide, 0)
         ;
         left = left < 0 ? 0 : left;
 
-        let right = this._attackPowerCharacterAttribute.value() +
+        let right = this._attackPowerCharacterAttribute.finalValue +
             round(this._rangeSide, 0)
             ;
 

@@ -16,18 +16,18 @@ import GameObject from '../../../source/GameObject.js';
 import MainItemStorageListComponent from '../../Components/MainItemStorageListComponent.js';
 import ItemStorageFactoryInterface from '../../Factories/ItemStorageFactoryInterface.js';
 import GameObjectFactory from '../../Factories/GameObjectFactory.js';
-import MainHeroListComponent from '../../Components/MainHeroListComponent.js';
+import MainHeroList from '../../Components/MainHeroList.js';
 import AutoIncrementIDGenerator from '../../../source/AutoIncrementIDGenerator.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
 import ItemDatabase from '../../../source/ItemDatabase.js';
-import MainLocationListComponent from '../../Components/MainLocationListComponent.js';
+import MainLocationList from '../../Components/MainLocationList.js';
 import ExperienceComponentFactory from '../../Factories/ExperienceComponentFactory.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
-import ExperienceComponent from '../../Components/ExperienceComponent.js';
+import Experience from '../../Components/Experience.js';
 import Wallet from '../../Components/Wallet.js';
 import Currency from '../../Entities/Currency.js';
 import _ from 'lodash';
-import {ContainerID} from '../../../types/enums/ContainerID.js';
+import {ServiceID} from '../../../types/enums/ServiceID.js';
 import {CurrencyID} from '../../../types/enums/CurrencyID.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
@@ -87,7 +87,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         // container.set<IDGeneratorInterface>('player.realtimeObjectIdGenerator', (container: ContainerInterface) => {
         //     return new UUIDGenerator();
         // });
-        container.set<IDGeneratorInterface>(ContainerID.IDGenerator, (container: ContainerInterface) => {
+        container.set<IDGeneratorInterface>(ServiceID.IDGenerator, (container: ContainerInterface) => {
             return new AutoIncrementIDGenerator(1);
         });
         //region dev
@@ -97,11 +97,11 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //Ну допустим...
         Object.defineProperty(Object.prototype, '_generateID', {
             get: () => {
-                return container.get<IDGeneratorInterface>(ContainerID.IDGenerator).generateID();
+                return container.get<IDGeneratorInterface>(ServiceID.IDGenerator).generateID();
             }
         });
         //endregion dev
-        container.set<GameObjectStorage>(ContainerID.GameObjectStorage, (container) => {
+        container.set<GameObjectStorage>(ServiceID.GameObjectStorage, (container) => {
             return new GameObjectStorage();
         });
         // container.set<UserFactory>('core.userFactory', (container) => {
@@ -109,14 +109,14 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         // });
 
         //Фабрики
-        container.set(ContainerID.GameObjectFactory, (container) => {
+        container.set(ServiceID.GameObjectFactory, (container) => {
             return new GameObjectFactory(
-                container.get<GameObjectStorage>(ContainerID.GameObjectStorage),
-                container.get<IDGeneratorInterface>(ContainerID.IDGenerator),
+                container.get<GameObjectStorage>(ServiceID.GameObjectStorage),
+                container.get<IDGeneratorInterface>(ServiceID.IDGenerator),
             );
         });
         //region Фабрики компонентов.
-        container.set<ExperienceComponentFactory>(ContainerID.ExperienceComponentFactory, (container) => {
+        container.set<ExperienceComponentFactory>(ServiceID.ExperienceComponentFactory, (container) => {
             return new ExperienceComponentFactory({
                 maxLevel: 100,
             });
@@ -124,65 +124,56 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //endregion Фабрики компонентов.
         container.set<PlayerFactory>('player.playerFactory', (container) => {
             let playerFactory = new PlayerFactory({
-                gameObjectFactory: container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
-                experienceComponentFactory: container.get<ExperienceComponentFactory>(ContainerID.ExperienceComponentFactory),
+                gameObjectFactory: container.get<GameObjectFactory>(ServiceID.GameObjectFactory),
+                experienceComponentFactory: container.get<ExperienceComponentFactory>(ServiceID.ExperienceComponentFactory),
                 maxLevel: 100,
             });
 
             //todo: player_env_indev
-            container.get<GameObjectStorage>(ContainerID.GameObjectStorage).add(playerFactory.create());
+            container.get<GameObjectStorage>(ServiceID.GameObjectStorage).add(playerFactory.create());
 
             return playerFactory;
         });
-        container.set<WalletFactory>(ContainerID.WalletFactory, (container) => {
+        container.set<WalletFactory>(ServiceID.WalletFactory, (container) => {
             let walletFactory = new WalletFactory(
-                container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
-                container.get<EntityManagerInterface>(ContainerID.EntityManager),
+                container.get<GameObjectFactory>(ServiceID.GameObjectFactory),
+                container.get<EntityManagerInterface>(ServiceID.EntityManager),
             );
 
-            //todo: player_env_indev
-            let currencies = {
-                [CurrencyID.Gold]: 1000,
-                [CurrencyID.ResearchPoints]: 10,
-            };
-
-            _.map(currencies, (value, currencyID) => {
-                walletFactory.create(
-                    value,
-                );
-            });
+            walletFactory.create(1000);
 
             return walletFactory;
         });
-        container.set<CharacterAttributeValueGenerator>(ContainerID.CharacterAttributeValueGenerator, (container) => {
+        container.get<WalletFactory>(ServiceID.WalletFactory).create(1000);
+        container.set<CharacterAttributeValueGenerator>(ServiceID.CharacterAttributeValueGenerator, (container) => {
             return new CharacterAttributeValueGenerator();
         });
-        container.set<EnemyCharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator, (container) => {
-            return new EnemyCharacterAttributeStartValueGenerator(container.get<CharacterAttributeValueGenerator>(ContainerID.CharacterAttributeValueGenerator));
+        container.set<EnemyCharacterAttributeStartValueGenerator>(ServiceID.CharacterAttributeStartValueGenerator, (container) => {
+            return new EnemyCharacterAttributeStartValueGenerator(container.get<CharacterAttributeValueGenerator>(ServiceID.CharacterAttributeValueGenerator));
             // return new CharacterAttributeStartValueGenerator();
         });
-        container.set<HeroCharacterAttributeFactory>(ContainerID.HeroCharacterAttributeFactory, (container) => {
+        container.set<HeroCharacterAttributeFactory>(ServiceID.HeroCharacterAttributeFactory, (container) => {
             return new HeroCharacterAttributeFactory(
                 // container.get<CharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator),
             );
         });
-        container.set<EnemyCharacterAttributeFactory>(ContainerID.EnemyCharacterAttributeFactory, (container) => {
+        container.set<EnemyCharacterAttributeFactory>(ServiceID.EnemyCharacterAttributeFactory, (container) => {
             return new EnemyCharacterAttributeFactory(
-                container.get<EnemyCharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator),
+                container.get<EnemyCharacterAttributeStartValueGenerator>(ServiceID.CharacterAttributeStartValueGenerator),
             );
         });
-        container.set<HeroFactory>(ContainerID.HeroFactory, (container) => {
+        container.set<HeroFactory>(ServiceID.HeroFactory, (container) => {
             return new HeroFactory(
-                container.get<EntityManagerInterface>(ContainerID.EntityManager),
-                container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
-                container.get<ExperienceComponentFactory>(ContainerID.ExperienceComponentFactory),
-                container.get<HeroCharacterAttributeFactory>(ContainerID.HeroCharacterAttributeFactory),
+                container.get<EntityManagerInterface>(ServiceID.EntityManager),
+                container.get<GameObjectFactory>(ServiceID.GameObjectFactory),
+                container.get<ExperienceComponentFactory>(ServiceID.ExperienceComponentFactory),
+                container.get<HeroCharacterAttributeFactory>(ServiceID.HeroCharacterAttributeFactory),
             );
         });
-        container.set<ItemStackFactory>(ContainerID.ItemStackFactory, (container) => {
+        container.set<ItemStackFactory>(ServiceID.ItemStackFactory, (container) => {
             return new ItemStackFactory(
-                container.get<IDGeneratorInterface>(ContainerID.IDGenerator),
-                container.get<EntityManagerInterface>(ContainerID.EntityManager),
+                container.get<IDGeneratorInterface>(ServiceID.IDGenerator),
+                container.get<EntityManagerInterface>(ServiceID.EntityManager),
             );
         });
         // container.set<MainItemStorageListComponent>(ContainerID.MainItemStorageList, (container) => {
@@ -198,33 +189,34 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //
         //     return itemStorageCollectionComponent;
         // });
-        container.set(ContainerID.ItemStorageController, (container) => {
+        container.set(ServiceID.ItemStorageController, (container) => {
             let max = 4;
             return new ItemStorageController(max);
         });
-        container.set<ItemStorageFactory>(ContainerID.ItemStorageFactory, (container) => {
+        container.set<ItemStorageFactory>(ServiceID.ItemStorageFactory, (container) => {
             return new ItemStorageFactory(
-                container.get<GameObjectStorage>(ContainerID.GameObjectStorage),
-                container.get<ItemStackFactory>(ContainerID.ItemStackFactory),
-                container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
+                container.get<GameObjectStorage>(ServiceID.GameObjectStorage),
+                container.get<ItemStackFactory>(ServiceID.ItemStackFactory),
+                container.get<GameObjectFactory>(ServiceID.GameObjectFactory),
+                container.get<EntityManagerInterface>(ServiceID.EntityManager),
             );
         });
-        container.set<EnemyFactory>(ContainerID.EnemyFactory, (container) => {
+        container.set<EnemyFactory>(ServiceID.EnemyFactory, (container) => {
             return new EnemyFactory(
-                container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
-                container.get<EntityManagerInterface>(ContainerID.EntityManager),
-                container.get<EnemyCharacterAttributeFactory>(ContainerID.EnemyCharacterAttributeFactory),
+                container.get<GameObjectFactory>(ServiceID.GameObjectFactory),
+                container.get<EntityManagerInterface>(ServiceID.EntityManager),
+                container.get<EnemyCharacterAttributeFactory>(ServiceID.EnemyCharacterAttributeFactory),
             );
         });
-        container.set<LocationFactory>(ContainerID.LocationFactory, (container) => {
+        container.set<LocationFactory>(ServiceID.LocationFactory, (container) => {
             return new LocationFactory(
-                container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
-                container.get<ItemStackFactory>(ContainerID.ItemStackFactory),
-                container.get<EntityManagerInterface>(ContainerID.EntityManager),
-                container.get<ItemDatabase>(ContainerID.ItemDatabase),
-                container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
-                container.get<WalletFactory>(ContainerID.WalletFactory),
-                container.get<EnemyFactory>(ContainerID.EnemyFactory),
+                container.get<GameObjectFactory>(ServiceID.GameObjectFactory),
+                container.get<ItemStackFactory>(ServiceID.ItemStackFactory),
+                container.get<EntityManagerInterface>(ServiceID.EntityManager),
+                container.get<ItemDatabase>(ServiceID.ItemDatabase),
+                container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory),
+                container.get<WalletFactory>(ServiceID.WalletFactory),
+                container.get<EnemyFactory>(ServiceID.EnemyFactory),
             );
         });
 
@@ -233,10 +225,10 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //     return new ItemStorageManager(container.get<GameObjectStorage>(ContainerID.GameObjectStorage));
         // });
 
-        container.set<MainHeroListComponent>(ContainerID.MainHeroList, (container) => {
-            let heroListControllerGameObject = container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
+        container.set<MainHeroList>(ServiceID.MainHeroList, (container) => {
+            let heroListControllerGameObject = container.get<GameObjectFactory>(ServiceID.GameObjectFactory).create();
 
-            let mainHeroListComponent = heroListControllerGameObject.addComponent(new MainHeroListComponent(
+            let mainHeroListComponent = heroListControllerGameObject.addComponent(new MainHeroList(
                 // 10,
                 100,    //todo: В настройки.
                 // 1000,    //todo: В настройки.
@@ -249,34 +241,34 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
 
         //todo: Надо както сделать по другому такую логику.
-        container.set<MainLocationListComponent>(ContainerID.MainLocationList, (container) => {
-            let mainLocationList = container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
+        container.set<MainLocationList>(ServiceID.MainLocationList, (container) => {
+            let mainLocationList = container.get<GameObjectFactory>(ServiceID.GameObjectFactory).create();
 
-            let mainLocationListComponent = mainLocationList.addComponent(new MainLocationListComponent(
+            let mainLocationListComponent = mainLocationList.addComponent(new MainLocationList(
                 10,
             ));
 
             return mainLocationListComponent;
         });
 
-        container.set(ContainerID.Shop, (container) => {
+        container.set(ServiceID.Shop, (container) => {
             let shop = new Shop();
-            container.get<EntityManagerInterface>(ContainerID.EntityManager).map<Item>(EntityID.Item, (item) => {
+            container.get<EntityManagerInterface>(ServiceID.EntityManager).map<Item>(EntityID.Item, (item) => {
                 shop.config(item, item.getProperty('defaultBuyPrice'));
             });
 
             return shop;
         });
-        container.set(ContainerID.Fence, (container) => {
+        container.set(ServiceID.Fence, (container) => {
             let fence = new Fence();
-            container.get<EntityManagerInterface>(ContainerID.EntityManager).map<Item>(EntityID.Item, (item) => {
+            container.get<EntityManagerInterface>(ServiceID.EntityManager).map<Item>(EntityID.Item, (item) => {
                 fence.config(item, item.getProperty('defaultSellPrice'));
             });
 
             return fence;
         });
 
-        container.set(ContainerID.StubFactory, (container) => {
+        container.set(ServiceID.StubFactory, (container) => {
             return new StubFactory(container);
         });
 

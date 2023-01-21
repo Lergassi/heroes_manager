@@ -16,10 +16,7 @@ export default class ItemKit {
 
     create(itemStorage: ItemStorageInterface, itemDatabase: ItemDatabase) {
         for (let i = 0; i < this._items.length; i++) {
-            itemStorage.addItem(
-                itemDatabase.get(this._items[i].item),
-                this._items[i].count
-            );
+            itemStorage.addItem(itemDatabase.get(this._items[i].item), this._items[i].count);
         }
     }
 }

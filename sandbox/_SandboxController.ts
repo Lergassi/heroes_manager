@@ -9,7 +9,7 @@ import GameObjectFactory from '../core/app/Factories/GameObjectFactory.js';
 import IDGeneratorInterface from '../core/source/IDGeneratorInterface.js';
 import ItemStackFactory from '../core/app/Factories/ItemStackFactory.js';
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
-import LocationComponent from '../core/app/Components/LocationComponent.js';
+import Location from '../core/app/Components/Location.js';
 import RandomItemGenerator from '../core/app/RandomItemGenerator.js';
 import EntityManager from '../core/source/EntityManager.js';
 import ItemDatabase from '../core/source/ItemDatabase.js';
@@ -30,9 +30,9 @@ import HeroGroup from '../core/app/Components/HeroGroup.js';
 import EnemyFactory from '../core/app/Factories/EnemyFactory.js';
 import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponentFactory.js';
 import EnemyEntity from '../core/app/Entities/EnemyEntity.js';
-import HealthPointsComponent from '../core/app/Components/HealthPointsComponent.js';
+import HealthPoints from '../core/app/Components/HealthPoints.js';
 import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
-import {ContainerID} from '../core/types/enums/ContainerID.js';
+import {ServiceID} from '../core/types/enums/ServiceID.js';
 import CharacterAttributeCollector from '../core/app/Components/CharacterAttributeCollector.js';
 import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
 import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
@@ -117,7 +117,7 @@ export default class _SandboxController {
     }
 
     devLocation() {
-        let locationFactory = this._container.get<LocationFactory>(ContainerID.LocationFactory);
+        let locationFactory = this._container.get<LocationFactory>(ServiceID.LocationFactory);
 
         let location = locationFactory.create({
             level: 1,
@@ -126,8 +126,8 @@ export default class _SandboxController {
     }
 
     devHeroFactory() {
-        let hero = this._container.get<HeroFactory>(ContainerID.HeroFactory).create(
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
+        let hero = this._container.get<HeroFactory>(ServiceID.HeroFactory).create(
+            this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior),
             1,
         );
         console.log(hero);
@@ -136,9 +136,9 @@ export default class _SandboxController {
     }
 
     devLocationFactory() {
-        let idGenerator = this._container.get<IDGeneratorInterface>(ContainerID.IDGenerator);
-        let heroFactory = this._container.get<HeroFactory>(ContainerID.HeroFactory);
-        let em = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let idGenerator = this._container.get<IDGeneratorInterface>(ServiceID.IDGenerator);
+        let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
+        let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let heroes = [
             heroFactory.create(
@@ -168,11 +168,11 @@ export default class _SandboxController {
         ];
 
         let locationFactory = new LocationFactory({
-            entityManager: this._container.get<EntityManagerInterface>(ContainerID.EntityManager),
-            gameObjectFactory: this._container.get<GameObjectFactory>(ContainerID.GameObjectFactory),
-            itemDatabase: this._container.get<ItemDatabase>(ContainerID.ItemDatabase),
-            itemStackFactory: this._container.get<ItemStackFactory>(ContainerID.ItemStackFactory),
-            itemStorageFactory: this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
+            entityManager: this._container.get<EntityManagerInterface>(ServiceID.EntityManager),
+            gameObjectFactory: this._container.get<GameObjectFactory>(ServiceID.GameObjectFactory),
+            itemDatabase: this._container.get<ItemDatabase>(ServiceID.ItemDatabase),
+            itemStackFactory: this._container.get<ItemStackFactory>(ServiceID.ItemStackFactory),
+            itemStorageFactory: this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory),
         });
 
         let location = locationFactory.create({
@@ -180,7 +180,7 @@ export default class _SandboxController {
         });
         // console.log(location);
 
-        let locationComponent = location.getComponent<LocationComponent>(ComponentID.Location);
+        let locationComponent = location.getComponent<Location>(ComponentID.Location);
         // console.log(locationComponent);
         // console.log(heroes[0]);
         locationComponent.addHero(heroes[0]);
@@ -193,7 +193,7 @@ export default class _SandboxController {
     }
 
     randomItemGenerator() {
-        let em = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let itemDatabase = new ItemDatabase(
             _.concat(em['_repositories'][Item.name]['_items']),
@@ -235,7 +235,7 @@ export default class _SandboxController {
     }
 
     itemDatabaseFilter() {
-        let em = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
         // let random = new Random();
 
         let itemDatabase = new ItemDatabase(
@@ -297,8 +297,8 @@ export default class _SandboxController {
 
     testItemStackSeparate() {
         // let em: EntityManager = this._container.get(ContainerKey.EntityManager);
-        let db: ItemDatabase = this._container.get(ContainerID.ItemDatabase);
-        let itemStackFactory: ItemStackFactory = this._container.get(ContainerID.ItemStackFactory);
+        let db: ItemDatabase = this._container.get(ServiceID.ItemDatabase);
+        let itemStackFactory: ItemStackFactory = this._container.get(ServiceID.ItemStackFactory);
 
         let item = {
             item: db.get(ItemID.Wood),
@@ -313,11 +313,11 @@ export default class _SandboxController {
     }
 
     testItemStorageComponentWithSeparate() {
-        let db: ItemDatabase = this._container.get(ContainerID.ItemDatabase);
-        let itemStackFactory: ItemStackFactory = this._container.get(ContainerID.ItemStackFactory);
+        let db: ItemDatabase = this._container.get(ServiceID.ItemDatabase);
+        let itemStackFactory: ItemStackFactory = this._container.get(ServiceID.ItemStackFactory);
 
-        let itemStorage = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(10);
-        let itemStorageComponent = itemStorage.getComponent<ItemStorageComponent>(ComponentID.ItemStorageComponent);
+        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(10);
+        let itemStorageComponent = itemStorage.getComponent<ItemStorageComponent>(ComponentID.ItemStorage);
         // console.log(itemStorageComponent);
         // debugItemStorage(itemStorage);
 
@@ -359,20 +359,20 @@ export default class _SandboxController {
     }
 
     private testNewComponents() {
-        let itemStorageFactory = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory);
+        let itemStorageFactory = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory);
 
         let itemStorage = itemStorageFactory.create(20);
         // console.log(itemStorage);
         // debugNewItemStorage(itemStorage);
-        let controller = itemStorage.getComponent<ItemStorageComponent>(ComponentID.ItemStorageComponent);
-        controller.addItem(this._container.get<ItemDatabase>(ContainerID.ItemDatabase).get(ItemID.Wood), 24);
+        let controller = itemStorage.getComponent<ItemStorageComponent>(ComponentID.ItemStorage);
+        controller.addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 24);
         debugItemStorage(itemStorage);
         // let itemStorage = new ItemStorageComponent();
     }
 
     gameContainerGetStarted() {
-        let itemStackFactory = this._container.get<ItemStackFactory>(ContainerID.ItemStackFactory);
-        let db = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let itemStackFactory = this._container.get<ItemStackFactory>(ServiceID.ItemStackFactory);
+        let db = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         // let itemStorage = new GameContainer();
         // console.log(itemStorage);
@@ -447,8 +447,8 @@ export default class _SandboxController {
     }
 
     testHeroFactory() {
-        let heroClass = this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior);
-        let hero = this._container.get<HeroFactory>(ContainerID.HeroFactory).create(
+        let heroClass = this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<HeroClass>(HeroClass, HeroClassID.Warrior);
+        let hero = this._container.get<HeroFactory>(ServiceID.HeroFactory).create(
             heroClass,
             1,
         );
@@ -456,7 +456,7 @@ export default class _SandboxController {
     }
 
     testLocationFactory() {
-        let location = this._container.get<LocationFactory>(ContainerID.LocationFactory).create({
+        let location = this._container.get<LocationFactory>(ServiceID.LocationFactory).create({
             // level: new LevelRange(1, 5),
             level: 1,
         });
@@ -468,8 +468,8 @@ export default class _SandboxController {
     // }
 
     devHeroGroup() {
-        let heroFactory = this._container.get<HeroFactory>(ContainerID.HeroFactory);
-        let em = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
+        let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let heroes = [
             // heroFactory.create(em.get<HeroClass>(HeroClass, HeroClassAlias.Warrior), 9),
@@ -481,7 +481,7 @@ export default class _SandboxController {
         ];
 
         // let heroGroup = new GameObject();
-        let heroGroup = this._container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
+        let heroGroup = this._container.get<GameObjectFactory>(ServiceID.GameObjectFactory).create();
 
         let size = 5;
         let heroGroupComponent = heroGroup.set('heroGroup', new HeroGroup(
@@ -534,8 +534,8 @@ export default class _SandboxController {
     }
 
     devEnemyFactory() {
-        let em = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
-        let enemyFactory = this._container.get<EnemyFactory>(ContainerID.EnemyFactory);
+        let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
+        let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
         // let enemyFactory = new EnemyFactory({
         //     gameObjectFactory: this._container.get<GameObjectFactory>(ContainerKey.GameObjectFactory),
@@ -574,7 +574,7 @@ export default class _SandboxController {
     }
 
     devLevelComponent() {
-        let levelComponent = this._container.get<ExperienceComponentFactory>(ContainerID.ExperienceComponentFactory).create({
+        let levelComponent = this._container.get<ExperienceComponentFactory>(ServiceID.ExperienceComponentFactory).create({
             level: 1,
         });
         let exp = 444444444;
@@ -615,8 +615,8 @@ export default class _SandboxController {
     }
 
     devLootGenerator() {
-        let enemyFactory = this._container.get<EnemyFactory>(ContainerID.EnemyFactory);
-        let em = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
+        let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let enemies: GameObject[] = [];
         enemies.push(enemyFactory.create(
@@ -647,11 +647,11 @@ export default class _SandboxController {
         // console.log(enemy);
         // console.log(enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name));
         // enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).kill();
-        enemies[0].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).takeDamage(42);
-        enemies[0].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).takeDamage(42);
-        enemies[0].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).takeDamage(42);
-        enemies[0].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).takeDamage(42);
-        enemies[1].getComponent<HealthPointsComponent>(ComponentID.HealthPoints).kill();
+        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[1].getComponent<HealthPoints>(ComponentID.HealthPoints).kill();
         // enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name).resurrect();
     }
 
@@ -671,9 +671,9 @@ export default class _SandboxController {
     }
 
     devCharacterAttributeCollector() {
-        let em = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
-        let heroFactory = this._container.get<HeroFactory>(ContainerID.HeroFactory);
-        let enemyFactory = this._container.get<EnemyFactory>(ContainerID.EnemyFactory);
+        let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
+        let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
+        let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
         let heroes = [
             heroFactory.create(
@@ -700,7 +700,7 @@ export default class _SandboxController {
 
         let heroAttributeCharacterAttributeSummary = new CharacterAttributeCollector();
 
-        let hero = this._container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
+        let hero = this._container.get<GameObjectFactory>(ServiceID.GameObjectFactory).create();
 
         let heroGroupComponent: HeroGroupInterface = new HeroGroup(
         // let heroGroupComponent = new HeroGroupComponent({
@@ -800,7 +800,7 @@ export default class _SandboxController {
     }
 
     devAttackPowerComponent() {
-        let em = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let em = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         let itemAttributeCollectorComponent = new ItemCharacterAttributeCollector();
 
@@ -836,20 +836,20 @@ export default class _SandboxController {
 
     testLodashPull() {
         let items = [
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.Wood),
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.IronOre),
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
-            this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
+            this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.Wood),
+            this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.IronOre),
+            this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
+            this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
+            this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01),
         ];
         console.log(items);
 
         // _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerKey.EntityManager).get<Item>(Item, ItemID.OneHandedSword_01));
-        console.log(_.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
-        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        console.log(_.indexOf(items, this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
+        _.pullAt(items, _.indexOf(items, this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(Item, ItemID.OneHandedSword01)));
         console.log(items);
     }
 
@@ -882,7 +882,7 @@ export default class _SandboxController {
         protection.increaseBaseValue(options.protectionBaseValue);
 
         let defence = new ArmorDecorator(
-            new HealthPointsComponent(
+            new HealthPoints(
                 new CharacterAttribute(
                     CharacterAttributeID.MaxHealthPoints,
                     new ItemCharacterAttributeCollector(),
@@ -1055,15 +1055,15 @@ export default class _SandboxController {
     }
 
     private devHeroArmor() {
-        let entityManager = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
-        let heroFactory = this._container.get<HeroFactory>(ContainerID.HeroFactory);
-        let enemyFactory = this._container.get<EnemyFactory>(ContainerID.EnemyFactory);
+        let entityManager = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
+        let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
+        let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector()
         let maxHealthPoints = new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, itemCharacterAttributeCollector, 0);
         maxHealthPoints.increaseBaseValue(100);
 
-        let healthPoints: DamageControllerInterface = new HealthPointsComponent(
+        let healthPoints: DamageControllerInterface = new HealthPoints(
         // let healthPoints = new HealthPointsComponent(
             maxHealthPoints,
             new CharacterStateController(),
@@ -1106,12 +1106,12 @@ export default class _SandboxController {
     }
 
     private devEnemyArmor() {
-        let enemyFactory = this._container.get<EnemyFactory>(ContainerID.EnemyFactory);
+        let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
         let enemy = enemyFactory.create(EnemyID.Bear, 1);
         console.log(enemy);
         console.log(enemy.get<DamageControllerInterface>(ComponentID.DamageController));
-        console.log(enemy.get<HealthPointsComponent>(ComponentID.HealthPoints));
+        console.log(enemy.get<HealthPoints>(ComponentID.HealthPoints));
 
         // let damage = 100;
         let damage = 24;
@@ -1172,9 +1172,9 @@ export default class _SandboxController {
     }
 
     private devNewEquipSlotSystem() {
-        let itemStackFactory = this._container.get<ItemStackFactory>(ContainerID.ItemStackFactory);
-        let entityManager = this._container.get<EntityManagerInterface>(ContainerID.EntityManager);
-        let itemDatabase = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let itemStackFactory = this._container.get<ItemStackFactory>(ServiceID.ItemStackFactory);
+        let entityManager = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
+        let itemDatabase = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         // let equipSlot: EquipSlotInterface = new DefaultEquipSlot([
         //     entityManager.get<ItemCategory>(ItemCategory, ItemCategoryID.Helmets),
@@ -1254,13 +1254,13 @@ export default class _SandboxController {
     }
 
     private testEntityManager() {
-        console.log(this._container.get(ContainerID.EntityManager));
+        console.log(this._container.get(ServiceID.EntityManager));
         // console.log(this._container.get<EntityManagerInterface>(ContainerKey.EntityManager).get(EntityManagerKey.EnemyType, EnemyID.Bear));
     }
 
     private devItemStorageUnion() {
-        let itemStorageFactory = this._container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory);
-        let itemDatabase = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
+        let itemStorageFactory = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory);
+        let itemDatabase = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         let items = [
             {item: itemDatabase.get(ItemID.Wood), count: 244},
@@ -1311,8 +1311,8 @@ export default class _SandboxController {
     }
 
     private devNewItemStorage() {
-        let itemDatabase = this._container.get<ItemDatabase>(ContainerID.ItemDatabase);
-        let itemStackFactory = this._container.get<ItemStackFactory>(ContainerID.ItemStackFactory);
+        let itemDatabase = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
+        let itemStackFactory = this._container.get<ItemStackFactory>(ServiceID.ItemStackFactory);
 
         let itemStorage = new ItemStorageV2(
             10,

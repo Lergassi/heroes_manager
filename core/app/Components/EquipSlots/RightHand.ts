@@ -1,54 +1,64 @@
-import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import EquipSlotInterface, {
+    EquipSlotInterfaceRender,
+    EquipSlotInterfaceRenderCallback
+} from '../../Interfaces/EquipSlotInterface.js';
 import Item from '../../Entities/Item.js';
-import {unsigned} from '../../../types/main.js';
-import ItemStackFactory from '../../Factories/ItemStackFactory.js';
-import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import LeftHand from './LeftHand.js';
 import DefaultEquipSlot from './DefaultEquipSlot.js';
 import {assertNotNil} from '../../../source/assert.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
+import AverageItemLevel from '../AverageItemLevel.js';
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
+import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
 
 export default class RightHand implements EquipSlotInterface {
     private readonly _equipSlot: EquipSlotInterface;
     private readonly _leftHand: LeftHand;
 
-    constructor(leftHand: LeftHand) {
-    // constructor() {
+    constructor(leftHand: LeftHand, averageItemLevel: AverageItemLevel, itemCharacterAttributeCollector: ItemCharacterAttributeCollector) {
         assertNotNil(leftHand);
 
         this._leftHand = leftHand;
-        this._equipSlot = new DefaultEquipSlot();
+        this._equipSlot = new DefaultEquipSlot(EquipSlotID.RightHand, averageItemLevel, itemCharacterAttributeCollector);
     }
 
-    createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
-        this._equipSlot.createItemStack(item, count, itemStackFactory);
-        if (item.isTwoHandWeapon()) {
-            this._leftHand.block();
-        }
+    equip(item: Item): boolean {
+        return this._equipSlot.equip(item);
     }
 
-    clear(): void {
-        this._equipSlot.clear();
+    clear(): boolean {
         this._leftHand.unblock();
+
+        return this._equipSlot.clear();
+    }
+
+    moveTo(itemStorage: ItemStorageInterface): boolean {
+        if (!this._equipSlot.moveTo(itemStorage)) return false;
+
+        return this.clear();
     }
 
     isFree(): boolean {
         return this._equipSlot.isFree();
     }
 
-    render(callback: (values: {
-        item: Item,
-    }) => void) {
+    view(logger) {
+        this._equipSlot.view(logger);
+    }
+
+    render(callback: EquipSlotInterfaceRenderCallback): void {
         this._equipSlot.render(callback);
     }
 
-    equip(itemStack: ItemStack) {
-        this._equipSlot.equip(itemStack);
+    removeRender(callback: EquipSlotInterfaceRenderCallback): void {
+        this._equipSlot.removeRender(callback);
     }
 
-    view(callback: (data: {
-        item: string,
-    }) => void) {
-        this._equipSlot.view(callback);
+    updateUI(): void {
+        this._equipSlot.updateUI();
+    }
+
+    renderByRequest(ui: EquipSlotInterfaceRender): void {
+        this._equipSlot.renderByRequest(ui);
     }
 }

@@ -1,4 +1,7 @@
-import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import EquipSlotInterface, {
+    EquipSlotInterfaceRender,
+    EquipSlotInterfaceRenderCallback
+} from '../../Interfaces/EquipSlotInterface.js';
 import ArmorMaterial from '../../Entities/ArmorMaterial.js';
 import Item from '../../Entities/Item.js';
 import {unsigned} from '../../../types/main.js';
@@ -6,6 +9,10 @@ import ItemStackFactory from '../../Factories/ItemStackFactory.js';
 import _ from 'lodash';
 import AppError from '../../../source/Errors/AppError.js';
 import ItemStack from '../../RuntimeObjects/ItemStack.js';
+import debug from 'debug';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import {sprintf} from 'sprintf-js';
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 
 export default class EquipSlotWithArmorMaterialDecorator implements EquipSlotInterface {
     private readonly _equipSlot: EquipSlotInterface;
@@ -16,41 +23,55 @@ export default class EquipSlotWithArmorMaterialDecorator implements EquipSlotInt
         this._armorMaterials = armorMaterials;
     }
 
-    createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void {
-        this._assertCanEquip(item);
+    equip(item: Item): boolean {
+        if (!this.canEquip(item)) return false;
 
-        this._equipSlot.createItemStack(item, count, itemStackFactory);
+        return this._equipSlot.equip(item);
     }
 
-    clear(): void {
-        this._equipSlot.clear();
+    clear(): boolean {
+        return this._equipSlot.clear();
+    }
+
+    moveTo(itemStorage: ItemStorageInterface): boolean {
+        return this._equipSlot.moveTo(itemStorage);
     }
 
     isFree(): boolean {
         return this._equipSlot.isFree();
     }
 
-    equip(itemStack: ItemStack): void {
-        this._assertCanEquip(itemStack.item);
+    canEquip(item: Item): boolean {
+        if (!item.properties.armorMaterial) {
+            debug(DebugNamespaceID.Throw)('Предмет без материала нельзя экипировать в данный слот.');
+            return false;
+        }
 
-        this._equipSlot.equip(itemStack);
+        if (!item.hasArmorMaterial(this._armorMaterials)) {
+            debug(DebugNamespaceID.Throw)(sprintf('Предмет "%s" с материалом "%s" не доступен для класса.', item.id, item.properties.armorMaterial.id));
+            return false;
+        }
+
+        return true;
     }
 
-    render(callback: (values: {
-        item: Item,
-    }) => void) {
+    view(logger) {
+        this._equipSlot.view(logger);
+    }
+
+    render(callback: EquipSlotInterfaceRenderCallback): void {
         this._equipSlot.render(callback);
     }
 
-    private _assertCanEquip(item: Item): void {
-        if (!item.hasArmorMaterial(this._armorMaterials)) {
-            throw AppError.equipNotAvailableByArmorMaterial();
-        }
+    removeRender(callback: EquipSlotInterfaceRenderCallback): void {
+        this._equipSlot.removeRender(callback);
     }
 
-    view(callback: (data: {
-        item: string,
-    }) => void) {
-        this._equipSlot.view(callback);
+    updateUI(): void {
+        this._equipSlot.updateUI();
+    }
+
+    renderByRequest(ui: EquipSlotInterfaceRender): void {
+        this._equipSlot.renderByRequest(ui);
     }
 }

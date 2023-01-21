@@ -1,6 +1,6 @@
 import AbstractSandboxController from './AbstractSandboxController.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import Recipe from '../../core/app/Entities/Recipe.js';
 import {RecipeID} from '../../core/types/enums/RecipeID.js';
@@ -19,11 +19,11 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
     }
 
     private _getStarted() {
-        let em = this.container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         // let resourcesItemStorage = new ItemStorageV2();
 
-        let resourcesItemStorage = new InfinityItemStorage();
+        let resourcesItemStorage = new InfinityItemStorage(em);
         // resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
         resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 100);
         resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 100);
@@ -33,7 +33,7 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
         // let resourcesItemStorage = new EndlessItemStorage();
 
         // let resultItemStorage = new InfinityItemStorage();
-        let resultItemStorage = new ItemStorageV2(20);
+        let resultItemStorage = new ItemStorageV2(20, em);
 
         let woodBoards = em.get<Recipe>(EntityID.Recipe, RecipeID.WoodBoards);
         let oneHandedSword01 = em.get<Recipe>(EntityID.Recipe, RecipeID.OneHandedSword01);
@@ -56,7 +56,7 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
         // console.log(resourcesItemStorage);
         // console.log(craftQueue);
 
-        let craftWorkbench = new CraftWorkbench();
+        let craftWorkbench = new CraftWorkbench(em);
         // craftWorkbench.startCraft(craftQueue);
         craftWorkbench.addRecipe(em.get<Recipe>(EntityID.Recipe, RecipeID.WoodBoards), resourcesItemStorage);
         // craftWorkbench.addRecipe(em.get<Recipe>(EntityID.Recipe, RecipeID.OneHandedSword01), resourcesItemStorage);

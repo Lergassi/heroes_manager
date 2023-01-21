@@ -1,9 +1,9 @@
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
-import ExperienceComponent from '../Components/ExperienceComponent.js';
+import Experience from '../Components/Experience.js';
 import EquipSlot from '../Entities/EquipSlot.js';
-import HealthPointsComponent from '../Components/HealthPointsComponent.js';
+import HealthPoints from '../Components/HealthPoints.js';
 import MagicPointsComponent from '../Components/MagicPointsComponent.js';
 import AttackController from '../Components/AttackController.js';
 import GameObjectFactory from './GameObjectFactory.js';
@@ -31,7 +31,10 @@ import {EntityID} from '../../types/enums/EntityID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import HeroCharacterAttributeFactory from './HeroCharacterAttributeFactory.js';
 import Gatherer from '../Components/Gatherer.js';
-import Hero from '../Hero.js';
+import CharacterAttribute from '../Components/CharacterAttribute.js';
+import AverageItemLevel from '../Components/AverageItemLevel.js';
+import EquipController from '../Components/EquipController.js';
+import {level} from 'chalk';
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -67,6 +70,7 @@ export default class HeroFactory {
     ): GameObject {
     // ): Hero {
         heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(EntityID.HeroClass, heroClass) : heroClass;
+        assertNotNil(heroClass, 'HeroClass не найден.');
 
         // let hero = <Hero>this._gameObjectFactory.create();
         let hero = this._gameObjectFactory.create();
@@ -82,7 +86,7 @@ export default class HeroFactory {
             heroClass,
         ));
 
-        hero.set<ExperienceComponent>(ComponentID.Experience, this._experienceComponentFactory.create({
+        hero.set<Experience>(ComponentID.Experience, this._experienceComponentFactory.create({
             level: level,
         }));
 
@@ -99,14 +103,20 @@ export default class HeroFactory {
             EquipSlotID.Waist,
             EquipSlotID.Legs,
             EquipSlotID.Foots,
+        ];
+
+        let jewelSlotIDs = [
             EquipSlotID.Neck,
-            EquipSlotID.Finger_1,
-            EquipSlotID.Finger_2,
+            EquipSlotID.Finger01,
+            EquipSlotID.Finger02,
             EquipSlotID.Trinket,
         ];
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
         hero.set(ItemCharacterAttributeCollector.name, itemCharacterAttributeCollector);
+
+        let averageItemLevel = new AverageItemLevel();
+        hero.set(ComponentID.AverageItemLevel, averageItemLevel);
 
         // let heroAttributeCollectorComponent = new HeroAttributeCollectorComponent();
         // hero.set(HeroAttributeCollectorComponent.name, heroAttributeCollectorComponent);
@@ -120,34 +130,47 @@ export default class HeroFactory {
         // });
         // hero.set(TotalCharacterAttributeValueCollectorComponent.name, totalCharacterAttributeValueCollectorComponent);
 
-        let equipSlotComponents: Partial<Record<EquipSlotID, EquipSlotInterface>> = {}; //todo: Временно.
         for (let i = 0; i < armorEquipSlotIDs.length; i++) {
             let equipSlot = equipSlotFactory.createArmor(
                 this._entityManager.get<EquipSlot>(EntityID.EquipSlot, armorEquipSlotIDs[i]),
                 heroClass,
                 itemCharacterAttributeCollector,
+                averageItemLevel,
             );
             hero.set<EquipSlotInterface>(armorEquipSlotIDs[i], equipSlot);
+        }
+
+        for (let i = 0; i < jewelSlotIDs.length; i++) {
+            let equipSlot = equipSlotFactory.create(
+                this._entityManager.get<EquipSlot>(EntityID.EquipSlot, jewelSlotIDs[i]),
+                heroClass,
+                itemCharacterAttributeCollector,
+                averageItemLevel,
+            );
+            hero.set<EquipSlotInterface>(jewelSlotIDs[i], equipSlot);
         }
 
         let leftHand: EquipSlotInterface = equipSlotFactory.createLeftHand(
             this._entityManager.get<EquipSlot>(EntityID.EquipSlot, EquipSlotID.LeftHand),
             heroClass,
             itemCharacterAttributeCollector,
+            averageItemLevel,
         );
         let rightHand : EquipSlotInterface = equipSlotFactory.createRightHand(
             leftHand as LeftHand,
             this._entityManager.get<EquipSlot>(EntityID.EquipSlot, EquipSlotID.RightHand),
             heroClass,
             itemCharacterAttributeCollector,
+            averageItemLevel,
         );
 
-        equipSlotComponents.LeftHand = leftHand;    //todo: Не удобно. Если не знать, что объект нужно добавлять в два места всегда буду забывать.
-        equipSlotComponents.RightHand = rightHand;
+        // equipSlotComponents.LeftHand = leftHand;    //todo: Не удобно. Если не знать, что объект нужно добавлять в два места всегда буду забывать.
+        // equipSlotComponents.RightHand = rightHand;
         hero.set<EquipSlotInterface>(EquipSlotID.RightHand, rightHand);
         hero.set<EquipSlotInterface>(EquipSlotID.LeftHand, leftHand);
 
-        hero.set<Partial<Record<EquipSlotID, EquipSlotInterface>>>(ComponentID.EquipSlots, equipSlotComponents);
+        // hero.set<Partial<Record<EquipSlotID, EquipSlotInterface>>>(ComponentID.EquipSlots, equipSlotComponents);
+        hero.set(ComponentID.EquipController, new EquipController(hero));
 
         //end equipSlots
 
@@ -201,6 +224,8 @@ export default class HeroFactory {
             ));
         }
 
+        // characterAttributes[CharacterAttributeID.ItemLevel] = new CharacterAttribute(CharacterAttributeID.ItemLevel, itemCharacterAttributeCollector, 0);
+
         //todo: Цепочка? builder? .create(...).decorate(...).decorate(...).build().
         characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new AttackPowerDependentIncreaserDecorator({
             attackPower: hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
@@ -210,7 +235,7 @@ export default class HeroFactory {
         }));
 
         //К компоненту с очками здоровья возможно не будет доступа вообще.
-        let healthPointsComponent = new HealthPointsComponent(
+        let healthPointsComponent = new HealthPoints(
             hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxHealthPoints,
             stateController,
         );
@@ -218,7 +243,7 @@ export default class HeroFactory {
             healthPointsComponent as DamageControllerInterface,
             hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Protection,
         );
-        hero.set<HealthPointsComponent>(ComponentID.HealthPoints, healthPointsComponent); //Пока только для рендера.
+        hero.set<HealthPoints>(ComponentID.HealthPoints, healthPointsComponent); //Пока только для рендера.
         hero.set<DamageControllerInterface>(ComponentID.DamageController, damageController);
 
         //todo: Очки магии добавляются только для магов. Магов надо помечать или настраивать для каждого класса по отдельности.
@@ -228,11 +253,11 @@ export default class HeroFactory {
             А еще точнее, у классов может быть разный ресурс. Если её нету, то нету. Пока также как с ArmorMaterial у предметов.
          */
 
-        let magicPointsComponent = hero.set(MagicPointsComponent.name, new MagicPointsComponent(
+        hero.set(MagicPointsComponent.name, new MagicPointsComponent(
             hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxMagicPoints,
         ));
 
-        let attackPowerComponent = hero.set<AttackControllerInterface>(ComponentID.AttackController, new AttackController(
+        hero.set<AttackControllerInterface>(ComponentID.AttackController, new AttackController(
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             stateController,
         ));
@@ -243,11 +268,39 @@ export default class HeroFactory {
         // ));
 
         hero.set(ComponentID.Gatherer, new Gatherer(stateController));
+        // hero.set(ComponentID.Render, new Gatherer(stateController));
 
         return hero;
     }
 
-    createSome() {
+    createRandom(level: number): GameObject {
+        let heroClassIDs = [
+            HeroClassID.Warrior,
+            HeroClassID.Paladin,
+            HeroClassID.Tank1,
+            HeroClassID.Tank2,
+            HeroClassID.Tank3,
+            HeroClassID.Gladiator,
+            HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
+            HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
+            HeroClassID.PlateDamageDealer1,
+            HeroClassID.PlateDamageDealer2,
+            HeroClassID.LeatherDamageDealer1,
+            HeroClassID.Rogue,
+            HeroClassID.Archer,
+            HeroClassID.LeatherDamageDealer2,
+            HeroClassID.Necromancer,
+            HeroClassID.Mage1,
+            HeroClassID.Mage2,
+            HeroClassID.Warlock,
+            HeroClassID.FireMage,
+            HeroClassID.Priest,
+            HeroClassID.Druid,
+            HeroClassID.Support1,
+            HeroClassID.Support2,
+            HeroClassID.Support3,
+        ];
 
+        return this.create(heroClassIDs[_.random(0, heroClassIDs.length - 1)], level);
     }
 }

@@ -9,7 +9,9 @@ import {unsigned} from '../../types/main.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
-import ItemStackControllerInterface from '../Interfaces/ItemStackControllerInterface.js';
+import ItemStackControllerInterface, {
+    ItemStackControllerInterfaceRender
+} from '../Interfaces/ItemStackControllerInterface.js';
 import ItemStackController from './ItemStackController.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import {ItemID} from '../../types/enums/ItemID.js';
@@ -151,5 +153,9 @@ export default class ItemStorageSlotComponent implements ItemStackControllerInte
 
     canAddItem(item: Item, count: number): number {
         return 0;
+    }
+
+    renderByRequest(ui: ItemStackControllerInterfaceRender): void {
+        this._itemStackController.renderByRequest(ui);
     }
 }

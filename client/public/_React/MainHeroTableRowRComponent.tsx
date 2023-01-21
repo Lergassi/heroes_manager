@@ -1,12 +1,12 @@
 import React from 'react';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
-import ExperienceComponent, {ExperienceComponentEventCode} from '../../../core/app/Components/ExperienceComponent.js';
+import Experience, {ExperienceComponentEventCode} from '../../../core/app/Components/Experience.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
-import HealthPointsComponent, {
+import HealthPoints, {
     HealthPointsComponentEventCode
-} from '../../../core/app/Components/HealthPointsComponent.js';
+} from '../../../core/app/Components/HealthPoints.js';
 import MagicPointsComponent from '../../../core/app/Components/MagicPointsComponent.js';
 import ExperienceTextRenderRComponent from './ExperienceTextRenderRComponent.js';
 import {EquipSlotComponentEventCode} from '../../../core/app/Components/EquipSlotComponent.js';
@@ -70,17 +70,17 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                 <td>{hero.get<HeroComponent>(ComponentID.Hero)['_heroClass']['_name']}</td>
                 <td>
                     <ExperienceTextRenderRComponent
-                        experienceComponent={hero.get<ExperienceComponent>(ComponentID.Experience)}
+                        experienceComponent={hero.get<Experience>(ComponentID.Experience)}
                     />
                 </td>
-                <td>{hero.get<HealthPointsComponent>(ComponentID.HealthPoints)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(ComponentID.HealthPoints)['_maxHealthPoints']['value']()}</td>
-                <td>{hero.get<HealthPointsComponent>(ComponentID.HealthPoints)['_isDead'] ? 'Мертвый' : 'Живой'}</td>
+                <td>{hero.get<HealthPoints>(ComponentID.HealthPoints)['_currentHealthPoints']}/{hero.get<HealthPoints>(ComponentID.HealthPoints)['_maxHealthPoints']['finalValue']}</td>
+                <td>{hero.get<HealthPoints>(ComponentID.HealthPoints)['_isDead'] ? 'Мертвый' : 'Живой'}</td>
                 {/*<td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>*/}
-                <td>{hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).AttackPower.value()}</td>
+                <td>{hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).AttackPower.finalValue}</td>
                 <td>
-                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Strength.value()}/
-                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Agility.value()}/
-                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Intelligence.value()}
+                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Strength.finalValue}/
+                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Agility.finalValue}/
+                    {hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Intelligence.finalValue}
                 </td>
                 <td>
                     {hero.get<TakeComponent>(TakeComponent.name)['_state']}

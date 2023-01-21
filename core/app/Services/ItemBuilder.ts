@@ -20,6 +20,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import debug from 'debug';
 import _ from 'lodash';
+import AppError from '../../source/Errors/AppError.js';
 
 export interface ItemBuilderOptions {
     description: string;
@@ -131,10 +132,16 @@ export default class ItemBuilder {
         this._options.getTypes = options.getTypes ?? [];
 
         this._properties = {};
-        if (options.properties?.armorMaterialID) this._properties['armorMaterial'] = this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, options.properties.armorMaterialID);
-        if (options.properties?.twoHandWeapon) this._properties['twoHandWeapon'] = options.properties.twoHandWeapon;
-        if (options.properties?.defaultBuyPrice) this._properties['defaultBuyPrice'] = options.properties.defaultBuyPrice;
-        if (options.properties?.defaultSellPrice) this._properties['defaultSellPrice'] = options.properties.defaultSellPrice;
+        if (options.properties?.equipable) {
+            if (options.stackSize !== 1) {
+                throw new AppError('StackSize для equipable предмета должен быть равный 1.');
+            }
+            this._properties.equipable = options.properties.equipable;
+        }
+        if (options.properties?.armorMaterialID) this._properties.armorMaterial = this._entityManager.get<ArmorMaterial>(EntityID.ArmorMaterial, options.properties.armorMaterialID);
+        if (options.properties?.twoHandWeapon) this._properties.twoHandWeapon = options.properties.twoHandWeapon;
+        if (options.properties?.defaultBuyPrice) this._properties.defaultBuyPrice = options.properties.defaultBuyPrice;
+        if (options.properties?.defaultSellPrice) this._properties.defaultSellPrice = options.properties.defaultSellPrice;
 
         return this;
     }

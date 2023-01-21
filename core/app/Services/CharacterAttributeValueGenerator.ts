@@ -17,6 +17,7 @@ import DefaultCharacterAttributeValueGenerator
 import {unsigned} from '../../types/main.js';
 import {CharacterAttributeValueModifier} from './EnemyCharacterAttributeStartValueGenerator.js';
 import CharacterAttributeValueGeneratorInterface from '../Interfaces/CharacterAttributeValueGeneratorInterface.js';
+import {underline} from 'chalk';
 
 //todo: Временно. Переделать когда будет прокачка героев. Далее станет более понятно какой нужен интерфейс у классов отвечающих за генерацию прибавки к атрибутам.
 export default class CharacterAttributeValueGenerator {

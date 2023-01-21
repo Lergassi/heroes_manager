@@ -4,7 +4,7 @@ import debug from 'debug';
 import Security from '../../source/Security.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 
 export default class UnloadUserEnvironmentCommand extends Command {
     get name(): string {
@@ -15,7 +15,7 @@ export default class UnloadUserEnvironmentCommand extends Command {
         this.container.get<Security>('server.security').assertIsUserLoaded();
 
         if (this.container.get<Security>('server.security').isPlayerLoaded()) {
-            await this.container.get<GameConsole>(ContainerID.GameConsole).run('unload_player_env');
+            await this.container.get<GameConsole>(ServiceID.GameConsole).run('unload_player_env');
         }
         this.container.get<Security>('server.security').logoutUser();
 

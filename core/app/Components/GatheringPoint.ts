@@ -1,20 +1,24 @@
-import GatheringPointInterface from '../Interfaces/GatheringPointInterface.js';
 import GathererInterface from '../Interfaces/GathererInterface.js';
-import {GatheringPointTypeID} from './LocationComponent.js';
+import {GatheringPointTypeID} from './Location.js';
 import Item from '../Entities/Item.js';
 import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import _ from 'lodash';
-import {unsigned} from '../../types/main.js';
+import {UI_ItemCount, UI_VeinItemCount, unsigned} from '../../types/main.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
-export default class GatheringPoint implements GatheringPointInterface {
+export interface GatheringPointRender {
+    update(item: UI_VeinItemCount);
+}
+
+export default class GatheringPoint {
     private readonly _minCountForGather: unsigned = 1;
     private readonly _maxCountForGather: unsigned = 4;  //todo: Шанс. Максимальное значение должно быть реже чем среднее.
 
     private readonly _type: GatheringPointTypeID;
     private readonly _item: Item;
+    private _startCount: unsigned;
     private _count: unsigned;
 
     constructor(type: GatheringPointTypeID, item: Item, count: unsigned) {
@@ -24,6 +28,7 @@ export default class GatheringPoint implements GatheringPointInterface {
 
         this._type = type;
         this._item = item;
+        this._startCount = count;
         this._count = count;
     }
 
@@ -91,5 +96,13 @@ export default class GatheringPoint implements GatheringPointInterface {
 
     isEmpty(): boolean {
         return this._count <= 0;
+    }
+
+    renderByRequest(ui: GatheringPointRender): void {
+        ui.update({
+            itemName: this._item.id,
+            startCount: this._startCount,
+            count: this._count,
+        });
     }
 }

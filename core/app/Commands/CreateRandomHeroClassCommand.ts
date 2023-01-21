@@ -4,8 +4,8 @@ import {CommandID} from '../../types/enums/CommandID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {assertIsGreaterThan, assertIsGreaterThanOrEqual, assertIsPositive} from '../../source/assert.js';
 import HeroFactory from '../Factories/HeroFactory.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
-import MainHeroListComponent from '../Components/MainHeroListComponent.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
+import MainHeroList from '../Components/MainHeroList.js';
 import Random from '../Services/Random.js';
 
 export default class CreateRandomHeroClassCommand extends Command {
@@ -43,8 +43,8 @@ export default class CreateRandomHeroClassCommand extends Command {
             HeroClassID.Druid,
         ];
 
-        let heroFactory = this.container.get<HeroFactory>(ContainerID.HeroFactory);
-        let mainHeroList = this.container.get<MainHeroListComponent>(ContainerID.MainHeroList);
+        let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
+        let mainHeroList = this.container.get<MainHeroList>(ServiceID.MainHeroList);
 
         let i = 0;
         while (i < count) {

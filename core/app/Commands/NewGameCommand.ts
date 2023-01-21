@@ -6,7 +6,7 @@ import ClientUI from '../../../client/public/ClientUI.js';
 import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import {CommandID} from '../../types/enums/CommandID.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 
 export default class NewGameCommand extends Command {
     private readonly _scenarios = {
@@ -29,9 +29,9 @@ export default class NewGameCommand extends Command {
         }
         (new PlayerContainerConfigure()).configure(this.container);
 
-        await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(CommandID.create_player_env).run();
+        await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(CommandID.create_player_env).run();
         if (scenario) {
-            await this.container.get<GameConsole>(ContainerID.GameConsole).getCommand(this._scenarios[scenario]).run();
+            await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(this._scenarios[scenario]).run();
         }
 
         this.container.get<ClientUI>('client.clientRender').buildGameUI();

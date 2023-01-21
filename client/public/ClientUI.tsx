@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom/client';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import GameConsole from '../../core/source/GameConsole/GameConsole.js';
 import MainHeroListRComponent from './_React/MainHeroListRComponent.js';
-import MainHeroListComponent from '../../core/app/Components/MainHeroListComponent.js';
+import MainHeroList from '../../core/app/Components/MainHeroList.js';
 import AppError from '../../core/source/Errors/AppError.js';
 import SandboxRComponent from './_React/SandboxRComponent.js';
 import MainLocationListRComponent from './_React/MainLocationListRComponent.js';
-import MainLocationListComponent from '../../core/app/Components/MainLocationListComponent.js';
+import MainLocationList from '../../core/app/Components/MainLocationList.js';
 import ItemStorageControllerRComponent from './_React/ItemStorageControllerRComponent.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import ItemStorageControllerInterface from '../../core/app/Interfaces/ItemStorageControllerInterface.js';
 import {WalletRComponent} from './_React/WalletRComponent.js';
 import GameObjectStorage from '../../core/source/GameObjectStorage.js';
@@ -22,9 +22,9 @@ import useCustomHook from './_React/Test/test.js';
 import PlayerItemStorage from './_React/PlayerItemStorage.js';
 import WalletRC2 from './_React/WalletRC2.js';
 import Currency from '../../core/app/Entities/Currency.js';
-import ItemStorageRC from './Components/ItemStorageRC.js';
+import ItemStorageRC_Legacy from './Components/ItemStorageRC_Legacy.js';
 import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
-import MainHeroListRC from './Components/MainHeroListRC.js';
+import MainHeroListRC_Legacy from './Components/MainHeroListRC_Legacy.js';
 
 export default class ClientUI {
     private readonly _container: ContainerInterface;
@@ -33,9 +33,10 @@ export default class ClientUI {
         this._container = container;
 
         //@dev
-        window['_container'] = this._container;
-        window['_clientRender'] = this;
-        window['_sandbox'] = {};
+        window['app'] = {};
+        window['app']['container'] = this._container;
+        window['app']['clientRender'] = this;
+        window['app']['sandbox'] = {};
     }
 
     buildPreGameUI() {
@@ -73,7 +74,7 @@ export default class ClientUI {
                     container={this._container}
                     executeUrl={'http://api.heroes.sd44.ru/game_console/execute'}
                     maxHistoryLength={100}
-                    commandNames={this._container.get<GameConsole>(ContainerID.GameConsole).names}
+                    commandNames={this._container.get<GameConsole>(ServiceID.GameConsole).names}
                 />
                 {/*<SandboxRComponent*/}
 
@@ -108,18 +109,19 @@ export default class ClientUI {
                 <div className={'widget'}>
                     <div className={'widget__title'}>Герои</div>
                     <div className={'widget__content'}>
-                        <MainHeroListRC
-                            mainHeroList={this._container.get<MainHeroListComponent>(ContainerID.MainHeroList)}
+                        <MainHeroListRC_Legacy
+                            container={this._container}
+                            mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
                         />
                     </div>
                 </div>
                 <MainLocationListRComponent
                     container={this._container}
-                    mainLocationListComponent={this._container.get<MainLocationListComponent>(ContainerID.MainLocationList)}
+                    mainLocationListComponent={this._container.get<MainLocationList>(ServiceID.MainLocationList)}
                 />
-                <ItemStorageControllerRC
-                    itemStorageController={this._container.get<ItemStorageControllerInterface>(ContainerID.ItemStorageController)}
-                />
+                {/*<ItemStorageControllerRC*/}
+                {/*    itemStorageController={this._container.get<ItemStorageControllerInterface>(ServiceID.ItemStorageController)}*/}
+                {/*/>*/}
             </div>
         );
     }

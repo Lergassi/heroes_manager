@@ -1,13 +1,13 @@
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
 import React from 'react';
-import ExperienceComponent from '../../../core/app/Components/ExperienceComponent.js';
+import Experience from '../../../core/app/Components/Experience.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
 import EquipSlotRComponent from './EquipSlotRComponent.js';
 import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
 import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
 import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
-import HealthPointsComponent from '../../../core/app/Components/HealthPointsComponent.js';
+import HealthPoints from '../../../core/app/Components/HealthPoints.js';
 import MagicPointsComponent from '../../../core/app/Components/MagicPointsComponent.js';
 import AttackController from '../../../core/app/Components/AttackController.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
@@ -98,7 +98,7 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                     </tr>
                     <tr>
                         <td>Уровень (опыт)</td>
-                        <td>{hero.get<ExperienceComponent>(ComponentID.Experience).level} ({hero.get<ExperienceComponent>(ComponentID.Experience).exp})</td>
+                        <td>{hero.get<Experience>(ComponentID.Experience).level} ({hero.get<Experience>(ComponentID.Experience).exp})</td>
                     </tr>
                     <tr>
                         <td>Класс</td>
@@ -106,27 +106,27 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                     </tr>
                     <tr>
                         <td>Сила</td>
-                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Strength).value()}</td>
+                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Strength).finalValue}</td>
                     </tr>
                     <tr>
                         <td>Ловкость</td>
-                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Agility).value()}</td>
+                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Agility).finalValue}</td>
                     </tr>
                     <tr>
                         <td>Интеллект</td>
-                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Intelligence).value()}</td>
+                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.Intelligence).finalValue}</td>
                     </tr>
                     <tr>
                         <td>Сила атаки</td>
-                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.AttackPower).value()}</td>
+                        <td>{hero.get<CharacterAttribute>(CharacterAttributeID.AttackPower).finalValue}</td>
                     </tr>
                     <tr>
                         <td>Очки здоровья</td>
-                        <td>{hero.get<HealthPointsComponent>(ComponentID.HealthPoints)['_currentHealthPoints']}/{hero.get<HealthPointsComponent>(ComponentID.HealthPoints)['_maxHealthPoints']['value']()}</td>
+                        <td>{hero.get<HealthPoints>(ComponentID.HealthPoints)['_currentHealthPoints']}/{hero.get<HealthPoints>(ComponentID.HealthPoints)['_maxHealthPoints']['finalValue']}</td>
                     </tr>
                     <tr>
                         <td>Очки магии</td>
-                        <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['value']()}</td>
+                        <td>{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_currentMagicPoints']}/{hero.get<MagicPointsComponent>(MagicPointsComponent.name)['_maxMagicPoints']['finalValue']}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -189,12 +189,12 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get(EquipSlotID.Finger_1)}
+                        equipSlotComponent={hero.get(EquipSlotID.Finger01)}
                         name={'Палец 1'}
                         updateHandler={this.updateHandler}
                     />
                     <EquipSlotRComponent
-                        equipSlotComponent={hero.get(EquipSlotID.Finger_2)}
+                        equipSlotComponent={hero.get(EquipSlotID.Finger02)}
                         name={'Палец 2'}
                         updateHandler={this.updateHandler}
                     />

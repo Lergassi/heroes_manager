@@ -3,7 +3,7 @@ import _ from 'lodash';
 import debug from 'debug';
 import GameConsole from '../../../../core/source/GameConsole/GameConsole.js';
 import {DebugNamespaceID} from '../../../../core/types/enums/DebugNamespaceID.js';
-import {ContainerID} from '../../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../../core/types/enums/ServiceID.js';
 
 export default class GameConsoleSiteController extends Controller {
     async execute(req, res) {
@@ -29,7 +29,7 @@ export default class GameConsoleSiteController extends Controller {
             return;
         }
 
-        let gameConsole = this.container.get<GameConsole>(ContainerID.GameConsole);
+        let gameConsole = this.container.get<GameConsole>(ServiceID.GameConsole);
         try {
             // let commandParams = gameConsole.parse(commandQuery);
             // let command = gameConsole.getCommand(commandParams.name);

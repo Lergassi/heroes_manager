@@ -1,34 +1,28 @@
-import HeroGroup from '../Components/HeroGroup.js';
-import LocationComponent, {
-    GatheringItemPoint,
-    GatheringItemPointTypeValues,
-    GatheringPointTypeID
-} from '../Components/LocationComponent.js';
-import GameObjectFactory from './GameObjectFactory.js';
-import GameObject from '../../source/GameObject.js';
-import ItemStackFactory from './ItemStackFactory.js';
-import ItemDatabase from '../../source/ItemDatabase.js';
-import Random from '../Services/Random.js';
-import ItemCategory from '../Entities/ItemCategory.js';
-import {unsigned} from '../../types/main.js';
-import {ONE_HOUR_IN_SECONDS} from '../consts.js';
-import ItemStorageFactory from './ItemStorageFactory.js';
-import Wallet from '../Components/Wallet.js';
-import Currency from '../Entities/Currency.js';
-import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
-import {CurrencyID} from '../../types/enums/CurrencyID.js';
-import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-import {EntityID} from '../../types/enums/EntityID.js';
 import debug from 'debug';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import EnemyFactory from './EnemyFactory.js';
-import {EnemyID} from '../../types/enums/EnemyID.js';
-import WalletFactory from './WalletFactory.js';
-import WalletInterface from '../Interfaces/WalletInterface.js';
-import GatheringPoint from '../Components/GatheringPoint.js';
-import {ItemID} from '../../types/enums/ItemID.js';
-import _ from 'lodash';
+import GameObject from '../../source/GameObject.js';
+import ItemDatabase from '../../source/ItemDatabase.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
+import {CurrencyID} from '../../types/enums/CurrencyID.js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {EnemyID} from '../../types/enums/EnemyID.js';
+import {EntityID} from '../../types/enums/EntityID.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import {ItemID} from '../../types/enums/ItemID.js';
+import {unsigned} from '../../types/main.js';
+import GatheringPoint from '../Components/GatheringPoint.js';
+import HealthPoints from '../Components/HealthPoints.js';
+import HeroGroup from '../Components/HeroGroup.js';
+import Location, {GatheringPointTypeID} from '../Components/Location.js';
+import Wallet from '../Components/Wallet.js';
+import ItemCategory from '../Entities/ItemCategory.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import WalletInterface from '../Interfaces/WalletInterface.js';
+import Random from '../Services/Random.js';
+import EnemyFactory from './EnemyFactory.js';
+import GameObjectFactory from './GameObjectFactory.js';
+import ItemStackFactory from './ItemStackFactory.js';
+import ItemStorageFactory from './ItemStorageFactory.js';
+import WalletFactory from './WalletFactory.js';
 
 export type LocationFactoryCreateOptions = {
     level: unsigned;
@@ -46,7 +40,6 @@ export default class LocationFactory {
     private readonly _maxGatheringItemPointsCount: number;
     private readonly _internalItemStorageSize: number;
     private readonly _heroGroupSize: number;
-    private readonly _enemyGroupSize: number[];
 
     private readonly _gameObjectFactory: GameObjectFactory;
     private readonly _itemStackFactory: ItemStackFactory;
@@ -74,7 +67,6 @@ export default class LocationFactory {
         this._maxGatheringItemPointsCount = 3;
         this._internalItemStorageSize = 5;
         this._heroGroupSize = 5;
-        this._enemyGroupSize = [1, 5];
 
         this._gameObjectFactory = gameObjectFactory;
         this._itemStackFactory = itemStackFactory;
@@ -156,7 +148,16 @@ export default class LocationFactory {
             [GatheringPointTypeID.high]: 64,
         };
 
-        let locationComponent = location.set<LocationComponent>(ComponentID.Location, new LocationComponent(
+        let enemies = [
+            // this._enemyFactory.create(EnemyID.Bear, 1),
+            // this._enemyFactory.create(EnemyID.Bear, 2),
+            // this._enemyFactory.create(EnemyID.Bear, 3),
+            // this._enemyFactory.create(EnemyID.Bear, 4),
+            // this._enemyFactory.create(EnemyID.Bear, 5),
+        ];
+        // enemies[2].get<HealthPoints>(ComponentID.HealthPoints).kill();
+
+        let locationComponent = location.set<Location>(ComponentID.Location, new Location(
             new Date(),
             level,
             // gatheringItemPoints,
@@ -174,13 +175,7 @@ export default class LocationFactory {
             itemStorageComponent,
             this._walletFactory.create().get<WalletInterface>(ComponentID.Wallet), //Можно передать любой кошелек.
             //@test
-            [
-                this._enemyFactory.create(EnemyID.Bear, 1),
-                // this._enemyFactory.create(EnemyID.Bear, 1),
-                // this._enemyFactory.create(EnemyID.Bear, 1),
-                // this._enemyFactory.create(EnemyID.Bear, 1),
-                // this._enemyFactory.create(EnemyID.Bear, 1),
-            ],
+            // enemies,
         ));
 
         return location;

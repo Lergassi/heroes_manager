@@ -43,6 +43,7 @@ export type ItemFilterCondition = Readonly<Partial<{
 //     defaultSellPrice?: number;
 // }
 export type ItemProperties = {
+    equipable?: boolean;
     armorMaterial?: ArmorMaterial;
     twoHandWeapon?: boolean;    //Всё оружие по умолчанию одноручное.
     defaultBuyPrice?: number;

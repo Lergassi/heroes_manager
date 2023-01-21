@@ -10,11 +10,11 @@ import _ from 'lodash';
 import {EventCode} from '../../../core/types/enums/EventCode.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import EventSystemFactory from '../../../core/app/Services/EventSystemFactory.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import PlayerItemStorage from './PlayerItemStorage.js';
 import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
-import ItemStorageRC from '../Components/ItemStorageRC.js';
+import ItemStorageRC_Legacy from '../Components/ItemStorageRC_Legacy.js';
 
 export interface ItemStorageControllerRComponentProps {
     container: ContainerInterface;

@@ -34,6 +34,7 @@ export default class ItemsLoader {
                             itemLevel: Number(data[i].ItemLevel),
                             characterAttributes: characterAttributes,
                             properties: {
+                                equipable: Boolean(data[i].Equipable),
                                 armorMaterialID: data[i].ArmorMaterialID,
                                 twoHandWeapon: Boolean(data[i].TwoHandWeapon),
                                 defaultBuyPrice: Number(data[i].DefaultBuyPrice),
@@ -41,7 +42,7 @@ export default class ItemsLoader {
                             },
                         },
                     )
-            );
+            );//end itemFactory
         }
     }
 }

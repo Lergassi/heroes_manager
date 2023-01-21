@@ -15,8 +15,9 @@ export interface ProgressBarRCState {
 
 export default class ProgressBarRC extends React.Component<ProgressBarRCProps, ProgressBarRCState> {
     constructor(props: ProgressBarRCProps) {
-        assertIsGreaterThanOrEqual(props.currentValue, 0);
-        assertIsGreaterThanOrEqual(props.maxValue, 1);
+        // assertIsGreaterThanOrEqual(props.currentValue, 0);
+        // assertIsGreaterThanOrEqual(props.maxValue, 0);
+        // assertIsGreaterThanOrEqual(props.maxValue, 0);
 
         super(props);
     }

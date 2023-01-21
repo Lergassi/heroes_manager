@@ -1,10 +1,12 @@
 import GameObject from '../../source/GameObject.js';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import ItemStorageInterface, {ItemStorageInterfaceRender} from '../Interfaces/ItemStorageInterface.js';
 import Item from '../Entities/Item.js';
 import {unsigned} from '../../types/main.js';
 import _ from 'lodash';
 import {ComponentID} from '../../types/enums/ComponentID.js';
-import ItemStorageControllerInterface from '../Interfaces/ItemStorageControllerInterface.js';
+import ItemStorageControllerInterface, {
+    ItemStorageControllerInterfaceRender
+} from '../Interfaces/ItemStorageControllerInterface.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import EventSystem from '../../source/EventSystem.js';
@@ -13,7 +15,8 @@ import AppError from '../../source/Errors/AppError.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {assertIsGreaterThanOrEqual, assertIsPositive} from '../../source/assert.js';
 
-export default class ItemStorageController implements ItemStorageControllerInterface, ItemStorageInterface {
+// export default class ItemStorageController implements ItemStorageControllerInterface, ItemStorageInterface {
+export default class ItemStorageController implements ItemStorageInterface {
     private readonly _itemStorages: GameObject[];
     private readonly _max: number;
 
@@ -40,9 +43,6 @@ export default class ItemStorageController implements ItemStorageControllerInter
         this._itemStorages.push(itemStorage);
         debug(DebugNamespaceID.Log)('Добавлен ItemStorage.');
         EventSystem.event(EventCode.ItemStorageController_AddItemStorage, this);
-        for (let i = 0; i < this._handlers.length; i++) {
-            this._handlers[i].addItemStorage(this, this._itemStorages);
-        }
 
         return this._itemStorages.length;
     }
@@ -63,15 +63,16 @@ export default class ItemStorageController implements ItemStorageControllerInter
      * @param count
      * @return Остаток.
      */
-    addItem(item: Item, count: unsigned): unsigned {
+    addItem(item: Item | ItemID, count: unsigned): unsigned {
         if (!this._itemStorages.length) {
+            console.log();
             debug(DebugNamespaceID.Throw)('Предмет не добавлен. Не найдено ни одного ItemStorage.');
             return count;
         }
 
         for (let i = 0; i < this._itemStorages.length; i++) {
             // count -= count - this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent)?.addItem(item, count);
-            count = this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent)?.addItem(item, count);
+            count = this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage)?.addItem(item, count);
             if (count <= 0) break;
         }
         // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
@@ -81,21 +82,6 @@ export default class ItemStorageController implements ItemStorageControllerInter
 
     moveTo(itemStorage: ItemStorageInterface): void {
         throw AppError.notImplements();
-    }
-
-    render(callback: (itemStorages: GameObject[]) => void) {
-        callback(this._itemStorages);
-    }
-
-    _handlers: {
-        addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
-    }[] = [];
-
-    attach(handlers: {
-        addItemStorage: (itemStorageController: ItemStorageControllerInterface, itemStorages: GameObject[]) => void,
-    }) {
-        this._handlers.push(handlers);
-        handlers.addItemStorage(this, this._itemStorages);
     }
 
     // totalItem(ID: ItemID): number {
@@ -110,7 +96,7 @@ export default class ItemStorageController implements ItemStorageControllerInter
     removeItem(ID: ItemID, count: number): number {
         let originCount = count;
         for (let i = 0; i < this._itemStorages.length; i++) {
-            count -= this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).removeItem(ID, count);
+            count -= this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage).removeItem(ID, count);
             if (count <= 0) break;
         }
 
@@ -120,7 +106,7 @@ export default class ItemStorageController implements ItemStorageControllerInter
     containItem(ID: ItemID): number {
         let count = 0;
         for (let i = 0; i < this._itemStorages.length; i++) {
-            count += this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent).containItem(ID);
+            count += this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage).containItem(ID);
         }
 
         return count;
@@ -128,5 +114,14 @@ export default class ItemStorageController implements ItemStorageControllerInter
 
     canAddItem(item: Item, count: number): number {
         return 0;
+    }
+
+    //todo: Тут явно это не нужно. Надо разделить интерфейс для сумки и коллекции сумок. Название временное.
+    renderAllByRequest(ui: ItemStorageControllerInterfaceRender): void {
+        ui.updateItemStorages?.(this._itemStorages);
+    }
+
+    renderByRequest(ui: ItemStorageInterfaceRender): void {
+        //...
     }
 }

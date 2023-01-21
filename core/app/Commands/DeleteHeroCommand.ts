@@ -1,8 +1,8 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import MainHeroListComponent from '../Components/MainHeroListComponent.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import MainHeroList from '../Components/MainHeroList.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 
 export default class DeleteHeroCommand extends Command {
@@ -21,10 +21,10 @@ export default class DeleteHeroCommand extends Command {
 
         this
             .container
-            .get<MainHeroListComponent>(ContainerID.MainHeroList)
+            .get<MainHeroList>(ServiceID.MainHeroList)
             .deleteHero(
-                this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByID(heroId),
-                this.container.get<GameObjectStorage>(ContainerID.GameObjectStorage),
+                this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(heroId),
+                this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage),
             );
     }
 }

@@ -2,7 +2,7 @@ import CharacterAttribute from '../CharacterAttribute.js';
 import {float, integer, unsigned} from '../../../types/main.js';
 import _ from 'lodash';
 import {assert, assertNotNil, assertIsPositive} from '../../../source/assert.js';
-import HealthPointsComponent from '../HealthPointsComponent.js';
+import HealthPoints from '../HealthPoints.js';
 import DamageControllerInterface from '../../Interfaces/DamageControllerInterface.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
@@ -43,7 +43,7 @@ export default class ArmorDecorator implements DamageControllerInterface {
     }
 
     private _calcProtectionModifier(): number {
-        let protection = +(this._protection.value() / this._onePercentArmorProtectionValue / 100).toFixed(4);
+        let protection = +(this._protection.finalValue / this._onePercentArmorProtectionValue / 100).toFixed(4);
 
         return protection <= this._maxProtection ? protection : this._maxProtection;
     }

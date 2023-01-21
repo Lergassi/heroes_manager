@@ -1,11 +1,11 @@
 import React from 'react';
-import ExperienceComponent from '../../../core/app/Components/ExperienceComponent.js';
+import Experience from '../../../core/app/Components/Experience.js';
 
 export type ExperienceTextRenderRComponentProps = {
-    experienceComponent: ExperienceComponent;
+    experienceComponent: Experience;
 }
 export type ExperienceTextRenderRComponentState = {
-    experienceComponent: ExperienceComponent;
+    experienceComponent: Experience;
 }
 
 export default class ExperienceTextRenderRComponent extends React.Component<ExperienceTextRenderRComponentProps, ExperienceTextRenderRComponentState> {

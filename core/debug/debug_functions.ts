@@ -4,7 +4,7 @@ import _ from 'lodash';
 import GameObject from '../source/GameObject.js';
 import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import EquipSlotComponent from '../app/Components/EquipSlotComponent.js';
-import HealthPointsComponent from '../app/Components/HealthPointsComponent.js';
+import HealthPoints from '../app/Components/HealthPoints.js';
 import AttackController from '../app/Components/AttackController.js';
 import MagicPointsComponent from '../app/Components/MagicPointsComponent.js';
 import HeroComponent from '../app/Components/HeroComponent.js';
@@ -14,10 +14,10 @@ import Wallet from '../app/Components/Wallet.js';
 import ItemStorageComponent from '../app/Components/ItemStorageComponent.js';
 import GameObjectStorage from '../source/GameObjectStorage.js';
 import ContainerInterface from '../source/ContainerInterface.js';
-import LevelRange from '../app/Components/ExperienceComponent.js';
+import LevelRange from '../app/Components/Experience.js';
 import EntityManager from '../source/EntityManager.js';
 import Item from '../app/Entities/Item.js';
-import {ContainerID} from '../types/enums/ContainerID.js';
+import {ServiceID} from '../types/enums/ServiceID.js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
 import {ComponentID} from '../types/enums/ComponentID.js';
@@ -131,7 +131,7 @@ export function debugHero(hero: GameObject) {
 
     debugLevelComponent(hero.getComponentByName<LevelRange>(LevelRange.name));
 
-    let healthPointsComponent: HealthPointsComponent = <HealthPointsComponent>hero.getComponentByName(ComponentID.HealthPoints);
+    let healthPointsComponent: HealthPoints = <HealthPoints>hero.getComponentByName(ComponentID.HealthPoints);
     debug(DebugNamespaceID.Debug)('%j', {
         component: ComponentID.HealthPoints,
         _id: healthPointsComponent['_id'],
@@ -183,7 +183,7 @@ export function debugHero(hero: GameObject) {
 
 export function debugHeroes(container: ContainerInterface) {
     debug(DebugNamespaceID.Debug)('# heroes');
-    container.get<GameObjectStorage>(ContainerID.GameObjectStorage)
+    container.get<GameObjectStorage>(ServiceID.GameObjectStorage)
         .findByTag('#hero')
         .map((wallet) => {
             debugHero(wallet);
@@ -288,7 +288,7 @@ export function debugWallet(wallet: GameObject) {
 
 export function debugWallets(container: ContainerInterface) {
     debug(DebugNamespaceID.Debug)('# wallets');
-    container.get<GameObjectStorage>(ContainerID.GameObjectStorage)
+    container.get<GameObjectStorage>(ServiceID.GameObjectStorage)
         .findByTag('#wallet')
         .map((wallet) => {
             debugWallet(wallet);
@@ -315,7 +315,7 @@ export function debugContainer(container: ContainerInterface) {
 }
 
 export function debugPlayerGameObject(container: ContainerInterface) {
-    let playerGameObject = container.get<GameObjectStorage>(ContainerID.GameObjectStorage).getOneByTag('#player');
+    let playerGameObject = container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByTag('#player');
     debug(DebugNamespaceID.Debug)('# player');
     debugGameObject(playerGameObject);
     debugLevelComponent(playerGameObject.getComponentByName(LevelRange.name));

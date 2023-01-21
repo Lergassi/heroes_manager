@@ -3,15 +3,21 @@ import EnemyEntity from '../Entities/EnemyEntity.js';
 import {unsigned} from '../../types/main.js';
 import {EnemyID} from '../../types/enums/EnemyID.js';
 
-export default class EnemyComponent {
+//Остальные данные пока не нужны.
+export interface EnemyComponentRender {
+    updateType(name: string): void;
+}
+
+export default class Enemy {
     private readonly _enemyEntity: EnemyEntity;
-    private readonly _level: unsigned;
 
     constructor(
         enemyEntity: EnemyEntity,
-        level: unsigned,
     ) {
         this._enemyEntity = enemyEntity;
-        this._level = level;
+    }
+
+    renderByRequest(ui: EnemyComponentRender): void {
+        ui.updateType(this._enemyEntity.id);
     }
 }

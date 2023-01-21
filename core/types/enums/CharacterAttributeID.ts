@@ -21,4 +21,7 @@ export enum CharacterAttributeID {
 
     //прочее
     Luck = 'Luck',
+
+    //todo: Пока тут.
+    // ItemLevel = 'ItemLevel',
 }

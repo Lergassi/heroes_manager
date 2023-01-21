@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import debug from 'debug';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import ItemStorageInterface, {ItemStorageInterfaceRender} from '../Interfaces/ItemStorageInterface.js';
 import Item from '../Entities/Item.js';
 import {unsigned} from '../../types/main.js';
 import {ItemID} from '../../types/enums/ItemID.js';
@@ -11,7 +11,7 @@ import {assertIsGreaterThanOrEqual} from '../../source/assert.js';
  * @deprecated Неудачное решение.
  */
 export default class EndlessItemStorage implements ItemStorageInterface {
-    addItem(item: Item, count: unsigned): unsigned {
+    addItem(item: Item | ItemID, count: unsigned): unsigned {
         assertIsGreaterThanOrEqual(count, 0);
 
         return 0;
@@ -33,5 +33,9 @@ export default class EndlessItemStorage implements ItemStorageInterface {
 
     canAddItem(item: Item, count: number): number {
         return count;
+    }
+
+    renderByRequest(ui: ItemStorageInterfaceRender): void {
+        throw AppError.notImplements();
     }
 }

@@ -4,7 +4,7 @@ import debug from 'debug';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 
 export interface GameConsoleProps {
     container: ContainerInterface;
@@ -119,7 +119,7 @@ export default class GameConsoleRComponent extends React.Component<any, any>{
                 // debug('log:game_console')(resultUrl);
                 debug(DebugNamespaceID.GameConsole)(resultUrl);
 
-                await this._container.get<GameConsole>(ContainerID.GameConsole).runByQuery(commandString);
+                await this._container.get<GameConsole>(ServiceID.GameConsole).runByQuery(commandString);
 
                 // fetch(resultUrl)
                 //     .then((response) => {

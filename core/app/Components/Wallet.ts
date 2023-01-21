@@ -4,7 +4,7 @@ import {unsigned} from '../../types/main.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../source/assert.js';
-import WalletInterface from '../Interfaces/WalletInterface.js';
+import WalletInterface, {WalletInterfaceRender} from '../Interfaces/WalletInterface.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
@@ -86,5 +86,9 @@ export default class Wallet implements WalletInterface {
 
     view(callback) {
         callback(this._value);
+    }
+
+    renderByRequest(ui: WalletInterfaceRender): void {
+        ui.updateValue(this._value);
     }
 }

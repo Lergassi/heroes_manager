@@ -52,7 +52,7 @@ export default class ItemStorageRComponent extends React.Component<ItemStorageRC
         let itemStorage = this.state.itemStorage;
 
         let itemStorageSlotsTableRows = [];
-        itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent).render((options) => {
+        itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorage).render((options) => {
             _.map(options.slots, (itemStorageSlotComponent, index) => {
                 itemStorageSlotsTableRows.push((<ItemStorageSlotRComponent
                     key={index}

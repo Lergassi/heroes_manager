@@ -1,10 +1,10 @@
 import React from 'react';
-import MainHeroListComponent, {
+import MainHeroList, {
     MainHeroListComponentEventCode
-} from '../../../core/app/Components/MainHeroListComponent.js';
+} from '../../../core/app/Components/MainHeroList.js';
 import EquipSlotComponent from '../../../core/app/Components/EquipSlotComponent.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
-import ExperienceComponent from '../../../core/app/Components/ExperienceComponent.js';
+import Experience from '../../../core/app/Components/Experience.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
 import GameObject from '../../../core/source/GameObject.js';
@@ -15,15 +15,15 @@ import MainHeroTableRowRComponent from './MainHeroTableRowRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import HeroDetailRComponent from './HeroDetailRComponent.js';
 import {CommandID} from '../../../core/types/enums/CommandID.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 
 interface HeroListRComponentProps {
     container: ContainerInterface;
-    heroListComponent: MainHeroListComponent;
+    heroListComponent: MainHeroList;
 }
 
 interface HeroListRComponentState {
-    heroListComponent: MainHeroListComponent;
+    heroListComponent: MainHeroList;
     selectedHero: GameObject;
 }
 
@@ -75,21 +75,22 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
     }
 
     async deleteHero(hero: GameObject) {
-        await this._container.get<GameConsole>(ContainerID.GameConsole).run(CommandID.delete_hero, [hero.ID.toString()]);
+        await this._container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.delete_hero, [hero.ID.toString()]);
     }
 
     render() {
-        let heroList = this.state.heroListComponent.heroes.map((hero, index) => {
-            return (
-                <MainHeroTableRowRComponent
-                    key={hero.ID}
-                    container={this._container}
-                    hero={hero}
-                    selectHero={this._selectHero}
-                    deleteHero={this.deleteHero}
-                />
-            );
-        });
+        // let heroList = this.state.heroListComponent.heroes.map((hero, index) => {
+        //     return (
+        //         <MainHeroTableRowRComponent
+        //             key={hero.ID}
+        //             container={this._container}
+        //             hero={hero}
+        //             selectHero={this._selectHero}
+        //             deleteHero={this.deleteHero}
+        //         />
+        //     );
+        // });
+        let heroList = undefined;
 
         return (
             <div className={'block'}>

@@ -63,9 +63,9 @@ export default class EquipSlotRComponent extends React.Component<EquipSlotRCompo
         let equipSlotComponent = this.props.equipSlotComponent;
         // console.log(equipSlotComponent);
         let r;
-        equipSlotComponent.render((values) => {
-            r = (<span>{values.item ? values.item.name : 'Пусто'}</span>);
-        });
+        // equipSlotComponent.render((values) => {
+        //     r = (<span>{values.item ? values.item.name : 'Пусто'}</span>);
+        // });
         return (
             <tr>
                 {/*<td>{equipSlotComponent['_id']}</td>*/}

@@ -11,7 +11,7 @@ import EntityManagerBuilder from '../../core/app/Services/EntityManagerBuilder.j
 import Container from '../../core/source/Container.js';
 import EntityManager from '../../core/source/EntityManager.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 // import data from '../../core/data/items.csv';
 
 export default class LoadItemDatabaseController extends AbstractSandboxController {
@@ -38,11 +38,10 @@ export default class LoadItemDatabaseController extends AbstractSandboxControlle
         // let container = new Container();
         let container = this.container;
         // let entityManager = new EntityManager();
-        let entityManager = this.container.get<EntityManagerInterface>(ContainerID.EntityManager);
+        let entityManager = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         // let entityManagerBuilder = new EntityManagerBuilder(container, entityManager);
         // entityManagerBuilder.build();
-        console.log(entityManager);
 
         // let itemDatabaseBuilder = new ItemDatabaseBuilder(new );
 

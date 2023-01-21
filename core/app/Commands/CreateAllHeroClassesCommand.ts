@@ -1,9 +1,9 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import {ContainerID} from '../../types/enums/ContainerID.js';
+import {ServiceID} from '../../types/enums/ServiceID.js';
 import HeroFactory from '../Factories/HeroFactory.js';
-import MainHeroListComponent from '../Components/MainHeroListComponent.js';
+import MainHeroList from '../Components/MainHeroList.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 
 export default class CreateAllHeroClassesCommand extends Command {
@@ -44,8 +44,8 @@ export default class CreateAllHeroClassesCommand extends Command {
             HeroClassID.Support3,
         ];
 
-        let heroFactory = this.container.get<HeroFactory>(ContainerID.HeroFactory);
-        let mainHeroList = this.container.get<MainHeroListComponent>(ContainerID.MainHeroList);
+        let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
+        let mainHeroList = this.container.get<MainHeroList>(ServiceID.MainHeroList);
 
         for (let i = 0; i < heroClasses.length; i++) {
             mainHeroList.createHero(

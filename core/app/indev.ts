@@ -3,7 +3,7 @@ import Item from './Entities/Item.js';
 import _ from 'lodash';
 import EntityManagerInterface from './Interfaces/EntityManagerInterface.js';
 import GameObject from '../source/GameObject.js';
-import HealthPointsComponent from './Components/HealthPointsComponent.js';
+import HealthPoints from './Components/HealthPoints.js';
 import {ComponentID} from '../types/enums/ComponentID.js';
 
 export function extractItems_dev(entityManager: EntityManagerInterface) {
@@ -12,9 +12,9 @@ export function extractItems_dev(entityManager: EntityManagerInterface) {
 
 export function extractHealthPoints(characters: GameObject[]) {
     return _.map(characters, (character) => {
-        let healthPoints = character.get<HealthPointsComponent>(ComponentID.HealthPoints);
+        let healthPoints = character.get<HealthPoints>(ComponentID.HealthPoints);
 
-        return healthPoints ? (healthPoints.isDead() ? 'Dead' : healthPoints['_currentHealthPoints']) : undefined;
+        return healthPoints ? (healthPoints.isDead ? 'Dead' : healthPoints['_currentHealthPoints']) : undefined;
     })
 }
 

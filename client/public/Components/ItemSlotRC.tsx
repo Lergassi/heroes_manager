@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import Item from '../../../core/app/Entities/Item.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemDatabase from '../../../core/source/ItemDatabase.js';
-import {ContainerID} from '../../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {IconID} from '../../../core/types/enums/IconID.js';
 
 export interface ItemSlotRCProps {

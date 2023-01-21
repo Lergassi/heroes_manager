@@ -7,21 +7,20 @@ import DefaultContainerConfigure from '../../core/app/Services/ContainerConfigur
 import ClientContainerConfigure from '../app/ClientContainerConfigure.js';
 import CoreContainerConfigure from '../../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
-import ItemStorageRC from './Components/ItemStorageRC.js';
+import ItemStorageRC_Legacy from './Components/ItemStorageRC_Legacy.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
-import {ContainerID} from '../../core/types/enums/ContainerID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
-import MainHeroListRC from './Components/MainHeroListRC.js';
+import MainHeroListRC_Legacy from './Components/MainHeroListRC_Legacy.js';
 import LeftSidebarRC from './Components/LeftSidebarRC.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import Icon from '../../core/app/Entities/Icon.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import {IconID} from '../../core/types/enums/IconID.js';
 import LoremRC from './Components/LoremRC.js';
-import LocationRC from './Components/LocationRC.js';
 import Buttons from './UI/Buttons.js';
 
 export default class Theme {
@@ -39,9 +38,10 @@ export default class Theme {
         this._container = container;
 
         //@dev
-        window['_container'] = this._container;
-        window['_clientRender'] = this;
-        window['_sandbox'] = {};
+        window['app'] = {};
+        window['container'] = this._container;
+        window['clientRender'] = this;
+        window['sandbox'] = {};
         // window['_sandbox']['ui'] = {};
     }
 
@@ -57,7 +57,7 @@ export default class Theme {
 
     private _devLayout() {
         let menuItems = [
-            {name: 'Главная', icon: this._container.get<EntityManagerInterface>(ContainerID.EntityManager).get<Icon>(EntityID.Icon, IconID.Shield01),},
+            {name: 'Главная', icon: this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Icon>(EntityID.Icon, IconID.Shield01),},
             {name: 'Инвентарь', icon: '',},
             {name: 'Таверна', icon: '',},
             {name: 'Герои', icon: '',},
@@ -94,7 +94,7 @@ export default class Theme {
                                 Хранилище
                             </div>
                             <div className={'widget__content'}>
-                                <ItemStorageRC
+                                <ItemStorageRC_Legacy
                                     size={20}
                                     columns={4}
                                 />
@@ -112,46 +112,46 @@ export default class Theme {
                             </div>
                         </div>
 
-                        <div className={'widget'}>
-                            <div className={'widget__title'}>
-                                Локация
-                            </div>
-                            <div className={'widget__content'}>
-                                <LocationRC
+                        {/*<div className={'widget'}>*/}
+                        {/*    <div className={'widget__title'}>*/}
+                        {/*        Локация*/}
+                        {/*    </div>*/}
+                        {/*    <div className={'widget__content'}>*/}
+                        {/*        <LocationRC*/}
 
-                                />
-                            </div>
-                        </div>
-                        <div className={'widget'}>
-                            <div className={'widget__title'}>
-                                Локация
-                            </div>
-                            <div className={'widget__content'}>
-                                <LocationRC
+                        {/*        />*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        {/*<div className={'widget'}>*/}
+                        {/*    <div className={'widget__title'}>*/}
+                        {/*        Локация*/}
+                        {/*    </div>*/}
+                        {/*    <div className={'widget__content'}>*/}
+                        {/*        <LocationRC*/}
 
-                                />
-                            </div>
-                        </div>
-                        <div className={'widget'}>
-                            <div className={'widget__title'}>
-                                Локация
-                            </div>
-                            <div className={'widget__content'}>
-                                <LocationRC
+                        {/*        />*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        {/*<div className={'widget'}>*/}
+                        {/*    <div className={'widget__title'}>*/}
+                        {/*        Локация*/}
+                        {/*    </div>*/}
+                        {/*    <div className={'widget__content'}>*/}
+                        {/*        <LocationRC*/}
 
-                                />
-                            </div>
-                        </div>
-                        <div className={'widget'}>
-                            <div className={'widget__title'}>
-                                Локация
-                            </div>
-                            <div className={'widget__content'}>
-                                <LocationRC
+                        {/*        />*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        {/*<div className={'widget'}>*/}
+                        {/*    <div className={'widget__title'}>*/}
+                        {/*        Локация*/}
+                        {/*    </div>*/}
+                        {/*    <div className={'widget__content'}>*/}
+                        {/*        <LocationRC*/}
 
-                                />
-                            </div>
-                        </div>
+                        {/*        />*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>{/*content*/}
                 </div>{/*container*/}
             </div>

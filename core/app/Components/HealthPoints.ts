@@ -20,12 +20,35 @@ export enum HealthPointsComponentEventCode {
     Resurrect = 'HealthPointsComponent.Resurrect',
 }
 
-export default class HealthPointsComponent implements DamageControllerInterface {
+export interface HealthPointsRender {
+    updateHealthPoints(currentHealthPoints: number, maxHealthPoints: number): void;
+    updateDeadState(isDead: boolean): void;
+}
+
+export default class HealthPoints implements DamageControllerInterface {
     private _currentHealthPoints: unsigned;
     private readonly _maxHealthPoints: CharacterAttributeInterface;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
     private readonly _stateController: CharacterStateController;
     private readonly _afterDiedCallback: Function;
+
+    get currentHealthPoints(): unsigned {
+        return this._currentHealthPoints;
+    }
+
+    get maxHealthPoints(): CharacterAttributeInterface {
+        return this._maxHealthPoints;
+    }
+
+    get isDead(): boolean {
+        return this._isDead;
+    }
+
+    get flawHealthPoints(): number {
+        let flawHealthPoints = this._maxHealthPoints.finalValue - this.currentHealthPoints;
+
+        return flawHealthPoints >= 0 ? flawHealthPoints : 0;
+    }
 
     constructor(
         maxHealthPoints: CharacterAttributeInterface,
@@ -38,7 +61,7 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         // this._maxHealthPoints = maxHealthPoints;
         // this._currentHealthPoints = maxHealthPoints;
         this._maxHealthPoints = maxHealthPoints;
-        this._currentHealthPoints = maxHealthPoints.value();
+        this._currentHealthPoints = maxHealthPoints.finalValue;
         this._isDead = false;
         this._stateController = stateController;
         this._afterDiedCallback = afterDiedCallback;
@@ -50,13 +73,13 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         //todo: Округление. Выбрать место.
 
         if (this._stateController.hasState(CharacterStateCode.Dead)) {
-            debug(DebugNamespaceID.Throw)('asdadasd');
+            debug(DebugNamespaceID.Throw)('Нельзя нанести урон.');
             return;
         }
 
         let healthPoints = this._currentHealthPoints - damage;
         this._currentHealthPoints = healthPoints <= 0 ? 0 : healthPoints;
-        debug(DebugNamespaceID.Log)(sprintf('Получено урона: %s (%s/%s)', damage, this._currentHealthPoints, this._maxHealthPoints.value()));
+        debug(DebugNamespaceID.Log)(sprintf('Получено урона: %s (%s/%s)', damage, this._currentHealthPoints, this._maxHealthPoints.finalValue));
         EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
         if (this._currentHealthPoints <= 0) {
             this.kill(enemyRewardOptions);
@@ -103,22 +126,52 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         return !this._stateController.hasState(CharacterStateCode.Dead);
     }
 
-    resurrect(): void {
+    canHeal(): boolean {
+        return !this._stateController.hasState(CharacterStateCode.Dead);
+    }
+
+    /**
+     *
+     * @param value
+     * @return Кол-во восстановленного здоровья.
+     */
+    heal(value: number): number {
+        if (!this.canHeal()) {
+            debug(DebugNamespaceID.Throw)('Персонаж не может получить лечение.');
+            return 0;
+        }
+
+        let flawHealthPoints = this.flawHealthPoints;
+        let recoveryHealthPoints;
+        if (value <= flawHealthPoints) {
+            this._currentHealthPoints += value;
+            recoveryHealthPoints = value;
+        } else {
+            this._currentHealthPoints = this._maxHealthPoints.finalValue;
+            recoveryHealthPoints = flawHealthPoints
+        }
+        debug(DebugNamespaceID.Log)(sprintf('Персонаж получил лечение %s.', recoveryHealthPoints));
+
+        return recoveryHealthPoints;
+    }
+
+    resurrect(): boolean {
         // if (!this._isDead) {
         //     throw AppError.isNotDead();
         // }
-        assertAction(this._stateController.hasState(CharacterStateCode.Dead));
-        // if (this._stateController.hasState(CharacterStateCode.Dead)) {
-        //     debug(DebugNamespaceID.Throw)('Персонаж мертвый.');
-        //     return;
-        // }
+        // assertAction(this._stateController.hasState(CharacterStateCode.Dead));
+        if (this._stateController.hasState(CharacterStateCode.Dead)) {
+            debug(DebugNamespaceID.Throw)('Персонаж мертвый.');
+            return false;
+        }
 
-        this._currentHealthPoints = this._maxHealthPoints.value();
+        this._currentHealthPoints = this._maxHealthPoints.finalValue;
         this._isDead = false;
-        // this._stateController.removeState();
         this._stateController.removeState(CharacterStateCode.Dead);
         debug(DebugNamespaceID.Log)('Персонаж воскрес.');
         EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
+
+        return true;
     }
 
     private _canModify(): void {
@@ -133,16 +186,12 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         return !this._stateController.hasState(CharacterStateCode.Dead);
     }
 
-    isDead(): boolean {
-        return this._isDead;
-    }
-
     _handlers: {
-        updateHandler: (target: HealthPointsComponent, currentHealthPoints, maxHealthPoints) => void,
+        updateHandler: (target: HealthPoints, currentHealthPoints, maxHealthPoints) => void,
     }[] = [];
 
     attach(handlers: {
-        updateHandler: (target: HealthPointsComponent, currentHealthPoints, maxHealthPoints) => void,
+        updateHandler: (target: HealthPoints, currentHealthPoints, maxHealthPoints) => void,
     }) {
         this._handlers.push(handlers);
     }
@@ -172,5 +221,10 @@ export default class HealthPointsComponent implements DamageControllerInterface 
         //     }),
         //     isDead: this._isDead,
         // });
+    }
+
+    renderByRequest(ui: HealthPointsRender): void {
+        ui.updateHealthPoints(this._currentHealthPoints, this._maxHealthPoints.finalValue);
+        ui.updateDeadState(this.isDead);
     }
 }

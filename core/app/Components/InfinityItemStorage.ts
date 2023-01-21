@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import debug from 'debug';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import {EntityID} from '../../types/enums/EntityID.js';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import ItemStorageInterface, {ItemStorageInterfaceRender} from '../Interfaces/ItemStorageInterface.js';
 import ItemStackController from './ItemStackController.js';
 import InfinityItemStackController from './InfinityItemStackController.js';
 import Item from '../Entities/Item.js';
@@ -13,12 +15,16 @@ import AppError from '../../source/Errors/AppError.js';
  */
 export default class InfinityItemStorage implements ItemStorageInterface {
     private _items: Partial<{[ID in ItemID]: InfinityItemStackController}>;
+    private readonly _entityManager: EntityManagerInterface;
 
-    constructor() {
+    constructor(entityManager: EntityManagerInterface) {
+        this._entityManager = entityManager;
         this._items = {};
     }
 
-    addItem(item: Item, count: unsigned): unsigned {
+    addItem(item: Item | ItemID, count: unsigned): unsigned {
+        item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
+
         if (!this.containItem(<ItemID>item.id)) {
             this._items[<ItemID>item.id] = new InfinityItemStackController();
         }
@@ -50,5 +56,9 @@ export default class InfinityItemStorage implements ItemStorageInterface {
 
     canAddItem(item: Item, count: number): number {
         return 0;
+    }
+
+    renderByRequest(ui: ItemStorageInterfaceRender): void {
+        throw AppError.notImplements();
     }
 }
