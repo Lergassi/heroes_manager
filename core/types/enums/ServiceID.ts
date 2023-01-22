@@ -50,7 +50,7 @@ export enum ServiceID {
 
     //ui
     UI_Game = 'core.ui.game',
-    UI_Controller = 'core.ui.Controller',
+    UI_Updater = 'core.ui.Updater',
 
     //React components
     UI_Wallet = 'player.ui.Wallet',

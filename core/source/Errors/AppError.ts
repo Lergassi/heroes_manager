@@ -118,4 +118,8 @@ export default class AppError extends Error {
     static notImplements() {
         return new AppError('Метод еще не реализован.');
     }
+
+    static legacy() {
+        return new AppError('legacy');
+    }
 }

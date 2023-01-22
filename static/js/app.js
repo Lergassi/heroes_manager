@@ -8,7 +8,8 @@ requirejs.config({
 
 require(
     [
-        'client.bundle',
+        // 'client.bundle',
+        'game.bundle',
     ],
     function(
         clientBundle,

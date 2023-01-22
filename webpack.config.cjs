@@ -18,11 +18,13 @@ module.exports = {
     //     sandbox: './client/sandbox.js',
     // },
     entry: {
-        dev: './dist/client/dev.js',
-        sandbox: './dist/client/sandbox.js',
-        client: './dist/client/index.js',
+        // dev: './dist/client/dev.js',
+        // client: './dist/client/index.js',
+        game: './dist/client/game.js',
+        // sandbox: './dist/client/sandbox.js', //Тут был client.bundle, который ушел в game. Песочницы не было.
+        sandbox_dev: './dist/client/sandbox_dev.js',
         //ui
-        theme: './dist/client/theme.js',
+        // theme: './dist/client/theme.js',
         sandbox_ui: './dist/client/sandbox_ui.js',
     },
     output: {

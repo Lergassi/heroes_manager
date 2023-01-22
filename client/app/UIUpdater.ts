@@ -16,7 +16,7 @@ enum UIState {
     Run = 'Run',
 }
 
-export default class UIController {
+export default class UIUpdater {
     private _state: UIState;
 
     private readonly _container: ContainerInterface;
@@ -45,7 +45,7 @@ export default class UIController {
         }, this._updateIntervalDelay)
 
         this._state = UIState.Run;
-        debug(DebugNamespaceID.Log)('UI update запущен.');
+        debug(DebugNamespaceID.Log)('UIUpdater запущен.');
     }
 
     stop(): void {

@@ -1,5 +1,5 @@
 import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
-import UIController from '../app/UIController.js';
+import UIUpdater from '../app/UIUpdater.js';
 import GameConsoleRComponent from './_React/GameConsoleRComponent.js';
 import ReactDOM from 'react-dom/client';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
@@ -65,7 +65,7 @@ export default class GameUI {
         let gameRoot = ReactDOM.createRoot(gameDomContainer);
         this._renderGameUI(gameRoot);
 
-        this._container.get<UIController>(ServiceID.UI_Controller).run();
+        this._container.get<UIUpdater>(ServiceID.UI_Updater).run();
     }
 
     private _renderPreGameUI(root) {
