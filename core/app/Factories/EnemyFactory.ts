@@ -8,7 +8,6 @@ import {EntityID} from '../../types/enums/EntityID.js';
 import {unsigned} from '../../types/main.js';
 import AttackController from '../Components/AttackController.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import CharacterStateController from '../Components/CharacterStateController.js';
 import Enemy from '../Components/Enemy.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
@@ -16,6 +15,7 @@ import HealthPoints from '../Components/HealthPoints.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
 import Level from '../Components/Level.js';
+import LifeStateController from '../Components/LifeStateController.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
@@ -62,7 +62,7 @@ export default class EnemyFactory {
         enemy.name = 'Enemy: ' + enemyID;
         enemy.addTags('#enemy');
 
-        let stateController = new CharacterStateController();
+        let stateController = new LifeStateController();
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
 

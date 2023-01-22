@@ -60,7 +60,7 @@ import LeftHand from '../core/app/Components/EquipSlots/LeftHand.js';
 import FightController from '../core/app/Components/FightController.js';
 import AttackController from '../core/app/Components/AttackController.js';
 import AttackControllerInterface from '../core/app/Interfaces/AttackControllerInterface.js';
-import CharacterStateController from '../core/app/Components/CharacterStateController.js';
+import HeroActivityStateController from '../core/app/Components/HeroActivityStateController.js';
 import MainItemStorageListComponent from '../core/app/Components/MainItemStorageListComponent.js';
 import ItemStorageUnion from '../core/app/Components/ItemStorageUnion.js';
 import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
@@ -888,7 +888,7 @@ export default class _SandboxController {
                     new ItemCharacterAttributeCollector(),
                     0,
                 ),
-                new CharacterStateController(),
+                new HeroActivityStateController(),
             ),
             protection,
         );
@@ -1066,7 +1066,7 @@ export default class _SandboxController {
         let healthPoints: DamageControllerInterface = new HealthPoints(
         // let healthPoints = new HealthPointsComponent(
             maxHealthPoints,
-            new CharacterStateController(),
+            new HeroActivityStateController(),
         );
 
         let protection = new CharacterAttribute(

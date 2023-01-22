@@ -1,3 +1,4 @@
+import LifeStateController from '../core/app/Components/LifeStateController.js';
 import ContainerInterface from '../core/source/ContainerInterface.js';
 import Container from '../core/source/Container.js';
 import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
@@ -35,7 +36,7 @@ import HealthPoints from '../core/app/Components/HealthPoints.js';
 import {extractHealthPoints, separator} from '../core/app/indev.js';
 import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
-import CharacterStateController, {CharacterStateCode} from '../core/app/Components/CharacterStateController.js';
+import HeroActivityStateController, {CharacterActivityStateCode} from '../core/app/Components/HeroActivityStateController.js';
 import CharacterFightGroup from '../core/app/Components/CharacterFightGroup.js';
 import {CurrencyID} from '../core/types/enums/CurrencyID.js';
 import WalletFactory from '../core/app/Factories/WalletFactory.js';
@@ -642,7 +643,8 @@ export default class SandboxController {
     private _devStateSystemV2() {
         let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
 
-        let stateController1 = new CharacterStateController();
+        // let stateController1 = new HeroActivityStateController();
+        let stateController1 = new LifeStateController();
         // stateController1.addState('state1');
         // stateController1.addState('state2');
         // stateController1.addState('state3');
@@ -669,7 +671,7 @@ export default class SandboxController {
         );
         let healthPoints2 = new HealthPoints(
             new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, new ItemCharacterAttributeCollector(), 100),
-            new CharacterStateController(),
+            new LifeStateController(),
         );
         // console.log(1);
         healthPoints1.kill();
@@ -682,7 +684,7 @@ export default class SandboxController {
         healthPoints2.kill();
         healthPoints2.kill();
         // console.log(4);
-        console.log(stateController1.hasState(CharacterStateCode.Dead));
+        // console.log(stateController1.hasState(CharacterActivityStateCode.LifeState_Dead));
         console.log(healthPoints1);
         console.log(stateController1);
     }
@@ -740,7 +742,7 @@ export default class SandboxController {
         let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 32);
         // let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 1);
 
-        let stateController = new CharacterStateController();
+        let stateController = new LifeStateController();
         // stateController.addState(CharacterStateCode.Dead);
         // let gatherer = new Gatherer(stateController, itemStorageManager);
         let gatherer = new Gatherer(stateController, itemStorage);

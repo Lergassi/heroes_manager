@@ -14,7 +14,7 @@ import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.
 import EquipSlotInterface from '../../../core/app/Interfaces/EquipSlotInterface.js';
 import CharacterAttributeInterface from '../../../core/app/Decorators/CharacterAttributeInterface.js';
 import _ from 'lodash';
-import CharacterStateController from '../../../core/app/Components/CharacterStateController.js';
+import HeroActivityStateController from '../../../core/app/Components/HeroActivityStateController.js';
 import {UI_ItemCount} from '../../../core/types/main.js';
 
 export interface DetailHeroRCProps {

@@ -1,18 +1,15 @@
 import debug from 'debug';
-import EventSystem from '../../source/EventSystem.js';
-import {unsigned} from '../../types/main.js';
-import AppError from '../../source/Errors/AppError.js';
-import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import {assertNotNil, assertIsPositive, assert, assertAction} from '../../source/assert.js';
-import ArmorDecorator from './CharacterAttributes/ArmorDecorator.js';
-import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
-import CharacterIsDeadError from '../../source/Errors/CharacterIsDeadError.js';
-import CharacterStateController, {CharacterStateCode} from './CharacterStateController.js';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
+import {sprintf} from 'sprintf-js';
+import {assertAction, assertIsPositive, assertNotNil} from '../../source/assert.js';
+import EventSystem from '../../source/EventSystem.js';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {unsigned} from '../../types/main.js';
+import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
+import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
-import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
+import {CharacterActivityStateCode} from './HeroActivityStateController.js';
+import LifeStateController, {CharacterLifeStateCode} from './LifeStateController.js';
 
 export enum HealthPointsComponentEventCode {
     TakeDamage = 'HealthPointsComponent.TakeDamage',
@@ -29,7 +26,7 @@ export default class HealthPoints implements DamageControllerInterface {
     private _currentHealthPoints: unsigned;
     private readonly _maxHealthPoints: CharacterAttributeInterface;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
-    private readonly _stateController: CharacterStateController;
+    private readonly _lifeStateController: LifeStateController;
     private readonly _afterDiedCallback: Function;
 
     get currentHealthPoints(): unsigned {
@@ -52,7 +49,7 @@ export default class HealthPoints implements DamageControllerInterface {
 
     constructor(
         maxHealthPoints: CharacterAttributeInterface,
-        stateController: CharacterStateController,
+        stateController: LifeStateController,
         afterDiedCallback?: Function,
     ) {
         assertNotNil(maxHealthPoints);
@@ -63,7 +60,7 @@ export default class HealthPoints implements DamageControllerInterface {
         this._maxHealthPoints = maxHealthPoints;
         this._currentHealthPoints = maxHealthPoints.finalValue;
         this._isDead = false;
-        this._stateController = stateController;
+        this._lifeStateController = stateController;
         this._afterDiedCallback = afterDiedCallback;
     }
 
@@ -72,7 +69,7 @@ export default class HealthPoints implements DamageControllerInterface {
         damage = _.floor(damage, 0);
         //todo: Округление. Выбрать место.
 
-        if (this._stateController.hasState(CharacterStateCode.Dead)) {
+        if (!this._lifeStateController.canAction()) {
             debug(DebugNamespaceID.Throw)('Нельзя нанести урон.');
             return;
         }
@@ -102,8 +99,8 @@ export default class HealthPoints implements DamageControllerInterface {
         this._currentHealthPoints = 0;
         this._isDead = true;
         debug(DebugNamespaceID.Log)('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
-        // this._stateController.state('Dead', 'State message: Персонаж мертвый.');
-        this._stateController.addState(CharacterStateCode.Dead);
+        // this._lifeStateController.state('Dead', 'State message: Персонаж мертвый.');
+        this._lifeStateController.setState(CharacterLifeStateCode.Dead);
         EventSystem.event(HealthPointsComponentEventCode.Died, this);
         if (this._afterDiedCallback && enemyRewardOptions) {
             this._afterDiedCallback(enemyRewardOptions);
@@ -120,11 +117,11 @@ export default class HealthPoints implements DamageControllerInterface {
     }
 
     canKill(): boolean {
-        return !this._stateController.hasState(CharacterStateCode.Dead);
+        return this._lifeStateController.canAction();
     }
 
     canHeal(): boolean {
-        return !this._stateController.hasState(CharacterStateCode.Dead);
+        return this._lifeStateController.canAction();
     }
 
     /**
@@ -156,15 +153,14 @@ export default class HealthPoints implements DamageControllerInterface {
         // if (!this._isDead) {
         //     throw AppError.isNotDead();
         // }
-        // assertAction(this._stateController.hasState(CharacterStateCode.Dead));
-        if (this._stateController.hasState(CharacterStateCode.Dead)) {
-            debug(DebugNamespaceID.Throw)('Персонаж мертвый.');
+        if (this._lifeStateController.canAction()) {
+            debug(DebugNamespaceID.Throw)('Персонаж живой.');   //todo: Или универсальное сообщение, например "Нельзя совершить подобное действие."
             return false;
         }
 
         this._currentHealthPoints = this._maxHealthPoints.finalValue;
         this._isDead = false;
-        this._stateController.removeState(CharacterStateCode.Dead);
+        this._lifeStateController.setState(CharacterLifeStateCode.Life);
         debug(DebugNamespaceID.Log)('Персонаж воскрес.');
         EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
 
@@ -172,7 +168,7 @@ export default class HealthPoints implements DamageControllerInterface {
     }
 
     canTakeDamage(): boolean {
-        return !this._stateController.hasState(CharacterStateCode.Dead);
+        return this._lifeStateController.canAction();
     }
 
     renderByRequest(ui: HealthPointsRender): void {
@@ -180,11 +176,11 @@ export default class HealthPoints implements DamageControllerInterface {
         ui.updateDeadState?.(this.isDead);
     }
 
-    private _canModify(): void {
-        // if (this._isDead) {
-        //     // throw AppError.isDead();
-        //     throw new CharacterIsDeadError();
-        // }
-        assertAction(!this._stateController.hasState(CharacterStateCode.Dead));
-    }
+    // private _canModify(): void {
+    //     // if (this._isDead) {
+    //     //     // throw AppError.isDead();
+    //     //     throw new CharacterIsDeadError();
+    //     // }
+    //     assertAction(this._lifeStateController.canAction());
+    // }
 }

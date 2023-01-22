@@ -60,10 +60,4 @@ export default class AttackGroupController implements AttackControllerInterface 
 
         return true;
     }
-
-    view(callback: (data: {
-        value: {left: number; right: number},
-    }) => void) {
-        throw AppError.notImplements();
-    }
 }

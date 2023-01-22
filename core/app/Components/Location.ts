@@ -2,8 +2,7 @@ import debug from 'debug';
 import _ from 'lodash';
 import {
     DetailLocationRCEnemyElement,
-    DetailLocationRCHeroElement,
-    DetailLocationRCVeinElement
+    DetailLocationRCHeroElement
 } from '../../../client/public/Components/DetailLocationRC.js';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
@@ -12,7 +11,7 @@ import GameObject from '../../source/GameObject.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {ItemCount, Seconds, UI_ItemCount, UI_VeinItemCount, unsigned} from '../../types/main.js';
+import {Seconds, UI_ItemCount, UI_VeinItemCount, unsigned} from '../../types/main.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import Item from '../Entities/Item.js';
@@ -28,8 +27,8 @@ import Experience from './Experience.js';
 import Gatherer from './Gatherer.js';
 import GatheringPoint from './GatheringPoint.js';
 import HealthPoints from './HealthPoints.js';
+import HeroActivityStateController, {CharacterActivityStateCode} from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
-import ItemStorageComponent from './ItemStorageComponent.js';
 
 export enum LocationState {
     Waiting = 'Waiting',
@@ -165,6 +164,7 @@ export default class Location {
         this._intervalID = setInterval(() => {
             this._gather();
 
+            console.log(this._heroFightGroup.canAttack() && this._enemyFightGroup.canAttack());
             if (this._heroFightGroup.canAttack() && this._enemyFightGroup.canAttack()) {
                 this._heroFightGroup.attackTo(this._enemyFightGroup, afterTargetDiedOptions);
                 this._enemyFightGroup.attackTo(this._heroFightGroup);
@@ -238,12 +238,17 @@ export default class Location {
     addHero(hero: GameObject): boolean {
         assertNotNil(hero);
 
-        this._canAddHero(hero);
+        if (!this._canAddHero(hero)) {
+            debug(DebugNamespaceID.Throw)('Нельзя добавить данного героя.');
+            return false;
+        }
 
         if (!this._heroFightGroup.addCharacter(hero)) return false;
 
         this._heroes.push(hero);    //todo: Не будет работать после удаления исключений.
         EventSystem.event(LocationEventCode.AddHero, this);    //todo: Или достаточно события из группы? Может как то связать их? "Цепочка" событыий.
+
+        hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).setState(CharacterActivityStateCode.InLocation);
 
         return true;
     }
@@ -258,12 +263,16 @@ export default class Location {
         this._heroFightGroup.removeCharacter(hero);
         _.pull(this._heroes, hero);
         EventSystem.event(LocationEventCode.RemoveHero, this);
+        hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).free();
     }
 
-    canModify(): void {
+    canModify(): boolean {
         if (this._state !== LocationState.Waiting) {
-            throw new AppError('Нельзя редактировать локацию во время охоты.');
+            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
+            return false;
         }
+
+        return true;
     }
 
     canDelete(): boolean {
@@ -403,12 +412,22 @@ export default class Location {
         });
     }
 
-    private _canAddHero(hero: GameObject): void {
-        this.canModify();
+    private _canAddHero(hero: GameObject): boolean {
+        if (!this.canModify()) return false;
 
+        //todo: Убрать геттер? Так и писать availableLevelForActivity().
         if (hero.getComponent<Experience>(ComponentID.Experience).level < this._level) {
-            throw new AppError('Уровень героя слишком низкий для данной локации.');
+            // throw new AppError('Уровень героя слишком низкий для данной локации.');
+            debug(DebugNamespaceID.Throw)('Уровень героя слишком низкий для данной локации.');
+            return false;
         }
+
+        if (!hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).isFree()) {
+            debug(DebugNamespaceID.Throw)('Персонаж занят.');
+            return false;
+        }
+
+        return true;
     }
 
     private _canRemoveHero(): void {

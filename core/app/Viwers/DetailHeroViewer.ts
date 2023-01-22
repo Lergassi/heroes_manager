@@ -2,7 +2,7 @@ import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import Experience from '../Components/Experience.js';
-import CharacterStateController from '../Components/CharacterStateController.js';
+import HeroActivityStateController from '../Components/HeroActivityStateController.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';

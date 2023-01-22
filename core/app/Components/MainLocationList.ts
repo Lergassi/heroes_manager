@@ -102,12 +102,6 @@ export default class MainLocationList {
     }
 
     renderByRequest(ui: MainLocationListRender): void {
-        // console.log('renderByRequest', this._locations);
-        //в1. Передавать сразу все данные.        // let locations: {id: 42, level: 42, heroes: [], enemies: [], ...}[] = [];
-        // ui.updateLocations(locations);
-        // ui.updatePagination(activePage, totalPages);
-
-        //в2.
         let locations: MainLocationListRCElement[] = [];
         for (let i = 0; i < this._locations.length; i++) {
             let locationData: MainLocationListRCElement = {

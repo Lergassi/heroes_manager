@@ -1,4 +1,5 @@
 import Level from '../Components/Level.js';
+import LifeStateController from '../Components/LifeStateController.js';
 import HeroClass from '../Entities/HeroClass.js';
 import GameObject from '../../source/GameObject.js';
 import HeroComponent from '../Components/HeroComponent.js';
@@ -27,7 +28,7 @@ import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import EquipSlotFactory from './EquipSlotFactory.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
-import CharacterStateController from '../Components/CharacterStateController.js';
+import HeroActivityStateController from '../Components/HeroActivityStateController.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import HeroCharacterAttributeFactory from './HeroCharacterAttributeFactory.js';
@@ -78,7 +79,8 @@ export default class HeroFactory {
         hero.name = 'Hero: ' + heroClass.id;
         hero.addTags('#hero');
 
-        let stateController = hero.set(ComponentID.StateController, new CharacterStateController());
+        let stateController = hero.set(ComponentID.LifeStateController, new LifeStateController());
+        hero.set(ComponentID.ActivityStateController, new HeroActivityStateController());
         hero.set(TakeComponent.name, new TakeComponent());
 
         let heroComponent = hero.set(ComponentID.Hero, new HeroComponent(

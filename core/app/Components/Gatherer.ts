@@ -1,19 +1,20 @@
 import GathererInterface from '../Interfaces/GathererInterface.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {unsigned} from '../../types/main.js';
-import CharacterStateController, {CharacterStateCode} from './CharacterStateController.js';
+import HeroActivityStateController, {CharacterActivityStateCode} from './HeroActivityStateController.js';
 import Item from '../Entities/Item.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import GatheringPoint from './GatheringPoint.js';
+import LifeStateController from './LifeStateController.js';
 
 export default class Gatherer implements GathererInterface {
-    private readonly _stateController: CharacterStateController;
+    private readonly _lifeStateController: LifeStateController;
     private readonly _itemStorage: ItemStorageInterface;
 
-    constructor(stateController: CharacterStateController, itemStorage?: ItemStorageInterface) {
-        this._stateController = stateController;
+    constructor(lifeStateController: LifeStateController, itemStorage?: ItemStorageInterface) {
+        this._lifeStateController = lifeStateController;
         this._itemStorage = itemStorage;
     }
 
@@ -45,8 +46,8 @@ export default class Gatherer implements GathererInterface {
     }
 
     canGather(): boolean {
-        if (this._stateController.hasState(CharacterStateCode.Dead)) {
-            debug(DebugNamespaceID.Throw)('Сбор не возможен. Герой мертвый.');
+        if (!this._lifeStateController.canAction()) {
+            debug(DebugNamespaceID.Throw)('Сбор не возможен.');
             return false;
         }
 

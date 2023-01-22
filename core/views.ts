@@ -5,7 +5,7 @@ import {DebugFormatterID} from './types/enums/DebugFormatterID.js';
 import HeroComponent from './app/Components/HeroComponent.js';
 import {ComponentID} from './types/enums/ComponentID.js';
 import Experience from './app/Components/Experience.js';
-import CharacterStateController from './app/Components/CharacterStateController.js';
+import HeroActivityStateController from './app/Components/HeroActivityStateController.js';
 import {EquipSlotID} from './types/enums/EquipSlotID.js';
 import {CharacterAttributeID} from './types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from './app/Decorators/CharacterAttributeInterface.js';

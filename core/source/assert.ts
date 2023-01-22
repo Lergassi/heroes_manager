@@ -96,3 +96,7 @@ export function assertAction(condition: boolean, message?: string) {
 export function assertIsInteger(value: number, message?: string) {
     assert(_.isInteger(value), 'Значение должно быть целым числом.');
 }
+
+// export function assertIsLength(value: string, message?: string) {
+//     assert(_.isInteger(value), 'Значение должно быть целым числом.');
+// }
