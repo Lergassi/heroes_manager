@@ -1,3 +1,4 @@
+import {assertNotNil} from '../../source/assert.js';
 import HeroGroup from './HeroGroup.js';
 import GameObject from '../../source/GameObject.js';
 import FightController from './FightController.js';
@@ -17,21 +18,18 @@ import {GatheringItemPoint} from './Location.js';
 import HealthPoints from './HealthPoints.js';
 
 export default class CharacterFightGroup {
-    private readonly _heroGroup: HeroGroup;
     private readonly _attackController: AttackGroupController;
     private readonly _damageController: DamageGroupController;
     private readonly _fightController: FightController;
 
-    //todo: Убрать size и группу. Это объект только для группировки урона и группа тут не нужна.
     constructor() {
-        this._heroGroup = new HeroGroup(1000/*todo: Временно. Убрать.*/);
         this._attackController = new AttackGroupController();
         this._damageController = new DamageGroupController();
         this._fightController = new FightController(this._attackController, this._damageController);
     }
 
     addCharacter(character: GameObject): boolean {
-        if (!this._heroGroup.addHero(character)) return false;
+        assertNotNil(character);
 
         this._attackController.add(character.get<AttackControllerInterface>(ComponentID.AttackController));
         this._damageController.add(character.get<DamageControllerInterface>(ComponentID.DamageController));
@@ -39,10 +37,13 @@ export default class CharacterFightGroup {
         return true;
     }
 
-    removeCharacter(character: GameObject) {
-        this._heroGroup.removeHero(character);
+    removeCharacter(character: GameObject): boolean {
+        assertNotNil(character);
+
         this._attackController.remove(character.get<AttackControllerInterface>(ComponentID.AttackController));
         this._damageController.remove(character.get<DamageControllerInterface>(ComponentID.DamageController));
+
+        return true;
     }
 
     attackTo(characterFightGroup: CharacterFightGroup, afterTargetDiedCallback?): void {
@@ -60,25 +61,24 @@ export default class CharacterFightGroup {
         return this._fightController.canAttack();
     }
 
-    //todo: @move Пока тут.
-    gather(gatheringItemPoints: GatheringItemPoint[], itemStorageComponent: ItemStorageComponent, interval: number) {
-        // let partOfMaxPeriodGathering = this._heroGroup.isLifeHeroesCount() / this._heroGroup.size;  //todo: isLifeHeroesCount доступ явно должен быть както иначе сделан, а не в группе. Для общих свойств нужен отдельный класс.
-        let partOfMaxPeriodGathering = 0;
-        this._heroGroup.map((hero) => {
-            partOfMaxPeriodGathering += Number(!hero.get<HealthPoints>(ComponentID.HealthPoints).isDead);
-        });
-        console.log('partOfMaxPeriodGathering', partOfMaxPeriodGathering);
-        for (let i = 0; i < gatheringItemPoints.length; i++) {
-            if (!partOfMaxPeriodGathering) continue;
-
-            let count = _.ceil(gatheringItemPoints[i].count.value / gatheringItemPoints[i].count.period * interval * partOfMaxPeriodGathering);
-            if (count <= 0) {
-                debug(DebugNamespaceID.Warning)('Количество предметов в gatheringItemPoint за период получилось равное или меньше нуля.');
-                continue;
-            }
-            if (itemStorageComponent.addItem(gatheringItemPoints[i].item, count) !== count) {   //todo: Не удобно.
-                debug(DebugNamespaceID.Log)(sprintf('Собран предмет: %s (%s). Эффективность сбора: %s', gatheringItemPoints[i].item.name, count, partOfMaxPeriodGathering));
-            }
-        }
-    }
+    //todo: @move Пока тут. Не актуально/уже перенесено/не работает?
+    // gather(gatheringItemPoints: GatheringItemPoint[], itemStorageComponent: ItemStorageComponent, interval: number) {
+    //     // let partOfMaxPeriodGathering = this._heroGroup.isLifeHeroesCount() / this._heroGroup.size;  //todo: isLifeHeroesCount доступ явно должен быть както иначе сделан, а не в группе. Для общих свойств нужен отдельный класс.
+    //     let partOfMaxPeriodGathering = 0;
+    //     this._heroGroup.map((hero) => {
+    //         partOfMaxPeriodGathering += Number(!hero.get<HealthPoints>(ComponentID.HealthPoints).isDead);
+    //     });
+    //     for (let i = 0; i < gatheringItemPoints.length; i++) {
+    //         if (!partOfMaxPeriodGathering) continue;
+    //
+    //         let count = _.ceil(gatheringItemPoints[i].count.value / gatheringItemPoints[i].count.period * interval * partOfMaxPeriodGathering);
+    //         if (count <= 0) {
+    //             debug(DebugNamespaceID.Warning)('Количество предметов в gatheringItemPoint за период получилось равное или меньше нуля.');
+    //             continue;
+    //         }
+    //         if (itemStorageComponent.addItem(gatheringItemPoints[i].item, count) !== count) {   //todo: Не удобно.
+    //             debug(DebugNamespaceID.Log)(sprintf('Собран предмет: %s (%s). Эффективность сбора: %s', gatheringItemPoints[i].item.name, count, partOfMaxPeriodGathering));
+    //         }
+    //     }
+    // }
 }

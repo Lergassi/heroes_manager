@@ -14,6 +14,10 @@ export enum CharacterActivityStateCode {
     InRaid = 'InRaid',
 }
 
+export interface HeroActivityStateControllerRender {
+    updateState?(state: string): void;
+}
+
 /**
  * @indev
  * Смерть в другом состоянии.
@@ -39,5 +43,7 @@ export default class HeroActivityStateController {
         this._code = CharacterActivityStateCode.Free;
     }
 
-    // renderByRequest(ui): void {}
+    renderByRequest(ui: HeroActivityStateControllerRender): void {
+        ui.updateState?.(this._code);
+    }
 }

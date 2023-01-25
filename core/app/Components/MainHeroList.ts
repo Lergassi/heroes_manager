@@ -1,7 +1,6 @@
 import debug from 'debug';
 import _ from 'lodash';
 import {MainHeroListRCElement} from '../../../client/public/Components/MainHeroListRC.js';
-import {MainHeroListRCElement_Legacy} from '../../../client/public/Components/MainHeroListRC_Legacy.js';
 import {assertIsInstanceOf, assertIsPositive, assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
 import EventSystem from '../../source/EventSystem.js';
@@ -11,13 +10,14 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import {CharacterAttributes, unsigned} from '../../types/main.js';
+import {unsigned} from '../../types/main.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import HeroClass from '../Entities/HeroClass.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import AverageItemLevel from './AverageItemLevel.js';
 import Experience from './Experience.js';
 import HealthPoints from './HealthPoints.js';
+import HeroActivityStateController from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
 import TakeComponent from './TakeComponent.js';
 
@@ -39,21 +39,27 @@ export interface MainHeroListRender {
  * Без обратной связи с ui.
  */
 export default class MainHeroList {
+    private readonly _gameObjectStorage: GameObjectStorage;
     private readonly _heroes: GameObject[];
     private _max: unsigned; //todo: Значение нужно увеличить с ростом уровня игрока.
     private readonly _options = {
         heroesForPage: 10,
     };
 
-    get totalPages(): number {
-        return _.ceil((this._heroes.length) / this._options.heroesForPage);
+    /**
+     * todo: totalPages зависит от числа элементов на страницу, значение передается из вне. А также этот метод не должно быть тут и убрать из _options.
+     */
+    totalPages(elementForPage: number): number {
+        return _.ceil((this._heroes.length) / elementForPage);
     }
 
     constructor(
+        gameObjectStorage: GameObjectStorage,
         max: unsigned,
     ) {
-        this._heroes = [];
+        this._gameObjectStorage = gameObjectStorage;
         this._max = max;
+        this._heroes = [];
     }
 
     createHero(
@@ -87,14 +93,14 @@ export default class MainHeroList {
         }
     };
 
-    deleteHero(hero: GameObject, gameObjectStorage: GameObjectStorage): void {
+    //todo: Переделать на ID или индекс. Так будет удобнее управлять через ui.
+    deleteHero(hero: GameObject): void {
         assertIsInstanceOf(hero, GameObject);
-        assertIsInstanceOf(gameObjectStorage, GameObjectStorage);
 
         this.canDeleteHero(hero);
 
         _.pull(this._heroes, hero);
-        gameObjectStorage.remove(hero);
+        this._gameObjectStorage.remove(hero);
 
         EventSystem.event(MainHeroListComponentEventCode.DeleteHero, this);
     }
@@ -109,7 +115,7 @@ export default class MainHeroList {
     }
 
     canDeleteHero(hero: GameObject): void {
-        if (hero.get<TakeComponent>(TakeComponent.name) && !hero.get<TakeComponent>(TakeComponent.name).isFree()) {
+        if (!hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).isFree()) {
             throw new AppError('Нельзя удалить героя пока он занят.');
         }
     }
@@ -124,28 +130,38 @@ export default class MainHeroList {
         return this._heroes[index];
     }
 
-    renderByRequest(ui: MainHeroListRender, options: {page: number, elementPerPage: number}): void {
+    //todo: Убрать страницы - мешают. Нужно чтобы
+    renderByRequest(ui: MainHeroListRender, options?: {page: number, elementForPage: number}): void {
+        let page = options?.page ?? 1;
+        // let elementForPage = options?.elementForPage ?? this._options.heroesForPage;
+        let elementForPage = options?.elementForPage ?? this._heroes.length;
+
         let startIndex = 0;
-        if (options.page <= 1) {
+        if (page <= 1) {
             startIndex = 0;
-        } else if (options.page > this.totalPages) {
+        } else if (page > this.totalPages(elementForPage)) {
             startIndex = this._heroes.length - 1;
         } else {
-            startIndex = (options.page - 1) * this._options.heroesForPage - 1;
+            startIndex = (page - 1) * elementForPage - 1;
         }
 
-        let endIndex = startIndex + this._options.heroesForPage;
+        let endIndex = startIndex + elementForPage;
         if (endIndex > this._heroes.length) {
             endIndex = this._heroes.length ? this._heroes.length : 0;
         }
 
+        //Не удалять дебаг инфу.
+        // console.log('startIndex', startIndex);
+        // console.log('endIndex', endIndex);
+
         let heroes: MainHeroListRCElement[] = [];
         for (let i = startIndex; i < endIndex; i++) {
             let hero: MainHeroListRCElement = {
+                hero: this._heroes[i],
                 ID: '',
                 agility: 0,
                 attackPower: 0,
-                currentHealthPoints: 0,
+                currentHealthPoints: 0, state: '',
                 exp: 0,
                 heroClassName: '',
                 heroRoleName: '',
@@ -156,9 +172,17 @@ export default class MainHeroList {
                 strength: 0,
                 totalExpToLevelUp: 0,
                 isDead: false,
+                deleteHandler: (): void => {
+                    this.deleteHero(this._heroes[i]);
+                },
             };
 
             hero.ID = String(this._heroes[i].ID);
+            this._heroes[i].get<HeroActivityStateController>(ComponentID.ActivityStateController).renderByRequest({
+                updateState(state: string) {
+                    hero.state = state;
+                },
+            });
             this._heroes[i].get<HeroComponent>(ComponentID.Hero).renderByRequest({
                 updateHeroClassName(value: string): void {
                     hero.heroClassName = value;
@@ -221,7 +245,7 @@ export default class MainHeroList {
         }//end for
 
         ui.updateHeroes?.(heroes);
-        ui.updatePagination?.(options.page, this.totalPages);
+        ui.updatePagination?.(page, this.totalPages(elementForPage));
         ui.updateTotalHeroes?.(this._heroes.length);
     }
 }

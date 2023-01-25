@@ -38,4 +38,7 @@ export default class EndlessItemStorage implements ItemStorageInterface {
     renderByRequest(ui: ItemStorageInterfaceRender): void {
         throw AppError.notImplements();
     }
+
+    clear(index: number): void {
+    }
 }

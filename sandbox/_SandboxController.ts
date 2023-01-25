@@ -63,7 +63,7 @@ import AttackControllerInterface from '../core/app/Interfaces/AttackControllerIn
 import HeroActivityStateController from '../core/app/Components/HeroActivityStateController.js';
 import MainItemStorageListComponent from '../core/app/Components/MainItemStorageListComponent.js';
 import ItemStorageUnion from '../core/app/Components/ItemStorageUnion.js';
-import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
+import Bag from '../core/app/Components/Bag.js';
 import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
 
 //todo: Перемести часть кода в общий test/dev/sandbox.
@@ -1314,7 +1314,7 @@ export default class _SandboxController {
         let itemDatabase = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
         let itemStackFactory = this._container.get<ItemStackFactory>(ServiceID.ItemStackFactory);
 
-        let itemStorage = new ItemStorageV2(
+        let itemStorage = new Bag(
             10,
             itemStackFactory,
         );

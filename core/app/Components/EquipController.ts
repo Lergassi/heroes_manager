@@ -5,6 +5,8 @@ import Item from '../Entities/Item.js';
 import GameObject from '../../source/GameObject.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import Bag from './Bag.js';
+import ItemStorageController from './ItemStorageController.js';
 
 export default class EquipController {
     private readonly _hero: GameObject;
@@ -17,8 +19,28 @@ export default class EquipController {
         return this._hero.get<EquipSlotInterface>(ID)?.equip(item);
     }
 
-    clear(ID: EquipSlotID): boolean {
-        return this._hero.get<EquipSlotInterface>(ID)?.clear();
+    // equipFrom(equipSlotID: EquipSlotID, itemStorage: ItemStorageInterface, itemStorageSlotID: number): boolean {
+    //     // if (this.equip(equipSlotID, ))
+    // }
+
+    // moveFromBag(equipSlotID: EquipSlotID, bag: Bag, slotID: number): boolean {
+    //     if (this.eq)
+    //
+    //     return true;
+    // }
+
+    clear(ID: EquipSlotID): void {
+        this._hero.get<EquipSlotInterface>(ID)?.clear();
+    }
+
+    moveTo(ID: EquipSlotID, itemStorage: ItemStorageInterface): boolean {
+        if (!this._hero.get<EquipSlotInterface>(ID).moveTo(itemStorage)) {
+            return false;
+        }
+
+        this.clear(ID);
+
+        return true;
     }
 
     remove(ID: EquipSlotID, itemStorage: ItemStorageInterface) {

@@ -12,40 +12,6 @@ import HeroListViewer from '../Viwers/HeroListViewer.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
-//todo: В будущем универсальный слот с _container: Container<T>. Слот может быть без логики или с изменением статуса занимаемого объекта.
-//todo: Убрать слоты.
-// export class HeroSlot {
-//     private _hero: GameObject;
-//
-//     get hero(): GameObject {
-//         return this._hero;
-//     }
-//
-//     constructor() {
-//         this._hero = null;
-//     }
-//
-//     place(hero: GameObject): void {
-//         this._hero = hero;
-//     }
-//
-//     clear(): void {
-//         this._hero = null;
-//     }
-//
-//     isFree(): boolean {
-//         return _.isNil(this._hero);
-//     }
-//
-//     isBusy(): boolean {
-//         return !this.isFree();
-//     }
-//
-//     contains(hero: GameObject): boolean {
-//         return this.isBusy() && this._hero === hero;
-//     }
-// }
-
 export enum HeroGroupComponentEventCode {
     AddHero = 'HeroGroupComponent.AddHero',
     RemoveHero = 'HeroGroupComponent.RemoveHero',
@@ -152,6 +118,24 @@ export default class HeroGroup implements HeroGroupInterface {
         return true;
     }
 
+    removeHero(hero: GameObject): void {
+        assert(hero instanceof GameObject);
+
+        let position = this._getHeroSlot(hero);
+        if (!position) {
+            // throw new AppError('Герой не найден в группе.');
+            debug(DebugNamespaceID.Throw)('Герой не найден в группе.');
+            return;
+        }
+
+        // hero.getComponent<TakeComponent>(TakeComponent.name)?.release<HeroGroup>(
+        //     this,
+        // );
+        // _.pull(this._heroesArray, hero);
+        _.pullAt(this._heroes, position);
+        EventSystem.event(HeroGroupComponentEventCode.RemoveHero, this);
+    }
+
     _clearPosition(position: number): void {
         // this._canEditGroup();
 
@@ -164,25 +148,6 @@ export default class HeroGroup implements HeroGroupInterface {
         // this._heroes[position] = null;
         // heroSlot.clear();
         // heroSlot.get<HeroComponent>(HeroComponent.name).release(this);
-    }
-
-    removeHero(hero: GameObject): void {
-        assert(hero instanceof GameObject);
-
-        let position = this._getHeroSlot(hero);
-        if (!position) {
-            // throw new AppError('Герой не найден в группе.');
-            debug(DebugNamespaceID.Throw)('Герой не найден в группе.');
-            return;
-        }
-
-        // position.clear();
-        hero.getComponent<TakeComponent>(TakeComponent.name)?.release<HeroGroup>(
-            this,
-        );
-        // _.pull(this._heroesArray, hero);
-        _.pullAt(this._heroes, position);
-        EventSystem.event(HeroGroupComponentEventCode.RemoveHero, this);
     }
 
     _getFirstFreeHeroSlot(): number {

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import debug from 'debug';
+import GameObjectStorage from '../../core/source/GameObjectStorage.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 import Tavern from '../../core/app/Components/Tavern.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
@@ -19,7 +20,7 @@ export default class TavernSandboxController extends AbstractSandboxController {
         let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
         let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
         // let mainHeroList = this.container.get<MainHeroListComponent>(ContainerID.MainHeroList);
-        let mainHeroList = new MainHeroList(3);
+        let mainHeroList = new MainHeroList(this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage), 3);
 
         let tavern = new Tavern();
 

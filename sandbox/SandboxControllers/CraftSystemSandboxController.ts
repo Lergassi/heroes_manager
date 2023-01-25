@@ -11,7 +11,7 @@ import Item from '../../core/app/Entities/Item.js';
 import InfinityItemStorage from '../../core/app/Components/InfinityItemStorage.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import CraftQueue from '../../core/app/Services/CraftQueue.js';
-import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
+import Bag from '../../core/app/Components/Bag.js';
 
 export default class CraftSystemSandboxController extends AbstractSandboxController {
     run(): void {
@@ -33,7 +33,7 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
         // let resourcesItemStorage = new EndlessItemStorage();
 
         // let resultItemStorage = new InfinityItemStorage();
-        let resultItemStorage = new ItemStorageV2(20, em);
+        let resultItemStorage = new Bag(20, em);
 
         let woodBoards = em.get<Recipe>(EntityID.Recipe, RecipeID.WoodBoards);
         let oneHandedSword01 = em.get<Recipe>(EntityID.Recipe, RecipeID.OneHandedSword01);

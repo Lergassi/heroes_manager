@@ -96,6 +96,8 @@ export enum ItemID {
     Staff01 = 'Staff01',
     Wand01 = 'Wand01',
     Revolver01 = 'Revolver01',
+    Bow01 = 'Bow01',
+    Crossbow01 = 'Crossbow01',
 
     // Stub01 = 'Stub01',
     // Stub02 = 'Stub02',

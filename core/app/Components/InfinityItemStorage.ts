@@ -61,4 +61,7 @@ export default class InfinityItemStorage implements ItemStorageInterface {
     renderByRequest(ui: ItemStorageInterfaceRender): void {
         throw AppError.notImplements();
     }
+
+    clear(index: number): void {
+    }
 }

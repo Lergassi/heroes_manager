@@ -28,6 +28,7 @@ export interface EquipSlotInterfaceRender {
 export default interface EquipSlotInterface {
     // equip(itemStack: ItemStack): void;
     equip(item: Item): boolean; /*todo: Добавить ItemID.*/
+    // equipFrom(item: Item): boolean; /*todo: Добавить ItemID.*/
 
     // /**
     //  * @deprecated
@@ -36,7 +37,7 @@ export default interface EquipSlotInterface {
     //  * @param itemStackFactory
     //  */
     // createItemStack(item: Item, count: unsigned, itemStackFactory: ItemStackFactory): void;
-    clear(): boolean;
+    clear(): void;
     moveTo(itemStorage: ItemStorageInterface): boolean;
     isFree(): boolean;
     // // moveTo(target: ItemSlotInterface): void;

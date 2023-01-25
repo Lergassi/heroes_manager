@@ -4,7 +4,7 @@ import EntityManager from '../../source/EntityManager.js';
 import Recipe from '../Entities/Recipe.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import ItemStorageV2 from '../Components/ItemStorageV2.js';
+import Bag from '../Components/Bag.js';
 import InfinityItemStorage from '../Components/InfinityItemStorage.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';

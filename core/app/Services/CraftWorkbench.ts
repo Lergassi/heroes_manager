@@ -4,7 +4,7 @@ import Recipe from '../Entities/Recipe.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import InfinityItemStorage from '../Components/InfinityItemStorage.js';
-import ItemStorageV2 from '../Components/ItemStorageV2.js';
+import Bag from '../Components/Bag.js';
 import CraftQueue from './CraftQueue.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
@@ -34,7 +34,7 @@ export default class CraftWorkbench {
         this._state = CraftWorkbenchState.Free;
         this._craftQueue = new CraftQueue(entityManager);
         this._resourcesItemStorage = new InfinityItemStorage(entityManager);
-        this._resultItemStorage = new ItemStorageV2(1, entityManager);
+        this._resultItemStorage = new Bag(1, entityManager);
         this._tempResultItemSlot = new ItemStackController();
     }
 

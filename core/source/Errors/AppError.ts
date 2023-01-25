@@ -3,6 +3,7 @@ import Item from '../../app/Entities/Item.js';
 import EquipSlot from '../../app/Entities/EquipSlot.js';
 import HeroClass from '../../app/Entities/HeroClass.js';
 import ArmorMaterial from '../../app/Entities/ArmorMaterial.js';
+import _ from 'lodash';
 
 export default class AppError extends Error {
     constructor(message?: string) {
@@ -121,5 +122,9 @@ export default class AppError extends Error {
 
     static legacy() {
         return new AppError('legacy');
+    }
+
+    static notWorking(message?: string) {
+        return new AppError('Код не рабочий.' + _.isNil(message) ? ' ' + message : '');
     }
 }

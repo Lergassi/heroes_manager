@@ -6,7 +6,7 @@ import Input from '../../source/GameConsole/Input.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import ItemDatabase from '../../source/ItemDatabase.js';
 import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
-import ItemStorageV2 from '../Components/ItemStorageV2.js';
+import Bag from '../Components/Bag.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
@@ -23,7 +23,7 @@ export default class CreateStubObjectsCommand extends Command {
 
         let size = 20;
         // let itemStorage = this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory).create(size);
-        let itemStorage = new ItemStorageV2(size, entityManager);
+        let itemStorage = new Bag(size, entityManager);
         // let itemStorageComponent = itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorageComponent);
 
         itemStorage.addItem(itemDatabase.get(ItemID.Wood), 50);

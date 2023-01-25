@@ -29,6 +29,7 @@ import LocationFactory from '../../Factories/LocationFactory.js';
 import PlayerFactory from '../../Factories/PlayerFactory.js';
 import WalletFactory from '../../Factories/WalletFactory.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../Interfaces/WalletInterface.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
@@ -144,8 +145,9 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //
         //     return itemStorageCollectionComponent;
         // });
-        container.set(ServiceID.ItemStorageController, (container) => {
+        container.set<ItemStorageInterface>(ServiceID.ItemStorageController, (container) => {
             let max = 4;
+
             return new ItemStorageController(max);
         });
         container.set<ItemStorageFactory>(ServiceID.ItemStorageFactory, (container) => {
@@ -184,6 +186,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             let heroListControllerGameObject = container.get<GameObjectFactory>(ServiceID.GameObjectFactory).create();
 
             let mainHeroListComponent = heroListControllerGameObject.addComponent(new MainHeroList(
+                container.get<GameObjectStorage>(ServiceID.GameObjectStorage),
                 // 10,
                 100,    //todo: В настройки.
                 // 1000,    //todo: В настройки.

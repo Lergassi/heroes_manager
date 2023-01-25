@@ -8,7 +8,7 @@ import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import {unsigned} from '../../types/main.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
-import ItemStorageV2 from '../Components/ItemStorageV2.js';
+import Bag from '../Components/Bag.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export default class ItemStorageFactory {
@@ -58,7 +58,7 @@ export default class ItemStorageFactory {
         //     slots,
         //     this._itemStackFactory,
         // ));
-        let itemStorage = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorage, new ItemStorageV2(
+        let itemStorage = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorage, new Bag(
             size,
             this._entityManager,
         ));

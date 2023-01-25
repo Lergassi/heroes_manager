@@ -7,6 +7,7 @@ import GameObject from '../../../core/source/GameObject.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemCount} from '../../../core/types/main.js';
+import UIUpdater from '../../app/UIUpdater.js';
 import ItemStorageRC from './ItemStorageRC.js';
 
 export interface ItemStorageControllerRCProps {
@@ -29,6 +30,7 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
         };
 
         this.props.container.set<ItemStorageControllerRC>(ServiceID.UI_ItemStorageController, this);
+        this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
     }
 
     updateByRequest(): void {
@@ -41,10 +43,6 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
                 itemStorages: itemStorages,
             } as ItemStorageControllerRCState;
         });
-    }
-
-    updateItemStorage(index: number, items: UI_ItemCount[]): void {
-
     }
 
     render() {

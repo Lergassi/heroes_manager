@@ -53,7 +53,7 @@ import Currency from '../core/app/Entities/Currency.js';
 import {EventCode} from '../core/types/enums/EventCode.js';
 import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
-import ItemStorageV2 from '../core/app/Components/ItemStorageV2.js';
+import Bag from '../core/app/Components/Bag.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
 import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
 import DevUISystemController from './SandboxControllers/DevUISystemController.js';
@@ -745,7 +745,7 @@ export default class SandboxController {
         let stateController = new LifeStateController();
         // stateController.addState(CharacterStateCode.Dead);
         // let gatherer = new Gatherer(stateController, itemStorageManager);
-        let gatherer = new Gatherer(stateController, itemStorage);
+        let gatherer = new Gatherer(stateController);
 
         // for (let i = 0; i < 1000; i++) {
         //     if (!gatheringPoint.gather(gatherer)) {
@@ -768,7 +768,7 @@ export default class SandboxController {
         for (let i = 0; i < 100; i++) {
             // if (!gatherer.gather3(gatheringPoint)) break;    //todo: А что если жила вернет 0 при добычи? -> Когда значение жилы опуститься до нуля другая часть программы удалит её. Тут цикл просто для теста.
             // if (!gatherer.gather3(gatheringPoint, itemStorageManager)) break;
-            if (!gatherer.gather3(gatheringPoint, itemStorage)) break;
+            if (!gatherer.gather(gatheringPoint, itemStorage)) break;
             // if (!gatheringPoint.gather2()) {
             //     break;
             // }
@@ -916,7 +916,7 @@ export default class SandboxController {
         //     new ItemStackController(),
         //     new ItemStackController(),
         // ]);
-        let itemStorage = new ItemStorageV2(2, entityManager);
+        let itemStorage = new Bag(2, entityManager);
         //equip slotIDFrom slotIDTo
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
         console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
@@ -934,7 +934,7 @@ export default class SandboxController {
 
         let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20);
 
-        let itemStorageComponent = itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage);
+        let itemStorageComponent = itemStorage.get<Bag>(ComponentID.ItemStorage);
 
         console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.IronOre), 24));
         console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 24));

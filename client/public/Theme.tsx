@@ -11,7 +11,7 @@ import ItemStorageRC_Legacy from './Components/ItemStorageRC_Legacy.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
+import Bag from '../../core/app/Components/Bag.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import MainHeroListRC_Legacy from './Components/MainHeroListRC_Legacy.js';

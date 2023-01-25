@@ -23,11 +23,11 @@ export default class AddHeroToLocationCommand extends Command {
         let locationID = parseInt(input.getArgument('location_id'), 10);
         let heroID = parseInt(input.getArgument('hero_id'), 10);
 
-        let hero = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(heroID);
         let location = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(locationID);
+        let hero = this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(heroID);
 
-        assertNotNil(hero);
         assertNotNil(location);
+        assertNotNil(hero);
 
         location
             ?.get<Location>(ComponentID.Location)

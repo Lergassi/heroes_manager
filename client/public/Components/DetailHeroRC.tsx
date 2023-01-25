@@ -1,24 +1,30 @@
+import _ from 'lodash';
 import React from 'react';
+import EquipController from '../../../core/app/Components/EquipController.js';
+import Experience from '../../../core/app/Components/Experience.js';
 import HealthPoints from '../../../core/app/Components/HealthPoints.js';
-import Location from '../../../core/app/Components/Location.js';
+import HeroComponent from '../../../core/app/Components/HeroComponent.js';
+import ItemStorageController from '../../../core/app/Components/ItemStorageController.js';
+import CharacterAttributeInterface from '../../../core/app/Decorators/CharacterAttributeInterface.js';
+import EquipSlotInterface from '../../../core/app/Interfaces/EquipSlotInterface.js';
+import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
+import {assertNotNil} from '../../../core/source/assert.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
-import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
-import Item from '../../../core/app/Entities/Item.js';
 import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
-import Experience from '../../../core/app/Components/Experience.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
-import HeroComponent from '../../../core/app/Components/HeroComponent.js';
+import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
-import EquipSlotInterface from '../../../core/app/Interfaces/EquipSlotInterface.js';
-import CharacterAttributeInterface from '../../../core/app/Decorators/CharacterAttributeInterface.js';
-import _ from 'lodash';
-import HeroActivityStateController from '../../../core/app/Components/HeroActivityStateController.js';
 import {UI_ItemCount} from '../../../core/types/main.js';
+import UIUpdater from '../../app/UIUpdater.js';
+import EquipItemListRC from './EquipItemListRC.js';
 
 export interface DetailHeroRCProps {
     container: ContainerInterface;
+    /**
+     * Для экипировки.
+     */
+    itemStorage: ItemStorageInterface;
 }
 
 export interface DetailHeroRCState {
@@ -150,8 +156,10 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         // this.updateHealthPoints = this.updateHealthPoints.bind(this);
         // this.updateCharacterAttributeFinalValue = this.updateCharacterAttributeFinalValue.bind(this);
         // this.updateEquipSlot = this.updateEquipSlot.bind(this);
+        this.hide = this.hide.bind(this);
 
         this.props.container.set<DetailHeroRC>(ServiceID.UI_DetailHero, this);
+        this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
 
         // window['app']['sandbox'][ServiceID.UI_DetailHero] = {};
         // window['app']['sandbox'][ServiceID.UI_DetailHero]['updateHero'] = (hero: GameObject) => {
@@ -186,6 +194,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
     }
 
     hide() {
+        console.log('hide', this);
         this.setState((state) => {
             return {
                 window: {
@@ -205,11 +214,12 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         });
     }
 
-    updateHero(hero: GameObject): void {
-        if (this.state.hero && this.state.hero === hero) return;
-        if (this.state.hero) {
-            // this.removeHero();
-        }
+    updateHero(hero: GameObject, options: {show?: boolean} = {show: false}): void {
+        assertNotNil(hero);
+        // if (this.state.hero && this.state.hero === hero) return; //За обновление отвечает updateByRequest.
+        // if (this.state.hero) {
+        //     // this.removeHero();
+        // }
 
         this.setState((state) => {
             return {
@@ -231,7 +241,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
 
         //todo: Событие на удаление героя или блокировка героя когда окно открыто.
 
-        // this.show();
+        if (options?.show) this.show();
     }
 
     removeHero(): void {
@@ -333,14 +343,19 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
     }
     // clearEquipSlot(ID: EquipSlotID): void {}
 
+    clearEquipSlot(equipSlotID: EquipSlotID) {
+        // this.state.hero.get<EquipController>(ComponentID.EquipController).clear(equipSlotID);
+        this.state.hero.get<EquipController>(ComponentID.EquipController).moveTo(equipSlotID, this.props.itemStorage);
+    }
+
     render() {
         if (!this.state.window.show) return;
-        if (!this.state.hero) return <div>Герой не выбран.</div>;
+        if (!this.state.hero) return;
 
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Герой<span className={'widget__close'}>x</span></div>
+                    <div className={'widget__title'}>Герой<button className={'widget__hide-button'} onClick={this.hide}>close</button></div>
                     <div className={'widget__content'}>
                         <div>{this.state.heroClassName}, {this.state.level} ({this.state.exp}/{this.state.totalExpToLevelUp})</div>
                         <div>Здоровье: {this.state.currentHealthPoints}/{this.state.maxHealthPoints}</div>
@@ -358,25 +373,31 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                         <div>
                             <h4>Экипировка:</h4>
                             <ul>
-                                <li>Голова: {this.state.Head ? this.state.Head : 'Пусто'}</li>
-                                <li>Плечи: {this.state.Shoulders ? this.state.Shoulders : 'Пусто'}</li>
-                                <li>Грудь: {this.state.Chest ? this.state.Chest : 'Пусто'}</li>
-                                <li>Запястье: {this.state.Wrist ? this.state.Wrist : 'Пусто'}</li>
-                                <li>Руки: {this.state.Hands ? this.state.Hands : 'Пусто'}</li>
-                                <li>Талия: {this.state.Waist ? this.state.Waist : 'Пусто'}</li>
-                                <li>Ноги: {this.state.Legs ? this.state.Legs : 'Пусто'}</li>
-                                <li>Ступни: {this.state.Foots ? this.state.Foots : 'Пусто'}</li>
-                                <li>Правая рука: {this.state.RightHand ? this.state.RightHand : 'Пусто'}</li>
-                                <li>Левая рука: {this.state.LeftHand ? this.state.LeftHand : 'Пусто'}</li>
-                                <li>Шея: {this.state.Neck ? this.state.Neck : 'Пусто'}</li>
-                                <li>Палец 1: {this.state.Finger01 ? this.state.Finger01 : 'Пусто'}</li>
-                                <li>Палец 2: {this.state.Finger02 ? this.state.Finger02 : 'Пусто'}</li>
-                                <li>Тринкет: {this.state.Trinket ? this.state.Trinket : 'Пусто'}</li>
+                                <li>Голова: {this.state.Head ? this.state.Head : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Head)}>clear</button></li>
+                                <li>Плечи: {this.state.Shoulders ? this.state.Shoulders : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Shoulders)}>clear</button></li>
+                                <li>Грудь: {this.state.Chest ? this.state.Chest : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Chest)}>clear</button></li>
+                                <li>Запястье: {this.state.Wrist ? this.state.Wrist : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Wrist)}>clear</button></li>
+                                <li>Руки: {this.state.Hands ? this.state.Hands : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Hands)}>clear</button></li>
+                                <li>Талия: {this.state.Waist ? this.state.Waist : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Waist)}>clear</button></li>
+                                <li>Ноги: {this.state.Legs ? this.state.Legs : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Legs)}>clear</button></li>
+                                <li>Ступни: {this.state.Foots ? this.state.Foots : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Foots)}>clear</button></li>
+                                <li>Правая рука: {this.state.RightHand ? this.state.RightHand : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.RightHand)}>clear</button></li>
+                                <li>Левая рука: {this.state.LeftHand ? this.state.LeftHand : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.LeftHand)}>clear</button></li>
+                                <li>Шея: {this.state.Neck ? this.state.Neck : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Neck)}>clear</button></li>
+                                <li>Палец 1: {this.state.Finger01 ? this.state.Finger01 : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Finger01)}>clear</button></li>
+                                <li>Палец 2: {this.state.Finger02 ? this.state.Finger02 : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Finger02)}>clear</button></li>
+                                <li>Тринкет: {this.state.Trinket ? this.state.Trinket : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Trinket)}>clear</button></li>
                             </ul>
+                            <EquipItemListRC
+                                container={this.props.container}
+                                equipSlotIDs={this._equipSlotIDs}
+                                itemStorageController={this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)}
+                                equipController={this.state.hero.get<EquipController>(ComponentID.EquipController)}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
         );
-    }
+    }//end render
 }

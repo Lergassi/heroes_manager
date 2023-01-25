@@ -56,6 +56,8 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     private async _createItems() {
         await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_kit, ['start_resources']);
         await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_kit, ['start_materials']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_kit, ['start_plate_armor']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_kit, ['start_jewelry']);
     }
 
     private _createHeroes() {
@@ -101,6 +103,16 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                     [EquipSlotID.RightHand]: ItemID.Dagger01,
                     [EquipSlotID.LeftHand]: ItemID.Dagger01,
                 },
+            },{
+                heroClassID: HeroClassID.Gladiator,
+                level: 1,
+                equip: {
+                    [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
+                    [EquipSlotID.Legs]: ItemID.PlatePants01,
+                    [EquipSlotID.Foots]: ItemID.PlateBoots01,
+                    [EquipSlotID.RightHand]: ItemID.OneHandedSword01,
+                    [EquipSlotID.LeftHand]: ItemID.OneHandedSword01,
+                },
             },
             {
                 heroClassID: HeroClassID.FireMage,
@@ -121,6 +133,46 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                     [EquipSlotID.Foots]: ItemID.LeatherBoots01,
                     [EquipSlotID.RightHand]: ItemID.Revolver01,
                     [EquipSlotID.LeftHand]: ItemID.Revolver01,
+                },
+            },
+            {
+                heroClassID: HeroClassID.Archer,
+                level: 1,
+                equip: {
+                    [EquipSlotID.Chest]: ItemID.LeatherBreastplate01,
+                    [EquipSlotID.Legs]: ItemID.LeatherPants01,
+                    [EquipSlotID.Foots]: ItemID.LeatherBoots01,
+                    [EquipSlotID.RightHand]: ItemID.Bow01,
+                },
+            },
+            {
+                heroClassID: HeroClassID.Support1,
+                level: 1,
+                equip: {
+                    [EquipSlotID.Chest]: ItemID.ClothBreastplate01,
+                    [EquipSlotID.Legs]: ItemID.ClothPants01,
+                    [EquipSlotID.Foots]: ItemID.ClothBoots01,
+                    [EquipSlotID.RightHand]: ItemID.Staff01,
+                },
+            },
+            {
+                heroClassID: HeroClassID.Support2,
+                level: 1,
+                equip: {
+                    [EquipSlotID.Chest]: ItemID.ClothBreastplate01,
+                    [EquipSlotID.Legs]: ItemID.ClothPants01,
+                    [EquipSlotID.Foots]: ItemID.ClothBoots01,
+                    [EquipSlotID.RightHand]: ItemID.Staff01,
+                },
+            },
+            {
+                heroClassID: HeroClassID.Support3,
+                level: 1,
+                equip: {
+                    [EquipSlotID.Chest]: ItemID.ClothBreastplate01,
+                    [EquipSlotID.Legs]: ItemID.ClothPants01,
+                    [EquipSlotID.Foots]: ItemID.ClothBoots01,
+                    [EquipSlotID.RightHand]: ItemID.Staff01,
                 },
             },
         ];
@@ -145,21 +197,12 @@ export default class CreateStartPlayerObjectsCommand extends Command {
                     ?.equip(item);
             }
         }
-
-        this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
-            HeroClassID.Warrior,
-            1,
-            this.container.get<HeroFactory>(ServiceID.HeroFactory),
-        );
-        this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
-            HeroClassID.Warrior,
-            1,
-            this.container.get<HeroFactory>(ServiceID.HeroFactory),
-        );
     }
 
     private async _createLocations() {
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
     }
 
     private async _addMoney() {

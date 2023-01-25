@@ -10,7 +10,7 @@ import ItemStorageInterface from '../../core/app/Interfaces/ItemStorageInterface
 import EndlessItemStorage from '../../core/app/Components/EndlessItemStorage.js';
 import InfinityItemStackController from '../../core/app/Components/InfinityItemStackController.js';
 import InfinityItemStorage from '../../core/app/Components/InfinityItemStorage.js';
-import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
+import Bag from '../../core/app/Components/Bag.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import Item from '../../core/app/Entities/Item.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
@@ -198,7 +198,7 @@ export default class BagSandboxController extends AbstractSandboxController {
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
 
-        let itemStorage = new ItemStorageV2(2, em);
+        let itemStorage = new Bag(2, em);
 
         // console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 10));

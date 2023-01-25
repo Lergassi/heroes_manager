@@ -1,21 +1,27 @@
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
-import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
+import {assertIsGreaterThanOrEqual, assertIsNumber, assertNotNil} from '../../source/assert.js';
 import Viewer from '../../source/Viewer.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
+import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import {UI_ItemCount, unsigned} from '../../types/main.js';
+import {UI_ItemCount, UI_ItemStorageSlot, unsigned} from '../../types/main.js';
 import HeroClass from '../Entities/HeroClass.js';
 import Item from '../Entities/Item.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import ItemStorageInterface, {ItemStorageInterfaceRender} from '../Interfaces/ItemStorageInterface.js';
+import EquipController from './EquipController.js';
 import ItemStackController from './ItemStackController.js';
 
-export default class ItemStorageV2 implements ItemStorageInterface {
+/**
+ * Сумка со слотами.
+ */
+export default class Bag implements ItemStorageInterface {
     private readonly _size: number;
     private readonly _itemStackControllers: ItemStackController[];
-    private _entityManager: EntityManagerInterface;
+    private readonly _entityManager: EntityManagerInterface;
 
     constructor(size: number, entityManager: EntityManagerInterface) {
         assertIsGreaterThanOrEqual(size, 1);
@@ -35,14 +41,14 @@ export default class ItemStorageV2 implements ItemStorageInterface {
     addItem(item: Item | ItemID, count: unsigned): unsigned {
         item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
         assertNotNil(item);
-        // assertIsGreaterThanOrEqual(count, 0);
 
-        // if (count === 0) return 0;
+        // assertIsGreaterThanOrEqual(count, 0);
+        if (count <= 0) return 0;   //А почему было удалено?
 
         let originCount = count;
         for (let i = 0; i < this._itemStackControllers.length; i++) {
             count = this._itemStackControllers[i].addItem(item, count);
-            // this._onChange(index, this._item, this._count);
+            if (count <= 0) break;
         }
 
         if (originCount !== count) {
@@ -104,12 +110,28 @@ export default class ItemStorageV2 implements ItemStorageInterface {
         return reminder;
     }
 
+    clear(slotID: number): void {
+        assertNotNil(this._itemStackControllers[slotID], 'Слот не найден.');
+
+        this._itemStackControllers[slotID].clear();
+    }
+
+    // moveToEquipSlot(itemStorageSlotID: number, equipSlot: EquipSlotInterface): boolean {
+    //     return this._itemStackControllers[itemStorageSlotID].moveToEquipSlot(equipSlot);
+    // }
+
+    moveToEquipSlotByEquipController(slotID: number, equipController: EquipController, equipSlotID: EquipSlotID): boolean {
+        assertNotNil(this._itemStackControllers[slotID], 'Слот не найден.');
+
+        return this._itemStackControllers[slotID].moveToEquipSlotByEquipController(equipSlotID, equipController);
+    }
+
     renderByRequest(ui: ItemStorageInterfaceRender): void {
-        let items: UI_ItemCount[] = [];
+        let items: UI_ItemStorageSlot[] = [];
         for (let i = 0; i < this._itemStackControllers.length; i++) {
             this._itemStackControllers[i].renderByRequest({
                 updateItem(itemName: string, count: number): void {
-                    items.push({itemName: itemName, count: count});
+                    items.push({ID: i, item: {itemName: itemName, count: count}});
                 },
             });
         }

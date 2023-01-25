@@ -11,7 +11,7 @@ import GameObject from '../../source/GameObject.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {Seconds, UI_ItemCount, UI_VeinItemCount, unsigned} from '../../types/main.js';
+import {Seconds, UI_ItemCount, UI_ItemStorageSlot, UI_VeinItemCount, unsigned} from '../../types/main.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import Item from '../Entities/Item.js';
@@ -29,6 +29,7 @@ import GatheringPoint from './GatheringPoint.js';
 import HealthPoints from './HealthPoints.js';
 import HeroActivityStateController, {CharacterActivityStateCode} from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
+import LifeStateController from './LifeStateController.js';
 
 export enum LocationState {
     Waiting = 'Waiting',
@@ -143,9 +144,7 @@ export default class Location {
         this._wallet = wallet;
     }
 
-    start(options?: {
-        // wallet: WalletInterface,
-    }): boolean {
+    startHunting(): boolean {
         if (this._state !== LocationState.Waiting) {
             debug(DebugNamespaceID.Throw)('Охота уже запущена.');
             return false;
@@ -177,7 +176,7 @@ export default class Location {
         return true;
     }
 
-    stop() {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
+    stopHunting() {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
         if (this._state !== LocationState.Hunting) {
             throw new AppError('Охота не запущена.');
         }
@@ -189,15 +188,11 @@ export default class Location {
         EventSystem.event(LocationEventCode.Stop, this);
     }
 
-    toggleState(options?: {
-        wallet?: WalletInterface,
-    }): void {
+    toggleState(): void {
         if (this._state === LocationState.Waiting) {
-            this.start({
-                wallet: options?.wallet,
-            });
+            this.startHunting();
         } else if (this._state === LocationState.Hunting) {
-            this.stop();
+            this.stopHunting();
         }
     }
 
@@ -224,7 +219,7 @@ export default class Location {
             for (let j = 0; j < this._gatheringPoints.length; j++) {
                 if (this._gatheringPoints[j].isEmpty()) continue;
 
-                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._gatheringPoints[j], this._itemStorage);
+                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._gatheringPoints[j], this._itemStorage);
                 // if (this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._gatheringPoints[j], this._itemStorage)) {
                     EventSystem.event(LocationEventCode.GatheringItems, this);
                 // }
@@ -253,17 +248,18 @@ export default class Location {
         return true;
     }
 
-    removeHero(hero: GameObject) {
+    removeHero(hero: GameObject): boolean {
         assertNotNil(hero);
         // assert(hero instanceof GameObject);
 
-        this._canRemoveHero();
+        if (!this._canRemoveHero()) return false;
 
-        // this._heroGroupComponent.removeHero(hero);
         this._heroFightGroup.removeCharacter(hero);
         _.pull(this._heroes, hero);
         EventSystem.event(LocationEventCode.RemoveHero, this);
         hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).free();
+
+        return true;
     }
 
     canModify(): boolean {
@@ -306,6 +302,7 @@ export default class Location {
         let heroes: DetailLocationRCHeroElement[] = [];
         for (let i = 0; i < this._heroes.length; i++) {
             let data: DetailLocationRCHeroElement = {
+                ID: String(this._heroes[i].ID),
                 attackPower: 0,
                 currentHealthPoints: 0,
                 heroClassName: '',
@@ -376,7 +373,8 @@ export default class Location {
                 updateHealthPoints(currentHealthPoints: number, maxHealthPoints: number): void {
                     data.currentHealthPoints = currentHealthPoints;
                     data.maxHealthPoints = maxHealthPoints;
-                }, updateDeadState(isDead: boolean): void {
+                },
+                updateDeadState(isDead: boolean): void {
                     data.isDead = isDead;
                 },
             });
@@ -406,8 +404,10 @@ export default class Location {
         });
 
         this._itemStorage.renderByRequest({
-            updateItems(items: UI_ItemCount[]) {
-                ui.updateLoot?.(items);
+            updateItems(slots: UI_ItemStorageSlot[]) {
+                ui.updateLoot?.(_.map(slots, (slot) => {
+                    return slot.item;
+                }));
             }
         });
     }
@@ -415,10 +415,14 @@ export default class Location {
     private _canAddHero(hero: GameObject): boolean {
         if (!this.canModify()) return false;
 
+        if (_.includes(this._heroes, hero)) {
+            debug(DebugNamespaceID.Throw)('Герой уже в локации..');
+            return false;
+        }
+
         //todo: Убрать геттер? Так и писать availableLevelForActivity().
         if (hero.getComponent<Experience>(ComponentID.Experience).level < this._level) {
-            // throw new AppError('Уровень героя слишком низкий для данной локации.');
-            debug(DebugNamespaceID.Throw)('Уровень героя слишком низкий для данной локации.');
+            debug(DebugNamespaceID.Throw)('Уровень героя низкий для данной локации.');
             return false;
         }
 
@@ -427,11 +431,16 @@ export default class Location {
             return false;
         }
 
+        if (!hero.get<LifeStateController>(ComponentID.LifeStateController).canAction()) {
+            //todo: Нужно передавать объект собирающий ошибки. А в начала или конце списка добавлять заголовок для серии ошибок.
+            return false;
+        }
+
         return true;
     }
 
-    private _canRemoveHero(): void {
-        this.canModify();
+    private _canRemoveHero(): boolean {
+        return this.canModify();
     }
 
     private _canModify(): boolean {

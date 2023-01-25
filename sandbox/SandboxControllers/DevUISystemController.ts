@@ -2,7 +2,7 @@ import AbstractSandboxController from './AbstractSandboxController.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
-import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
+import Bag from '../../core/app/Components/Bag.js';
 import Viewer from '../../core/source/Viewer.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
@@ -37,10 +37,10 @@ export default class DevUISystemController extends AbstractSandboxController {
         let viewer = new Viewer();
 
         let itemStorage = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 2);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 2);
         // console.log(itemStorage);
 
         // itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).view(viewer);

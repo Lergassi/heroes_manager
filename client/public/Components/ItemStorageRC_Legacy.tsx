@@ -5,7 +5,7 @@ import Icon from '../../../core/app/Entities/Icon.js';
 import {assert, assertIsGreaterThanOrEqual, assertIsNumber, assertNotNil} from '../../../core/source/assert.js';
 import ItemStorageSlotRC from './ItemStorageSlotRC.js';
 import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
-import ItemStorageV2 from '../../../core/app/Components/ItemStorageV2.js';
+import Bag from '../../../core/app/Components/Bag.js';
 import Item from '../../../core/app/Entities/Item.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 import ItemSlotRC from './ItemSlotRC.js';

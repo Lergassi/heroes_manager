@@ -3,10 +3,13 @@ import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {LocationState} from '../../../core/app/Components/Location.js';
-import MainLocationList from '../../../core/app/Components/MainLocationList.js';
+import MainLocationList, {MainLocationListRender} from '../../../core/app/Components/MainLocationList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
+import GameObject from '../../../core/source/GameObject.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemCount, UI_VeinItemCount} from '../../../core/types/main.js';
+import UIUpdater from '../../app/UIUpdater.js';
+import DetailLocationRC from './DetailLocationRC.js';
 
 export interface MainLocationListRCProps {
     container: ContainerInterface;
@@ -23,6 +26,7 @@ export interface MainLocationListRCState {
 }
 
 export interface MainLocationListRCElement {
+    location: GameObject;
     ID: string;
     level: number;
     state: string;
@@ -35,7 +39,7 @@ export interface MainLocationListRCElement {
     loot: UI_ItemCount[];
 }
 
-export default class MainLocationListRC extends React.Component<MainLocationListRCProps, MainLocationListRCState> {
+export default class MainLocationListRC extends React.Component<MainLocationListRCProps, MainLocationListRCState> implements MainLocationListRender {
     constructor(props: MainLocationListRCProps) {
         super(props);
 
@@ -49,6 +53,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
         };
 
         this.props.container.set<MainLocationListRC>(ServiceID.UI_MainLocationList, this);
+        this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
     }
 
     updateByRequest(): void {
@@ -71,7 +76,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Список локаций</div>
+                    <div className={'widget__title'}>Локации</div>
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
@@ -84,6 +89,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                     <th>veins</th>
                                     <th>loot</th>
                                     <th>money</th>
+                                    <th>Управление</th>
                                 </tr>
                                 {_.map(this.state.locations, (location, index) => {
                                     return <tr key={index}>
@@ -109,6 +115,11 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                             </ul>
                                         </td>
                                         <td>{location.money}</td>
+                                        <td>
+                                            <button onClick={() => {
+                                                this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
+                                            }}>detail</button>
+                                        </td>
                                     </tr>
                                 })}
                             </tbody>

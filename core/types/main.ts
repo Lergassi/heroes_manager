@@ -38,10 +38,26 @@ export type UI_ItemCount = {
     count: number;
 }
 
+export type UI_ItemStorage = {
+    ID: number;
+    slots: UI_ItemStorageSlot[];
+}
+
+export type UI_ItemStorageSlot = {
+    ID: number;
+    item: UI_ItemCount;
+}
+
 export type UI_VeinItemCount = {
     itemName: string;
     startCount: number;
     count: number;
+}
+
+export type UI_ShortHero = {
+    ID: string;
+    heroClassID: string;
+    level: number;
 }
 
 //ID = ID CurrencyAlias todo: Теги тоже в переменные?

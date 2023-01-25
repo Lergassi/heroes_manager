@@ -2,7 +2,7 @@ import debug from 'debug';
 import React from 'react';
 import ReactDOM, {Root} from 'react-dom/client';
 import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
-import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
+import Bag from '../../core/app/Components/Bag.js';
 import Location from '../../core/app/Components/Location.js';
 import MainHeroList from '../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../core/app/Components/MainLocationList.js';
@@ -25,6 +25,7 @@ import ContainerInterface from '../../core/source/ContainerInterface.js';
 import AppError from '../../core/source/Errors/AppError.js';
 import GameConsole from '../../core/source/GameConsole/GameConsole.js';
 import GameObject from '../../core/source/GameObject.js';
+import GameObjectStorage from '../../core/source/GameObjectStorage.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {CommandID} from '../../core/types/enums/CommandID.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
@@ -136,11 +137,11 @@ export default class SandboxUI {
         let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(size);
 
         //todo: В заготовки.
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.WoodBoards), 12);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 5);
-        itemStorage.get<ItemStorageV2>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.PlateHelmet01), 5);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.WoodBoards), 12);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 5);
+        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.PlateHelmet01), 5);
 
         // itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorageComponent).show();
         // console.log(itemStorage);
@@ -381,7 +382,7 @@ export default class SandboxUI {
         let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
         let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
 
-        let mainHeroList = new MainHeroList(100);
+        let mainHeroList = new MainHeroList(this._container.get<GameObjectStorage>(ServiceID.GameObjectStorage), 100);
 
         // mainHeroList.addHero(heroFactory.create(HeroClassID.Warrior, 1));
         // mainHeroList.addHero(heroFactory.create(HeroClassID.Warrior, 1));
@@ -417,7 +418,7 @@ export default class SandboxUI {
         let warrior = heroFactory.create(em.get<HeroClass>(EntityID.HeroClass, HeroClassID.Warrior), 1);
         let rogue = heroFactory.create(em.get<HeroClass>(EntityID.HeroClass, HeroClassID.Rogue), 1);
 
-        let mainHeroList = new MainHeroList(100);
+        let mainHeroList = new MainHeroList(this._container.get<GameObjectStorage>(ServiceID.GameObjectStorage), 100);
         // mainHeroList.addHero(warrior);
         // mainHeroList.addHero(rogue);
 
@@ -444,9 +445,9 @@ export default class SandboxUI {
 
         this._root.render(
             <div>
-                <DetailHeroRC
-                    container={this._container}
-                />
+                {/*<DetailHeroRC*/}
+                {/*    container={this._container}*/}
+                {/*/>*/}
                 {/*<MainHeroListRC*/}
                 {/*    container={this._container}*/}
                 {/*    mainHeroList={mainHeroList}*/}
@@ -486,9 +487,9 @@ export default class SandboxUI {
 
         this._root.render(
             <div>
-                <DetailLocationRC
-                    container={this._container}
-                />
+                {/*<DetailLocationRC*/}
+                {/*    container={this._container}*/}
+                {/*/>*/}
                 {/*<LocationRC*/}
 
                 {/*/>*/}
@@ -538,12 +539,12 @@ export default class SandboxUI {
         window['app']['sandbox']['mainLocationList'] = mainLocationList;
         window['app']['sandbox']['allStart'] = () => {
             for (let i = 0; i < locations.length; i++) {
-                locations[i].get<Location>(ComponentID.Location).start();
+                locations[i].get<Location>(ComponentID.Location).startHunting();
             }
         };
         window['app']['sandbox']['allStop'] = () => {
             for (let i = 0; i < locations.length; i++) {
-                locations[i].get<Location>(ComponentID.Location).stop();
+                locations[i].get<Location>(ComponentID.Location).stopHunting();
             }
         };
         window['app']['sandbox']['allGetRewards'] = () => {

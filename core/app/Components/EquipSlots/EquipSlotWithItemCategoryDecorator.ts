@@ -35,8 +35,8 @@ export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInte
         return this._equipSlot.equip(item);
     }
 
-    clear(): boolean {
-        return this._equipSlot.clear();
+    clear(): void {
+        this._equipSlot.clear();
     }
 
     moveTo(itemStorage: ItemStorageInterface): boolean {

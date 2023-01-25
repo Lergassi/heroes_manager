@@ -225,6 +225,7 @@ export default class HeroFactory {
                 },
             ));
         }
+        console.log(hero.get<CharacterAttributeID>(CharacterAttributeID.Agility));
 
         // characterAttributes[CharacterAttributeID.ItemLevel] = new CharacterAttribute(CharacterAttributeID.ItemLevel, itemCharacterAttributeCollector, 0);
 

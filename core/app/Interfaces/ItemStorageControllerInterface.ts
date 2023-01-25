@@ -22,6 +22,5 @@ export default interface ItemStorageControllerInterface {
      * @return Итоговое кол-во ItemStorage, -1 в случае ошибки.
      */
     removeItemStorage(itemStorage: GameObject): number;
-    render(callback: (itemStorages: GameObject[]) => void);
     renderByRequest(ui: ItemStorageControllerInterfaceRender): void;
 }

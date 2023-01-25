@@ -4,7 +4,7 @@ import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInter
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import Shop from '../../core/app/Components/Shop.js';
-import ItemStorageV2 from '../../core/app/Components/ItemStorageV2.js';
+import Bag from '../../core/app/Components/Bag.js';
 import Item from '../../core/app/Entities/Item.js';
 import Fence from '../../core/app/Components/Fence.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
@@ -24,7 +24,7 @@ export default class ShopSandboxController extends AbstractSandboxController {
         console.log(wallet.value);
 
         // let itemStorage = new InfinityItemStorage();
-        let itemStorage = new ItemStorageV2(5, em);
+        let itemStorage = new Bag(5, em);
 
         // console.log(wallet.remove(10));
         // console.log(wallet.remove(10));
@@ -60,7 +60,7 @@ export default class ShopSandboxController extends AbstractSandboxController {
         });
         console.log(fence);
 
-        let itemStorage = new ItemStorageV2(5, em);
+        let itemStorage = new Bag(5, em);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 9);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);

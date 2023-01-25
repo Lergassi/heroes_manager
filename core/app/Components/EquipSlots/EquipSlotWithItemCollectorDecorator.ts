@@ -29,19 +29,18 @@ export default class EquipSlotWithItemCollectorDecorator implements EquipSlotInt
         return this._equipSlot.equip(item);
     }
 
-    clear(): boolean {
-        if (!this._equipSlot.clear()) return false;
-
+    clear(): void {
+        this._equipSlot.clear();
         this._itemAttributeCollectionComponent.removeItem(this._item);
         this._item = null;
-
-        return true;
     }
 
     moveTo(itemStorage: ItemStorageInterface): boolean {
         if (!this._equipSlot.moveTo(itemStorage)) return false;
 
-        return this.clear();
+        this.clear();
+
+        return true;
     }
 
     isFree(): boolean {

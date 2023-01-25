@@ -2,9 +2,15 @@ export enum EquipSlotID {
     Head = 'Head',
     Shoulders = 'Shoulders',
     Chest = 'Chest',
-    Wrist = 'Wrist',    //запястье
+    /**
+     * Запястье.
+     */
+    Wrist = 'Wrist',
     Hands = 'Hands',
-    Waist = 'Waist',    //талия
+    /**
+     * Талия.
+     */
+    Waist = 'Waist',
     Legs = 'Legs',
     Foots = 'Foots',
 

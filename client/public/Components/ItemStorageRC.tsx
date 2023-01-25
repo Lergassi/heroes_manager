@@ -8,7 +8,8 @@ import {assertIsGreaterThanOrEqual} from '../../../core/source/assert.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import {UI_ItemCount} from '../../../core/types/main.js';
+import {UI_ItemCount, UI_ItemStorageSlot} from '../../../core/types/main.js';
+import UIUpdater from '../../app/UIUpdater.js';
 
 export interface PlayerTableItemStorageRCProps {
     ID: string;
@@ -21,7 +22,8 @@ export interface PlayerTableItemStorageRCProps {
 export interface PlayerTableItemStorageRCState {
     itemStorage: ItemStorageInterface;
     // itemStorageID: string;
-    slots: UI_ItemCount[];
+    // slots: UI_ItemCount[];
+    slots: UI_ItemStorageSlot[];
 }
 
 export default class ItemStorageRC extends React.Component<PlayerTableItemStorageRCProps, PlayerTableItemStorageRCState> implements ItemStorageInterfaceRender {
@@ -37,8 +39,11 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
         this.state = {
             slots: _.map(_.range(0, this._size), (index) => {
                 return {
-                    itemName: undefined,
-                    count: undefined,
+                    ID: index,
+                    item: {
+                        itemName: undefined,
+                        count: undefined,
+                    },
                 };
             }),
             itemStorage: props.itemStorage,
@@ -47,18 +52,25 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
 
         // this.props.container.set<PlayerTableItemStorageRC>(ServiceID.UI_PlayerItemStorage + '.', this)
         this.props.container.set<ItemStorageRC>(props.ID, this);
+        this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
+
+        this.clear = this.clear.bind(this);
     }
 
     updateByRequest(): void {
         this.props.itemStorage.renderByRequest(this);
     }
 
-    updateItems(items: UI_ItemCount[]) {
+    updateItems(items: UI_ItemStorageSlot[]) {
         this.setState((state) => {
             return {
                 slots: items,
             } as PlayerTableItemStorageRCState;
         });
+    }
+
+    clear(index: number) {
+        this.state.itemStorage.clear(index);
     }
 
     render() {
@@ -71,9 +83,9 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
                             <tbody>
                                 {_.map(this.state.slots, (slot, index) => {
                                     return <tr key={index}>
-                                        <td>{slot.itemName}</td>
-                                        <td>{slot.count}</td>
-                                        <td>Очистить, разделить</td>
+                                        <td>{slot.item.itemName}</td>
+                                        <td>{slot.item.count}</td>
+                                        <td><button className={'btn btn_default'} onClick={this.clear.bind(this, index)}>clear</button></td>
                                     </tr>
                                 })}
                             </tbody>

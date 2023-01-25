@@ -13,7 +13,7 @@ export default class CreateLocationCommand extends Command {
     configure() {
         super.configure();
 
-        this.addArgument('level', '', true);
+        this.addArgument('level', '', false, '1');
     }
 
     async execute(input: Input) {

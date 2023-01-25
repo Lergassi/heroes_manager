@@ -33,40 +33,11 @@ export default class GatheringPoint {
     }
 
     /**
-     *
-     * @param gatherer
-     * @return Остаток в жиле.
-     */
-    gather(gatherer: GathererInterface): unsigned {
-        assertNotNil(gatherer);
-
-        if (!this.canGather()) return 0;
-        // if (!gatherer.()) return 0;
-
-        let count = this._generateCount();
-        let reminder = gatherer.add(this._item, count);
-        if (reminder !== count) {
-            this._count -= count - reminder;
-        }
-
-        return this._count;
-    }
-
-    gather2(): number {
-        if (!this.canGather()) return 0;
-
-        let count = this._generateCount();
-        this._count -= count;
-
-        return count;
-    }
-
-    /**
      * todo: Только другим разработчикам и самому себе не понятно будет как этим пользоваться и зачем нужен посредник в виде Gatherer. Хотя вроде как очевидно, что при таком использовании жила не звисит от игрока, и поэтому явно нужна зависимость от состояния героя.
      * @param itemStorage
      * @return Остаток в жиле.
      */
-    gather3(itemStorage: ItemStorageInterface): unsigned {
+    gather(itemStorage: ItemStorageInterface): unsigned {
         if (!this.canGather()) return 0;
 
         let count = this._generateCount();
@@ -85,6 +56,10 @@ export default class GatheringPoint {
         return _.random(this._minCountForGather, this._maxCountForGather <= this._count ? this._maxCountForGather : this._count);
     }
 
+    isEmpty(): boolean {
+        return this._count <= 0;
+    }
+
     canGather(): boolean {
         if (this._count <= 0) {
             debug(DebugNamespaceID.Throw)('Жила истощена.');
@@ -92,10 +67,6 @@ export default class GatheringPoint {
         }
 
         return true;
-    }
-
-    isEmpty(): boolean {
-        return this._count <= 0;
     }
 
     renderByRequest(ui: GatheringPointRender): void {

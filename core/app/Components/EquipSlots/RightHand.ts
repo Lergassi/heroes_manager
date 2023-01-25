@@ -26,16 +26,18 @@ export default class RightHand implements EquipSlotInterface {
         return this._equipSlot.equip(item);
     }
 
-    clear(): boolean {
+    clear(): void {
         this._leftHand.unblock();
 
-        return this._equipSlot.clear();
+        this._equipSlot.clear();
     }
 
     moveTo(itemStorage: ItemStorageInterface): boolean {
         if (!this._equipSlot.moveTo(itemStorage)) return false;
 
-        return this.clear();
+        this.clear();
+
+        return true;
     }
 
     isFree(): boolean {

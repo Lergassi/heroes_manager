@@ -105,26 +105,26 @@ export default class MainLocationList {
         let locations: MainLocationListRCElement[] = [];
         for (let i = 0; i < this._locations.length; i++) {
             let locationData: MainLocationListRCElement = {
+                location: this._locations[i],
                 ID: String(this._locations[i].ID),
                 level: 0,
                 lifeEnemiesCount: 0,
                 lifeHeroesCount: 0,
                 loot: [],
                 money: 0,
-                state: undefined,
+                state: '',
                 totalEnemiesCount: 0,
                 totalHeroesCount: 0,
                 veins: [],
             };
 
-            // locationData.ID = String(this._locations[i].ID);
             this._locations[i].get<Location>(ComponentID.Location).renderByRequest({
                 updateState(state: string) {
                     locationData.state = state;
                 },
                 updateEnemies(enemies: DetailLocationRCEnemyElement[]): void {
                     for (let j = 0; j < enemies.length; j++) {
-                        if (!enemies[i].isDead) {
+                        if (!enemies[j].isDead) {
                             locationData.lifeEnemiesCount++;
                         }
                     }
@@ -142,7 +142,6 @@ export default class MainLocationList {
                     locationData.loot = loot;
                 }, updateMoney(value: number): void {
                     locationData.money = value;
-                // }, updateVeins(veins: DetailLocationRCVeinElement[]): void {
                 }, updateVeins(veins: UI_VeinItemCount[]): void {
                     locationData.veins = veins;
                 }

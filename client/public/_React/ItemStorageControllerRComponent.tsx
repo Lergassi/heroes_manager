@@ -52,27 +52,28 @@ export default class ItemStorageControllerRComponent extends React.Component<Ite
 
     render() {
         let result;
-        {this.state.itemStorageController.render((itemStorages) => {
-            // console.log(itemStorages);
-            {result = _.map(itemStorages, (itemStorage) => {
-                return <ItemStorageRComponent
-                    key={itemStorage['_id']}
-                    itemStorage={itemStorage}
-                />
-                // return <PlayerItemStorage
-                //     key={itemStorage['_id']}
-                //     container={this.props.container}
-                //     itemStorage={itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent)}
-                // />
-                // return <ItemStorageUI
-                //     key={itemStorage.ID}
-                //     size={20}
-                //     columns={5}
-                //     />
-            })}
-        })}
+        // {this.state.itemStorageController.render((itemStorages) => {
+        //     // console.log(itemStorages);
+        //     {result = _.map(itemStorages, (itemStorage) => {
+        //         return <ItemStorageRComponent
+        //             key={itemStorage['_id']}
+        //             itemStorage={itemStorage}
+        //         />
+        //         // return <PlayerItemStorage
+        //         //     key={itemStorage['_id']}
+        //         //     container={this.props.container}
+        //         //     itemStorage={itemStorage.get<ItemStorageComponent>(ComponentID.ItemStorageComponent)}
+        //         // />
+        //         // return <ItemStorageUI
+        //         //     key={itemStorage.ID}
+        //         //     size={20}
+        //         //     columns={5}
+        //         //     />
+        //     })}
+        // })}
 
-        return <span>{_.isEmpty(result) ? <span>empty</span> : result}</span>
+        // return <span>{_.isEmpty(result) ? <span>empty</span> : result}</span>
+        return <span></span>
     }
 
     update(): void {

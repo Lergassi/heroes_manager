@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import WalletInterface, {WalletInterfaceRender} from '../../../core/app/Interfaces/WalletInterface.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
+import UIUpdater from '../../app/UIUpdater.js';
 
 export interface WalletRCProps {
     container: ContainerInterface;
@@ -24,6 +25,7 @@ export default class WalletRC extends React.Component<WalletRCProps, WalletRCSta
         };
 
         this.props.container.set<WalletRC>(ServiceID.UI_Wallet, this);
+        this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
     }
 
     updateByRequest(): void {

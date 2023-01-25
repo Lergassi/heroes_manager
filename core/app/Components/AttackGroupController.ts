@@ -1,3 +1,4 @@
+import {assertNotNil} from '../../source/assert.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
 import _ from 'lodash';
 import StateError from '../../source/Errors/StateError.js';
@@ -15,13 +16,17 @@ export default class AttackGroupController implements AttackControllerInterface 
     }
 
     add(attackController: AttackControllerInterface) {
-        if (!_.isNil(attackController) && !_.includes(this._attackControllers, attackController)) {
+        assertNotNil(attackController);
+
+        if (!_.includes(this._attackControllers, attackController)) {
             this._attackControllers.push(attackController);
         }
     }
 
     //todo: Проблема. Можно передать вообще любой интерфейс. И не понятно что должно происходить. В программе реализаций может быть много.
     remove(attackController: AttackControllerInterface) {
+        assertNotNil(attackController);
+
         _.pullAt(this._attackControllers, _.indexOf(this._attackControllers, attackController));
     }
 

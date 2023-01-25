@@ -42,16 +42,15 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         return true;
     }
 
-    clear(): boolean {
-        if (!this.canClear()) return false;
+    clear(): void {
+        // if (!this.canClear()) return;
+        if (this.isFree()) return;
 
         this._averageItemLevel.removeItem(this._item);
         this._itemAttributeCollectionComponent.removeItem(this._item);
         this._item = null;
         EventSystem.event(EquipSlotComponentEventCode.DestroyItemStack, this);
         debug(DebugNamespaceID.Log)('Слот экипировки очищен.');
-
-        return true;
     }
 
     moveTo(itemStorage: ItemStorageInterface): boolean {
@@ -59,7 +58,9 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
             return false;
         }
 
-        return this.clear();
+        this.clear();
+
+        return true;
     }
 
     isFree(): boolean {
@@ -75,14 +76,14 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         return true;
     }
 
-    canClear(): boolean {
-        if (this.isFree()) {
-            debug(DebugNamespaceID.Throw)('Слот пустой.');
-            return false;
-        }
-
-        return true;
-    }
+    // canClear(): boolean {
+    //     if (this.isFree()) {
+    //         // debug(DebugNamespaceID.Throw)('Слот пустой.');
+    //         // return false;
+    //     }
+    //
+    //     return true;
+    // }
 
     renderByRequest(ui: EquipSlotInterfaceRender): void {
         ui.updateEquipSlot?.(this._ID, this._item ? {itemName: this._item.id, count: 1} : {itemName: undefined, count: undefined});

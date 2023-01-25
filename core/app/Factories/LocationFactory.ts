@@ -94,9 +94,9 @@ export default class LocationFactory {
         location.set<Wallet>(CurrencyID.Gold, new Wallet(
             0,
         ));
-        let heroGroupComponent = location.set<HeroGroup>('heroGroupComponent', new HeroGroup(
-            5,
-        ));
+        // let heroGroupComponent = location.set<HeroGroup>('heroGroupComponent', new HeroGroup(
+        //     5,
+        // ));
 
         let itemStorageComponent = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(this._internalItemStorageSize, location));
 

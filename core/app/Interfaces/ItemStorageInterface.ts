@@ -1,15 +1,19 @@
+import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
+import EquipController from '../Components/EquipController.js';
 import Item from '../Entities/Item.js';
-import {UI_ItemCount, unsigned} from '../../types/main.js';
+import {UI_ItemCount, UI_ItemStorageSlot, unsigned} from '../../types/main.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 
 export interface ItemStorageInterfaceRender {
     // updateSlot(index: number, item: Item, count: number);
-    updateItems(items: UI_ItemCount[]);  //todo: Пока так в виде массива данных. Дальше нужно передавать методы.
+    // updateItems(items: UI_ItemCount[]);  //todo: Пока так в виде массива данных. Дальше нужно передавать методы.
+    updateItems(slots: UI_ItemStorageSlot[]);  //todo: Пока так в виде массива данных. Дальше нужно передавать методы.
 }
 
 /**
  * Для сумки и коллекции сумок, стеков и других мест где нужно добавлять предметы.
  * todo: Разделить на сумки и просто классы для управления предметов типа слот экипировки. Интерфейс у обычной сумки и бесконечной не обязательно должен совпадать, особенно в плане рендера. Выделить отдельно интерфейс только на добавление предметов.
+ * todo: Теперь это интерфейс для сумок. Всё что не сумки пока не обязательные методы до момента разделения.
  */
 export default interface ItemStorageInterface {
     /**
@@ -32,6 +36,7 @@ export default interface ItemStorageInterface {
     removeItem(ID: ItemID, count: number): number;
 
     moveTo(itemStorage: ItemStorageInterface): void;
+
     /**
      *
      * @param item
@@ -40,4 +45,13 @@ export default interface ItemStorageInterface {
      */
     canAddItem(item: Item, count: number): number;
     renderByRequest(ui: ItemStorageInterfaceRender): void;
+    clear(index: number): void;
+
+    /**
+     * Только для сумки.
+     * @param itemStorageSlotID
+     * @param equipController
+     * @param equipSlotID
+     */
+    //
 }

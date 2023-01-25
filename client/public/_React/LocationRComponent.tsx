@@ -9,7 +9,7 @@ import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
-import ItemStorageV2 from '../../../core/app/Components/ItemStorageV2.js';
+import Bag from '../../../core/app/Components/Bag.js';
 import ItemStorageRC_Legacy from '../Components/ItemStorageRC_Legacy.js';
 
 export interface LocationRComponentProps {

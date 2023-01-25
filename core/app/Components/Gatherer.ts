@@ -11,26 +11,9 @@ import LifeStateController from './LifeStateController.js';
 
 export default class Gatherer implements GathererInterface {
     private readonly _lifeStateController: LifeStateController;
-    private readonly _itemStorage: ItemStorageInterface;
 
-    constructor(lifeStateController: LifeStateController, itemStorage?: ItemStorageInterface) {
+    constructor(lifeStateController: LifeStateController) {
         this._lifeStateController = lifeStateController;
-        this._itemStorage = itemStorage;
-    }
-
-    add(item: Item, count: unsigned): unsigned {
-        if (!this.canGather()) return count;
-
-        return this._itemStorage.addItem(item, count);
-    }
-
-    gather2(gatheringPoint: GatheringPoint): unsigned {
-        if (!this.canGather()) return 0;
-
-        let count = gatheringPoint.gather2();
-        if (count) {
-            // this._itemStorage.addItem();
-        }
     }
 
     /**
@@ -39,10 +22,10 @@ export default class Gatherer implements GathererInterface {
      * @param itemStorage
      * @return Остаток в жиле.
      */
-    gather3(gatheringPoint: GatheringPoint, itemStorage: ItemStorageInterface): unsigned {
+    gather(gatheringPoint: GatheringPoint, itemStorage: ItemStorageInterface): unsigned {
         if (!this.canGather()) return 0;
 
-        return gatheringPoint.gather3(itemStorage);
+        return gatheringPoint.gather(itemStorage);
     }
 
     canGather(): boolean {

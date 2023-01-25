@@ -202,6 +202,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
     },
     [HeroClassID.Support3]: {
         [CharacterAttributeID.Strength]: [6, 9],
+        [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],
         [CharacterAttributeID.Protection]: [100, 100],
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],
@@ -209,6 +210,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
     },
     [HeroClassID.Druid]: {
         [CharacterAttributeID.Strength]: [6, 9],
+        [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],
         [CharacterAttributeID.Protection]: [100, 100],
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],

@@ -1,35 +1,25 @@
+import {UNDEFINED_INJECT_ANNOTATION} from 'inversify/lib/constants/error_msgs.js';
+import ReactDOM from 'react-dom/client';
+import Experience from '../../core/app/Components/Experience.js';
+import HeroComponent from '../../core/app/Components/HeroComponent.js';
 import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
+import MainHeroList from '../../core/app/Components/MainHeroList.js';
+import MainLocationList from '../../core/app/Components/MainLocationList.js';
+import ItemStorageInterface from '../../core/app/Interfaces/ItemStorageInterface.js';
+import WalletInterface from '../../core/app/Interfaces/WalletInterface.js';
+import ContainerInterface from '../../core/source/ContainerInterface.js';
+import AppError from '../../core/source/Errors/AppError.js';
+import GameConsole from '../../core/source/GameConsole/GameConsole.js';
+import {ComponentID} from '../../core/types/enums/ComponentID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
+import {UI_ShortHero} from '../../core/types/main.js';
 import UIUpdater from '../app/UIUpdater.js';
 import GameConsoleRComponent from './_React/GameConsoleRComponent.js';
-import ReactDOM from 'react-dom/client';
-import ContainerInterface from '../../core/source/ContainerInterface.js';
-import GameConsole from '../../core/source/GameConsole/GameConsole.js';
-import MainHeroListRComponent from './_React/MainHeroListRComponent.js';
-import MainHeroList from '../../core/app/Components/MainHeroList.js';
-import AppError from '../../core/source/Errors/AppError.js';
-import SandboxRComponent from './_React/SandboxRComponent.js';
-import MainLocationListRComponent from './_React/MainLocationListRComponent.js';
-import MainLocationList from '../../core/app/Components/MainLocationList.js';
-import ItemStorageControllerRComponent from './_React/ItemStorageControllerRComponent.js';
-import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import ItemStorageControllerInterface from '../../core/app/Interfaces/ItemStorageControllerInterface.js';
-import {WalletRComponent} from './_React/WalletRComponent.js';
-import GameObjectStorage from '../../core/source/GameObjectStorage.js';
-import {CurrencyID} from '../../core/types/enums/CurrencyID.js';
-import {ComponentID} from '../../core/types/enums/ComponentID.js';
-import WalletInterface from '../../core/app/Interfaces/WalletInterface.js';
-import Wallet from '../../core/app/Components/Wallet.js';
-import {Example} from './_React/Test/Example.js';
-import useCustomHook from './_React/Test/test.js';
-import PlayerItemStorage from './_React/PlayerItemStorage.js';
-import WalletRC2 from './_React/WalletRC2.js';
-import Currency from '../../core/app/Entities/Currency.js';
 import DetailHeroRC from './Components/DetailHeroRC.js';
 import DetailLocationRC from './Components/DetailLocationRC.js';
-import ItemStorageRC_Legacy from './Components/ItemStorageRC_Legacy.js';
+import EquipItemListRC from './Components/EquipItemListRC.js';
 import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
 import MainHeroListRC from './Components/MainHeroListRC.js';
-import MainHeroListRC_Legacy from './Components/MainHeroListRC_Legacy.js';
 import MainLocationListRC from './Components/MainLocationListRC.js';
 import WalletRC from './Components/WalletRC.js';
 
@@ -82,6 +72,28 @@ export default class GameUI {
     }
 
     private _renderGameUI(root) {
+        //todo: Временные данные.
+        let heroes: UI_ShortHero[] = [];
+        this._container.get<MainHeroList>(ServiceID.MainHeroList).map((hero) => {
+            let data = {
+                ID: String(hero.ID),
+            } as UI_ShortHero;
+
+            hero.get<HeroComponent>(ComponentID.Hero).renderByRequest({
+                updateHeroClassName(value: string) {
+                    data.heroClassID = value;
+                }
+            });
+
+            hero.get<Experience>(ComponentID.Experience).renderByRequest({
+                updateLevel(value: number) {
+                    data.level = value;
+                },
+            });
+
+            heroes.push(data);
+        });
+
         root.render(
             <div>
                 <MainHeroListRC
@@ -90,6 +102,7 @@ export default class GameUI {
                 />
                 <DetailHeroRC
                     container={this._container}
+                    itemStorage={this._container.get<ItemStorageInterface>(ServiceID.ItemStorageController)}
                 />
                 <MainLocationListRC
                     container={this._container}
@@ -97,6 +110,7 @@ export default class GameUI {
                 />
                 <DetailLocationRC
                     container={this._container}
+                    mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
                 />
                 <WalletRC
                     container={this._container}

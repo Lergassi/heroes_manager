@@ -89,7 +89,7 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
         return (
             <div className={'block'}>
                 <div>Hero</div>
-                <button onClick={this.hide}>Закрыть</button>
+                <button onClick={this.hide}>close</button>
                 <table className={'basic-table'}>
                     <tbody>
                     <tr>
