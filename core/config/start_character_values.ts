@@ -1,11 +1,7 @@
 import {HeroClassID} from '../types/enums/HeroClassID.js';
 import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
 
-// type __ = Pick<CharacterAttributeID, CharacterAttributeID.Strength>;
-// export type CharacterAttributeConfig = {[id in HeroClassID]?: {[id in CharacterAttributeID]?: number[]}};
-// export type CharacterAttributeConfig = {[id in HeroClassID]?: {[id in __]?: number[]}};
 export type CharacterAttributeConfig = {[id in CharacterAttributeID]?: number[]};
-// export type StartCharacterAttributeConfig = {[id in HeroClassID]?: {[id in CharacterAttributeID]?: number[]}};
 export type StartCharacterAttributeConfig = {[id in HeroClassID]?: CharacterAttributeConfig};
 
 let defaultValues = {
@@ -15,7 +11,6 @@ let defaultValues = {
     [CharacterAttributeID.AttackPower]: [16, 20],
 };
 
-// export let startCharacterAttributeConfig = {
 export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
     [HeroClassID.Tank1]: {
         //Слабее атака, но сильнее защите, поэтому дешевле.

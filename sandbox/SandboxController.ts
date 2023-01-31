@@ -55,6 +55,7 @@ import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
 import Bag from '../core/app/Components/Bag.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
+import GenerateItemsSandboxController from './SandboxControllers/GenerateItemsSandboxController.js';
 import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
 import DevUISystemController from './SandboxControllers/DevUISystemController.js';
 import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseController.js';
@@ -100,7 +101,8 @@ export default class SandboxController {
         // (new RecipesSandboxController(this._container)).run();
         // (new ShopSandboxController(this._container)).run();
         // (new EntityManagerSandboxController(this._container)).run();
-        (new HeroSandboxController(this._container)).run();
+        // (new HeroSandboxController(this._container)).run();
+        (new GenerateItemsSandboxController(this._container)).run();
 
         // this._testSumBoolean();
         // this._testLodashEvery();
