@@ -443,7 +443,7 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.OneHandedSwords,
-                ItemCategoryID.OneHandedAxes,
+                // ItemCategoryID.OneHandedAxes,
             ],
             [
                 ItemCategoryID.Shields,
@@ -464,7 +464,7 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.OneHandedSwords,
-                ItemCategoryID.OneHandedAxes,
+                // ItemCategoryID.OneHandedAxes,
             ],
             [
                 ItemCategoryID.Shields,
@@ -561,7 +561,7 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.TwoHandedSwords,
-                ItemCategoryID.TwoHandedAxes,
+                // ItemCategoryID.TwoHandedAxes,
             ],
         );
         heroClassFactory.create(
@@ -578,11 +578,11 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.TwoHandedSwords,
-                ItemCategoryID.TwoHandedAxes,
+                // ItemCategoryID.TwoHandedAxes,
             ],
             [
                 ItemCategoryID.TwoHandedSwords,
-                ItemCategoryID.TwoHandedAxes,
+                // ItemCategoryID.TwoHandedAxes,
             ],
         );
         heroClassFactory.create(
@@ -600,11 +600,11 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.OneHandedSwords,
-                ItemCategoryID.OneHandedAxes,
+                // ItemCategoryID.OneHandedAxes,
             ],
             [
                 ItemCategoryID.OneHandedSwords,
-                ItemCategoryID.OneHandedAxes,
+                // ItemCategoryID.OneHandedAxes,
             ],
         );
         heroClassFactory.create(
@@ -658,7 +658,7 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.Bows,
-                ItemCategoryID.Crossbows,
+                // ItemCategoryID.Crossbows,
             ],
         );
         heroClassFactory.create(
@@ -735,7 +735,7 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.Staffs,  //todo: Перчакти вместо оружия.
-                ItemCategoryID.Wands,
+                // ItemCategoryID.Wands,
             ],
             [
                 ItemCategoryID.Wands,
@@ -755,10 +755,10 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.Staffs,
-                ItemCategoryID.Wands,
+                // ItemCategoryID.Wands,
             ],
             [
-                ItemCategoryID.Wands,
+                // ItemCategoryID.Wands,
             ],
         );
         heroClassFactory.create(
@@ -775,10 +775,10 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.Staffs,
-                ItemCategoryID.Wands,
+                // ItemCategoryID.Wands,
             ],
             [
-                ItemCategoryID.Wands,
+                // ItemCategoryID.Wands,
             ],
         );
         heroClassFactory.create(
@@ -795,10 +795,10 @@ export default class EntityManagerBuilder {
             ],
             [
                 ItemCategoryID.Staffs,
-                ItemCategoryID.Wands,
+                // ItemCategoryID.Wands,
             ],
             [
-                ItemCategoryID.Wands,
+                // ItemCategoryID.Wands,
             ],
         );
         heroClassFactory.create(

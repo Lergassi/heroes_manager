@@ -1,7 +1,7 @@
 /**
  * Не путать с категориями и слотами.
  */
-export enum EquipTypeID {
+export enum EquipItemTypeID {
     Helmet = 'Helmet',
     ShoulderPads = 'ShoulderPads',
     Breastplate = 'Breastplate',
@@ -13,7 +13,7 @@ export enum EquipTypeID {
     Amulet = 'Amulet',
     Ring = 'Ring',
     Trinket = 'Trinket',
-    Shield = 'Shield',
     OneHandedWeapon = 'OneHandedWeapon',
     TwoHandedWeapon = 'TwoHandedWeapon',
+    Shield = 'Shield',
 }

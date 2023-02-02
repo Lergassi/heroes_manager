@@ -60,4 +60,21 @@ export enum ServiceID {
     UI_MainHeroList = 'player.ui.MainHeroList',
     UI_DetailLocation = 'player.ui.DetailLocation',
     UI_MainLocationList = 'player.ui.MainLocationList',
+
+    //data
+    Data_ItemCategoryPowerRatio = 'Data_ItemCategoryPowerRatio',
+
+    //...
+    Data_CommonArmorSet = 'Data_CommonArmorSet',
+    Data_WeaponSet = 'Data_WeaponSet',
+    // Data_HealthPointsEquipSet = 'Data_HealthPointsEquipSet',
+    // Data_AttackPowerEquipSet = 'Data_AttackPowerEquipSet',
+    Data_EquipSet = 'Data_EquipSet',
+
+    // Data_WarriorEquipSet = 'Data_WarriorEquipSet',
+    // Data_RogueWeaponSet = 'Data_RogueWeaponSet',
+    // Data_GunslingerWeaponSet = 'Data_GunslingerWeaponSet',
+    // Data_FireMageWeaponSet = 'Data_FireMageWeaponSet',
+    // Data_Support1WeaponSet = 'Data_Support1WeaponSet',
+    //... и тд
 }

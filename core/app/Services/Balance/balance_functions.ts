@@ -2,10 +2,12 @@ import _ from 'lodash';
 
 /**
  * Округляются до целого только целевые значения: атрибут, хп.
+ * todo: Формулы надо переделать. Чтобы в аргументах были только данные, а константы уже были внутри. Формулы можно представить в виде классов, в которых будут в том числе обратные формулы.
  */
 
 function enemyDamageToHero(heroHealthPoints: number, ratio: number, fightTime: number): number {
-    return _.round(heroHealthPoints * ratio / fightTime, 2)
+    // return _.round(heroHealthPoints * ratio / fightTime, 2);
+    return _.round(heroHealthPoints * ratio, 2);
 }
 
 function dpsByDamage(damage: number, fightTime: number): number {
@@ -32,8 +34,22 @@ function itemAttackPowerByBreastplate(breastplateAttackPower: number, ratio: num
     return _.round(breastplateAttackPower * ratio, 2);
 }
 
+/**
+ * Обратная формула: attackPowerByCharacterAttribute
+ * @param attackPower
+ * @param ratio
+ */
 function itemCharacterAttributeByAttackPower(attackPower: number, ratio: number): number {
     return _.round(attackPower / ratio);
+}
+
+/**
+ * Обратная формула: itemCharacterAttributeByAttackPower
+ * @param characterAttribute
+ * @param ratio
+ */
+function attackPowerByCharacterAttribute(characterAttribute: number, ratio: number): number {
+    return _.round(characterAttribute * ratio);
 }
 
 function heroLevelByItemLevel(itemLevel: number, itemLevelStep: number): number {
@@ -44,9 +60,7 @@ function heroHealthPointsByLevel(level: number, healthPointsStep: number): numbe
     return _.round(level * healthPointsStep, 2);
 }
 
-function attackPowerByCharacterAttribute(characterAttribute: number, ratio: number): number {
-    return _.round(characterAttribute * ratio);
-}
+
 
 function heroHealthPoints(heroLevel: number, healthPointsStep: number): number {
     return _.round(heroLevel * healthPointsStep, 2);

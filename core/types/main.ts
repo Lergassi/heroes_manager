@@ -5,6 +5,8 @@ import {CharacterAttributeID} from './enums/CharacterAttributeID.js';
 import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import CharacterAttributeInterface from '../app/Decorators/CharacterAttributeInterface.js';
 import {EnemyID} from './enums/EnemyID.js';
+import {HeroClassID} from './enums/HeroClassID.js';
+import {ItemCategoryID} from './enums/ItemCategoryID.js';
 
 export type integer = number;
 export type unsigned = number;
@@ -65,3 +67,6 @@ export type UI_ShortHero = {
 //     Gold = 'Wallet.Gold',
 //     ResearchPoints = 'Wallet.ResearchPoints',
 // }
+
+export type ItemCategoryPowerRatio = {[ID in ItemCategoryID]?: {ratio: number}};
+// export type EquipSet = {[ID in HeroClassID]?: {[ID in ItemCategoryID]?: {count: number}}}[];

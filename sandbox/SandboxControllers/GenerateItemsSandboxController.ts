@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import balance from '../../core/app/Services/Balance/balance.js';
+import balance from '../../core/app/Services/Balance/balance_functions.js';
 import ItemCharacterAttributeGenerator from '../../core/app/Services/Balance/ItemCharacterAttributeGenerator.js';
 import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
+import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
@@ -12,11 +13,12 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
 
     run(): void {
         // this._getStarted();
-        // this._devStartValues();
+        this._devStartValues();
         // this._averageItemLevel();
         // this._massAverageItemLevel();
         // this._devAPI();
         this._testAPI();
+        // this._devGenerateItems();
     }
 
     private _getStarted() {
@@ -93,8 +95,8 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         constValues.enemyDamageToHeroPart = 0.3;
 
         constValues.rawDamageRatioFromFullEquip = 0.1;
-        // constValues.attackPowerByCharacterAttributeRatio = 2;
-        constValues.attackPowerByCharacterAttributeRatio = 0.5;
+        constValues.attackPowerByCharacterAttributeRatio = 2;
+        // constValues.attackPowerByCharacterAttributeRatio = 0.5;
 
         constValues.heroHealthPointsStep = 50;
         constValues.itemLevelStep = 4.5;
@@ -125,12 +127,14 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             [ItemCategoryID.Pants]: {ratio: 0.6, count: 1},
             [ItemCategoryID.Boots]: {ratio: 0.4, count: 1},
 
-            [ItemCategoryID.Amulets]: {ratio: 0.6, count: 1},
-            [ItemCategoryID.Rings]: {ratio: 0.3, count: 2},
+            [ItemCategoryID.Amulets]: {ratio: 0.6, count: 1},   //9
+            [ItemCategoryID.Rings]: {ratio: 0.3, count: 2},     //10,11
 
             // [ItemCategoryID.Trinkets]: {ratio: 4, count: 1},
 
-            [ItemCategoryID.OneHandedSwords]: {ratio: 2, count: 2},
+            // [ItemCategoryID.OneHandedSwords]: {ratio: 2, count: 2}, //12
+            [ItemCategoryID.OneHandedSwords]: {ratio: 2, count: 1}, //12
+            // [ItemCategoryID.Shields]: {ratio: 8, count: 1}, //12
             // [ItemCategoryID.TwoHandedSwords]: {ratio: 4, count: 1},
         };
 
@@ -321,17 +325,17 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
     private _devAPI() {
         let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
 
-        // let heroHealthPoints = itemCharacterAttributeGenerator.healthPoints(110, ItemCategoryID.Helmets);
+        // let heroHealthPoints = itemCharacterAttributeGeneratorCharacterAttributeID.HealthPoints(110, ItemCategoryID.Helmets);
         // console.log('heroHealthPoints', heroHealthPoints);
 
         // let itemLevels = _.range(0, 501, 10);
         // _.map(itemLevels, (itemLevel) => {
-        //     console.log(itemCharacterAttributeGenerator.healthPoints(itemLevel, ItemCategoryID.Rings));
+        //     console.log(itemCharacterAttributeGeneratorCharacterAttributeID.HealthPoints(itemLevel, ItemCategoryID.Rings));
         // });
 
-        console.log(itemCharacterAttributeGenerator.characterAttribute(100, ItemCategoryID.Helmets));
-        console.log(itemCharacterAttributeGenerator.characterAttribute(100, ItemCategoryID.Breastplates));
-        console.log(itemCharacterAttributeGenerator.characterAttribute(100, ItemCategoryID.Rings));
+        console.log(itemCharacterAttributeGenerator.characterAttribute(100, HeroClassID.Warrior, ItemCategoryID.Helmets));
+        console.log(itemCharacterAttributeGenerator.characterAttribute(100, HeroClassID.Warrior, ItemCategoryID.Breastplates));
+        console.log(itemCharacterAttributeGenerator.characterAttribute(100, HeroClassID.Warrior, ItemCategoryID.Rings));
         // _.map(itemLevels, (itemLevel) => {
         //     // console.log(itemCharacterAttributeGenerator.characterAttribute(itemLevel, ItemCategoryID.Rings));
         //     itemCharacterAttributeGenerator.characterAttribute(itemLevel, ItemCategoryID.Rings);
@@ -339,25 +343,70 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
     }
 
     private _testAPI() {
+        console.log('---');
         let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
 
-        let itemLevel = 225;
+        // let itemLevel = 10;
+        let itemLevel = 100;
+        // let heroClassID = HeroClassID.Warrior;
+        let heroClassID = HeroClassID.Rogue;
         let itemCategoryID = ItemCategoryID.Breastplates;
         console.log({
             healthPoints: itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategoryID),
-            strength: itemCharacterAttributeGenerator.characterAttribute(itemLevel, itemCategoryID),
+            strength: itemCharacterAttributeGenerator.characterAttribute(itemLevel, HeroClassID.Warrior, itemCategoryID),
+        });
+
+        // let armorSet = this.container.get(ServiceID.Data_CommonArmorSet);
+        // let weaponSets = this.container.get(ServiceID.Data_WeaponSet);
+        let healthPointsSum = 0;
+        let characterAttributeSum = 0;
+        // let commonArmorSet = this.container.get(ServiceID.Data_CommonArmorSet) as any;/* Без as {} выдает ошибку. Ниже если с получением по ключу ошибки нету. */
+        let warriorEquipSet = this.container.get(ServiceID.Data_EquipSet)[heroClassID];
+        // console.log('commonArmorSet', commonArmorSet);
+        // console.log('warriorEquipSet', warriorEquipSet);
+        // _.map(commonArmorSet, (data: any, itemCategoryID) => {
+        _.map(warriorEquipSet, (data: any, itemCategoryID) => {
+            _.map(_.range(0, data.count), (index) => {
+                let healthPoints = itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategoryID as ItemCategoryID);
+                let characterAttribute = itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, itemCategoryID as ItemCategoryID);
+                healthPointsSum += healthPoints;
+                characterAttributeSum += characterAttribute;
+                console.log({
+                    itemCategoryID: itemCategoryID,
+                    healthPoints: healthPoints,
+                    characterAttribute: characterAttribute,
+                });
+            });
+        });
+        console.log('---');
+        // _.map(warriorEquipSet, (data: any, itemCategoryID) => {
+        //     _.map(_.range(0, data.count), (index) => {
+        //         let characterAttribute = itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, itemCategoryID as ItemCategoryID);
+        //         characterAttributeSum += characterAttribute;
+        //         console.log({
+        //             itemCategoryID: itemCategoryID,
+        //             characterAttribute: characterAttribute,
+        //         });
+        //     });
+        // });
+        // console.log(ItemCategoryID.Helmets, itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, ItemCategoryID.Helmets));
+        // console.log(ItemCategoryID.Breastplates, itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, ItemCategoryID.Breastplates));
+        // console.log(ItemCategoryID.Gloves, itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, ItemCategoryID.Gloves));
+        // console.log(ItemCategoryID.Rings, itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, ItemCategoryID.Rings));
+        // console.log(ItemCategoryID.OneHandedSwords, itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, ItemCategoryID.OneHandedSwords));
+
+        let enemyDPS = balance.dpsByDamage(balance.enemyDamageToHero(healthPointsSum, 0.3, 10), 10);
+        let enemyAttackPower = _.round(enemyDPS * 3, 2);
+
+        console.log({
+            healthPointsSum: healthPointsSum,
+            characterAttributeSum: characterAttributeSum,
+            attackPower: balance.attackPowerByCharacterAttribute(characterAttributeSum, 2),
+            // attackPower: balance.attackPowerByCharacterAttribute(characterAttributeSum, 0.5),
+            enemyHealthPoints: balance.enemyHealthPoints(healthPointsSum, 2),
+            enemyDamageToHero: balance.enemyDamageToHero(healthPointsSum, 0.3, 10),
+            enemyDPS: enemyDPS,
+            enemyAttackPower: enemyAttackPower,
         });
     }
-}
-
-interface ItemCharacterAttributeGeneratorInterface {
-    healthPoints(itemLevel: number): number;
-    // attackPower(itemLevel: number): number;
-    characterAttribute(itemLevel: number): number;
-
-    // heroLevel(itemLevel): number;
-    // heroHealthPoints(level: number): number;
-    // heroAttackPower(characterAttribute: number): number;
-
-    // enemyHealthPoints(heroHealthPoints: number): number;
 }

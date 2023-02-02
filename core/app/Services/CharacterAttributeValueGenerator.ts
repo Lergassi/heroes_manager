@@ -21,7 +21,8 @@ import {underline} from 'chalk';
 
 //todo: Временно. Переделать когда будет прокачка героев. Далее станет более понятно какой нужен интерфейс у классов отвечающих за генерацию прибавки к атрибутам.
 export default class CharacterAttributeValueGenerator {
-    private _characterAttributeValueGenerators: Record<CharacterAttributeID, CharacterAttributeValueGeneratorInterface> = {
+    // private _characterAttributeValueGenerators: Record<CharacterAttributeID, CharacterAttributeValueGeneratorInterface> = {
+    private _characterAttributeValueGenerators: {[ID in CharacterAttributeID]?: CharacterAttributeValueGeneratorInterface} = {
         [CharacterAttributeID.Strength]: new DefaultCharacterAttributeValueGenerator(),
         [CharacterAttributeID.Agility]: new DefaultCharacterAttributeValueGenerator(),
         [CharacterAttributeID.Intelligence]: new DefaultCharacterAttributeValueGenerator(),

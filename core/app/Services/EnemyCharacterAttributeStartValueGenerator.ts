@@ -1,4 +1,5 @@
 import {unsigned} from '../../types/main.js';
+import CharacterAttributeValueGeneratorInterface from '../Interfaces/CharacterAttributeValueGeneratorInterface.js';
 import StrengthStartValueGenerator from './CharacterAttributeStartValueGenerators/StrengthStartValueGenerator.js';
 import AgilityStartValueGenerator from './CharacterAttributeStartValueGenerators/AgilityStartValueGenerator.js';
 import IntelligenceStartValueGenerator from './CharacterAttributeStartValueGenerators/IntelligenceStartValueGenerator.js';
@@ -16,7 +17,8 @@ import {assertNotNil} from '../../source/assert.js';
 export type CharacterAttributeValueModifier = (value: number) => number;
 
 export default class EnemyCharacterAttributeStartValueGenerator {
-    private readonly _characterAttributeStartValueGenerators: Record<CharacterAttributeID, CharacterAttributeStartValueGeneratorInterface> = {
+    // private readonly _characterAttributeStartValueGenerators: Record<CharacterAttributeID, CharacterAttributeStartValueGeneratorInterface> = {
+    private readonly _characterAttributeStartValueGenerators: {[ID in CharacterAttributeID]?: CharacterAttributeStartValueGeneratorInterface} = {
         [CharacterAttributeID.Strength]: new StrengthStartValueGenerator(),
         [CharacterAttributeID.Agility]: new AgilityStartValueGenerator(),
         [CharacterAttributeID.Intelligence]: new IntelligenceStartValueGenerator(),
