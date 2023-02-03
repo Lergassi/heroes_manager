@@ -74,5 +74,17 @@ export default {
         [CurrencyID.ResearchPoints]: {
             value: 10
         }
-    }
+    },
+    max_item_level: 500,
+    max_hero_level: 100,
+    hero_health_points_step: 50,
+    item_level_step: 4.5,
+    fight_time: 10,
+    equip_slots_count: 13,  //Пока без тринкета,
+    enemy_health_points_ratio: 2,
+    enemy_damage_to_hero_part: 0.3,
+    raw_damage_ratio_from_full_equip: 0.1,
+    attack_power_by_character_attribute_ratio: 2,
+    hero_attack_speed: 2,
+    enemy_attack_speed: 3,
 };

@@ -52,10 +52,6 @@ function attackPowerByCharacterAttribute(characterAttribute: number, ratio: numb
     return _.round(characterAttribute * ratio);
 }
 
-function heroLevelByItemLevel(itemLevel: number, itemLevelStep: number): number {
-    return _.round(itemLevel / itemLevelStep, 2);
-}
-
 function heroHealthPointsByLevel(level: number, healthPointsStep: number): number {
     return _.round(level * healthPointsStep, 2);
 }
@@ -71,10 +67,11 @@ function enemyHealthPoints(heroHealthPoints: number, ratio: number): number {
 }
 
 function heroItemLevel(level: number, itemLevelStep: number): number {
-    return _.round(itemLevelStep * level, 2);
+    // return _.round(itemLevelStep * level, 2);
+    return _.round(itemLevelStep * level);
 }
 
-function heroLevel(itemLevel: number, itemLevelStep: number): number {
+function heroLevelByItemLevel(itemLevel: number, itemLevelStep: number): number {
     return _.round(itemLevel / itemLevelStep, 2);
 }
 
@@ -96,7 +93,6 @@ export default {
     attackPowerByCharacterAttribute: attackPowerByCharacterAttribute,
     heroHealthPoints: heroHealthPoints,
     enemyHealthPoints: enemyHealthPoints,
-    heroItemLevel: heroItemLevel,
-    heroLevel: heroLevel,
+    itemLevel: heroItemLevel,
     rawDamageFromFullEquip: rawDamageFromFullEquip,
 };

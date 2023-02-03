@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
-import balance from './balance_functions.js';
+import balance from './item_character_attribute_generation_functions.js';
 
 export default class ItemCharacterAttributeGenerator {
     private _config: any;
@@ -170,10 +170,6 @@ export default class ItemCharacterAttributeGenerator {
     }
 
     healthPoints(itemLevel: number, itemCategoryID: ItemCategoryID): number {
-        // if (!this._config.healthPointsCommonEquipSets.hasOwnProperty(itemCategoryID)) {
-        //     return 0;
-        // }
-
         let heroLevel = balance.heroLevelByItemLevel(itemLevel, this._config.itemLevelStep);
         let heroHealthPoints = balance.heroHealthPointsByLevel(heroLevel, this._config.heroHealthPointsStep);
 
@@ -187,10 +183,6 @@ export default class ItemCharacterAttributeGenerator {
     }
 
     characterAttribute(itemLevel: number, heroClassID: HeroClassID, itemCategoryID: ItemCategoryID): number {
-        // if (!this._config.itemAttackPowerEquipSet[heroClassID].hasOwnProperty(itemCategoryID)) {
-        //     return 0;
-        // }
-
         let debugValues: any = {};
 
         let heroLevel = balance.heroLevelByItemLevel(itemLevel, this._config.itemLevelStep);

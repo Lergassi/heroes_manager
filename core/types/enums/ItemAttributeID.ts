@@ -1,0 +1,17 @@
+export enum ItemAttributeID {
+    ID = 'ID',
+    // name = 'name',
+    // description = 'description',
+    Icon = 'Icon',
+    ItemLevel = 'ItemLevel',
+    // Sort = 'Sort',
+    GetTypes = 'GetTypes',
+    ItemCategory = 'ItemCategory',
+    Quality = 'Quality',
+    StackSize = 'StackSize',
+    Properties = 'Properties',
+    CharacterAttributes = 'CharacterAttributes',
+    Strength = 'Strength',
+    Agility = 'Agility',
+    Intelligence = 'Intelligence',
+}

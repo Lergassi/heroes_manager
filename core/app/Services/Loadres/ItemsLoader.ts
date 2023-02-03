@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import debug from 'debug';
+import {ItemAttributeID} from '../../../types/enums/ItemAttributeID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemFactory from '../../Factories/ItemFactory.js';
 import ItemBuilder from '../ItemBuilder.js';
@@ -14,9 +15,9 @@ export default class ItemsLoader {
     private _load(entityManager: EntityManagerInterface, itemFactory: ItemFactory, data) {
         for (let i = 0; i < data.length; i++) {
             let characterAttributes = {};
-            if (data[i].STR) characterAttributes[CharacterAttributeID.Strength] = Number(data[i].STR);
-            if (data[i].AGI) characterAttributes[CharacterAttributeID.Agility] = Number(data[i].AGI);
-            if (data[i].INT) characterAttributes[CharacterAttributeID.Intelligence] = Number(data[i].INT);
+            if (data[i][CharacterAttributeID.Strength]) characterAttributes[CharacterAttributeID.Strength] = Number(data[i].STR);
+            if (data[i][CharacterAttributeID.Agility]) characterAttributes[CharacterAttributeID.Agility] = Number(data[i].AGI);
+            if (data[i][CharacterAttributeID.Intelligence]) characterAttributes[CharacterAttributeID.Intelligence] = Number(data[i].INT);
 
             itemFactory.createByBuilder(
                 data[i].ID,

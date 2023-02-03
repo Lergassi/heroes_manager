@@ -1,4 +1,4 @@
-import config from '../../../config/main.js';
+import config from '../../../config/config.js';
 import ContainerConfigureInterface from '../../../source/ContainerConfigureInterface.js';
 import ContainerInterface from '../../../source/ContainerInterface.js';
 import EntityManager from '../../../source/EntityManager.js';
@@ -103,8 +103,8 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
             [ItemCategoryID.Belts]: {count: 1},
             [ItemCategoryID.Pants]: {count: 1},
             [ItemCategoryID.Boots]: {count: 1},
-            [ItemCategoryID.Amulets]: {count: 1},               //9
-            [ItemCategoryID.Rings]: {count: 2},                 //11
+            [ItemCategoryID.Amulets]: {count: 1},
+            [ItemCategoryID.Rings]: {count: 2},
         });
 
         container.set(ServiceID.Data_WeaponSet, {

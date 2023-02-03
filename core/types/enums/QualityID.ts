@@ -1,8 +1,26 @@
 export enum QualityID {
-    Poor = 'Poor',              //Серые
-    Common = 'Common',          //Белые
-    Uncommon = 'Uncommon',      //Зеленые
-    Rare = 'Rare',              //Синие
-    Epic = 'Epic',              //Фиолетовые
-    Legendary = 'Legendary',    //Оранжевые
+    /**
+     * Серые предметы.
+     */
+    Poor = 'Poor',
+    /**
+     * Белые предметы.
+     */
+    Common = 'Common',
+    /**
+     * Зеленые предметы.
+     */
+    Uncommon = 'Uncommon',
+    /**
+     * Синие предметы.
+     */
+    Rare = 'Rare',
+    /**
+     * Фиолетвые предметы.
+     */
+    Epic = 'Epic',
+    /**
+     * Оранжевые предметы.
+     */
+    Legendary = 'Legendary',
 }

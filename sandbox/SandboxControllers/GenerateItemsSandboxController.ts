@@ -1,24 +1,35 @@
 import _ from 'lodash';
+import {Simulate} from 'react-dom/test-utils';
+import {sprintf} from 'sprintf-js';
+import HeroClass from '../../core/app/Entities/HeroClass.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import balance from '../../core/app/Services/Balance/balance_functions.js';
-import ItemCharacterAttributeGenerator from '../../core/app/Services/Balance/ItemCharacterAttributeGenerator.js';
+import item_character_attribute_generation_functions
+    from '../../core/app/Services/ItemGeneration/item_character_attribute_generation_functions.js';
+import balance from '../../core/app/Services/ItemGeneration/item_character_attribute_generation_functions.js';
+import ItemCharacterAttributeGenerator from '../../core/app/Services/ItemGeneration/ItemCharacterAttributeGenerator.js';
+import config from '../../core/config/config.js';
+import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
+import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
+import {QualityID} from '../../core/types/enums/QualityID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
+import {ItemDatabaseRow} from '../../core/types/ItemDatabaseRow.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
+import copy = Simulate.copy;
 
 export default class GenerateItemsSandboxController extends AbstractSandboxController {
     private readonly _entityManager = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
     run(): void {
         // this._getStarted();
-        this._devStartValues();
+        // this._devStartValues();
         // this._averageItemLevel();
         // this._massAverageItemLevel();
         // this._devAPI();
-        this._testAPI();
-        // this._devGenerateItems();
+        // this._testAPI();
+        this._devGenerateItems();
     }
 
     private _getStarted() {
@@ -408,5 +419,298 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             enemyDPS: enemyDPS,
             enemyAttackPower: enemyAttackPower,
         });
+    }
+
+    private _devGenerateItems() {
+        let warriorEquipSet = this.container.get(ServiceID.Data_EquipSet)[HeroClassID.Warrior];
+        // console.log(warriorEquipSet);
+
+        // let itemCategories = [
+        //     ItemCategoryID.Helmets,
+        //     ItemCategoryID.ShoulderPads,
+        //     ItemCategoryID.Breastplates,
+        //     ItemCategoryID.Bracelets,
+        //     ItemCategoryID.Gloves,
+        //     ItemCategoryID.Belts,
+        //     ItemCategoryID.Pants,
+        //     ItemCategoryID.Boots,
+        //     ItemCategoryID.Amulets,
+        //     ItemCategoryID.Rings,
+        //     ItemCategoryID.Rings,
+        //     ItemCategoryID.OneHandedSwords,
+        //     ItemCategoryID.Shields,
+        // ];
+
+        let constValues = {
+            slotsCount: 13,
+            firstLevelUpdate: 2,
+            maxLevel: 100,
+            updateRange: 15,
+        };
+        console.log('constValues', constValues);
+
+        // console.log(this._createPrepareItemCategorySet(1));
+        // console.log(this._createPrepareItemCategorySet(2));
+
+        let preparePositions = {
+            1: {
+                [ItemCategoryID.OneHandedSwords]: [constValues.firstLevelUpdate + 1],
+                [ItemCategoryID.Shields]: [constValues.firstLevelUpdate + 2],
+                [ItemCategoryID.Amulets]: [constValues.updateRange + constValues.firstLevelUpdate - 2],
+                [ItemCategoryID.Rings]: [constValues.firstLevelUpdate + 5, constValues.updateRange + constValues.firstLevelUpdate],
+            },
+        };
+        // console.log(preparePositions);
+
+        let positions = {};
+        for (let i = 1; i <= constValues.maxLevel; i++) {
+            positions[i] = [];
+        }
+        // console.log(positions);
+
+        for (const sampleNumber in preparePositions) {
+            for (const itemCategoryID in preparePositions[sampleNumber]) {
+                for (let i = 0; i < preparePositions[sampleNumber][itemCategoryID].length; i++) {
+                    positions[preparePositions[sampleNumber][itemCategoryID][i]].push(itemCategoryID);
+                }
+            }
+        }
+        console.log(positions);
+
+        let values: any = {};
+        let itemCategories = this._createPrepareItemCategorySet(1);
+        values.currentSample = 1;
+        values.rangeStepError = 1;
+        values.rangeStep = _.round(constValues.updateRange / itemCategories.length);
+        values.currentLevelUpdate = constValues.firstLevelUpdate + _.random(0, values.rangeStep + values.rangeStepError);
+        values.currentMaxLevelRange = _.round(values.currentLevelUpdate + constValues.updateRange * values.currentSample);
+
+        console.log('values', values);
+        while (values.currentLevelUpdate <= constValues.maxLevel) {
+            for (let i = 0; i < itemCategories.length; i++) {
+                // console.log(values.currentSample, values.currentLevelUpdate, itemCategories[i], itemCategories);
+                positions[values.currentLevelUpdate].push(itemCategories[i]);
+                values.currentLevelUpdate += values.rangeStep +_.random(0, values.rangeStepError);
+
+                if (values.currentLevelUpdate >= constValues.maxLevel) break;
+            }
+
+            values.currentSample++;
+            itemCategories = this._createPrepareItemCategorySet(values.currentSample);
+        }
+
+        let items = [];
+        // let level = 1;
+        let heroClassID = HeroClassID.Warrior;
+        let armorMaterialID = ArmorMaterialID.Plate;
+        let qualityID = QualityID.Uncommon;
+        let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
+        for (const level in positions) {
+            // console.log(level, item_character_attribute_generation_functions.itemLevel(level, config.item_level_step));
+            for (let itemCategoryIndex = 0; itemCategoryIndex < positions[level].length; itemCategoryIndex++) {
+                // console.log(level, itemCategoryIndex, positions[level][itemCategoryIndex]);
+                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step);
+                let itemAttributes: ItemDatabaseRow = {
+                    ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
+                    ItemCategoryID: positions[level][itemCategoryIndex],
+                    ItemLevel: itemLevel,
+                    QualityID: qualityID,
+                    StackSize: 1,
+                    Strength: 0,
+                    Agility: 0,
+                    Intelligence: 0,
+                    Equipable: true,
+                    TwoHandWeapon: false,
+                };
+
+                if (this._getMetadata(positions[level][itemCategoryIndex]).requireArmorMaterial) itemAttributes.ArmorMaterialID = armorMaterialID;
+                if (this._getMetadata(positions[level][itemCategoryIndex]).twoHandWeapon) itemAttributes.TwoHandWeapon = true;
+
+                itemAttributes[CharacterAttributeID.HealthPoints] = itemCharacterAttributeGenerator.healthPoints(itemLevel, positions[level][itemCategoryIndex]);
+                itemAttributes[CharacterAttributeID.Strength] = itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, positions[level][itemCategoryIndex]);
+                // console.log(Number(level), positions[level][itemCategoryIndex], itemAttributes);
+                console.log(itemAttributes);
+            }
+        }
+    }
+
+    private _randomPosition(positions: []): number {
+        if (!positions.length) return -1;
+
+        return positions[_.random(0, positions.length - 1)];
+    }
+
+    private _defaultItemCategorySet = [
+        ItemCategoryID.Helmets,
+        ItemCategoryID.ShoulderPads,
+        ItemCategoryID.Breastplates,
+        ItemCategoryID.Bracelets,
+        ItemCategoryID.Gloves,
+        ItemCategoryID.Belts,
+        ItemCategoryID.Pants,
+        ItemCategoryID.Boots,
+        ItemCategoryID.Amulets,
+        ItemCategoryID.Rings,
+        ItemCategoryID.Rings,
+        ItemCategoryID.OneHandedSwords,
+        ItemCategoryID.Shields,
+    ];
+
+    private _prepareItemCategorySets = {
+        1: [
+            ItemCategoryID.Helmets,
+            ItemCategoryID.ShoulderPads,
+            ItemCategoryID.Breastplates,
+            ItemCategoryID.Bracelets,
+            ItemCategoryID.Gloves,
+            ItemCategoryID.Belts,
+            ItemCategoryID.Pants,
+            ItemCategoryID.Boots,
+        ],
+    }
+
+    private _createPrepareItemCategorySet(sampleNumber: number) {
+        if (!this._prepareItemCategorySets.hasOwnProperty(sampleNumber)) return _.shuffle([...this._defaultItemCategorySet]);
+
+        return _.shuffle([...this._prepareItemCategorySets[sampleNumber]]);
+    }
+
+    private _itemMetadataByItemCategory = {
+        [ItemCategoryID.Helmets]: {
+            name: 'Helmet',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Helmets]: {
+            name: 'Helmet',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.ShoulderPads]: {
+            name: 'ShoulderPads',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Breastplates]: {
+            name: 'Breastplate',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Gloves]: {
+            name: 'Gloves',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Bracelets]: {
+            name: 'Bracelet',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Belts]: {
+            name: 'Belt',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Pants]: {
+            name: 'Pants',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Boots]: {
+            name: 'Boots',
+            equipable: true,
+            requireArmorMaterial: true,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Shields]: {
+            name: 'Shield',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Amulets]: {
+            name: 'Amulet',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Rings]: {
+            name: 'Ring',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.OneHandedSwords]: {
+            name: 'OneHandedSword',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.TwoHandedSwords]: {
+            name: 'TwoHandedSword',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: true,
+        },
+        [ItemCategoryID.OneHandedAxes]: {
+            name: 'OneHandedAxe',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.TwoHandedAxes]: {
+            name: 'TwoHandedAxe',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: true,
+        },
+        [ItemCategoryID.Daggers]: {
+            name: 'Dagger',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Bows]: {
+            name: 'Bow',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: true,
+        },
+        [ItemCategoryID.Crossbows]: {
+            name: 'Crossbow',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: true,
+        },
+        [ItemCategoryID.Revolvers]: {
+            name: 'Revolver',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: false,
+        },
+        [ItemCategoryID.Staffs]: {
+            name: 'Staff',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: true,
+        },
+        [ItemCategoryID.Wands]: {
+            name: 'Wand',
+            equipable: true,
+            requireArmorMaterial: false,
+            twoHandWeapon: false,
+        },
+    };
+
+    private _getMetadata(itemCategoryID: ItemCategoryID) {
+        return this._itemMetadataByItemCategory[itemCategoryID];
     }
 }

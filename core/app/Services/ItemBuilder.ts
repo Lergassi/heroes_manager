@@ -162,17 +162,4 @@ export default class ItemBuilder {
             this._options,
         );
     }
-
-    // armor(armorMaterial: string) {
-    //     this._armorMaterial = this._entityManager.getRepository<ArmorMaterial>(ArmorMaterial.name).getOneByAlias(armorMaterial);
-    //     this._equip();
-    //
-    //     return this;
-    // }
-
-    // weapon() {
-    //     this._equip();
-    //
-    //     return this;
-    // }
 }
