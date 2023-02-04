@@ -102,15 +102,15 @@ export default class ItemBuilder {
      */
     default(
         id: string,
-        name: string,
+        // name: string,
         itemCategoryID: ItemCategoryID,
         options: Partial<ItemBuilderOptions> = {},
     ) {
         this._id = id;
-        this._name = name;
+        this._name = id;
         this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
         if (!this._itemCategory) {
-            debug(DebugNamespaceID.Replace)(sprintf('Категория %s не найдена и будет заменена на %s.', itemCategoryID, this._default.itemCategoryID));
+            debug(DebugNamespaceID.Replace)(sprintf('Категория %s для %s не найдена и будет заменена на %s.', itemCategoryID, id,  this._default.itemCategoryID));
             this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, this._default.itemCategoryID);
         }
         this._description = options.description ?? this._default.description;

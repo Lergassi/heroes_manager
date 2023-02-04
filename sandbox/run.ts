@@ -1,6 +1,13 @@
 #!/usr/bin/env node
+import path from 'path';
 import yargs from 'yargs/yargs';
 import {hideBin} from 'yargs/helpers';
+import CoreContainerConfigure from '../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
+import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
+import PlayerContainerConfigure from '../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
+import GenerateItems from '../core/scripts/GenerateItems.js';
+import Container from '../core/source/Container.js';
+import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 import SandboxController from './SandboxController.js';
 import dotenv from 'dotenv';
 import debug from 'debug';
@@ -13,6 +20,11 @@ import ConventCSVDataToJson from '../core/app/Services/Server/ConventCSVDataToJs
 
 dotenv.config();
 debug.enable(process.env['DEBUG']);
+
+let container = new Container();
+(new DefaultContainerConfigure()).configure(container);
+(new CoreContainerConfigure()).configure(container);
+// (new PlayerContainerConfigure()).configure(container);
 
 yargs(hideBin(process.argv))
     .command('test [foo]', 'test command', (yargs) => {
@@ -118,6 +130,31 @@ yargs(hideBin(process.argv))
     }, (argv) => {
         let conventCSVDataToJson = new ConventCSVDataToJson();
         conventCSVDataToJson.run();
+    })
+    .parse()
+;
+
+yargs(hideBin(process.argv))
+    .command('generate_equip', '', (yargs) => {
+        return yargs;
+    }, (argv) => {
+        let items = [];
+        let generateItems = new GenerateItems(container);
+        generateItems.run(items);
+
+        let json = JSON.stringify(items);
+
+        let filename = 'auto_generated_equip.json';
+        let dir = './core/data/';
+        let pathname = path.join(dir, filename);
+        fs.writeFile(pathname, json, (error) => {
+            if (error) {
+                console.log('error', error);
+                return;
+            }
+
+            debug(DebugNamespaceID.Log)(sprintf('Данные записаны в файл %s.', pathname));
+        });
     })
     .parse()
 ;

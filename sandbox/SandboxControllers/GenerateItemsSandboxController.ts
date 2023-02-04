@@ -8,6 +8,7 @@ import item_character_attribute_generation_functions
 import balance from '../../core/app/Services/ItemGeneration/item_character_attribute_generation_functions.js';
 import ItemCharacterAttributeGenerator from '../../core/app/Services/ItemGeneration/ItemCharacterAttributeGenerator.js';
 import config from '../../core/config/config.js';
+import GenerateItems from '../../core/scripts/GenerateItems.js';
 import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
@@ -29,7 +30,8 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         // this._massAverageItemLevel();
         // this._devAPI();
         // this._testAPI();
-        this._devGenerateItems();
+        // this._devGenerateItems();
+        this._devItemGenerator();
     }
 
     private _getStarted() {
@@ -132,7 +134,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             [ItemCategoryID.Helmets]: {ratio: 0.5, count: 1},
             [ItemCategoryID.ShoulderPads]: {ratio: 0.3, count: 1},
             [ItemCategoryID.Breastplates]: {ratio: 1, count: 1},
-            [ItemCategoryID.Bracelets]: {ratio: 0.2, count: 1},
+            [ItemCategoryID.Bracers]: {ratio: 0.2, count: 1},
             [ItemCategoryID.Gloves]: {ratio: 0.3, count: 1},
             [ItemCategoryID.Belts]: {ratio: 0.2, count: 1},
             [ItemCategoryID.Pants]: {ratio: 0.6, count: 1},
@@ -153,7 +155,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             [ItemCategoryID.Helmets]: equipRatio[ItemCategoryID.Helmets],
             [ItemCategoryID.ShoulderPads]: equipRatio[ItemCategoryID.ShoulderPads],
             [ItemCategoryID.Breastplates]: equipRatio[ItemCategoryID.Breastplates],
-            [ItemCategoryID.Bracelets]: equipRatio[ItemCategoryID.Bracelets],
+            [ItemCategoryID.Bracers]: equipRatio[ItemCategoryID.Bracers],
             [ItemCategoryID.Gloves]: equipRatio[ItemCategoryID.Gloves],
             [ItemCategoryID.Belts]: equipRatio[ItemCategoryID.Belts],
             [ItemCategoryID.Pants]: equipRatio[ItemCategoryID.Pants],
@@ -167,7 +169,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             [ItemCategoryID.Helmets]: equipRatio[ItemCategoryID.Helmets],
             [ItemCategoryID.ShoulderPads]: equipRatio[ItemCategoryID.ShoulderPads],
             [ItemCategoryID.Breastplates]: equipRatio[ItemCategoryID.Breastplates],
-            [ItemCategoryID.Bracelets]: equipRatio[ItemCategoryID.Bracelets],
+            [ItemCategoryID.Bracers]: equipRatio[ItemCategoryID.Bracers],
             [ItemCategoryID.Gloves]: equipRatio[ItemCategoryID.Gloves],
             [ItemCategoryID.Belts]: equipRatio[ItemCategoryID.Belts],
             [ItemCategoryID.Pants]: equipRatio[ItemCategoryID.Pants],
@@ -422,25 +424,6 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
     }
 
     private _devGenerateItems() {
-        let warriorEquipSet = this.container.get(ServiceID.Data_EquipSet)[HeroClassID.Warrior];
-        // console.log(warriorEquipSet);
-
-        // let itemCategories = [
-        //     ItemCategoryID.Helmets,
-        //     ItemCategoryID.ShoulderPads,
-        //     ItemCategoryID.Breastplates,
-        //     ItemCategoryID.Bracelets,
-        //     ItemCategoryID.Gloves,
-        //     ItemCategoryID.Belts,
-        //     ItemCategoryID.Pants,
-        //     ItemCategoryID.Boots,
-        //     ItemCategoryID.Amulets,
-        //     ItemCategoryID.Rings,
-        //     ItemCategoryID.Rings,
-        //     ItemCategoryID.OneHandedSwords,
-        //     ItemCategoryID.Shields,
-        // ];
-
         let constValues = {
             slotsCount: 13,
             firstLevelUpdate: 2,
@@ -448,9 +431,6 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             updateRange: 15,
         };
         console.log('constValues', constValues);
-
-        // console.log(this._createPrepareItemCategorySet(1));
-        // console.log(this._createPrepareItemCategorySet(2));
 
         let preparePositions = {
             1: {
@@ -466,7 +446,6 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         for (let i = 1; i <= constValues.maxLevel; i++) {
             positions[i] = [];
         }
-        // console.log(positions);
 
         for (const sampleNumber in preparePositions) {
             for (const itemCategoryID in preparePositions[sampleNumber]) {
@@ -475,40 +454,32 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
                 }
             }
         }
-        console.log(positions);
 
-        let values: any = {};
+        let calcValues: any = {};
         let itemCategories = this._createPrepareItemCategorySet(1);
-        values.currentSample = 1;
-        values.rangeStepError = 1;
-        values.rangeStep = _.round(constValues.updateRange / itemCategories.length);
-        values.currentLevelUpdate = constValues.firstLevelUpdate + _.random(0, values.rangeStep + values.rangeStepError);
-        values.currentMaxLevelRange = _.round(values.currentLevelUpdate + constValues.updateRange * values.currentSample);
-
-        console.log('values', values);
-        while (values.currentLevelUpdate <= constValues.maxLevel) {
+        calcValues.currentSample = 1;
+        calcValues.rangeStepError = 1;
+        calcValues.rangeStep = _.round(constValues.updateRange / itemCategories.length);
+        calcValues.currentLevelUpdate = constValues.firstLevelUpdate + _.random(0, calcValues.rangeStep + calcValues.rangeStepError);
+        calcValues.currentMaxLevelRange = _.round(calcValues.currentLevelUpdate + constValues.updateRange * calcValues.currentSample);
+        while (calcValues.currentLevelUpdate <= constValues.maxLevel) {
             for (let i = 0; i < itemCategories.length; i++) {
-                // console.log(values.currentSample, values.currentLevelUpdate, itemCategories[i], itemCategories);
-                positions[values.currentLevelUpdate].push(itemCategories[i]);
-                values.currentLevelUpdate += values.rangeStep +_.random(0, values.rangeStepError);
+                positions[calcValues.currentLevelUpdate].push(itemCategories[i]);
+                calcValues.currentLevelUpdate += calcValues.rangeStep +_.random(0, calcValues.rangeStepError);
 
-                if (values.currentLevelUpdate >= constValues.maxLevel) break;
+                if (calcValues.currentLevelUpdate >= constValues.maxLevel) break;
             }
 
-            values.currentSample++;
-            itemCategories = this._createPrepareItemCategorySet(values.currentSample);
+            calcValues.currentSample++;
+            itemCategories = this._createPrepareItemCategorySet(calcValues.currentSample);
         }
 
-        let items = [];
-        // let level = 1;
         let heroClassID = HeroClassID.Warrior;
         let armorMaterialID = ArmorMaterialID.Plate;
         let qualityID = QualityID.Uncommon;
         let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
         for (const level in positions) {
-            // console.log(level, item_character_attribute_generation_functions.itemLevel(level, config.item_level_step));
             for (let itemCategoryIndex = 0; itemCategoryIndex < positions[level].length; itemCategoryIndex++) {
-                // console.log(level, itemCategoryIndex, positions[level][itemCategoryIndex]);
                 let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step);
                 let itemAttributes: ItemDatabaseRow = {
                     ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
@@ -528,10 +499,9 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
 
                 itemAttributes[CharacterAttributeID.HealthPoints] = itemCharacterAttributeGenerator.healthPoints(itemLevel, positions[level][itemCategoryIndex]);
                 itemAttributes[CharacterAttributeID.Strength] = itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, positions[level][itemCategoryIndex]);
-                // console.log(Number(level), positions[level][itemCategoryIndex], itemAttributes);
                 console.log(itemAttributes);
             }
-        }
+        }//end for
     }
 
     private _randomPosition(positions: []): number {
@@ -544,7 +514,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         ItemCategoryID.Helmets,
         ItemCategoryID.ShoulderPads,
         ItemCategoryID.Breastplates,
-        ItemCategoryID.Bracelets,
+        ItemCategoryID.Bracers,
         ItemCategoryID.Gloves,
         ItemCategoryID.Belts,
         ItemCategoryID.Pants,
@@ -561,7 +531,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             ItemCategoryID.Helmets,
             ItemCategoryID.ShoulderPads,
             ItemCategoryID.Breastplates,
-            ItemCategoryID.Bracelets,
+            ItemCategoryID.Bracers,
             ItemCategoryID.Gloves,
             ItemCategoryID.Belts,
             ItemCategoryID.Pants,
@@ -606,7 +576,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             requireArmorMaterial: true,
             twoHandWeapon: false,
         },
-        [ItemCategoryID.Bracelets]: {
+        [ItemCategoryID.Bracers]: {
             name: 'Bracelet',
             equipable: true,
             requireArmorMaterial: true,
@@ -712,5 +682,11 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
 
     private _getMetadata(itemCategoryID: ItemCategoryID) {
         return this._itemMetadataByItemCategory[itemCategoryID];
+    }
+
+    private _devItemGenerator() {
+        let items = [];
+        let generateItems = new GenerateItems(this.container);
+        generateItems.run(items);
     }
 }

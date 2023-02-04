@@ -209,22 +209,22 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return mainLocationListComponent;
         });
 
-        container.set(ServiceID.Shop, (container) => {
-            let shop = new Shop();
-            container.get<EntityManagerInterface>(ServiceID.EntityManager).map<Item>(EntityID.Item, (item) => {
-                shop.config(item, item.getProperty('defaultBuyPrice'));
-            });
-
-            return shop;
-        });
-        container.set(ServiceID.Fence, (container) => {
-            let fence = new Fence();
-            container.get<EntityManagerInterface>(ServiceID.EntityManager).map<Item>(EntityID.Item, (item) => {
-                fence.config(item, item.getProperty('defaultSellPrice'));
-            });
-
-            return fence;
-        });
+        // container.set(ServiceID.Shop, (container) => {
+        //     let shop = new Shop();
+        //     container.get<EntityManagerInterface>(ServiceID.EntityManager).map<Item>(EntityID.Item, (item) => {
+        //         shop.config(item, item.getProperty('defaultBuyPrice') ?? 0);
+        //     });
+        //
+        //     return shop;
+        // });
+        // container.set(ServiceID.Fence, (container) => {
+        //     let fence = new Fence();
+        //     container.get<EntityManagerInterface>(ServiceID.EntityManager).map<Item>(EntityID.Item, (item) => {
+        //         fence.config(item, item.getProperty('defaultSellPrice') ?? 0);
+        //     });
+        //
+        //     return fence;
+        // });
 
         container.set(ServiceID.StubFactory, (container) => {
             return new StubFactory(container);

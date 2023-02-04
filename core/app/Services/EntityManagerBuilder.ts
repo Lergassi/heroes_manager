@@ -382,7 +382,7 @@ export default class EntityManagerBuilder {
             ItemCategoryID.Armor,
         );
         itemCategoryFactory.create(
-            ItemCategoryID.Bracelets,
+            ItemCategoryID.Bracers,
             'Браслеты',
             500,
             ItemCategoryID.Armor,
@@ -950,7 +950,7 @@ export default class EntityManagerBuilder {
             'Запястье',
             530,
             [
-                ItemCategoryID.Bracelets,
+                ItemCategoryID.Bracers,
             ],
         );
         equipSlotFactory.createArmorSlot(
