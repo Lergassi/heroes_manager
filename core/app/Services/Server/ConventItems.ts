@@ -7,8 +7,9 @@ import {sprintf} from 'sprintf-js';
 
 export default class ConventItems {
     run() {
-        let input = './core/data/items.csv';
-        let output = './core/data/items.json';
+        let filename = 'items';
+        let input = sprintf('./core/data/csv/%s.csv', filename);
+        let output = sprintf('./core/data/json/%s.json', filename);
         let json = csvToJson.getJsonFromCsv(input);
         let string = JSON.stringify(json);
         fs.writeFile(output, string, (error) => {

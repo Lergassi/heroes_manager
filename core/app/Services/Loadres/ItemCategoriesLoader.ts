@@ -3,7 +3,7 @@ import debug from 'debug';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemFactory from '../../Factories/ItemFactory.js';
 import ItemCategoryFactory from '../../Factories/EntityFactories/ItemCategoryFactory.js';
-import itemCategoriesData from '../../../data/item_categories.json';
+import itemCategoriesData from '../../../data/json/item_categories.json';
 import ItemBuilder from '../ItemBuilder.js';
 import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
 

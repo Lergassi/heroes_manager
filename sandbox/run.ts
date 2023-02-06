@@ -69,7 +69,7 @@ yargs(hideBin(process.argv))
         let targets = [
             './data/test',
             './data/test/text.txt',
-            './data/items.csv',
+            './data/csv/items.csv',
         ];
 
         // fs.stat(fileInputName, (err, stats) => {
@@ -138,6 +138,7 @@ yargs(hideBin(process.argv))
     .command('generate_equip', '', (yargs) => {
         return yargs;
     }, (argv) => {
+        //todo: Спросить для перезаписи или записывать в новый файл. Существующий файл не трогать.
         let items = [];
         let generateItems = new GenerateItems(container);
         generateItems.run(items);

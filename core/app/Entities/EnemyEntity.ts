@@ -1,12 +1,15 @@
-import {Loot, unsigned} from '../../types/main.js';
+import {ItemLoot, unsigned} from '../../types/main.js';
 import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
 import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
 
+/**
+ * @deprecated Данные лута, силы и тд теперь храняться в бд в виде простых значений и передаются сразу в нужные компоненты. Отображение для игрока делается через отдельный компонент.
+ */
 export default class EnemyEntity {
     private readonly _id: string;
     private readonly _name: string;
-    private readonly _loot: Loot[];
+    private readonly _loot: ItemLoot[];
     private readonly _exp: unsigned;
     private readonly _gold: unsigned[];
 
@@ -18,7 +21,7 @@ export default class EnemyEntity {
         return this._name;
     }
 
-    get loot(): Loot[] {
+    get loot(): ItemLoot[] {
         return this._loot;
     }
 
@@ -33,7 +36,7 @@ export default class EnemyEntity {
     constructor(
         id: string,
         name: string,
-        loot: Loot[],
+        loot: ItemLoot[],
         exp: unsigned,
         gold: unsigned[],
     ) {

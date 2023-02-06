@@ -37,7 +37,7 @@ import CharacterAttributeCollector from '../core/app/Components/CharacterAttribu
 import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
 import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../core/types/enums/HeroClassID.js';
-import {EnemyID} from '../core/types/enums/EnemyID.js';
+import {EnemyTypeID} from '../core/types/enums/EnemyTypeID.js';
 import {ItemID} from '../core/types/enums/ItemID.js';
 import HeroGroupCharacterAttributeCollector from '../core/app/Decorators/HeroGroupCharacterAttributeCollector.js';
 import HeroGroupInterface from '../core/app/Interfaces/HeroGroupInterface.js';
@@ -551,7 +551,7 @@ export default class _SandboxController {
         // console.log(enemyType);
         // console.log(enemyType.alias);
         let enemy = enemyFactory.create(
-            EnemyID.Boar,
+            EnemyTypeID.Boar,
             1,
         );
         console.log(enemy);
@@ -622,17 +622,17 @@ export default class _SandboxController {
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
             // enemyType: EnemyTypeID.Boar,
-            EnemyID.Boar,
+            EnemyTypeID.Boar,
             1,
         ));
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            EnemyID.Boar,
+            EnemyTypeID.Boar,
             1,
         ));
         enemies.push(enemyFactory.create(
             // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            EnemyID.Boar,
+            EnemyTypeID.Boar,
             1,
 
         ));
@@ -1108,7 +1108,7 @@ export default class _SandboxController {
     private devEnemyArmor() {
         let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let enemy = enemyFactory.create(EnemyID.Bear, 1);
+        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1);
         console.log(enemy);
         console.log(enemy.get<DamageControllerInterface>(ComponentID.DamageController));
         console.log(enemy.get<HealthPoints>(ComponentID.HealthPoints));

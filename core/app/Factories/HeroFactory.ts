@@ -67,7 +67,7 @@ export default class HeroFactory {
         // characterAttributeCollector?: CharacterAttributeCollector;
         //todo: Нужнен доступ к смене начальных атрибутов.
         options?: {
-            baseCharacterAttributeValues?: {[id in CharacterAttributeID]?: number},
+            baseCharacterAttributeValues?: {[id in CharacterAttributeID]?: number}, //todo: Через строитель.
         },
     ): GameObject {
         heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(EntityID.HeroClass, heroClass) : heroClass;
@@ -225,7 +225,6 @@ export default class HeroFactory {
                 },
             ));
         }
-        console.log(hero.get<CharacterAttributeID>(CharacterAttributeID.Agility));
 
         // characterAttributes[CharacterAttributeID.ItemLevel] = new CharacterAttribute(CharacterAttributeID.ItemLevel, itemCharacterAttributeCollector, 0);
 

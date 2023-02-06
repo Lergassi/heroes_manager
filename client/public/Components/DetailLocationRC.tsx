@@ -386,18 +386,18 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                 <table className={'basic-table'}>
                                     <tbody>
                                         <tr>
-                                            <th>Класс</th>
-                                            <th>Уровень</th>
-                                            <th>Сила атаки</th>
-                                            <th>Очки здоровья</th>
-                                            <th>Управление</th>
+                                            <th>HeroClass</th>
+                                            <th>Level</th>
+                                            <th>HP</th>
+                                            <th>AP</th>
+                                            <th>Ctrl</th>
                                         </tr>
                                         {_.map(heroes, (hero, index) => {
                                             return <tr key={index}>
                                                 <td>{hero.heroClassName} {hero.isDead ? '(X)' : ''}</td>
                                                 <td>{hero.level}</td>
-                                                <td>{hero.attackPower}</td>
                                                 <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
+                                                <td>{hero.attackPower}</td>
                                                 <td>
                                                     <button onClick={() => {
                                                         this.removeHero(hero.ID);
@@ -425,10 +425,10 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                 <table className={'basic-table'}>
                                     <tbody>
                                         <tr>
-                                            <th>Тип</th>
-                                            <th>Уровень</th>
-                                            <th>Сила атаки</th>
-                                            <th>Очки здоровья</th>
+                                            <th>EnemyTypeID</th>
+                                            <th>Level</th>
+                                            <th>AP</th>
+                                            <th>HP</th>
                                         </tr>
                                         {_.map(enemies, (enemy, index) => {
                                             return <tr key={index}>

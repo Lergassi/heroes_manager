@@ -30,9 +30,10 @@ export enum MainHeroListComponentEventCode {
  * Отличается от локации тем, что тут есть постраничная навигация и в ui передается только определенное кол-во героев.
  */
 export interface MainHeroListRender {
-    updateTotalHeroes?(totalHeroes: number): void;
+    // updateTotalHeroes?(totalHeroes: number): void;
     updateHeroes?(heroes: MainHeroListRCElement[]): void;
-    updatePagination?(activePage: number, totalPages: number): void;
+    // updatePagination?(activePage: number, totalPages: number): void;
+    updatePagination?(totalPages: number, totalHeroes: number): void;
 }
 
 /**
@@ -131,31 +132,18 @@ export default class MainHeroList {
     }
 
     //todo: Убрать страницы - мешают. Нужно чтобы
-    renderByRequest(ui: MainHeroListRender, options?: {page: number, elementForPage: number}): void {
-        let page = options?.page ?? 1;
-        // let elementForPage = options?.elementForPage ?? this._options.heroesForPage;
-        let elementForPage = options?.elementForPage ?? this._heroes.length;
-
-        let startIndex = 0;
-        if (page <= 1) {
-            startIndex = 0;
-        } else if (page > this.totalPages(elementForPage)) {
-            startIndex = this._heroes.length - 1;
-        } else {
-            startIndex = (page - 1) * elementForPage - 1;
-        }
-
-        let endIndex = startIndex + elementForPage;
-        if (endIndex > this._heroes.length) {
-            endIndex = this._heroes.length ? this._heroes.length : 0;
-        }
+    // renderByRequest(ui: MainHeroListRender, options?: {page: number, elementForPage: number}): void {
+    renderByRequest(ui: MainHeroListRender, options?: {offset: number, count: number}): void {
+        let offset = options?.offset ?? 0;
+        let count = options?.count ?? this._heroes.length;
+        let heroesForPage = offset + count;
 
         //Не удалять дебаг инфу.
         // console.log('startIndex', startIndex);
         // console.log('endIndex', endIndex);
 
         let heroes: MainHeroListRCElement[] = [];
-        for (let i = startIndex; i < endIndex; i++) {
+        for (let i = offset; i < heroesForPage && i < this._heroes.length; i++) {
             let hero: MainHeroListRCElement = {
                 hero: this._heroes[i],
                 ID: '',
@@ -245,7 +233,8 @@ export default class MainHeroList {
         }//end for
 
         ui.updateHeroes?.(heroes);
-        ui.updatePagination?.(page, this.totalPages(elementForPage));
-        ui.updateTotalHeroes?.(this._heroes.length);
+        // ui.updatePagination?.(page, this.totalPages(elementForPage));
+        // console.log(_.ceil(this._heroes.length / count));
+        ui.updatePagination?.(_.ceil(this._heroes.length / count), this._heroes.length);
     }
 }

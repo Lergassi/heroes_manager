@@ -5,7 +5,7 @@ import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemFactory from '../../Factories/ItemFactory.js';
 import ItemBuilder from '../ItemBuilder.js';
 import items_data from '../../../data/items.json';
-import auto_generated_equip from '../../../data/auto_generated_equip.json';
+import auto_generated_equip from '../../../data/json/auto_generated_equip.json';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 
 export default class ItemsLoader {

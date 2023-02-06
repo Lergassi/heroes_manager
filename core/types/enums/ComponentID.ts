@@ -24,7 +24,11 @@ export enum ComponentID {
     Gatherer = 'Gatherer',
 
     //Enemy
+    EnemyTypeID = 'EnemyTypeID',
     Enemy = 'Enemy',
+    ExperienceLootGenerator = 'ExperienceLootGenerator',
+    ItemLootGenerator = 'ItemLootGenerator',
+    GoldLootGenerator = 'GoldLootGenerator',
 
     //Player/User
     ItemStorage = 'ItemStorage',

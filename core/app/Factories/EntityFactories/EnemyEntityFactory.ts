@@ -2,8 +2,8 @@ import EntityManager from '../../../source/EntityManager.js';
 import Currency from '../../Entities/Currency.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import EnemyEntity from '../../Entities/EnemyEntity.js';
-import {EnemyID} from '../../../types/enums/EnemyID.js';
-import {Loot, unsigned} from '../../../types/main.js';
+import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
+import {ItemLoot, unsigned} from '../../../types/main.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 
 export default class EnemyEntityFactory {
@@ -16,7 +16,7 @@ export default class EnemyEntityFactory {
     create(
         id: string,
         name: string,
-        loot: Loot[],
+        loot: ItemLoot[],
         exp: unsigned,
         gold: unsigned[],
     ) {

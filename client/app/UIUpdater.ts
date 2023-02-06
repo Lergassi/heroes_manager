@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import debug from 'debug';
+import {sprintf} from 'sprintf-js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
@@ -51,13 +52,14 @@ export default class UIUpdater {
         }, this._updateIntervalDelay)
 
         this._state = UIState.Run;
-        debug(DebugNamespaceID.Log)('UIUpdater запущен.');
+        debug(DebugNamespaceID.Log)(sprintf('%s started.', ServiceID.UI_Updater));
     }
 
     stop(): void {
         if (this._state !== UIState.Run) return;
 
         clearInterval(this._updateUIIntervalID);
+        debug(DebugNamespaceID.Log)(sprintf('%s stopped.', ServiceID.UI_Updater));
 
         this._state = UIState.Run;
     }

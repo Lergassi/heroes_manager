@@ -8,6 +8,9 @@ import EnemyCharacterAttributeStartValueGenerator, {
 } from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
 import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
 
+/**
+ * @deprecated У врагов не будет атрибутов - будет проще. Только сила и хп.
+ */
 export default class EnemyCharacterAttributeFactory {
     private readonly _enemyCharacterAttributeStartValueFactory: EnemyCharacterAttributeStartValueGenerator;
 

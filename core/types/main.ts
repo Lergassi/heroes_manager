@@ -4,9 +4,10 @@ import {EquipSlotID} from './enums/EquipSlotID.js';
 import {CharacterAttributeID} from './enums/CharacterAttributeID.js';
 import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import CharacterAttributeInterface from '../app/Decorators/CharacterAttributeInterface.js';
-import {EnemyID} from './enums/EnemyID.js';
+import {EnemyTypeID} from './enums/EnemyTypeID.js';
 import {HeroClassID} from './enums/HeroClassID.js';
 import {ItemCategoryID} from './enums/ItemCategoryID.js';
+import {ItemID} from './enums/ItemID.js';
 
 export type integer = number;
 export type unsigned = number;
@@ -20,14 +21,23 @@ export type Days = number;
 
 export type CharacterAttributes = Partial<{[ID in CharacterAttributeID]: CharacterAttributeInterface}>;
 
-export type Loot = {
-    enemyLevel: unsigned[];
-    item: Item;
-    count: unsigned[];
+export type RangeType = {
+    min: number,
+    max: number,
+}
+
+export type ItemLoot = {
+    ID: ItemID;
+    count: RangeType;
     /**
      * Целое число в диапазоне 0-100. Но может быть и больше.
      */
-    chance: unsigned;
+    chance: number;
+}
+
+export type ItemCountDBType = {
+    ID: ItemID;
+    count: number;
 }
 
 export type ItemCount = {
@@ -70,3 +80,5 @@ export type UI_ShortHero = {
 
 export type ItemCategoryPowerRatio = {[ID in ItemCategoryID]?: {ratio: number}};
 // export type EquipSet = {[ID in HeroClassID]?: {[ID in ItemCategoryID]?: {count: number}}}[];
+
+export type LevelRange = {min: number, max: number};

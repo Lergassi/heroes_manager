@@ -8,17 +8,15 @@ import RComponentBridge, {
 import {assert} from './assert.js';
 import {ComponentID} from '../types/enums/ComponentID.js';
 
-export default class GameObject implements AssignRComponentInterface {
-    private readonly _id: number;
+export default class GameObject {
+    private readonly _ID: number;
     private _name: string;
     private readonly _tags: string[];
     private readonly _components;
-    private readonly _componentNames: {[name: string]: Object};
-    private _rComponentBridges: RComponentBridge[];
-    private _assignedRComponents: RComponentUpdateInterface[];
+    private readonly _componentNames: {[key: string]: any};
 
     get ID(): number {
-        return this._id;
+        return this._ID;
     }
 
     get name(): string {
@@ -39,22 +37,11 @@ export default class GameObject implements AssignRComponentInterface {
     constructor(
         id: number,
     ) {
-        // console.log('_id', this._id);
-        // console.log('_ID1', this['_ID']);
-        // console.log('_ID2', this['_ID']);
-        // console.log('_ID3', this['_ID']);
-        // this._id = id;
-        // this['_id'] = GameObject['generateID']();
-        this._id = id;
-        // this._name = GameObject.name + ': ' + this._id;
-        this._name = GameObject.name + ': ' + this._id;
+        this._ID = id;
+        this._name = GameObject.name + ': ' + this._ID;
         this._components = [];
         this._componentNames = {};
         this._tags = [];
-        // this._rComponentBridge = new RComponentBridge();
-        // this._rComponentBridge.update(this);
-        this._rComponentBridges = [];
-        this._assignedRComponents = [];
     }
 
     /**
@@ -181,43 +168,6 @@ export default class GameObject implements AssignRComponentInterface {
     }
 
     /**
-     * @deprecated
-     * @param rComponent
-     */
-    assignRComponent(rComponent: RComponentUpdateInterface): void {
-        // this._rComponentBridge.rComponent = rComponent;
-        // this._rComponentBridges.push(new RComponentBridge(rComponent));
-        this._assignedRComponents.push(rComponent);
-    }
-
-    /**
-     * @deprecated
-     * @param rComponent
-     */
-    removeRComponent(rComponent): void {
-
-    }
-
-    /**
-     * @deprecated
-     */
-    update() {
-        // this._rComponentBridge.update(this);
-        // for (let i = 0; i < this._rComponentBridges.length; i++) {
-        //     this._rComponentBridges[i].update(this);
-        // }
-        for (let i = 0; i < this._assignedRComponents.length; i++) {
-            // this._assignedRComponents[i].update(this);
-            this._assignedRComponents[i].update();
-        }
-        // for (let i = 0; i < this._components.length; i++) {
-        //     if (typeof this._components[i]['update'] === 'function') {
-        //         this._components[i]['update']();
-        //     }
-        // }
-    }
-
-    /**
      * @indev
      * Как контейнер. Также вызывается метод addComponent.
      * @param key Только строки из enum GameObjectKey.
@@ -244,8 +194,4 @@ export default class GameObject implements AssignRComponentInterface {
 
         return <T>this._componentNames[key];
     }
-
-    // has(key: string | string[]): {
-    //
-    // }
 }

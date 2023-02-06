@@ -41,7 +41,7 @@ Name;ID;ItemCategoryID;ArmorMaterialID;GetTypes;IconID;QualityID;StackSize;Equip
 Латный сапоги 01;PlateBoots01;Boots;Plate;;;Common;1;1;;1;;;;100;20;1;10;;IronIngot;10;Leather01;5;;;;
 Кожаный шлем 01;LeatherHelmet01;Helmets;Leather;;;Common;1;1;;1;;;;100;20;1;10;;Leather01;10;;;;;;
 Кожаные наплечники 01;LeatherShoulders01;ShoulderPads;Leather;;;Common;1;1;;1;;;;100;20;1;10;;Leather01;10;;;;;;
-Кожаный нагрудник 01;LeatherBreastplate;Breastplates;Leather;;;Common;1;1;;1;;;;100;20;1;10;;Leather01;10;;;;;;
+Кожаный нагрудник 01;LeatherBreastplate01;Breastplates;Leather;;;Common;1;1;;1;;;;100;20;1;10;;Leather01;10;;;;;;
 Кожаный браслет 01;LeatherBracer01;Bracers;Leather;;;Common;1;1;;1;;;;100;20;1;10;;Leather01;10;;;;;;
 Кожаные перчатки 01;LeatherGloves01;Gloves;Leather;;;Common;1;1;;1;;;;100;20;1;10;;Leather01;10;;;;;;
 Кожаный пояс 01;LeatherBelt01;Belts;Leather;;;Common;1;1;;1;;;;100;20;1;10;;Leather01;10;;;;;;

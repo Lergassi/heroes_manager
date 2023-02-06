@@ -1,6 +1,9 @@
+import _ from 'lodash';
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
+import MainLocationList from '../Components/MainLocationList.js';
 import Item from '../Entities/Item.js';
+import LocationFactory from '../Factories/LocationFactory.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
@@ -200,9 +203,45 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     }
 
     private async _createLocations() {
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+
+        this._manualCreateLocations();
+    }
+
+    private async _manualCreateLocations() {
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+    }
+
+    private _createFullRangeLocations() {
+        let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
+
+        // let maxLocationLevel = 100;
+        let maxLocationLevel = 35;
+        let mainLocationList = this.container.get<MainLocationList>(ServiceID.MainLocationList);
+
+        let locationsForLevel = [5, 10];    //Числа случайные. Логика будет дальше.
+        let startLocationLevel = 1;
+        for (let level = startLocationLevel; level <= maxLocationLevel; level++) {
+            _.map(_.range(0, _.random(locationsForLevel[0], locationsForLevel[1]) + 1), () => {
+                mainLocationList.add(locationFactory.create(level));
+            });
+        }
     }
 
     private async _addMoney() {

@@ -1,5 +1,5 @@
-import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
-import {ItemCategoryPowerRatio} from '../core/types/main.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import {ItemCategoryPowerRatio} from '../../types/main.js';
 
 //todo: Наверное нужно не так это делать.
 // export let itemCategoryPowerRatio: ItemCategoryPowerRatio = {

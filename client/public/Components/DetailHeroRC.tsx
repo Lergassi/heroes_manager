@@ -372,22 +372,22 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                         </div>
                         <div>
                             <h4>Экипировка:</h4>
-                            <ul>
-                                <li>Голова: {this.state.Head ? this.state.Head : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Head)}>clear</button></li>
-                                <li>Плечи: {this.state.Shoulders ? this.state.Shoulders : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Shoulders)}>clear</button></li>
-                                <li>Грудь: {this.state.Chest ? this.state.Chest : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Chest)}>clear</button></li>
-                                <li>Запястье: {this.state.Wrist ? this.state.Wrist : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Wrist)}>clear</button></li>
-                                <li>Руки: {this.state.Hands ? this.state.Hands : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Hands)}>clear</button></li>
-                                <li>Талия: {this.state.Waist ? this.state.Waist : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Waist)}>clear</button></li>
-                                <li>Ноги: {this.state.Legs ? this.state.Legs : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Legs)}>clear</button></li>
-                                <li>Ступни: {this.state.Foots ? this.state.Foots : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Foots)}>clear</button></li>
-                                <li>Правая рука: {this.state.RightHand ? this.state.RightHand : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.RightHand)}>clear</button></li>
-                                <li>Левая рука: {this.state.LeftHand ? this.state.LeftHand : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.LeftHand)}>clear</button></li>
-                                <li>Шея: {this.state.Neck ? this.state.Neck : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Neck)}>clear</button></li>
-                                <li>Палец 1: {this.state.Finger01 ? this.state.Finger01 : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Finger01)}>clear</button></li>
-                                <li>Палец 2: {this.state.Finger02 ? this.state.Finger02 : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Finger02)}>clear</button></li>
-                                <li>Тринкет: {this.state.Trinket ? this.state.Trinket : 'Пусто'}<button onClick={this.clearEquipSlot.bind(this, EquipSlotID.Trinket)}>clear</button></li>
-                            </ul>
+                            <table className={'basic-table'}>
+                                {this._renderEquipSlot(EquipSlotID.Head)}
+                                {this._renderEquipSlot(EquipSlotID.Shoulders)}
+                                {this._renderEquipSlot(EquipSlotID.Chest)}
+                                {this._renderEquipSlot(EquipSlotID.Wrist)}
+                                {this._renderEquipSlot(EquipSlotID.Hands)}
+                                {this._renderEquipSlot(EquipSlotID.Waist)}
+                                {this._renderEquipSlot(EquipSlotID.Legs)}
+                                {this._renderEquipSlot(EquipSlotID.Foots)}
+                                {this._renderEquipSlot(EquipSlotID.RightHand)}
+                                {this._renderEquipSlot(EquipSlotID.LeftHand)}
+                                {this._renderEquipSlot(EquipSlotID.Neck)}
+                                {this._renderEquipSlot(EquipSlotID.Finger01)}
+                                {this._renderEquipSlot(EquipSlotID.Finger02)}
+                                {this._renderEquipSlot(EquipSlotID.Trinket)}
+                            </table>
                             <EquipItemListRC
                                 container={this.props.container}
                                 equipSlotIDs={this._equipSlotIDs}
@@ -400,4 +400,12 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
             </div>
         );
     }//end render
+
+    private _renderEquipSlot(ID: EquipSlotID) {
+        return <tr key={ID}>
+            <td>{ID}</td>
+            <td>{this.state[ID] ? this.state[ID] : 'free'}</td>
+            <td><button onClick={this.clearEquipSlot.bind(this, ID)}>clear</button></td>
+        </tr>
+    }
 }

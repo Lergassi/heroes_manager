@@ -61,7 +61,7 @@ export default class HealthPoints implements DamageControllerInterface {
         this._currentHealthPoints = maxHealthPoints.finalValue;
         this._isDead = false;
         this._lifeStateController = stateController;
-        this._afterDiedCallback = afterDiedCallback;
+        this._afterDiedCallback = afterDiedCallback; //todo: Скрыть - логика передачи лута будет всегда. Позже в виде отдельного класса.
     }
 
     takeDamage(damage: unsigned, enemyRewardOptions?: RewardOptions): void {

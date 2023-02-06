@@ -1,13 +1,15 @@
 import Component from '../../source/Component.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
 import {unsigned} from '../../types/main.js';
-import {EnemyID} from '../../types/enums/EnemyID.js';
+import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 
-//Остальные данные пока не нужны.
 export interface EnemyComponentRender {
     updateType?(name: string): void;
 }
 
+/**
+ * @deprecated Просто хранение данных не нужно.
+ */
 export default class Enemy {
     private readonly _enemyEntity: EnemyEntity;
 

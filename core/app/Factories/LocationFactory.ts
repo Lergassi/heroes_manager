@@ -1,21 +1,22 @@
 import debug from 'debug';
+import {database} from '../../data/ts/database.js';
+import {location_enemies} from '../../data/ts/location_enemies.js';
 import GameObject from '../../source/GameObject.js';
 import ItemDatabase from '../../source/ItemDatabase.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {EnemyID} from '../../types/enums/EnemyID.js';
+import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import {unsigned} from '../../types/main.js';
+import {LevelRange} from '../../types/main.js';
 import GatheringPoint from '../Components/GatheringPoint.js';
-import HealthPoints from '../Components/HealthPoints.js';
-import HeroGroup from '../Components/HeroGroup.js';
 import Location, {GatheringPointTypeID} from '../Components/Location.js';
 import Wallet from '../Components/Wallet.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import Random from '../Services/Random.js';
 import EnemyFactory from './EnemyFactory.js';
@@ -24,17 +25,22 @@ import ItemStackFactory from './ItemStackFactory.js';
 import ItemStorageFactory from './ItemStorageFactory.js';
 import WalletFactory from './WalletFactory.js';
 
-export type LocationFactoryCreateOptions = {
-    level: unsigned;
-    internalItemStorageSize?: unsigned;
-    heroGroupSize?: unsigned;
-}
-
 export type GatheringItemPointPattern = {
     [GatheringPointTypeID.low]: number;
     [GatheringPointTypeID.normal]: number;
     [GatheringPointTypeID.high]: number;
 }
+
+// let types = [
+//     GatheringPointTypeID.low,
+//     GatheringPointTypeID.normal,
+//     GatheringPointTypeID.high,
+// ];
+// let gatheringTypeValues = {
+//     [GatheringPointTypeID.low]: 16,
+//     [GatheringPointTypeID.normal]: 32,
+//     [GatheringPointTypeID.high]: 64,
+// };
 
 export default class LocationFactory {
     private readonly _maxGatheringItemPointsCount: number;
@@ -54,6 +60,8 @@ export default class LocationFactory {
     //     heroGroupSize: 5,
     // };
     private _enemyFactory: EnemyFactory;
+
+    private readonly _location_enemies = location_enemies;
 
     constructor(
         gameObjectFactory: GameObjectFactory,
@@ -79,101 +87,48 @@ export default class LocationFactory {
     }
 
     create(
-        level: unsigned,
-        // internalItemStorageSize?: unsigned,
-        // heroGroupSize?: unsigned,
+        level: number,
     ): GameObject {
-        //internalItemStorageSize = internalItemStorageSize ?? this._defaultOptions.internalItemStorageSize;
-        //heroGroupSize = heroGroupSize ?? this._defaultOptions.heroGroupSize;
-        // let internalItemStorageSize = this._defaultOptions.internalItemStorageSize;
-        // let heroGroupSize = this._defaultOptions.heroGroupSize;
-
         let location = this._gameObjectFactory.create();
 
         //todo: Доступ к кошельку нужно сделать удобнее, а не по ID валюты из контейнера.
-        location.set<Wallet>(CurrencyID.Gold, new Wallet(
+        let wallet = new Wallet(
             0,
-        ));
-        // let heroGroupComponent = location.set<HeroGroup>('heroGroupComponent', new HeroGroup(
-        //     5,
-        // ));
-
-        let itemStorageComponent = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(this._internalItemStorageSize, location));
-
-        //todo: В периоде нет смысла если он используется только при выводе для игрока.
-        // let gatheringItemPointTypeValues: Readonly<GatheringItemPointTypeValues> = {
-        //     [GatheringPointTypeID.low]: {value: 2 * 3600, period: ONE_HOUR_IN_SECONDS},
-        //     [GatheringPointTypeID.normal]: {value: 4 * 3600, period: ONE_HOUR_IN_SECONDS},
-        //     [GatheringPointTypeID.high]: {value: 8 * 3600, period: ONE_HOUR_IN_SECONDS},
-        // };
-        // let gatheringItemPointPatterns: GatheringItemPointPattern[] = [
-        //     {[GatheringPointTypeID.low]: 0, [GatheringPointTypeID.normal]: 3, [GatheringPointTypeID.high]: 0},
-        //     {[GatheringPointTypeID.low]: 0, [GatheringPointTypeID.normal]: 2, [GatheringPointTypeID.high]: 1},
-        //     {[GatheringPointTypeID.low]: 1, [GatheringPointTypeID.normal]: 2, [GatheringPointTypeID.high]: 0},
-        // ];
+        );
+        // let itemStorage = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(this._internalItemStorageSize, location));
+        let itemStorage = this._itemStorageFactory.create(this._internalItemStorageSize).get<ItemStorageInterface>(ComponentID.ItemStorage);
 
         //todo: Предметы должны устаналиваться более строго. А вдруг в бд не будет предметов категории? Надо чтобы items всегда был в рабочем состоянии.
-        let items = this._itemDatabase.getByItemCategory(this._entityManager.get<ItemCategory>(EntityID.ItemCategory, ItemCategoryID.Resources));
+        let items = this._itemDatabase.findByItemCategory(this._entityManager.get<ItemCategory>(EntityID.ItemCategory, ItemCategoryID.Resources));
         if (items.length < this._maxGatheringItemPointsCount) {
             debug(DebugNamespaceID.Warning)('Предметов не достаточно для создании локации.');
         }
         items = Random.some(items, this._maxGatheringItemPointsCount, {unique: true});
-        // let selectedGatheringItemPointPattern = Random.one(gatheringItemPointPatterns);
 
-        // let index = 0;
-        // let gatheringItemPoints: GatheringItemPoint[] = [];
-        // for (const selectedGatheringItemPointPatternKey in selectedGatheringItemPointPattern) {
-        //     let i = 0;
-        //     while (i < selectedGatheringItemPointPattern[selectedGatheringItemPointPatternKey]) {
-        //         if (items[index]) {
-        //             gatheringItemPoints.push({
-        //                 item: items[index],
-        //                 count: gatheringItemPointTypeValues[selectedGatheringItemPointPatternKey],
-        //                 type: <GatheringPointTypeID>selectedGatheringItemPointPatternKey,
-        //             });
-        //         }
-        //         ++i;
-        //         ++index;
-        //     }
-        // }
-
-        let types = [
-            GatheringPointTypeID.low,
-            GatheringPointTypeID.normal,
-            GatheringPointTypeID.high,
-        ];
-        let gatheringTypeValues = {
-            [GatheringPointTypeID.low]: 16,
-            [GatheringPointTypeID.normal]: 32,
-            [GatheringPointTypeID.high]: 64,
-        };
+        let gatheringItemPoints = [
+            new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.Wood), 32),
+            new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.Cotton), 32),
+            new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.IronOre), 32),
+        ]
 
         let locationComponent = location.set<Location>(ComponentID.Location, new Location(
-            new Date(),
             level,
-            // gatheringItemPoints,
-            [
-                new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.Wood), 32),
-                new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.Cotton), 32),
-                new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.IronOre), 32),
-            ],
+            gatheringItemPoints,
             // _.map(items, (item) => {
             //     let type = Random.one(types);
             //     // return new GatheringPoint(GatheringPointTypeID.normal, item, 32);
             //     return new GatheringPoint(type, item, gatheringTypeValues[type]);
             // }),
             this._itemStackFactory,
-            itemStorageComponent,
-            this._walletFactory.create().get<WalletInterface>(ComponentID.Wallet), //Можно передать любой кошелек.
-            //@test
+            itemStorage,
+            wallet,
             // enemies,
         ));
 
-        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
-        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
-        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
-        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
-        locationComponent.addEnemy(this._enemyFactory.create(EnemyID.Bear, 1));
+        let locationEnemies = database.locations.enemies.findByLevel(level);
+        for (let i = 0; i < locationEnemies.length; i++) {
+            locationComponent.addEnemy(this._enemyFactory.create(locationEnemies[i].enemy, level));
+        }
 
         return location;
     }

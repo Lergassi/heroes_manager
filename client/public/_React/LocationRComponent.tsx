@@ -1,7 +1,6 @@
 import React from 'react';
 import GameObject from '../../../core/source/GameObject.js';
 import Location, {LocationEventCode} from '../../../core/app/Components/Location.js';
-import LevelRange from '../../../core/app/LevelRange.js';
 import HeroGroup from '../../../core/app/Components/HeroGroup.js';
 import _, {values} from 'lodash';
 import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';

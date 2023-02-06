@@ -1,3 +1,4 @@
+import {sprintf} from 'sprintf-js';
 import EquipSlotInterface, {
     EquipSlotInterfaceRender,
     EquipSlotInterfaceRenderCallback
@@ -37,20 +38,19 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         this._item = item;
         this._averageItemLevel.addItem(item);
         this._itemAttributeCollectionComponent.addItem(item);
-        debug(DebugNamespaceID.Log)('Предмет экипирован.');
+        debug(DebugNamespaceID.Log)(sprintf('В слот слот %s экипирован предмет %s.', this._ID, item.id));
 
         return true;
     }
 
     clear(): void {
-        // if (!this.canClear()) return;
         if (this.isFree()) return;
 
         this._averageItemLevel.removeItem(this._item);
         this._itemAttributeCollectionComponent.removeItem(this._item);
         this._item = null;
         EventSystem.event(EquipSlotComponentEventCode.DestroyItemStack, this);
-        debug(DebugNamespaceID.Log)('Слот экипировки очищен.');
+        debug(DebugNamespaceID.Log)(sprintf('Слот экипировки %s очищен.', this._ID));
     }
 
     moveTo(itemStorage: ItemStorageInterface): boolean {

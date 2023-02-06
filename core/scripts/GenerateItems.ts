@@ -36,12 +36,13 @@ export default class GenerateItems {
             HeroClassID.Support1,
         ];
 
-        // let constValues: any = {};
-        // constValues.qualityID = QualityID.Uncommon;
-
         for (let i = 0; i < heroClassIDs.length; i++) {
             this._generate(heroClassIDs[i], items);
         }
+    }
+
+    generate(heroClassID: HeroClassID, items: any[]): void {
+
     }
 
     private _generate(heroClassID: HeroClassID, items: any[]) {
@@ -142,8 +143,8 @@ export default class GenerateItems {
                 // console.log(itemAttributes);
 
                 items.push(itemAttributes);
-            }
-        }//end for
+            }//end for positions[level]
+        }//end for positions
     }
 
     private _createPrepareItemCategorySet(sampleNumber: number) {

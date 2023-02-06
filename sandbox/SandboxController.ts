@@ -23,7 +23,7 @@ import {startCharacterAttributeConfig} from '../core/config/start_character_valu
 import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js';
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
 import EnemyFactory from '../core/app/Factories/EnemyFactory.js';
-import {EnemyID} from '../core/types/enums/EnemyID.js';
+import {EnemyTypeID} from '../core/types/enums/EnemyTypeID.js';
 import FightController from '../core/app/Components/FightController.js';
 import AttackControllerInterface from '../core/app/Interfaces/AttackControllerInterface.js';
 import {ComponentID} from '../core/types/enums/ComponentID.js';
@@ -55,7 +55,10 @@ import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
 import Bag from '../core/app/Components/Bag.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
+import DatabaseTSSandboxController from './SandboxControllers/DatabaseTSSandboxController.js';
+import GenerateEnemySandboxController from './SandboxControllers/GenerateEnemySandboxController.js';
 import GenerateItemsSandboxController from './SandboxControllers/GenerateItemsSandboxController.js';
+import GenerateLocationSandboxController from './SandboxControllers/GenerateLocationSandboxController.js';
 import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
 import DevUISystemController from './SandboxControllers/DevUISystemController.js';
 import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseController.js';
@@ -102,7 +105,10 @@ export default class SandboxController {
         // (new ShopSandboxController(this._container)).run();
         // (new EntityManagerSandboxController(this._container)).run();
         // (new HeroSandboxController(this._container)).run();
-        (new GenerateItemsSandboxController(this._container)).run();
+        // (new GenerateItemsSandboxController(this._container)).run();
+        (new GenerateLocationSandboxController(this._container)).run();
+        // (new GenerateEnemySandboxController(this._container)).run();
+        // (new DatabaseTSSandboxController(this._container)).run();
 
         // this._testSumBoolean();
         // this._testLodashEvery();
@@ -292,7 +298,7 @@ export default class SandboxController {
         let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
         let hero = heroFactory.create(HeroClassID.Warrior, 1);
-        let enemy = enemyFactory.create(EnemyID.Bear, 1, {
+        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1, {
             baseCharacterAttributeValues: {
                 // [CharacterAttributeID.AttackPower]: 0,
                 // [CharacterAttributeID.AttackPower]: 1,
@@ -334,31 +340,31 @@ export default class SandboxController {
         console.log('heroes', extractHealthPoints(heroes));
 
         let enemies = [
-            enemyFactory.create(EnemyID.Bear, 1, {
+            enemyFactory.create(EnemyTypeID.Bear, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
                 },
             }),
-            enemyFactory.create(EnemyID.Bear, 1, {
+            enemyFactory.create(EnemyTypeID.Bear, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
                 },
             }),
-            enemyFactory.create(EnemyID.Bear, 1, {
+            enemyFactory.create(EnemyTypeID.Bear, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
                 },
             }),
-            enemyFactory.create(EnemyID.Bear, 1, {
+            enemyFactory.create(EnemyTypeID.Bear, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
                 },
             }),
-            enemyFactory.create(EnemyID.Bear, 1, {
+            enemyFactory.create(EnemyTypeID.Bear, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
@@ -712,11 +718,11 @@ export default class SandboxController {
         console.log(heroFightGroup);
 
         let enemyFightGroup = new CharacterFightGroup();
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyID.Bear, 1));
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyID.Bear, 1));
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyID.Bear, 1));
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyID.Bear, 1));
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
         console.log(enemyFightGroup);
 
         // heroFightGroup.attackTo(enemyFightGroup);

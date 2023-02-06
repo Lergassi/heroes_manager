@@ -65,7 +65,6 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
 
     setHero(hero: GameObject) {
         this.setState(function () {
-            hero.assignRComponent(this);
             return {
                 hero: hero,
             };

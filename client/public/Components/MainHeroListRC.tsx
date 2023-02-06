@@ -10,6 +10,7 @@ import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import DetailHeroRC from './DetailHeroRC.js';
+import {MainLocationListRCState} from './MainLocationListRC.js';
 
 export interface MainHeroListRCProps {
     container: ContainerInterface;
@@ -84,7 +85,8 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
     updateByRequest(): void {
         if (!this.state.window.show) return;
 
-        this.state.mainHeroList.renderByRequest(this, {page: this.state.activePage, elementForPage: this._options.rows});
+        // this.state.mainHeroList.renderByRequest(this, {page: this.state.activePage, elementForPage: this._options.rows});
+        this.state.mainHeroList.renderByRequest(this, {offset: ((this.state.activePage > 0 ? this.state.activePage - 1 : 0)) * this._options.rows, count: this._options.rows});
     }
 
     showPage(page: number): void {
@@ -103,19 +105,27 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
         });
     }
 
-    updatePagination(activePage: number, totalPages: number): void {
+    updatePagination(totalPages:number, totalHeroes:number): void {
         this.setState((state) => {
             return {
-                activePage: activePage,
                 totalPages: totalPages,
+                totalHeroes: totalHeroes,
             } as MainHeroListRCState;
         });
     }
 
-    updateTotalHeroes(totalHeroes: number): void {
+    // updateTotalHeroes(totalHeroes: number): void {
+    //     this.setState((state) => {
+    //         return {
+    //             totalHeroes: totalHeroes,
+    //         } as MainHeroListRCState;
+    //     });
+    // }
+
+    updateActivePage(activePage: number): void {
         this.setState((state) => {
             return {
-                totalHeroes: totalHeroes,
+                activePage: activePage,
             } as MainHeroListRCState;
         });
     }
@@ -131,15 +141,15 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                 <tbody>
                                 <tr className={'hero-list-table-row'}>
                                     {/*<th></th>*/}
-                                    <th>Класс (ID)</th>
-                                    <th>Роль</th>
-                                    <th>Состояние</th>
-                                    <th style={{width: '220px'}}>Уровень (опыт)</th>
+                                    <th>HeroClass (ID)</th>
+                                    <th>HeroRole</th>
+                                    <th>State</th>
+                                    <th style={{width: '220px'}}>Level (xp)</th>
                                     <th>ilvl</th>
-                                    <th>Очки здоровья</th>
-                                    <th>Сила атаки</th>
-                                    <th>СИЛ/ЛОВ/ИНТ</th>
-                                    <th>Управление</th>
+                                    <th>HP</th>
+                                    <th>AP</th>
+                                    <th>STR/AGI/INT</th>
+                                    <th>Ctrl</th>
                                     {/*<th>to location</th>*/}
                                 </tr>
                                     {_.map(this.state.heroes, (hero, index) => {
@@ -168,7 +178,16 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                     })}
                                 </tbody>
                             </table>
-                            <div>activePage: {this.state.activePage}, pages: {this.state.totalPages}, totalHeroes: {this.state.totalHeroes}</div>
+                            {/*<div>activePage: {this.state.activePage}, pages: {this.state.totalPages}, totalHeroes: {this.state.totalHeroes}</div>*/}
+                            <div>pages: {this.state.activePage}/{this.state.totalPages}, {this.state.totalHeroes}</div>
+                            <div>
+                                {_.map(_.range(1, this.state.totalPages + 1), (page) => {
+                                    return <span key={page} className={'btn btn_default'} onClick={(event) => {
+                                        this.updateActivePage(page);
+                                        event.preventDefault();
+                                    }}>{page}</span>
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>

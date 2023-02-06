@@ -8,8 +8,8 @@ import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 export default class ConventItemCategories {
     run() {
         let filename = 'item_categories';
-        let input = sprintf('./core/data/%s.csv', filename);
-        let output = sprintf('./core/data/%s.json', filename);
+        let input = sprintf('./core/data/csv/%s.csv', filename);
+        let output = sprintf('./core/data/json/%s.json', filename);
         let json = csvToJson.getJsonFromCsv(input);
         let string = JSON.stringify(json);
         fs.writeFile(output, string, (error) => {

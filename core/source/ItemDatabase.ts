@@ -37,7 +37,7 @@ export default class ItemDatabase {
     }
 
     //todo: Временно тут.
-    getByItemCategory(itemCategory: ItemCategory | ItemCategory[]): Item[] {
+    findByItemCategory(itemCategory: ItemCategory | ItemCategory[]): Item[] {
         let result = [];
         for (const itemID in this._items) {
             if (this._items[itemID].hasItemCategory(itemCategory)) {

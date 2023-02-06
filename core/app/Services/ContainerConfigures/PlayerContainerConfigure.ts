@@ -53,11 +53,11 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
          * @indev
          */
         //Ну допустим...
-        Object.defineProperty(Object.prototype, '_generateID', {
-            get: () => {
-                return container.get<IDGeneratorInterface>(ServiceID.IDGenerator).generateID();
-            }
-        });
+        // Object.defineProperty(Object.prototype, '_generateID', {
+        //     get: () => {
+        //         return container.get<IDGeneratorInterface>(ServiceID.IDGenerator).generateID();
+        //     }
+        // });
         //endregion dev
         container.set<GameObjectStorage>(ServiceID.GameObjectStorage, (container) => {
             return new GameObjectStorage();
@@ -200,13 +200,12 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
         //todo: Надо както сделать по другому такую логику.
         container.set<MainLocationList>(ServiceID.MainLocationList, (container) => {
-            let mainLocationList = container.get<GameObjectFactory>(ServiceID.GameObjectFactory).create();
+            let max = 1000;
+            let mainLocationList = new MainLocationList(
+                max,
+            );
 
-            let mainLocationListComponent = mainLocationList.addComponent(new MainLocationList(
-                10,
-            ));
-
-            return mainLocationListComponent;
+            return mainLocationList;
         });
 
         // container.set(ServiceID.Shop, (container) => {

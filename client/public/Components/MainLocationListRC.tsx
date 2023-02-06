@@ -23,6 +23,7 @@ export interface MainLocationListRCState {
     locations: MainLocationListRCElement[];
     activePage: number;
     totalPages: number;
+    totalLocations: number;
 }
 
 export interface MainLocationListRCElement {
@@ -40,6 +41,10 @@ export interface MainLocationListRCElement {
 }
 
 export default class MainLocationListRC extends React.Component<MainLocationListRCProps, MainLocationListRCState> implements MainLocationListRender {
+    private _options = {
+        rows: 10,
+    };
+
     constructor(props: MainLocationListRCProps) {
         super(props);
 
@@ -48,18 +53,21 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                 show: true,
             },
             locations: [],
-            activePage: 0,
+            activePage: 1,
             totalPages: 0,
+            totalLocations: 0,
         };
 
         this.props.container.set<MainLocationListRC>(ServiceID.UI_MainLocationList, this);
         this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
+
+        this.changeActivePageHandler = this.changeActivePageHandler.bind(this);
     }
 
     updateByRequest(): void {
         if (!this.state.window.show) return;
 
-        this.props.mainLocationList?.renderByRequest(this);
+        this.props.mainLocationList?.renderByRequest(this, {offset: ((this.state.activePage > 0 ? this.state.activePage - 1 : 0)) * this._options.rows, count: this._options.rows});
     }
 
     updateLocations(locations: MainLocationListRCElement[]): void {
@@ -70,7 +78,30 @@ export default class MainLocationListRC extends React.Component<MainLocationList
         });
     }
 
-    updatePagination(activePage: number, totalPages: number): void {}
+    updateActivePage(activePage: number): void {
+        this.setState((state) => {
+            return {
+                activePage: activePage,
+            } as MainLocationListRCState;
+        });
+    }
+
+    updatePagination(totalPages:number, totalLocations:number): void {
+        this.setState((state) => {
+            return {
+                totalPages: totalPages,
+                totalLocations: totalLocations,
+            } as MainLocationListRCState;
+        });
+    }
+
+    changeActivePageHandler(e) {
+        this.setState((state) => {
+            return {
+                activePage: e.target.value ?? 1,
+            } as MainLocationListRCState;
+        });
+    }
 
     render() {
         return (
@@ -81,19 +112,19 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                         <table className={'basic-table'}>
                             <tbody>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>level</th>
-                                    <th>state</th>
-                                    <th>heroes (L/T)</th>
-                                    <th>enemies (L/T)</th>
-                                    <th>veins</th>
-                                    <th>loot</th>
-                                    <th>money</th>
-                                    <th>Управление</th>
+                                    {/*<th>ID</th>*/}
+                                    <th>Level</th>
+                                    <th>State</th>
+                                    <th>Heroes (L/T)</th>
+                                    <th>Enemies (L/T)</th>
+                                    <th>Veins</th>
+                                    <th>Loot</th>
+                                    <th>Money</th>
+                                    <th>Ctrl, ID</th>
                                 </tr>
                                 {_.map(this.state.locations, (location, index) => {
                                     return <tr key={index}>
-                                        <td>{location.ID}</td>
+                                        {/*<td>{location.ID}</td>*/}
                                         <td>{location.level}</td>
                                         <td>{location.state}</td>
                                         <td>{location.lifeHeroesCount}/{location.totalHeroesCount}</td>
@@ -116,6 +147,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                         </td>
                                         <td>{location.money}</td>
                                         <td>
+                                            <span>{location.ID}: </span>
                                             <button onClick={() => {
                                                 this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
                                             }}>detail</button>
@@ -124,9 +156,18 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                 })}
                             </tbody>
                         </table>
+                        <div>pages: {this.state.activePage}/{this.state.totalPages}, {this.state.totalLocations}</div>
+                        <div>
+                            {_.map(_.range(1, this.state.totalPages + 1), (page) => {
+                                return <span key={page} className={'btn btn_default'} onClick={(event) => {
+                                    this.updateActivePage(page);
+                                    event.preventDefault();
+                                }}>{page}</span>
+                            })}
+                        </div>
                     </div>{/*end widget__content*/}
                 </div>{/*end widget*/}
             </div>
         );
-    }
+    }//render
 }

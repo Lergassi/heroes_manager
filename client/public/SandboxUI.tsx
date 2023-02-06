@@ -30,7 +30,7 @@ import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {CommandID} from '../../core/types/enums/CommandID.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
-import {EnemyID} from '../../core/types/enums/EnemyID.js';
+import {EnemyTypeID} from '../../core/types/enums/EnemyTypeID.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {IconID} from '../../core/types/enums/IconID.js';
@@ -475,11 +475,11 @@ export default class SandboxUI {
         location.get<Location>(ComponentID.Location).addHero(heroFactory.create(HeroClassID.Gunslinger, 1));
         location.get<Location>(ComponentID.Location).addHero(heroFactory.create(HeroClassID.Support1, 1));
 
-        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
-        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
-        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
-        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
-        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
+        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
+        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
+        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
+        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
+        location.get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
 
         console.log('location', location);
 
@@ -524,11 +524,11 @@ export default class SandboxUI {
             locations[i].get<Location>(ComponentID.Location).addHero(heroFactory.create(HeroClassID.Support2, 1));
             locations[i].get<Location>(ComponentID.Location).addHero(heroFactory.create(HeroClassID.Support1, 1));
 
-            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
-            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
-            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
-            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
-            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyID.Bear, 1));
+            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
+            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
+            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
+            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
+            locations[i].get<Location>(ComponentID.Location).addEnemy(enemyFactory.create(EnemyTypeID.Bear, 1));
         }
 
         for (let i = 0; i < locations.length; i++) {

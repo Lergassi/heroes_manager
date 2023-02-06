@@ -20,6 +20,7 @@ export interface ExperienceRender {
     updateTotalExpToLevelUp?(value: number): void,
 }
 
+//todo: ExperienceDistributorInterface - зачем это тут?
 export default class Experience implements ExperienceDistributorInterface {
     private _level: unsigned;
     private readonly _maxLevel: unsigned;

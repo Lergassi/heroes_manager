@@ -2,6 +2,10 @@ import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../types/enums/HeroClassID.js';
 import {CurrencyID} from '../types/enums/CurrencyID.js';
 
+export let a = [
+    {},
+];
+
 export default {
     max_player_level: 100,
     start_hero_values: {

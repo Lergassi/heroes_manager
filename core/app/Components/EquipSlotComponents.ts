@@ -16,7 +16,7 @@ export default class EquipSlotComponents extends Component {
         }
 
         this._equipSlotComponents[name] = equipSlotComponent;
-        this.gameObject.addComponent(equipSlotComponent);
+        // this.gameObject.addComponent(equipSlotComponent);
 
         return equipSlotComponent;
     }

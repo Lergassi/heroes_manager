@@ -1,10 +1,22 @@
 export enum CharacterAttributeID {
     //главные
+    /**
+     * STR
+     */
     Strength = 'Strength',
+    /**
+     * AGI
+     */
     Agility = 'Agility',
+    /**
+     * INT
+     */
     Intelligence = 'Intelligence',
 
     //...
+    /**
+     * HP
+     */
     HealthPoints = 'HealthPoints',
     MaxHealthPoints = 'MaxHealthPoints',
     Protection = 'Protection',              //Числовой показатель.
@@ -15,7 +27,13 @@ export enum CharacterAttributeID {
     MaxMagicPoints = 'MaxMagicPoints',
 
     //дополнительные
+    /**
+     * AP
+     */
     AttackPower = 'AttackPower',
+    /**
+     * AS
+     */
     AttackSpeed = 'AttackSpeed',
     CriticalStrike = 'CriticalStrike',
     // CriticalStrikeChance = 'CriticalStrikeChance',

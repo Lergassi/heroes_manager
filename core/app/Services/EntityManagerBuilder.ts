@@ -6,7 +6,7 @@ import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import {EnemyID} from '../../types/enums/EnemyID.js';
+import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {QualityID} from '../../types/enums/QualityID.js';
@@ -1176,42 +1176,42 @@ export default class EntityManagerBuilder {
     // }
 
     private _createEnemyEntities() {
-        let maxEnemyLevel = 100;    //todo: Настройки.
-        let enemyEntityFactory = new EnemyEntityFactory(this._entityManager);
-        enemyEntityFactory.create(
-            EnemyID.Boar,
-            'Кабан',
-            [
-                {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(EntityID.Item, ItemID.BoarMeat), count: [1, 3], chance: 30},
-                {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(EntityID.Item, ItemID.BoarSkin), count: [1, 2], chance: 20},
-                // {enemyLevel: [1, 40], item: this._entityManager.get<Item>(Item, ItemID.Wood), count: [4, 10], chance: 40},
-                // {enemyLevel: [10, 30], item: this._entityManager.get<Item>(Item, ItemID.IronOre), count: [2, 6], chance: 20},
-                // {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
-                // {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
-                // {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
-                {enemyLevel: [50, 100], item: this._entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01), count: [1, 1], chance: 1},
-            ],
-            20,
-            [10, 20],
-        );
-        enemyEntityFactory.create(
-            EnemyID.Bear,
-            'Медведь',
-            [
-                {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(EntityID.Item, ItemID.BoarMeat), count: [1, 3], chance: 30},
-                {enemyLevel: [1, maxEnemyLevel], item: this._entityManager.get<Item>(EntityID.Item, ItemID.BoarSkin), count: [1, 2], chance: 20},
-                // {enemyLevel: [1, 40], item: this._entityManager.get<Item>(Item, ItemID.Wood), count: [4, 10], chance: 40},
-                // {enemyLevel: [10, 30], item: this._entityManager.get<Item>(Item, ItemID.IronOre), count: [2, 6], chance: 20},
-                // {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
-                // {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
-                // {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
-                {enemyLevel: [50, 100], item: this._entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01), count: [1, 1], chance: 1},
-            ],
-            20,
-            [10, 20],
-        );
-
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.EnemyEntity');
+        // let maxEnemyLevel = 100;    //todo: Настройки.
+        // let enemyEntityFactory = new EnemyEntityFactory(this._entityManager);
+        // enemyEntityFactory.create(
+        //     EnemyTypeID.Boar,
+        //     'Кабан',
+        //     [
+        //         {enemyLevel: [1, maxEnemyLevel], ID: this._entityManager.get<Item>(EntityID.Item, ItemID.BoarMeat), count: [1, 3], chance: 30},
+        //         {enemyLevel: [1, maxEnemyLevel], ID: this._entityManager.get<Item>(EntityID.Item, ItemID.BoarSkin), count: [1, 2], chance: 20},
+        //         // {enemyLevel: [1, 40], item: this._entityManager.get<Item>(Item, ItemID.Wood), count: [4, 10], chance: 40},
+        //         // {enemyLevel: [10, 30], item: this._entityManager.get<Item>(Item, ItemID.IronOre), count: [2, 6], chance: 20},
+        //         // {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
+        //         // {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
+        //         // {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
+        //         {enemyLevel: [50, 100], ID: this._entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01), count: [1, 1], chance: 1},
+        //     ],
+        //     20,
+        //     [10, 20],
+        // );
+        // enemyEntityFactory.create(
+        //     EnemyTypeID.Bear,
+        //     'Медведь',
+        //     [
+        //         {enemyLevel: [1, maxEnemyLevel], ID: this._entityManager.get<Item>(EntityID.Item, ItemID.BoarMeat), count: [1, 3], chance: 30},
+        //         {enemyLevel: [1, maxEnemyLevel], ID: this._entityManager.get<Item>(EntityID.Item, ItemID.BoarSkin), count: [1, 2], chance: 20},
+        //         // {enemyLevel: [1, 40], item: this._entityManager.get<Item>(Item, ItemID.Wood), count: [4, 10], chance: 40},
+        //         // {enemyLevel: [10, 30], item: this._entityManager.get<Item>(Item, ItemID.IronOre), count: [2, 6], chance: 20},
+        //         // {enemyLevel: [20, 40], item: this._entityManager.get<Item>(Item, ItemID.CopperOre), count: [1, 4], chance: 20},
+        //         // {enemyLevel: [30, 50], item: this._entityManager.get<Item>(Item, ItemID.GoldOre), count: [0, 3], chance: 10},
+        //         // {enemyLevel: [40, 100], item: this._entityManager.get<Item>(Item, ItemID.PlateHelmet_01), count: [1, 1], chance: 1},
+        //         {enemyLevel: [50, 100], ID: this._entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01), count: [1, 1], chance: 1},
+        //     ],
+        //     20,
+        //     [10, 20],
+        // );
+        //
+        // debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.EnemyEntity');
     }
 
     // private _calcHeroConfig() {

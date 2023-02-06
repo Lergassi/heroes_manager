@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import EnemyFactory from '../Factories/EnemyFactory.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
-import {EnemyID} from '../../types/enums/EnemyID.js';
+import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {assertNotNil} from '../../source/assert.js';
 import FightController from '../Components/FightController.js';
@@ -29,7 +29,7 @@ export default class FightCommand extends Command {
         assertNotNil(hero);
         console.log(hero);
 
-        let enemy = this.container.get<EnemyFactory>(ServiceID.EnemyFactory).create(EnemyID.Bear, 1, {
+        let enemy = this.container.get<EnemyFactory>(ServiceID.EnemyFactory).create(EnemyTypeID.Bear, 1, {
             baseCharacterAttributeValues: {
                 [CharacterAttributeID.AttackPower]: 1000,
             },

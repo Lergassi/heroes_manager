@@ -22,15 +22,19 @@ export enum MainLocationListComponentEventCode {
 
 export interface MainLocationListRender {
     updateLocations?(locations: MainLocationListRCElement[]): void;
-    updatePagination?(activePage: number, totalPages: number): void;
+    updatePagination?(totalPages: number, totalLocations: number): void;
 }
 
 export default class MainLocationList {
     private readonly _locations: GameObject[];
     private _max: unsigned;
 
+    /**
+     *
+     * @param max -1 = без ограничений.
+     */
     constructor(
-        max: unsigned,  //todo: Изменяемый игровой параметр.
+        max: number = -1,
     ) {
         this._locations = [];
         this._max = max;
@@ -44,21 +48,26 @@ export default class MainLocationList {
     create(
         level: unsigned,
         locationFactory: LocationFactory,   //todo: Должен быть в конце. Возможно тут стоит использовать options или отдельный аргумент для зависимостей.
-        // internalItemStorageSize?: unsigned,
-        // heroGroupSize?: unsigned,
     ): GameObject {
         if (!this.canAddLocation()) return;
 
         let location = locationFactory.create(
             level,
-            // internalItemStorageSize,
-            // heroGroupSize,
         );
 
         this._locations.push(location);
-        EventSystem.event(MainLocationListComponentEventCode.AddLocation, this);
 
         return location;
+    }
+
+    add(location: GameObject): boolean {
+        assertIsInstanceOf(location, GameObject);
+
+        if (!this.canAddLocation()) return false;
+
+        this._locations.push(location);
+
+        return true;
     }
 
     delete(location: GameObject, gameObjectStorage: GameObjectStorage): void {
@@ -70,24 +79,18 @@ export default class MainLocationList {
         if (_.includes(this._locations, location)) {
             _.pull(this._locations, location);
             gameObjectStorage.remove(location);
-
-            EventSystem.event(MainLocationListComponentEventCode.DeleteLocation, this);
         }
     }
 
-    add(location: GameObject): boolean {
-        assertIsInstanceOf(location, GameObject);
-
-        if (!this.canAddLocation()) return false;
-
-        this._locations.push(location);
-        EventSystem.event(MainLocationListComponentEventCode.AddLocation, this);
-
-        return true;
-    }
-
     canAddLocation(): boolean {
+        if (this._max === -1) return true;
+
         if (this._locations.length > this._max + 1) {
+            /*
+                Варианты сообщений:
+                'Ошибка создании локации. У игрока максимальное кол-во локаций.'
+                'Ошибка/игрока ошибка. У игрока максимальное кол-во локаций.' - без сообщения оо ошибке создания.
+             */
             debug(DebugNamespaceID.Throw)('Нельзя добавить новую локацию. У игрока максимальное кол-во локаций.');
             return false;
         }
@@ -101,9 +104,14 @@ export default class MainLocationList {
         return true;
     }
 
-    renderByRequest(ui: MainLocationListRender): void {
+    //todo: Рендер списков с навигацией в отдельный класс.
+    renderByRequest(ui: MainLocationListRender, options?: {offset: number, count: number}): void {
+        let offset = options?.offset ?? 0;
+        let count = options?.count ?? this._locations.length;
+        let locationsForPage = offset + count;
+
         let locations: MainLocationListRCElement[] = [];
-        for (let i = 0; i < this._locations.length; i++) {
+        for (let i = offset; i < locationsForPage && i < this._locations.length; i++) {
             let locationData: MainLocationListRCElement = {
                 location: this._locations[i],
                 ID: String(this._locations[i].ID),
@@ -151,5 +159,6 @@ export default class MainLocationList {
         }
 
         ui.updateLocations?.(locations);
+        ui.updatePagination?.(_.ceil(this._locations.length / count), this._locations.length);
     }
 }

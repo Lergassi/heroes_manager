@@ -4,14 +4,15 @@ import {
     DetailLocationRCEnemyElement,
     DetailLocationRCHeroElement
 } from '../../../client/public/Components/DetailLocationRC.js';
-import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
+import {assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
 import EventSystem from '../../source/EventSystem.js';
 import GameObject from '../../source/GameObject.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {Seconds, UI_ItemCount, UI_ItemStorageSlot, UI_VeinItemCount, unsigned} from '../../types/main.js';
+import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
+import {Seconds, UI_ItemCount, UI_ItemStorageSlot, UI_VeinItemCount} from '../../types/main.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import Item from '../Entities/Item.js';
@@ -22,7 +23,6 @@ import LevelInterface from '../Interfaces/LevelInterface.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import CharacterAttribute from './CharacterAttribute.js';
 import CharacterFightGroup from './CharacterFightGroup.js';
-import Enemy from './Enemy.js';
 import Experience from './Experience.js';
 import Gatherer from './Gatherer.js';
 import GatheringPoint from './GatheringPoint.js';
@@ -84,9 +84,7 @@ export interface LocationRender {
 }
 
 export default class Location {
-    private readonly _created: Date;
-    private readonly _level: unsigned;
-    // private readonly _gatheringItemPoints: GatheringItemPoint[];
+    private readonly _level: number;
     private readonly _gatheringPoints: GatheringPoint[];
     private readonly _itemStackFactory: ItemStackFactory;
 
@@ -99,37 +97,32 @@ export default class Location {
     //лут
     private readonly _itemStorage: ItemStorageInterface;   //Визуально может никак не быть связанным с сумками.
     private readonly _wallet: WalletInterface;
-    // private readonly _exp: ;
 
     private _state: LocationState;
     private _intervalID: NodeJS.Timer;
-    private readonly _intervalPeriod: Seconds;
+    private readonly _intervalPeriod: number;
 
-    //todo: Настраиваемые параметры.
     private readonly _options = {
         heroGroupSize: 5,
         intervalPeriod: 1,
     };
 
     constructor(
-        created: Date,
-        level: unsigned,
+        levelRange: number,
         gatheringPoints: GatheringPoint[],
         itemStackFactory: ItemStackFactory,         //todo: Убрать в генератор лута.
         itemStorage: ItemStorageInterface,
         wallet: WalletInterface,
         // enemies: GameObject[] = [],
     ) {
-        assertNotNil(created);
-        assertIsGreaterThanOrEqual(level, 1);
+        // assertIsGreaterThanOrEqual(levelRange, 1);
         assertNotNil(gatheringPoints);
         assertNotNil(itemStorage);
         assertNotNil(itemStackFactory);
 
         this._state = LocationState.Waiting;
 
-        this._created = created;
-        this._level = level;
+        this._level = levelRange;
         this._gatheringPoints = gatheringPoints;
         this._itemStackFactory = itemStackFactory;
 
@@ -348,17 +341,17 @@ export default class Location {
             let data: DetailLocationRCEnemyElement = {
                 attackPower: 0,
                 currentHealthPoints: 0,
-                enemyTypeName: '',
+                enemyTypeName: this._enemies[i].get<EnemyTypeID>(ComponentID.EnemyTypeID),
                 level: 0,
                 maxHealthPoints: 0,
                 isDead: false,
             };
 
-            this._enemies[i].get<Enemy>(ComponentID.Enemy).renderByRequest({
-                updateType(name: string): void {
-                    data.enemyTypeName = name;
-                },
-            });
+            // this._enemies[i].get<Enemy>(ComponentID.Enemy).renderByRequest({
+            //     updateType(name: string): void {
+            //         data.enemyTypeName = name;
+            //     },
+            // });
             this._enemies[i].get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower).renderByRequest({
                 updateCharacterAttributeFinalValue(ID: CharacterAttributeID, value: number): void {
                     data.attackPower = value;
