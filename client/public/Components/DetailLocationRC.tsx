@@ -16,6 +16,7 @@ import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemCount, UI_ShortHero} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import HeroListSelectRC from './HeroListSelectRC.js';
+import HeroScrolledListSelectRC from './HeroScrolledListSelectRC.js';
 import {MainHeroListRCElement} from './MainHeroListRC.js';
 
 export interface DetailLocationRCProps {
@@ -345,6 +346,16 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                 {/*<div className={''} key={0}>*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
+                            <div className={'widget__title'}>Выбор героев</div>
+                            <div className={'widget__content'}>
+                                <HeroScrolledListSelectRC
+                                    container={this.props.container}
+                                    mainHeroList={this.props.mainHeroList}
+                                    handleAddHeroChange={this.addHero}
+                                />
+                            </div>
+                        </div>{/* end widget Выбор героев */}
+                        <div className={'widget'}>
                             <div className={'widget__title'}>Информация</div>
                             <div className={'widget__content'}>
                                 <ul>
@@ -365,19 +376,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                 <button className={'btn btn_primary'} onClick={this.getRewards}>getRewards</button>
                                 {/*<button className={'btn btn_danger'}>Удалить локацию</button>*/}
                             </div>
-                        </div>
-                        {/*<div className={'widget'}>*/}
-                        {/*    <div className={'widget__title'}>Журнал</div>*/}
-                        {/*    <div className={'widget__content'}>*/}
-                        {/*        <div>Охота запущена</div>*/}
-                        {/*        <div>Добыча ресурсов: 42</div>*/}
-                        {/*        <div>Добыча ресурсов: 42</div>*/}
-                        {/*        <div>Умер герой</div>*/}
-                        {/*        <div>Добыча ресурсов: 42</div>*/}
-                        {/*        <div>Умер враг</div>*/}
-                        {/*        <div>Конец</div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                        </div>{/* end widget Управление */}
                     </div>{/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
@@ -408,12 +407,11 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     </tbody>
                                 </table>
                                 <div>
-                                    <HeroListSelectRC
-                                        container={this.props.container}
-                                        mainHeroList={this.props.mainHeroList}
-                                        // selectedHeroID={undefined}
-                                        handleAddHeroChange={this.addHero}
-                                    />
+                                    {/*<HeroListSelectRC*/}
+                                    {/*    container={this.props.container}*/}
+                                    {/*    mainHeroList={this.props.mainHeroList}*/}
+                                    {/*    handleAddHeroChange={this.addHero}*/}
+                                    {/*/>*/}
                                 </div>
                             </div>{/*end widget__content*/}
                         </div>{/*end widget*/}

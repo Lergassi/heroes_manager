@@ -6,36 +6,32 @@ import MainHeroList, {MainHeroListRenderInterface} from '../../../core/app/Compo
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
+import {HeroListSelectRCState} from './HeroListSelectRC.js';
 import {MainHeroListRCElement} from './MainHeroListRC.js';
 
-export interface HeroListSelectRCProps {
+export interface HeroScrolledListSelectRCProps {
     container: ContainerInterface;
     mainHeroList: MainHeroList;
     handleAddHeroChange: (ID: string) => void;
 }
 
-export interface HeroListSelectRCState {
+export interface HeroScrolledListSelectRCState {
     mainHeroList: MainHeroList;
     heroes: MainHeroListRCElement[];
-    selectedHeroID: string;
+    // selectedHeroID: string;
 }
 
-/**
- * Компонент для изменения внешнего состояния.
- */
-export default class HeroListSelectRC extends React.Component<HeroListSelectRCProps, HeroListSelectRCState> implements MainHeroListRenderInterface {
-    constructor(props: HeroListSelectRCProps) {
+export default class HeroScrolledListSelectRC extends React.Component<HeroScrolledListSelectRCProps, HeroScrolledListSelectRCState> implements MainHeroListRenderInterface {
+    constructor(props: HeroScrolledListSelectRCProps) {
         super(props);
 
         this.state = {
-            mainHeroList: props.mainHeroList,
+            mainHeroList: this.props.mainHeroList,
             heroes: [],
-            selectedHeroID: '',
+            // handleAddHeroChange: this.props.handleAddHeroChange,
         };
 
         this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
-
-        this.handleAddHeroChange = this.handleAddHeroChange.bind(this);
     }
 
     updateByRequest(): void {
@@ -50,35 +46,32 @@ export default class HeroListSelectRC extends React.Component<HeroListSelectRCPr
 
             //todo: @bug При удалении героя, selectedHeroID не сбрасывается.
             if (heroes.length) {
-                if (!state.selectedHeroID) {
-                    newState.selectedHeroID = heroes[0].ID;
-                }
+                // if (!state.selectedHeroID) {
+                //     newState.selectedHeroID = heroes[0].ID;
+                // }
             } else {
-                newState.selectedHeroID = '';
+                // newState.selectedHeroID = '';
             }
 
             return newState;
         });
     }
 
-    handleAddHeroChange(event): void {
-        event.preventDefault();
-        this.setState((state) => {
-            return {
-                selectedHeroID: event.target.value,
-            } as HeroListSelectRCState;
-        });
-    }
+    // handleAddHeroChange(ID: string) {
+    //     this.props.handleAddHeroChange(this.state.selectedHeroID);
+    // }
 
     render() {
         return (
-            <div>
-                <select value={this.state.selectedHeroID} name="" id="" onChange={this.handleAddHeroChange}>
-                    {_.map(this.state.heroes, (hero, index) => {
-                        return <option key={index} value={hero.ID}>{hero.heroClassName} ({hero.ID}), {hero.level} lvl</option>
+            <div className={'scrolled-list-select'}>
+                <table className={'basic-table'}>
+                    {_.map(this.state.heroes, (hero , index) => {
+                        return <tr>
+                            <td>{hero.heroClassName} ({hero.ID}), {hero.level} lvl</td>
+                            <td><button onClick={this.props.handleAddHeroChange.bind(this, hero.ID)}>add</button></td>
+                        </tr>
                     })}
-                </select>
-                <button onClick={this.props.handleAddHeroChange.bind(this, this.state.selectedHeroID)}>addHero</button>
+                </table>
             </div>
         );
     }

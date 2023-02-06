@@ -29,10 +29,8 @@ export enum MainHeroListComponentEventCode {
 /**
  * Отличается от локации тем, что тут есть постраничная навигация и в ui передается только определенное кол-во героев.
  */
-export interface MainHeroListRender {
-    // updateTotalHeroes?(totalHeroes: number): void;
+export interface MainHeroListRenderInterface {
     updateHeroes?(heroes: MainHeroListRCElement[]): void;
-    // updatePagination?(activePage: number, totalPages: number): void;
     updatePagination?(totalPages: number, totalHeroes: number): void;
 }
 
@@ -133,7 +131,7 @@ export default class MainHeroList {
 
     //todo: Убрать страницы - мешают. Нужно чтобы
     // renderByRequest(ui: MainHeroListRender, options?: {page: number, elementForPage: number}): void {
-    renderByRequest(ui: MainHeroListRender, options?: {offset: number, count: number}): void {
+    renderByRequest(ui: MainHeroListRenderInterface, options?: {offset: number, count: number}): void {
         let offset = options?.offset ?? 0;
         let count = options?.count ?? this._heroes.length;
         let heroesForPage = offset + count;

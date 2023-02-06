@@ -212,20 +212,20 @@ export default class CreateStartPlayerObjectsCommand extends Command {
 
     private async _manualCreateLocations() {
         await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
     }
 
     private _createFullRangeLocations() {

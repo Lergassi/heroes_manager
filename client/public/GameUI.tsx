@@ -14,7 +14,7 @@ import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import {UI_ShortHero} from '../../core/types/main.js';
 import UIUpdater from '../app/UIUpdater.js';
-import GameConsoleRComponent from './_React/GameConsoleRComponent.js';
+import GameConsoleRC from './_React/GameConsoleRC.js';
 import DetailHeroRC from './Components/DetailHeroRC.js';
 import DetailLocationRC from './Components/DetailLocationRC.js';
 import EquipItemListRC from './Components/EquipItemListRC.js';
@@ -61,7 +61,7 @@ export default class GameUI {
     private _renderPreGameUI(root) {
         root.render(
             <div className={'wrapper'}>
-                <GameConsoleRComponent
+                <GameConsoleRC
                     container={this._container}
                     executeUrl={'http://api.heroes.sd44.ru/game_console/execute'}
                     maxHistoryLength={100}

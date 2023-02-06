@@ -1,8 +1,10 @@
 import React from 'react';
+import {sprintf} from 'sprintf-js';
 import AppError from '../../../core/source/Errors/AppError.js';
 import debug from 'debug';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
+import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 
@@ -13,7 +15,7 @@ export interface GameConsoleProps {
     maxHistoryLength: number | undefined;
 }
 
-export default class GameConsoleRComponent extends React.Component<any, any>{
+export default class GameConsoleRC extends React.Component<any, any>{
     private readonly _container: ContainerInterface;
 
     private readonly _executeUrl;
@@ -90,6 +92,31 @@ export default class GameConsoleRComponent extends React.Component<any, any>{
         this._isAutoCompleteHandling = false;
     }
 
+    private async _queryHandler(query: string) {
+        console.log(query);
+        this.resetAutoComplete();
+
+        let commandString = query.trim();
+        this.setState({value: ''});
+
+        if (!commandString.length) {
+            return;
+        }
+
+        let resultUrl = this._executeUrl + '?command=' + commandString;
+        if (this._history.length >= this._maxHistoryLength) {
+            this._history.shift();
+        }
+        if (this._history[this._history.length - 1] !== commandString) {
+            this._history.push(commandString);
+        }
+        this.resetHistoryPosition();
+
+        debug(DebugNamespaceID.GameConsole)(resultUrl);
+
+        await this._container.get<GameConsole>(ServiceID.GameConsole).runByQuery(commandString);
+    }
+
     /**
      * Только для Enter.
      * @param e
@@ -98,28 +125,7 @@ export default class GameConsoleRComponent extends React.Component<any, any>{
         switch(e.code) {
             case 'Enter':
             case 'NumpadEnter':
-                this.resetAutoComplete();
-
-                let commandString = e.target.value.trim();
-                this.setState({value: ''});
-
-                if (!commandString.length) {
-                    return;
-                }
-
-                let resultUrl = this._executeUrl + '?command=' + commandString;
-                if (this._history.length >= this._maxHistoryLength) {
-                    this._history.shift();
-                }
-                if (this._history[this._history.length - 1] !== commandString) {
-                    this._history.push(commandString);
-                }
-                this.resetHistoryPosition();
-
-                // debug('log:game_console')(resultUrl);
-                debug(DebugNamespaceID.GameConsole)(resultUrl);
-
-                await this._container.get<GameConsole>(ServiceID.GameConsole).runByQuery(commandString);
+                this._queryHandler(e.target.value);
 
                 // fetch(resultUrl)
                 //     .then((response) => {
@@ -150,6 +156,14 @@ export default class GameConsoleRComponent extends React.Component<any, any>{
 
                 break;  //Enter, NumpadEnter
         }//end switch(e.code)
+    }
+
+    selectCommandSample(query: string, event) {
+        console.log(this);
+        console.log(query);
+        console.log(event);
+        event.preventDefault();
+        this._queryHandler(query);
     }
 
     keyDownHandler(e) {
@@ -242,6 +256,12 @@ export default class GameConsoleRComponent extends React.Component<any, any>{
                     ))}
                     </ul>
                 </div>
+                {/*<div>*/}
+                {/*    <ul>*/}
+                {/*        <li><a onClick={this.selectCommandSample.bind(this, CommandID.new_game)} href="#">{CommandID.new_game}</a></li>*/}
+                {/*        <li><a onClick={this.selectCommandSample.bind(this, CommandID.new_game + ' ' + 'basic')} href="#">{CommandID.new_game} basic</a></li>*/}
+                {/*    </ul>*/}
+                {/*</div>*/}
             </div>
         );
     }

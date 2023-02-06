@@ -2,7 +2,7 @@ import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import MainHeroList, {MainHeroListRender} from '../../../core/app/Components/MainHeroList.js';
+import MainHeroList, {MainHeroListRenderInterface} from '../../../core/app/Components/MainHeroList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import GameObject from '../../../core/source/GameObject.js';
@@ -54,7 +54,7 @@ export class MainHeroListRCElement {
     deleteHandler: () => void;
 }
 
-export default class MainHeroListRC extends React.Component<MainHeroListRCProps, MainHeroListRCState> implements MainHeroListRender {
+export default class MainHeroListRC extends React.Component<MainHeroListRCProps, MainHeroListRCState> implements MainHeroListRenderInterface {
     private _options = {
         rows: 10,
     };
