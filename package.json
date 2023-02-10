@@ -15,7 +15,7 @@
     "build_ts": "tsc --jsx react-jsx",
     "rebuild_ts": "tsc --build --force",
     "build_and_watch_ts1": "rm -rf ./dist/ && tsc --watch --jsx react-jsx",
-    "build_and_watch_ts": "rm -rf ./dist/ && mkdir -p ./dist/sandbox && touch ./dist/sandbox/run.js && chmod +x ./dist/sandbox/run.js && tsc --watch",
+    "build_and_watch_ts": "rm -rf ./dist/ && mkdir -p ./dist/sandbox ./dist/tools && touch ./dist/sandbox/run.js ./dist/tools/run.js && chmod +x ./dist/sandbox/run.js ./dist/tools/run.js && tsc --watch",
     "build_babel": "babel client -d client_lib",
     "build_and_watch_babel": "babel client -d client_lib --watch",
     "build_webpack": "webpack --config webpack.config.cjs",

@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import debug from 'debug';
 import _ from 'lodash';
 import ValidationError from '../Errors/ValidationError.js';
-import {assertNotNil} from '../assert.js';
+import {assertNotEmpty, assertNotNil} from '../assert.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export interface CommandOptions {
@@ -42,11 +42,7 @@ export default class GameConsole {
         return this._commands.hasOwnProperty(name);
     }
 
-    /**
-     * @deprecated Поиск лишний. Запускать сразу по имени.
-     * @param name
-     */
-    getCommand(name: string) {
+    private _getCommand(name: string) {
         if (this.hasCommand(name)) {
             return this._commands[name];
         }
@@ -55,9 +51,12 @@ export default class GameConsole {
     }
 
     async run(name: string, commandArguments: string[] = []) {
-        let command = this.getCommand(name);
-        // debug('log:game_console')(sprintf('Command: %s', chalk.yellow(name)));
+        assertNotEmpty(name);
+
+        let command = this._getCommand(name);
+
         debug(DebugNamespaceID.GameConsole)(sprintf('Command: %s', chalk.yellow(name)));
+
         await command.run(commandArguments);
     }
 

@@ -33,7 +33,7 @@ export default class DamageGroupController implements DamageControllerInterface 
         let length = _.sum(_.map(this._damageControllers, (damageController) => {
             return Number(damageController.canTakeDamage());
         }));
-        let damageForElement = value / length;
+        let damageForElement = _.round(value / length);
         debug(DebugNamespaceID.Log)(sprintf('Распределение входящего урона %s по %s на персонажей %s.', value, damageForElement, length));
         let _damageControllers = [...this._damageControllers];
         for (let i = 0; i < _damageControllers.length; i++) {

@@ -4,11 +4,11 @@ import {sprintf} from 'sprintf-js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import item_character_attribute_generation_functions
-    from '../../core/app/Services/ItemGeneration/item_character_attribute_generation_functions.js';
-import balance from '../../core/app/Services/ItemGeneration/item_character_attribute_generation_functions.js';
-import ItemCharacterAttributeGenerator from '../../core/app/Services/ItemGeneration/ItemCharacterAttributeGenerator.js';
+    from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
+import balance from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
+import ItemCharacterAttributeGenerator from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/ItemCharacterAttributeGenerator.js';
 import config from '../../core/config/config.js';
-import GenerateItems from '../../core/scripts/GenerateItems.js';
+import GenerateItems from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
 import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
@@ -480,7 +480,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
         for (const level in positions) {
             for (let itemCategoryIndex = 0; itemCategoryIndex < positions[level].length; itemCategoryIndex++) {
-                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step);
+                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
                 let itemAttributes: ItemDatabaseRow = {
                     ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
                     ItemCategoryID: positions[level][itemCategoryIndex],

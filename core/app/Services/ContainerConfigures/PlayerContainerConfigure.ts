@@ -100,7 +100,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             return walletFactory;
         });
-        container.set<WalletInterface>(ServiceID.Wallet, container.get<WalletFactory>(ServiceID.WalletFactory).create(0).get<WalletInterface>(ComponentID.Wallet));
+        //Где была зависимость?
+        // container.set<WalletInterface>(ServiceID.Wallet, container.get<WalletFactory>(ServiceID.WalletFactory).create(0).get<WalletInterface>(ComponentID.Wallet));
         container.set<CharacterAttributeValueGenerator>(ServiceID.CharacterAttributeValueGenerator, (container) => {
             return new CharacterAttributeValueGenerator();
         });

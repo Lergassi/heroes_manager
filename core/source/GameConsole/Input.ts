@@ -13,7 +13,7 @@ export default class Input {
             throw new AppError(sprintf('Аргумент %s не указан.', name));
         }
 
-        return this._inputCommandArguments[name].value;
+        return this._inputCommandArguments[name].value ?? '';
     }
 
     hasArgument(name): boolean {

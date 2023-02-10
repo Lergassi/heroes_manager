@@ -26,13 +26,9 @@ import {sprintf} from 'sprintf-js';
 import GameConsole from '../../source/GameConsole/GameConsole.js';
 import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 
-export default class CreateStartPlayerObjectsCommand extends Command {
+export default class CreateBasicStartPlayerObjectsCommand extends Command {
     get name(): string {
-        return CommandID.create_start_player_objects;
-    }
-
-    get description(): string {
-        return 'Создает начальные объекты игрока: предметы, герои и тд. Окружение должно быть создано отдельно.';
+        return CommandID.create_basic_start_player_objects;
     }
 
     async execute(input: Input) {
@@ -44,16 +40,8 @@ export default class CreateStartPlayerObjectsCommand extends Command {
     }
 
     private async _createItemStorages() {
-        // this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
-        //     DEFAULT_ITEM_STORAGE_SIZE,
-        //     this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
-        // );
-        // this.container.get<MainItemStorageListComponent>(ContainerID.MainItemStorageList).create(
-        //     DEFAULT_ITEM_STORAGE_SIZE,
-        //     this.container.get<ItemStorageFactory>(ContainerID.ItemStorageFactory),
-        // );
-        await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
-        await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(CommandID.create_item_storage).run([DEFAULT_ITEM_STORAGE_SIZE.toString()]);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_storage, [String(DEFAULT_ITEM_STORAGE_SIZE)]);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_storage, [String(DEFAULT_ITEM_STORAGE_SIZE)]);
     }
 
     private async _createItems() {

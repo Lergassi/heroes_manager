@@ -1,3 +1,6 @@
+import {CommandID} from '../types/enums/CommandID.js';
+import {DebugFormatterID} from '../types/enums/DebugFormatterID.js';
+import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
 import Repository from './Repository.js';
 import {assert, assertIsString, assertNotEmpty, assertNotNil} from './assert.js';
 import _ from 'lodash';
@@ -9,6 +12,7 @@ import {clearLine} from 'readline';
 import {ItemID} from '../types/enums/ItemID.js';
 import Item from '../app/Entities/Item.js';
 import Recipe from '../app/Entities/Recipe.js';
+import debug from 'debug';
 
 export default class EntityManager implements EntityManagerInterface {
     private readonly _entities;
@@ -74,4 +78,22 @@ export default class EntityManager implements EntityManagerInterface {
             callback(entity);
         });
     }
+
+    debug = {
+        items: () => {
+            let count = 0;
+            for (const key in this._entities[EntityID.Item]) {
+                debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+                    ID: this._entities[EntityID.Item][key].id,
+                    itemLevel: this._entities[EntityID.Item][key].itemLevel,
+                    itemCategory: this._entities[EntityID.Item][key].itemCategory.id,
+                    quality: this._entities[EntityID.Item][key].quality.id,
+                    stackSize: this._entities[EntityID.Item][key].stackSize,
+                });
+                count++;
+            }
+
+            debug(DebugNamespaceID.Debug)(sprintf('Всего предметов: ', count));
+        },
+    };
 }

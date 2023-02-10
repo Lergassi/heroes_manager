@@ -142,6 +142,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                 <tr className={'hero-list-table-row'}>
                                     {/*<th></th>*/}
                                     <th>HeroClass (ID)</th>
+                                    <th>Level</th>
                                     <th>HeroRole</th>
                                     <th>State</th>
                                     <th style={{width: '220px'}}>Level (xp)</th>
@@ -155,6 +156,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                     {_.map(this.state.heroes, (hero, index) => {
                                         return <tr key={index}>
                                             <td>{hero.heroClassName} ({hero.ID}) {hero.isDead ? 'X' : ''}</td>
+                                            <td>{hero.level}</td>
                                             <td>{hero.heroRoleName}</td>
                                             <td>{hero.state}</td>
                                             <td>{hero.level} ({hero.exp}/{hero.totalExpToLevelUp})</td>

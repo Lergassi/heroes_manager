@@ -46,13 +46,11 @@ export default class EnemyFactory {
         level: number,
         options?: {
             baseCharacterAttributeValues: Partial<{[ID in CharacterAttributeID]: number}>,
+            strategies?: {},
         }
     ) {
         assert(level >= 1);
         assert(!_.isNil(enemyTypeID));
-
-        // let enemyEntity = this._entityManager.get<EnemyEntity>(EntityID.EnemyEntity, enemyTypeID);
-        // assert(enemyEntity instanceof EnemyEntity, sprintf('EnemyEntity (%s) не найден.', enemyTypeID));
 
         let enemy = this._gameObjectFactory.create();
 
@@ -96,15 +94,14 @@ export default class EnemyFactory {
             ),
         ));
 
-        let attackPower = this._enemyCharacterAttributeFactory.create(
+        let attackPower = enemy.set(CharacterAttributeID.AttackPower, this._enemyCharacterAttributeFactory.create(
             CharacterAttributeID.AttackPower,
             level,
             itemCharacterAttributeCollector,
             {
                 baseValue: options?.baseCharacterAttributeValues?.AttackPower,
             }
-        );
-        enemy.set(CharacterAttributeID.AttackPower, attackPower);
+        ));
 
         enemy.set<AttackController>(ComponentID.AttackController, new AttackController(
             attackPower,

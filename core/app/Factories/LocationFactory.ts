@@ -125,7 +125,7 @@ export default class LocationFactory {
             // enemies,
         ));
 
-        let locationEnemies = database.locations.enemies.findByLevel(level);
+        let locationEnemies = database.locations.enemies.find(level);
         for (let i = 0; i < locationEnemies.length; i++) {
             locationComponent.addEnemy(this._enemyFactory.create(locationEnemies[i].enemy, level));
         }

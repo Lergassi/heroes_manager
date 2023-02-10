@@ -64,31 +64,24 @@ export default class HealthPoints implements DamageControllerInterface {
         this._afterDiedCallback = afterDiedCallback; //todo: Скрыть - логика передачи лута будет всегда. Позже в виде отдельного класса.
     }
 
-    takeDamage(damage: unsigned, enemyRewardOptions?: RewardOptions): void {
+    takeDamage(damage: number, enemyRewardOptions?: RewardOptions): void {
         assertIsPositive(damage);
         damage = _.floor(damage, 0);
-        //todo: Округление. Выбрать место.
+        //todo: Округление. Выбрать место. Для damage сделть отдельный класс.
 
         if (!this._lifeStateController.canAction()) {
             debug(DebugNamespaceID.Throw)('Нельзя нанести урон.');
             return;
         }
 
-        let healthPoints = this._currentHealthPoints - damage;
-        this._currentHealthPoints = healthPoints <= 0 ? 0 : healthPoints;
+        let _healthPoints = this._currentHealthPoints - damage;
+        this._currentHealthPoints = _healthPoints <= 0 ? 0 : _healthPoints;
         debug(DebugNamespaceID.Log)(sprintf('Получено урона: %s (%s/%s)', damage, this._currentHealthPoints, this._maxHealthPoints.finalValue));
         EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
         if (this._currentHealthPoints <= 0) {
             this.kill(enemyRewardOptions);
         }
     }
-
-    // add(value: unsigned): void {
-    //     this._canModify();
-    //
-    //     let healthPoints = this._currentHealthPoints + value;
-    //     this._currentHealthPoints = healthPoints >= this._maxHealthPoints ? this._maxHealthPoints : healthPoints;
-    // }
 
     kill(enemyRewardOptions?: RewardOptions): void {
         if (!this.canKill()) {

@@ -4,10 +4,11 @@ import GameConsole from '../../../source/GameConsole/GameConsole.js';
 import Kernel from '../../../source/Kernel.js';
 import HelpCommand from '../../../../server/app/Commands/HelpCommand.js';
 import ListCommand from '../../../../server/app/Commands/ListCommand.js';
+import CreateDefaultStartPlayerObjectsCommand from '../../Commands/CreateDefaultStartPlayerObjectsCommand.js';
 import DetailHeroCommand from '../../Commands/DetailHeroCommand.js';
 import DetailLocationCommand from '../../Commands/DetailLocationCommand.js';
 import NewGameCommand from '../../Commands/NewGameCommand.js';
-import CreateStartPlayerObjectsCommand from '../../Commands/CreateStartPlayerObjectsCommand.js';
+import CreateBasicStartPlayerObjectsCommand from '../../Commands/CreateBasicStartPlayerObjectsCommand.js';
 import CreateItemCommand from '../../Commands/CreateItemCommand.js';
 import CreateHeroCommand from '../../Commands/CreateHeroCommand.js';
 import CreateItemStorageCommand from '../../Commands/CreateItemStorageCommand.js';
@@ -40,12 +41,12 @@ import _ from 'lodash';
 import CreateItemKitCommand from '../../Commands/CreateItemKitCommand.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
 import AddMoneyCommand from '../../Commands/AddMoneyCommand.js';
-import DebugItemDatabaseCommand from '../../Commands/DebugCommands/DebugItemDatabaseCommand.js';
+import DebugItemsCommand from '../../Commands/DebugCommands/DebugItemsCommand.js';
 import CreateStubObjectsCommand from '../../Commands/CreateStubObjectsCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
-        //todo: Сделать разный источник для клиента и сервера.
+        //todo: Сделать разный источник для клиента и сервера. Вынести за пределы контейнера.
         let debugNamespaces = [
             DebugNamespaceID.Info,
             DebugNamespaceID.Debug,
@@ -90,7 +91,8 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         /* GAME */
         gameConsole.register(new NewGameCommand(container));
         gameConsole.register(new CreatePlayerEnvironmentCommand(container));
-        gameConsole.register(new CreateStartPlayerObjectsCommand(container));
+        gameConsole.register(new CreateBasicStartPlayerObjectsCommand(container));
+        gameConsole.register(new CreateDefaultStartPlayerObjectsCommand(container));
 
         gameConsole.register(new AddMoneyCommand(container));
 
@@ -127,7 +129,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new DebugContainerCommand(container));
         gameConsole.register(new DebugGameObjectStorageCommand(container));
         gameConsole.register(new InspectGameObjectCommand(container));
-        gameConsole.register(new DebugItemDatabaseCommand(container));
+        gameConsole.register(new DebugItemsCommand(container));
 
         gameConsole.register(new DebugUserEnvironmentCommand(container));
         gameConsole.register(new DebugPlayerEnvironmentCommand(container));

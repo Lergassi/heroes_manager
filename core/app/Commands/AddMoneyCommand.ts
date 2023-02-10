@@ -23,7 +23,7 @@ export default class AddMoneyCommand extends Command {
         this
             .container
             .get<WalletInterface>(ServiceID.Wallet)
-            .add(value)
+            ?.add(value)
         ;
     }
 }

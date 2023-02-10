@@ -103,7 +103,7 @@ export default class Location {
     private readonly _intervalPeriod: number;
 
     private readonly _options = {
-        heroGroupSize: 5,
+        maxHeroes: 5,
         intervalPeriod: 1,
     };
 
@@ -200,31 +200,13 @@ export default class Location {
         EventSystem.event(LocationEventCode.Update, this);
     }
 
-    /**
-     * todo: В отдельный класс. За сбор ресурсов будет отвечать другой объект. Т.е. локация тут вообще ничего делать не будет. Gathering
-     * @private
-     */
-    private _gather(): void {
-        if (!this._gatheringPoints.length) return;
-
-        // this._heroFightGroup.gather(this._gatheringItemPoints, this._itemStorage, this._options.intervalPeriod);
-        for (let i = 0; i < this._heroes.length; i++) {
-            for (let j = 0; j < this._gatheringPoints.length; j++) {
-                if (this._gatheringPoints[j].isEmpty()) continue;
-
-                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._gatheringPoints[j], this._itemStorage);
-                // if (this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._gatheringPoints[j], this._itemStorage)) {
-                    EventSystem.event(LocationEventCode.GatheringItems, this);
-                // }
-                // if (this._gatheringPoints[j].gather3(this._itemStorage)) {
-                //     EventSystem.event(LocationEventCode.GatheringItems, this);
-                // }
-            }
-        }
-    }
-
     addHero(hero: GameObject): boolean {
         assertNotNil(hero);
+
+        if (this._heroes.length >= this._options.maxHeroes) {
+            debug(DebugNamespaceID.Throw)('Кол-во героев в локации достигло максимума.');
+            return false;
+        }
 
         if (!this._canAddHero(hero)) {
             debug(DebugNamespaceID.Throw)('Нельзя добавить данного героя.');
@@ -251,24 +233,6 @@ export default class Location {
         _.pull(this._heroes, hero);
         EventSystem.event(LocationEventCode.RemoveHero, this);
         hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).free();
-
-        return true;
-    }
-
-    canModify(): boolean {
-        if (this._state !== LocationState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
-            return false;
-        }
-
-        return true;
-    }
-
-    canDelete(): boolean {
-        if (this._state !== LocationState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Нельзя удалить локацию во время охоты.');
-            return false;
-        }
 
         return true;
     }
@@ -405,6 +369,24 @@ export default class Location {
         });
     }
 
+    canModify(): boolean {
+        if (this._state !== LocationState.Waiting) {
+            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
+            return false;
+        }
+
+        return true;
+    }
+
+    canDelete(): boolean {
+        if (this._state !== LocationState.Waiting) {
+            debug(DebugNamespaceID.Throw)('Нельзя удалить локацию во время охоты.');
+            return false;
+        }
+
+        return true;
+    }
+
     private _canAddHero(hero: GameObject): boolean {
         if (!this.canModify()) return false;
 
@@ -443,5 +425,28 @@ export default class Location {
         }
 
         return true;
+    }
+
+    /**
+     * todo: В отдельный класс. За сбор ресурсов будет отвечать другой объект. Т.е. локация тут вообще ничего делать не будет. Gathering
+     * @private
+     */
+    private _gather(): void {
+        if (!this._gatheringPoints.length) return;
+
+        // this._heroFightGroup.gather(this._gatheringItemPoints, this._itemStorage, this._options.intervalPeriod);
+        for (let i = 0; i < this._heroes.length; i++) {
+            for (let j = 0; j < this._gatheringPoints.length; j++) {
+                if (this._gatheringPoints[j].isEmpty()) continue;
+
+                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._gatheringPoints[j], this._itemStorage);
+                // if (this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._gatheringPoints[j], this._itemStorage)) {
+                EventSystem.event(LocationEventCode.GatheringItems, this);
+                // }
+                // if (this._gatheringPoints[j].gather3(this._itemStorage)) {
+                //     EventSystem.event(LocationEventCode.GatheringItems, this);
+                // }
+            }
+        }
     }
 }

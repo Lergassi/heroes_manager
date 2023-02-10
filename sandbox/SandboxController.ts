@@ -56,8 +56,11 @@ import EventSystem2 from '../core/source/EventSystem2.js';
 import Bag from '../core/app/Components/Bag.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
 import DatabaseTSSandboxController from './SandboxControllers/DatabaseTSSandboxController.js';
+import EnemySandboxController from './SandboxControllers/EnemySandboxController.js';
+import FightV2SandboxController from './SandboxControllers/FightV2SandboxController.js';
 import GenerateEnemySandboxController from './SandboxControllers/GenerateEnemySandboxController.js';
 import GenerateItemsSandboxController from './SandboxControllers/GenerateItemsSandboxController.js';
+import GenerateItemsV002SandboxController from './SandboxControllers/GenerateItemsV002SandboxController.js';
 import GenerateLocationSandboxController from './SandboxControllers/GenerateLocationSandboxController.js';
 import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
 import DevUISystemController from './SandboxControllers/DevUISystemController.js';
@@ -97,7 +100,9 @@ export default class SandboxController {
         // this._devUISystem();
         // (new InversifyJSGetStarted()).run();
         // (new DevUISystemController(this._container)).run();
+
         // (new LoadItemDatabaseController(this._container)).run();
+
         // (new FightSandboxController(this._container)).run();
         // (new BagSandboxController(this._container)).run();
         // (new CraftSystemSandboxController(this._container)).run();
@@ -106,9 +111,12 @@ export default class SandboxController {
         // (new EntityManagerSandboxController(this._container)).run();
         // (new HeroSandboxController(this._container)).run();
         // (new GenerateItemsSandboxController(this._container)).run();
-        (new GenerateLocationSandboxController(this._container)).run();
+        (new GenerateItemsV002SandboxController(this._container)).run();
+        // (new GenerateLocationSandboxController(this._container)).run();
         // (new GenerateEnemySandboxController(this._container)).run();
         // (new DatabaseTSSandboxController(this._container)).run();
+        // (new EnemySandboxController(this._container)).run();
+        // (new FightV2SandboxController(this._container)).run();
 
         // this._testSumBoolean();
         // this._testLodashEvery();

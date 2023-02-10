@@ -46,39 +46,18 @@ export default class CharacterFightGroup {
         return true;
     }
 
-    attackTo(characterFightGroup: CharacterFightGroup, afterTargetDiedCallback?): void {
-        if (!this._fightController.canAttack() || !characterFightGroup._fightController.canAttack()) {
-            debug(DebugNamespaceID.Throw)('Одна из групп мертва.');
+    attackTo(targetCharacterFightGroup: CharacterFightGroup, afterTargetDiedCallback?): void {
+        if (!this._fightController.canAttack() || !targetCharacterFightGroup._fightController.canAttack()) {
+            debug(DebugNamespaceID.Throw)('Все герои группы мертвы.');
             return;
         }
 
         //todo: Здесь FightController должен передавать данные для опыта со всех атакующих.
-        // this._fightController.attackTo(characterFightGroup._fightController, afterTargetDiedCallback);
-        this._fightController.attackTo(characterFightGroup._fightController, afterTargetDiedCallback);
+        // this._fightController.attackTo(targetCharacterFightGroup._fightController, afterTargetDiedCallback);
+        this._fightController.attackTo(targetCharacterFightGroup._fightController, afterTargetDiedCallback);
     }
 
     canAttack(): boolean {
         return this._fightController.canAttack();
     }
-
-    //todo: @move Пока тут. Не актуально/уже перенесено/не работает?
-    // gather(gatheringItemPoints: GatheringItemPoint[], itemStorageComponent: ItemStorageComponent, interval: number) {
-    //     // let partOfMaxPeriodGathering = this._heroGroup.isLifeHeroesCount() / this._heroGroup.size;  //todo: isLifeHeroesCount доступ явно должен быть както иначе сделан, а не в группе. Для общих свойств нужен отдельный класс.
-    //     let partOfMaxPeriodGathering = 0;
-    //     this._heroGroup.map((hero) => {
-    //         partOfMaxPeriodGathering += Number(!hero.get<HealthPoints>(ComponentID.HealthPoints).isDead);
-    //     });
-    //     for (let i = 0; i < gatheringItemPoints.length; i++) {
-    //         if (!partOfMaxPeriodGathering) continue;
-    //
-    //         let count = _.ceil(gatheringItemPoints[i].count.value / gatheringItemPoints[i].count.period * interval * partOfMaxPeriodGathering);
-    //         if (count <= 0) {
-    //             debug(DebugNamespaceID.Warning)('Количество предметов в gatheringItemPoint за период получилось равное или меньше нуля.');
-    //             continue;
-    //         }
-    //         if (itemStorageComponent.addItem(gatheringItemPoints[i].item, count) !== count) {   //todo: Не удобно.
-    //             debug(DebugNamespaceID.Log)(sprintf('Собран предмет: %s (%s). Эффективность сбора: %s', gatheringItemPoints[i].item.name, count, partOfMaxPeriodGathering));
-    //         }
-    //     }
-    // }
 }

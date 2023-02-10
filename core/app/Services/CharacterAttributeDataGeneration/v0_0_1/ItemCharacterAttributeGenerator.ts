@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
-import {HeroClassID} from '../../../types/enums/HeroClassID.js';
-import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
+import {CharacterAttributeID} from '../../../../types/enums/CharacterAttributeID.js';
+import {HeroClassID} from '../../../../types/enums/HeroClassID.js';
+import {ItemCategoryID} from '../../../../types/enums/ItemCategoryID.js';
 import balance from './item_character_attribute_generation_functions.js';
 
 export default class ItemCharacterAttributeGenerator {
@@ -41,6 +41,7 @@ export default class ItemCharacterAttributeGenerator {
             [ItemCategoryID.OneHandedSwords]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
             [ItemCategoryID.TwoHandedSwords]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
             [ItemCategoryID.Daggers]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
+            [ItemCategoryID.Shields]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
         };
         this._config.healthPointsCommonEquipSets = {
             [ItemCategoryID.Helmets]: {count: 1},

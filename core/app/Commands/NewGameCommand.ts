@@ -12,7 +12,9 @@ import _ from 'lodash';
 
 export default class NewGameCommand extends Command {
     private readonly _scenarios = {
-        basic: CommandID.create_start_player_objects,
+        default: CommandID.create_default_start_player_objects,
+        empty: undefined,   //С проверкой по условию.
+        basic: CommandID.create_basic_start_player_objects,
     };
 
     get name(): string {
@@ -25,21 +27,24 @@ export default class NewGameCommand extends Command {
     }
 
     async execute(input: Input) {
-        let scenario = input.getArgument('scenario');
-        if (!_.isNil(scenario) && !this._scenarios.hasOwnProperty(scenario)) {
-            throw new AppError(sprintf('Сценарий %s не найден.', scenario));
+        let scenarioName = input.getArgument('scenario') || 'default';
+        if (!this._scenarios.hasOwnProperty(scenarioName)) {
+            throw new AppError(sprintf('Сценарий %s не найден.', scenarioName));
         }
 
         (new PlayerContainerConfigure()).configure(this.container);
 
-        await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(CommandID.create_player_env).run();
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_player_env);
+
+        let scenario = this._scenarios[scenarioName];
         if (scenario) {
-            await this.container.get<GameConsole>(ServiceID.GameConsole).getCommand(this._scenarios[scenario]).run();
+            await this.container.get<GameConsole>(ServiceID.GameConsole).run(scenario);
         }
 
-        let gameUI = this.container.get<GameUI>(ServiceID.UI_Game);
-        assertNotNil(gameUI);
+        //Если делать проверки, то везде, а не в одном месте.
+        // let gameUI = this.container.get<GameUI>(ServiceID.UI_Game);
+        // assertNotNil(gameUI);
 
-        gameUI.buildGameUI();
+        this.container.get<GameUI>(ServiceID.UI_Game).buildGameUI();
     }
 }

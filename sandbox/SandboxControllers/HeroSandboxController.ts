@@ -19,8 +19,9 @@ import {ComponentID} from '../../core/types/enums/ComponentID.js';
 export default class HeroSandboxController extends AbstractSandboxController {
     run(): void {
         // this._devEquip();
-        this._devEquipController();
+        // this._devEquipController();
         // this._devViewHero();
+        this._devCreateHeroWithStrategy();
     }
 
     private _devEquip() {
@@ -62,4 +63,13 @@ export default class HeroSandboxController extends AbstractSandboxController {
     //     let hero = heroFactory.create(em.get<HeroClass>(EntityID.HeroClass, HeroClassID.Warrior), 1);
     //     detailHeroView(hero);
     // }
+
+    private _devCreateHeroWithStrategy() {
+        let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
+        let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
+
+        let level = 1;
+        let heroClassID = HeroClassID.Warrior;
+        // let hero = heroFactory.createByStrategy(level, heroClassID);
+    }
 }

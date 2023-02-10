@@ -66,7 +66,7 @@ export default class HeroScrolledListSelectRC extends React.Component<HeroScroll
             <div className={'scrolled-list-select'}>
                 <table className={'basic-table'}>
                     {_.map(this.state.heroes, (hero , index) => {
-                        return <tr>
+                        return <tr key={index}>
                             <td>{hero.heroClassName} ({hero.ID}), {hero.level} lvl</td>
                             <td><button onClick={this.props.handleAddHeroChange.bind(this, hero.ID)}>add</button></td>
                         </tr>

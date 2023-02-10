@@ -46,7 +46,7 @@ let enemy_loot_data: EnemyLootDBType[] = [
 
 let empty: EnemyLootDBType = {enemyTypeID: undefined, exp: 0, loot: [], money: {max: 0, min: 0}};
 
-export let enemy_loot = {
+export const enemy_loot = {
     find: (enemyTypeID: EnemyTypeID): EnemyLootDBType => {
         let enemyLootDBData = _.find(enemy_loot_data, (item) => {
             return item.enemyTypeID === enemyTypeID;

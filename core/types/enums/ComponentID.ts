@@ -1,4 +1,9 @@
 export enum ComponentID {
+    //Player/User
+    HeroClassID = 'HeroClassID',
+    ItemStorage = 'ItemStorage',
+    Wallet = 'Wallet',
+
     //Character
     Level = 'Level',
     EquipController = 'EquipController',    //todo: Или экипировка только у героев, а у врагов проще?
@@ -9,7 +14,6 @@ export enum ComponentID {
     Experience = 'Experience',
     AverageItemLevel = 'AverageItemLevel',
 
-    // EquipSlots = 'EquipSlots',
     CharacterAttributes = 'CharacterAttributes',
     AttackController = 'AttackController',
     DamageController = 'DamageController',
@@ -29,10 +33,6 @@ export enum ComponentID {
     ExperienceLootGenerator = 'ExperienceLootGenerator',
     ItemLootGenerator = 'ItemLootGenerator',
     GoldLootGenerator = 'GoldLootGenerator',
-
-    //Player/User
-    ItemStorage = 'ItemStorage',
-    Wallet = 'Wallet',
 
     //Location
     Location = 'Location',

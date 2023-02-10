@@ -21,6 +21,7 @@
     "core/**/*",
     "client/**/*",
     "server/**/*",
+    "tools/**/*",
     "sandbox/**/*",
     "jest.config.ts",
     "tests/**/*",

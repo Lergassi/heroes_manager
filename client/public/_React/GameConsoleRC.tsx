@@ -93,7 +93,6 @@ export default class GameConsoleRC extends React.Component<any, any>{
     }
 
     private async _queryHandler(query: string) {
-        console.log(query);
         this.resetAutoComplete();
 
         let commandString = query.trim();

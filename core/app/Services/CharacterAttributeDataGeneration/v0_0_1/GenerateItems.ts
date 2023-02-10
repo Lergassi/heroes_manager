@@ -2,21 +2,21 @@ import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
 import {sprintf} from 'sprintf-js';
-import HeroClass from '../app/Entities/HeroClass.js';
-import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
+import HeroClass from '../../../Entities/HeroClass.js';
+import EntityManagerInterface from '../../../Interfaces/EntityManagerInterface.js';
 import item_character_attribute_generation_functions
-    from '../app/Services/ItemGeneration/item_character_attribute_generation_functions.js';
-import ItemCharacterAttributeGenerator from '../app/Services/ItemGeneration/ItemCharacterAttributeGenerator.js';
-import config from '../config/config.js';
-import ContainerInterface from '../source/ContainerInterface.js';
-import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
-import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
-import {EntityID} from '../types/enums/EntityID.js';
-import {HeroClassID} from '../types/enums/HeroClassID.js';
-import {ItemCategoryID} from '../types/enums/ItemCategoryID.js';
-import {QualityID} from '../types/enums/QualityID.js';
-import {ServiceID} from '../types/enums/ServiceID.js';
-import {ItemDatabaseRow} from '../types/ItemDatabaseRow.js';
+    from './item_character_attribute_generation_functions.js';
+import ItemCharacterAttributeGenerator from './ItemCharacterAttributeGenerator.js';
+import config from '../../../../config/config.js';
+import ContainerInterface from '../../../../source/ContainerInterface.js';
+import {CharacterAttributeID} from '../../../../types/enums/CharacterAttributeID.js';
+import {DebugNamespaceID} from '../../../../types/enums/DebugNamespaceID.js';
+import {EntityID} from '../../../../types/enums/EntityID.js';
+import {HeroClassID} from '../../../../types/enums/HeroClassID.js';
+import {ItemCategoryID} from '../../../../types/enums/ItemCategoryID.js';
+import {QualityID} from '../../../../types/enums/QualityID.js';
+import {ServiceID} from '../../../../types/enums/ServiceID.js';
+import {ItemDatabaseRow} from '../../../../types/ItemDatabaseRow.js';
 import debug from 'debug';
 
 export default class GenerateItems {
@@ -39,10 +39,6 @@ export default class GenerateItems {
         for (let i = 0; i < heroClassIDs.length; i++) {
             this._generate(heroClassIDs[i], items);
         }
-    }
-
-    generate(heroClassID: HeroClassID, items: any[]): void {
-
     }
 
     private _generate(heroClassID: HeroClassID, items: any[]) {
@@ -102,7 +98,7 @@ export default class GenerateItems {
                 let itemMetadata = this._getMetadata(itemCategoryID);
                 let armorMaterialID = this._getMetadata(itemCategoryID).requireArmorMaterial ? this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<HeroClass>(EntityID.HeroClass, heroClassID).availableArmorMaterials[0].id : undefined;
 
-                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step);
+                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
                 let itemAttributes: ItemDatabaseRow = {
                     ID: '',
                     ItemCategoryID: itemCategoryID,

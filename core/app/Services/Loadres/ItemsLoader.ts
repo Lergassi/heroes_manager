@@ -1,12 +1,19 @@
 import _ from 'lodash';
 import debug from 'debug';
+import config from '../../../config/config.js';
 import {ItemAttributeID} from '../../../types/enums/ItemAttributeID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemFactory from '../../Factories/ItemFactory.js';
 import ItemBuilder from '../ItemBuilder.js';
-import items_data from '../../../data/items.json';
-import auto_generated_equip from '../../../data/json/auto_generated_equip.json';
+
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
+/*
+    todo: Для webpack файл импортируется прямо тут. Разделить.
+ */
+import items_data from '../../../data/items.json';
+// import auto_generated_equip from '../../../data/json/auto_generated_equip.json';
+import auto_generated_equip from '../../../data/json/auto_generated_equip_10.02.2023_09:07:11.json';
+// import auto_generated_equip from '../../../data/json/' + config.pathname;
 
 export default class ItemsLoader {
     load(entityManager: EntityManagerInterface, itemFactory: ItemFactory) {

@@ -5,7 +5,7 @@ import {hideBin} from 'yargs/helpers';
 import CoreContainerConfigure from '../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
 import PlayerContainerConfigure from '../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
-import GenerateItems from '../core/scripts/GenerateItems.js';
+import GenerateItems from '../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
 import Container from '../core/source/Container.js';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 import SandboxController from './SandboxController.js';

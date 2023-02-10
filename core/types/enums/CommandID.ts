@@ -2,7 +2,8 @@ export enum CommandID {
     //user/player
     new_game = 'new_game',
     create_player_env = 'create_player_env',
-    create_start_player_objects = 'create_start_player_objects',
+    create_default_start_player_objects = 'create_default_start_player_objects',
+    create_basic_start_player_objects = 'create_basic_start_player_objects',
     create_start_player_items = 'create_start_player_items',
 
     //player
@@ -34,7 +35,7 @@ export enum CommandID {
 
     //debug
     debug_entity_manager = 'debug_entity_manager',
-    debug_item_database = 'debug_item_database',
+    debug_items = 'debug_items',
     create_stub_objects = 'create_stub_objects',
 
     //ui
