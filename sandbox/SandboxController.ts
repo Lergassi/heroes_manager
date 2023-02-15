@@ -11,6 +11,7 @@ import {ItemID} from '../core/types/enums/ItemID.js';
 import EntityManager from '../core/source/EntityManager.js';
 import {HeroClassID} from '../core/types/enums/HeroClassID.js';
 import EntityManagerBuilder from '../core/app/Services/EntityManagerBuilder.js';
+import {LocationTypeID} from '../core/types/enums/LocationTypeID.js';
 import {ServiceID} from '../core/types/enums/ServiceID.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
@@ -60,7 +61,7 @@ import EnemySandboxController from './SandboxControllers/EnemySandboxController.
 import GenerateEnemySandboxController from './SandboxControllers/GenerateEnemySandboxController.js';
 import GenerateItemsSandboxController from './SandboxControllers/GenerateItemsSandboxController.js';
 import GenerateItemsV002SandboxController from './SandboxControllers/GenerateItemsV002SandboxController.js';
-import GenerateLocationSandboxController from './SandboxControllers/GenerateLocationSandboxController.js';
+import LocationSandboxController from './SandboxControllers/LocationSandboxController.js';
 import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
 import DevUISystemController from './SandboxControllers/DevUISystemController.js';
 import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseController.js';
@@ -101,20 +102,21 @@ export default class SandboxController {
         // (new DevUISystemController(this._container)).run();
 
         // (new LoadItemDatabaseController(this._container)).run();
+        // (new EntityManagerSandboxController(this._container)).run();
+        // (new DatabaseTSSandboxController(this._container)).run();
 
         // (new FightSandboxController(this._container)).run();
         // (new BagSandboxController(this._container)).run();
-        // (new CraftSystemSandboxController(this._container)).run();
         // (new RecipesSandboxController(this._container)).run();
         // (new ShopSandboxController(this._container)).run();
-        // (new EntityManagerSandboxController(this._container)).run();
-        (new HeroSandboxController(this._container)).run();
-        // (new DatabaseTSSandboxController(this._container)).run();
+        // (new CraftSystemSandboxController(this._container)).run();
+        // (new HeroSandboxController(this._container)).run();
         // (new EnemySandboxController(this._container)).run();
         // (new FightSandboxController(this._container)).run();
+        (new LocationSandboxController(this._container)).run();
+
         // (new GenerateItemsSandboxController(this._container)).run();
         // (new GenerateItemsV002SandboxController(this._container)).run();
-        // (new GenerateLocationSandboxController(this._container)).run();
         // (new GenerateEnemySandboxController(this._container)).run();
 
         // this._testSumBoolean();
@@ -631,7 +633,7 @@ export default class SandboxController {
         let locationFactory = this._container.get<LocationFactory>(ServiceID.LocationFactory);
         let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
 
-        let location = locationFactory.create(1);
+        let location = locationFactory.create(LocationTypeID.Forrest, 1);
         let locationComponent = location.get<Location>(ComponentID.Location);
 
         locationComponent.addHero(heroFactory.create(HeroClassID.Warrior, 1));

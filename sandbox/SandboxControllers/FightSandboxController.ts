@@ -20,7 +20,7 @@ export default class FightSandboxController extends AbstractSandboxController {
         let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
         let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
 
-        // let locationGO = locationFactory.create(1);
+        // let locationGO = locationFactory.create(LocationTypeID.Forrest, 1);
         // let location = locationGO.get<Location>(ComponentID.Location);
         // console.log(location);
 

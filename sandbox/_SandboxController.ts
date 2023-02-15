@@ -32,6 +32,7 @@ import ExperienceComponentFactory from '../core/app/Factories/ExperienceComponen
 import EnemyEntity from '../core/app/Entities/EnemyEntity.js';
 import HealthPoints from '../core/app/Components/HealthPoints.js';
 import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
+import {LocationTypeID} from '../core/types/enums/LocationTypeID.js';
 import {ServiceID} from '../core/types/enums/ServiceID.js';
 import CharacterAttributeCollector from '../core/app/Components/CharacterAttributeCollector.js';
 import {ItemCategoryID} from '../core/types/enums/ItemCategoryID.js';
@@ -119,7 +120,7 @@ export default class _SandboxController {
     devLocation() {
         let locationFactory = this._container.get<LocationFactory>(ServiceID.LocationFactory);
 
-        let location = locationFactory.create({
+        let location = locationFactory.create(LocationTypeID.Forrest, {
             level: 1,
         });
         console.log(location);
@@ -175,7 +176,7 @@ export default class _SandboxController {
             itemStorageFactory: this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory),
         });
 
-        let location = locationFactory.create({
+        let location = locationFactory.create(LocationTypeID.Forrest, {
             level: 1,
         });
         // console.log(location);

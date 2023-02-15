@@ -92,9 +92,6 @@ export default class GameConsoleRC extends React.Component<any, any>{
     }
 
     selectCommandSample(query: string, event) {
-        console.log(this);
-        console.log(query);
-        console.log(event);
         event.preventDefault();
         this._queryHandler(query);
     }

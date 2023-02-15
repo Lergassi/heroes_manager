@@ -1,11 +1,21 @@
 import HeroClass from '../../app/Entities/HeroClass.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
+import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import _ from 'lodash';
 import {database} from './database.js';
 
-let commonArmorEquipSet = {
+type TSDB_EquipSet = {
+    [ID in ItemCategoryID]?: {count: number};
+};
+
+// type TSDB_ArmorSet = TSDB_EquipSet;
+type TSDB_WeaponSet = {
+    [ID in HeroClassID]?: TSDB_EquipSet;
+};
+
+let common_armor_equip_set_data: TSDB_EquipSet = {
     [ItemCategoryID.Helmets]: {count: 1},
     [ItemCategoryID.ShoulderPads]: {count: 1},
     [ItemCategoryID.Breastplates]: {count: 1},
@@ -18,38 +28,7 @@ let commonArmorEquipSet = {
     [ItemCategoryID.Rings]: {count: 2},
 };
 
-// let equipSetsData = {
-//     [HeroClassID.Warrior]: {
-//         [ItemCategoryID.Helmets]: {count: 1},
-//         [ItemCategoryID.ShoulderPads]: {count: 1},
-//         [ItemCategoryID.Breastplates]: {count: 1},
-//         [ItemCategoryID.Bracers]: {count: 1},
-//         [ItemCategoryID.Gloves]: {count: 1},
-//         [ItemCategoryID.Belts]: {count: 1},
-//         [ItemCategoryID.Pants]: {count: 1},
-//         [ItemCategoryID.Boots]: {count: 1},
-//         [ItemCategoryID.Amulets]: {count: 1},
-//         [ItemCategoryID.Rings]: {count: 2},
-//         // [ItemCategoryID.OneHandedSwords]: {count: 1},
-//         // [ItemCategoryID.Shields]: {count: 1},
-//     },
-//     [HeroClassID.Barbarian]: {
-//         [ItemCategoryID.Helmets]: {count: 1},
-//         [ItemCategoryID.ShoulderPads]: {count: 1},
-//         [ItemCategoryID.Breastplates]: {count: 1},
-//         [ItemCategoryID.Bracers]: {count: 1},
-//         [ItemCategoryID.Gloves]: {count: 1},
-//         [ItemCategoryID.Belts]: {count: 1},
-//         [ItemCategoryID.Pants]: {count: 1},
-//         [ItemCategoryID.Boots]: {count: 1},
-//         [ItemCategoryID.Amulets]: {count: 1},
-//         [ItemCategoryID.Rings]: {count: 2},
-//         // [ItemCategoryID.OneHandedSwords]: {count: 1},
-//         // [ItemCategoryID.Shields]: {count: 1},
-//     },
-// };
-
-let weaponSets = {
+let weapon_sets_data: TSDB_WeaponSet = {
     [HeroClassID.Warrior]: {
         [ItemCategoryID.OneHandedSwords]: {count: 1},
         [ItemCategoryID.Shields]: {count: 1},
@@ -72,18 +51,18 @@ let weaponSets = {
 };
 
 export const hero_equip_sets = {
-    armorSet: (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void): void => {
-        _.map(commonArmorEquipSet, (data, itemCategoryID) => {
+    armorSet: function (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void): void {
+        _.map(common_armor_equip_set_data, (data, itemCategoryID) => {
             callback(itemCategoryID as ItemCategoryID, data.count);
         });
     },
-    weaponSet: (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void): void => {
-        _.map(weaponSets[heroClassID] ?? {}, (data, itemCategoryID) => {
+    weaponSet: function (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void): void {
+        _.map(weapon_sets_data[heroClassID] ?? {}, (data, itemCategoryID) => {
             callback(itemCategoryID as ItemCategoryID, data.count);
         });
     },
-    fullEquipSet: (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void) => {
-        database.heroes.equip_sets.armorSet(heroClassID, callback);
-        database.heroes.equip_sets.weaponSet(heroClassID, callback);
+    equipSet: function (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void) {
+        this.hero_equip_sets.armorSet(heroClassID, callback);
+        this.hero_equip_sets.weaponSet(heroClassID, callback);
     },
 };

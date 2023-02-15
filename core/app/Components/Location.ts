@@ -13,6 +13,7 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
+import {LocationTypeID} from '../../types/enums/LocationTypeID.js';
 import {Seconds, UI_ItemCount, UI_ItemStorageSlot, UI_VeinItemCount} from '../../types/main.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
@@ -77,6 +78,7 @@ export enum LocationEventCode {
 
 export interface LocationRender {
     updateID?(ID: string): void;
+    updateName?(name: string): void;
     updateState?(state: string): void;
     updateLevel?(level: number): void;   //todo: Тут наверное нужно все данные которые не изменяются передать и метод назвать set/init.
     updateHeroes?(heroes: DetailLocationRCHeroElement[]): void;
@@ -87,6 +89,7 @@ export interface LocationRender {
 }
 
 export default class Location {
+    private readonly _type: LocationTypeID;
     private readonly _level: number;
     private readonly _veins: Vein[];
     private readonly _itemStackFactory: ItemStackFactory;
@@ -106,12 +109,21 @@ export default class Location {
     private _huntingState: LocationHuntingState;
     private _intervalID: NodeJS.Timer;
 
+    get type(): LocationTypeID {
+        return this._type;
+    }
+
+    get level(): number {
+        return this._level;
+    }
+
     private readonly _options = {
         maxHeroes: 5,
         intervalPeriod: 1,
     };
 
     constructor(
+        type: LocationTypeID,
         levelRange: number,
         itemStackFactory: ItemStackFactory,         //todo: Убрать в генератор лута.
         itemStorage: ItemStorageInterface,
@@ -122,6 +134,7 @@ export default class Location {
 
         this._huntingState = LocationHuntingState.Waiting;
 
+        this._type = type;
         this._level = levelRange;
         this._veins = [];
         this._itemStackFactory = itemStackFactory;
@@ -135,11 +148,11 @@ export default class Location {
             deleteDeadCharacter: true,
         });
 
+        this._fightController = new FightController(this._heroFightGroupController, this._enemyFightGroupController);
+
         //лут
         this._itemStorage = itemStorage;    //todo: Убрать. Если нужно передать из вне - логику поменять, а не делать чтото на всякий случай. И кошелек тоже.
         this._wallet = wallet;
-
-        this._fightController = new FightController(this._heroFightGroupController, this._enemyFightGroupController);
     }
 
     addHero(hero: GameObject): boolean {
@@ -379,6 +392,7 @@ export default class Location {
             });
         }
 
+        ui.updateName?.(this._type);
         ui.updateState?.(this._huntingState);
         ui.updateLevel?.(this._level);
         ui.updateHeroes?.(heroes);

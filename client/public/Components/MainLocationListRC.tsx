@@ -29,6 +29,7 @@ export interface MainLocationListRCState {
 export interface MainLocationListRCElement {
     location: GameObject;
     ID: string;
+    name: string;
     level: number;
     state: string;
     lifeHeroesCount: number;
@@ -124,7 +125,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                 </tr>
                                 {_.map(this.state.locations, (location, index) => {
                                     return <tr key={index}>
-                                        <td>%name% ({location.ID})</td>
+                                        <td>{location.name} ({location.ID})</td>
                                         <td>{location.level}</td>
                                         <td>{location.state}</td>
                                         <td>{location.lifeHeroesCount}/{location.totalHeroesCount}</td>

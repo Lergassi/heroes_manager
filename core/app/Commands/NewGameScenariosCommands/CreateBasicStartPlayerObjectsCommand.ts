@@ -12,6 +12,7 @@ import {EntityID} from '../../../types/enums/EntityID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../../types/enums/HeroClassID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
+import {LocationTypeID} from '../../../types/enums/LocationTypeID.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
 import {unsigned} from '../../../types/main.js';
 import Location from '../../Components/Location.js';
@@ -226,7 +227,7 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
         let startLocationLevel = 1;
         for (let level = startLocationLevel; level <= maxLocationLevel; level++) {
             _.map(_.range(0, _.random(locationsForLevel[0], locationsForLevel[1]) + 1), () => {
-                mainLocationList.add(locationFactory.create(level));
+                mainLocationList.add(locationFactory.create(LocationTypeID.Forrest, level));
             });
         }
     }

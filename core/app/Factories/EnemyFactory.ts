@@ -9,11 +9,11 @@ import {EntityID} from '../../types/enums/EntityID.js';
 import {unsigned} from '../../types/main.js';
 import AttackController from '../Components/AttackController.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import ExperienceLootGeneratorComponent from '../Components/ExperienceLootGeneratorComponent.js';
-import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
+import ExperienceLootGenerator from '../Components/ExperienceLootGenerator.js';
+import GoldLootGenerator from '../Components/GoldLootGenerator.js';
 import HealthPoints from '../Components/HealthPoints.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
-import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
+import ItemLootGenerator from '../Components/ItemLootGenerator.js';
 import Level from '../Components/Level.js';
 import LifeStateController from '../Components/LifeStateController.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
@@ -81,7 +81,7 @@ export default class EnemyFactory {
             }) => {
                 if (target?.experienceDistributor) experienceGeneratorComponent.distribute(target.experienceDistributor);
                 if (target?.wallet) goldLootGeneratorComponent.transfer(target.wallet);
-                if (target?.itemStorage) itemLootGeneratorComponent.generate();
+                if (target?.itemStorage) itemLootGeneratorComponent.generate(target.itemStorage);
             }
         ));
         enemy.set<DamageControllerInterface>(ComponentID.DamageController, healthPointsComponent);
@@ -109,18 +109,14 @@ export default class EnemyFactory {
             stateController,
         ));
 
-        let enemyLootData = database.enemies.loot.find(enemyTypeID);
-
-        let experienceGeneratorComponent = enemy.set<ExperienceLootGeneratorComponent>(ComponentID.ExperienceLootGenerator, new ExperienceLootGeneratorComponent(
-            enemyLootData?.exp,
+        let itemLootGeneratorComponent = enemy.set<ItemLootGenerator>(ComponentID.ItemLootGenerator, new ItemLootGenerator());
+        database.enemies.rewards.items(enemyTypeID, (itemID, count, chance) => {
+            itemLootGeneratorComponent.addItem(itemID, count, chance);
+        });
+        let experienceGeneratorComponent = enemy.set<ExperienceLootGenerator>(ComponentID.ExperienceLootGenerator, new ExperienceLootGenerator(
+            database.enemies.rewards.exp(enemyTypeID),
         ));
-        let goldLootGeneratorComponent = enemy.set<GoldLootGeneratorComponent>(ComponentID.GoldLootGenerator, new GoldLootGeneratorComponent({
-            min: enemyLootData.money.min,
-            max: enemyLootData.money.max,
-        }));
-        let itemLootGeneratorComponent = enemy.set<ItemLootGeneratorComponent>(ComponentID.ItemLootGenerator, new ItemLootGeneratorComponent({
-            itemsLoot: enemyLootData.loot,
-        }));
+        let goldLootGeneratorComponent = enemy.set<GoldLootGenerator>(ComponentID.GoldLootGenerator, new GoldLootGenerator(database.enemies.rewards.money(enemyTypeID)));
 
         return enemy;
     }

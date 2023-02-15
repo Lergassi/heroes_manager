@@ -11,6 +11,7 @@ import GameObject from '../../source/GameObject.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {LocationTypeID} from '../../types/enums/LocationTypeID.js';
 import {UI_ItemCount, UI_VeinItemCount, unsigned} from '../../types/main.js';
 import LocationFactory from '../Factories/LocationFactory.js';
 import Location from './Location.js';
@@ -51,7 +52,7 @@ export default class MainLocationList {
     ): GameObject {
         if (!this.canAddLocation()) return;
 
-        let location = locationFactory.create(
+        let location = locationFactory.create(LocationTypeID.Forrest, 
             level,
         );
 
@@ -115,6 +116,7 @@ export default class MainLocationList {
             let locationData: MainLocationListRCElement = {
                 location: this._locations[i],
                 ID: String(this._locations[i].ID),
+                name: '',
                 level: 0,
                 lifeEnemiesCount: 0,
                 lifeHeroesCount: 0,
@@ -127,6 +129,9 @@ export default class MainLocationList {
             };
 
             this._locations[i].get<Location>(ComponentID.Location).renderByRequest({
+                updateName(name: string) {
+                    locationData.name = name;
+                },
                 updateState(state: string) {
                     locationData.state = state;
                 },

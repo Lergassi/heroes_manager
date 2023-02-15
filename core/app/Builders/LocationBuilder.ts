@@ -1,5 +1,6 @@
 import GameObject from '../../source/GameObject.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
+import {LocationTypeID} from '../../types/enums/LocationTypeID.js';
 import Location from '../Components/Location.js';
 import LocationFactory from '../Factories/LocationFactory.js';
 
@@ -21,7 +22,7 @@ export default class LocationBuilder {
     }
 
     build(): GameObject {
-        let locationGO = this._locationFactory.create(this._level);
+        let locationGO = this._locationFactory.create(LocationTypeID.Forrest, this._level);
         let location = locationGO.get<Location>(ComponentID.Location);
 
         

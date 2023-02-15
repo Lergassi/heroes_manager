@@ -1,4 +1,5 @@
 import config from '../../../config/config.js';
+import {database} from '../../../data/ts/database.js';
 import ContainerConfigureInterface from '../../../source/ContainerConfigureInterface.js';
 import ContainerInterface from '../../../source/ContainerInterface.js';
 import EntityManager from '../../../source/EntityManager.js';
@@ -44,6 +45,9 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         container.set<MetadataManager>('core.metadataManager', (container) => {
             return (new MetadataManagerCreator()).create();
         });
+        // container.set(ServiceID.TSDatabase, (container) => {
+        //     return database;
+        // });
         container.set<EntityManager>(ServiceID.EntityManager, (container) => {
             return new EntityManager();
         });
@@ -218,6 +222,9 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         // });
 
         debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', 'CoreContainerConfigure'));
+
+        debug(DebugNamespaceID.Dump)(container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        debug(DebugNamespaceID.Dump)(database);
 
         return container;
     }

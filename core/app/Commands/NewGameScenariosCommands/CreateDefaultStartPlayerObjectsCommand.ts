@@ -3,6 +3,7 @@ import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
 import {ComponentID} from '../../../types/enums/ComponentID.js';
 import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
+import {LocationTypeID} from '../../../types/enums/LocationTypeID.js';
 import Location from '../../Components/Location.js';
 import MainLocationList from '../../Components/MainLocationList.js';
 import Item from '../../Entities/Item.js';
@@ -167,7 +168,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
         let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let locationGO = locationFactory.create(1);
+        let locationGO = locationFactory.create(LocationTypeID.Forrest, 1);
         let location = locationGO.get<Location>(ComponentID.Location);
 
         location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));

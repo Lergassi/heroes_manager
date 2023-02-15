@@ -5,7 +5,7 @@ import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
 
-export default class ExperienceLootGeneratorComponent {
+export default class ExperienceLootGenerator {
     /**
      * Точное значение выдаваемое компонентом. Множители рассчитываются не тут. todo: Какой множитель?
      * @private

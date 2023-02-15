@@ -8,52 +8,40 @@ import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {ItemCount, ItemCountDBType, ItemLoot, RangeType} from '../../types/main.js';
 
-export type EnemyLootDBType = {
-    enemyTypeID: EnemyTypeID,
-    loot: EnemyLootItemDBType[],
-    exp: number,
-    money: {min: number, max: number},
+type TSDB_EnemyLoot = {
+    [ID in EnemyTypeID]?: {
+        items: {
+            ID: ItemID,
+            count: RangeType,
+            chance: number,
+        }[],
+        exp: number,
+        money: RangeType,
+    }
 };
 
-export type EnemyLootItemDBType = {
-    ID: ItemID;
-    count: RangeType;
-    chance: number;
-};
-
-let enemy_loot_data: EnemyLootDBType[] = [
-    {
-        enemyTypeID: EnemyTypeID.Boar,
-        loot: [
-            {ID: ItemID.Skin01, count: {min: 4, max: 2}, chance: 10},
+let enemy_loot_data: TSDB_EnemyLoot = {
+    [EnemyTypeID.Boar]: {
+        exp: 42,
+        items: [
+            {ID: ItemID.Wood, count: {min: 0, max: 2}, chance: 1},
+            {ID: ItemID.Skin01, count: {min: 2, max: 4}, chance: 1},
+            {ID: ItemID.Leather01, count: {min: 0, max: 1}, chance: 1},
         ],
-        exp: 100,
-        money: {max: 100, min: 200},
+        money: {min: 100, max: 200},
     },
-    // {
-    //     enemyTypeID: EnemyTypeID.EnemyType02,
-    //     loot: [
-    //         {ID: ItemID.Wood, count: {max: 12, min: 22}, chance: 80},
-    //         {ID: ItemID.IronOre, count: {max: 4, min: 12}, chance: 50},
-    //         {ID: ItemID.OneHandedSword01, count: {max: 1, min: 1}, chance: 10},
-    //     ],
-    //     exp: 42,
-    //     money: {max: 100, min: 200},
-    // },
-];
-
-let empty: EnemyLootDBType = {enemyTypeID: undefined, exp: 0, loot: [], money: {max: 0, min: 0}};
+};
 
 export const enemy_loot = {
-    find: (enemyTypeID: EnemyTypeID): EnemyLootDBType => {
-        let enemyLootDBData = _.find(enemy_loot_data, (item) => {
-            return item.enemyTypeID === enemyTypeID;
+    items: function (enemyTypeID: EnemyTypeID, callback: (itemID: ItemID, count: RangeType, chance: number) => void): void {
+        _.map(enemy_loot_data[enemyTypeID]?.items, (data) => {
+            callback(data.ID, data.count, data.chance);
         });
-
-        targetIsNilAndReplacedReport(enemyLootDBData, sprintf('Данные "enemy_loot" для %s не найдены, и заменены на нулевые значения.', JSON.stringify({
-            enemyTypeID: enemyTypeID,
-        })));
-
-        return enemyLootDBData ?? empty;
+    },
+    exp: function (enemyTypeID: EnemyTypeID): number {
+        return enemy_loot_data[enemyTypeID]?.exp ?? 0;
+    },
+    money: function (enemyTypeID: EnemyTypeID): RangeType {
+        return enemy_loot_data[enemyTypeID]?.money ?? {min: 0, max: 0};
     },
 };

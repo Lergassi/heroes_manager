@@ -145,19 +145,19 @@ export default class GenerateItems {
                         TwoHandWeapon: false,
                     };
 
-                    if (database.metadata.itemsByItemCategory.requireArmorMaterial(itemCategories[i])) itemAttributes.ArmorMaterialID = options.armorMaterialID;
-                    if (database.metadata.itemsByItemCategory.twoHandWeapon(itemCategories[i])) itemAttributes.TwoHandWeapon = true;
+                    if (database.metadata.items_by_item_category.requireArmorMaterial(itemCategories[i])) itemAttributes.ArmorMaterialID = options.armorMaterialID;
+                    if (database.metadata.items_by_item_category.twoHandWeapon(itemCategories[i])) itemAttributes.TwoHandWeapon = true;
 
                     let IDPatterns = {
                         withArmorMaterial: '%s_%s_%s_%s',
                         withoutArmorMaterial: '%s_%s_%s',
                     };
 
-                    let IDPattern = database.metadata.itemsByItemCategory.requireArmorMaterial(itemCategories[i]) ? IDPatterns.withArmorMaterial : IDPatterns.withoutArmorMaterial;
+                    let IDPattern = database.metadata.items_by_item_category.requireArmorMaterial(itemCategories[i]) ? IDPatterns.withArmorMaterial : IDPatterns.withoutArmorMaterial;
                     let IDPatternParams = [];
-                    if (database.metadata.itemsByItemCategory.requireArmorMaterial(itemCategories[i])) IDPatternParams.push(options.armorMaterialID);
+                    if (database.metadata.items_by_item_category.requireArmorMaterial(itemCategories[i])) IDPatternParams.push(options.armorMaterialID);
                     IDPatternParams.push(constValues.qualityID);
-                    IDPatternParams.push(database.metadata.itemsByItemCategory.singleItemName(itemCategories[i]));
+                    IDPatternParams.push(database.metadata.items_by_item_category.singleItemName(itemCategories[i]));
                     IDPatternParams.push(itemLevel);
 
                     itemAttributes.ID = sprintf(IDPattern, ..._.filter(IDPatternParams, (value, key) => {

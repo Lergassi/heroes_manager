@@ -4,6 +4,7 @@ import {hero_equip_sets} from './hero_equip_sets.js';
 import {item_category_ratios} from './item_category_ratios.js';
 import {location_enemies} from './location_enemies.js';
 import {metadata} from './metadata.js';
+import {test} from './test.js';
 
 export const database = {
     metadata: metadata,
@@ -18,10 +19,11 @@ export const database = {
         equip_sets: hero_equip_sets,
     },
     enemies: {
-        loot: enemy_loot,
+        rewards: enemy_loot,
     },
     locations: {
         // data: {},    Не data, а через метод.
         enemies: location_enemies,
     },
+    test: test,
 };

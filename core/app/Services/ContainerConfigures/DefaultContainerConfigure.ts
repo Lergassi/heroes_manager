@@ -1,7 +1,6 @@
 import ContainerConfigureInterface from '../../../source/ContainerConfigureInterface.js';
 import ContainerInterface from '../../../source/ContainerInterface.js';
 import GameConsole from '../../../source/GameConsole/GameConsole.js';
-import Kernel from '../../../source/Kernel.js';
 import HelpCommand from '../../../../server/app/Commands/HelpCommand.js';
 import ListCommand from '../../../../server/app/Commands/ListCommand.js';
 import CreateDefaultStartPlayerObjectsCommand from '../../Commands/NewGameScenariosCommands/CreateDefaultStartPlayerObjectsCommand.js';
@@ -73,9 +72,6 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
             return new GameConsole();
         });
         // container.set('gameConsole', container.get<GameConsole>('server.gameConsole'));    //alias
-        container.set<Kernel>('kernel', (container) => {
-            return new Kernel(container);
-        });
 
         this._gameConsoleConfigure(container);
 
@@ -120,6 +116,9 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
 
         gameConsole.register(new FightCommand(container));
 
+        /* STUB OBJECTS */
+        gameConsole.register(new CreateStubObjectsCommand(container));
+
         /* UI */
         gameConsole.register(new DetailHeroCommand(container));
         gameConsole.register(new DetailLocationCommand(container));
@@ -133,8 +132,5 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
 
         gameConsole.register(new DebugUserEnvironmentCommand(container));
         gameConsole.register(new DebugPlayerEnvironmentCommand(container));
-
-        /* STUB OBJECTS */
-        gameConsole.register(new CreateStubObjectsCommand(container));
     }
 }

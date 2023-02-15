@@ -1,27 +1,23 @@
-import AbstractSandboxController from './AbstractSandboxController.js';
-import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
-import {ComponentID} from '../../core/types/enums/ComponentID.js';
+import debug from 'debug';
 import Bag from '../../core/app/Components/Bag.js';
-import Viewer from '../../core/source/Viewer.js';
-import ItemDatabase from '../../core/source/ItemDatabase.js';
-import {ItemID} from '../../core/types/enums/ItemID.js';
-import WalletFactory from '../../core/app/Factories/WalletFactory.js';
-import {CurrencyID} from '../../core/types/enums/CurrencyID.js';
+import Location from '../../core/app/Components/Location.js';
 import Wallet from '../../core/app/Components/Wallet.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
-import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
-import HeroComponent from '../../core/app/Components/HeroComponent.js';
-import Experience from '../../core/app/Components/Experience.js';
-import DetailHeroViewer from '../../core/app/Viwers/DetailHeroViewer.js';
-import HeroListViewer from '../../core/app/Viwers/HeroListViewer.js';
-import ShortHeroViewer from '../../core/app/Viwers/ShortHeroViewer.js';
-import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
-import debug from 'debug';
-import _ from 'lodash';
+import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import LocationFactory from '../../core/app/Factories/LocationFactory.js';
+import WalletFactory from '../../core/app/Factories/WalletFactory.js';
+import DetailHeroViewer from '../../core/app/Viwers/DetailHeroViewer.js';
 import DetailLocationViewer from '../../core/app/Viwers/DetailLocationViewer.js';
-import Location from '../../core/app/Components/Location.js';
+import ShortHeroViewer from '../../core/app/Viwers/ShortHeroViewer.js';
+import ItemDatabase from '../../core/source/ItemDatabase.js';
+import Viewer from '../../core/source/Viewer.js';
+import {ComponentID} from '../../core/types/enums/ComponentID.js';
+import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
+import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
+import {ItemID} from '../../core/types/enums/ItemID.js';
+import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
+import AbstractSandboxController from './AbstractSandboxController.js';
 
 export default class DevUISystemController extends AbstractSandboxController {
     run() {
@@ -91,7 +87,7 @@ export default class DevUISystemController extends AbstractSandboxController {
     }
 
     private _location() {
-        let location = this.container.get<LocationFactory>(ServiceID.LocationFactory).create(1);
+        let location = this.container.get<LocationFactory>(ServiceID.LocationFactory).create(LocationTypeID.Forrest, 1);
 
         location.get<Location>(ComponentID.Location).addHero(this.container.get<HeroFactory>(ServiceID.HeroFactory).create(HeroClassID.Warrior, 1));
         location.get<Location>(ComponentID.Location).addHero(this.container.get<HeroFactory>(ServiceID.HeroFactory).create(HeroClassID.Warrior, 1));

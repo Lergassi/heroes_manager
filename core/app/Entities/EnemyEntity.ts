@@ -1,7 +1,7 @@
 import {ItemLoot, unsigned} from '../../types/main.js';
-import ItemLootGeneratorComponent from '../Components/ItemLootGeneratorComponent.js';
-import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
-import ExperienceLootGeneratorComponent from '../Components/ExperienceLootGeneratorComponent.js';
+import ItemLootGenerator from '../Components/ItemLootGenerator.js';
+import GoldLootGenerator from '../Components/GoldLootGenerator.js';
+import ExperienceLootGenerator from '../Components/ExperienceLootGenerator.js';
 
 /**
  * @deprecated Данные лута, силы и тд теперь храняться в бд в виде простых значений и передаются сразу в нужные компоненты. Отображение для игрока делается через отдельный компонент.
@@ -48,20 +48,20 @@ export default class EnemyEntity {
     }
 
     createLootGenerator() {
-        return new ItemLootGeneratorComponent({
-            itemsLoot: this._loot,
-        });
+        // return new ItemLootGeneratorComponent({
+        //     itemsLoot: this._loot,
+        // });
     }
 
     createGoldLootGenerator() {
-        return new GoldLootGeneratorComponent({
+        return new GoldLootGenerator({
             min: this._gold[0],
             max: this._gold[1],
         });
     }
 
     createExperienceLootGenerator() {
-        return new ExperienceLootGeneratorComponent(
+        return new ExperienceLootGenerator(
             this._exp,
         );
     }

@@ -1,8 +1,8 @@
 import debug from 'debug';
 import React from 'react';
 import ReactDOM, {Root} from 'react-dom/client';
-import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
 import Bag from '../../core/app/Components/Bag.js';
+import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
 import Location from '../../core/app/Components/Location.js';
 import MainHeroList from '../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../core/app/Components/MainLocationList.js';
@@ -14,7 +14,6 @@ import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import LocationFactory from '../../core/app/Factories/LocationFactory.js';
 import WalletFactory from '../../core/app/Factories/WalletFactory.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import ItemStorageControllerInterface from '../../core/app/Interfaces/ItemStorageControllerInterface.js';
 import ItemStorageInterface from '../../core/app/Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../core/app/Interfaces/WalletInterface.js';
 import CoreContainerConfigure from '../../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
@@ -23,11 +22,9 @@ import PlayerContainerConfigure from '../../core/app/Services/ContainerConfigure
 import Container from '../../core/source/Container.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import AppError from '../../core/source/Errors/AppError.js';
-import GameConsole from '../../core/source/GameConsole/GameConsole.js';
 import GameObject from '../../core/source/GameObject.js';
 import GameObjectStorage from '../../core/source/GameObjectStorage.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
-import {CommandID} from '../../core/types/enums/CommandID.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {EnemyTypeID} from '../../core/types/enums/EnemyTypeID.js';
@@ -35,17 +32,17 @@ import {EntityID} from '../../core/types/enums/EntityID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {IconID} from '../../core/types/enums/IconID.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
+import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import ClientContainerConfigure from '../app/ClientContainerConfigure.js';
 import DetailHeroRC from './Components/DetailHeroRC.js';
 import DetailLocationRC from './Components/DetailLocationRC.js';
 import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
+import ItemStorageRC from './Components/ItemStorageRC.js';
 import ItemStorageRC_Legacy from './Components/ItemStorageRC_Legacy.js';
 import LeftSidebarRC from './Components/LeftSidebarRC.js';
 import MainHeroListRC from './Components/MainHeroListRC.js';
-import MainHeroListRC_Legacy from './Components/MainHeroListRC_Legacy.js';
 import MainLocationListRC from './Components/MainLocationListRC.js';
-import ItemStorageRC from './Components/ItemStorageRC.js';
 
 function Hello(props) {
     console.log('Hello.this', this);
@@ -467,7 +464,7 @@ export default class SandboxUI {
         let locationFactory = this._container.get<LocationFactory>(ServiceID.LocationFactory);
         let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let location = locationFactory.create(1);
+        let location = locationFactory.create(LocationTypeID.Forrest, 1);
 
         location.get<Location>(ComponentID.Location).addHero(heroFactory.create(HeroClassID.Warrior, 1));
         location.get<Location>(ComponentID.Location).addHero(heroFactory.create(HeroClassID.Rogue, 1));
@@ -510,11 +507,11 @@ export default class SandboxUI {
         let wallet = walletFactory.create(0);
 
         let locations = [
-            locationFactory.create(1),
-            locationFactory.create(1),
-            locationFactory.create(1),
-            locationFactory.create(1),
-            locationFactory.create(1),
+            locationFactory.create(LocationTypeID.Forrest, 1),
+            locationFactory.create(LocationTypeID.Forrest, 1),
+            locationFactory.create(LocationTypeID.Forrest, 1),
+            locationFactory.create(LocationTypeID.Forrest, 1),
+            locationFactory.create(LocationTypeID.Forrest, 1),
         ];
 
         for (let i = 0; i < locations.length; i++) {

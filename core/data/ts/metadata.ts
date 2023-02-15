@@ -1,7 +1,16 @@
 import ItemCategory from '../../app/Entities/ItemCategory.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 
-const itemsInItemCategories = {
+type TSDB_ItemsInItemCategory = {
+    [ID in ItemCategoryID]?: {
+        singleItemName: string;
+        equipable: boolean;
+        requireArmorMaterial: boolean;
+        twoHandWeapon: boolean;
+    };
+};
+
+let items_by_item_categories_data: TSDB_ItemsInItemCategory = {
     [ItemCategoryID.Helmets]: {
         singleItemName: 'Helmet',
         equipable: true,
@@ -137,19 +146,19 @@ const itemsInItemCategories = {
 };
 
 export const metadata = {
-    itemsByItemCategory: {
+    items_by_item_category: {
         //todo: Много данных будет сложно так обрабатывать, когда их не будет в бд.
-        singleItemName: (itemCategoryID: ItemCategoryID): string => {
-            return itemsInItemCategories[itemCategoryID]?.singleItemName ?? '';
+        singleItemName: function (itemCategoryID: ItemCategoryID): string {
+            return items_by_item_categories_data[itemCategoryID]?.singleItemName ?? '%SINGLE_NAME%';
         },
-        equipable: (itemCategoryID: ItemCategoryID): boolean => {
-            return itemsInItemCategories[itemCategoryID]?.equipable ?? false;
+        equipable: function (itemCategoryID: ItemCategoryID): boolean {
+            return items_by_item_categories_data[itemCategoryID]?.equipable ?? false;
         },
-        requireArmorMaterial: (itemCategoryID: ItemCategoryID): boolean => {
-            return itemsInItemCategories[itemCategoryID]?.requireArmorMaterial ?? false;
+        requireArmorMaterial: function (itemCategoryID: ItemCategoryID): boolean {
+            return items_by_item_categories_data[itemCategoryID]?.requireArmorMaterial ?? false;
         },
-        twoHandWeapon: (itemCategoryID: ItemCategoryID): boolean => {
-            return itemsInItemCategories[itemCategoryID]?.twoHandWeapon ?? false;
+        twoHandWeapon: function (itemCategoryID: ItemCategoryID): boolean {
+            return items_by_item_categories_data[itemCategoryID]?.twoHandWeapon ?? false;
         },
     },
 };

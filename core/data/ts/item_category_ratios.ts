@@ -1,7 +1,11 @@
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 
-let itemCategoryRatiosData = {
+type TSDB_ItemCategoryRatio = {
+    [ID in ItemCategoryID]?: {[ID in CharacterAttributeID]?: number};
+};
+
+let item_category_ratios_data: TSDB_ItemCategoryRatio = {
     [ItemCategoryID.Helmets]: {[CharacterAttributeID.HealthPoints]: 0.5, [CharacterAttributeID.AttackPower]: 0.5},
     [ItemCategoryID.ShoulderPads]: {[CharacterAttributeID.HealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
     [ItemCategoryID.Breastplates]: {[CharacterAttributeID.HealthPoints]: 1, [CharacterAttributeID.AttackPower]: 1},
@@ -19,10 +23,10 @@ let itemCategoryRatiosData = {
 };
 
 /**
- * Данные используемые для генерации контента вне игры.
+ * Данные используемые для генерации контента вне игры. После запуска не использовать.
  */
 export const item_category_ratios = {
-    getRatio: (itemCategoryID: ItemCategoryID, characterAttributeID: CharacterAttributeID): number => {
-        return itemCategoryRatiosData[itemCategoryID]?.[characterAttributeID] ?? 0;
+    getRatio: function (itemCategoryID: ItemCategoryID, characterAttributeID: CharacterAttributeID): number {
+        return item_category_ratios_data[itemCategoryID]?.[characterAttributeID] ?? 0;
     }
 };

@@ -233,7 +233,7 @@ function check(heroClassID: HeroClassID, characterAttributeID: CharacterAttribut
 }
 
 export const hero_character_attributes = {
-    startValue: (heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID): number => {
+    startValue: function (heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID): number {
         check(heroClassID, characterAttributeID);
 
         return hero_character_attributes_data[heroClassID]?.[characterAttributeID] ?? 0;
@@ -243,7 +243,7 @@ export const hero_character_attributes = {
      * @param heroClassID
      * @param characterAttributeID
      */
-    stepForLevel: (heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID): number => {
+    stepForLevel: function (heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID): number {
         check(heroClassID, characterAttributeID);
 
         return 0;
