@@ -1,3 +1,4 @@
+import {database} from '../../data/ts/database.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
@@ -36,7 +37,8 @@ export default class HeroCharacterAttributeFactory {
         let characterAttribute = new CharacterAttribute(
             characterAttributeID,
             itemCharacterAttributeCollector,
-            options?.baseValue ?? this._generatorByConfig.generate(heroClassID, characterAttributeID),
+            // options?.baseValue ?? this._generatorByConfig.generate(heroClassID, characterAttributeID),
+            options?.baseValue ?? database.heroes.character_attributes.startValue(heroClassID, characterAttributeID),
             // options?.baseValue ?? this._characterAttributeStartValueFactory.generate(
             //     characterAttributeID,
             //     level,

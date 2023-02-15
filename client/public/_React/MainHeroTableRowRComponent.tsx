@@ -15,7 +15,7 @@ import AttackController from '../../../core/app/Components/AttackController.js';
 import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
 import TotalCharacterAttributeValueCollectorComponent
     from '../../../core/app/Components/TotalCharacterAttributeValueCollectorComponent.js';
-import AttackPower from '../../../core/app/Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
+import AttackPower from '../../../core/app/Components/CharacterAttributes/AttackPowerDependentIncreaseDecorator.js';
 import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
 import {CharacterAttributes} from '../../../core/types/main.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
@@ -45,7 +45,7 @@ export default class MainHeroTableRowRComponent extends React.Component<HeroTabl
                 ExperienceComponentEventCode.AddLevel,
                 EquipSlotComponentEventCode.CreateItemStack,
                 EquipSlotComponentEventCode.DestroyItemStack,
-                HealthPointsComponentEventCode.TakeDamage,
+                HealthPointsComponentEventCode.Damage,
                 HealthPointsComponentEventCode.Died,
                 HealthPointsComponentEventCode.Resurrect,
             ],

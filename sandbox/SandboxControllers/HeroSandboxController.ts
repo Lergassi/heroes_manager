@@ -1,27 +1,25 @@
-import _ from 'lodash';
-import debug from 'debug';
-import AbstractSandboxController from './AbstractSandboxController.js';
-import HeroFactory from '../../core/app/Factories/HeroFactory.js';
-import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import HeroClass from '../../core/app/Entities/HeroClass.js';
-import {EntityID} from '../../core/types/enums/EntityID.js';
-import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
-import EquipSlotInterface from '../../core/app/Interfaces/EquipSlotInterface.js';
-import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
-import ItemStack from '../../core/app/RuntimeObjects/ItemStack.js';
-import Item from '../../core/app/Entities/Item.js';
-import {ItemID} from '../../core/types/enums/ItemID.js';
-import {detailHeroView} from '../../core/views.js';
 import EquipController from '../../core/app/Components/EquipController.js';
+import HeroClass from '../../core/app/Entities/HeroClass.js';
+import Item from '../../core/app/Entities/Item.js';
+import HeroFactory from '../../core/app/Factories/HeroFactory.js';
+import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
+import {debug_detailHero} from '../../core/debug/debug_functions.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
+import {EntityID} from '../../core/types/enums/EntityID.js';
+import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
+import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
+import {ItemID} from '../../core/types/enums/ItemID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
+import AbstractSandboxController from './AbstractSandboxController.js';
 
 export default class HeroSandboxController extends AbstractSandboxController {
     run(): void {
         // this._devEquip();
         // this._devEquipController();
         // this._devViewHero();
-        this._devCreateHeroWithStrategy();
+        // this._devCreateHeroWithStrategy();
+
+        this._useHeroFactory();
     }
 
     private _devEquip() {
@@ -71,5 +69,13 @@ export default class HeroSandboxController extends AbstractSandboxController {
         let level = 1;
         let heroClassID = HeroClassID.Warrior;
         // let hero = heroFactory.createByStrategy(level, heroClassID);
+    }
+
+    private _useHeroFactory() {
+        let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
+
+        let hero = heroFactory.create(HeroClassID.Warrior, 1);
+        console.log('hero', hero);
+        debug_detailHero(hero);
     }
 }

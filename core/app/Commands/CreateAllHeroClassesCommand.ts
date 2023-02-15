@@ -20,7 +20,7 @@ export default class CreateAllHeroClassesCommand extends Command {
             HeroClassID.Tank3,
 
             HeroClassID.Gladiator,
-            HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
+            HeroClassID.Barbarian,
             HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
             HeroClassID.PlateDamageDealer1,
             HeroClassID.PlateDamageDealer2,

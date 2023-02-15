@@ -1,5 +1,6 @@
 import React from 'react';
 import {sprintf} from 'sprintf-js';
+import {assertNotEmpty} from '../../../core/source/assert.js';
 import AppError from '../../../core/source/Errors/AppError.js';
 import debug from 'debug';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
@@ -12,7 +13,6 @@ export interface GameConsoleProps {
     container: ContainerInterface;
     executeUrl: string;
     commandNames: string[] | undefined;
-    maxHistoryLength: number | undefined;
 }
 
 export default class GameConsoleRC extends React.Component<any, any>{
@@ -37,11 +37,13 @@ export default class GameConsoleRC extends React.Component<any, any>{
     constructor(props: GameConsoleProps) {
         super(props);
 
-        this._container = props.container;
+        assertNotEmpty(props.executeUrl, 'executeUrl не может быть пустым.')
 
-        if (!props.executeUrl) {
-            throw new AppError('executeUrl не может быть пустым.');
-        }
+        this.state = {
+            value: '',
+        };
+
+        this._container = props.container;
 
         this._executeUrl = props.executeUrl;
 
@@ -52,12 +54,9 @@ export default class GameConsoleRC extends React.Component<any, any>{
         this._autoCompletePosition = 0;
 
         this._history = [];
-        this._maxHistoryLength = props.maxHistoryLength || this._defaults.maxHistoryLength;
-        this.resetHistoryPosition();
+        this._maxHistoryLength = this._defaults.maxHistoryLength;
 
-        this.state = {
-            value: '',
-        };
+        this.resetHistoryPosition();
 
         this.handleChange = this.handleChange.bind(this);
         this.keyPressHandler = this.keyPressHandler.bind(this);
@@ -90,71 +89,6 @@ export default class GameConsoleRC extends React.Component<any, any>{
 
     autoCompleteHandlingDisable() {
         this._isAutoCompleteHandling = false;
-    }
-
-    private async _queryHandler(query: string) {
-        this.resetAutoComplete();
-
-        let commandString = query.trim();
-        this.setState({value: ''});
-
-        if (!commandString.length) {
-            return;
-        }
-
-        let resultUrl = this._executeUrl + '?command=' + commandString;
-        if (this._history.length >= this._maxHistoryLength) {
-            this._history.shift();
-        }
-        if (this._history[this._history.length - 1] !== commandString) {
-            this._history.push(commandString);
-        }
-        this.resetHistoryPosition();
-
-        debug(DebugNamespaceID.GameConsole)(resultUrl);
-
-        await this._container.get<GameConsole>(ServiceID.GameConsole).runByQuery(commandString);
-    }
-
-    /**
-     * Только для Enter.
-     * @param e
-     */
-    async keyPressHandler(e) {
-        switch(e.code) {
-            case 'Enter':
-            case 'NumpadEnter':
-                this._queryHandler(e.target.value);
-
-                // fetch(resultUrl)
-                //     .then((response) => {
-                //         if (response.ok) {
-                //             if (response.headers.get('content-type')?.includes('application/json')) {
-                //                 return response.json();
-                //             } else {
-                //                 throw new Error('Ошибка при обработки response. Неверный формат данных. Ожидался json.');
-                //             }
-                //         } else {
-                //             console.log('DEBUG', 'http error', response);
-                //             throw new Error('Ошибка HTTP: ' + response.status);
-                //         }
-                //     })
-                //     .then((json) => {
-                //         if (json.error) {
-                //             // console.log('DEBUG', 'json.error', json.error);
-                //             throw new Error(json.error);
-                //         }
-                //
-                //         console.log('DEBUG', 'data', json);
-                //         // console.log(json.json);
-                //     })
-                //     .catch((error) => {
-                //         console.log('DEBUG', 'fetch catch error', error);
-                //     })
-                // ;//end fetch
-
-                break;  //Enter, NumpadEnter
-        }//end switch(e.code)
     }
 
     selectCommandSample(query: string, event) {
@@ -232,9 +166,7 @@ export default class GameConsoleRC extends React.Component<any, any>{
 
     render() {
         return (
-            <div
-                className={'game-console'}
-            >
+            <div className={'game-console'} >
                 <input
                     className={'game-console__input'}
                     autoFocus
@@ -255,13 +187,83 @@ export default class GameConsoleRC extends React.Component<any, any>{
                     ))}
                     </ul>
                 </div>
-                {/*<div>*/}
-                {/*    <ul>*/}
-                {/*        <li><a onClick={this.selectCommandSample.bind(this, CommandID.new_game)} href="#">{CommandID.new_game}</a></li>*/}
-                {/*        <li><a onClick={this.selectCommandSample.bind(this, CommandID.new_game + ' ' + 'basic')} href="#">{CommandID.new_game} basic</a></li>*/}
-                {/*    </ul>*/}
-                {/*</div>*/}
+                <div>
+                    <div>
+                        <button className={'btn btn_default btn_width-200px'} onClick={this.selectCommandSample.bind(this, CommandID.new_game)}>{CommandID.new_game}</button>
+                    </div>
+                    <div>
+                        <button className={'btn btn_default btn_width-200px'} onClick={this.selectCommandSample.bind(this, CommandID.new_game + ' ' + 'empty')}>{CommandID.new_game} empty</button>
+                    </div>
+                    <div>
+                        <button className={'btn btn_default btn_width-200px'} onClick={this.selectCommandSample.bind(this, CommandID.new_game + ' ' + 'basic')}>{CommandID.new_game} basic</button>
+                    </div>
+                </div>
             </div>
         );
+    }
+
+    private async _queryHandler(query: string) {
+        this.resetAutoComplete();
+
+        let commandString = query.trim();
+        this.setState({value: ''});
+
+        if (!commandString.length) {
+            return;
+        }
+
+        let resultUrl = this._executeUrl + '?command=' + commandString;
+        if (this._history.length >= this._maxHistoryLength) {
+            this._history.shift();
+        }
+        if (this._history[this._history.length - 1] !== commandString) {
+            this._history.push(commandString);
+        }
+        this.resetHistoryPosition();
+
+        debug(DebugNamespaceID.GameConsole)(resultUrl);
+
+        await this._container.get<GameConsole>(ServiceID.GameConsole).runByQuery(commandString);
+    }
+
+    /**
+     * Только для Enter.
+     * @param e
+     */
+    async keyPressHandler(e) {
+        switch(e.code) {
+            case 'Enter':
+            case 'NumpadEnter':
+                this._queryHandler(e.target.value);
+
+                // fetch(resultUrl)
+                //     .then((response) => {
+                //         if (response.ok) {
+                //             if (response.headers.get('content-type')?.includes('application/json')) {
+                //                 return response.json();
+                //             } else {
+                //                 throw new Error('Ошибка при обработки response. Неверный формат данных. Ожидался json.');
+                //             }
+                //         } else {
+                //             console.log('DEBUG', 'http error', response);
+                //             throw new Error('Ошибка HTTP: ' + response.status);
+                //         }
+                //     })
+                //     .then((json) => {
+                //         if (json.error) {
+                //             // console.log('DEBUG', 'json.error', json.error);
+                //             throw new Error(json.error);
+                //         }
+                //
+                //         console.log('DEBUG', 'data', json);
+                //         // console.log(json.json);
+                //     })
+                //     .catch((error) => {
+                //         console.log('DEBUG', 'fetch catch error', error);
+                //     })
+                // ;//end fetch
+
+                break;  //Enter, NumpadEnter
+        }//end switch(e.code)
     }
 }

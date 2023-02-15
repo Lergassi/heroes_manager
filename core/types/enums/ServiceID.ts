@@ -25,12 +25,13 @@ export enum ServiceID {
 
     //фабрики
     HeroFactory = 'player.HeroFactory',
-    LocationFactory = 'player.LocationFactory',
-    EnemyFactory = 'player.EnemyFactory',
     ItemStackFactory = 'player.ItemStackFactory',
+    WalletFactory = 'player.WalletFactory',
     HeroCharacterAttributeFactory = 'player.HeroCharacterAttributeFactory',
     EnemyCharacterAttributeFactory = 'player.EnemyCharacterAttributeFactory',
-    WalletFactory = 'player.WalletFactory',
+    LocationFactory = 'player.LocationFactory',
+    VeinFactory = 'player.VeinFactory',
+    EnemyFactory = 'player.EnemyFactory',
 
     //компоненты из GameObject
     ItemStorageController = 'player.ItemStorageController',
@@ -49,17 +50,17 @@ export enum ServiceID {
     StubFactory = 'StubFactory',
 
     //ui
-    UI_Game = 'core.ui.game',
+    UI_Game = 'core.ui.Game',
     UI_Updater = 'core.ui.Updater',
 
     //React components
-    UI_Wallet = 'player.ui.Wallet',
     UI_ItemStorage = 'player.ui.PlayerItemStorage',
     UI_ItemStorageController = 'player.ui.ItemStorageController',
-    UI_DetailHero = 'player.ui.DetailHero',
+    UI_Wallet = 'player.ui.Wallet',
     UI_MainHeroList = 'player.ui.MainHeroList',
-    UI_DetailLocation = 'player.ui.DetailLocation',
+    UI_DetailHero = 'player.ui.DetailHero',
     UI_MainLocationList = 'player.ui.MainLocationList',
+    UI_DetailLocation = 'player.ui.DetailLocation',
 
     //data
     Data_ItemCategoryPowerRatio = 'Data_ItemCategoryPowerRatio',

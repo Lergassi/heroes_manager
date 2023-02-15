@@ -1,5 +1,4 @@
 import CharacterAttribute from './CharacterAttribute.js';
-import {unsigned} from '../../types/main.js';
 import LifeStateController from './LifeStateController.js';
 import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
 import _, {curryRight, round} from 'lodash';
@@ -8,7 +7,7 @@ import CharacterAttributeCollector from './CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
-import HeroActivityStateController, {CharacterActivityStateCode} from './HeroActivityStateController.js';
+import HeroActivityStateController, {HeroActivityStateCode} from './HeroActivityStateController.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import AppError from '../../source/Errors/AppError.js';
@@ -17,23 +16,20 @@ import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 
 export default class AttackController implements AttackControllerInterface {
-    private readonly _rangeSide: unsigned;  //todo: Диапазон должен быть задан, а не вычисляемым.
+    private readonly _rangeSide: number;  //todo: Диапазон должен быть задан, а не вычисляемым.
     private readonly _attackPowerCharacterAttribute: CharacterAttributeInterface;
     private readonly _lifeStateController: LifeStateController;
 
     constructor(
         attackPowerCharacterAttribute: CharacterAttributeInterface, //todo: Нужен дополнительная логика с числом для врагов.
-        stateController: LifeStateController,
+        lifeStateController: LifeStateController,
     ) {
         assert(!_.isNil(attackPowerCharacterAttribute));
-        assert(!_.isNil(stateController));
-        // assert(options.attackPowerCharacterAttributeComponent instanceof CharacterAttributeComponent);
-        // assert(options.attackPower instanceof CharacterAttributeValueCollector);
-        // assert(!_.isNil(options.dependentCharacterAttributeComponents));
+        assert(!_.isNil(lifeStateController));
 
         this._rangeSide = 2;
         this._attackPowerCharacterAttribute = attackPowerCharacterAttribute;
-        this._lifeStateController = stateController;
+        this._lifeStateController = lifeStateController;
     }
 
     /**
@@ -55,29 +51,26 @@ export default class AttackController implements AttackControllerInterface {
         };
     }
 
-    /**
-     * @deprecated
-     */
-    generateAttack(): number {
-        let value = this.value();
+    attackTo(target: DamageControllerInterface, afterDiedTargetCallback?: RewardOptions): number {
+        if (!this.canAttack()) {
+            debug(DebugNamespaceID.Throw)('Персонаж не может атаковать.');
+            return 0;
+        }
 
-        return _.random(value.left, value.right);
+        let damage = this._generateAttack();
+        debug(DebugNamespaceID.Log)('Атака: ' + damage);
+        let resultDamage = target.damage(damage, afterDiedTargetCallback);
+
+        return resultDamage;
     }
 
     canAttack(): boolean {
         return this._lifeStateController.canAction();
     }
 
-    attackTo(target: DamageControllerInterface, afterDiedTargetCallback?: RewardOptions): boolean {
-        if (!this.canAttack()) {
-            debug(DebugNamespaceID.Throw)('Персонаж не может атаковать.');
-            return false;
-        }
+    private _generateAttack(): number {
+        let value = this.value();
 
-        let damage = this.generateAttack();
-        debug(DebugNamespaceID.Log)('Атака: ' + damage);
-        target.takeDamage(damage, afterDiedTargetCallback);
-
-        return true;
+        return _.random(value.left, value.right);
     }
 }

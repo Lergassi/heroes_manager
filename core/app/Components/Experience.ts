@@ -64,7 +64,7 @@ export default class Experience implements ExperienceDistributorInterface {
         this._increaseExpForNextLevel = 100;  //2: 1000 - 3:1100 - 4:1200 - ...
     }
 
-    addExp(value: unsigned): void {
+    addExp(value: number): void {
         if (this._nextLevel() > this._maxLevel) {
             throw new MaxLevelReachedError();
         }
@@ -100,6 +100,14 @@ export default class Experience implements ExperienceDistributorInterface {
         ui.updateLevel?.(this._level);
         ui.updateExp?.(this._exp);
         ui.updateTotalExpToLevelUp?.(this.totalExpForNextLevel);
+    }
+
+    debug(): void {
+        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+            exp: this._exp,
+            level: this._level,
+            maxLevel: this._maxLevel,
+        });
     }
 
     private _addLevel(): void {

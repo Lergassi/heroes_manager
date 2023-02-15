@@ -80,7 +80,7 @@ export default class CreateItemKitCommand extends Command {
             {itemID: ItemID.Ring01, count: 1},
             {itemID: ItemID.Ring01, count: 1},
             {itemID: ItemID.Amulet01, count: 1},
-            {itemID: ItemID.Trinket01, count: 1},    //Пока тут.
+            // {itemID: ItemID.Trinket01, count: 1},    //Пока тут.
         ],
         start_weapons: [
             {itemID: ItemID.OneHandedSword01, count: 2},

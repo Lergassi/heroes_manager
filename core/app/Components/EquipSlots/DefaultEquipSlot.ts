@@ -88,4 +88,11 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
     renderByRequest(ui: EquipSlotInterfaceRender): void {
         ui.updateEquipSlot?.(this._ID, this._item ? {itemName: this._item.id, count: 1} : {itemName: undefined, count: undefined});
     }
+
+    debug(): void {
+        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+            ID: this._ID,
+            item: this._item ? this._item.id : null,
+        });
+    }
 }

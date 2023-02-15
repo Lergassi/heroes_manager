@@ -2,7 +2,7 @@ import {formatDuration, intervalToDuration} from 'date-fns';
 import _ from 'lodash';
 import React from 'react';
 import ItemStorageController from '../../../core/app/Components/ItemStorageController.js';
-import Location, {LocationRender, LocationState} from '../../../core/app/Components/Location.js';
+import Location, {LocationRender, LocationHuntingState} from '../../../core/app/Components/Location.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
@@ -340,7 +340,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Локация ({this.state.ID})<button className={'widget__hide-button'} onClick={this.hide}>close</button></div>
+                    <div className={'widget__title'}>Локация ({this.state.ID})<button className={'btn btn_default btn_right'} onClick={this.hide}>close</button></div>
                 </div>
                 <div className={'row'} key={0}>
                 {/*<div className={''} key={0}>*/}
@@ -369,7 +369,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                         <div className={'widget'}>
                             <div className={'widget__title'}>Управление</div>
                             <div className={'widget__content'}>
-                                {this.state.state === LocationState.Waiting ?
+                                {this.state.state === LocationHuntingState.Waiting ?
                                     <button className={'btn btn_primary'} onClick={this.startHunting}>startHunting</button> :
                                     <button className={'btn btn_primary'} onClick={this.stopHunting}>stopHunting</button>
                                 }
@@ -398,7 +398,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                                 <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
                                                 <td>{hero.attackPower}</td>
                                                 <td>
-                                                    <button onClick={() => {
+                                                    <button className={'btn btn_default'} onClick={() => {
                                                         this.removeHero(hero.ID);
                                                     }}>remove</button>
                                                 </td>

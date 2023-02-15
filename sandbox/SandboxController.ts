@@ -24,7 +24,7 @@ import {CharacterAttributeID} from '../core/types/enums/CharacterAttributeID.js'
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
 import EnemyFactory from '../core/app/Factories/EnemyFactory.js';
 import {EnemyTypeID} from '../core/types/enums/EnemyTypeID.js';
-import FightController from '../core/app/Components/FightController.js';
+import _CharacterFightController from '../core/app/Components/FightLegacy/_CharacterFightController.js';
 import AttackControllerInterface from '../core/app/Interfaces/AttackControllerInterface.js';
 import {ComponentID} from '../core/types/enums/ComponentID.js';
 import DamageControllerInterface from '../core/app/Interfaces/DamageControllerInterface.js';
@@ -36,13 +36,13 @@ import HealthPoints from '../core/app/Components/HealthPoints.js';
 import {extractHealthPoints, separator} from '../core/app/indev.js';
 import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
-import HeroActivityStateController, {CharacterActivityStateCode} from '../core/app/Components/HeroActivityStateController.js';
-import CharacterFightGroup from '../core/app/Components/CharacterFightGroup.js';
+import HeroActivityStateController, {HeroActivityStateCode} from '../core/app/Components/HeroActivityStateController.js';
+import _CharacterFightGroup from '../core/app/Components/FightLegacy/_CharacterFightGroup.js';
 import {CurrencyID} from '../core/types/enums/CurrencyID.js';
 import WalletFactory from '../core/app/Factories/WalletFactory.js';
 import Wallet from '../core/app/Components/Wallet.js';
 import Experience from '../core/app/Components/Experience.js';
-import GatheringPoint from '../core/app/Components/GatheringPoint.js';
+import Vein from '../core/app/Components/Vein.js';
 import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
 import Gatherer from '../core/app/Components/Gatherer.js';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
@@ -57,7 +57,6 @@ import Bag from '../core/app/Components/Bag.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
 import DatabaseTSSandboxController from './SandboxControllers/DatabaseTSSandboxController.js';
 import EnemySandboxController from './SandboxControllers/EnemySandboxController.js';
-import FightV2SandboxController from './SandboxControllers/FightV2SandboxController.js';
 import GenerateEnemySandboxController from './SandboxControllers/GenerateEnemySandboxController.js';
 import GenerateItemsSandboxController from './SandboxControllers/GenerateItemsSandboxController.js';
 import GenerateItemsV002SandboxController from './SandboxControllers/GenerateItemsV002SandboxController.js';
@@ -109,14 +108,14 @@ export default class SandboxController {
         // (new RecipesSandboxController(this._container)).run();
         // (new ShopSandboxController(this._container)).run();
         // (new EntityManagerSandboxController(this._container)).run();
-        // (new HeroSandboxController(this._container)).run();
-        // (new GenerateItemsSandboxController(this._container)).run();
-        (new GenerateItemsV002SandboxController(this._container)).run();
-        // (new GenerateLocationSandboxController(this._container)).run();
-        // (new GenerateEnemySandboxController(this._container)).run();
+        (new HeroSandboxController(this._container)).run();
         // (new DatabaseTSSandboxController(this._container)).run();
         // (new EnemySandboxController(this._container)).run();
-        // (new FightV2SandboxController(this._container)).run();
+        // (new FightSandboxController(this._container)).run();
+        // (new GenerateItemsSandboxController(this._container)).run();
+        // (new GenerateItemsV002SandboxController(this._container)).run();
+        // (new GenerateLocationSandboxController(this._container)).run();
+        // (new GenerateEnemySandboxController(this._container)).run();
 
         // this._testSumBoolean();
         // this._testLodashEvery();
@@ -152,6 +151,7 @@ export default class SandboxController {
         // this._testEnumKey();
         // this._testDebugNamespace();
         // this._averageItemLevel();
+        // this._devProbability();
     }
 
     private _test1() {
@@ -387,7 +387,7 @@ export default class SandboxController {
         let heroDamageGroupController = new DamageGroupController(_.map(heroes, (hero) => {
             return hero.get<DamageControllerInterface>(ComponentID.DamageController);
         }));
-        let heroFightController = new FightController(  //todo: Это можно объединить и сделать FightController у каждого персонажа.
+        let heroFightController = new _CharacterFightController(  //todo: Это можно объединить и сделать FightController у каждого персонажа.
             // hero.get<AttackControllerInterface>(GameObjectKey.AttackController),
             // new AttackGroupController([
             //     (heroFactory.create(HeroClassID.Warrior, 1)).get<AttackControllerInterface>(GameObjectKey.AttackController),
@@ -403,7 +403,7 @@ export default class SandboxController {
         let enemyDamageGroupController = new DamageGroupController(_.map(enemies, (enemy) => {
             return enemy.get<DamageControllerInterface>(ComponentID.DamageController);
         }));
-        let enemyFightController = new FightController(
+        let enemyFightController = new _CharacterFightController(
             // enemy.get<AttackControllerInterface>(GameObjectKey.AttackController),
             // enemy.get<DamageControllerInterface>(GameObjectKey.DamageController),
             enemyAttackGroupController,
@@ -420,7 +420,7 @@ export default class SandboxController {
         // console.log(extractHealthPoints(heroes));
         // // console.log(extractHealthPoints());
 
-        let checkEndFightCallback = (fightController: FightController) => {
+        let checkEndFightCallback = (fightController: _CharacterFightController) => {
             return !fightController.canAttack();
         };
 
@@ -550,11 +550,11 @@ export default class SandboxController {
             return hero.get<AttackControllerInterface>(ComponentID.AttackController);
         }));
         console.log('attackGroupController', attackGroupController);
-        console.log('attackGroupController.attack', attackGroupController.generateAttack());
-        console.log('attackGroupController.attack', attackGroupController.generateAttack());
-        console.log('attackGroupController.attack', attackGroupController.generateAttack());
-        console.log('attackGroupController.attack', attackGroupController.generateAttack());
-        console.log('attackGroupController.attack', attackGroupController.generateAttack());
+        // console.log('attackGroupController.attack', attackGroupController.generateAttack());
+        // console.log('attackGroupController.attack', attackGroupController.generateAttack());
+        // console.log('attackGroupController.attack', attackGroupController.generateAttack());
+        // console.log('attackGroupController.attack', attackGroupController.generateAttack());
+        // console.log('attackGroupController.attack', attackGroupController.generateAttack());
 
         // let damageGroupController = new DamageGroupController([
         //     heroes[0].get<DamageControllerInterface>(GameObjectKey.DamageController),
@@ -563,9 +563,9 @@ export default class SandboxController {
             return hero.get<DamageControllerInterface>(ComponentID.DamageController);
         }));
         console.log(damageGroupController);
-        damageGroupController.takeDamage(5000);
+        damageGroupController.damage(5000);
         console.log('-'.repeat(32));
-        damageGroupController.takeDamage(5000);
+        damageGroupController.damage(5000);
 
         // let enemies = [
         //     enemyFactory.create(EnemyID.Bear, 1, {
@@ -717,7 +717,7 @@ export default class SandboxController {
         let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
         let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let heroFightGroup = new CharacterFightGroup();
+        let heroFightGroup = new _CharacterFightGroup();
         heroFightGroup.addCharacter(heroFactory.create(HeroClassID.Warrior, 1));
         heroFightGroup.addCharacter(heroFactory.create(HeroClassID.Warrior, 1));
         heroFightGroup.addCharacter(heroFactory.create(HeroClassID.Warrior, 1));
@@ -725,7 +725,7 @@ export default class SandboxController {
         heroFightGroup.addCharacter(heroFactory.create(HeroClassID.Warrior, 1));
         console.log(heroFightGroup);
 
-        let enemyFightGroup = new CharacterFightGroup();
+        let enemyFightGroup = new _CharacterFightGroup();
         enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
         enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
         enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
@@ -755,7 +755,7 @@ export default class SandboxController {
         // itemStorageManager.addItem(itemDatabase.get(ItemID.Wood), 12);
         // console.log(itemStorageManager);
 
-        let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 32);
+        let gatheringPoint = new Vein(itemDatabase.get(ItemID.Wood), 32);
         // let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 1);
 
         let stateController = new LifeStateController();
@@ -1016,5 +1016,38 @@ export default class SandboxController {
 
     private _testRandom() {
         console.log(_.random(0, 10, ));
+    }
+
+    private _devProbability() {
+        // let probability = 0.3;
+        let probability = 0.001;
+        // let probability = 0.001;
+        let resultsCount = {
+            0: 0,
+            1: 0,
+        };
+        let i = 0;
+        // let max = 1_000_000_000;
+        let max = 1_000_000;
+        // let max = 1_000;
+        // let max = 100;
+        // let firstWinIteration = undefined;
+        let winIterations = [];
+        // let maxFirstWinIterations = ;
+        while (i < max) {
+            let randomValue = _.random(0, 1, true);
+            let result = probability >= randomValue;
+            // console.log(result);
+            resultsCount[String(Number(result))]++;
+
+            // if (firstWinIteration === undefined && result) firstWinIteration = i;
+            if (result) winIterations.push(i);
+
+            i++;
+        }
+
+        console.log(resultsCount);
+        // console.log(firstWinIteration);
+        console.log(winIterations);
     }
 }

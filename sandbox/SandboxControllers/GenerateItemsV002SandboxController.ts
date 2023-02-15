@@ -15,8 +15,8 @@ import AbstractSandboxController from './AbstractSandboxController.js';
 export default class GenerateItemsV002SandboxController extends AbstractSandboxController {
     run(): void {
         // this._gevAlgorithm();
-        // this._gevClass();
-        this._gevGenerateItems();
+        this._gevClass();
+        // this._gevGenerateItems();
 
         // this._testSumGetStarted();
         // this._testSumGetStarted();
@@ -161,7 +161,7 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         constValues.itemLevel = 25;
         constValues.heroClassID = HeroClassID.Warrior;
         calcValues.attackPowerSum = 0;
-        database.heroes.equip_sets.itemCategories(HeroClassID.Warrior, (itemCategoryID, count) => {
+        database.heroes.equip_sets.fullEquipSet(HeroClassID.Warrior, (itemCategoryID, count) => {
             // console.log(itemCategoryID, count);
             for (let i = 0; i < count; i++) {
                 let attackPower = formulas.attackPowerByRatio({
@@ -196,26 +196,27 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         let characterAttributeTransfer = new CharacterAttributeTransfer();
 
         let constValues: any = {
-            // itemLevel: 30,
-            itemLevel: 500,
-            heroClassID: HeroClassID.Warrior,
+            // itemLevel: 25,
+            // itemLevel: 50,
+            itemLevel: 125,
+            heroClassID: HeroClassID.Barbarian,
         };
         let calcValues: any = {};
 
         calcValues.attackPowerSum = 0;
         calcValues.characterAttributeSum = 0;
         calcValues.healthPointsSum = 0;
-        database.heroes.equip_sets.itemCategories(HeroClassID.Warrior, (itemCategoryID, count) => {
+        database.heroes.equip_sets.fullEquipSet(constValues.heroClassID, (itemCategoryID, count) => {
             for (let i = 0; i < count; i++) {
-                let attackPower = itemCharacterAttributeGenerator.attackPower(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
                 let healthPoints = itemCharacterAttributeGenerator.healthPoints(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
+                let attackPower = itemCharacterAttributeGenerator.attackPower(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
                 // let characterAttribute = itemCharacterAttributeGenerator.characterAttribute(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
                 // let characterAttribute = formulas.attackPowerToCharacterAttribute_reverse(attackPower, 2);
                 let characterAttribute = characterAttributeTransfer.attackPowerToCharacterAttribute_reverse(attackPower);
 
                 calcValues.healthPointsSum = _.round(calcValues.healthPointsSum + healthPoints);
-                calcValues.attackPowerSum = _.round(calcValues.attackPowerSum + attackPower);
                 calcValues.characterAttributeSum = _.round(calcValues.characterAttributeSum + characterAttribute);
+                calcValues.attackPowerSum = _.round(calcValues.attackPowerSum + attackPower);
                 // console.log(constValues.heroClassID, itemCategoryID, attackPower, characterAttribute);
                 console.log(constValues.heroClassID, itemCategoryID, {healthPoints: healthPoints, attackPower: attackPower});
             }
@@ -236,7 +237,7 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         let sums = {};
         for (let i = 0; i < maxIteration; i++) {
             calcValues.attackPowerSum = 0;
-            database.heroes.equip_sets.itemCategories(HeroClassID.Warrior, (itemCategoryID, count) => {
+            database.heroes.equip_sets.fullEquipSet(HeroClassID.Warrior, (itemCategoryID, count) => {
                 for (let i = 0; i < count; i++) {
                     let attackPower = itemCharacterAttributeGenerator.attackPower(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
 

@@ -10,8 +10,8 @@ import {CharacterAttributes, unsigned} from '../../types/main.js';
 import AttackController from '../Components/AttackController.js';
 import AverageItemLevel from '../Components/AverageItemLevel.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import AttackPowerDependentIncreaserDecorator
-    from '../Components/CharacterAttributes/AttackPowerDependentIncreaserDecorator.js';
+import AttackPowerDependentIncreaseDecorator
+    from '../Components/CharacterAttributes/AttackPowerDependentIncreaseDecorator.js';
 import EquipController from '../Components/EquipController.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import Experience from '../Components/Experience.js';
@@ -60,11 +60,9 @@ export default class HeroFactory {
     create(
         heroClass: HeroClassID | HeroClass,
         level: number,
-        // characterAttributeCollector?: CharacterAttributeCollector;
         //todo: Нужнен доступ к смене начальных атрибутов.
         options?: {
             baseCharacterAttributeValues?: {[id in CharacterAttributeID]?: number}, //todo: Через строитель.
-            // strategies?: {},
         },
     ): GameObject {
         heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(EntityID.HeroClass, heroClass) : heroClass;
@@ -76,7 +74,7 @@ export default class HeroFactory {
         hero.addTags('#hero');
 
         let lifeStateController = hero.set(ComponentID.LifeStateController, new LifeStateController());
-        hero.set(ComponentID.ActivityStateController, new HeroActivityStateController());
+        hero.set(ComponentID.HeroActivityStateController, new HeroActivityStateController());
 
         let heroComponent = hero.set(ComponentID.Hero, new HeroComponent(
             heroClass.name,
@@ -164,9 +162,8 @@ export default class HeroFactory {
             CharacterAttributeID.Agility,
             CharacterAttributeID.Intelligence,
             CharacterAttributeID.MaxHealthPoints,
-            CharacterAttributeID.MaxMagicPoints,
+            // CharacterAttributeID.MaxMagicPoints,
             CharacterAttributeID.AttackPower,
-            CharacterAttributeID.Protection,
         ];
 
         /*
@@ -209,7 +206,7 @@ export default class HeroFactory {
         }
 
         //todo: Цепочка? builder? .create(...).decorate(...).decorate(...).build().
-        characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new AttackPowerDependentIncreaserDecorator({
+        characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new AttackPowerDependentIncreaseDecorator({
             attackPower: hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             dependentCharacterAttributes: _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {   //todo: Через индекс.
                 return hero.get<CharacterAttributeInterface>(characterAttribute.id);    //todo: Доступ.
@@ -221,12 +218,12 @@ export default class HeroFactory {
             hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxHealthPoints,
             lifeStateController,
         );
-        let damageController = new ArmorDecorator(
-            healthPointsComponent as DamageControllerInterface,
-            hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Protection,
-        );
+        // let damageController = new ArmorDecorator(
+        //     healthPointsComponent as DamageControllerInterface,
+        //     hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Protection,
+        // );
         hero.set<HealthPoints>(ComponentID.HealthPoints, healthPointsComponent); //Пока только для рендера.
-        hero.set<DamageControllerInterface>(ComponentID.DamageController, damageController);
+        hero.set<DamageControllerInterface>(ComponentID.DamageController, healthPointsComponent);
 
         hero.set<AttackControllerInterface>(ComponentID.AttackController, new AttackController(
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
@@ -240,9 +237,9 @@ export default class HeroFactory {
             А еще точнее, у классов может быть разный ресурс. Если её нету, то нету. Пока также как с ArmorMaterial у предметов.
          */
 
-        hero.set(MagicPointsComponent.name, new MagicPointsComponent(
-            hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxMagicPoints,
-        ));
+        // hero.set(MagicPointsComponent.name, new MagicPointsComponent(
+        //     hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxMagicPoints,
+        // ));
 
         hero.set(ComponentID.Gatherer, new Gatherer(lifeStateController));
 
@@ -257,7 +254,7 @@ export default class HeroFactory {
             HeroClassID.Tank2,
             HeroClassID.Tank3,
             HeroClassID.Gladiator,
-            HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
+            HeroClassID.Barbarian,
             HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
             HeroClassID.PlateDamageDealer1,
             HeroClassID.PlateDamageDealer2,

@@ -14,13 +14,13 @@ export default class GoldLootGeneratorComponent {
         this._max = options.max;
     }
 
-    private _generate(): unsigned {
-        return _.random(this._min, this._max);
-    }
-
     transfer(wallet: WalletInterface) {
         let gold = this._generate();
-        debug(DebugNamespaceID.Log)('Генерация золота в луте: ' + gold);
+        debug(DebugNamespaceID.Debug)('Генерация золота в луте: ' + gold);
         wallet.add(gold);
+    }
+
+    private _generate(): unsigned {
+        return _.random(this._min, this._max);
     }
 }

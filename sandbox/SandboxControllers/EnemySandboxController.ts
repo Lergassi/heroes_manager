@@ -1,4 +1,4 @@
-import CharacterFightGroup from '../../core/app/Components/CharacterFightGroup.js';
+import _CharacterFightGroup from '../../core/app/Components/FightLegacy/_CharacterFightGroup.js';
 import EnemyFactory from '../../core/app/Factories/EnemyFactory.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 import EnemySquadController from '../../core/app/Services/EnemySquadController.js';
@@ -25,7 +25,7 @@ export default class EnemySandboxController extends AbstractSandboxController {
         let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);``
         let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
 
-        let heroFightGroup = new CharacterFightGroup();
+        let heroFightGroup = new _CharacterFightGroup();
         heroFightGroup.addCharacter(heroFactory.create(HeroClassID.Warrior, 1));
         heroFightGroup.addCharacter(heroFactory.create(HeroClassID.Warrior, 1));
         heroFightGroup.addCharacter(heroFactory.create(HeroClassID.Warrior, 1));

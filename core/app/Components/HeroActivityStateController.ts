@@ -7,7 +7,7 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 import CharacterStateInterface from '../Interfaces/CharacterStateInterface.js';
 
-export enum CharacterActivityStateCode {
+export enum HeroActivityStateCode {
     Free = 'Free',
     InLocation = 'InLocation',
     InDungeon = 'InDungeon',
@@ -23,24 +23,24 @@ export interface HeroActivityStateControllerRender {
  * Смерть в другом состоянии.
  */
 export default class HeroActivityStateController {
-    private _code: CharacterActivityStateCode;
+    private _code: HeroActivityStateCode;
 
     constructor() {
-        this._code = CharacterActivityStateCode.Free;
+        this._code = HeroActivityStateCode.Free;
     }
 
-    setState(code: CharacterActivityStateCode): void {
+    setState(code: HeroActivityStateCode): void {
         assertNotNil(code);
 
         this._code = code;
     }
 
     isFree(): boolean {
-        return this._code === CharacterActivityStateCode.Free;
+        return this._code === HeroActivityStateCode.Free;
     }
 
     free(): void {
-        this._code = CharacterActivityStateCode.Free;
+        this._code = HeroActivityStateCode.Free;
     }
 
     renderByRequest(ui: HeroActivityStateControllerRender): void {

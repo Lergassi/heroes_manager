@@ -10,14 +10,14 @@ export type RewardOptions = Partial<{
     itemStorage?: ItemStorageInterface,
 }>;
 
-export default interface FightControllerInterface {
-    //todo: afterDiedCallback = undefined времено до поиска решения.
-    hit(damageController: DamageControllerInterface, rewardOptions?: RewardOptions): void;
-    takeHit(attackController: AttackControllerInterface, rewardOptions?: RewardOptions): void;
-
-    attackTo(target: FightControllerInterface, rewardOptions?: RewardOptions): void;
-    attackFrom(target: FightControllerInterface, rewardOptions?: RewardOptions): void;
-
-    canAttack(): boolean;
-    canTakeDamage(): boolean;
-}
+// export default interface FightControllerInterface {
+//     //todo: afterDiedCallback = undefined времено до поиска решения.
+//     hit(damageController: DamageControllerInterface, rewardOptions?: RewardOptions): void;
+//     takeHit(attackController: AttackControllerInterface, rewardOptions?: RewardOptions): void;
+//
+//     attackTo(target: FightControllerInterface, rewardOptions?: RewardOptions): void;
+//     attackFrom(target: FightControllerInterface, rewardOptions?: RewardOptions): void;
+//
+//     canAttack(): boolean;
+//     canTakeDamage(): boolean;
+// }

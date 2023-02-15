@@ -27,6 +27,7 @@ import ItemStackFactory from '../../Factories/ItemStackFactory.js';
 import ItemStorageFactory from '../../Factories/ItemStorageFactory.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
 import PlayerFactory from '../../Factories/PlayerFactory.js';
+import VeinFactory from '../../Factories/VeinFactory.js';
 import WalletFactory from '../../Factories/WalletFactory.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
@@ -177,6 +178,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EnemyFactory>(ServiceID.EnemyFactory),
             );
         });
+        container.set<VeinFactory>(ServiceID.VeinFactory, new VeinFactory());
 
         //Фасады
         // container.set<ItemStorageManager>(ContainerID.ItemStorageManager, (container) => {

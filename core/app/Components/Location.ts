@@ -4,7 +4,8 @@ import {
     DetailLocationRCEnemyElement,
     DetailLocationRCHeroElement
 } from '../../../client/public/Components/DetailLocationRC.js';
-import {assertNotNil} from '../../source/assert.js';
+import {separate} from '../../debug_functions.js';
+import {assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
 import EventSystem from '../../source/EventSystem.js';
 import GameObject from '../../source/GameObject.js';
@@ -22,24 +23,26 @@ import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import LevelInterface from '../Interfaces/LevelInterface.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import CharacterAttribute from './CharacterAttribute.js';
-import CharacterFightGroup from './CharacterFightGroup.js';
+import _CharacterFightGroup from './FightLegacy/_CharacterFightGroup.js';
 import Experience from './Experience.js';
+import FightController from './FightController.js';
+import FightGroupController from './FightGroupController.js';
 import Gatherer from './Gatherer.js';
-import GatheringPoint from './GatheringPoint.js';
+import Vein from './Vein.js';
 import HealthPoints from './HealthPoints.js';
-import HeroActivityStateController, {CharacterActivityStateCode} from './HeroActivityStateController.js';
+import HeroActivityStateController, {HeroActivityStateCode} from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
 import LifeStateController from './LifeStateController.js';
 
-export enum LocationState {
+export enum LocationHuntingState {
     Waiting = 'Waiting',
     Hunting = 'Hunting',
 }
 
 export enum GatheringPointTypeID {
-    low = 'low',
-    normal = 'normal',
-    high = 'high',
+    Low = 'Low',
+    Normal = 'Normal',
+    High = 'High',
 }
 
 export type GatheringItemPointTypeValues = {
@@ -85,22 +88,23 @@ export interface LocationRender {
 
 export default class Location {
     private readonly _level: number;
-    private readonly _gatheringPoints: GatheringPoint[];
+    private readonly _veins: Vein[];
     private readonly _itemStackFactory: ItemStackFactory;
 
     private readonly _heroes: GameObject[];
-    private readonly _heroFightGroup: CharacterFightGroup;
+    // private readonly _heroFightGroupController: _CharacterFightGroup;
+    private readonly _heroFightGroupController: FightGroupController;
 
     private readonly _enemies: GameObject[];
-    private readonly _enemyFightGroup: CharacterFightGroup;
+    // private readonly _enemyFightGroupController: _CharacterFightGroup;
+    private readonly _enemyFightGroupController: FightGroupController;
 
-    //лут
     private readonly _itemStorage: ItemStorageInterface;   //Визуально может никак не быть связанным с сумками.
     private readonly _wallet: WalletInterface;
 
-    private _state: LocationState;
+    private _fightController: FightController;
+    private _huntingState: LocationHuntingState;
     private _intervalID: NodeJS.Timer;
-    private readonly _intervalPeriod: number;
 
     private readonly _options = {
         maxHeroes: 5,
@@ -109,95 +113,33 @@ export default class Location {
 
     constructor(
         levelRange: number,
-        gatheringPoints: GatheringPoint[],
         itemStackFactory: ItemStackFactory,         //todo: Убрать в генератор лута.
         itemStorage: ItemStorageInterface,
         wallet: WalletInterface,
-        // enemies: GameObject[] = [],
     ) {
-        // assertIsGreaterThanOrEqual(levelRange, 1);
-        assertNotNil(gatheringPoints);
         assertNotNil(itemStorage);
         assertNotNil(itemStackFactory);
 
-        this._state = LocationState.Waiting;
+        this._huntingState = LocationHuntingState.Waiting;
 
         this._level = levelRange;
-        this._gatheringPoints = gatheringPoints;
+        this._veins = [];
         this._itemStackFactory = itemStackFactory;
 
+        //todo: Как сделать доступ к героям и там и тут?
         this._heroes = [];
-        this._heroFightGroup = new CharacterFightGroup();
+        this._heroFightGroupController = new FightGroupController();
 
         this._enemies = [];
-        this._enemyFightGroup = new CharacterFightGroup();
+        this._enemyFightGroupController = new FightGroupController({
+            deleteDeadCharacter: true,
+        });
 
         //лут
         this._itemStorage = itemStorage;    //todo: Убрать. Если нужно передать из вне - логику поменять, а не делать чтото на всякий случай. И кошелек тоже.
         this._wallet = wallet;
-    }
 
-    startHunting(): boolean {
-        if (this._state !== LocationState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Охота уже запущена.');
-            return false;
-        }
-
-        if (this._heroes.length === 0) {
-            debug(DebugNamespaceID.Throw)('В группе должен быть хотя бы 1 герой.');
-            return false;
-        }
-
-        this._state = LocationState.Hunting;
-        let afterTargetDiedOptions: RewardOptions = {
-            wallet: this._wallet,
-            itemStorage: this._itemStorage,
-        };
-        this._intervalID = setInterval(() => {
-            this._gather();
-
-            console.log(this._heroFightGroup.canAttack() && this._enemyFightGroup.canAttack());
-            if (this._heroFightGroup.canAttack() && this._enemyFightGroup.canAttack()) {
-                this._heroFightGroup.attackTo(this._enemyFightGroup, afterTargetDiedOptions);
-                this._enemyFightGroup.attackTo(this._heroFightGroup);
-            }
-            //И другие действия...
-        }, this._options.intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
-        debug(DebugNamespaceID.Log)('Охота запущена.');
-        EventSystem.event(LocationEventCode.Start, this);
-
-        return true;
-    }
-
-    stopHunting() {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
-        if (this._state !== LocationState.Hunting) {
-            throw new AppError('Охота не запущена.');
-        }
-
-        this._state = LocationState.Waiting;
-        // this._heroGroupComponent.unblock(this);
-        clearInterval(this._intervalID);
-        debug(DebugNamespaceID.Log)('Охота остановлена.');
-        EventSystem.event(LocationEventCode.Stop, this);
-    }
-
-    toggleState(): void {
-        if (this._state === LocationState.Waiting) {
-            this.startHunting();
-        } else if (this._state === LocationState.Hunting) {
-            this.stopHunting();
-        }
-    }
-
-    getReward(rewardOptions: {
-        itemStorage?: ItemStorageInterface,
-        wallet?: WalletInterface,
-    }): void {
-        if (!this._canModify()) return;
-
-        if (rewardOptions.itemStorage) this._itemStorage.moveTo(rewardOptions.itemStorage);
-        if (rewardOptions.wallet) this._wallet.moveTo(rewardOptions.wallet);
-        EventSystem.event(LocationEventCode.Update, this);
+        this._fightController = new FightController(this._heroFightGroupController, this._enemyFightGroupController);
     }
 
     addHero(hero: GameObject): boolean {
@@ -213,43 +155,132 @@ export default class Location {
             return false;
         }
 
-        if (!this._heroFightGroup.addCharacter(hero)) return false;
-
+        // if (!this._heroFightGroupController.addCharacter(hero)) return false;
+        this._heroFightGroupController.addCharacter(hero);
         this._heroes.push(hero);    //todo: Не будет работать после удаления исключений.
         EventSystem.event(LocationEventCode.AddHero, this);    //todo: Или достаточно события из группы? Может как то связать их? "Цепочка" событыий.
 
-        hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).setState(CharacterActivityStateCode.InLocation);
+        hero.get<HeroActivityStateController>(ComponentID.HeroActivityStateController).setState(HeroActivityStateCode.InLocation);
 
         return true;
     }
 
     removeHero(hero: GameObject): boolean {
         assertNotNil(hero);
-        // assert(hero instanceof GameObject);
 
         if (!this._canRemoveHero()) return false;
 
-        this._heroFightGroup.removeCharacter(hero);
+        this._heroFightGroupController.removeCharacter(hero);
         _.pull(this._heroes, hero);
         EventSystem.event(LocationEventCode.RemoveHero, this);
-        hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).free();
+        hero.get<HeroActivityStateController>(ComponentID.HeroActivityStateController).free();
 
         return true;
     }
 
     addEnemy(enemy: GameObject): boolean {
-        if (_.includes(this._enemies, enemy)) return false;
+        assertNotNil(enemy);
 
+        //todo: Проверка на include.
+
+        this._enemyFightGroupController.addCharacter(enemy);
         this._enemies.push(enemy);
-        this._enemyFightGroup.addCharacter(enemy);
 
         return true;
     }
 
-    //todo: Нельзя просто так удалить врага. Тут явно нужно очень много логики делать.
-    // removeEnemy(): boolean {
-    //     return true;
+    //todo: Нельзя просто так удалить врага. Тут явно нужно очень много логики делать. Либо вообще не делать.
+    // removeEnemy(): boolean {}
+
+    // addVein(): boolean {
+    //
     // }
+
+    startHunting(): boolean {
+        if (this._huntingState !== LocationHuntingState.Waiting) {
+            debug(DebugNamespaceID.Throw)('Охота уже запущена.');
+            return false;
+        }
+
+        if (this._heroes.length === 0) {
+            debug(DebugNamespaceID.Throw)('В группе должен быть хотя бы 1 герой.');
+            return false;
+        }
+
+        this._huntingState = LocationHuntingState.Hunting;
+        let reward: RewardOptions = {
+            wallet: this._wallet,
+            itemStorage: this._itemStorage,
+        };
+        this._intervalID = setInterval(() => {
+            this._gather();
+
+            // if (this._heroFightGroupController.canAttack() && this._enemyFightGroupController.canAttack()) {
+            //     this._heroFightGroupController.attackTo(this._enemyFightGroupController, reward);
+            //     this._enemyFightGroupController.attackTo(this._heroFightGroupController);
+            // }
+
+            // this._heroFightGroupController.attack(this._enemyFightGroupController);
+            // this._enemyFightGroupController.attack(this._heroFightGroupController);
+            this._fightController.fight(reward);
+            separate();
+
+            //И другие действия...
+        }, this._options.intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
+        debug(DebugNamespaceID.Log)('Охота запущена.');
+        EventSystem.event(LocationEventCode.Start, this);
+
+        return true;
+    }
+
+    stopHunting() {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
+        if (this._huntingState !== LocationHuntingState.Hunting) {
+            throw new AppError('Охота не запущена.');
+        }
+
+        this._huntingState = LocationHuntingState.Waiting;
+        // this._heroGroupComponent.unblock(this);
+        clearInterval(this._intervalID);
+        debug(DebugNamespaceID.Log)('Охота остановлена.');
+        EventSystem.event(LocationEventCode.Stop, this);
+    }
+
+    toggleState(): void {
+        if (this._huntingState === LocationHuntingState.Waiting) {
+            this.startHunting();
+        } else if (this._huntingState === LocationHuntingState.Hunting) {
+            this.stopHunting();
+        }
+    }
+
+    getReward(rewardOptions: {
+        itemStorage?: ItemStorageInterface,
+        wallet?: WalletInterface,
+    }): void {
+        if (!this._canModify()) return;
+
+        if (rewardOptions.itemStorage) this._itemStorage.moveTo(rewardOptions.itemStorage);
+        if (rewardOptions.wallet) this._wallet.moveTo(rewardOptions.wallet);
+        EventSystem.event(LocationEventCode.Update, this);
+    }
+
+    canModify(): boolean {
+        if (this._huntingState !== LocationHuntingState.Waiting) {
+            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
+            return false;
+        }
+
+        return true;
+    }
+
+    canDelete(): boolean {
+        if (this._huntingState !== LocationHuntingState.Waiting) {
+            debug(DebugNamespaceID.Throw)('Нельзя удалить локацию во время охоты.');
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * todo: Сборку данных перенести в отдельный класс.
@@ -340,15 +371,15 @@ export default class Location {
         }
 
         let items: UI_VeinItemCount[] = [];
-        for (let i = 0; i < this._gatheringPoints.length; i++) {
-            this._gatheringPoints[i].renderByRequest({
+        for (let i = 0; i < this._veins.length; i++) {
+            this._veins[i].renderByRequest({
                 update(item: UI_VeinItemCount) {
                     items.push(item);
                 },
             });
         }
 
-        ui.updateState?.(this._state);
+        ui.updateState?.(this._huntingState);
         ui.updateLevel?.(this._level);
         ui.updateHeroes?.(heroes);
         ui.updateEnemies?.(enemies);
@@ -369,39 +400,21 @@ export default class Location {
         });
     }
 
-    canModify(): boolean {
-        if (this._state !== LocationState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
-            return false;
-        }
-
-        return true;
-    }
-
-    canDelete(): boolean {
-        if (this._state !== LocationState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Нельзя удалить локацию во время охоты.');
-            return false;
-        }
-
-        return true;
-    }
-
     private _canAddHero(hero: GameObject): boolean {
         if (!this.canModify()) return false;
 
         if (_.includes(this._heroes, hero)) {
-            debug(DebugNamespaceID.Throw)('Герой уже в локации..');
+            debug(DebugNamespaceID.Throw)('Герой уже в локации.');
             return false;
         }
 
         //todo: Убрать геттер? Так и писать availableLevelForActivity().
-        if (hero.getComponent<Experience>(ComponentID.Experience).level < this._level) {
-            debug(DebugNamespaceID.Throw)('Уровень героя низкий для данной локации.');
-            return false;
-        }
+        // if (hero.getComponent<Experience>(ComponentID.Experience).level < this._level) {
+        //     debug(DebugNamespaceID.Throw)('Уровень героя низкий для данной локации.');
+        //     return false;
+        // }
 
-        if (!hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).isFree()) {
+        if (!hero.get<HeroActivityStateController>(ComponentID.HeroActivityStateController).isFree()) {
             debug(DebugNamespaceID.Throw)('Персонаж занят.');
             return false;
         }
@@ -419,7 +432,7 @@ export default class Location {
     }
 
     private _canModify(): boolean {
-        if (this._state !== LocationState.Waiting) {
+        if (this._huntingState !== LocationHuntingState.Waiting) {
             debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
             return false;
         }
@@ -432,18 +445,18 @@ export default class Location {
      * @private
      */
     private _gather(): void {
-        if (!this._gatheringPoints.length) return;
+        if (!this._veins.length) return;
 
-        // this._heroFightGroup.gather(this._gatheringItemPoints, this._itemStorage, this._options.intervalPeriod);
+        // this._heroFightGroupController.gather(this._gatheringItemPoints, this._itemStorage, this._options.intervalPeriod);
         for (let i = 0; i < this._heroes.length; i++) {
-            for (let j = 0; j < this._gatheringPoints.length; j++) {
-                if (this._gatheringPoints[j].isEmpty()) continue;
+            for (let j = 0; j < this._veins.length; j++) {
+                if (this._veins[j].isEmpty()) continue;
 
-                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._gatheringPoints[j], this._itemStorage);
-                // if (this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._gatheringPoints[j], this._itemStorage)) {
+                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._veins[j], this._itemStorage);
+                // if (this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._veins[j], this._itemStorage)) {
                 EventSystem.event(LocationEventCode.GatheringItems, this);
                 // }
-                // if (this._gatheringPoints[j].gather3(this._itemStorage)) {
+                // if (this._veins[j].gather3(this._itemStorage)) {
                 //     EventSystem.event(LocationEventCode.GatheringItems, this);
                 // }
             }

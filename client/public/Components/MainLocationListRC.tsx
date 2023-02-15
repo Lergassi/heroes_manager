@@ -2,7 +2,7 @@ import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {LocationState} from '../../../core/app/Components/Location.js';
+import {LocationHuntingState} from '../../../core/app/Components/Location.js';
 import MainLocationList, {MainLocationListRender} from '../../../core/app/Components/MainLocationList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
@@ -112,9 +112,9 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                         <table className={'basic-table'}>
                             <tbody>
                                 <tr>
-                                    {/*<th>ID</th>*/}
+                                    <th>Name</th>
                                     <th>Level</th>
-                                    <th>State</th>
+                                    <th>HuntingState</th>
                                     <th>Heroes (L/T)</th>
                                     <th>Enemies (L/T)</th>
                                     <th>Veins</th>
@@ -124,7 +124,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                 </tr>
                                 {_.map(this.state.locations, (location, index) => {
                                     return <tr key={index}>
-                                        {/*<td>{location.ID}</td>*/}
+                                        <td>%name% ({location.ID})</td>
                                         <td>{location.level}</td>
                                         <td>{location.state}</td>
                                         <td>{location.lifeHeroesCount}/{location.totalHeroesCount}</td>
@@ -147,8 +147,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                         </td>
                                         <td>{location.money}</td>
                                         <td>
-                                            <span>{location.ID}: </span>
-                                            <button onClick={() => {
+                                            <button className={'btn btn_default'} onClick={() => {
                                                 this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
                                             }}>detail</button>
                                         </td>

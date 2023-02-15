@@ -7,7 +7,6 @@ export enum EnemyTypeID {
     Deer = 'Deer',
     Wolf = 'Wolf',
 
-    //Обычные враги.
     EnemyType01 = 'EnemyType01',
     EnemyType02 = 'EnemyType02',
     EnemyType03 = 'EnemyType03',

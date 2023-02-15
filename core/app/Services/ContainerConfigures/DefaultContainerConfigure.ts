@@ -4,11 +4,11 @@ import GameConsole from '../../../source/GameConsole/GameConsole.js';
 import Kernel from '../../../source/Kernel.js';
 import HelpCommand from '../../../../server/app/Commands/HelpCommand.js';
 import ListCommand from '../../../../server/app/Commands/ListCommand.js';
-import CreateDefaultStartPlayerObjectsCommand from '../../Commands/CreateDefaultStartPlayerObjectsCommand.js';
+import CreateDefaultStartPlayerObjectsCommand from '../../Commands/NewGameScenariosCommands/CreateDefaultStartPlayerObjectsCommand.js';
 import DetailHeroCommand from '../../Commands/DetailHeroCommand.js';
 import DetailLocationCommand from '../../Commands/DetailLocationCommand.js';
 import NewGameCommand from '../../Commands/NewGameCommand.js';
-import CreateBasicStartPlayerObjectsCommand from '../../Commands/CreateBasicStartPlayerObjectsCommand.js';
+import CreateBasicStartPlayerObjectsCommand from '../../Commands/NewGameScenariosCommands/CreateBasicStartPlayerObjectsCommand.js';
 import CreateItemCommand from '../../Commands/CreateItemCommand.js';
 import CreateHeroCommand from '../../Commands/CreateHeroCommand.js';
 import CreateItemStorageCommand from '../../Commands/CreateItemStorageCommand.js';
@@ -48,18 +48,18 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
     configure(container: ContainerInterface): ContainerInterface {
         //todo: Сделать разный источник для клиента и сервера. Вынести за пределы контейнера.
         let debugNamespaces = [
-            DebugNamespaceID.Info,
-            DebugNamespaceID.Debug,
-            DebugNamespaceID.Error,
             DebugNamespaceID.Log,
+            DebugNamespaceID.Info,
             DebugNamespaceID.Warning,
+            DebugNamespaceID.Error,
             // DebugNamespaceID.Load,
             // DebugNamespaceID.DebugLog,
             // DebugNamespaceID.Dump,
             // DebugNamespaceID.DebugAssertThrow,
             DebugNamespaceID.Throw,
-            DebugNamespaceID.Indev,
             DebugNamespaceID.Replace,
+            DebugNamespaceID.Indev,
+            DebugNamespaceID.Debug,
             // 'debug:*',
             // 'error:*',
             // 'log:*',

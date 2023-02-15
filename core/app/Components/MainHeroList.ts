@@ -114,7 +114,7 @@ export default class MainHeroList {
     }
 
     canDeleteHero(hero: GameObject): void {
-        if (!hero.get<HeroActivityStateController>(ComponentID.ActivityStateController).isFree()) {
+        if (!hero.get<HeroActivityStateController>(ComponentID.HeroActivityStateController).isFree()) {
             throw new AppError('Нельзя удалить героя пока он занят.');
         }
     }
@@ -164,7 +164,7 @@ export default class MainHeroList {
             };
 
             hero.ID = String(this._heroes[i].ID);
-            this._heroes[i].get<HeroActivityStateController>(ComponentID.ActivityStateController).renderByRequest({
+            this._heroes[i].get<HeroActivityStateController>(ComponentID.HeroActivityStateController).renderByRequest({
                 updateState(state: string) {
                     hero.state = state;
                 },

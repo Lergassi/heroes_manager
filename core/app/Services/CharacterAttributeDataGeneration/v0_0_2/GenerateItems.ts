@@ -41,7 +41,8 @@ export default class GenerateItems {
         ];
 
         let armorItemCategories = [];
-        database.heroes.equip_sets.armorSet((itemCategoryID, count) => {
+        //heroClassID по undefined
+        database.heroes.equip_sets.armorSet(undefined,(itemCategoryID, count) => {
             armorItemCategories.push({
                 itemCategoryID: itemCategoryID,
                 count: count,

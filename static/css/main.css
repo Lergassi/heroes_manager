@@ -160,6 +160,30 @@ body {
 
 }
 
+.btn_right {
+    float: right;
+}
+
+.btn_width-100px {
+    width: 100px;
+}
+
+.btn_width-150px {
+    width: 150px;
+}
+
+.btn_width-200px {
+    width: 200px;
+}
+
+.btn_width-250px {
+    width: 250px;
+}
+
+.btn_width-300px {
+    width: 300px;
+}
+
 /****************************************************************/
 /* block */
 /****************************************************************/
@@ -187,9 +211,9 @@ body {
     border-bottom: 2px solid #ddd;
 }
 
-.widget__hide-button {
-    float: right;
-}
+/*.widget__hide-button {*/
+/*    float: right;*/
+/*}*/
 
 .widget__title_bold {
     font-weight: bold;

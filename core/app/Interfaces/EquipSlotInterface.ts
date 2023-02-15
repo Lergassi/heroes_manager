@@ -42,4 +42,5 @@ export default interface EquipSlotInterface {
     isFree(): boolean;
     // // moveTo(target: ItemSlotInterface): void;
     renderByRequest(ui: EquipSlotInterfaceRender): void;
+    debug(): void;
 }

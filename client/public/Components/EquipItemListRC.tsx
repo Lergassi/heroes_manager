@@ -20,14 +20,10 @@ export interface EquipItemListRCProps {
     itemStorageController: ItemStorageController;
     equipSlotIDs: EquipSlotID[];
     equipController: EquipController;
-    // selectHandler: (itemStorageID: string, itemStorageSlotID: number) => void;
 }
 
 export interface EquipItemListRCState {
     itemStorageController: ItemStorageController;
-    // itemStorages: {[ID: number]: UI_ItemStorageSlot[]};
-    // itemStorages: {[ID: number]: UI_ItemStorageSlot[]};
-    // selectedEquipSlotID: string;
     selectedEquipSlotID: EquipSlotID;
     selectedItemStorageID: number;
     selectedItemStorageSlotID: number;
@@ -84,9 +80,6 @@ export default class EquipItemListRC extends React.Component<EquipItemListRCProp
     }
 
     move(): void {
-        // console.log(this.state.selectedItemStorageID);
-        // console.log(this.state.selectedItemStorageSlotID);
-        // console.log(this.state.selectedEquipSlotID);
         this.props.itemStorageController.moveToEquipSlotByEquipController(this.state.selectedItemStorageID, this.state.selectedItemStorageSlotID, this.props.equipController, this.state.selectedEquipSlotID);
     }
 
@@ -119,7 +112,7 @@ export default class EquipItemListRC extends React.Component<EquipItemListRCProp
                         });
                     })}
                 </select>
-                <button onClick={this.move}>move</button>
+                <button className={'btn btn_default'} onClick={this.move}>move</button>
             </div>
         );
     }

@@ -15,7 +15,7 @@ export default class AttackGroupController implements AttackControllerInterface 
         this._attackControllers = attackControllers;
     }
 
-    add(attackController: AttackControllerInterface) {
+    add(attackController: AttackControllerInterface): void {
         assertNotNil(attackController);
 
         if (!_.includes(this._attackControllers, attackController)) {
@@ -30,37 +30,41 @@ export default class AttackGroupController implements AttackControllerInterface 
         _.pullAt(this._attackControllers, _.indexOf(this._attackControllers, attackController));
     }
 
-    generateAttack(): number {
-        let sum = 0;
-        let length = 0;
+    // generateAttack(): number {
+    //     let sum = 0;
+    //     let length = 0;
+    //     for (let i = 0; i < this._attackControllers.length; i++) {
+    //         if (!this._attackControllers[i].canAttack()) continue;
+    //         sum += this._attackControllers[i].generateAttack();
+    //         ++length;
+    //     }
+    //     debug(DebugNamespaceID.Log)(sprintf('Суммарный урон: %d (персонажей: %d).', sum, length));
+    //
+    //     return sum;
+    // }
+
+    attackTo(target: DamageControllerInterface, afterDiedTargetCallback?): number {
+        if (!this.canAttack()) {
+            debug(DebugNamespaceID.Throw)('Группа не может атаковать.');
+            return 0;
+        }
+
+        let resultDamage = 0;
         for (let i = 0; i < this._attackControllers.length; i++) {
             if (!this._attackControllers[i].canAttack()) continue;
-            sum += this._attackControllers[i].generateAttack();
-            ++length;
-        }
-        debug(DebugNamespaceID.Log)(sprintf('Суммарный урон: %d (персонажей: %d).', sum, length));
 
-        return sum;
+            resultDamage += this._attackControllers[i].attackTo(target, afterDiedTargetCallback);
+        }
+
+        return resultDamage;
     }
 
     canAttack(): boolean {
-        return !_.every(_.map(this._attackControllers, (attackController) => {
+        if (!_.every(_.map(this._attackControllers, (attackController) => {
             return !attackController.canAttack();
-        }));
-    }
-
-    attackTo(target: DamageControllerInterface, afterDiedTargetCallback?): boolean {
-        if (!this.canAttack()) {
-            debug(DebugNamespaceID.Throw)('Все участники группы мертвы и не могут атаковать.');
+        }))) {
+            debug(DebugNamespaceID.Throw)('Все участники группы мертвы.');
             return false;
-        }
-
-        for (let i = 0; i < this._attackControllers.length; i++) {
-            //todo: А зачем вообще суммировать урон если можно сделать так? А получательУрона сам разберется как его распределить: на одну цель или группу. И логика объединения исходящего урона не логичная. Если очень надо его можно объединить при получении или гдето между.
-            // if (!this._attackControllers[i].canAttack() || !target.canTakeDamage()) continue;
-            if (!this._attackControllers[i].canAttack()) continue;
-
-            this._attackControllers[i].attackTo(target, afterDiedTargetCallback);
         }
 
         return true;

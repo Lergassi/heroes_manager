@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import {database} from '../../data/ts/database.js';
-import {assert, assertNotNil} from '../../source/assert.js';
+import {assert, assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
@@ -9,7 +9,7 @@ import {EntityID} from '../../types/enums/EntityID.js';
 import {unsigned} from '../../types/main.js';
 import AttackController from '../Components/AttackController.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import ExperienceGeneratorComponent from '../Components/ExperienceGeneratorComponent.js';
+import ExperienceLootGeneratorComponent from '../Components/ExperienceLootGeneratorComponent.js';
 import GoldLootGeneratorComponent from '../Components/GoldLootGeneratorComponent.js';
 import HealthPoints from '../Components/HealthPoints.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
@@ -49,8 +49,8 @@ export default class EnemyFactory {
             strategies?: {},
         }
     ) {
-        assert(level >= 1);
-        assert(!_.isNil(enemyTypeID));
+        assertIsGreaterThanOrEqual(level,1);
+        assertNotNil(enemyTypeID);
 
         let enemy = this._gameObjectFactory.create();
 
@@ -84,15 +84,16 @@ export default class EnemyFactory {
                 if (target?.itemStorage) itemLootGeneratorComponent.generate();
             }
         ));
+        enemy.set<DamageControllerInterface>(ComponentID.DamageController, healthPointsComponent);
 
-        let armorDecorator = enemy.set<DamageControllerInterface>(ComponentID.DamageController, new ArmorDecorator(
-            healthPointsComponent as DamageControllerInterface,
-            this._enemyCharacterAttributeFactory.create(
-                CharacterAttributeID.Protection,
-                level,
-                itemCharacterAttributeCollector,
-            ),
-        ));
+        // let armorDecorator = enemy.set<DamageControllerInterface>(ComponentID.DamageController, new ArmorDecorator(
+        //     healthPointsComponent as DamageControllerInterface,
+        //     this._enemyCharacterAttributeFactory.create(
+        //         CharacterAttributeID.Protection,
+        //         level,
+        //         itemCharacterAttributeCollector,
+        //     ),
+        // ));
 
         let attackPower = enemy.set(CharacterAttributeID.AttackPower, this._enemyCharacterAttributeFactory.create(
             CharacterAttributeID.AttackPower,
@@ -110,7 +111,7 @@ export default class EnemyFactory {
 
         let enemyLootData = database.enemies.loot.find(enemyTypeID);
 
-        let experienceGeneratorComponent = enemy.set<ExperienceGeneratorComponent>(ComponentID.ExperienceLootGenerator, new ExperienceGeneratorComponent(
+        let experienceGeneratorComponent = enemy.set<ExperienceLootGeneratorComponent>(ComponentID.ExperienceLootGenerator, new ExperienceLootGeneratorComponent(
             enemyLootData?.exp,
         ));
         let goldLootGeneratorComponent = enemy.set<GoldLootGeneratorComponent>(ComponentID.GoldLootGenerator, new GoldLootGeneratorComponent({

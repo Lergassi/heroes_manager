@@ -18,6 +18,9 @@ let itemCategoryRatiosData = {
     [ItemCategoryID.Shields]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 0.2},
 };
 
+/**
+ * Данные используемые для генерации контента вне игры.
+ */
 export const item_category_ratios = {
     getRatio: (itemCategoryID: ItemCategoryID, characterAttributeID: CharacterAttributeID): number => {
         return itemCategoryRatiosData[itemCategoryID]?.[characterAttributeID] ?? 0;

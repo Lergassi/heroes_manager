@@ -11,7 +11,7 @@ import {EntityID} from '../../types/enums/EntityID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {LevelRange} from '../../types/main.js';
-import GatheringPoint from '../Components/GatheringPoint.js';
+import Vein from '../Components/Vein.js';
 import Location, {GatheringPointTypeID} from '../Components/Location.js';
 import Wallet from '../Components/Wallet.js';
 import ItemCategory from '../Entities/ItemCategory.js';
@@ -26,9 +26,9 @@ import ItemStorageFactory from './ItemStorageFactory.js';
 import WalletFactory from './WalletFactory.js';
 
 export type GatheringItemPointPattern = {
-    [GatheringPointTypeID.low]: number;
-    [GatheringPointTypeID.normal]: number;
-    [GatheringPointTypeID.high]: number;
+    [GatheringPointTypeID.Low]: number;
+    [GatheringPointTypeID.Normal]: number;
+    [GatheringPointTypeID.High]: number;
 }
 
 // let types = [
@@ -86,16 +86,18 @@ export default class LocationFactory {
         this._walletFactory = walletFactory;
     }
 
+    /**
+     * Создает пустую локацию.
+     * @param level
+     */
     create(
         level: number,
     ): GameObject {
         let location = this._gameObjectFactory.create();
 
-        //todo: Доступ к кошельку нужно сделать удобнее, а не по ID валюты из контейнера.
         let wallet = new Wallet(
             0,
         );
-        // let itemStorage = location.set('internalItemStorageComponent', this._itemStorageFactory.createIn(this._internalItemStorageSize, location));
         let itemStorage = this._itemStorageFactory.create(this._internalItemStorageSize).get<ItemStorageInterface>(ComponentID.ItemStorage);
 
         //todo: Предметы должны устаналиваться более строго. А вдруг в бд не будет предметов категории? Надо чтобы items всегда был в рабочем состоянии.
@@ -105,30 +107,22 @@ export default class LocationFactory {
         }
         items = Random.some(items, this._maxGatheringItemPointsCount, {unique: true});
 
-        let gatheringItemPoints = [
-            new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.Wood), 32),
-            new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.Cotton), 32),
-            new GatheringPoint(GatheringPointTypeID.normal, this._itemDatabase.get(ItemID.IronOre), 32),
-        ]
+        // let gatheringItemPoints = [
+        //     new Vein(this._itemDatabase.get(ItemID.Wood), 32),
+        //     new Vein(this._itemDatabase.get(ItemID.Cotton), 32),
+        //     new Vein(this._itemDatabase.get(ItemID.IronOre), 32),
+        // ];
 
         let locationComponent = location.set<Location>(ComponentID.Location, new Location(
             level,
-            gatheringItemPoints,
-            // _.map(items, (item) => {
-            //     let type = Random.one(types);
-            //     // return new GatheringPoint(GatheringPointTypeID.normal, item, 32);
-            //     return new GatheringPoint(type, item, gatheringTypeValues[type]);
-            // }),
             this._itemStackFactory,
             itemStorage,
             wallet,
-            // enemies,
         ));
 
-        let locationEnemies = database.locations.enemies.find(level);
-        for (let i = 0; i < locationEnemies.length; i++) {
-            locationComponent.addEnemy(this._enemyFactory.create(locationEnemies[i].enemy, level));
-        }
+        // database.locations.enemies.find(level, (enemyTypeID) => {
+        //     locationComponent.addEnemy(this._enemyFactory.create(enemyTypeID, level));
+        // });
 
         return location;
     }

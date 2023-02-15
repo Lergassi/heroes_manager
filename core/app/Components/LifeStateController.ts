@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import debug from 'debug';
 import {assertNotEmpty} from '../../source/assert.js';
+import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export enum CharacterLifeStateCode {
@@ -25,10 +26,15 @@ export default class LifeStateController {
         this._code = code;
     }
 
+    debug(): void {
+        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+            code: this._code,
+        });
+    }
+
     canAction(): boolean {
         if (this._code !== CharacterLifeStateCode.Life) {
-            debug(DebugNamespaceID.Throw)('Персонаж мертвый.');
-
+            debug(DebugNamespaceID.Throw)('Персонаж мертв.');
             return false;
         }
 

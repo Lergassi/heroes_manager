@@ -6,6 +6,9 @@ import {HeroClassID} from '../../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../../types/enums/ItemCategoryID.js';
 import {formulas} from './formulas.js';
 
+/**
+ * Важно! По умолчанию данный алгоритм генерирует НЕ случайные значения. Это нужно для контроля правильности работы алгоритма. todo: Разделить на части: базовое значение и рейты для класса + погрешность и случайные величины, и/или добавить сюда контроль точных значений.
+ */
 export default class ItemCharacterAttributeGenerator {
     /**
      * Не пупать начальное значение и прибавку за 1 илвл. Начальное baseItemConstant это просто условное значение для формулы.
@@ -14,12 +17,12 @@ export default class ItemCharacterAttributeGenerator {
     private readonly _config = {
         startAttackPower: 2,
         // baseItemConstantDispersion: 2,
-        // baseItemConstantDispersion: 0,
-        baseItemConstantDispersion: 1,
+        baseItemConstantDispersion: 0,
+        // baseItemConstantDispersion: 1,
         itemLevelAttackPower: 2,
         // itemLevelAttackPowerDispersion: 2,
-        // itemLevelAttackPowerDispersion: 0,
-        itemLevelAttackPowerDispersion: 1,
+        itemLevelAttackPowerDispersion: 0,
+        // itemLevelAttackPowerDispersion: 1,
         startItemLevel: 25,
         attackPowerByCharacterAttributeRatio: 2,
 

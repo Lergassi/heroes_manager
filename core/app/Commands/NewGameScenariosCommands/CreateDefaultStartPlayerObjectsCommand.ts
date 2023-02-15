@@ -1,30 +1,34 @@
 import _ from 'lodash';
-import Command from '../../source/GameConsole/Command.js';
-import Input from '../../source/GameConsole/Input.js';
-import MainLocationList from '../Components/MainLocationList.js';
-import Item from '../Entities/Item.js';
-import LocationFactory from '../Factories/LocationFactory.js';
-import ItemStorageManager from '../Services/ItemStorageManager.js';
-import HeroFactory from '../Factories/HeroFactory.js';
-import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
-import MainHeroList from '../Components/MainHeroList.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
-import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import {unsigned} from '../../types/main.js';
-import {ServiceID} from '../../types/enums/ServiceID.js';
-import ItemStackFactory from '../Factories/ItemStackFactory.js';
-import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import {ItemID} from '../../types/enums/ItemID.js';
-import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
-import {CommandID} from '../../types/enums/CommandID.js';
-import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-import {EntityID} from '../../types/enums/EntityID.js';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import Command from '../../../source/GameConsole/Command.js';
+import Input from '../../../source/GameConsole/Input.js';
+import {ComponentID} from '../../../types/enums/ComponentID.js';
+import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
+import Location from '../../Components/Location.js';
+import MainLocationList from '../../Components/MainLocationList.js';
+import Item from '../../Entities/Item.js';
+import EnemyFactory from '../../Factories/EnemyFactory.js';
+import LocationFactory from '../../Factories/LocationFactory.js';
+import ItemStorageManager from '../../Services/ItemStorageManager.js';
+import HeroFactory from '../../Factories/HeroFactory.js';
+import ItemStorageFactoryInterface from '../../Factories/ItemStorageFactoryInterface.js';
+import MainHeroList from '../../Components/MainHeroList.js';
+import {DEFAULT_ITEM_STORAGE_SIZE} from '../../consts.js';
+import MainItemStorageListComponent from '../../Components/MainItemStorageListComponent.js';
+import {unsigned} from '../../../types/main.js';
+import {ServiceID} from '../../../types/enums/ServiceID.js';
+import ItemStackFactory from '../../Factories/ItemStackFactory.js';
+import {HeroClassID} from '../../../types/enums/HeroClassID.js';
+import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
+import {ItemID} from '../../../types/enums/ItemID.js';
+import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import {CommandID} from '../../../types/enums/CommandID.js';
+import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
+import {EntityID} from '../../../types/enums/EntityID.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
-import GameConsole from '../../source/GameConsole/GameConsole.js';
-import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
+import GameConsole from '../../../source/GameConsole/GameConsole.js';
+import ItemStorageFactory from '../../Factories/ItemStorageFactory.js';
 
 export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -55,6 +59,18 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         }[] = [
             {
                 heroClassID: HeroClassID.Warrior,
+                level: 1,
+                equip: {
+                    [EquipSlotID.Head]: ItemID.PlateHelmet02,
+                    [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
+                    [EquipSlotID.Legs]: ItemID.PlatePants01,
+                    [EquipSlotID.Foots]: ItemID.PlateBoots01,
+                    [EquipSlotID.RightHand]: ItemID.OneHandedSword01,
+                    [EquipSlotID.LeftHand]: ItemID.Shield01,
+                },
+            },
+            {
+                heroClassID: HeroClassID.Barbarian,
                 level: 1,
                 equip: {
                     [EquipSlotID.Head]: ItemID.PlateHelmet02,
@@ -110,7 +126,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
             for (const equipSlotID in heroPatterns[i].equip) {
                 let item = this.container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(EntityID.Item, heroPatterns[i].equip[equipSlotID]);
                 if (!item) {
-                    debug(DebugNamespaceID.Warning)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
+                    debug(DebugNamespaceID.Replace)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
                     continue;
                 }
 
@@ -125,7 +141,8 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
         // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
         // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
-        this._manualCreateLocations();
+        // this._manualCreateLocations();
+        this._createDevLocations();
     }
 
     private async _manualCreateLocations() {
@@ -144,6 +161,22 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
         // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
         // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+    }
+
+    private _createDevLocations(): void {
+        let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
+        let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
+
+        let locationGO = locationFactory.create(1);
+        let location = locationGO.get<Location>(ComponentID.Location);
+
+        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
+        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
+        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
+        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
+        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
+
+        this.container.get<MainLocationList>(ServiceID.MainLocationList).add(locationGO);
     }
 
     private async _addMoney() {

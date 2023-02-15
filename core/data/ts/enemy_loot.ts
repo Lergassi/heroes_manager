@@ -23,25 +23,23 @@ export type EnemyLootItemDBType = {
 
 let enemy_loot_data: EnemyLootDBType[] = [
     {
-        enemyTypeID: EnemyTypeID.EnemyType01,
+        enemyTypeID: EnemyTypeID.Boar,
         loot: [
-            {ID: ItemID.Wood, count: {max: 12, min: 22}, chance: 80},
-            {ID: ItemID.IronOre, count: {max: 4, min: 12}, chance: 50},
-            {ID: ItemID.OneHandedSword01, count: {max: 1, min: 1}, chance: 10},
+            {ID: ItemID.Skin01, count: {min: 4, max: 2}, chance: 10},
         ],
-        exp: 42,
+        exp: 100,
         money: {max: 100, min: 200},
     },
-    {
-        enemyTypeID: EnemyTypeID.EnemyType02,
-        loot: [
-            {ID: ItemID.Wood, count: {max: 12, min: 22}, chance: 80},
-            {ID: ItemID.IronOre, count: {max: 4, min: 12}, chance: 50},
-            {ID: ItemID.OneHandedSword01, count: {max: 1, min: 1}, chance: 10},
-        ],
-        exp: 42,
-        money: {max: 100, min: 200},
-    },
+    // {
+    //     enemyTypeID: EnemyTypeID.EnemyType02,
+    //     loot: [
+    //         {ID: ItemID.Wood, count: {max: 12, min: 22}, chance: 80},
+    //         {ID: ItemID.IronOre, count: {max: 4, min: 12}, chance: 50},
+    //         {ID: ItemID.OneHandedSword01, count: {max: 1, min: 1}, chance: 10},
+    //     ],
+    //     exp: 42,
+    //     money: {max: 100, min: 200},
+    // },
 ];
 
 let empty: EnemyLootDBType = {enemyTypeID: undefined, exp: 0, loot: [], money: {max: 0, min: 0}};

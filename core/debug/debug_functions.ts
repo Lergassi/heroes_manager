@@ -1,6 +1,11 @@
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
+import Experience from '../app/Components/Experience.js';
+import LifeStateController from '../app/Components/LifeStateController.js';
+import CharacterAttributeInterface from '../app/Decorators/CharacterAttributeInterface.js';
+import EquipSlotInterface from '../app/Interfaces/EquipSlotInterface.js';
+import {debug_header} from '../debug_functions.js';
 import GameObject from '../source/GameObject.js';
 import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import EquipSlotComponent from '../app/Components/EquipSlotComponent.js';
@@ -17,6 +22,8 @@ import ContainerInterface from '../source/ContainerInterface.js';
 import LevelRange from '../app/Components/Experience.js';
 import EntityManager from '../source/EntityManager.js';
 import Item from '../app/Entities/Item.js';
+import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
+import {EquipSlotID} from '../types/enums/EquipSlotID.js';
 import {ServiceID} from '../types/enums/ServiceID.js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
@@ -340,4 +347,44 @@ export function debugItemList(items: Item[]) {
 
 function separator() {
     console.log(_.repeat('-', 64));
+}
+
+export function debug_detailHero(hero: GameObject) {
+    let characterAttributeIDs = [
+        CharacterAttributeID.Strength,
+        CharacterAttributeID.Agility,
+        CharacterAttributeID.Intelligence,
+        CharacterAttributeID.AttackPower,
+    ];
+
+    let equipSlotIDs = [
+        EquipSlotID.Head,
+        EquipSlotID.Shoulders,
+        EquipSlotID.Chest,
+        EquipSlotID.Wrist,
+        EquipSlotID.Hands,
+        EquipSlotID.Waist,
+        EquipSlotID.Legs,
+        EquipSlotID.Foots,
+        EquipSlotID.Neck,
+        EquipSlotID.Finger01,
+        EquipSlotID.Finger02,
+        EquipSlotID.Trinket,
+        EquipSlotID.RightHand,
+        EquipSlotID.LeftHand,
+    ];
+
+    debug_header('debug_detailHero');
+    // hero.get<HeroComponent>(ComponentID.Hero)?.renderByRequest(this);
+    hero.get<LifeStateController>(ComponentID.LifeStateController)?.debug();
+    hero.get<Experience>(ComponentID.Experience)?.debug();
+    hero.get<HealthPoints>(ComponentID.HealthPoints)?.debug();
+    debug_header('character_attributes');
+    _.map(characterAttributeIDs, (ID) => {
+        hero.get<CharacterAttributeInterface>(ID).debug();
+    });
+    debug_header('equip_slots');
+    _.map(equipSlotIDs, (ID) => {
+        hero.get<EquipSlotInterface>(ID)?.debug();
+    });
 }

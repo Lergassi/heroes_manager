@@ -86,7 +86,6 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         CharacterAttributeID.Agility,
         CharacterAttributeID.Intelligence,
         CharacterAttributeID.AttackPower,
-        CharacterAttributeID.Protection,
     ];
 
     private readonly _equipSlotIDs = [
@@ -151,35 +150,24 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
             [EquipSlotID.LeftHand]: undefined,
         };
 
-        // this.updateHeroClassName = this.updateHeroClassName.bind(this);
-        // this.updateExperience = this.updateExperience.bind(this);
-        // this.updateHealthPoints = this.updateHealthPoints.bind(this);
-        // this.updateCharacterAttributeFinalValue = this.updateCharacterAttributeFinalValue.bind(this);
-        // this.updateEquipSlot = this.updateEquipSlot.bind(this);
-        this.hide = this.hide.bind(this);
-
         this.props.container.set<DetailHeroRC>(ServiceID.UI_DetailHero, this);
         this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
 
-        // window['app']['sandbox'][ServiceID.UI_DetailHero] = {};
-        // window['app']['sandbox'][ServiceID.UI_DetailHero]['updateHero'] = (hero: GameObject) => {
-        //     this.updateHero(hero);
-        //     this.show();
-        // };
+        this.hide = this.hide.bind(this);
     }
 
     updateByRequest(): void {
         if (!this.state.window.show) return;
         if (!this.state.hero) return;
 
-        this.state.hero.get<HeroComponent>(ComponentID.Hero).renderByRequest(this);
-        this.state.hero.get<Experience>(ComponentID.Experience).renderByRequest(this);
-        this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).renderByRequest(this);
+        this.state.hero.get<HeroComponent>(ComponentID.Hero)?.renderByRequest(this);
+        this.state.hero.get<Experience>(ComponentID.Experience)?.renderByRequest(this);
+        this.state.hero.get<HealthPoints>(ComponentID.HealthPoints)?.renderByRequest(this);
         _.map(this._characterAttributeIDs, (ID) => {
-            this.state.hero.get<CharacterAttributeInterface>(ID).renderByRequest(this);
+            this.state.hero.get<CharacterAttributeInterface>(ID)?.renderByRequest(this);
         });
         _.map(this._equipSlotIDs, (ID) => {
-            this.state.hero.get<EquipSlotInterface>(ID).renderByRequest(this);
+            this.state.hero.get<EquipSlotInterface>(ID)?.renderByRequest(this);
         });
     }
 
@@ -355,7 +343,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Герой<button className={'widget__hide-button'} onClick={this.hide}>close</button></div>
+                    <div className={'widget__title'}>Герой<button className={'btn btn_default btn_right'} onClick={this.hide}>close</button></div>
                     <div className={'widget__content'}>
                         <div>{this.state.heroClassName}, {this.state.level} ({this.state.exp}/{this.state.totalExpToLevelUp})</div>
                         <div>Здоровье: {this.state.currentHealthPoints}/{this.state.maxHealthPoints}</div>
@@ -373,20 +361,22 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                         <div>
                             <h4>Экипировка:</h4>
                             <table className={'basic-table'}>
-                                {this._renderEquipSlot(EquipSlotID.Head)}
-                                {this._renderEquipSlot(EquipSlotID.Shoulders)}
-                                {this._renderEquipSlot(EquipSlotID.Chest)}
-                                {this._renderEquipSlot(EquipSlotID.Wrist)}
-                                {this._renderEquipSlot(EquipSlotID.Hands)}
-                                {this._renderEquipSlot(EquipSlotID.Waist)}
-                                {this._renderEquipSlot(EquipSlotID.Legs)}
-                                {this._renderEquipSlot(EquipSlotID.Foots)}
-                                {this._renderEquipSlot(EquipSlotID.RightHand)}
-                                {this._renderEquipSlot(EquipSlotID.LeftHand)}
-                                {this._renderEquipSlot(EquipSlotID.Neck)}
-                                {this._renderEquipSlot(EquipSlotID.Finger01)}
-                                {this._renderEquipSlot(EquipSlotID.Finger02)}
-                                {this._renderEquipSlot(EquipSlotID.Trinket)}
+                                <tbody>
+                                    {this._renderEquipSlot(EquipSlotID.Head)}
+                                    {this._renderEquipSlot(EquipSlotID.Shoulders)}
+                                    {this._renderEquipSlot(EquipSlotID.Chest)}
+                                    {this._renderEquipSlot(EquipSlotID.Wrist)}
+                                    {this._renderEquipSlot(EquipSlotID.Hands)}
+                                    {this._renderEquipSlot(EquipSlotID.Waist)}
+                                    {this._renderEquipSlot(EquipSlotID.Legs)}
+                                    {this._renderEquipSlot(EquipSlotID.Foots)}
+                                    {this._renderEquipSlot(EquipSlotID.RightHand)}
+                                    {this._renderEquipSlot(EquipSlotID.LeftHand)}
+                                    {this._renderEquipSlot(EquipSlotID.Neck)}
+                                    {this._renderEquipSlot(EquipSlotID.Finger01)}
+                                    {this._renderEquipSlot(EquipSlotID.Finger02)}
+                                    {this._renderEquipSlot(EquipSlotID.Trinket)}
+                                </tbody>
                             </table>
                             <EquipItemListRC
                                 container={this.props.container}
@@ -405,7 +395,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         return <tr key={ID}>
             <td>{ID}</td>
             <td>{this.state[ID] ? this.state[ID] : 'free'}</td>
-            <td><button onClick={this.clearEquipSlot.bind(this, ID)}>clear</button></td>
+            <td><button className={'btn btn_default'} onClick={this.clearEquipSlot.bind(this, ID)}>clear</button></td>
         </tr>
     }
 }

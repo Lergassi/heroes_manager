@@ -21,7 +21,7 @@ export enum ComponentID {
     MagicPoints = 'MagicPoints',
 
     LifeStateController = 'LifeStateController',
-    ActivityStateController = 'ActivityStateController',
+    HeroActivityStateController = 'HeroActivityStateController',
     TakeController = 'TakeController',
 
     ItemCharacterAttributeCollector = 'ItemCharacterAttributeCollector',

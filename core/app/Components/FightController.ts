@@ -1,36 +1,19 @@
-import {assertNotNil} from '../../source/assert.js';
+import _ from 'lodash';
 import debug from 'debug';
-import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import CharacterIsDeadError from '../../source/Errors/CharacterIsDeadError.js';
-import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import FightControllerInterface, {RewardOptions} from '../Interfaces/FightControllerInterface.js';
-import {unsigned} from '../../types/main.js';
+import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
+import FightGroupController from './FightGroupController.js';
 
 export default class FightController {
-    private readonly _attackController: AttackControllerInterface;
-    private readonly _damageController: DamageControllerInterface;
+    private readonly _heroFightGroupController: FightGroupController;
+    private readonly _enemyFightGroupController: FightGroupController;
 
-    constructor(
-        attackController: AttackControllerInterface,
-        damageController: DamageControllerInterface,
-    ) {
-        assertNotNil(attackController);
-        assertNotNil(damageController);
-
-        this._attackController = attackController;
-        this._damageController = damageController;
+    constructor(heroFightGroupController: FightGroupController, enemyFightGroupController: FightGroupController) {
+        this._heroFightGroupController = heroFightGroupController;
+        this._enemyFightGroupController = enemyFightGroupController;
     }
 
-    attackTo(target: FightController, rewardOptions?: RewardOptions): void {
-        this._attackController.attackTo(target._damageController, rewardOptions);
-    }
-
-    canAttack(): boolean {
-        return this._attackController.canAttack();
-    }
-
-    canTakeDamage(): boolean {
-        return this._damageController.canTakeDamage();
+    fight(rewardOptions?: RewardOptions): void {
+        this._heroFightGroupController.attack(this._enemyFightGroupController, rewardOptions);
+        this._enemyFightGroupController.attack(this._heroFightGroupController);
     }
 }

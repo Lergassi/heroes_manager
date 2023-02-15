@@ -78,7 +78,7 @@ export default class HeroListSelectRC extends React.Component<HeroListSelectRCPr
                         return <option key={index} value={hero.ID}>{hero.heroClassName} ({hero.ID}), {hero.level} lvl</option>
                     })}
                 </select>
-                <button onClick={this.props.handleAddHeroChange.bind(this, this.state.selectedHeroID)}>addHero</button>
+                <button className={'btn btn_default'} onClick={this.props.handleAddHeroChange.bind(this, this.state.selectedHeroID)}>addHero</button>
             </div>
         );
     }

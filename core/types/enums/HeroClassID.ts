@@ -27,9 +27,11 @@ export enum HeroClassID {
      */
     Gladiator = 'Gladiator',
     /**
+     * Одно двуручное оружие.
      * 500
      */
-    PlateDamageDealerWithOneTwoHandedWeapon = 'PlateDamageDealerWithOneTwoHandedWeapon',
+    // PlateDamageDealerWithOneTwoHandedWeapon = 'PlateDamageDealerWithOneTwoHandedWeapon',
+    Barbarian = 'Barbarian',
     /**
      * 600
      */

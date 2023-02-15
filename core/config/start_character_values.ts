@@ -26,7 +26,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
         [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],
         [CharacterAttributeID.Protection]: [200, 300],
-        [CharacterAttributeID.MaxHealthPoints]: [120, 160],
+        [CharacterAttributeID.MaxHealthPoints]: [220, 280],
         [CharacterAttributeID.AttackPower]: [14, 18],
     },
     //Всё тоже что и за 500, только с увеличенными хп и ап. Атакующие параметры будут стоить дороже защитных.
@@ -64,7 +64,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],
         [CharacterAttributeID.AttackPower]: [14, 18],
     },
-    [HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon]: {
+    [HeroClassID.Barbarian]: {
         [CharacterAttributeID.Strength]: [6, 9],
         [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],

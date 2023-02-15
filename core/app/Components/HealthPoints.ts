@@ -3,16 +3,17 @@ import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import {assertAction, assertIsPositive, assertNotNil} from '../../source/assert.js';
 import EventSystem from '../../source/EventSystem.js';
+import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {unsigned} from '../../types/main.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
-import {CharacterActivityStateCode} from './HeroActivityStateController.js';
+import {HeroActivityStateCode} from './HeroActivityStateController.js';
 import LifeStateController, {CharacterLifeStateCode} from './LifeStateController.js';
 
 export enum HealthPointsComponentEventCode {
-    TakeDamage = 'HealthPointsComponent.TakeDamage',
+    Damage = 'HealthPointsComponent.Damage',
     Died = 'HealthPointsComponent.Died',
     Resurrect = 'HealthPointsComponent.Resurrect',
 }
@@ -49,38 +50,46 @@ export default class HealthPoints implements DamageControllerInterface {
 
     constructor(
         maxHealthPoints: CharacterAttributeInterface,
-        stateController: LifeStateController,
+        lifeStateController: LifeStateController,
         afterDiedCallback?: Function,
     ) {
         assertNotNil(maxHealthPoints);
-        assertNotNil(stateController);
+        assertNotNil(lifeStateController);
 
-        // this._maxHealthPoints = maxHealthPoints;
-        // this._currentHealthPoints = maxHealthPoints;
         this._maxHealthPoints = maxHealthPoints;
         this._currentHealthPoints = maxHealthPoints.finalValue;
         this._isDead = false;
-        this._lifeStateController = stateController;
+        this._lifeStateController = lifeStateController;
         this._afterDiedCallback = afterDiedCallback; //todo: Скрыть - логика передачи лута будет всегда. Позже в виде отдельного класса.
     }
 
-    takeDamage(damage: number, enemyRewardOptions?: RewardOptions): void {
+    //todo: Убрать enemyRewardOptions.
+    //todo: Сделать обычные add/remove, возможно даже без проверки на смерть. Нанесение урона - отдельная логика.
+    damage(damage: number, enemyRewardOptions?: RewardOptions): number {
         assertIsPositive(damage);
-        damage = _.floor(damage, 0);
-        //todo: Округление. Выбрать место. Для damage сделть отдельный класс.
+        damage = _.floor(damage, 0);    //todo: Округление. Выбрать место. Для damage сделть отдельный класс.
 
         if (!this._lifeStateController.canAction()) {
-            debug(DebugNamespaceID.Throw)('Нельзя нанести урон.');
+            debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
             return;
         }
 
-        let _healthPoints = this._currentHealthPoints - damage;
-        this._currentHealthPoints = _healthPoints <= 0 ? 0 : _healthPoints;
-        debug(DebugNamespaceID.Log)(sprintf('Получено урона: %s (%s/%s)', damage, this._currentHealthPoints, this._maxHealthPoints.finalValue));
-        EventSystem.event(HealthPointsComponentEventCode.TakeDamage, this);
+        let resultDamage = this._currentHealthPoints >= damage ? damage : this._currentHealthPoints;
+
+        this._currentHealthPoints -= resultDamage;
+        debug(DebugNamespaceID.Log)(sprintf('Получено урона (остаток/макс): %s (%s/%s)', resultDamage, this._currentHealthPoints, this._maxHealthPoints.finalValue));
+        EventSystem.event(HealthPointsComponentEventCode.Damage, this);
         if (this._currentHealthPoints <= 0) {
-            this.kill(enemyRewardOptions);
+            this.dead(enemyRewardOptions);
         }
+
+        return resultDamage;
+    }
+
+    dead(enemyRewardOptions?: RewardOptions): boolean {
+        this.kill(enemyRewardOptions);
+
+        return true;
     }
 
     kill(enemyRewardOptions?: RewardOptions): void {
@@ -160,13 +169,21 @@ export default class HealthPoints implements DamageControllerInterface {
         return true;
     }
 
-    canTakeDamage(): boolean {
+    canDamage(): boolean {
         return this._lifeStateController.canAction();
     }
 
     renderByRequest(ui: HealthPointsRender): void {
         ui.updateHealthPoints?.(this._currentHealthPoints, this._maxHealthPoints.finalValue);
         ui.updateDeadState?.(this.isDead);
+    }
+
+    debug(): void {
+        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+            healthPoints: this._currentHealthPoints,
+            maxHealthPoints: this._maxHealthPoints.finalValue,
+            isDead: this._isDead,
+        });
     }
 
     // private _canModify(): void {

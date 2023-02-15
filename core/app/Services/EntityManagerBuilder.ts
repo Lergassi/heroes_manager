@@ -548,8 +548,8 @@ export default class EntityManagerBuilder {
             ],
         );
         heroClassFactory.create(
-            HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
-            HeroClassID.PlateDamageDealerWithOneTwoHandedWeapon,
+            HeroClassID.Barbarian,
+            HeroClassID.Barbarian,
             IconID.Sword02,
             500,
             HeroRoleID.DamageDealer,

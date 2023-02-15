@@ -50,4 +50,8 @@ export default class EquipSlotWithItemCollectorDecorator implements EquipSlotInt
     renderByRequest(ui: EquipSlotInterfaceRender): void {
         this._equipSlot.renderByRequest(ui);
     }
+
+    debug(): void {
+        this._equipSlot.debug();
+    }
 }

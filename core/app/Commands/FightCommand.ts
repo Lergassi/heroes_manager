@@ -5,7 +5,7 @@ import {ServiceID} from '../../types/enums/ServiceID.js';
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {assertNotNil} from '../../source/assert.js';
-import FightController from '../Components/FightController.js';
+import _CharacterFightController from '../Components/FightLegacy/_CharacterFightController.js';
 import AttackController from '../Components/AttackController.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
@@ -36,11 +36,11 @@ export default class FightCommand extends Command {
         });
         console.log(enemy);
 
-        let heroAttackController = new FightController(
+        let heroAttackController = new _CharacterFightController(
             hero.get<AttackController>(ComponentID.AttackController),
             hero.get<DamageControllerInterface>(ComponentID.DamageController),
         );
-        let enemyAttackController = new FightController(
+        let enemyAttackController = new _CharacterFightController(
             enemy.get<AttackController>(ComponentID.AttackController),
             enemy.get<DamageControllerInterface>(ComponentID.DamageController),
         );

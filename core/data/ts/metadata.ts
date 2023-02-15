@@ -138,6 +138,7 @@ const itemsInItemCategories = {
 
 export const metadata = {
     itemsByItemCategory: {
+        //todo: Много данных будет сложно так обрабатывать, когда их не будет в бд.
         singleItemName: (itemCategoryID: ItemCategoryID): string => {
             return itemsInItemCategories[itemCategoryID]?.singleItemName ?? '';
         },

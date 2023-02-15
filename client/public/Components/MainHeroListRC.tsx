@@ -144,7 +144,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                     <th>HeroClass (ID)</th>
                                     <th>Level</th>
                                     <th>HeroRole</th>
-                                    <th>State</th>
+                                    <th>ActivityState</th>
                                     <th style={{width: '220px'}}>Level (xp)</th>
                                     <th>ilvl</th>
                                     <th>HP</th>
@@ -165,12 +165,12 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                             <td>{hero.attackPower}</td>
                                             <td>{hero.strength}/{hero.agility}/{hero.intelligence}</td>
                                             <td>
-                                                <button onClick={() => {
+                                                <button className={'btn btn_default'} onClick={() => {
                                                     this.props.container.get<DetailHeroRC>(ServiceID.UI_DetailHero).updateHero(hero.hero, {show: true});
                                                 }}>
                                                     detail
                                                 </button>
-                                                <button onClick={() => {
+                                                <button className={'btn btn_default'} onClick={() => {
                                                     hero.deleteHandler();
                                                 }}>
                                                     delete

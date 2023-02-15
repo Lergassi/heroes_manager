@@ -57,7 +57,7 @@ import {ArmorMaterialID} from '../core/types/enums/ArmorMaterialID.js';
 import DefaultEquipSlot from '../core/app/Components/EquipSlots/DefaultEquipSlot.js';
 import RightHand from '../core/app/Components/EquipSlots/RightHand.js';
 import LeftHand from '../core/app/Components/EquipSlots/LeftHand.js';
-import FightController from '../core/app/Components/FightController.js';
+import _CharacterFightController from '../core/app/Components/FightLegacy/_CharacterFightController.js';
 import AttackController from '../core/app/Components/AttackController.js';
 import AttackControllerInterface from '../core/app/Interfaces/AttackControllerInterface.js';
 import HeroActivityStateController from '../core/app/Components/HeroActivityStateController.js';
@@ -647,10 +647,10 @@ export default class _SandboxController {
         // console.log(enemy);
         // console.log(enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name));
         // enemies[0].getComponent<HealthPointsComponent>(HealthPointsComponent.name).kill();
-        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).takeDamage(42);
-        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).takeDamage(42);
-        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).takeDamage(42);
-        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).takeDamage(42);
+        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).damage(42);
+        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).damage(42);
+        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).damage(42);
+        enemies[0].getComponent<HealthPoints>(ComponentID.HealthPoints).damage(42);
         enemies[1].getComponent<HealthPoints>(ComponentID.HealthPoints).kill();
         // enemy.getComponent<HealthPointsComponent>(HealthPointsComponent.name).resurrect();
     }
@@ -910,7 +910,7 @@ export default class _SandboxController {
 
         console.log(defence);
         for (let i = 0; i < damage.length; i++) {
-            console.log(damage[i], defence.takeDamage(damage[i]));
+            console.log(damage[i], defence.damage(damage[i]));
         }
         // console.log(defence.finalDamage(100.123));
         // console.log(defence.finalDamage(-100));
@@ -1099,10 +1099,10 @@ export default class _SandboxController {
         // damageController.damage(damage);
         // console.log(damageController);
 
-        healthPoints.takeDamage(damage);
-        healthPoints.takeDamage(damage);
-        healthPoints.takeDamage(damage);
-        healthPoints.takeDamage(damage);
+        healthPoints.damage(damage);
+        healthPoints.damage(damage);
+        healthPoints.damage(damage);
+        healthPoints.damage(damage);
     }
 
     private devEnemyArmor() {

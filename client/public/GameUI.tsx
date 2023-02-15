@@ -64,7 +64,6 @@ export default class GameUI {
                 <GameConsoleRC
                     container={this._container}
                     executeUrl={'http://api.heroes.sd44.ru/game_console/execute'}
-                    maxHistoryLength={100}
                     commandNames={this._container.get<GameConsole>(ServiceID.GameConsole).names}
                 />
             </div>

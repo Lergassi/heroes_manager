@@ -1,3 +1,4 @@
+import {assertNotNil} from '../../source/assert.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {unsigned} from '../../types/main.js';
 import _ from 'lodash';
@@ -13,39 +14,48 @@ export default class DamageGroupController implements DamageControllerInterface 
     }
 
     add(damageController: DamageControllerInterface) {
+        assertNotNil(damageController);
+
         if (!_.includes(this._damageControllers, damageController)) {
             this._damageControllers.push(damageController);
         }
     }
 
     remove(damageController: DamageControllerInterface) {
+        assertNotNil(damageController);
+
         _.pullAt(this._damageControllers, _.indexOf(this._damageControllers, damageController));
     }
 
-    takeDamage(value: unsigned, afterDiedCallback?): void {
+    damage(value: unsigned, afterDiedCallback?): number {
         value = _.floor(value);
 
-        if (!this.canTakeDamage()) {
+        if (!this.canDamage()) {
             debug(DebugNamespaceID.Throw)('Все участники группы мертвы и не могут получить урон.');
             return;
         }
 
+        let resultDamage = 0;
         let length = _.sum(_.map(this._damageControllers, (damageController) => {
-            return Number(damageController.canTakeDamage());
+            return Number(damageController.canDamage());
         }));
         let damageForElement = _.round(value / length);
         debug(DebugNamespaceID.Log)(sprintf('Распределение входящего урона %s по %s на персонажей %s.', value, damageForElement, length));
         let _damageControllers = [...this._damageControllers];
         for (let i = 0; i < _damageControllers.length; i++) {
-            if (!_damageControllers[i].canTakeDamage()) continue;
+            if (!_damageControllers[i].canDamage()) continue;
 
-            _damageControllers[i].takeDamage(damageForElement, afterDiedCallback);
+            resultDamage += _damageControllers[i].damage(damageForElement, afterDiedCallback);
         }
+
+        return resultDamage;
     }
 
-    canTakeDamage(): boolean {
+    canDamage(): boolean {
+        console.log('this._damageControllers', this._damageControllers);
         return !_.every(_.map(this._damageControllers, (damageController) => {
-            return !damageController.canTakeDamage();
+            console.log('damageController', damageController);
+            return !damageController.canDamage();
         }));
     }
 }

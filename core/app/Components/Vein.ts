@@ -1,32 +1,27 @@
-import GathererInterface from '../Interfaces/GathererInterface.js';
-import {GatheringPointTypeID} from './Location.js';
 import Item from '../Entities/Item.js';
 import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import _ from 'lodash';
-import {UI_ItemCount, UI_VeinItemCount, unsigned} from '../../types/main.js';
+import {UI_ItemCount, UI_VeinItemCount} from '../../types/main.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
-export interface GatheringPointRender {
+export interface VeinRender {
     update?(item: UI_VeinItemCount);
 }
 
-export default class GatheringPoint {
-    private readonly _minCountForGather: unsigned = 1;
-    private readonly _maxCountForGather: unsigned = 4;  //todo: Шанс. Максимальное значение должно быть реже чем среднее.
+export default class Vein {
+    private readonly _minCountForGather: number = 1;
+    private readonly _maxCountForGather: number = 4;  //todo: Шанс. Максимальное значение должно быть реже чем среднее.
 
-    private readonly _type: GatheringPointTypeID;
     private readonly _item: Item;
-    private _startCount: unsigned;
-    private _count: unsigned;
+    private _startCount: number;
+    private _count: number;
 
-    constructor(type: GatheringPointTypeID, item: Item, count: unsigned) {
-        assertNotNil(type);
+    constructor(item: Item, count: number) {
         assertIsInstanceOf(item, Item);
         assertIsGreaterThanOrEqual(count, 1);
 
-        this._type = type;
         this._item = item;
         this._startCount = count;
         this._count = count;
@@ -37,7 +32,7 @@ export default class GatheringPoint {
      * @param itemStorage
      * @return Остаток в жиле.
      */
-    gather(itemStorage: ItemStorageInterface): unsigned {
+    gather(itemStorage: ItemStorageInterface): number {
         if (!this.canGather()) return 0;
 
         let count = this._generateCount();
@@ -46,14 +41,6 @@ export default class GatheringPoint {
         this._count -= count - reminder;
 
         return this._count;
-    }
-
-    private _generateCount(): unsigned {
-        // if (!this.canGather()) return 0; //todo: Нужна ли тут проверка? ---> Можно сделать что возвращается 0 если жила пустая, а потом объект адялется.
-        if (this._count <= 0) return 0;
-        if (this._count === 1) return 1;
-
-        return _.random(this._minCountForGather, this._maxCountForGather <= this._count ? this._maxCountForGather : this._count);
     }
 
     isEmpty(): boolean {
@@ -69,11 +56,19 @@ export default class GatheringPoint {
         return true;
     }
 
-    renderByRequest(ui: GatheringPointRender): void {
+    renderByRequest(ui: VeinRender): void {
         ui.update?.({
             itemName: this._item.id,
             startCount: this._startCount,
             count: this._count,
         });
+    }
+
+    private _generateCount(): number {
+        // if (!this.canGather()) return 0; //todo: Нужна ли тут проверка? ---> Можно сделать что возвращается 0 если жила пустая, а потом объект адялется.
+        if (this._count <= 0) return 0;
+        if (this._count === 1) return 1;
+
+        return _.random(this._minCountForGather, this._maxCountForGather <= this._count ? this._maxCountForGather : this._count);
     }
 }
