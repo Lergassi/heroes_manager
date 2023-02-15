@@ -30,6 +30,7 @@ export enum ServiceID {
     HeroCharacterAttributeFactory = 'player.HeroCharacterAttributeFactory',
     EnemyCharacterAttributeFactory = 'player.EnemyCharacterAttributeFactory',
     LocationFactory = 'player.LocationFactory',
+    LocationConfigurator = 'player.LocationConfigurator',
     VeinFactory = 'player.VeinFactory',
     EnemyFactory = 'player.EnemyFactory',
 

@@ -7,6 +7,7 @@ import Location, {GatheringPointTypeID} from '../Components/Location.js';
 import Wallet from '../Components/Wallet.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import LocationConfigurator from '../Services/LocationConfigurator.js';
 import EnemyFactory from './EnemyFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import ItemStackFactory from './ItemStackFactory.js';
@@ -42,14 +43,8 @@ export default class LocationFactory {
 
     private readonly _itemStorageFactory: ItemStorageFactory;
     private readonly _walletFactory: WalletFactory;
-
-    // private readonly _defaultOptions: Partial<LocationFactoryCreateOptions> = {
-    //     internalItemStorageSize: 5,
-    //     heroGroupSize: 5,
-    // };
-    private _enemyFactory: EnemyFactory;
-
-    private readonly _location_enemies = location_enemies;
+    private readonly _enemyFactory: EnemyFactory;
+    private readonly _locationConfigurator: LocationConfigurator;
 
     constructor(
         gameObjectFactory: GameObjectFactory,
@@ -59,6 +54,7 @@ export default class LocationFactory {
         itemStorageFactory: ItemStorageFactory,
         walletFactory: WalletFactory,
         enemyFactory: EnemyFactory,
+        locationConfigurator: LocationConfigurator,
     ) {
         this._maxGatheringItemPointsCount = 3;
         this._internalItemStorageSize = 5;
@@ -72,17 +68,17 @@ export default class LocationFactory {
 
         this._itemStorageFactory = itemStorageFactory;
         this._walletFactory = walletFactory;
+        this._locationConfigurator = locationConfigurator;
     }
 
-    /**
-     * Создает пустую локацию.
-     * @param level
-     */
     create(
         type: LocationTypeID,
         level: number,
+        options?: {
+            configureStrategy: string,
+        }
     ): GameObject {
-        let location = this._gameObjectFactory.create();
+        let locationGO = this._gameObjectFactory.create();
 
         let wallet = new Wallet(0);
         let itemStorage = this._itemStorageFactory.create(this._internalItemStorageSize).get<ItemStorageInterface>(ComponentID.ItemStorage);
@@ -100,7 +96,7 @@ export default class LocationFactory {
         //     new Vein(this._itemDatabase.get(ItemID.IronOre), 32),
         // ];
 
-        location.set<Location>(ComponentID.Location, new Location(
+        let location = locationGO.set<Location>(ComponentID.Location, new Location(
             type,
             level,
             this._itemStackFactory,
@@ -108,6 +104,16 @@ export default class LocationFactory {
             wallet,
         ));
 
-        return location;
+        if (options?.configureStrategy) {
+            switch (options.configureStrategy) {
+                case 'default':
+                    this._locationConfigurator.configure(location);
+                    break;
+                default:
+                    break
+            }
+        }
+
+        return locationGO;
     }
 }

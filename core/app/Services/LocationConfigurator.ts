@@ -6,6 +6,7 @@ import {LocationTypeID} from '../../types/enums/LocationTypeID.js';
 import Location from '../Components/Location.js';
 import EnemyFactory from '../Factories/EnemyFactory.js';
 
+//@indev Далее будет разделение. Пока просто добавляет всех врагов из бд в локацию.
 export default class LocationConfigurator {
     private readonly _enemyFactory: EnemyFactory;
 

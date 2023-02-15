@@ -34,6 +34,7 @@ import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../Interfaces/WalletInterface.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
+import LocationConfigurator from '../LocationConfigurator.js';
 import StubFactory from '../StubFactory.js';
 
 /**
@@ -167,6 +168,9 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EnemyCharacterAttributeFactory>(ServiceID.EnemyCharacterAttributeFactory),
             );
         });
+        container.set<LocationConfigurator>(ServiceID.LocationConfigurator, new LocationConfigurator(
+            container.get<EnemyFactory>(ServiceID.EnemyFactory),
+        ));
         container.set<LocationFactory>(ServiceID.LocationFactory, (container) => {
             return new LocationFactory(
                 container.get<GameObjectFactory>(ServiceID.GameObjectFactory),
@@ -176,6 +180,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory),
                 container.get<WalletFactory>(ServiceID.WalletFactory),
                 container.get<EnemyFactory>(ServiceID.EnemyFactory),
+                container.get<LocationConfigurator>(ServiceID.LocationConfigurator),
             );
         });
         container.set<VeinFactory>(ServiceID.VeinFactory, new VeinFactory());

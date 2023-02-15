@@ -7,6 +7,7 @@ import {ServiceID} from '../../types/enums/ServiceID.js';
 import Location from '../Components/Location.js';
 import MainLocationList from '../Components/MainLocationList.js';
 import LocationFactory from '../Factories/LocationFactory.js';
+import LocationConfigurator from '../Services/LocationConfigurator.js';
 
 export default class CreateLocationCommand extends Command {
     get name(): string {
@@ -25,6 +26,10 @@ export default class CreateLocationCommand extends Command {
         let mainLocationList = this.container.get<MainLocationList>(ServiceID.MainLocationList);
         let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
 
-        mainLocationList.add(locationFactory.create(LocationTypeID.Forrest, level));
+        let location = locationFactory.create(LocationTypeID.Forrest, level,{
+            configureStrategy: 'default',
+        });
+
+        mainLocationList.add(location);
     }
 }
