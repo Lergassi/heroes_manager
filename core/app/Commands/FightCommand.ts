@@ -29,7 +29,7 @@ export default class FightCommand extends Command {
         assertNotNil(hero);
         console.log(hero);
 
-        let enemy = this.container.get<EnemyFactory>(ServiceID.EnemyFactory).create(EnemyTypeID.Bear, 1, {
+        let enemy = this.container.get<EnemyFactory>(ServiceID.EnemyFactory).createSquad(EnemyTypeID.Bear, 1, 1, {
             baseCharacterAttributeValues: {
                 [CharacterAttributeID.AttackPower]: 1000,
             },

@@ -17,7 +17,7 @@ export default class GenerateEnemySandboxController extends AbstractSandboxContr
     private _getStarted() {
         let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let enemy = enemyFactory.create(EnemyTypeID.EnemyType01, 1);
+        let enemy = enemyFactory.createSquad(EnemyTypeID.EnemyType01, 1);
         console.log(enemy);
 
         let itemStorage = new Bag(20, this.container.get<EntityManagerInterface>(ServiceID.EntityManager));

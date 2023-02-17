@@ -8,6 +8,7 @@ import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
+import _ from 'lodash';
 
 export interface GameConsoleProps {
     container: ContainerInterface;
@@ -16,6 +17,13 @@ export interface GameConsoleProps {
 }
 
 export default class GameConsoleRC extends React.Component<any, any>{
+    private _buttonCommands = [
+        CommandID.new_game,
+        CommandID.new_game + ' ' + 'empty',
+        CommandID.new_game + ' ' + 'basic',
+        CommandID.create_location,
+    ];
+
     private readonly _container: ContainerInterface;
 
     private readonly _executeUrl;
@@ -61,6 +69,7 @@ export default class GameConsoleRC extends React.Component<any, any>{
         this.handleChange = this.handleChange.bind(this);
         this.keyPressHandler = this.keyPressHandler.bind(this);
         this.keyDownHandler = this.keyDownHandler.bind(this);
+        this._queryHandler = this._queryHandler.bind(this);
     }
 
     handleChange(event) {
@@ -89,11 +98,6 @@ export default class GameConsoleRC extends React.Component<any, any>{
 
     autoCompleteHandlingDisable() {
         this._isAutoCompleteHandling = false;
-    }
-
-    selectCommandSample(query: string, event) {
-        event.preventDefault();
-        this._queryHandler(query);
     }
 
     keyDownHandler(e) {
@@ -174,26 +178,20 @@ export default class GameConsoleRC extends React.Component<any, any>{
                     onKeyDown={this.keyDownHandler}
                     value={this.state.value}
                 />
-                <div
-                    className={'game-console-autocomplete-list-wrapper'}
-                >
+                <div className={'game-console-autocomplete-list-wrapper'} >
                     {/*todo: Сделать в виде отдельного компонента. Только рендер.*/}
                     <ul className={'game-console-autocomplete-list list-without-types'}>
-                    {this._autoCompleteList.map(command => (
-                            <li className={this._isAutoCompleteHandling && (command === this.state.value) ? 'game-console-autocomplete-list__selected' : ''} key={command}>{command}</li>
-                    ))}
+                        {this._autoCompleteList.map(command => (
+                                <li className={this._isAutoCompleteHandling && (command === this.state.value) ? 'game-console-autocomplete-list__selected' : ''} key={command}>{command}</li>
+                        ))}
                     </ul>
                 </div>
                 <div>
-                    <div>
-                        <button className={'btn btn_default btn_width-200px'} onClick={this.selectCommandSample.bind(this, CommandID.new_game)}>{CommandID.new_game}</button>
-                    </div>
-                    <div>
-                        <button className={'btn btn_default btn_width-200px'} onClick={this.selectCommandSample.bind(this, CommandID.new_game + ' ' + 'empty')}>{CommandID.new_game} empty</button>
-                    </div>
-                    <div>
-                        <button className={'btn btn_default btn_width-200px'} onClick={this.selectCommandSample.bind(this, CommandID.new_game + ' ' + 'basic')}>{CommandID.new_game} basic</button>
-                    </div>
+                    {_.map(this._buttonCommands, (command, index) => {
+                        return <div key={index}>
+                            <button className={'btn btn_default btn_width-200px'} onClick={this._queryHandler.bind(this, command)}>{command}</button>
+                        </div>
+                    })}
                 </div>
             </div>
         );

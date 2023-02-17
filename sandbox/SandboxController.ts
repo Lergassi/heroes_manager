@@ -111,9 +111,9 @@ export default class SandboxController {
         // (new ShopSandboxController(this._container)).run();
         // (new CraftSystemSandboxController(this._container)).run();
         // (new HeroSandboxController(this._container)).run();
-        // (new EnemySandboxController(this._container)).run();
+        (new EnemySandboxController(this._container)).run();
         // (new FightSandboxController(this._container)).run();
-        (new LocationSandboxController(this._container)).run();
+        // (new LocationSandboxController(this._container)).run();
 
         // (new GenerateItemsSandboxController(this._container)).run();
         // (new GenerateItemsV002SandboxController(this._container)).run();
@@ -308,7 +308,7 @@ export default class SandboxController {
         let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
         let hero = heroFactory.create(HeroClassID.Warrior, 1);
-        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1, {
+        let enemy = enemyFactory.createSquad(EnemyTypeID.Bear, 1, 1, {
             baseCharacterAttributeValues: {
                 // [CharacterAttributeID.AttackPower]: 0,
                 // [CharacterAttributeID.AttackPower]: 1,
@@ -350,31 +350,31 @@ export default class SandboxController {
         console.log('heroes', extractHealthPoints(heroes));
 
         let enemies = [
-            enemyFactory.create(EnemyTypeID.Bear, 1, {
+            enemyFactory.createSquad(EnemyTypeID.Bear, 1, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
                 },
             }),
-            enemyFactory.create(EnemyTypeID.Bear, 1, {
+            enemyFactory.createSquad(EnemyTypeID.Bear, 1, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
                 },
             }),
-            enemyFactory.create(EnemyTypeID.Bear, 1, {
+            enemyFactory.createSquad(EnemyTypeID.Bear, 1, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
                 },
             }),
-            enemyFactory.create(EnemyTypeID.Bear, 1, {
+            enemyFactory.createSquad(EnemyTypeID.Bear, 1, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
                 },
             }),
-            enemyFactory.create(EnemyTypeID.Bear, 1, {
+            enemyFactory.createSquad(EnemyTypeID.Bear, 1, 1, {
                 baseCharacterAttributeValues: {
                     [CharacterAttributeID.AttackPower]: 16,
                     [CharacterAttributeID.MaxHealthPoints]: 200,
@@ -728,11 +728,11 @@ export default class SandboxController {
         console.log(heroFightGroup);
 
         let enemyFightGroup = new _CharacterFightGroup();
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
-        enemyFightGroup.addCharacter(enemyFactory.create(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.createSquad(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.createSquad(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.createSquad(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.createSquad(EnemyTypeID.Bear, 1));
+        enemyFightGroup.addCharacter(enemyFactory.createSquad(EnemyTypeID.Bear, 1));
         console.log(enemyFightGroup);
 
         // heroFightGroup.attackTo(enemyFightGroup);

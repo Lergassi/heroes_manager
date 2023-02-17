@@ -18,8 +18,9 @@ export default class LocationConfigurator {
         //veins
 
         //enemies
-        database.locations.enemies.find(LocationTypeID.Forrest, (enemyTypeID) => {
-            location.addEnemy(this._enemyFactory.create(enemyTypeID, location.level));
+        database.locations.enemies.find(LocationTypeID.Forrest, (enemyTypeID, count) => {
+            //todo: Число врагов брать из бд.
+            location.addEnemy(this._enemyFactory.createSquad(enemyTypeID, location.level, _.random(count.min, count.max)));
         });
     }
 }

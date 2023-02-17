@@ -11,14 +11,8 @@ export default abstract class Command {
     private readonly _commandArguments;
     private _requireArgumentsLength: number;
 
-    /**
-     * @deprecated
-     */
     abstract get name(): string;
 
-    /**
-     * @deprecated
-     */
     get description(): string {
         return this._description;
     }
@@ -71,7 +65,7 @@ export default abstract class Command {
         this._requireArgumentsLength += +isRequire;
     }
 
-    //todo: Убрать из команды.
+    //todo: Убрать из команды. Куда?
     async run(commandArguments: string[] = []) {
         //todo: Убрать в другой объект, чтобы не код не был в каждом классе команды.
         if (commandArguments.length < this._requireArgumentsLength) {

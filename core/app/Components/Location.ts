@@ -5,7 +5,7 @@ import {
     DetailLocationRCHeroElement
 } from '../../../client/public/Components/DetailLocationRC.js';
 import {separate} from '../../debug_functions.js';
-import {assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
+import {assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
 import EventSystem from '../../source/EventSystem.js';
 import GameObject from '../../source/GameObject.js';
@@ -24,16 +24,16 @@ import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import LevelInterface from '../Interfaces/LevelInterface.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import CharacterAttribute from './CharacterAttribute.js';
-import _CharacterFightGroup from './FightLegacy/_CharacterFightGroup.js';
 import Experience from './Experience.js';
 import FightController from './FightController.js';
 import FightGroupController from './FightGroupController.js';
 import Gatherer from './Gatherer.js';
-import Vein from './Vein.js';
 import HealthPoints from './HealthPoints.js';
 import HeroActivityStateController, {HeroActivityStateCode} from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
 import LifeStateController from './LifeStateController.js';
+import SquadDamageController from './SquadDamageController.js';
+import Vein from './Vein.js';
 
 export enum LocationHuntingState {
     Waiting = 'Waiting',
@@ -95,11 +95,9 @@ export default class Location {
     private readonly _itemStackFactory: ItemStackFactory;
 
     private readonly _heroes: GameObject[];
-    // private readonly _heroFightGroupController: _CharacterFightGroup;
     private readonly _heroFightGroupController: FightGroupController;
 
     private readonly _enemies: GameObject[];
-    // private readonly _enemyFightGroupController: _CharacterFightGroup;
     private readonly _enemyFightGroupController: FightGroupController;
 
     private readonly _itemStorage: ItemStorageInterface;   //Визуально может никак не быть связанным с сумками.
@@ -168,8 +166,7 @@ export default class Location {
             return false;
         }
 
-        // if (!this._heroFightGroupController.addCharacter(hero)) return false;
-        this._heroFightGroupController.addCharacter(hero);
+        if (!this._heroFightGroupController.addCharacter(hero)) return false;
         this._heroes.push(hero);    //todo: Не будет работать после удаления исключений.
         EventSystem.event(LocationEventCode.AddHero, this);    //todo: Или достаточно события из группы? Может как то связать их? "Цепочка" событыий.
 
@@ -183,7 +180,7 @@ export default class Location {
 
         if (!this._canRemoveHero()) return false;
 
-        this._heroFightGroupController.removeCharacter(hero);
+        if (!this._heroFightGroupController.removeCharacter(hero)) return false;
         _.pull(this._heroes, hero);
         EventSystem.event(LocationEventCode.RemoveHero, this);
         hero.get<HeroActivityStateController>(ComponentID.HeroActivityStateController).free();
@@ -196,7 +193,7 @@ export default class Location {
 
         //todo: Проверка на include.
 
-        this._enemyFightGroupController.addCharacter(enemy);
+        if (!this._enemyFightGroupController.addCharacter(enemy)) return false;
         this._enemies.push(enemy);
 
         return true;
@@ -221,21 +218,14 @@ export default class Location {
         }
 
         this._huntingState = LocationHuntingState.Hunting;
-        let reward: RewardOptions = {
+        let rewardOptions: RewardOptions = {
             wallet: this._wallet,
             itemStorage: this._itemStorage,
         };
         this._intervalID = setInterval(() => {
             this._gather();
 
-            // if (this._heroFightGroupController.canAttack() && this._enemyFightGroupController.canAttack()) {
-            //     this._heroFightGroupController.attackTo(this._enemyFightGroupController, reward);
-            //     this._enemyFightGroupController.attackTo(this._heroFightGroupController);
-            // }
-
-            // this._heroFightGroupController.attack(this._enemyFightGroupController);
-            // this._enemyFightGroupController.attack(this._heroFightGroupController);
-            this._fightController.fight(reward);
+            this._fightController.fight(rewardOptions);
             separate();
 
             //И другие действия...
@@ -347,6 +337,7 @@ export default class Location {
         let enemies: DetailLocationRCEnemyElement[] = [];
         for (let i = 0; i < this._enemies.length; i++) {
             let data: DetailLocationRCEnemyElement = {
+                count: 0,
                 attackPower: 0,
                 currentHealthPoints: 0,
                 enemyTypeName: this._enemies[i].get<EnemyTypeID>(ComponentID.EnemyTypeID),
@@ -377,6 +368,11 @@ export default class Location {
                 },
                 updateDeadState(isDead: boolean): void {
                     data.isDead = isDead;
+                },
+            });
+            this._enemies[i].get<SquadDamageController>(ComponentID.DamageController).renderByRequest({
+                updateCount(count: number) {
+                    data.count = count;
                 },
             });
 

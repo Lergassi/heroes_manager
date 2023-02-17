@@ -551,10 +551,7 @@ export default class _SandboxController {
         // let enemyType = em.entity<EnemyEntity>(EntityManagerKey.EnemyType, EnemyID.Boar);
         // console.log(enemyType);
         // console.log(enemyType.alias);
-        let enemy = enemyFactory.create(
-            EnemyTypeID.Boar,
-            1,
-        );
+        let enemy = enemyFactory.createSquad(EnemyTypeID.Boar, 1);
         console.log(enemy);
     }
 
@@ -620,23 +617,9 @@ export default class _SandboxController {
         let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let enemies: GameObject[] = [];
-        enemies.push(enemyFactory.create(
-            // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            // enemyType: EnemyTypeID.Boar,
-            EnemyTypeID.Boar,
-            1,
-        ));
-        enemies.push(enemyFactory.create(
-            // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            EnemyTypeID.Boar,
-            1,
-        ));
-        enemies.push(enemyFactory.create(
-            // type: em.entity<EnemyType>(EntityManagerKey.EnemyType, EnemyTypeID.Boar),
-            EnemyTypeID.Boar,
-            1,
-
-        ));
+        enemies.push(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
+        enemies.push(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
+        enemies.push(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
         console.log(_.map(enemies, (enemy) => {
             return enemy['_id'];
         }));
@@ -1109,7 +1092,7 @@ export default class _SandboxController {
     private devEnemyArmor() {
         let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let enemy = enemyFactory.create(EnemyTypeID.Bear, 1);
+        let enemy = enemyFactory.createSquad(EnemyTypeID.Bear, 1);
         console.log(enemy);
         console.log(enemy.get<DamageControllerInterface>(ComponentID.DamageController));
         console.log(enemy.get<HealthPoints>(ComponentID.HealthPoints));

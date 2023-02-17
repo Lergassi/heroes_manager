@@ -4,10 +4,10 @@ import {RewardOptions} from './FightControllerInterface.js';
 export default interface DamageControllerInterface {
     /**
      *
-     * @param value
-     * @param afterDiedThisOptions
+     * @param damage
+     * @param rewardOptions
      * @return Полученное кол-во урона.
      */
-    damage(value: number, afterDiedThisOptions?: RewardOptions): number;
+    damage(damage: number, rewardOptions?: RewardOptions): number;
     canDamage(): boolean;
 }

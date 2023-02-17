@@ -1,7 +1,7 @@
 import debug from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
-import {assertAction, assertIsPositive, assertNotNil} from '../../source/assert.js';
+import {assertAction, assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../source/assert.js';
 import EventSystem from '../../source/EventSystem.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
@@ -66,13 +66,14 @@ export default class HealthPoints implements DamageControllerInterface {
     //todo: Убрать enemyRewardOptions.
     //todo: Сделать обычные add/remove, возможно даже без проверки на смерть. Нанесение урона - отдельная логика.
     damage(damage: number, enemyRewardOptions?: RewardOptions): number {
-        assertIsPositive(damage);
-        damage = _.floor(damage, 0);    //todo: Округление. Выбрать место. Для damage сделть отдельный класс.
+        assertIsGreaterThanOrEqual(damage, 0);
 
         if (!this._lifeStateController.canAction()) {
             debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
             return;
         }
+
+        damage = _.floor(damage, 0);    //todo: Округление. Выбрать место. Для damage сделть отдельный класс.
 
         let resultDamage = this._currentHealthPoints >= damage ? damage : this._currentHealthPoints;
 
@@ -152,10 +153,7 @@ export default class HealthPoints implements DamageControllerInterface {
     }
 
     resurrect(): boolean {
-        // if (!this._isDead) {
-        //     throw AppError.isNotDead();
-        // }
-        if (this._lifeStateController.canAction()) {
+        if (this._lifeStateController.canAction()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
             debug(DebugNamespaceID.Throw)('Персонаж живой.');   //todo: Или универсальное сообщение, например "Нельзя совершить подобное действие."
             return false;
         }
@@ -185,12 +183,4 @@ export default class HealthPoints implements DamageControllerInterface {
             isDead: this._isDead,
         });
     }
-
-    // private _canModify(): void {
-    //     // if (this._isDead) {
-    //     //     // throw AppError.isDead();
-    //     //     throw new CharacterIsDeadError();
-    //     // }
-    //     assertAction(this._lifeStateController.canAction());
-    // }
 }

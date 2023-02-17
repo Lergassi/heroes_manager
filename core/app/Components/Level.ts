@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import debug from 'debug';
 import {assertIsGreaterThanOrEqual} from '../../source/assert.js';
-import LevelInterface, {LevelInterfaceRender} from '../Interfaces/LevelInterface.js';
+import LevelInterface, {LevelRenderInterface} from '../Interfaces/LevelInterface.js';
 
 export default class Level implements LevelInterface {
     private readonly _level: number;
@@ -16,7 +16,7 @@ export default class Level implements LevelInterface {
         this._level = level;
     }
 
-    renderByRequest(ui: LevelInterfaceRender): void {
+    renderByRequest(ui: LevelRenderInterface): void {
         ui.updateLevel?.(this._level);
     }
 }

@@ -17,7 +17,7 @@ export default class GameConsole {
     private readonly _commands: {[name: string]: Command};
 
     /**
-     * @deprecated
+     * @deprecated Сделать метод configUI(gameConsoleRC) в котором будет происходить настройка ui компонента.
      */
     get names(): string[] {
         let names = [];
@@ -40,14 +40,6 @@ export default class GameConsole {
 
     hasCommand(name: string) {
         return this._commands.hasOwnProperty(name);
-    }
-
-    private _getCommand(name: string) {
-        if (this.hasCommand(name)) {
-            return this._commands[name];
-        }
-
-        throw new AppError(sprintf('Команда %s не найдена.', name));
     }
 
     async run(name: string, commandArguments: string[] = []) {
@@ -77,5 +69,13 @@ export default class GameConsole {
             name: commandQuerySplitted[0],
             arguments: _.slice(commandQuerySplitted, 1),
         };
+    }
+
+    private _getCommand(name: string) {
+        if (this.hasCommand(name)) {
+            return this._commands[name];
+        }
+
+        throw new AppError(sprintf('Команда %s не найдена.', name));
     }
 }

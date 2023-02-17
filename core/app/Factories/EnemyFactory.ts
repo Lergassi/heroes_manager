@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import {database} from '../../data/ts/database.js';
 import {assert, assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
+import GameObject from '../../source/GameObject.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
@@ -16,6 +17,7 @@ import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttribut
 import ItemLootGenerator from '../Components/ItemLootGenerator.js';
 import Level from '../Components/Level.js';
 import LifeStateController from '../Components/LifeStateController.js';
+import SquadDamageController from '../Components/SquadDamageController.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
@@ -41,15 +43,15 @@ export default class EnemyFactory {
         this._enemyCharacterAttributeFactory = characterAttributeFactory;
     }
 
-    create(
+    createSquad(
         enemyTypeID: EnemyTypeID,
         level: number,
+        count: number = 1,
         options?: {
-            baseCharacterAttributeValues: Partial<{[ID in CharacterAttributeID]: number}>,
-            strategies?: {},
+            baseCharacterAttributeValues?: Partial<{ [ID in CharacterAttributeID]: number }>;
         }
     ) {
-        assertIsGreaterThanOrEqual(level,1);
+        // assertIsGreaterThanOrEqual(level,1);
         assertNotNil(enemyTypeID);
 
         let enemy = this._gameObjectFactory.create();
@@ -64,7 +66,7 @@ export default class EnemyFactory {
         enemy.set<EnemyTypeID>(ComponentID.EnemyTypeID, enemyTypeID);
         enemy.set<LevelInterface>(ComponentID.Level, new Level(level));
 
-        let healthPointsComponent = enemy.set<HealthPoints>(ComponentID.HealthPoints, new HealthPoints(
+        let healthPoints = enemy.set<HealthPoints>(ComponentID.HealthPoints, new HealthPoints(
             this._enemyCharacterAttributeFactory.create(
                 CharacterAttributeID.MaxHealthPoints,
                 level,
@@ -82,18 +84,35 @@ export default class EnemyFactory {
                 if (target?.experienceDistributor) experienceGeneratorComponent.distribute(target.experienceDistributor);
                 if (target?.wallet) goldLootGeneratorComponent.transfer(target.wallet);
                 if (target?.itemStorage) itemLootGeneratorComponent.generate(target.itemStorage);
-            }
+            },
         ));
-        enemy.set<DamageControllerInterface>(ComponentID.DamageController, healthPointsComponent);
-
-        // let armorDecorator = enemy.set<DamageControllerInterface>(ComponentID.DamageController, new ArmorDecorator(
-        //     healthPointsComponent as DamageControllerInterface,
-        //     this._enemyCharacterAttributeFactory.create(
-        //         CharacterAttributeID.Protection,
-        //         level,
-        //         itemCharacterAttributeCollector,
-        //     ),
-        // ));
+        // enemy.set<DamageControllerInterface>(ComponentID.DamageController, healthPoints);
+        // const f = (healthPoints: HealthPoints) => {
+        //     return new SquadDamageController(healthPoints, 10);
+        // }
+        enemy.set<DamageControllerInterface>(ComponentID.DamageController, new SquadDamageController(
+            healthPoints,
+            // this._enemyCharacterAttributeFactory.create(
+            //     CharacterAttributeID.MaxHealthPoints,
+            //     level,
+            //     itemCharacterAttributeCollector,
+            //     {
+            //         baseValue: options?.baseCharacterAttributeValues?.MaxHealthPoints,
+            //     },
+            // ),
+            // stateController,
+            // enemyTypeID,
+            count,
+            // (target?: {
+            //     experienceDistributor?: ExperienceDistributorInterface,
+            //     wallet?: WalletInterface,
+            //     itemStorage?: ItemStorageInterface,
+            // }) => {
+            //     if (target?.experienceDistributor) experienceGeneratorComponent.distribute(target.experienceDistributor);
+            //     if (target?.wallet) goldLootGeneratorComponent.transfer(target.wallet);
+            //     if (target?.itemStorage) itemLootGeneratorComponent.generate(target.itemStorage);
+            // },
+        ));
 
         let attackPower = enemy.set(CharacterAttributeID.AttackPower, this._enemyCharacterAttributeFactory.create(
             CharacterAttributeID.AttackPower,
@@ -109,6 +128,7 @@ export default class EnemyFactory {
             stateController,
         ));
 
+        //todo: configure
         let itemLootGeneratorComponent = enemy.set<ItemLootGenerator>(ComponentID.ItemLootGenerator, new ItemLootGenerator());
         database.enemies.rewards.items(enemyTypeID, (itemID, count, chance) => {
             itemLootGeneratorComponent.addItem(itemID, count, chance);
@@ -121,3 +141,8 @@ export default class EnemyFactory {
         return enemy;
     }
 }
+
+function aaa(a: number, b1: number) {
+
+}
+

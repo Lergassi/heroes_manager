@@ -168,14 +168,16 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
         let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let locationGO = locationFactory.create(LocationTypeID.Forrest, 1);
+        let locationGO = locationFactory.create(LocationTypeID.Forrest, 1, {
+            configureStrategy: 'default',
+        });
         let location = locationGO.get<Location>(ComponentID.Location);
 
-        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
-        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
-        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
-        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
-        location.addEnemy(enemyFactory.create(EnemyTypeID.Boar, 1));
+        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
+        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
+        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
+        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
+        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
 
         this.container.get<MainLocationList>(ServiceID.MainLocationList).add(locationGO);
     }

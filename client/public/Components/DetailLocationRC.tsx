@@ -63,6 +63,7 @@ export interface DetailLocationRCHeroElement {
 
 export interface DetailLocationRCEnemyElement {
     enemyTypeName: string;
+    count: number;
     level: number;
     attackPower: number;
     currentHealthPoints: number;
@@ -424,6 +425,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     <tbody>
                                         <tr>
                                             <th>EnemyTypeID</th>
+                                            <th>Count</th>
                                             <th>Level</th>
                                             <th>AP</th>
                                             <th>HP</th>
@@ -431,6 +433,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                         {_.map(enemies, (enemy, index) => {
                                             return <tr key={index}>
                                                 <td>{enemy.enemyTypeName} {enemy.isDead ? '(X)' : ''}</td>
+                                                <td>{enemy.count}</td>
                                                 <td>{enemy.level}</td>
                                                 <td>{enemy.attackPower}</td>
                                                 <td>{enemy.currentHealthPoints}/{enemy.maxHealthPoints}</td>

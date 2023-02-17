@@ -37,11 +37,11 @@ export default class FightSandboxController extends AbstractSandboxController {
         ];
 
         let enemies = [
-            enemyFactory.create(EnemyTypeID.Boar, 1),
-            enemyFactory.create(EnemyTypeID.Boar, 1),
-            enemyFactory.create(EnemyTypeID.Boar, 1),
-            enemyFactory.create(EnemyTypeID.Boar, 1),
-            enemyFactory.create(EnemyTypeID.Boar, 1),
+            enemyFactory.createSquad(EnemyTypeID.Boar, 1),
+            enemyFactory.createSquad(EnemyTypeID.Boar, 1),
+            enemyFactory.createSquad(EnemyTypeID.Boar, 1),
+            enemyFactory.createSquad(EnemyTypeID.Boar, 1),
+            enemyFactory.createSquad(EnemyTypeID.Boar, 1),
         ];
 
         let heroFightController = new FightGroupController();
@@ -80,8 +80,8 @@ export default class FightSandboxController extends AbstractSandboxController {
         _.map(_.range(0, hits), () => {
             // enemyFightController.damageFirstCharacter(42);
             // heroFightController.damageFirstCharacter(42);
-            heroFightController.attack(enemyFightController);
-            enemyFightController.attack(heroFightController);
+            heroFightController.attackTo(enemyFightController);
+            enemyFightController.attackTo(heroFightController);
             separate();
             separate();
         });
