@@ -1,17 +1,15 @@
+import debug from 'debug';
+import _ from 'lodash'
+import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 import {DebugFormatterID} from '../../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import {unsigned} from '../../../types/main.js';
 import CharacterAttributeInterface, {
     CharacterAttributeInterfaceRender
 } from '../../Decorators/CharacterAttributeInterface.js';
-import {unsigned} from '../../../types/main.js';
-import _ from 'lodash'
-import debug from 'debug';
-import CharacterAttribute from '../CharacterAttribute.js';
-import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
-import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
 
 /**
- * @deprecated Не удобно.
+ * @deprecated Не удобно. Переделать.
  */
 export default class AttackPowerDependentIncreaseDecorator implements CharacterAttributeInterface {
     private readonly _attackPower: CharacterAttributeInterface;
@@ -44,11 +42,10 @@ export default class AttackPowerDependentIncreaseDecorator implements CharacterA
     }
 
     renderByRequest(ui: CharacterAttributeInterfaceRender): void {
-        this._attackPower.renderByRequest(ui);
+        ui.updateCharacterAttributeFinalValue?.(CharacterAttributeID.AttackPower, this.finalValue);
     }
 
     debug(): void {
-        // this._attackPower.debug();
         debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             ID: CharacterAttributeID.AttackPower,
             baseValue: this.baseValue,

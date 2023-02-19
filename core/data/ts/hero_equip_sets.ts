@@ -37,7 +37,7 @@ let weapon_sets_data: TSDB_WeaponSet = {
         [ItemCategoryID.TwoHandedSwords]: {count: 1},
     },
     [HeroClassID.Rogue]: {
-        [ItemCategoryID.Daggers]: {count: 1},
+        [ItemCategoryID.Daggers]: {count: 2},
     },
     [HeroClassID.Gunslinger]: {
         [ItemCategoryID.Revolvers]: {count: 2},
@@ -62,7 +62,13 @@ export const hero_equip_sets = {
         });
     },
     equipSet: function (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void) {
-        this.hero_equip_sets.armorSet(heroClassID, callback);
-        this.hero_equip_sets.weaponSet(heroClassID, callback);
+        // console.log('this', this);
+        // console.log('this.armorSet', this.armorSet);
+        // console.log('this.armorSet', this.armorSet);
+        // this.hero_equip_sets.armorSet(heroClassID, callback);
+        // this.hero_equip_sets.weaponSet(heroClassID, callback);
+        //todo: Разобраться с this в таком решении (database.ts). То есть то нету...
+        this.armorSet(heroClassID, callback);
+        this.weaponSet(heroClassID, callback);
     },
 };

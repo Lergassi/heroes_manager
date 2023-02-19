@@ -98,7 +98,8 @@ export default class GenerateItems {
                 let itemMetadata = this._getMetadata(itemCategoryID);
                 let armorMaterialID = this._getMetadata(itemCategoryID).requireArmorMaterial ? this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<HeroClass>(EntityID.HeroClass, heroClassID).availableArmorMaterials[0].id : undefined;
 
-                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
+                // let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
+                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), 0);
                 let itemAttributes: ItemDatabaseRow = {
                     ID: '',
                     ItemCategoryID: itemCategoryID,

@@ -48,10 +48,9 @@ export default class EnemyFactory {
         level: number,
         count: number = 1,
         options?: {
-            baseCharacterAttributeValues?: Partial<{ [ID in CharacterAttributeID]: number }>;
+            baseCharacterAttributeValues?: {[ID in CharacterAttributeID]?: number};
         }
     ) {
-        // assertIsGreaterThanOrEqual(level,1);
         assertNotNil(enemyTypeID);
 
         let enemy = this._gameObjectFactory.create();
@@ -61,8 +60,6 @@ export default class EnemyFactory {
 
         let stateController = new LifeStateController();
 
-        let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
-
         enemy.set<EnemyTypeID>(ComponentID.EnemyTypeID, enemyTypeID);
         enemy.set<LevelInterface>(ComponentID.Level, new Level(level));
 
@@ -70,7 +67,6 @@ export default class EnemyFactory {
             this._enemyCharacterAttributeFactory.create(
                 CharacterAttributeID.MaxHealthPoints,
                 level,
-                itemCharacterAttributeCollector,
                 {
                     baseValue: options?.baseCharacterAttributeValues?.MaxHealthPoints,
                 },
@@ -117,7 +113,6 @@ export default class EnemyFactory {
         let attackPower = enemy.set(CharacterAttributeID.AttackPower, this._enemyCharacterAttributeFactory.create(
             CharacterAttributeID.AttackPower,
             level,
-            itemCharacterAttributeCollector,
             {
                 baseValue: options?.baseCharacterAttributeValues?.AttackPower,
             }
@@ -141,8 +136,3 @@ export default class EnemyFactory {
         return enemy;
     }
 }
-
-function aaa(a: number, b1: number) {
-
-}
-

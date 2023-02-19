@@ -1,16 +1,12 @@
+import {startCharacterAttributeConfig} from '../../config/start_character_values.js';
 import {database} from '../../data/ts/database.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
-import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
+import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
-import {unsigned} from '../../types/main.js';
-import EnemyCharacterAttributeStartValueGenerator, {
-    CharacterAttributeValueModifier
-} from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
-import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValueGenerator.js';
-import {HeroClassID} from '../../types/enums/HeroClassID.js';
+import Balance from '../Services/Balance.js';
 import CharacterAttributeValueGeneratorByConfig from '../Services/CharacterAttributeValueGeneratorByConfig.js';
-import {startCharacterAttributeConfig} from '../../config/start_character_values.js';
+import EnemyCharacterAttributeStartValueGenerator from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
 
 export default class HeroCharacterAttributeFactory {
     private readonly _characterAttributeStartValueFactory: EnemyCharacterAttributeStartValueGenerator;
@@ -26,7 +22,7 @@ export default class HeroCharacterAttributeFactory {
     create(
         heroClassID: HeroClassID,
         characterAttributeID: CharacterAttributeID,
-        level: unsigned,
+        level: number,
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,   //todo: В декоратор.
         options?: { //todo: Времено пока в разработке. Далее для каждого класса будет своя логика без передачи из вне.
             baseValue?: number,
@@ -34,11 +30,27 @@ export default class HeroCharacterAttributeFactory {
             // increaseValueModifier?: CharacterAttributeValueModifier,
         },
     ) {
+        let balance = new Balance();
+
+        let value = 0;
+        switch (characterAttributeID) {
+            case CharacterAttributeID.MaxHealthPoints:
+                value = balance.baseHeroMaxHealthPoints(level, heroClassID);
+                break;
+            case CharacterAttributeID.AttackPower:
+                value = balance.baseHeroAttackPower(level, heroClassID);
+                break;
+            default:
+                value = database.heroes.character_attributes.startValue(heroClassID, characterAttributeID)
+                break;
+        }
+
         let characterAttribute = new CharacterAttribute(
             characterAttributeID,
             itemCharacterAttributeCollector,
             // options?.baseValue ?? this._generatorByConfig.generate(heroClassID, characterAttributeID),
-            options?.baseValue ?? database.heroes.character_attributes.startValue(heroClassID, characterAttributeID),
+            // options?.baseValue ?? database.heroes.character_attributes.startValue(heroClassID, characterAttributeID),
+            options?.baseValue ?? value,
             // options?.baseValue ?? this._characterAttributeStartValueFactory.generate(
             //     characterAttributeID,
             //     level,

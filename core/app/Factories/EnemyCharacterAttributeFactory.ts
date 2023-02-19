@@ -3,6 +3,7 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import {unsigned} from '../../types/main.js';
+import Balance from '../Services/Balance.js';
 import EnemyCharacterAttributeStartValueGenerator, {
     CharacterAttributeValueModifier
 } from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
@@ -14,27 +15,37 @@ import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValu
 export default class EnemyCharacterAttributeFactory {
     private readonly _enemyCharacterAttributeStartValueFactory: EnemyCharacterAttributeStartValueGenerator;
 
-    constructor(
-        characterAttributeStartValueGenerator: EnemyCharacterAttributeStartValueGenerator,
-    ) {
-        this._enemyCharacterAttributeStartValueFactory = characterAttributeStartValueGenerator;
+    constructor() {
+
     }
 
     create(
-        ID: CharacterAttributeID,
-        level: unsigned,
-        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,   //todo: В декоратор.
+        characterAttributeID: CharacterAttributeID,
+        level: number,
         options?: {
             baseValue?: number,
         },
     ) {
+        let balance = new Balance();
+
+        let value = 0;
+        switch (characterAttributeID) {
+            case CharacterAttributeID.MaxHealthPoints:
+                value = balance.defaultEnemyMaxHealthPoints(level);
+                break;
+            case CharacterAttributeID.AttackPower:
+                value = balance.defaultEnemyAttackPower(level);
+                break;
+        }
+
         let characterAttribute = new CharacterAttribute(
-            ID,
-            itemCharacterAttributeCollector,
-            options?.baseValue ?? this._enemyCharacterAttributeStartValueFactory.generate(
-                ID,
-                level,
-            )
+            characterAttributeID,
+            new ItemCharacterAttributeCollector(),  //Временно, для совместимости.
+            options?.baseValue ?? value,
+            // options?.baseValue ?? this._enemyCharacterAttributeStartValueFactory.generate(
+            //     characterAttributeID,
+            //     level,
+            // ),
         );
 
         return characterAttribute;

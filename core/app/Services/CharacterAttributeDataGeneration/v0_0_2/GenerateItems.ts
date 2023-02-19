@@ -10,7 +10,7 @@ import {ItemCategoryID} from '../../../../types/enums/ItemCategoryID.js';
 import {QualityID} from '../../../../types/enums/QualityID.js';
 import {ItemDatabaseRow} from '../../../../types/ItemDatabaseRow.js';
 import item_character_attribute_generation_functions from '../v0_0_1/item_character_attribute_generation_functions.js';
-import {formulas} from './formulas.js';
+import {item_balance_formulas} from './item_balance_formulas.js';
 import ItemCharacterAttributeGenerator from './ItemCharacterAttributeGenerator.js';
 
 export default class GenerateItems {
@@ -126,10 +126,10 @@ export default class GenerateItems {
                     positions[calcValues.currentLevelUpdate].push(itemCategories[innerI]);
                     innerI++;
 
-                    let itemLevel = formulas.heroLevelToItemLevel({
+                    let itemLevel = item_balance_formulas.heroLevelToItemLevel({
                         heroLevel: calcValues.currentLevelUpdate,
                         itemLevelStep: 5,
-                        startHeroLevel: 1,
+                        // startHeroLevel: 1,
                         startItemLevel: 25,
                     });
                     let itemAttributes: ItemDatabaseRow = {
@@ -171,6 +171,7 @@ export default class GenerateItems {
                     }
                     itemAttributes.ID += sprintf('_%s', _.padStart(String(this._IDs[itemAttributes.ID]), 2, '0'));
 
+                    //todo: Разделить атрибуты предметов и атрибуты героев. Не всегда логика 1:1. Атрибуты у предметов это просто число (несколько чисел).
                     itemAttributes[CharacterAttributeID.HealthPoints] = this._itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategories[i]);
                     //Пока все атрибуты одинаковые. Класс сам выбререт нужный.
                     itemAttributes[CharacterAttributeID.Strength] = this._itemCharacterAttributeGenerator.characterAttribute(itemLevel, itemCategories[i]);

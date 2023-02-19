@@ -1,5 +1,5 @@
 import {enemy_loot} from './enemy_loot.js';
-import {hero_character_attributes} from './hero_character_attributes.js';
+import {hero_class_character_attributes} from './hero_class_character_attributes.js';
 import {hero_equip_sets} from './hero_equip_sets.js';
 import {item_category_ratios} from './item_category_ratios.js';
 import {location_enemies} from './location_enemies.js';
@@ -15,7 +15,7 @@ export const database = {
         // data: {},
     },
     heroes: {
-        character_attributes: hero_character_attributes,
+        character_attributes: hero_class_character_attributes,
         equip_sets: hero_equip_sets,
     },
     enemies: {

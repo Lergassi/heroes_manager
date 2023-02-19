@@ -4,7 +4,7 @@ import {database} from '../../../../data/ts/database.js';
 import {CharacterAttributeID} from '../../../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../../types/enums/ItemCategoryID.js';
-import {formulas} from './formulas.js';
+import {item_balance_formulas} from './item_balance_formulas.js';
 
 /**
  * Важно! По умолчанию данный алгоритм генерирует НЕ случайные значения. Это нужно для контроля правильности работы алгоритма. todo: Разделить на части: базовое значение и рейты для класса + погрешность и случайные величины, и/или добавить сюда контроль точных значений.
@@ -31,9 +31,9 @@ export default class ItemCharacterAttributeGenerator {
     };
 
     healthPoints(itemLevel: number, itemCategoryID: ItemCategoryID, heroClassID?: HeroClassID): number {
-        return formulas.universalCharacterAttributeByRatio({
+        return item_balance_formulas.universalCharacterAttributeByRatio({
             itemLevel: itemLevel,
-            ratio: database.item_categories.ratios.getRatio(itemCategoryID, CharacterAttributeID.AttackPower),
+            ratio: database.item_categories.ratios.ratio(itemCategoryID, CharacterAttributeID.AttackPower),
             startValue: this._config.startHealthPoints,
             startItemLevel: this._config.startItemLevel,
             valueForItemLevel: this._config.healthPointsForItemLevel,
@@ -41,9 +41,9 @@ export default class ItemCharacterAttributeGenerator {
     }
 
     attackPower(itemLevel: number, itemCategoryID: ItemCategoryID, heroClassID?: HeroClassID): number {
-        return formulas.attackPowerByRatio({
+        return item_balance_formulas.attackPowerByRatio({
             startAttackPower: _.random(this._config.startAttackPower - this._config.baseItemConstantDispersion, this._config.startAttackPower + this._config.baseItemConstantDispersion),
-            ratio: database.item_categories.ratios.getRatio(itemCategoryID, CharacterAttributeID.AttackPower),
+            ratio: database.item_categories.ratios.ratio(itemCategoryID, CharacterAttributeID.AttackPower),
             itemLevel: itemLevel,
             attackPowerItemLevel: _.random(this._config.itemLevelAttackPower - this._config.itemLevelAttackPowerDispersion, this._config.itemLevelAttackPower + this._config.itemLevelAttackPowerDispersion),
             startItemLevel: this._config.startItemLevel,
@@ -51,6 +51,6 @@ export default class ItemCharacterAttributeGenerator {
     }
 
     characterAttribute(itemLevel: number, itemCategoryID: ItemCategoryID, heroClassID?: HeroClassID): number {
-        return formulas.attackPowerToCharacterAttribute(this.attackPower(itemLevel, itemCategoryID, heroClassID), this._config.attackPowerByCharacterAttributeRatio);
+        return item_balance_formulas.attackPowerToCharacterAttribute(this.attackPower(itemLevel, itemCategoryID, heroClassID), this._config.attackPowerByCharacterAttributeRatio);
     }
 }

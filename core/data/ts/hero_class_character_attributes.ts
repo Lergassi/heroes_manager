@@ -32,7 +32,7 @@ let hero_character_attributes_data: {[ID in HeroClassID]?: TSDB_CharacterAttribu
         [CharacterAttributeID.Intelligence]: 6,
         [CharacterAttributeID.Protection]: 200,
         [CharacterAttributeID.MaxHealthPoints]: 220,
-        [CharacterAttributeID.AttackPower]: 14,
+        [CharacterAttributeID.AttackPower]: 16,
     },
     //Всё тоже что и за 500, только с увеличенными хп и ап. Атакующие параметры будут стоить дороже защитных.
     [HeroClassID.Tank2]: {
@@ -75,7 +75,7 @@ let hero_character_attributes_data: {[ID in HeroClassID]?: TSDB_CharacterAttribu
         [CharacterAttributeID.Intelligence]: 6,
         [CharacterAttributeID.Protection]: 100,
         [CharacterAttributeID.MaxHealthPoints]: 80,
-        [CharacterAttributeID.AttackPower]: 16,
+        [CharacterAttributeID.AttackPower]: 20,
     },
     [HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon]: {
         [CharacterAttributeID.Strength]: 6,
@@ -116,7 +116,7 @@ let hero_character_attributes_data: {[ID in HeroClassID]?: TSDB_CharacterAttribu
         [CharacterAttributeID.Intelligence]: 6,
         [CharacterAttributeID.Protection]: 80,
         [CharacterAttributeID.MaxHealthPoints]: 80,
-        [CharacterAttributeID.AttackPower]: 16,
+        [CharacterAttributeID.AttackPower]: 24,
     },
     [HeroClassID.Archer]: {
         [CharacterAttributeID.Strength]: 6,
@@ -140,7 +140,7 @@ let hero_character_attributes_data: {[ID in HeroClassID]?: TSDB_CharacterAttribu
         [CharacterAttributeID.Intelligence]: 7,
         [CharacterAttributeID.Protection]: 50,
         [CharacterAttributeID.MaxHealthPoints]: 60,
-        [CharacterAttributeID.AttackPower]: 10,
+        [CharacterAttributeID.AttackPower]: 28,
     },
 
     [HeroClassID.Necromancer]: {
@@ -181,7 +181,7 @@ let hero_character_attributes_data: {[ID in HeroClassID]?: TSDB_CharacterAttribu
         [CharacterAttributeID.Intelligence]: 6,
         [CharacterAttributeID.Protection]: 50,
         [CharacterAttributeID.MaxHealthPoints]: 80,
-        [CharacterAttributeID.AttackPower]: 20,
+        [CharacterAttributeID.AttackPower]: 32,
     },
 
     [HeroClassID.Support1]: {
@@ -190,7 +190,7 @@ let hero_character_attributes_data: {[ID in HeroClassID]?: TSDB_CharacterAttribu
         [CharacterAttributeID.Intelligence]: 6,
         [CharacterAttributeID.Protection]: 100,
         [CharacterAttributeID.MaxHealthPoints]: 80,
-        [CharacterAttributeID.AttackPower]: 16,
+        [CharacterAttributeID.AttackPower]: 6,
     },
     [HeroClassID.Support2]: {
         [CharacterAttributeID.Strength]: 6,
@@ -226,20 +226,50 @@ let hero_character_attributes_data: {[ID in HeroClassID]?: TSDB_CharacterAttribu
     },
 };
 
+let character_attribute_ratios_data = {
+    [CharacterAttributeID.AttackPower]: {
+        [HeroClassID.Warrior]: 0.8,
+        [HeroClassID.Barbarian]: 1,
+        [HeroClassID.Rogue]: 1.2,
+        [HeroClassID.Gunslinger]: 1.4,
+        [HeroClassID.FireMage]: 1.6,
+        [HeroClassID.Support1]: 0.3,
+    },
+    [CharacterAttributeID.MaxHealthPoints]: {
+        [HeroClassID.Warrior]: 2,
+        [HeroClassID.Barbarian]: 1,
+        [HeroClassID.Rogue]: 0.8,
+        [HeroClassID.Gunslinger]: 0.7,
+        [HeroClassID.FireMage]: 0.5,
+        [HeroClassID.Support1]: 1.2,
+    },
+};
+
 function check(heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID): void {
     if (_.isNil(hero_character_attributes_data[heroClassID]?.[characterAttributeID])) {
         debug(DebugNamespaceID.Replace)(sprintf('Данные для %s: %s не найдены и будут заменены нулевыми значениями.', heroClassID, characterAttributeID));
     }
 }
 
-export const hero_character_attributes = {
+export function debug_replace(value: any, message?: string) {
+    if (_.isNil(value)) {
+        debug(DebugNamespaceID.Replace)(sprintf('Данные не найдены и будут заменены нулевыми значениями.'));
+    }
+}
+
+export const hero_class_character_attributes = {
+    /**
+     * @deprecated Начальных значений не будет за пределами конфига в инструментах. Начальное значение это значение для 1ого уровня => blabla(level: number)
+     * @param heroClassID
+     * @param characterAttributeID
+     */
     startValue: function (heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID): number {
         check(heroClassID, characterAttributeID);
 
         return hero_character_attributes_data[heroClassID]?.[characterAttributeID] ?? 0;
     },
     /**
-     * Значение которое прибавляется за 1 уровень к базовому значению героя. Увеличение с ростом уровня высчитывается отдельно.
+     * Значение которое прибавляется за 1 уровень к базовому значению героя.
      * @param heroClassID
      * @param characterAttributeID
      */
@@ -247,5 +277,11 @@ export const hero_character_attributes = {
         check(heroClassID, characterAttributeID);
 
         return 0;
+    },
+    ratio: function (heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID) {
+        let value = character_attribute_ratios_data[characterAttributeID]?.[heroClassID];
+        debug_replace(value);
+
+        return value ?? 0;
     },
 };

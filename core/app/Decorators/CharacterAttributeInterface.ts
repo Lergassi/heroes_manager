@@ -2,7 +2,7 @@ import {unsigned} from '../../types/main.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 export interface CharacterAttributeInterfaceRender {
-    updateCharacterAttributeFinalValue(ID: CharacterAttributeID, value: number): void;
+    updateCharacterAttributeFinalValue?(ID: CharacterAttributeID, value: number): void;
 }
 
 export default interface CharacterAttributeInterface {

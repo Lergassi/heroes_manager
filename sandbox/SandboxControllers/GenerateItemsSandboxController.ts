@@ -266,7 +266,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         console.log('-'.repeat(64));
 
         this._devStartValues({
-            enemyHealthPoints: calcValues.enemyHealthPoints,
+            enemyMaxHealthPoints: calcValues.enemyHealthPoints,
         });
     }
 
@@ -292,7 +292,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             console.log('-'.repeat(64));
 
             this._devStartValues({
-                enemyHealthPoints: calcValues.enemyHealthPoints,
+                enemyMaxHealthPoints: calcValues.enemyHealthPoints,
             });
 
             console.log('-'.repeat(64));
@@ -416,7 +416,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             characterAttributeSum: characterAttributeSum,
             attackPower: balance.attackPowerByCharacterAttribute(characterAttributeSum, 2),
             // attackPower: balance.attackPowerByCharacterAttribute(characterAttributeSum, 0.5),
-            enemyHealthPoints: balance.enemyHealthPoints(healthPointsSum, 2),
+            enemyMaxHealthPoints: balance.enemyHealthPoints(healthPointsSum, 2),
             enemyDamageToHero: balance.enemyDamageToHero(healthPointsSum, 0.3, 10),
             enemyDPS: enemyDPS,
             enemyAttackPower: enemyAttackPower,
@@ -480,7 +480,8 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
         for (const level in positions) {
             for (let itemCategoryIndex = 0; itemCategoryIndex < positions[level].length; itemCategoryIndex++) {
-                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
+                // let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
+                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), 0);
                 let itemAttributes: ItemDatabaseRow = {
                     ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
                     ItemCategoryID: positions[level][itemCategoryIndex],

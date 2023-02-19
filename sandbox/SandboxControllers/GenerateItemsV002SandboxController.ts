@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import CharacterAttributeTransfer
     from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/CharacterAttributeTransfer.js';
-import {formulas} from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/formulas.js';
+import {item_balance_formulas} from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/item_balance_formulas.js';
 import GenerateItems from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
 import ItemCharacterAttributeGenerator
     from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/ItemCharacterAttributeGenerator.js';
@@ -15,29 +15,31 @@ import AbstractSandboxController from './AbstractSandboxController.js';
 export default class GenerateItemsV002SandboxController extends AbstractSandboxController {
     run(): void {
         // this._gevAlgorithm();
-        this._gevClass();
+        // this._gevClass();
         // this._gevGenerateItems();
 
         // this._testSumGetStarted();
         // this._testSumGetStarted();
         // this._testSumWithBlur();
+
+        this._use();
     }
 
     private readonly _itemCategoryRatios = {
-        [ItemCategoryID.Helmets]: {[CharacterAttributeID.HealthPoints]: 0.5, [CharacterAttributeID.AttackPower]: 0.5},  //todo: Добавить другие атрибуты.
-        [ItemCategoryID.ShoulderPads]: {[CharacterAttributeID.HealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-        [ItemCategoryID.Breastplates]: {[CharacterAttributeID.HealthPoints]: 1, [CharacterAttributeID.AttackPower]: 1},
-        [ItemCategoryID.Bracers]: {[CharacterAttributeID.HealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
-        [ItemCategoryID.Gloves]: {[CharacterAttributeID.HealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-        [ItemCategoryID.Belts]: {[CharacterAttributeID.HealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
-        [ItemCategoryID.Pants]: {[CharacterAttributeID.HealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
-        [ItemCategoryID.Boots]: {[CharacterAttributeID.HealthPoints]: 0.4, [CharacterAttributeID.AttackPower]: 0.4},
-        [ItemCategoryID.Amulets]: {[CharacterAttributeID.HealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
-        [ItemCategoryID.Rings]: {[CharacterAttributeID.HealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-        [ItemCategoryID.OneHandedSwords]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
-        [ItemCategoryID.TwoHandedSwords]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
-        [ItemCategoryID.Daggers]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
-        [ItemCategoryID.Shields]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 0.2},
+        [ItemCategoryID.Helmets]: {[CharacterAttributeID.MaxHealthPoints]: 0.5, [CharacterAttributeID.AttackPower]: 0.5},  //todo: Добавить другие атрибуты.
+        [ItemCategoryID.ShoulderPads]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
+        [ItemCategoryID.Breastplates]: {[CharacterAttributeID.MaxHealthPoints]: 1, [CharacterAttributeID.AttackPower]: 1},
+        [ItemCategoryID.Bracers]: {[CharacterAttributeID.MaxHealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
+        [ItemCategoryID.Gloves]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
+        [ItemCategoryID.Belts]: {[CharacterAttributeID.MaxHealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
+        [ItemCategoryID.Pants]: {[CharacterAttributeID.MaxHealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
+        [ItemCategoryID.Boots]: {[CharacterAttributeID.MaxHealthPoints]: 0.4, [CharacterAttributeID.AttackPower]: 0.4},
+        [ItemCategoryID.Amulets]: {[CharacterAttributeID.MaxHealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
+        [ItemCategoryID.Rings]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
+        [ItemCategoryID.OneHandedSwords]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
+        [ItemCategoryID.TwoHandedSwords]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
+        [ItemCategoryID.Daggers]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
+        [ItemCategoryID.Shields]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 0.2},
     };
 
     private _testSumGetStarted() {
@@ -164,9 +166,9 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         database.heroes.equip_sets.equipSet(HeroClassID.Warrior, (itemCategoryID, count) => {
             // console.log(itemCategoryID, count);
             for (let i = 0; i < count; i++) {
-                let attackPower = formulas.attackPowerByRatio({
+                let attackPower = item_balance_formulas.attackPowerByRatio({
                     startAttackPower: _.random(constValues.baseItemConstant - constValues.baseItemConstantBlur, constValues.baseItemConstant + constValues.baseItemConstantBlur),
-                    ratio: database.item_categories.ratios.getRatio(itemCategoryID, CharacterAttributeID.AttackPower),
+                    ratio: database.item_categories.ratios.ratio(itemCategoryID, CharacterAttributeID.AttackPower),
                     itemLevel: constValues.itemLevel,
                     // itemLevelAttackPower: constValues.itemLevelRangeAttackPower,
                     attackPowerItemLevel: _.random(constValues.itemLevelAttackPower - constValues.itemLevelAttackPowerBlur, constValues.itemLevelAttackPower + constValues.itemLevelAttackPowerBlur),
@@ -255,5 +257,67 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         let generateItems = new GenerateItems(this.container);
         generateItems.run(items);
         console.log('items', items);
+    }
+
+    private _use() {
+        let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
+        let characterAttributeTransfer = new CharacterAttributeTransfer();
+
+        let constValues: any = {
+            // itemLevel: 25,
+            // itemLevel: 50,
+            // itemLevel: 125,
+            heroClassID: HeroClassID.Barbarian,
+        };
+        let calcValues: any = {};
+
+        let startItemLevel = 25;
+        let itemLevel = 25;
+        let itemLevelStep = 5;
+        calcValues.attackPowerSum = 0;
+        _.forEach(_.range(1, 101), (level) => {
+            itemLevel = startItemLevel + _.floor(level / itemLevelStep) * itemLevelStep;
+            // console.log(level, itemLevel);
+            // console.log(itemLevel);
+
+            database.heroes.equip_sets.equipSet(constValues.heroClassID, (itemCategoryID, count) => {
+                for (let i = 0; i < count; i++) {
+                    // let healthPoints = itemCharacterAttributeGenerator.healthPoints(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
+                    let attackPower = itemCharacterAttributeGenerator.attackPower(itemLevel, itemCategoryID, constValues.heroClassID);
+                    // let characterAttribute = itemCharacterAttributeGenerator.characterAttribute(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
+                    // let characterAttribute = formulas.attackPowerToCharacterAttribute_reverse(attackPower, 2);
+                    // let characterAttribute = characterAttributeTransfer.attackPowerToCharacterAttribute_reverse(attackPower);
+
+                    // calcValues.healthPointsSum = _.round(calcValues.healthPointsSum + healthPoints);
+                    // calcValues.characterAttributeSum = _.round(calcValues.characterAttributeSum + characterAttribute);
+                    calcValues.attackPowerSum = _.round(calcValues.attackPowerSum + attackPower);
+                    // console.log(constValues.heroClassID, itemCategoryID, attackPower, characterAttribute);
+                    // console.log(constValues.heroClassID, itemCategoryID, {healthPoints: healthPoints, attackPower: attackPower});
+                }
+            });//end database
+            console.log(level, itemLevel, calcValues.attackPowerSum);
+            calcValues.attackPowerSum = 0;
+        });
+        // console.log(calcValues);
+
+        // calcValues.attackPowerSum = 0;
+        // calcValues.characterAttributeSum = 0;
+        // calcValues.healthPointsSum = 0;
+        // database.heroes.equip_sets.equipSet(constValues.heroClassID, (itemCategoryID, count) => {
+        //     for (let i = 0; i < count; i++) {
+        //         let healthPoints = itemCharacterAttributeGenerator.healthPoints(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
+        //         let attackPower = itemCharacterAttributeGenerator.attackPower(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
+        //         // let characterAttribute = itemCharacterAttributeGenerator.characterAttribute(constValues.itemLevel, itemCategoryID, constValues.heroClassID);
+        //         // let characterAttribute = formulas.attackPowerToCharacterAttribute_reverse(attackPower, 2);
+        //         let characterAttribute = characterAttributeTransfer.attackPowerToCharacterAttribute_reverse(attackPower);
+        //
+        //         calcValues.healthPointsSum = _.round(calcValues.healthPointsSum + healthPoints);
+        //         calcValues.characterAttributeSum = _.round(calcValues.characterAttributeSum + characterAttribute);
+        //         calcValues.attackPowerSum = _.round(calcValues.attackPowerSum + attackPower);
+        //         // console.log(constValues.heroClassID, itemCategoryID, attackPower, characterAttribute);
+        //         console.log(constValues.heroClassID, itemCategoryID, {healthPoints: healthPoints, attackPower: attackPower});
+        //     }
+        // });
+        // console.log(calcValues);
     }
 }

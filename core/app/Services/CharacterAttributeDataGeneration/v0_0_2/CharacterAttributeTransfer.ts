@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import debug from 'debug';
 import {item_category_ratios} from '../../../../data/ts/item_category_ratios.js';
-import {formulas} from './formulas.js';
+import {item_balance_formulas} from './item_balance_formulas.js';
 
 export default class CharacterAttributeTransfer {
     private readonly _config = {
@@ -9,10 +9,10 @@ export default class CharacterAttributeTransfer {
     };
 
     characterAttributeToAttackPower(characterAttribute: number): number {
-        return formulas.characterAttributeToAttackPower(characterAttribute, this._config.characterAttributeToAttackPowerRatio);
+        return item_balance_formulas.characterAttributeToAttackPower(characterAttribute, this._config.characterAttributeToAttackPowerRatio);
     }
 
     attackPowerToCharacterAttribute_reverse(attackPower: number): number {
-        return formulas.attackPowerToCharacterAttribute(attackPower, this._config.characterAttributeToAttackPowerRatio);
+        return item_balance_formulas.attackPowerToCharacterAttribute(attackPower, this._config.characterAttributeToAttackPowerRatio);
     }
 }

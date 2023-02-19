@@ -120,11 +120,19 @@ export default class AppError extends Error {
         return new AppError('Метод еще не реализован.');
     }
 
+    static not() {
+        return new AppError('Метод еще не реализован.');
+    }
+
     static legacy() {
         return new AppError('legacy');
     }
 
     static notWorking(message?: string) {
         return new AppError('Код не рабочий.' + _.isNil(message) ? ' ' + message : '');
+    }
+
+    static indev(message?: string) {
+        return new AppError('В разработке.' + _.isNil(message) ? ' ' + message : '');
     }
 }

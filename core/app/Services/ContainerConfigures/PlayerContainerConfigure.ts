@@ -1,6 +1,7 @@
 // import config from '../config/main.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import config from '../../../config/config.js';
 import AutoIncrementIDGenerator from '../../../source/AutoIncrementIDGenerator.js';
 import ContainerConfigureInterface from '../../../source/ContainerConfigureInterface.js';
 import ContainerInterface from '../../../source/ContainerInterface.js';
@@ -78,7 +79,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //region Фабрики компонентов.
         container.set<ExperienceComponentFactory>(ServiceID.ExperienceComponentFactory, (container) => {
             return new ExperienceComponentFactory({
-                maxLevel: 100,
+                maxLevel: config.max_hero_level,
             });
         });
         //endregion Фабрики компонентов.
@@ -107,19 +108,13 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         container.set<CharacterAttributeValueGenerator>(ServiceID.CharacterAttributeValueGenerator, (container) => {
             return new CharacterAttributeValueGenerator();
         });
-        container.set<EnemyCharacterAttributeStartValueGenerator>(ServiceID.CharacterAttributeStartValueGenerator, (container) => {
-            return new EnemyCharacterAttributeStartValueGenerator(container.get<CharacterAttributeValueGenerator>(ServiceID.CharacterAttributeValueGenerator));
-            // return new CharacterAttributeStartValueGenerator();
-        });
         container.set<HeroCharacterAttributeFactory>(ServiceID.HeroCharacterAttributeFactory, (container) => {
             return new HeroCharacterAttributeFactory(
                 // container.get<CharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator),
             );
         });
         container.set<EnemyCharacterAttributeFactory>(ServiceID.EnemyCharacterAttributeFactory, (container) => {
-            return new EnemyCharacterAttributeFactory(
-                container.get<EnemyCharacterAttributeStartValueGenerator>(ServiceID.CharacterAttributeStartValueGenerator),
-            );
+            return new EnemyCharacterAttributeFactory();
         });
         container.set<HeroFactory>(ServiceID.HeroFactory, (container) => {
             return new HeroFactory(

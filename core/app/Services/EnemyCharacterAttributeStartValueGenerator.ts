@@ -16,6 +16,9 @@ import {assertNotNil} from '../../source/assert.js';
 
 export type CharacterAttributeValueModifier = (value: number) => number;
 
+/**
+ * @deprecated Не актуально.
+ */
 export default class EnemyCharacterAttributeStartValueGenerator {
     // private readonly _characterAttributeStartValueGenerators: Record<CharacterAttributeID, CharacterAttributeStartValueGeneratorInterface> = {
     private readonly _characterAttributeStartValueGenerators: {[ID in CharacterAttributeID]?: CharacterAttributeStartValueGeneratorInterface} = {

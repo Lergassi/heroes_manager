@@ -15,7 +15,7 @@ export enum CharacterAttributeID {
 
     //...
     /**
-     * HP
+     * @deprecated Понятия HealthPoints не нужно пока. Максимальное значение и текущее. Текущее значение - пока не атрибут.
      */
     HealthPoints = 'HealthPoints',
     MaxHealthPoints = 'MaxHealthPoints',

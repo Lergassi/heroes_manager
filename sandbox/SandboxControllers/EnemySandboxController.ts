@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import FightController from '../../core/app/Components/FightController.js';
 import FightGroupController from '../../core/app/Components/FightGroupController.js';
 import EnemyFactory from '../../core/app/Factories/EnemyFactory.js';
@@ -6,12 +7,12 @@ import {EnemyTypeID} from '../../core/types/enums/EnemyTypeID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
-import _ from 'lodash';
 
 export default class EnemySandboxController extends AbstractSandboxController {
     run(): void {
         // this._devEnemyFactoryWithStrategy();
-        this._devEnemySquad();
+        // this._devEnemySquad();
+        this._devGenerateCharacterAttributes();
     }
 
     private _devEnemyFactoryWithStrategy() {
@@ -23,8 +24,7 @@ export default class EnemySandboxController extends AbstractSandboxController {
     }
 
     private _devEnemySquad() {
-        let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);``
-        let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
+        let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);        let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
 
         let heroes = [
             heroFactory.create(HeroClassID.Warrior, 1),
@@ -69,5 +69,15 @@ export default class EnemySandboxController extends AbstractSandboxController {
             // squad.attackTo(heroes[0].get<DamageControllerInterface>(ComponentID.DamageController));
             fightController.fight();
         });
+    }
+
+    private _devGenerateCharacterAttributes() {
+        let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);
+        let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
+
+        console.log(heroFactory.create(HeroClassID.Barbarian, 1));
+        // console.log(heroFactory.create(HeroClassID.Warrior, 1));
+        // console.log(heroFactory.create(HeroClassID.FireMage, 1));
+        console.log(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
     }
 }
