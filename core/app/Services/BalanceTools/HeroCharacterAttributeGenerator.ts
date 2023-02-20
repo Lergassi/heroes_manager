@@ -1,23 +1,24 @@
 // import _ from 'lodash';
-import config from '../../config/config.js';
-import {database} from '../../data/ts/database.js';
-import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
-import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
-import {HeroClassID} from '../../types/enums/HeroClassID.js';
+import config from '../../../config/config.js';
+import {database} from '../../../data/ts/database.js';
+import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
+import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
+import {HeroClassID} from '../../../types/enums/HeroClassID.js';
+import {enemy_character_attributes_formulas} from './formulas/enemy_character_attributes_formulas.js';
+import {hero_character_attributes_formulas} from './formulas/hero_character_attributes_formulas.js';
 
-import {balance_formulas} from './balance_formulas.js';
-import {item_balance_formulas} from './CharacterAttributeDataGeneration/v0_0_2/item_balance_formulas.js';
+import {item_attributes_formulas} from './formulas/item_attributes_formulas.js';
 
 /**
  * Базовый инструмент для генерации всех атрибутов на основе уровня героя и уровне врага. Всё что скрыто будет меняться, но генерация всегда будет на основе уровней.
  */
-export default class Balance {
+export default class HeroCharacterAttributeGenerator {
     //**********************************
     // default.HealthPoints
     //**********************************
 
     defaultBaseHeroMaxHealthPoints(level: number): number {
-        return balance_formulas.defaultBaseHeroMaxHealthPoints({
+        return hero_character_attributes_formulas.defaultBaseHeroMaxHealthPoints({
             level: level,
             startDefaultHeroHealthPoints: config.start_default_hero_health_points,
             defaultHeroHealthPointsLevelIncrease: config.default_hero_health_points_level_increase,
@@ -34,7 +35,7 @@ export default class Balance {
     //**********************************
 
     baseHeroMaxHealthPoints(level: number, heroClassID: HeroClassID): number {
-        return balance_formulas.baseHeroMaxHealthPoints({
+        return hero_character_attributes_formulas.baseHeroMaxHealthPoints({
             defaultValue: this.defaultBaseHeroMaxHealthPoints(level),
             ratio: database.heroes.character_attributes.ratio(heroClassID, CharacterAttributeID.MaxHealthPoints),
         });
@@ -43,10 +44,9 @@ export default class Balance {
     equipHeroMaxHealthPoints(level: number, heroClassID: HeroClassID): number {
         let summaryRatio = this._summaryRatio(heroClassID, CharacterAttributeID.MaxHealthPoints);
         let itemLevel = this.itemLevelsCount(level);
-        // console.log(summaryRatio, itemLevel);
 
         return _.round(
-            (config.start_item_level_health_points + config.item_level_increase_health_points * itemLevel) * summaryRatio
+            ( config.start_item_level_health_points + config.item_level_increase_health_points * ( itemLevel - 1) ) * summaryRatio
         );
     }
 
@@ -59,7 +59,7 @@ export default class Balance {
     //**********************************
 
     defaultBaseHeroAttackPower(level: number): number {
-        return balance_formulas.defaultBaseHeroAttackPower({
+        return hero_character_attributes_formulas.defaultBaseHeroAttackPower({
             defaultHeroAttackPowerLevelIncrease: config.default_hero_attack_power_level_increase,
             level: level,
             startDefaultHeroAttackPower: config.start_default_hero_attack_power,
@@ -91,7 +91,7 @@ export default class Balance {
      * @param heroClassID
      */
     baseHeroAttackPower(level: number, heroClassID: HeroClassID): number {
-        return balance_formulas.baseHeroAttackPower({
+        return hero_character_attributes_formulas.baseHeroAttackPower({
             defaultValue: this.defaultBaseHeroAttackPower(level),
             ratio: database.heroes.character_attributes.ratio(heroClassID, CharacterAttributeID.AttackPower),
         });
@@ -101,10 +101,9 @@ export default class Balance {
         let values: any = {};
         values.itemLevel = this.itemLevelsCount(level);
         values.summaryRatio = this._summaryRatio(heroClassID, CharacterAttributeID.AttackPower);
-        // console.log(values);
 
         return _.round(
-            (config.start_item_level_attack_power + config.item_level_increase_attack_power * values.itemLevel) *
+            ( config.start_item_level_attack_power + config.item_level_increase_attack_power * ( values.itemLevel - 1 ) ) *
             values.summaryRatio
         );
     }
@@ -117,33 +116,6 @@ export default class Balance {
     finalHeroAttackPower(level: number, heroClassID): number {
         return this.baseHeroAttackPower(level, heroClassID) + this.equipHeroAttackPower(level, heroClassID);
     }
-
-    //**********************************
-    // enemies.HealthPoints
-    //**********************************
-
-    defaultEnemyMaxHealthPoints(level: number /* enemyTypeID ratio */): number {
-        return balance_formulas.enemyMaxHealthPoints({
-            finalHeroAttackPower: this.defaultFinalHeroAttackPower(level),
-            heroHitRatioToEnemy: config.default_hero_hit_ratio_to_enemy,
-        });
-    }
-
-    enemyMaxHealthPoints(level: number, enemyTypeID: EnemyTypeID): number {return 0;}
-
-    //**********************************
-    // enemies.AttackPower
-    //**********************************
-
-    defaultEnemyAttackPower(level: number): number {
-        return balance_formulas.enemyAttackPower({
-            heroHealthPoints: this.defaultFinalHeroMaxHealthPoints(level),
-            enemyDamageRatioToHero: config.default_enemy_damage_ratio_to_hero,
-            heroHitRatioToEnemy: config.default_hero_hit_ratio_to_enemy,
-        });
-    }
-
-    enemyAttackPower(level: number, enemyTypeID: EnemyTypeID): number {return 0;}
 
     //**********************************
     //region tools todo: Убрать в другое место.
@@ -165,10 +137,9 @@ export default class Balance {
     }
 
     itemLevelsCount(level: number): number {
-        return (item_balance_formulas.heroLevelToItemLevel({
+        return item_attributes_formulas.heroLevelCorrespondsToItemLevel({
             heroLevel: level,
-            itemLevelStep: config.item_level_step,
-            startItemLevel: config.start_item_level,
-        }) - config.start_item_level);
+            ratio: config.hero_level_corresponds_to_item_level_ratio,
+        });
     }
 }

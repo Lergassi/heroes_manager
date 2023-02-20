@@ -33,6 +33,7 @@ import WalletFactory from '../../Factories/WalletFactory.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../Interfaces/WalletInterface.js';
+import AttributeGenerators from '../BalanceTools/AttributeGenerators.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
 import LocationConfigurator from '../LocationConfigurator.js';
@@ -110,11 +111,11 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<HeroCharacterAttributeFactory>(ServiceID.HeroCharacterAttributeFactory, (container) => {
             return new HeroCharacterAttributeFactory(
-                // container.get<CharacterAttributeStartValueGenerator>(ContainerID.CharacterAttributeStartValueGenerator),
+                container.get<AttributeGenerators>(ServiceID.AttributeGenerators).heroCharacterAttributeGenerator,
             );
         });
         container.set<EnemyCharacterAttributeFactory>(ServiceID.EnemyCharacterAttributeFactory, (container) => {
-            return new EnemyCharacterAttributeFactory();
+            return new EnemyCharacterAttributeFactory(container.get<AttributeGenerators>(ServiceID.AttributeGenerators).enemyCharacterAttributeGenerator);
         });
         container.set<HeroFactory>(ServiceID.HeroFactory, (container) => {
             return new HeroFactory(

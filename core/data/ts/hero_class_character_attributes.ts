@@ -259,7 +259,7 @@ export function debug_replace(value: any, message?: string) {
 
 export const hero_class_character_attributes = {
     /**
-     * @deprecated Начальных значений не будет за пределами конфига в инструментах. Начальное значение это значение для 1ого уровня => blabla(level: number)
+     * @deprecated Начальных значений не будет за пределами конфига в инструментах. Начальное значение это значение для 1ого уровня => attackPower(level: number)
      * @param heroClassID
      * @param characterAttributeID
      */

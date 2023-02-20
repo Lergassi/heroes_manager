@@ -3,7 +3,9 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import {unsigned} from '../../types/main.js';
-import Balance from '../Services/Balance.js';
+import AttributeGenerators from '../Services/BalanceTools/AttributeGenerators.js';
+import EnemyCharacterAttributeGenerator from '../Services/BalanceTools/EnemyCharacterAttributeGenerator.js';
+import HeroCharacterAttributeGenerator from '../Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator, {
     CharacterAttributeValueModifier
 } from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
@@ -14,9 +16,10 @@ import CharacterAttributeValueGenerator from '../Services/CharacterAttributeValu
  */
 export default class EnemyCharacterAttributeFactory {
     private readonly _enemyCharacterAttributeStartValueFactory: EnemyCharacterAttributeStartValueGenerator;
+    private readonly _enemyCharacterAttributeGenerator: EnemyCharacterAttributeGenerator;
 
-    constructor() {
-
+    constructor(enemyCharacterAttributeGenerator: EnemyCharacterAttributeGenerator) {
+        this._enemyCharacterAttributeGenerator = enemyCharacterAttributeGenerator;
     }
 
     create(
@@ -26,15 +29,13 @@ export default class EnemyCharacterAttributeFactory {
             baseValue?: number,
         },
     ) {
-        let balance = new Balance();
-
         let value = 0;
         switch (characterAttributeID) {
             case CharacterAttributeID.MaxHealthPoints:
-                value = balance.defaultEnemyMaxHealthPoints(level);
+                value = this._enemyCharacterAttributeGenerator.defaultEnemyMaxHealthPoints(level);
                 break;
             case CharacterAttributeID.AttackPower:
-                value = balance.defaultEnemyAttackPower(level);
+                value = this._enemyCharacterAttributeGenerator.defaultEnemyAttackPower(level);
                 break;
         }
 

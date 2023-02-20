@@ -112,10 +112,10 @@ export default class SandboxController {
         // (new ShopSandboxController(this._container)).run();
         // (new CraftSystemSandboxController(this._container)).run();
         // (new HeroSandboxController(this._container)).run();
-        (new EnemySandboxController(this._container)).run();
+        // (new EnemySandboxController(this._container)).run();
         // (new FightSandboxController(this._container)).run();
         // (new LocationSandboxController(this._container)).run();
-        // (new BalanceSandboxController(this._container)).run();
+        (new BalanceSandboxController(this._container)).run();
 
         // (new GenerateItemsSandboxController(this._container)).run();
         // (new GenerateItemsV002SandboxController(this._container)).run();

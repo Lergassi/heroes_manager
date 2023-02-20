@@ -1,9 +1,12 @@
 import _ from 'lodash';
-import {CharacterAttributeID} from '../../../../types/enums/CharacterAttributeID.js';
-import {HeroClassID} from '../../../../types/enums/HeroClassID.js';
-import {ItemCategoryID} from '../../../../types/enums/ItemCategoryID.js';
+import {CharacterAttributeID} from '../../../../../types/enums/CharacterAttributeID.js';
+import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
+import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
 import balance from './item_character_attribute_generation_functions.js';
 
+/**
+ * @deprecated
+ */
 export default class ItemCharacterAttributeGenerator {
     private _config: any;
 

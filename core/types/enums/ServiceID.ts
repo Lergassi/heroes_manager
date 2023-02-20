@@ -4,6 +4,7 @@ export enum ServiceID {
     //core
     EventSystem = 'core.EventSystem',
     EventSystemFactory = 'core.EventSystemFactory',
+    AttributeGenerators = 'core.AttributeGenerators',
     EntityManager = 'core.EntityManager',
     ItemFactory = 'core.ItemFactory',
     RecipeFactory = 'core.RecipeFactory',
@@ -67,11 +68,11 @@ export enum ServiceID {
     Data_ItemCategoryPowerRatio = 'Data_ItemCategoryPowerRatio',
 
     //...
-    Data_CommonArmorSet = 'Data_CommonArmorSet',
-    Data_WeaponSet = 'Data_WeaponSet',
+    // Data_CommonArmorSet = 'Data_CommonArmorSet',
+    // Data_WeaponSet = 'Data_WeaponSet',
     // Data_HealthPointsEquipSet = 'Data_HealthPointsEquipSet',
     // Data_AttackPowerEquipSet = 'Data_AttackPowerEquipSet',
-    Data_EquipSet = 'Data_EquipSet',
+    // Data_EquipSet = 'Data_EquipSet',
 
     // Data_WarriorEquipSet = 'Data_WarriorEquipSet',
     // Data_RogueWeaponSet = 'Data_RogueWeaponSet',

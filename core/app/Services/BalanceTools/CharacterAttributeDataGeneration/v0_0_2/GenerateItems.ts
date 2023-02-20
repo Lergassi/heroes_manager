@@ -1,20 +1,20 @@
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
-import config from '../../../../config/config.js';
-import {database} from '../../../../data/ts/database.js';
-import ContainerInterface from '../../../../source/ContainerInterface.js';
-import {ArmorMaterialID} from '../../../../types/enums/ArmorMaterialID.js';
-import {CharacterAttributeID} from '../../../../types/enums/CharacterAttributeID.js';
-import {HeroClassID} from '../../../../types/enums/HeroClassID.js';
-import {ItemCategoryID} from '../../../../types/enums/ItemCategoryID.js';
-import {QualityID} from '../../../../types/enums/QualityID.js';
-import {ItemDatabaseRow} from '../../../../types/ItemDatabaseRow.js';
+import config from '../../../../../config/config.js';
+import {database} from '../../../../../data/ts/database.js';
+import ContainerInterface from '../../../../../source/ContainerInterface.js';
+import {ArmorMaterialID} from '../../../../../types/enums/ArmorMaterialID.js';
+import {CharacterAttributeID} from '../../../../../types/enums/CharacterAttributeID.js';
+import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
+import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
+import {QualityID} from '../../../../../types/enums/QualityID.js';
+import {ItemDatabaseRow} from '../../../../../types/ItemDatabaseRow.js';
 import item_character_attribute_generation_functions from '../v0_0_1/item_character_attribute_generation_functions.js';
-import {item_balance_formulas} from './item_balance_formulas.js';
-import ItemCharacterAttributeGenerator from './ItemCharacterAttributeGenerator.js';
+import {item_attributes_formulas} from '../../formulas/item_attributes_formulas.js';
+import ItemAttributeGenerator from './ItemAttributeGenerator.js';
 
 export default class GenerateItems {
-    private readonly _itemCharacterAttributeGenerator: ItemCharacterAttributeGenerator;
+    private readonly _itemCharacterAttributeGenerator: ItemAttributeGenerator;
     private readonly _container: ContainerInterface;
 
     //tests
@@ -22,7 +22,7 @@ export default class GenerateItems {
 
     constructor(container: ContainerInterface) {
         this._container = container;
-        this._itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
+        this._itemCharacterAttributeGenerator = new ItemAttributeGenerator();
     }
 
     run(items: ItemDatabaseRow[]): void {
@@ -126,11 +126,9 @@ export default class GenerateItems {
                     positions[calcValues.currentLevelUpdate].push(itemCategories[innerI]);
                     innerI++;
 
-                    let itemLevel = item_balance_formulas.heroLevelToItemLevel({
+                    let itemLevel = item_attributes_formulas.heroLevelCorrespondsToItemLevel({
                         heroLevel: calcValues.currentLevelUpdate,
-                        itemLevelStep: 5,
-                        // startHeroLevel: 1,
-                        startItemLevel: 25,
+                        ratio: config.hero_level_corresponds_to_item_level_ratio,
                     });
                     let itemAttributes: ItemDatabaseRow = {
                         ID: '',
@@ -174,9 +172,9 @@ export default class GenerateItems {
                     //todo: Разделить атрибуты предметов и атрибуты героев. Не всегда логика 1:1. Атрибуты у предметов это просто число (несколько чисел).
                     itemAttributes[CharacterAttributeID.HealthPoints] = this._itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategories[i]);
                     //Пока все атрибуты одинаковые. Класс сам выбререт нужный.
-                    itemAttributes[CharacterAttributeID.Strength] = this._itemCharacterAttributeGenerator.characterAttribute(itemLevel, itemCategories[i]);
-                    itemAttributes[CharacterAttributeID.Agility] = this._itemCharacterAttributeGenerator.characterAttribute(itemLevel, itemCategories[i]);
-                    itemAttributes[CharacterAttributeID.Intelligence] = this._itemCharacterAttributeGenerator.characterAttribute(itemLevel, itemCategories[i]);
+                    itemAttributes[CharacterAttributeID.Strength] = this._itemCharacterAttributeGenerator.characterAttribute_reverse(itemLevel, itemCategories[i]);
+                    itemAttributes[CharacterAttributeID.Agility] = this._itemCharacterAttributeGenerator.characterAttribute_reverse(itemLevel, itemCategories[i]);
+                    itemAttributes[CharacterAttributeID.Intelligence] = this._itemCharacterAttributeGenerator.characterAttribute_reverse(itemLevel, itemCategories[i]);
 
                     // console.log(itemCategories[i], itemAttributes.ItemLevel, itemAttributes[CharacterAttributeID.Strength]);
 

@@ -7,7 +7,7 @@ import path from 'path';
 import {sprintf} from 'sprintf-js';
 import yargs from 'yargs/yargs';
 import {hideBin} from 'yargs/helpers';
-import GenerateItems from '../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
+import GenerateItems from '../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
 import CoreContainerConfigure from '../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
 import Container from '../core/source/Container.js';

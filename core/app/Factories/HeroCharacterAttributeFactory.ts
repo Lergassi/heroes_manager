@@ -4,19 +4,20 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
-import Balance from '../Services/Balance.js';
+import HeroCharacterAttributeGenerator from '../Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import CharacterAttributeValueGeneratorByConfig from '../Services/CharacterAttributeValueGeneratorByConfig.js';
 import EnemyCharacterAttributeStartValueGenerator from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
 
 export default class HeroCharacterAttributeFactory {
     private readonly _characterAttributeStartValueFactory: EnemyCharacterAttributeStartValueGenerator;
     private readonly _generatorByConfig: CharacterAttributeValueGeneratorByConfig;
+    private readonly _heroCharacterAttributeGenerator: HeroCharacterAttributeGenerator;
 
     constructor(
-        // characterAttributeStartValueGenerator: CharacterAttributeStartValueGenerator,
+        heroCharacterAttributeGenerator: HeroCharacterAttributeGenerator,
     ) {
-        // this._characterAttributeStartValueFactory = characterAttributeStartValueGenerator;
         this._generatorByConfig = new CharacterAttributeValueGeneratorByConfig(startCharacterAttributeConfig);
+        this._heroCharacterAttributeGenerator = heroCharacterAttributeGenerator;
     }
 
     create(
@@ -30,20 +31,20 @@ export default class HeroCharacterAttributeFactory {
             // increaseValueModifier?: CharacterAttributeValueModifier,
         },
     ) {
-        let balance = new Balance();
-
         let value = 0;
         switch (characterAttributeID) {
             case CharacterAttributeID.MaxHealthPoints:
-                value = balance.baseHeroMaxHealthPoints(level, heroClassID);
+                value = this._heroCharacterAttributeGenerator.baseHeroMaxHealthPoints(level, heroClassID);
                 break;
             case CharacterAttributeID.AttackPower:
-                value = balance.baseHeroAttackPower(level, heroClassID);
+                value = this._heroCharacterAttributeGenerator.baseHeroAttackPower(level, heroClassID);
                 break;
             default:
-                value = database.heroes.character_attributes.startValue(heroClassID, characterAttributeID)
+                // value = database.heroes.character_attributes.startValue(heroClassID, characterAttributeID);
+                // value = this._heroCharacterAttributeGenerator.defaultBaseHeroAttackPower(level);
                 break;
         }
+        //todo: Добавить генерацию главных атрибутов. На основе рейтов. Пока будут нулевые значения.
 
         let characterAttribute = new CharacterAttribute(
             characterAttributeID,

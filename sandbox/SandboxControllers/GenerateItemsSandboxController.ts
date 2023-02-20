@@ -4,11 +4,11 @@ import {sprintf} from 'sprintf-js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import item_character_attribute_generation_functions
-    from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
-import balance from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
-import ItemCharacterAttributeGenerator from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/ItemCharacterAttributeGenerator.js';
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
+import balance from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
+import ItemCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/ItemCharacterAttributeGenerator.js';
 import config from '../../core/config/config.js';
-import GenerateItems from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
+import GenerateItems from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
 import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
@@ -266,7 +266,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         console.log('-'.repeat(64));
 
         this._devStartValues({
-            enemyMaxHealthPoints: calcValues.enemyHealthPoints,
+            maxHealthPoints: calcValues.enemyHealthPoints,
         });
     }
 
@@ -292,7 +292,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             console.log('-'.repeat(64));
 
             this._devStartValues({
-                enemyMaxHealthPoints: calcValues.enemyHealthPoints,
+                maxHealthPoints: calcValues.enemyHealthPoints,
             });
 
             console.log('-'.repeat(64));
@@ -355,9 +355,9 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         // });
     }
 
-    private _testAPI() {
+    private _testAPI(itemCharacterAttributeGenerator: ItemCharacterAttributeGenerator) {
         console.log('---');
-        let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
+        // let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
 
         // let itemLevel = 10;
         let itemLevel = 100;
@@ -374,7 +374,8 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
         let healthPointsSum = 0;
         let characterAttributeSum = 0;
         // let commonArmorSet = this.container.get(ServiceID.Data_CommonArmorSet) as any;/* Без as {} выдает ошибку. Ниже если с получением по ключу ошибки нету. */
-        let warriorEquipSet = this.container.get(ServiceID.Data_EquipSet)[heroClassID];
+        // let warriorEquipSet = this.container.get(ServiceID.Data_EquipSet)[heroClassID];
+        let warriorEquipSet: any = [];   //@legacy
         // console.log('commonArmorSet', commonArmorSet);
         // console.log('warriorEquipSet', warriorEquipSet);
         // _.map(commonArmorSet, (data: any, itemCategoryID) => {
@@ -416,10 +417,10 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             characterAttributeSum: characterAttributeSum,
             attackPower: balance.attackPowerByCharacterAttribute(characterAttributeSum, 2),
             // attackPower: balance.attackPowerByCharacterAttribute(characterAttributeSum, 0.5),
-            enemyMaxHealthPoints: balance.enemyHealthPoints(healthPointsSum, 2),
+            maxHealthPoints: balance.enemyHealthPoints(healthPointsSum, 2),
             enemyDamageToHero: balance.enemyDamageToHero(healthPointsSum, 0.3, 10),
             enemyDPS: enemyDPS,
-            enemyAttackPower: enemyAttackPower,
+            // attackPower: enemyAttackPower,
         });
     }
 

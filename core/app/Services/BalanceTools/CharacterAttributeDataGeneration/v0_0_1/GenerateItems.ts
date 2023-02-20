@@ -2,23 +2,26 @@ import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
 import {sprintf} from 'sprintf-js';
-import HeroClass from '../../../Entities/HeroClass.js';
-import EntityManagerInterface from '../../../Interfaces/EntityManagerInterface.js';
+import HeroClass from '../../../../Entities/HeroClass.js';
+import EntityManagerInterface from '../../../../Interfaces/EntityManagerInterface.js';
 import item_character_attribute_generation_functions
     from './item_character_attribute_generation_functions.js';
 import ItemCharacterAttributeGenerator from './ItemCharacterAttributeGenerator.js';
-import config from '../../../../config/config.js';
-import ContainerInterface from '../../../../source/ContainerInterface.js';
-import {CharacterAttributeID} from '../../../../types/enums/CharacterAttributeID.js';
-import {DebugNamespaceID} from '../../../../types/enums/DebugNamespaceID.js';
-import {EntityID} from '../../../../types/enums/EntityID.js';
-import {HeroClassID} from '../../../../types/enums/HeroClassID.js';
-import {ItemCategoryID} from '../../../../types/enums/ItemCategoryID.js';
-import {QualityID} from '../../../../types/enums/QualityID.js';
-import {ServiceID} from '../../../../types/enums/ServiceID.js';
-import {ItemDatabaseRow} from '../../../../types/ItemDatabaseRow.js';
+import config from '../../../../../config/config.js';
+import ContainerInterface from '../../../../../source/ContainerInterface.js';
+import {CharacterAttributeID} from '../../../../../types/enums/CharacterAttributeID.js';
+import {DebugNamespaceID} from '../../../../../types/enums/DebugNamespaceID.js';
+import {EntityID} from '../../../../../types/enums/EntityID.js';
+import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
+import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
+import {QualityID} from '../../../../../types/enums/QualityID.js';
+import {ServiceID} from '../../../../../types/enums/ServiceID.js';
+import {ItemDatabaseRow} from '../../../../../types/ItemDatabaseRow.js';
 import debug from 'debug';
 
+/**
+ * @deprecated
+ */
 export default class GenerateItems {
     private readonly _container: ContainerInterface;
     private _IDs = {};

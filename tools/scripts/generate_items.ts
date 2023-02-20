@@ -3,7 +3,7 @@ import debug from 'debug';
 import fs from 'fs';
 import path from 'path';
 import {sprintf} from 'sprintf-js';
-import GenerateItems from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
+import GenerateItems from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 

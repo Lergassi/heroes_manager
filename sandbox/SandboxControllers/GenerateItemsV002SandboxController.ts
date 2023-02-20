@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import CharacterAttributeTransfer
-    from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/CharacterAttributeTransfer.js';
-import {item_balance_formulas} from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/item_balance_formulas.js';
-import GenerateItems from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
-import ItemCharacterAttributeGenerator
-    from '../../core/app/Services/CharacterAttributeDataGeneration/v0_0_2/ItemCharacterAttributeGenerator.js';
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/CharacterAttributeTransfer.js';
+import {item_attributes_formulas} from '../../core/app/Services/BalanceTools/formulas/item_attributes_formulas.js';
+import GenerateItems from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
+import ItemAttributeGenerator
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
 import {database} from '../../core/data/ts/database.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
@@ -166,14 +166,15 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         database.heroes.equip_sets.equipSet(HeroClassID.Warrior, (itemCategoryID, count) => {
             // console.log(itemCategoryID, count);
             for (let i = 0; i < count; i++) {
-                let attackPower = item_balance_formulas.attackPowerByRatio({
-                    startAttackPower: _.random(constValues.baseItemConstant - constValues.baseItemConstantBlur, constValues.baseItemConstant + constValues.baseItemConstantBlur),
-                    ratio: database.item_categories.ratios.ratio(itemCategoryID, CharacterAttributeID.AttackPower),
-                    itemLevel: constValues.itemLevel,
-                    // itemLevelAttackPower: constValues.itemLevelRangeAttackPower,
-                    attackPowerItemLevel: _.random(constValues.itemLevelAttackPower - constValues.itemLevelAttackPowerBlur, constValues.itemLevelAttackPower + constValues.itemLevelAttackPowerBlur),
-                    startItemLevel: constValues.startItemLevel,
-                });
+                let attackPower = 0;
+                // let attackPower = item_attributes_formulas.attackPower({
+                //     startAttackPower: _.random(constValues.baseItemConstant - constValues.baseItemConstantBlur, constValues.baseItemConstant + constValues.baseItemConstantBlur),
+                //     ratio: database.item_categories.ratios.ratio(itemCategoryID, CharacterAttributeID.AttackPower),
+                //     itemLevel: constValues.itemLevel,
+                //     // itemLevelAttackPower: constValues.itemLevelRangeAttackPower,
+                //     attackPowerItemLevel: _.random(constValues.itemLevelAttackPower - constValues.itemLevelAttackPowerBlur, constValues.itemLevelAttackPower + constValues.itemLevelAttackPowerBlur),
+                //     startItemLevel: constValues.startItemLevel,
+                // });
                 console.log(itemCategoryID, attackPower);
                 calcValues.attackPowerSum = _.round(calcValues.attackPowerSum + attackPower, 2);
             }
@@ -194,7 +195,7 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
     }
 
     private _gevClass() {
-        let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
+        let itemCharacterAttributeGenerator = new ItemAttributeGenerator();
         let characterAttributeTransfer = new CharacterAttributeTransfer();
 
         let constValues: any = {
@@ -233,7 +234,7 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         };
         let calcValues: any = {};
 
-        let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
+        let itemCharacterAttributeGenerator = new ItemAttributeGenerator();
 
         let maxIteration = 100;
         let sums = {};
@@ -260,8 +261,7 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
     }
 
     private _use() {
-        let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
-        let characterAttributeTransfer = new CharacterAttributeTransfer();
+        let itemCharacterAttributeGenerator = new ItemAttributeGenerator();
 
         let constValues: any = {
             // itemLevel: 25,

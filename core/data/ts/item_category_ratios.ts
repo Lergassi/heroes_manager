@@ -6,6 +6,7 @@ type TSDB_ItemCategoryRatio = {
 };
 
 let item_category_ratios_data: TSDB_ItemCategoryRatio = {
+    //todo: Атрибуты будут называться по другому. У атрибуты нет MaxHealthPoints и тд.
     [ItemCategoryID.Helmets]: {[CharacterAttributeID.MaxHealthPoints]: 0.5, [CharacterAttributeID.AttackPower]: 0.5},
     [ItemCategoryID.ShoulderPads]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
     [ItemCategoryID.Breastplates]: {[CharacterAttributeID.MaxHealthPoints]: 1, [CharacterAttributeID.AttackPower]: 1},
