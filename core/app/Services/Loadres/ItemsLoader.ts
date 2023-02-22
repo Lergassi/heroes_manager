@@ -4,20 +4,19 @@ import config from '../../../config/config.js';
 import {ItemAttributeID} from '../../../types/enums/ItemAttributeID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemFactory from '../../Factories/ItemFactory.js';
-import ItemBuilder from '../ItemBuilder.js';
+import ItemBuilder from '../../Builders/ItemBuilder.js';
 
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 /*
-    todo: Для webpack файл импортируется прямо тут. Разделить.
+    todo: Временно. Для webpack файл импортируется прямо тут. Разделить.
  */
-import items_data from '../../../data/items.json';
-// import auto_generated_equip from '../../../data/json/auto_generated_equip.json';
-import auto_generated_equip from '../../../data/json/auto_generated_equip_10.02.2023_09:07:11.json';
-// import auto_generated_equip from '../../../data/json/' + config.pathname;
+import manual_created_items_data from '../../../data/items.json';
+// import auto_generated_equip from '../../../data/json/auto_generated_equip_10.02.2023_09:07:11.json';
+import auto_generated_equip from '../../../data/json/auto_generated_equip_22.02.2023_06:23:54.json';
 
 export default class ItemsLoader {
     load(entityManager: EntityManagerInterface, itemFactory: ItemFactory) {
-        this._load(entityManager, itemFactory, items_data);
+        this._load(entityManager, itemFactory, manual_created_items_data);
         this._load(entityManager, itemFactory, auto_generated_equip);
     }
 

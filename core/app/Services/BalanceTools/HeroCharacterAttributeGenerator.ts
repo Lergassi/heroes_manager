@@ -142,4 +142,11 @@ export default class HeroCharacterAttributeGenerator {
             ratio: config.hero_level_corresponds_to_item_level_ratio,
         });
     }
+
+    itemLevelCorrespondsToItemLevel(level: number): number {
+        return item_attributes_formulas.heroLevelCorrespondsToItemLevel({
+            heroLevel: level,
+            ratio: config.hero_level_corresponds_to_item_level_ratio,
+        });
+    }
 }

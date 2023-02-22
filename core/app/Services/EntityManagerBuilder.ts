@@ -737,7 +737,7 @@ export default class EntityManagerBuilder {
                 // ItemCategoryID.Wands,
             ],
             [
-                ItemCategoryID.Wands,
+                // ItemCategoryID.Wands,
             ],
         );
         heroClassFactory.create(

@@ -33,7 +33,8 @@ import WalletFactory from '../../Factories/WalletFactory.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../Interfaces/WalletInterface.js';
-import AttributeGenerators from '../BalanceTools/AttributeGenerators.js';
+import EnemyCharacterAttributeGenerator from '../BalanceTools/EnemyCharacterAttributeGenerator.js';
+import HeroCharacterAttributeGenerator from '../BalanceTools/HeroCharacterAttributeGenerator.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
 import LocationConfigurator from '../LocationConfigurator.js';
@@ -111,11 +112,11 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<HeroCharacterAttributeFactory>(ServiceID.HeroCharacterAttributeFactory, (container) => {
             return new HeroCharacterAttributeFactory(
-                container.get<AttributeGenerators>(ServiceID.AttributeGenerators).heroCharacterAttributeGenerator,
+                container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
             );
         });
         container.set<EnemyCharacterAttributeFactory>(ServiceID.EnemyCharacterAttributeFactory, (container) => {
-            return new EnemyCharacterAttributeFactory(container.get<AttributeGenerators>(ServiceID.AttributeGenerators).enemyCharacterAttributeGenerator);
+            return new EnemyCharacterAttributeFactory(container.get<EnemyCharacterAttributeGenerator>(ServiceID.EnemyCharacterAttributeGenerator));
         });
         container.set<HeroFactory>(ServiceID.HeroFactory, (container) => {
             return new HeroFactory(

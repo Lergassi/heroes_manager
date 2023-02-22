@@ -106,12 +106,14 @@ export default class GenerateItems {
                 let itemAttributes: ItemDatabaseRow = {
                     ID: '',
                     ItemCategoryID: itemCategoryID,
+                    ArmorMaterialID: '',
                     ItemLevel: itemLevel,
                     QualityID: constValues.qualityID,
                     StackSize: 1,
                     Strength: 0,
                     Agility: 0,
                     Intelligence: 0,
+                    HealthPoints: 0,
                     Equipable: true,
                     TwoHandWeapon: false,
                 };

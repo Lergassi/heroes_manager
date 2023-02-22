@@ -4,7 +4,7 @@ import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemFactory from '../../Factories/ItemFactory.js';
 import ItemCategoryFactory from '../../Factories/EntityFactories/ItemCategoryFactory.js';
 import itemCategoriesData from '../../../data/json/item_categories.json';
-import ItemBuilder from '../ItemBuilder.js';
+import ItemBuilder from '../../Builders/ItemBuilder.js';
 import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
 
 export default class ItemCategoriesLoader {

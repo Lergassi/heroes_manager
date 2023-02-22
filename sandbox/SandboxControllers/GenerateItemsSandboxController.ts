@@ -486,12 +486,14 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
                 let itemAttributes: ItemDatabaseRow = {
                     ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
                     ItemCategoryID: positions[level][itemCategoryIndex],
+                    ArmorMaterialID: '',
                     ItemLevel: itemLevel,
                     QualityID: qualityID,
                     StackSize: 1,
                     Strength: 0,
                     Agility: 0,
                     Intelligence: 0,
+                    HealthPoints: 0,
                     Equipable: true,
                     TwoHandWeapon: false,
                 };

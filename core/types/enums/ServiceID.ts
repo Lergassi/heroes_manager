@@ -4,7 +4,10 @@ export enum ServiceID {
     //core
     EventSystem = 'core.EventSystem',
     EventSystemFactory = 'core.EventSystemFactory',
-    AttributeGenerators = 'core.AttributeGenerators',
+    // AttributeGenerators = 'core.AttributeGenerators',
+    ItemAttributeGenerator = 'core.ItemAttributeGenerator',                     //В будущем не core, а tool. Во время игры возможно не будет доступно.
+    HeroCharacterAttributeGenerator = 'core.HeroCharacterAttributeGenerator',
+    EnemyCharacterAttributeGenerator = 'core.EnemyCharacterAttributeGenerator',
     EntityManager = 'core.EntityManager',
     ItemFactory = 'core.ItemFactory',
     RecipeFactory = 'core.RecipeFactory',

@@ -13,6 +13,9 @@ export enum ItemCategoryID {
     Staffs = 'Staffs',
     Wands = 'Wands',
 
+    /**
+     * todo: Переименовать. Броня - только броня, ювелирка отдельно. Общая категория: экипировка.
+     */
     Armor = 'Armor',
     Helmets = 'Helmets',
     ShoulderPads = 'ShoulderPads',

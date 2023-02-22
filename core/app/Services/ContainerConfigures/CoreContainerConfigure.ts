@@ -11,7 +11,8 @@ import MetadataManager from '../../../source/MetadataManager.js';
 import {HeroClassID} from '../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
 import {ItemCategoryPowerRatio} from '../../../types/main.js';
-import AttributeGenerators from '../BalanceTools/AttributeGenerators.js';
+import ItemAttributeGenerator from '../BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
+import EnemyCharacterAttributeGenerator from '../BalanceTools/EnemyCharacterAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../BalanceTools/HeroCharacterAttributeGenerator.js';
 import MetadataManagerCreator from '../MetadataManagerCreator.js';
 import EntityManagerBuilder from '../EntityManagerBuilder.js';
@@ -84,8 +85,16 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
 
             return new ItemDatabase(items);
         });
-        container.set<AttributeGenerators>(ServiceID.AttributeGenerators, (container) => {
-            return new AttributeGenerators();
+        container.set<ItemAttributeGenerator>(ServiceID.ItemAttributeGenerator, (container) => {
+            return new ItemAttributeGenerator();
+        });
+        container.set<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator, (container) => {
+            return new HeroCharacterAttributeGenerator();
+        });
+        container.set<EnemyCharacterAttributeGenerator>(ServiceID.EnemyCharacterAttributeGenerator, (container) => {
+            return new EnemyCharacterAttributeGenerator(
+                container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
+            );
         });
 
         // //Фабрики

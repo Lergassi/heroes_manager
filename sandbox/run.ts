@@ -7,6 +7,7 @@ import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/
 import PlayerContainerConfigure from '../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
 import GenerateItems from '../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
 import Container from '../core/source/Container.js';
+import AppError from '../core/source/Errors/AppError.js';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 import SandboxController from './SandboxController.js';
 import dotenv from 'dotenv';
@@ -138,6 +139,7 @@ yargs(hideBin(process.argv))
     .command('generate_equip', '', (yargs) => {
         return yargs;
     }, (argv) => {
+        throw AppError.legacy();
         //todo: Спросить для перезаписи или записывать в новый файл. Существующий файл не трогать.
         let items = [];
         let generateItems = new GenerateItems(container);

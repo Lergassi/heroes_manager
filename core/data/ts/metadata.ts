@@ -1,7 +1,7 @@
 import ItemCategory from '../../app/Entities/ItemCategory.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 
-type TSDB_ItemsInItemCategory = {
+type TSDB_ItemsMetadata = {
     [ID in ItemCategoryID]?: {
         singleItemName: string;
         equipable: boolean;
@@ -10,7 +10,7 @@ type TSDB_ItemsInItemCategory = {
     };
 };
 
-let items_by_item_categories_data: TSDB_ItemsInItemCategory = {
+let items_metadata: TSDB_ItemsMetadata = {
     [ItemCategoryID.Helmets]: {
         singleItemName: 'Helmet',
         equipable: true,
@@ -146,19 +146,19 @@ let items_by_item_categories_data: TSDB_ItemsInItemCategory = {
 };
 
 export const metadata = {
-    items_by_item_category: {
+    items: {
         //todo: Много данных будет сложно так обрабатывать, когда их не будет в бд.
         singleItemName: function (itemCategoryID: ItemCategoryID): string {
-            return items_by_item_categories_data[itemCategoryID]?.singleItemName ?? '%SINGLE_NAME%';
+            return items_metadata[itemCategoryID]?.singleItemName ?? '%SINGLE_NAME%';
         },
         equipable: function (itemCategoryID: ItemCategoryID): boolean {
-            return items_by_item_categories_data[itemCategoryID]?.equipable ?? false;
+            return items_metadata[itemCategoryID]?.equipable ?? false;
         },
         requireArmorMaterial: function (itemCategoryID: ItemCategoryID): boolean {
-            return items_by_item_categories_data[itemCategoryID]?.requireArmorMaterial ?? false;
+            return items_metadata[itemCategoryID]?.requireArmorMaterial ?? false;
         },
         twoHandWeapon: function (itemCategoryID: ItemCategoryID): boolean {
-            return items_by_item_categories_data[itemCategoryID]?.twoHandWeapon ?? false;
+            return items_metadata[itemCategoryID]?.twoHandWeapon ?? false;
         },
     },
 };

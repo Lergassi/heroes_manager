@@ -3,7 +3,6 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import CharacterAttribute from '../Components/CharacterAttribute.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import {unsigned} from '../../types/main.js';
-import AttributeGenerators from '../Services/BalanceTools/AttributeGenerators.js';
 import EnemyCharacterAttributeGenerator from '../Services/BalanceTools/EnemyCharacterAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator, {

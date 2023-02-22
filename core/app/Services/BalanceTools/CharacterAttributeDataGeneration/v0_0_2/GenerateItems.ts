@@ -41,7 +41,6 @@ export default class GenerateItems {
         ];
 
         let armorItemCategories = [];
-        //heroClassID по undefined
         database.heroes.equip_sets.armorSet(undefined,(itemCategoryID, count) => {
             armorItemCategories.push({
                 itemCategoryID: itemCategoryID,
@@ -90,7 +89,6 @@ export default class GenerateItems {
             slotsCount: 11,
             firstLevelUpdate: _.random(2, 3),
             maxLevel: 100,
-            // updateRange: _.random(14, 17),
             updateRange: 20,
             qualityID: QualityID.Uncommon,
 
@@ -133,29 +131,31 @@ export default class GenerateItems {
                     let itemAttributes: ItemDatabaseRow = {
                         ID: '',
                         ItemCategoryID: itemCategories[i],
+                        ArmorMaterialID: '',
                         ItemLevel: itemLevel,
                         QualityID: constValues.qualityID,
                         StackSize: 1,
                         Strength: 0,
                         Agility: 0,
                         Intelligence: 0,
+                        HealthPoints: 0,
                         Equipable: true,
                         TwoHandWeapon: false,
                     };
 
-                    if (database.metadata.items_by_item_category.requireArmorMaterial(itemCategories[i])) itemAttributes.ArmorMaterialID = options.armorMaterialID;
-                    if (database.metadata.items_by_item_category.twoHandWeapon(itemCategories[i])) itemAttributes.TwoHandWeapon = true;
+                    if (database.metadata.items.requireArmorMaterial(itemCategories[i])) itemAttributes.ArmorMaterialID = options.armorMaterialID;
+                    if (database.metadata.items.twoHandWeapon(itemCategories[i])) itemAttributes.TwoHandWeapon = true;
 
                     let IDPatterns = {
                         withArmorMaterial: '%s_%s_%s_%s',
                         withoutArmorMaterial: '%s_%s_%s',
                     };
 
-                    let IDPattern = database.metadata.items_by_item_category.requireArmorMaterial(itemCategories[i]) ? IDPatterns.withArmorMaterial : IDPatterns.withoutArmorMaterial;
+                    let IDPattern = database.metadata.items.requireArmorMaterial(itemCategories[i]) ? IDPatterns.withArmorMaterial : IDPatterns.withoutArmorMaterial;
                     let IDPatternParams = [];
-                    if (database.metadata.items_by_item_category.requireArmorMaterial(itemCategories[i])) IDPatternParams.push(options.armorMaterialID);
+                    if (database.metadata.items.requireArmorMaterial(itemCategories[i])) IDPatternParams.push(options.armorMaterialID);
                     IDPatternParams.push(constValues.qualityID);
-                    IDPatternParams.push(database.metadata.items_by_item_category.singleItemName(itemCategories[i]));
+                    IDPatternParams.push(database.metadata.items.singleItemName(itemCategories[i]));
                     IDPatternParams.push(itemLevel);
 
                     itemAttributes.ID = sprintf(IDPattern, ..._.filter(IDPatternParams, (value, key) => {
@@ -172,9 +172,9 @@ export default class GenerateItems {
                     //todo: Разделить атрибуты предметов и атрибуты героев. Не всегда логика 1:1. Атрибуты у предметов это просто число (несколько чисел).
                     itemAttributes[CharacterAttributeID.HealthPoints] = this._itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategories[i]);
                     //Пока все атрибуты одинаковые. Класс сам выбререт нужный.
-                    itemAttributes[CharacterAttributeID.Strength] = this._itemCharacterAttributeGenerator.characterAttribute_reverse(itemLevel, itemCategories[i]);
-                    itemAttributes[CharacterAttributeID.Agility] = this._itemCharacterAttributeGenerator.characterAttribute_reverse(itemLevel, itemCategories[i]);
-                    itemAttributes[CharacterAttributeID.Intelligence] = this._itemCharacterAttributeGenerator.characterAttribute_reverse(itemLevel, itemCategories[i]);
+                    itemAttributes[CharacterAttributeID.Strength] = this._itemCharacterAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, itemCategories[i]);
+                    itemAttributes[CharacterAttributeID.Agility] = this._itemCharacterAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, itemCategories[i]);
+                    itemAttributes[CharacterAttributeID.Intelligence] = this._itemCharacterAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, itemCategories[i]);
 
                     // console.log(itemCategories[i], itemAttributes.ItemLevel, itemAttributes[CharacterAttributeID.Strength]);
 

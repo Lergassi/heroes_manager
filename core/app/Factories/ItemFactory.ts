@@ -1,5 +1,5 @@
 import EntityManager from '../../source/EntityManager.js';
-import ItemBuilder, {ItemBuilderOptions} from '../Services/ItemBuilder.js';
+import ItemBuilder, {ItemBuilderOptions} from '../Builders/ItemBuilder.js';
 import Item from '../Entities/Item.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {EntityID} from '../../types/enums/EntityID.js';

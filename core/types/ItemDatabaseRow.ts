@@ -1,13 +1,14 @@
 export type ItemDatabaseRow = {
     ID: string;
     ItemCategoryID: string;
-    ArmorMaterialID?: string;
+    ArmorMaterialID: string;
     QualityID: string;
     StackSize: number;
     ItemLevel: number;
     Strength: number;
     Agility: number;
     Intelligence: number;
+    HealthPoints: number;
     DefaultBuyPrice?: number;
     DefaultSellPrice?: number;
     Equipable: boolean;

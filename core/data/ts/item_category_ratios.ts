@@ -34,5 +34,5 @@ let item_category_ratios_data: TSDB_ItemCategoryRatio = {
 export const item_category_ratios = {
     ratio: function (itemCategoryID: ItemCategoryID, characterAttributeID: CharacterAttributeID): number {
         return item_category_ratios_data[itemCategoryID]?.[characterAttributeID] ?? 0;
-    }
+    },
 };

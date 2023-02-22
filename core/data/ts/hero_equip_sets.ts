@@ -10,7 +10,6 @@ type TSDB_EquipSet = {
     [ID in ItemCategoryID]?: {count: number};
 };
 
-// type TSDB_ArmorSet = TSDB_EquipSet;
 type TSDB_WeaponSet = {
     [ID in HeroClassID]?: TSDB_EquipSet;
 };
@@ -24,6 +23,7 @@ let common_armor_equip_set_data: TSDB_EquipSet = {
     [ItemCategoryID.Belts]: {count: 1},
     [ItemCategoryID.Pants]: {count: 1},
     [ItemCategoryID.Boots]: {count: 1},
+
     [ItemCategoryID.Amulets]: {count: 1},
     [ItemCategoryID.Rings]: {count: 2},
 };

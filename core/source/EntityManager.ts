@@ -85,15 +85,15 @@ export default class EntityManager implements EntityManagerInterface {
             for (const key in this._entities[EntityID.Item]) {
                 debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
                     ID: this._entities[EntityID.Item][key].id,
-                    itemLevel: this._entities[EntityID.Item][key].itemLevel,
                     itemCategory: this._entities[EntityID.Item][key].itemCategory.id,
+                    itemLevel: this._entities[EntityID.Item][key].itemLevel,
                     quality: this._entities[EntityID.Item][key].quality.id,
-                    stackSize: this._entities[EntityID.Item][key].stackSize,
+                    // stackSize: this._entities[EntityID.Item][key].stackSize,
                 });
                 count++;
             }
 
-            debug(DebugNamespaceID.Debug)(sprintf('Всего предметов: ', count));
+            debug(DebugNamespaceID.Debug)(sprintf('Всего предметов: %s.', count));
         },
     };
 }

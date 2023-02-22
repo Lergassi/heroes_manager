@@ -56,7 +56,7 @@ export default class ItemAttributeGenerator {
         });
     }
 
-    characterAttribute_reverse(itemLevel: number, itemCategoryID: ItemCategoryID, heroClassID?: HeroClassID): number {
-        return item_attributes_formulas.attackPowerToCharacterAttribute_reverse(this.attackPower(itemLevel, itemCategoryID, heroClassID), config.default_character_attribute_to_attack_power_ratio);
+    characterAttributeFromAttackPower_reverse(itemLevel: number, itemCategoryID: ItemCategoryID, heroClassID?: HeroClassID): number {
+        return item_attributes_formulas.attackPowerToCharacterAttribute_revers(this.attackPower(itemLevel, itemCategoryID, heroClassID), config.default_character_attribute_to_attack_power_ratio);
     }
 }

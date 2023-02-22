@@ -2,7 +2,7 @@ import _ from 'lodash';
 import debug from 'debug';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemFactory from '../../Factories/ItemFactory.js';
-import ItemBuilder from '../ItemBuilder.js';
+import ItemBuilder from '../../Builders/ItemBuilder.js';
 import data from '../../../data/items.json';
 import RecipeFactory from '../../Factories/EntityFactories/RecipeFactory.js';
 import ItemStackBlankInterface from '../../Interfaces/ItemStackBlankInterface.js';

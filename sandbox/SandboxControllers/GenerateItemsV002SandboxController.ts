@@ -1,14 +1,18 @@
 import _ from 'lodash';
 import CharacterAttributeTransfer
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/CharacterAttributeTransfer.js';
+import GenerateItemsByPattern
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItemsByPattern.js';
 import {item_attributes_formulas} from '../../core/app/Services/BalanceTools/formulas/item_attributes_formulas.js';
 import GenerateItems from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
 import ItemAttributeGenerator
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
+import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import {database} from '../../core/data/ts/database.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import {ItemDatabaseRow} from '../../core/types/ItemDatabaseRow.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 
@@ -18,11 +22,13 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         // this._gevClass();
         // this._gevGenerateItems();
 
+        this._gevGenerateItemsByPatterns();
+
         // this._testSumGetStarted();
         // this._testSumGetStarted();
         // this._testSumWithBlur();
 
-        this._use();
+        // this._use();
     }
 
     private readonly _itemCategoryRatios = {
@@ -319,5 +325,17 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
         //     }
         // });
         // console.log(calcValues);
+    }
+
+    private _gevGenerateItemsByPatterns() {
+        let command = new GenerateItemsByPattern(
+            this.container,
+            this.container.get<ItemAttributeGenerator>(ServiceID.ItemAttributeGenerator),
+            this.container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
+        );
+
+        let items: ItemDatabaseRow[] = [];
+        command.run(items);
+        console.log(items);
     }
 }

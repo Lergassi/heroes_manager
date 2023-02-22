@@ -56,7 +56,7 @@ import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
 import Bag from '../core/app/Components/Bag.js';
 import ItemStackController from '../core/app/Components/ItemStackController.js';
-import BalanceSandboxController from './SandboxControllers/BalanceSandboxController.js';
+import AttributeGeneratorSandboxController from './SandboxControllers/AttributeGeneratorSandboxController.js';
 import DatabaseTSSandboxController from './SandboxControllers/DatabaseTSSandboxController.js';
 import EnemySandboxController from './SandboxControllers/EnemySandboxController.js';
 import GenerateEnemySandboxController from './SandboxControllers/GenerateEnemySandboxController.js';
@@ -115,10 +115,10 @@ export default class SandboxController {
         // (new EnemySandboxController(this._container)).run();
         // (new FightSandboxController(this._container)).run();
         // (new LocationSandboxController(this._container)).run();
-        (new BalanceSandboxController(this._container)).run();
+        // (new AttributeGeneratorSandboxController(this._container)).run();
 
         // (new GenerateItemsSandboxController(this._container)).run();
-        // (new GenerateItemsV002SandboxController(this._container)).run();
+        (new GenerateItemsV002SandboxController(this._container)).run();
         // (new GenerateEnemySandboxController(this._container)).run();
 
         // this._testSumBoolean();

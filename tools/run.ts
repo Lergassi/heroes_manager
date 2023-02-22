@@ -13,6 +13,7 @@ import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/
 import Container from '../core/source/Container.js';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 import {generate_items} from './scripts/generate_items.js';
+import {generate_items_by_patterns} from './scripts/generate_items_by_patterns.js';
 
 dotenv.config();
 debug.enable(process.env['DEBUG']);
@@ -25,7 +26,7 @@ yargs(hideBin(process.argv))
     .command('generate_equip', '', (yargs) => {
         return yargs;
     }, (argv) => {
-        generate_items(container);
+        generate_items_by_patterns(container);
     })
     .parse()
 ;

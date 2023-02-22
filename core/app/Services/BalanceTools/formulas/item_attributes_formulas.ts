@@ -95,7 +95,7 @@ export const item_attributes_formulas = {
     healthPoints: healthPoints,
 
     characterAttributeToAttackPower: characterAttributeToAttackPower,
-    attackPowerToCharacterAttribute_reverse: attackPowerToCharacterAttribute_revers,
+    attackPowerToCharacterAttribute_revers: attackPowerToCharacterAttribute_revers,
     itemLevelToHeroLevel: itemLevelToHeroLevel,
     heroLevelCorrespondsToItemLevel: heroLevelCorrespondsToItemLevel,
     universalCharacterAttributeByRatio: universalCharacterAttributeByRatio,

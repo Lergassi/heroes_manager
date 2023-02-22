@@ -13,6 +13,6 @@ export default class CharacterAttributeTransfer {
     }
 
     attackPowerToCharacterAttribute_reverse(attackPower: number): number {
-        return item_attributes_formulas.attackPowerToCharacterAttribute_reverse(attackPower, this._config.characterAttributeToAttackPowerRatio);
+        return item_attributes_formulas.attackPowerToCharacterAttribute_revers(attackPower, this._config.characterAttributeToAttackPowerRatio);
     }
 }

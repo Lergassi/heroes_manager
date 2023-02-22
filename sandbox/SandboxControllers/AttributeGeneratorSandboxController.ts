@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
-import AttributeGenerators from '../../core/app/Services/BalanceTools/AttributeGenerators.js';
+import EnemyCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/EnemyCharacterAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import ItemAttributeGenerator
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
@@ -15,7 +15,7 @@ import AbstractSandboxController from './AbstractSandboxController.js';
 
 _.isNil(undefined);
 
-export default class BalanceSandboxController extends AbstractSandboxController {
+export default class AttributeGeneratorSandboxController extends AbstractSandboxController {
     run(): void {
         // this._devTools();
         // this._devBalance();
@@ -171,43 +171,44 @@ export default class BalanceSandboxController extends AbstractSandboxController 
 
     private _devSummary() {
         // let balanceTool = new HeroCharacterAttributeGenerator();
-        let balanceTool = this.container.get<AttributeGenerators>(ServiceID.AttributeGenerators);
+        let heroCharacterAttributeGenerator = this.container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator);
+        let enemyCharacterAttributeGenerator = this.container.get<EnemyCharacterAttributeGenerator>(ServiceID.EnemyCharacterAttributeGenerator);
 
-        console.log('defaultBaseHeroHP 1 level', balanceTool.heroCharacterAttributeGenerator.defaultBaseHeroMaxHealthPoints(1));
-        console.log('defaultBaseHeroHP 100 level', balanceTool.heroCharacterAttributeGenerator.defaultBaseHeroMaxHealthPoints(100));
-        console.log('defaultFinalHeroHP 1 level', balanceTool.heroCharacterAttributeGenerator.defaultFinalHeroMaxHealthPoints(1));
-        console.log('defaultFinalHeroHP 100 level', balanceTool.heroCharacterAttributeGenerator.defaultFinalHeroMaxHealthPoints(100));
+        console.log('defaultBaseHeroHP 1 level', heroCharacterAttributeGenerator.defaultBaseHeroMaxHealthPoints(1));
+        console.log('defaultBaseHeroHP 100 level', heroCharacterAttributeGenerator.defaultBaseHeroMaxHealthPoints(100));
+        console.log('defaultFinalHeroHP 1 level', heroCharacterAttributeGenerator.defaultFinalHeroMaxHealthPoints(1));
+        console.log('defaultFinalHeroHP 100 level', heroCharacterAttributeGenerator.defaultFinalHeroMaxHealthPoints(100));
 
-        console.log('defaultBaseHeroAP 1 level', balanceTool.heroCharacterAttributeGenerator.defaultBaseHeroAttackPower(1));
-        console.log('defaultBaseHeroAP 100 level', balanceTool.heroCharacterAttributeGenerator.defaultBaseHeroAttackPower(100));
-        console.log('defaultFinalHeroAP 1 level', balanceTool.heroCharacterAttributeGenerator.defaultFinalHeroAttackPower(1));
-        console.log('defaultFinalHeroAP 100 level', balanceTool.heroCharacterAttributeGenerator.defaultFinalHeroAttackPower(100));
+        console.log('defaultBaseHeroAP 1 level', heroCharacterAttributeGenerator.defaultBaseHeroAttackPower(1));
+        console.log('defaultBaseHeroAP 100 level', heroCharacterAttributeGenerator.defaultBaseHeroAttackPower(100));
+        console.log('defaultFinalHeroAP 1 level', heroCharacterAttributeGenerator.defaultFinalHeroAttackPower(1));
+        console.log('defaultFinalHeroAP 100 level', heroCharacterAttributeGenerator.defaultFinalHeroAttackPower(100));
 
         let heroClassID = HeroClassID.Warrior;
 
         console.log('heroes');
         console.log(heroClassID);
 
-        console.log('heroBaseHP 1 level', balanceTool.heroCharacterAttributeGenerator.baseHeroMaxHealthPoints(1, heroClassID));
-        console.log('heroBaseHP 100 level', balanceTool.heroCharacterAttributeGenerator.baseHeroMaxHealthPoints(100, heroClassID));
-        console.log('heroEquipHP 1 level', balanceTool.heroCharacterAttributeGenerator.equipHeroMaxHealthPoints(1, heroClassID));
-        console.log('heroEquipHP 100 level', balanceTool.heroCharacterAttributeGenerator.equipHeroMaxHealthPoints(100, heroClassID));
-        console.log('heroFinalHP 1 level', balanceTool.heroCharacterAttributeGenerator.finalHeroMaxHealthPoints(1, heroClassID));
-        console.log('heroFinalHP 100 level', balanceTool.heroCharacterAttributeGenerator.finalHeroMaxHealthPoints(100, heroClassID));
+        console.log('heroBaseHP 1 level', heroCharacterAttributeGenerator.baseHeroMaxHealthPoints(1, heroClassID));
+        console.log('heroBaseHP 100 level', heroCharacterAttributeGenerator.baseHeroMaxHealthPoints(100, heroClassID));
+        console.log('heroEquipHP 1 level', heroCharacterAttributeGenerator.equipHeroMaxHealthPoints(1, heroClassID));
+        console.log('heroEquipHP 100 level', heroCharacterAttributeGenerator.equipHeroMaxHealthPoints(100, heroClassID));
+        console.log('heroFinalHP 1 level', heroCharacterAttributeGenerator.finalHeroMaxHealthPoints(1, heroClassID));
+        console.log('heroFinalHP 100 level', heroCharacterAttributeGenerator.finalHeroMaxHealthPoints(100, heroClassID));
 
-        console.log('heroBaseAP 1 level', balanceTool.heroCharacterAttributeGenerator.baseHeroAttackPower(1, heroClassID));
-        console.log('heroBaseAP 100 level', balanceTool.heroCharacterAttributeGenerator.baseHeroAttackPower(100, heroClassID));
-        console.log('heroEquipAP 1 level', balanceTool.heroCharacterAttributeGenerator.equipHeroAttackPower(1, heroClassID));
-        console.log('heroEquipAP 100 level', balanceTool.heroCharacterAttributeGenerator.equipHeroAttackPower(100, heroClassID));
-        console.log('heroFinalAP 1 level', balanceTool.heroCharacterAttributeGenerator.finalHeroAttackPower(1, heroClassID));
-        console.log('heroFinalAP 100 level', balanceTool.heroCharacterAttributeGenerator.finalHeroAttackPower(100, heroClassID));
+        console.log('heroBaseAP 1 level', heroCharacterAttributeGenerator.baseHeroAttackPower(1, heroClassID));
+        console.log('heroBaseAP 100 level', heroCharacterAttributeGenerator.baseHeroAttackPower(100, heroClassID));
+        console.log('heroEquipAP 1 level', heroCharacterAttributeGenerator.equipHeroAttackPower(1, heroClassID));
+        console.log('heroEquipAP 100 level', heroCharacterAttributeGenerator.equipHeroAttackPower(100, heroClassID));
+        console.log('heroFinalAP 1 level', heroCharacterAttributeGenerator.finalHeroAttackPower(1, heroClassID));
+        console.log('heroFinalAP 100 level', heroCharacterAttributeGenerator.finalHeroAttackPower(100, heroClassID));
 
         console.log('enemies');
 
-        console.log('enemyHP 1 level', balanceTool.enemyCharacterAttributeGenerator.enemyMaxHealthPoints(1));
-        console.log('enemyHP 100 level', balanceTool.enemyCharacterAttributeGenerator.enemyMaxHealthPoints(100));
-        console.log('enemyAP 1 level', balanceTool.enemyCharacterAttributeGenerator.enemyAttackPower(1));
-        console.log('enemyAP 100 level', balanceTool.enemyCharacterAttributeGenerator.enemyAttackPower(100));
+        console.log('enemyHP 1 level', enemyCharacterAttributeGenerator.enemyMaxHealthPoints(1));
+        console.log('enemyHP 100 level', enemyCharacterAttributeGenerator.enemyMaxHealthPoints(100));
+        console.log('enemyAP 1 level', enemyCharacterAttributeGenerator.enemyAttackPower(1));
+        console.log('enemyAP 100 level', enemyCharacterAttributeGenerator.enemyAttackPower(100));
     }
 
     private _devItems() {
