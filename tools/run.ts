@@ -30,3 +30,12 @@ yargs(hideBin(process.argv))
     })
     .parse()
 ;
+
+yargs(hideBin(process.argv))
+    .command('generate_enum_item_ids', '', (yargs) => {
+        return yargs;
+    }, (argv) => {
+
+    })
+    .parse()
+;

@@ -1,4 +1,7 @@
-export type ItemDatabaseRow = {
+import {ItemID} from './enums/ItemID.js';
+import {ItemTypeID} from './enums/ItemTypeID.js';
+
+export type TSDB_Item = {
     ID: string;
     ItemCategoryID: string;
     ArmorMaterialID: string;
@@ -8,11 +11,13 @@ export type ItemDatabaseRow = {
     Strength: number;
     Agility: number;
     Intelligence: number;
+    AttackPower: number;
     HealthPoints: number;
     DefaultBuyPrice?: number;
     DefaultSellPrice?: number;
     Equipable: boolean;
     TwoHandWeapon: boolean;
+    // TypeID: ItemTypeID;
     // RequireItemID01?: string;
     // RequireItemID01Count?: number;
     // RequireItemID02?: string;
@@ -23,4 +28,8 @@ export type ItemDatabaseRow = {
     // RequireItemID04Count?: number;
     // ResultCount?: number;
     // CraftTime?: number;
-}
+};
+
+export type TSDB_ItemDB = {
+    [ID in ItemID | string]?: TSDB_Item;
+};

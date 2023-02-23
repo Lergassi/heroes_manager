@@ -14,4 +14,12 @@ export enum ItemAttributeID {
     Strength = 'Strength',
     Agility = 'Agility',
     Intelligence = 'Intelligence',
+
+    //Наверное логичнее использовать отдельные переменные для рейтов, а не сами атрибуты.
+    CraftRatio = 'CraftRatio',                  //default -> itemCategory
+    HealthPointsRatio = 'HealthPointsRatio',    //default -> itemCategory
+    AttackPowerRatio = 'AttackPowerRatio',    //default -> itemCategory
+    StrengthRatio = 'StrengthRatio',            //default -> itemCategory
+    AgilityRatio = 'AgilityRatio',              //default -> itemCategory
+    IntelligenceRatio = 'IntelligenceRatio',    //default -> itemCategory
 }

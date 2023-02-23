@@ -9,11 +9,12 @@ import ItemAttributeGenerator
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import {database} from '../../core/data/ts/database.js';
+import {TSDB_RecipeDB} from '../../core/data/ts/recipes.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import {ItemDatabaseRow} from '../../core/types/ItemDatabaseRow.js';
+import {TSDB_Item, TSDB_ItemDB} from '../../core/types/TSDB_Item.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 
 export default class GenerateItemsV002SandboxController extends AbstractSandboxController {
@@ -260,7 +261,7 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
     }
 
     private _gevGenerateItems() {
-        let items: ItemDatabaseRow[] = [];
+        let items: TSDB_Item[] = [];
         let generateItems = new GenerateItems(this.container);
         generateItems.run(items);
         console.log('items', items);
@@ -334,8 +335,10 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
             this.container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
         );
 
-        let items: ItemDatabaseRow[] = [];
-        command.run(items);
+        let items: TSDB_ItemDB = {};
+        let recipes: TSDB_RecipeDB = {};
+        command.run(items, recipes);
         console.log(items);
+        console.log(recipes);
     }
 }

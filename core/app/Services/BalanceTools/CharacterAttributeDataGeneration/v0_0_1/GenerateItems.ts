@@ -16,7 +16,7 @@ import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
 import {QualityID} from '../../../../../types/enums/QualityID.js';
 import {ServiceID} from '../../../../../types/enums/ServiceID.js';
-import {ItemDatabaseRow} from '../../../../../types/ItemDatabaseRow.js';
+import {TSDB_Item} from '../../../../../types/TSDB_Item.js';
 import debug from 'debug';
 
 /**
@@ -103,7 +103,7 @@ export default class GenerateItems {
 
                 // let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
                 let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), 0);
-                let itemAttributes: ItemDatabaseRow = {
+                let itemAttributes: TSDB_Item = {
                     ID: '',
                     ItemCategoryID: itemCategoryID,
                     ArmorMaterialID: '',
@@ -116,6 +116,7 @@ export default class GenerateItems {
                     HealthPoints: 0,
                     Equipable: true,
                     TwoHandWeapon: false,
+                    AttackPower: 0,
                 };
 
                 if (this._getMetadata(itemCategoryID).requireArmorMaterial) itemAttributes.ArmorMaterialID = armorMaterialID;

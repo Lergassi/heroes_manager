@@ -1,35 +1,43 @@
 import _ from 'lodash';
 import debug from 'debug';
+import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 import {QualityID} from '../../types/enums/QualityID.js';
-import {ItemDatabaseRow} from '../../types/ItemDatabaseRow.js';
+import {TSDB_Item} from '../../types/TSDB_Item.js';
 
-export default class ItemDatabaseRowBuilder {
-    ID: string;
-    ItemCategoryID: string;
-    ArmorMaterialID: string;
-    QualityID: string;
+export default class TSDB_ItemBuilder {
+    ID: ItemID | string;
+    ItemCategoryID: ItemCategoryID | string;
+    ArmorMaterialID: ArmorMaterialID | string;
+    QualityID: QualityID | string;
     StackSize: number;
     ItemLevel: number;
     Strength: number;
     Agility: number;
     Intelligence: number;
+    AttackPower: number;
     HealthPoints: number;
     DefaultBuyPrice?: number;
     DefaultSellPrice?: number;
     Equipable: boolean;
     TwoHandWeapon: boolean;
 
-    constructor() {
-        this.ID = '';
-        this.ItemCategoryID = '';
-        this.ArmorMaterialID = '';
+    constructor(values: {
+        ID: ItemID | string,
+        itemCategoryID: ItemCategoryID,
+    }) {
+        this.ID = values.ID;
+        this.ItemCategoryID = values.itemCategoryID;
 
-        this.QualityID = QualityID.Uncommon;
+        this.ArmorMaterialID = '';
+        this.QualityID = QualityID.Common;
         this.StackSize = 1;
         this.ItemLevel = 1;
         this.Strength = 0;
         this.Agility = 0;
         this.Intelligence = 0;
+        this.AttackPower = 0;
         this.HealthPoints = 0;
         this.DefaultBuyPrice = 0;
         this.DefaultSellPrice = 0;
@@ -37,7 +45,7 @@ export default class ItemDatabaseRowBuilder {
         this.TwoHandWeapon = false;
     }
 
-    build(): ItemDatabaseRow {
+    build(): TSDB_Item {
         return {
             Agility: this.Agility,
             ArmorMaterialID: this.ArmorMaterialID,
@@ -53,6 +61,7 @@ export default class ItemDatabaseRowBuilder {
             StackSize: this.StackSize,
             Strength: this.Strength,
             TwoHandWeapon: this.TwoHandWeapon,
+            AttackPower: this.AttackPower,
         };
     }
 }

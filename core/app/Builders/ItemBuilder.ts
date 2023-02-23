@@ -102,7 +102,6 @@ export default class ItemBuilder {
      */
     default(
         id: string,
-        // name: string,
         itemCategoryID: ItemCategoryID,
         options: Partial<ItemBuilderOptions> = {},
     ) {

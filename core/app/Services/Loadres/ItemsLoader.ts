@@ -1,53 +1,52 @@
 import _ from 'lodash';
 import debug from 'debug';
 import config from '../../../config/config.js';
-import {ItemAttributeID} from '../../../types/enums/ItemAttributeID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemFactory from '../../Factories/ItemFactory.js';
 import ItemBuilder from '../../Builders/ItemBuilder.js';
 
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 /*
-    todo: Временно. Для webpack файл импортируется прямо тут. Разделить.
+    todo: Временно для webpack файл импортируется прямо тут. Разделить на клиент и сервер.
  */
 import manual_created_items_data from '../../../data/items.json';
-// import auto_generated_equip from '../../../data/json/auto_generated_equip_10.02.2023_09:07:11.json';
-import auto_generated_equip from '../../../data/json/auto_generated_equip_22.02.2023_06:23:54.json';
+// import auto_generated_equip_data from '../../../data/json/auto_generated_equip_22.02.2023_12_18_11.json';
+import auto_generated_equip_data from '../../../data/json/auto_generated_equip_23.02.2023_09_45_08.json';
 
 export default class ItemsLoader {
     load(entityManager: EntityManagerInterface, itemFactory: ItemFactory) {
         this._load(entityManager, itemFactory, manual_created_items_data);
-        this._load(entityManager, itemFactory, auto_generated_equip);
+        this._load(entityManager, itemFactory, auto_generated_equip_data);
     }
 
     private _load(entityManager: EntityManagerInterface, itemFactory: ItemFactory, data) {
-        for (let i = 0; i < data.length; i++) {
+        // for (let i = 0; i < data.length; i++) {
+        for (const key in data) {
             let characterAttributes = {};
-            if (data[i][CharacterAttributeID.Strength]) characterAttributes[CharacterAttributeID.Strength] = Number(data[i][CharacterAttributeID.Strength]);
-            if (data[i][CharacterAttributeID.Agility]) characterAttributes[CharacterAttributeID.Agility] = Number(data[i][CharacterAttributeID.Agility]);
-            if (data[i][CharacterAttributeID.Intelligence]) characterAttributes[CharacterAttributeID.Intelligence] = Number(data[i][CharacterAttributeID.Strength]);
+            if (data[key][CharacterAttributeID.Strength]) characterAttributes[CharacterAttributeID.Strength] = Number(data[key][CharacterAttributeID.Strength]);
+            if (data[key][CharacterAttributeID.Agility]) characterAttributes[CharacterAttributeID.Agility] = Number(data[key][CharacterAttributeID.Agility]);
+            if (data[key][CharacterAttributeID.Intelligence]) characterAttributes[CharacterAttributeID.Intelligence] = Number(data[key][CharacterAttributeID.Strength]);
 
             itemFactory.createByBuilder(
-                data[i].ID,
+                data[key].ID,
                 (new ItemBuilder(entityManager))
                     .default(
-                        data[i].ID,
-                        // data[i].Name,
-                        data[i].ItemCategoryID,
+                        data[key].ID,
+                        data[key].ItemCategoryID,
                         {
-                            stackSize: Number(data[i].StackSize),
+                            stackSize: Number(data[key].StackSize),
                             // getTypes: [
                             //     ItemGetType.Gathering,
                             // ],
-                            // iconID: data[i].IconID,
-                            itemLevel: Number(data[i].ItemLevel),
+                            // iconID: data[key].IconID,
+                            itemLevel: Number(data[key].ItemLevel),
                             characterAttributes: characterAttributes,
                             properties: {
-                                equipable: Boolean(data[i].Equipable),
-                                armorMaterialID: data[i].ArmorMaterialID,
-                                twoHandWeapon: Boolean(data[i].TwoHandWeapon),
-                                defaultBuyPrice: Number(data[i].DefaultBuyPrice),
-                                defaultSellPrice: Number(data[i].DefaultSellPrice),
+                                equipable: Boolean(data[key].Equipable),
+                                armorMaterialID: data[key].ArmorMaterialID,
+                                twoHandWeapon: Boolean(data[key].TwoHandWeapon),
+                                defaultBuyPrice: Number(data[key].DefaultBuyPrice),
+                                defaultSellPrice: Number(data[key].DefaultSellPrice),
                             },
                         },
                     )

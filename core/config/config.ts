@@ -38,4 +38,15 @@ export default {
     //enemies
     default_hero_hit_ratio_to_enemy: 0.15,
     default_enemy_damage_ratio_to_hero: 0.3,
+
+    //craft
+    //Далее будет ресурс1, ресурс2, но пока для удобства используются названия предметов.
+    start_item_level_blacksmith_iron_ingot: 10,
+    start_item_level_leather_working_leather01: 20,
+    start_item_level_tailoring_cloth01: 30,
+    start_item_level_jewelry_iron_ingot: 20,
+    increase_item_level_blacksmith_iron_ingot: 4,
+    increase_item_level_leather_working_iron_ingot: 8,
+    increase_item_level_tailoring_iron_ingot: 12,
+    increase_item_level_jewelry_iron_ingot: 12,
 };

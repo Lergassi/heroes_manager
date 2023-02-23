@@ -38,8 +38,8 @@ export default class ItemIDGenerator {
 
         let IDPatternParams = [];
 
-        if (options?.armorMaterialID) IDPatternParams.push(options.armorMaterialID);
         IDPatternParams.push(qualityID);
+        if (options?.armorMaterialID) IDPatternParams.push(options.armorMaterialID);
         IDPatternParams.push(database.metadata.items.singleItemName(itemCategoryID));
         IDPatternParams.push(itemLevel);
 

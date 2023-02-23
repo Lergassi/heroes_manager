@@ -1,10 +1,17 @@
+import _ from 'lodash';
+import config from '../../../../../config/config.js';
 import {database} from '../../../../../data/ts/database.js';
+import {TSDB_Recipe, TSDB_RecipeDB} from '../../../../../data/ts/recipes.js';
+// import {TSDB_Recipe} from '../../../../../data/ts/recipes.js';
 import ContainerInterface from '../../../../../source/ContainerInterface.js';
 import {ArmorMaterialID} from '../../../../../types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../../../../types/enums/CharacterAttributeID.js';
+import {ItemAttributeID} from '../../../../../types/enums/ItemAttributeID.js';
 import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
+import {ItemID} from '../../../../../types/enums/ItemID.js';
 import {QualityID} from '../../../../../types/enums/QualityID.js';
-import {ItemDatabaseRow} from '../../../../../types/ItemDatabaseRow.js';
+import {TSDB_ItemDB} from '../../../../../types/TSDB_Item.js';
+import TSDB_ItemBuilder from '../../../../Builders/TSDB_ItemBuilder.js';
 import ItemIDGenerator from '../../../ItemIDGenerator.js';
 import HeroCharacterAttributeGenerator from '../../HeroCharacterAttributeGenerator.js';
 import ItemAttributeGenerator from './ItemAttributeGenerator.js';
@@ -107,7 +114,8 @@ export default class GenerateItemsByPattern {
         this._itemIDGenerator = new ItemIDGenerator();
     }
 
-    run(items: ItemDatabaseRow[]): void {
+    // run(items: TSDB_Item[], recipes: TSDB_Recipe[]): void {
+    run(items: TSDB_ItemDB, recipes: TSDB_RecipeDB): void {
         let rangeLength = 14;
         let rangeStart = 2;
         let rangeEnd = 100;
@@ -123,14 +131,7 @@ export default class GenerateItemsByPattern {
                             // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             for (let k = 0; k < this._armorMaterialIDs.length; k++) {
                                 // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID, this._armorMaterialIDs[k]);
-                                let itemDatabaseRow = this._createItemDatabaseRow();
-
-                                itemDatabaseRow.ItemLevel = itemLevel;
-                                itemDatabaseRow.QualityID = QualityID.Uncommon;
-                                itemDatabaseRow.Equipable = true;
-                                itemDatabaseRow.ItemCategoryID = this._patterns[i].itemCategories[j].itemCategoryID;
-
-                                itemDatabaseRow.ID = this._itemIDGenerator.generate(
+                                let ID = this._itemIDGenerator.generate(
                                     this._patterns[i].itemCategories[j].itemCategoryID,
                                     itemLevel,
                                     QualityID.Uncommon,
@@ -138,93 +139,171 @@ export default class GenerateItemsByPattern {
                                         armorMaterialID: this._armorMaterialIDs[k],
                                     },
                                 );
-                                itemDatabaseRow.ArmorMaterialID = this._armorMaterialIDs[k];
 
-                                itemDatabaseRow.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
-                                itemDatabaseRow[this._mainCharacterAttributeForArmorMaterial(this._armorMaterialIDs[k])] = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                                let tsdb_itemBuilder = new TSDB_ItemBuilder({
+                                    ID: ID,
+                                    itemCategoryID: this._patterns[i].itemCategories[j].itemCategoryID as ItemCategoryID,
+                                });
 
-                                items.push(itemDatabaseRow);
+                                tsdb_itemBuilder.ItemLevel = itemLevel;
+                                tsdb_itemBuilder.QualityID = QualityID.Uncommon;
+                                tsdb_itemBuilder.Equipable = true;
+                                tsdb_itemBuilder.ArmorMaterialID = this._armorMaterialIDs[k];
+                                tsdb_itemBuilder.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+
+                                let characterAttributeValue = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                                let mainResource: ItemID = undefined;
+                                switch (this._armorMaterialIDs[k]) {
+                                    case ArmorMaterialID.Plate:
+                                        mainResource = ItemID.IronIngot;
+                                        tsdb_itemBuilder.Strength = characterAttributeValue;
+                                        break;
+                                    case ArmorMaterialID.Leather:
+                                        mainResource = ItemID.Leather01;
+                                        tsdb_itemBuilder.Agility = characterAttributeValue;
+                                        break;
+                                    case ArmorMaterialID.Cloth:
+                                        mainResource = ItemID.CottonCloth;
+                                        tsdb_itemBuilder.Intelligence = characterAttributeValue;
+                                        break;
+                                }
+
+                                //todo: Надо придумать как не экспортировать все типы нужные только внутри бд.
+                                let recipe: TSDB_Recipe = {
+                                    ID: ID,
+                                    requireItems: [
+                                        {
+                                            ID: mainResource,
+                                            count: _.round((config.start_item_level_blacksmith_iron_ingot + config.increase_item_level_blacksmith_iron_ingot * (itemLevel - 1)) * database.item_categories.ratios.ratioByItemAttribute(this._patterns[i].itemCategories[j].itemCategoryID, ItemAttributeID.CraftRatio)),
+                                        },
+                                    ],
+                                    resultItemCount: 1,
+                                };
+
+                                let tsdb_item = tsdb_itemBuilder.build();
+                                items[ID] = tsdb_item;
+                                recipes[ID] = recipe;
                             }
+
                             break;
                         case 'jewelry':
                             // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             for (const key in this._jewelryStrategies) {
                                 // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID, this._jewelryStrategies[key].characterAttributeID);
-                                let itemDatabaseRow = this._createItemDatabaseRow();
-
-                                itemDatabaseRow.ItemLevel = itemLevel;
-                                itemDatabaseRow.QualityID = QualityID.Uncommon;
-                                itemDatabaseRow.Equipable = true;
-                                itemDatabaseRow.ItemCategoryID = this._patterns[i].itemCategories[j].itemCategoryID;
-
-                                itemDatabaseRow.ID = this._itemIDGenerator.generate(
+                                let ID = this._itemIDGenerator.generate(
                                     this._patterns[i].itemCategories[j].itemCategoryID,
                                     itemLevel,
                                     QualityID.Uncommon,
                                 );
 
-                                itemDatabaseRow.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
-                                itemDatabaseRow[this._mainCharacterAttributeForArmorMaterial(this._jewelryStrategies[key].armorMaterialID)] = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                                let tsdb_itemBuilder = new TSDB_ItemBuilder({
+                                    ID: ID,
+                                    itemCategoryID: this._patterns[i].itemCategories[j].itemCategoryID as ItemCategoryID,
+                                });
 
-                                items.push(itemDatabaseRow);
+                                tsdb_itemBuilder.ItemLevel = itemLevel;
+                                tsdb_itemBuilder.QualityID = QualityID.Uncommon;
+                                tsdb_itemBuilder.Equipable = true;
+                                tsdb_itemBuilder.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                                //todo: jw
+
+                                let recipe = {
+                                    ID: ID,
+                                    requireItems: [
+                                        {
+                                            ID: ItemID.IronIngot,   //todo: Будет отдельная логика.
+                                            count: _.round((config.start_item_level_jewelry_iron_ingot + config.increase_item_level_jewelry_iron_ingot * (itemLevel - 1)) * database.item_categories.ratios.ratioByItemAttribute(this._patterns[i].itemCategories[j].itemCategoryID, ItemAttributeID.CraftRatio)),
+                                        },
+                                    ],
+                                    resultItemCount: 1,
+                                };
+
+                                let tsdb_item = tsdb_itemBuilder.build();
+                                items[ID] = tsdb_item;
+                                recipes[ID] = recipe;
                             }
+
                             break;
                         case 'weapon':
                             // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
-                            let itemDatabaseRow = this._createItemDatabaseRow();
-
-                            itemDatabaseRow.ItemLevel = itemLevel;
-                            itemDatabaseRow.QualityID = QualityID.Uncommon;
-                            itemDatabaseRow.Equipable = true;
-                            itemDatabaseRow.ItemCategoryID = this._patterns[i].itemCategories[j].itemCategoryID;
-
-                            itemDatabaseRow.ID = this._itemIDGenerator.generate(
+                            let ID = this._itemIDGenerator.generate(
                                 this._patterns[i].itemCategories[j].itemCategoryID,
                                 itemLevel,
                                 QualityID.Uncommon,
                             );
-                            itemDatabaseRow.ItemLevel = itemLevel;
-                            itemDatabaseRow.QualityID = QualityID.Uncommon;
-                            itemDatabaseRow.Equipable = true;
-                            if (database.metadata.items.twoHandWeapon(this._patterns[i].itemCategories[j].itemCategoryID)) itemDatabaseRow.TwoHandWeapon = true;
 
-                            itemDatabaseRow.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
-                            itemDatabaseRow[CharacterAttributeID.AttackPower] = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                            let tsdb_itemBuilder = new TSDB_ItemBuilder({
+                                ID: ID,
+                                itemCategoryID: this._patterns[i].itemCategories[j].itemCategoryID as ItemCategoryID,
+                            });
 
-                            items.push(itemDatabaseRow);
+                            tsdb_itemBuilder.ItemLevel = itemLevel;
+                            tsdb_itemBuilder.QualityID = QualityID.Uncommon;
+                            tsdb_itemBuilder.Equipable = true;
+                            tsdb_itemBuilder.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                            tsdb_itemBuilder.AttackPower = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                            if (database.metadata.items.twoHandWeapon(this._patterns[i].itemCategories[j].itemCategoryID)) tsdb_itemBuilder.TwoHandWeapon = true;
+
+                            let recipe = {
+                                ID: ID,
+                                requireItems: [
+                                    {
+                                        ID: ItemID.IronIngot,   //todo: Будет отдельная логика.
+                                        count: _.round((config.start_item_level_blacksmith_iron_ingot + config.increase_item_level_blacksmith_iron_ingot * (itemLevel - 1)) * database.item_categories.ratios.ratioByItemAttribute(this._patterns[i].itemCategories[j].itemCategoryID, ItemAttributeID.CraftRatio)),
+                                    },
+                                ],
+                                resultItemCount: 1,
+                            };
+
+                            let tsdb_item = tsdb_itemBuilder.build();
+                            items[ID] = tsdb_item;
+                            recipes[ID] = recipe;
 
                             break;
                         case 'shields':
                             // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             {//А так можно было?
-                                let itemDatabaseRow = this._createItemDatabaseRow();
-
-                                itemDatabaseRow.ItemLevel = itemLevel;
-                                itemDatabaseRow.QualityID = QualityID.Uncommon;
-                                itemDatabaseRow.Equipable = true;
-                                itemDatabaseRow.ItemCategoryID = this._patterns[i].itemCategories[j].itemCategoryID;
-
-                                itemDatabaseRow.ID = this._itemIDGenerator.generate(
+                                let ID = this._itemIDGenerator.generate(
                                     this._patterns[i].itemCategories[j].itemCategoryID,
                                     itemLevel,
                                     QualityID.Uncommon,
                                 );
-                                if (database.metadata.items.twoHandWeapon(this._patterns[i].itemCategories[j].itemCategoryID)) itemDatabaseRow.TwoHandWeapon = true;
 
-                                itemDatabaseRow.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
-                                itemDatabaseRow.Strength = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
-                                //todo: CharacterAttribute на основе метаданных/strategy. Для паладинов нужна еще инта.
+                                let tsdb_itemBuilder = new TSDB_ItemBuilder({
+                                    ID: ID,
+                                    itemCategoryID: this._patterns[i].itemCategories[j].itemCategoryID as ItemCategoryID,
+                                });
 
-                                items.push(itemDatabaseRow);
+                                tsdb_itemBuilder.ItemLevel = itemLevel;
+                                tsdb_itemBuilder.QualityID = QualityID.Uncommon;
+                                tsdb_itemBuilder.Equipable = true;
+                                tsdb_itemBuilder.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                                tsdb_itemBuilder.Strength = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+
+                                let recipe = {
+                                    ID: ID,
+                                    requireItems: [
+                                        {
+                                            ID: ItemID.IronIngot,   //todo: Будет отдельная логика.
+                                            count: _.round((config.start_item_level_blacksmith_iron_ingot + config.increase_item_level_blacksmith_iron_ingot * (itemLevel - 1)) * database.item_categories.ratios.ratioByItemAttribute(this._patterns[i].itemCategories[j].itemCategoryID, ItemAttributeID.CraftRatio)),
+                                        },
+                                    ],
+                                    resultItemCount: 1,
+                                };
+
+                                let tsdb_item = tsdb_itemBuilder.build();
+                                items[ID] = tsdb_item;
+                                recipes[ID] = recipe;
                             }
+
                             break;
                     }//end switch
                 }//end for itemCategories
             }//end this._patterns
             
             rangeIndex++;
-        }
-    }
+        }//end range
+    }//end run
 
     private _mainCharacterAttributeForArmorMaterial(armorMaterialID: ArmorMaterialID): CharacterAttributeID | undefined {
         for (const key in this._jewelryStrategies) {
@@ -232,22 +311,5 @@ export default class GenerateItemsByPattern {
         }
 
         return undefined;
-    }
-
-    private _createItemDatabaseRow(): ItemDatabaseRow {
-        return {
-            ID: '',
-            ItemCategoryID: '',
-            ArmorMaterialID: '',
-            ItemLevel: 0,
-            QualityID: QualityID.Uncommon,
-            StackSize: 1,
-            Strength: 0,
-            Agility: 0,
-            Intelligence: 0,
-            HealthPoints: 0,
-            Equipable: false,
-            TwoHandWeapon: false,
-        };
     }
 }

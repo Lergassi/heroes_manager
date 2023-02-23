@@ -16,7 +16,7 @@ import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
 import {QualityID} from '../../core/types/enums/QualityID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import {ItemDatabaseRow} from '../../core/types/ItemDatabaseRow.js';
+import {TSDB_Item} from '../../core/types/TSDB_Item.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 import copy = Simulate.copy;
 
@@ -483,7 +483,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
             for (let itemCategoryIndex = 0; itemCategoryIndex < positions[level].length; itemCategoryIndex++) {
                 // let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
                 let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), 0);
-                let itemAttributes: ItemDatabaseRow = {
+                let itemAttributes: TSDB_Item = {
                     ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
                     ItemCategoryID: positions[level][itemCategoryIndex],
                     ArmorMaterialID: '',
@@ -496,6 +496,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
                     HealthPoints: 0,
                     Equipable: true,
                     TwoHandWeapon: false,
+                    AttackPower: 0,
                 };
 
                 if (this._getMetadata(positions[level][itemCategoryIndex]).requireArmorMaterial) itemAttributes.ArmorMaterialID = armorMaterialID;

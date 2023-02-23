@@ -8,7 +8,7 @@ import {CharacterAttributeID} from '../../../../../types/enums/CharacterAttribut
 import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
 import {QualityID} from '../../../../../types/enums/QualityID.js';
-import {ItemDatabaseRow} from '../../../../../types/ItemDatabaseRow.js';
+import {TSDB_Item} from '../../../../../types/TSDB_Item.js';
 import item_character_attribute_generation_functions from '../v0_0_1/item_character_attribute_generation_functions.js';
 import {item_attributes_formulas} from '../../formulas/item_attributes_formulas.js';
 import ItemAttributeGenerator from './ItemAttributeGenerator.js';
@@ -25,7 +25,7 @@ export default class GenerateItems {
         this._itemCharacterAttributeGenerator = new ItemAttributeGenerator();
     }
 
-    run(items: ItemDatabaseRow[]): void {
+    run(items: TSDB_Item[]): void {
         let armorMaterialIDs = [
             ArmorMaterialID.Plate,
             ArmorMaterialID.Leather,
@@ -82,7 +82,7 @@ export default class GenerateItems {
 
     private _generate(options: {
         armorMaterialID: ArmorMaterialID,
-        items: ItemDatabaseRow[],
+        items: TSDB_Item[],
         itemCategories: {itemCategoryID: ItemCategoryID, count: number}[],
     }): void {
         let constValues = {
@@ -128,7 +128,7 @@ export default class GenerateItems {
                         heroLevel: calcValues.currentLevelUpdate,
                         ratio: config.hero_level_corresponds_to_item_level_ratio,
                     });
-                    let itemAttributes: ItemDatabaseRow = {
+                    let itemAttributes: TSDB_Item = {
                         ID: '',
                         ItemCategoryID: itemCategories[i],
                         ArmorMaterialID: '',
@@ -141,6 +141,7 @@ export default class GenerateItems {
                         HealthPoints: 0,
                         Equipable: true,
                         TwoHandWeapon: false,
+                        AttackPower: 0,
                     };
 
                     if (database.metadata.items.requireArmorMaterial(itemCategories[i])) itemAttributes.ArmorMaterialID = options.armorMaterialID;

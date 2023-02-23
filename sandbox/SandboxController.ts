@@ -69,6 +69,7 @@ import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseCon
 import FightSandboxController from './SandboxControllers/FightSandboxController.js';
 import BagSandboxController from './SandboxControllers/BagSandboxController.js';
 import CraftSystemSandboxController from './SandboxControllers/CraftSystemSandboxController.js';
+import RecipeSandboxController from './SandboxControllers/RecipeSandboxController.js';
 import RecipesSandboxController from './SandboxControllers/RecipesSandboxController.js';
 import ShopSandboxController from './SandboxControllers/ShopSandboxController.js';
 import WalletInterface from '../core/app/Interfaces/WalletInterface.js';
@@ -118,7 +119,8 @@ export default class SandboxController {
         // (new AttributeGeneratorSandboxController(this._container)).run();
 
         // (new GenerateItemsSandboxController(this._container)).run();
-        (new GenerateItemsV002SandboxController(this._container)).run();
+        // (new GenerateItemsV002SandboxController(this._container)).run();
+        (new RecipeSandboxController(this._container)).run();
         // (new GenerateEnemySandboxController(this._container)).run();
 
         // this._testSumBoolean();
