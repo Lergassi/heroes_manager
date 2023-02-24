@@ -55,10 +55,11 @@ export enum ServiceID {
     StubFactory = 'StubFactory',
 
     //ui
-    UI_Game = 'core.ui.Game',
+    UI_ClientBuilder = 'core.ui.ClientBuilder',
     UI_Updater = 'core.ui.Updater',
 
     //React components
+    UI_Game = 'core.ui.Game',
     UI_ItemStorage = 'player.ui.PlayerItemStorage',
     UI_ItemStorageController = 'player.ui.ItemStorageController',
     UI_Wallet = 'player.ui.Wallet',

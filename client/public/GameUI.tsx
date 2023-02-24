@@ -1,4 +1,5 @@
 import {UNDEFINED_INJECT_ANNOTATION} from 'inversify/lib/constants/error_msgs.js';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Experience from '../../core/app/Components/Experience.js';
 import HeroComponent from '../../core/app/Components/HeroComponent.js';
@@ -18,7 +19,9 @@ import GameConsoleRC from './_React/GameConsoleRC.js';
 import DetailHeroRC from './Components/DetailHeroRC.js';
 import DetailLocationRC from './Components/DetailLocationRC.js';
 import EquipItemListRC from './Components/EquipItemListRC.js';
+import GameRC from './Components/GameRC.js';
 import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
+import LeftSidebarRC from './Components/LeftSidebarRC.js';
 import MainHeroListRC from './Components/MainHeroListRC.js';
 import MainLocationListRC from './Components/MainLocationListRC.js';
 import WalletRC from './Components/WalletRC.js';
@@ -71,55 +74,36 @@ export default class GameUI {
     }
 
     private _renderGameUI(root) {
-        //todo: Временные данные.
-        let heroes: UI_ShortHero[] = [];
-        this._container.get<MainHeroList>(ServiceID.MainHeroList).map((hero) => {
-            let data = {
-                ID: String(hero.ID),
-            } as UI_ShortHero;
-
-            hero.get<HeroComponent>(ComponentID.Hero).renderByRequest({
-                updateHeroClassName(value: string) {
-                    data.heroClassID = value;
-                }
-            });
-
-            hero.get<Experience>(ComponentID.Experience).renderByRequest({
-                updateLevel(value: number) {
-                    data.level = value;
-                },
-            });
-
-            heroes.push(data);
-        });
-
         root.render(
-            <div>
-                <MainHeroListRC
-                    container={this._container}
-                    mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
-                />
-                <DetailHeroRC
-                    container={this._container}
-                    itemStorage={this._container.get<ItemStorageInterface>(ServiceID.ItemStorageController)}
-                />
-                <MainLocationListRC
-                    container={this._container}
-                    mainLocationList={this._container.get<MainLocationList>(ServiceID.MainLocationList)}
-                />
-                <DetailLocationRC
-                    container={this._container}
-                    mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
-                />
-                <WalletRC
-                    container={this._container}
-                    wallet={this._container.get<WalletInterface>(ServiceID.Wallet)}
-                />
-                <ItemStorageControllerRC
-                    container={this._container}
-                    itemStorageController={this._container.get<ItemStorageController>(ServiceID.ItemStorageController)}
-                />
-            </div>
+            // <div>
+            //     <MainHeroListRC
+            //         container={this._container}
+            //         mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
+            //     />
+            //     <DetailHeroRC
+            //         container={this._container}
+            //         itemStorage={this._container.get<ItemStorageInterface>(ServiceID.ItemStorageController)}
+            //     />
+            //     <MainLocationListRC
+            //         container={this._container}
+            //         mainLocationList={this._container.get<MainLocationList>(ServiceID.MainLocationList)}
+            //     />
+            //     <DetailLocationRC
+            //         container={this._container}
+            //         mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
+            //     />
+            //     <WalletRC
+            //         container={this._container}
+            //         wallet={this._container.get<WalletInterface>(ServiceID.Wallet)}
+            //     />
+            //     <ItemStorageControllerRC
+            //         container={this._container}
+            //         itemStorageController={this._container.get<ItemStorageController>(ServiceID.ItemStorageController)}
+            //     />
+            // </div>
+            <GameRC
+                container={this._container}
+            />
         );
     }
 }

@@ -78,7 +78,8 @@ export default class Theme {
                 </div>
                 <div className={'container'}>
                     <LeftSidebarRC
-                        items={menuItems}
+                        // items={menuItems}
+                        container={this._container}
                     />
                     <div className={'content'}>
                         <div className={'widget'}>

@@ -15,6 +15,7 @@ import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemCount, UI_ShortHero} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
+import {UI_WindowOptions} from '../../types/main.js';
 import HeroListSelectRC from './HeroListSelectRC.js';
 import HeroScrolledListSelectRC from './HeroScrolledListSelectRC.js';
 import {MainHeroListRCElement} from './MainHeroListRC.js';
@@ -22,15 +23,14 @@ import {MainHeroListRCElement} from './MainHeroListRC.js';
 export interface DetailLocationRCProps {
     container: ContainerInterface;
     mainHeroList: MainHeroList;
+    window: UI_WindowOptions;
 }
 
 export interface DetailLocationRCState {
     location: GameObject;
     ID: string;
 
-    window: {
-        show: boolean,
-    },
+    window: UI_WindowOptions;
 
     state: string;
     level: number;
@@ -127,7 +127,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
     }
 
     updateByRequest(): void {
-        if (!this.state.window.show) return;
+        if (!(this.state.window.show && this.props.window.show)) return;
 
         this.updateID(String(this.state.location.ID));  //todo: Будет так до новой системы GameObject.
         this.state.location?.get<Location>(ComponentID.Location).renderByRequest(this);
@@ -330,8 +330,8 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
     }
 
     render() {
+        if (!(this.state.window.show && this.props.window.show)) return;
         if (!this.state.location) return;
-        if (!this.state.window.show) return;
 
         let heroes = this.state.heroes;
         let enemies = this.state.enemies;

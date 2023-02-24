@@ -109,11 +109,11 @@ export default class SandboxUI {
         // this.uiGetStarted();
         // this.testWithoutJSX();
 
-        // this.devLayout();
+        this.devLayout();
         // this._renderItemStorageController();
 
         // this.devItemStorage();
-        this._devItemStorageController();
+        // this._devItemStorageController();
 
         // this.devDetailHero();
         // this.devMainHeroList();
@@ -211,7 +211,8 @@ export default class SandboxUI {
                 </div>
                 <div className={'container'}>
                     <LeftSidebarRC
-                        items={menuItems}
+                        // items={menuItems}
+                        container={this._container}
                     />
                     <div className={'content'}>
                         {/*<Lorem/>*/}
@@ -348,6 +349,7 @@ export default class SandboxUI {
                 <ItemStorageControllerRC
                     itemStorageController={itemStorageController}
                     container={this._container}
+                    window={{show: true}}
                 />
             </div>
         );
@@ -400,10 +402,10 @@ export default class SandboxUI {
                 {/*    container={this._container}*/}
                 {/*    mainHeroList={mainHeroList}*/}
                 {/*/>*/}
-                <MainHeroListRC
-                    container={this._container}
-                    mainHeroList={mainHeroList}
-                />
+                {/*<MainHeroListRC*/}
+                {/*    container={this._container}*/}
+                {/*    mainHeroList={mainHeroList}*/}
+                {/*/>*/}
             </div>
         );
     }
@@ -557,10 +559,10 @@ export default class SandboxUI {
 
         this._root.render(
             <div>
-                <MainLocationListRC
-                    container={this._container}
-                    mainLocationList={mainLocationList}
-                />
+                {/*<MainLocationListRC*/}
+                {/*    container={this._container}*/}
+                {/*    mainLocationList={mainLocationList}*/}
+                {/*/>*/}
                 {/*<MainLocationListRC*/}
                 {/*    container={this._container}*/}
                 {/*    mainLocationList={mainLocationList}*/}

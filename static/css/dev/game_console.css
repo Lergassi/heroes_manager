@@ -2,6 +2,15 @@
 
 }
 
+.game-console_bottom {
+    /*position: absolute;*/
+    position: fixed;
+    z-index: 1000;
+    bottom: 15px;
+    /*left: 220px;*/
+    left: 235px;    /* sidebar.width + 15px padding */
+}
+
 .game-console__input {
     width: 500px;
     height: 24px;
@@ -15,4 +24,10 @@
 
 .game-console-autocomplete-list__selected {
     text-decoration: underline;
+}
+
+.game-console-autocomplete-list-wrapper {
+    background: white;
+    padding: 10px;
+    border: 1px solid #ddd;
 }

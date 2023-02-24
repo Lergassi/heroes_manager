@@ -167,7 +167,15 @@ export default class GameConsoleRC extends React.Component<any, any>{
 
     render() {
         return (
-            <div className={'game-console'} >
+            <div className={'game-console game-console_bottom'} >
+                <div className={'game-console-autocomplete-list-wrapper'} >
+                    {/*todo: Сделать в виде отдельного компонента. Только рендер.*/}
+                    <ul className={'game-console-autocomplete-list list-without-types'}>
+                        {this._autoCompleteList.map(command => (
+                            <li className={this._isAutoCompleteHandling && (command === this.state.value) ? 'game-console-autocomplete-list__selected' : ''} key={command}>{command}</li>
+                        ))}
+                    </ul>
+                </div>
                 <input
                     className={'game-console__input'}
                     autoFocus
@@ -178,21 +186,13 @@ export default class GameConsoleRC extends React.Component<any, any>{
                     onKeyDown={this.keyDownHandler}
                     value={this.state.value}
                 />
-                <div className={'game-console-autocomplete-list-wrapper'} >
-                    {/*todo: Сделать в виде отдельного компонента. Только рендер.*/}
-                    <ul className={'game-console-autocomplete-list list-without-types'}>
-                        {this._autoCompleteList.map(command => (
-                                <li className={this._isAutoCompleteHandling && (command === this.state.value) ? 'game-console-autocomplete-list__selected' : ''} key={command}>{command}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div>
-                    {_.map(this._buttonCommands, (command, index) => {
-                        return <div key={index}>
-                            <button className={'btn btn_default btn_width-200px'} onClick={this._queryHandler.bind(this, command)}>{command}</button>
-                        </div>
-                    })}
-                </div>
+                {/*<div>*/}
+                {/*    {_.map(this._buttonCommands, (command, index) => {*/}
+                {/*        return <div key={index}>*/}
+                {/*            <button className={'btn btn_default btn_width-200px'} onClick={this._queryHandler.bind(this, command)}>{command}</button>*/}
+                {/*        </div>*/}
+                {/*    })}*/}
+                {/*</div>*/}
             </div>
         );
     }
@@ -225,7 +225,7 @@ export default class GameConsoleRC extends React.Component<any, any>{
      * Только для Enter.
      * @param e
      */
-    async keyPressHandler(e) {
+    private async keyPressHandler(e) {
         switch(e.code) {
             case 'Enter':
             case 'NumpadEnter':

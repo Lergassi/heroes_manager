@@ -19,10 +19,8 @@ export interface PlayerTableItemStorageRCProps {
     container: ContainerInterface;
 }
 
-export interface PlayerTableItemStorageRCState {
+interface PlayerTableItemStorageRCState {
     itemStorage: ItemStorageInterface;
-    // itemStorageID: string;
-    // slots: UI_ItemCount[];
     slots: UI_ItemStorageSlot[];
 }
 
@@ -81,6 +79,11 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
+                                <tr>
+                                    <th style={{width: '300px'}}>Item</th>
+                                    <th style={{width: '300px'}}>Count</th>
+                                    <th>Ctrl</th>
+                                </tr>
                                 {_.map(this.state.slots, (slot, index) => {
                                     return <tr key={index}>
                                         <td>{slot.item.itemName}</td>

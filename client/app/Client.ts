@@ -19,7 +19,7 @@ export default class Client {
         debug(DebugNamespaceID.Log)('Создание клиенте завершено (index.js).');
 
         let gameUI = new GameUI(container);
-        container.set<GameUI>(ServiceID.UI_Game, gameUI);
+        container.set<GameUI>(ServiceID.UI_ClientBuilder, gameUI);
 
         gameUI.buildPreGameUI();
     }

@@ -17,22 +17,22 @@ import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemCount} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
+import {UI_WindowOptions} from '../../types/main.js';
 import EquipItemListRC from './EquipItemListRC.js';
 
 export interface DetailHeroRCProps {
     container: ContainerInterface;
     /**
-     * Для экипировки.
+     * Для списка экипировки.
      */
     itemStorage: ItemStorageInterface;
+    window: UI_WindowOptions;
 }
 
 export interface DetailHeroRCState {
     hero: GameObject;
 
-    window: {
-        show: boolean,
-    };
+    window: UI_WindowOptions;
 
     heroClassName: string;
 
@@ -69,17 +69,6 @@ export interface DetailHeroRCState {
     [EquipSlotID.LeftHand]: string;
 }
 
-/**
- * todo:
- * - Класс.
- * - Уровень и опыт.
- * - Атрибуты.
- * - Средний илвл.
- * - Экипировка.
- * - Здоровье.
- * - Мана.
- * - Атака.
- */
 export default class DetailHeroRC extends React.Component<DetailHeroRCProps, DetailHeroRCState> /*todo: Реализовать все интерфейсы или разделить на отдельные классы. */ {
     private readonly _characterAttributeIDs = [
         CharacterAttributeID.Strength,
@@ -157,7 +146,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
     }
 
     updateByRequest(): void {
-        if (!this.state.window.show) return;
+        if (!(this.state.window.show && this.props.window.show)) return;
         if (!this.state.hero) return;
 
         this.state.hero.get<HeroComponent>(ComponentID.Hero)?.renderByRequest(this);
@@ -182,7 +171,6 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
     }
 
     hide() {
-        console.log('hide', this);
         this.setState((state) => {
             return {
                 window: {
@@ -337,7 +325,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
     }
 
     render() {
-        if (!this.state.window.show) return;
+        if (!(this.state.window.show && this.props.window.show)) return;
         if (!this.state.hero) return;
 
         return (
@@ -362,6 +350,11 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                             <h4>Экипировка:</h4>
                             <table className={'basic-table'}>
                                 <tbody>
+                                    <tr>
+                                        <th style={{width: '300px'}}>EquipSlotID</th>
+                                        <th style={{width: '300px'}}>Item</th>
+                                        <th style={{}}>Ctrl</th>
+                                    </tr>
                                     {this._renderEquipSlot(EquipSlotID.Head)}
                                     {this._renderEquipSlot(EquipSlotID.Shoulders)}
                                     {this._renderEquipSlot(EquipSlotID.Chest)}

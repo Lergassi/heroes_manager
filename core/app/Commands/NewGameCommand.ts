@@ -45,6 +45,6 @@ export default class NewGameCommand extends Command {
         // let gameUI = this.container.get<GameUI>(ServiceID.UI_Game);
         // assertNotNil(gameUI);
 
-        this.container.get<GameUI>(ServiceID.UI_Game).buildGameUI();
+        this.container.get<GameUI>(ServiceID.UI_ClientBuilder).buildGameUI();
     }
 }

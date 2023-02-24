@@ -78,6 +78,15 @@ import TavernSandboxController from './SandboxControllers/TavernSandboxControlle
 import AverageItemLevel from '../core/app/Components/AverageItemLevel.js';
 import HeroSandboxController from './SandboxControllers/HeroSandboxController.js';
 
+// let p = './core/data/json/auto_generated_equip_24.02.2023_06_02_55.json';
+// let a = import(p);
+
+// import {test} from '../core/data/json/test.js';
+// let test = import('../core/data/json/test.js');
+// let test = (async () => {
+//     return await import('../core/data/json/test.js');
+// })();
+
 export default class SandboxController {
     private _container: ContainerInterface;
 
@@ -92,16 +101,22 @@ export default class SandboxController {
         }
     }
 
-    run() {
+    async run() {
         this._initContainer();
         this.main();
+
+        // console.log(a);
+        // await test;
+        // console.log(test);
+        // test.then(value => {
+        //     console.log(value);
+        //     console.log(value.test);
+        // });
     }
 
     main() {
         // this._inversifyjsGetStarted();
-        // this._devUISystem();
         // (new InversifyJSGetStarted()).run();
-        // (new DevUISystemController(this._container)).run();
 
         // (new LoadItemDatabaseController(this._container)).run();
         // (new EntityManagerSandboxController(this._container)).run();
@@ -120,7 +135,7 @@ export default class SandboxController {
 
         // (new GenerateItemsSandboxController(this._container)).run();
         // (new GenerateItemsV002SandboxController(this._container)).run();
-        (new RecipeSandboxController(this._container)).run();
+        // (new RecipeSandboxController(this._container)).run();
         // (new GenerateEnemySandboxController(this._container)).run();
 
         // this._testSumBoolean();
@@ -149,6 +164,9 @@ export default class SandboxController {
 
         // this._devItemStackController();
         // this._devItemStorageV2();
+
+        //ui
+        // (new DevUISystemController(this._container)).run();
 
         // this._testVanillaJS();
         // this._testLodash();

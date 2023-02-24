@@ -7,7 +7,9 @@
     warring: #f4b400
     danger: #d73d32
 
+    border: #ddd
     text: #444
+    text: #262626
     menu: #737373
     menu:hover: #262626
 */
@@ -34,7 +36,7 @@
 body {
     background-color: #eee;
     /*margin-top: 15px; !*todo: indev*!*/
-    padding: 15px;
+    /*padding: 15px;*/
 }
 
 /****************************************************************/
@@ -224,6 +226,39 @@ body {
 }
 
 /****************************************************************/
+/* basic-table */
+/****************************************************************/
+.basic-table {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.basic-table th {
+    text-align: left;
+}
+
+.basic-table th,
+.basic-table td {
+    line-height: 36px;
+}
+
+.basic-table th,
+.basic-table td {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    /*padding: 4px 8px;*/
+    padding-left: 8px;
+    padding-right: 8px;
+    box-sizing: border-box;
+}
+
+.basic-table__full-width {
+    width: 100%;
+}
+
+/****************************************************************/
 /* progress-bar */
 /****************************************************************/
 .progress-bar-wrapper,
@@ -343,11 +378,18 @@ body {
     width: 100%;
     box-sizing: border-box;
     border-bottom: 1px solid #f3f3f3;
-    color: #737373; /*todo: scss*/
+    /*color: #737373;*/
+    /*color: #444;*/
+    color: #262626;
+    /*color: #737373;*/
+}
+
+.left-sidebar__item_disabled > a {
+    color: #9f9f9f;
 }
 
 .left-sidebar__menu-text {
-    padding-left: 47px;
+    padding-left: 24px;
 }
 
 .left-sidebar__item:hover > a {

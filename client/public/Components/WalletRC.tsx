@@ -6,14 +6,17 @@ import WalletInterface, {WalletInterfaceRender} from '../../../core/app/Interfac
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
+import {UI_WindowOptions} from '../../types/main.js';
 
 export interface WalletRCProps {
     container: ContainerInterface;
     wallet: WalletInterface;
+    window: UI_WindowOptions;
 }
 
 export interface WalletRCState {
     money: number;
+    window: UI_WindowOptions;
 }
 
 export default class WalletRC extends React.Component<WalletRCProps, WalletRCState> implements WalletInterfaceRender {
@@ -22,6 +25,9 @@ export default class WalletRC extends React.Component<WalletRCProps, WalletRCSta
 
         this.state = {
             money: 0,
+            window: {
+                show: true,
+            },
         };
 
         this.props.container.set<WalletRC>(ServiceID.UI_Wallet, this);
@@ -29,6 +35,8 @@ export default class WalletRC extends React.Component<WalletRCProps, WalletRCSta
     }
 
     updateByRequest(): void {
+        if (!(this.state.window.show && this.props.window.show)) return;
+
         this.props.wallet.renderByRequest(this);
     }
 
@@ -41,6 +49,8 @@ export default class WalletRC extends React.Component<WalletRCProps, WalletRCSta
     }
 
     render() {
+        if (!(this.state.window.show && this.props.window.show)) return;
+
         return (
             <div>
                 <div className={'widget'}>

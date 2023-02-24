@@ -8,16 +8,19 @@ import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemCount} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
+import {UI_WindowOptions} from '../../types/main.js';
 import ItemStorageRC from './ItemStorageRC.js';
 
 export interface ItemStorageControllerRCProps {
     container: ContainerInterface;
     itemStorageController: ItemStorageController;
+    window: UI_WindowOptions;
 }
 
 export interface ItemStorageControllerRCState {
     itemStorageController: ItemStorageController;
     itemStorages: GameObject[];
+    window: UI_WindowOptions;
 }
 
 export default class ItemStorageControllerRC extends React.Component<ItemStorageControllerRCProps, ItemStorageControllerRCState> {
@@ -27,6 +30,9 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
         this.state = {
             itemStorageController: props.itemStorageController,
             itemStorages: [],
+            window: {
+                show: true,
+            },
         };
 
         this.props.container.set<ItemStorageControllerRC>(ServiceID.UI_ItemStorageController, this);
@@ -34,6 +40,8 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
     }
 
     updateByRequest(): void {
+        if (!(this.state.window.show && this.props.window.show)) return;
+
         this.state.itemStorageController.renderAllByRequest(this);
     }
 
@@ -46,6 +54,8 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
     }
 
     render() {
+        if (!(this.state.window.show && this.props.window.show)) return;
+
         let itemStorages = this.state.itemStorages;
 
         return (

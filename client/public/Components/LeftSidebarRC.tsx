@@ -1,14 +1,23 @@
-import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ContainerInterface from '../../../core/source/ContainerInterface.js';
+import {ServiceID} from '../../../core/types/enums/ServiceID.js';
+import {UI_PanelID} from '../../types/UI_PanelID.js';
+import GameRC from './GameRC.js';
+
+type LeftSidebarMenuItem = {
+    panelID: UI_PanelID;
+    name: string;
+    icon: string;
+    enable: boolean;
+};
 
 export interface LeftSidebarProps {
-    items: any;
+    // items: any;
+    container: ContainerInterface;
 }
 
 export interface LeftSidebarState {
-    items: any;
+    items: LeftSidebarMenuItem[];
 }
 
 export default class LeftSidebarRC extends React.Component<LeftSidebarProps, LeftSidebarState> {
@@ -16,7 +25,18 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
         super(props);
 
         this.state = {
-            items: props.items,
+            items: [
+                {panelID: UI_PanelID.Homepage, name: 'Главная', icon: '', enable: true},
+                {panelID: UI_PanelID.ItemStorages, name: 'Склад', icon: '', enable: true},
+                {panelID: undefined, name: 'Таверна', icon: '', enable: false},
+                {panelID: UI_PanelID.Heroes, name: 'Герои', icon: '', enable: true},
+                {panelID: UI_PanelID.Locations, name: 'Локации', icon: '', enable: true},
+                {panelID: undefined, name: 'Крафт', icon: '', enable: false},
+                {panelID: undefined, name: 'Подземелья и рейды', icon: '', enable: false},
+                {panelID: undefined, name: 'Строительство', icon: '', enable: false},
+                {panelID: undefined, name: 'Исследования', icon: '', enable: false},
+                {panelID: undefined, name: 'PvP', icon: '', enable: false},
+            ],
         };
     }
 
@@ -26,11 +46,17 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
         let elements = [];
         for (let i = 0; i < items.length; i++) {
             elements.push(
-                <div key={i} className={'left-sidebar__item'}>
-                    <a href="client/public/Components/LeftSidebarRC.tsx">
-                        <span className={'left-sidebar__icon-wrapper'}>
-                            <span className={'icon icon_Question01 icon_32'}></span>
-                        </span>
+                <div key={i} className={'left-sidebar__item ' + (!items[i].enable ? 'left-sidebar__item_disabled' : '')}>
+                    <a href="" onClick={(event) => {
+                        event.preventDefault();
+
+                        if (!items[i].panelID) return;
+
+                        this.props.container.get<GameRC>(ServiceID.UI_Game).showPanel(items[i].panelID);
+                    }}>
+                        {/*<span className={'left-sidebar__icon-wrapper'}>*/}
+                        {/*    <span className={'icon icon_Question01 icon_32'}></span>*/}
+                        {/*</span>*/}
                         <span className={'left-sidebar__menu-text'}>{items[i].name}</span>
                     </a>
                 </div>);

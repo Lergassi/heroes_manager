@@ -9,21 +9,21 @@ import GameObject from '../../../core/source/GameObject.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemCount, UI_VeinItemCount} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
+import {UI_WindowOptions} from '../../types/main.js';
 import DetailLocationRC from './DetailLocationRC.js';
 
 export interface MainLocationListRCProps {
     container: ContainerInterface;
     mainLocationList: MainLocationList;
+    window: UI_WindowOptions;
 }
 
 export interface MainLocationListRCState {
-    window: {
-        show: boolean,
-    },
     locations: MainLocationListRCElement[];
     activePage: number;
     totalPages: number;
     totalLocations: number;
+    window: UI_WindowOptions;
 }
 
 export interface MainLocationListRCElement {
@@ -66,7 +66,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
     }
 
     updateByRequest(): void {
-        if (!this.state.window.show) return;
+        if (!(this.state.window.show && this.props.window.show)) return;
 
         this.props.mainLocationList?.renderByRequest(this, {offset: ((this.state.activePage > 0 ? this.state.activePage - 1 : 0)) * this._options.rows, count: this._options.rows});
     }
@@ -105,6 +105,8 @@ export default class MainLocationListRC extends React.Component<MainLocationList
     }
 
     render() {
+        if (!(this.state.window.show && this.props.window.show)) return;
+
         return (
             <div>
                 <div className={'widget'}>
@@ -156,14 +158,16 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                 })}
                             </tbody>
                         </table>
-                        <div>pages: {this.state.activePage}/{this.state.totalPages}, {this.state.totalLocations}</div>
                         <div>
-                            {_.map(_.range(1, this.state.totalPages + 1), (page) => {
-                                return <span key={page} className={'btn btn_default'} onClick={(event) => {
-                                    this.updateActivePage(page);
-                                    event.preventDefault();
-                                }}>{page}</span>
-                            })}
+                            <span>
+                                {_.map(_.range(1, this.state.totalPages + 1), (page) => {
+                                    return <span key={page} className={'btn btn_default'} onClick={(event) => {
+                                        this.updateActivePage(page);
+                                        event.preventDefault();
+                                    }}>{page}</span>
+                                })}
+                            </span>
+                            <span>pages: {this.state.activePage}/{this.state.totalPages}, {this.state.totalLocations}</span>
                         </div>
                     </div>{/*end widget__content*/}
                 </div>{/*end widget*/}
