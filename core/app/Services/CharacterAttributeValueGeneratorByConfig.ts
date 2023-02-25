@@ -21,8 +21,9 @@ export default class CharacterAttributeValueGeneratorByConfig {
     }
 
     generate(heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID): number {
-        let values = database.heroes.character_attributes.startValue(heroClassID, characterAttributeID);
-
-        return  _.random(values[0], values[1]);
+        // let values = database.heroes.character_attributes.startValue(heroClassID, characterAttributeID);
+        //
+        // return  _.random(values[0], values[1]);
+        return  0;
     }
 }

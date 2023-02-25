@@ -141,7 +141,7 @@ export default class GenerateItems {
                 }
                 itemAttributes.ID += sprintf('_%s', _.padStart(String(this._IDs[itemAttributes.ID]), 2, '0'));
 
-                itemAttributes[CharacterAttributeID.HealthPoints] = itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategoryID);
+                itemAttributes[CharacterAttributeID.MaxHealthPoints] = itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategoryID);
                 itemAttributes[CharacterAttributeID.Strength] = itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, itemCategoryID);
                 // console.log(itemAttributes);
 

@@ -21,9 +21,9 @@ export default class CreateAllHeroClassesCommand extends Command {
 
             HeroClassID.Gladiator,
             HeroClassID.Barbarian,
-            HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
             HeroClassID.PlateDamageDealer1,
             HeroClassID.PlateDamageDealer2,
+            HeroClassID.PlateDamageDealer3,
 
             HeroClassID.Rogue,
             HeroClassID.Archer,
@@ -37,8 +37,8 @@ export default class CreateAllHeroClassesCommand extends Command {
             HeroClassID.Warlock,
             HeroClassID.Necromancer,
 
-            HeroClassID.Priest,
-            HeroClassID.Druid,
+            HeroClassID.Support4,
+            HeroClassID.Support5,
             HeroClassID.Support1,
             HeroClassID.Support2,
             HeroClassID.Support3,

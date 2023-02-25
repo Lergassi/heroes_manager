@@ -72,7 +72,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],
         [CharacterAttributeID.AttackPower]: [16, 20],
     },
-    [HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon]: {
+    [HeroClassID.PlateDamageDealer1]: {
         [CharacterAttributeID.Strength]: [6, 9],
         [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],
@@ -80,7 +80,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],
         [CharacterAttributeID.AttackPower]: [18, 22],
     },
-    [HeroClassID.PlateDamageDealer1]: {
+    [HeroClassID.PlateDamageDealer2]: {
         [CharacterAttributeID.Strength]: [6, 9],
         [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],
@@ -88,7 +88,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],
         [CharacterAttributeID.AttackPower]: [14, 18],
     },
-    [HeroClassID.PlateDamageDealer2]: {
+    [HeroClassID.PlateDamageDealer3]: {
         [CharacterAttributeID.Strength]: [6, 9],
         [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],
@@ -203,7 +203,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],
         [CharacterAttributeID.AttackPower]: [16, 20],
     },
-    [HeroClassID.Druid]: {
+    [HeroClassID.Support5]: {
         [CharacterAttributeID.Strength]: [6, 9],
         [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],
@@ -211,7 +211,7 @@ export let startCharacterAttributeConfig: StartCharacterAttributeConfig = {
         [CharacterAttributeID.MaxHealthPoints]: [80, 120],
         [CharacterAttributeID.AttackPower]: [16, 20],
     },
-    [HeroClassID.Priest]: {
+    [HeroClassID.Support4]: {
         [CharacterAttributeID.Strength]: [6, 9],
         [CharacterAttributeID.Agility]: [6, 9],
         [CharacterAttributeID.Intelligence]: [6, 9],

@@ -39,8 +39,8 @@ export default class CreateRandomHeroClassCommand extends Command {
             HeroClassID.Gunslinger,
             HeroClassID.FireMage,
             HeroClassID.Warlock,
-            HeroClassID.Priest,
-            HeroClassID.Druid,
+            HeroClassID.Support4,
+            HeroClassID.Support5,
         ];
 
         let heroFactory = this.container.get<HeroFactory>(ServiceID.HeroFactory);

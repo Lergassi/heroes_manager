@@ -1,5 +1,8 @@
 export enum HeroClassID {
+    //****************
     //танки
+    //****************
+
     /**
      * 500
      */
@@ -21,31 +24,35 @@ export enum HeroClassID {
      */
     Tank3 = 'Tank3',
 
+    //****************
     //дд латы
+    //****************
+
     /**
      * 400
      */
     Gladiator = 'Gladiator',
     /**
-     * Одно двуручное оружие.
      * 500
      */
-    // PlateDamageDealerWithOneTwoHandedWeapon = 'PlateDamageDealerWithOneTwoHandedWeapon',
     Barbarian = 'Barbarian',
     /**
      * 600
      */
-    PlateDamageDealerWithTwoTwoHandedWeapon = 'PlateDamageDealerWithTwoTwoHandedWeapon',
+    PlateDamageDealer1 = 'PlateDamageDealer1',
     /**
      * 800 +магия
      */
-    PlateDamageDealer1 = 'PlateDamageDealer1',
+    PlateDamageDealer2 = 'PlateDamageDealer2',
     /**
      * 1000 +магия
      */
-    PlateDamageDealer2 = 'PlateDamageDealer2',
+    PlateDamageDealer3 = 'PlateDamageDealer3',
 
+    //****************
     //дд кожа
+    //****************
+
     /**
      * 400
      */
@@ -66,7 +73,10 @@ export enum HeroClassID {
      * 1000
      */
     Gunslinger = 'Gunslinger',
-    // Cybernetician = 'Cybernetician',
+
+    //****************
+    //дд маги
+    //****************
 
     /**
      * 400
@@ -89,15 +99,10 @@ export enum HeroClassID {
      */
     FireMage = 'FireMage',
 
+    //****************
     //саппорты
-    /**
-     * 500
-     */
-    Priest = 'Priest',
-    /**
-     * 500
-     */
-    Druid = 'Druid',
+    //****************
+
     /**
      * 500
      */
@@ -110,4 +115,12 @@ export enum HeroClassID {
      * 500
      */
     Support3 = 'Support3',
+    /**
+     * 500
+     */
+    Support4 = 'Support4',
+    /**
+     * 500
+     */
+    Support5 = 'Support5',
 }

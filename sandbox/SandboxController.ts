@@ -542,7 +542,7 @@ export default class SandboxController {
             heroFactory.create(HeroClassID.Rogue, 1),
             heroFactory.create(HeroClassID.FireMage, 1),
             heroFactory.create(HeroClassID.Gunslinger, 1),
-            heroFactory.create(HeroClassID.Priest, 1),
+            heroFactory.create(HeroClassID.Support4, 1),
         ];
         console.log(heroes);
         console.log(_.map(heroes, (hero) => {
@@ -662,7 +662,7 @@ export default class SandboxController {
         locationComponent.addHero(heroFactory.create(HeroClassID.Rogue, 1));
         locationComponent.addHero(heroFactory.create(HeroClassID.FireMage, 1));
         locationComponent.addHero(heroFactory.create(HeroClassID.Gunslinger, 1));
-        locationComponent.addHero(heroFactory.create(HeroClassID.Priest, 1));
+        locationComponent.addHero(heroFactory.create(HeroClassID.Support4, 1));
 
         console.log(location);
 

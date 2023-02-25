@@ -31,20 +31,20 @@ export default class ItemCharacterAttributeGenerator {
         this._config.enemyAttackSpeed = 3;
 
         this._config.itemCategoryRatios = {
-            [ItemCategoryID.Helmets]: {[CharacterAttributeID.HealthPoints]: 0.5, [CharacterAttributeID.AttackPower]: 0.5},  //todo: Добавить другие атрибуты.
-            [ItemCategoryID.ShoulderPads]: {[CharacterAttributeID.HealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-            [ItemCategoryID.Breastplates]: {[CharacterAttributeID.HealthPoints]: 1, [CharacterAttributeID.AttackPower]: 1},
-            [ItemCategoryID.Bracers]: {[CharacterAttributeID.HealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
-            [ItemCategoryID.Gloves]: {[CharacterAttributeID.HealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-            [ItemCategoryID.Belts]: {[CharacterAttributeID.HealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
-            [ItemCategoryID.Pants]: {[CharacterAttributeID.HealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
-            [ItemCategoryID.Boots]: {[CharacterAttributeID.HealthPoints]: 0.4, [CharacterAttributeID.AttackPower]: 0.4},
-            [ItemCategoryID.Amulets]: {[CharacterAttributeID.HealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
-            [ItemCategoryID.Rings]: {[CharacterAttributeID.HealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-            [ItemCategoryID.OneHandedSwords]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
-            [ItemCategoryID.TwoHandedSwords]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
-            [ItemCategoryID.Daggers]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
-            [ItemCategoryID.Shields]: {[CharacterAttributeID.HealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
+            [ItemCategoryID.Helmets]: {[CharacterAttributeID.MaxHealthPoints]: 0.5, [CharacterAttributeID.AttackPower]: 0.5},  //todo: Добавить другие атрибуты.
+            [ItemCategoryID.ShoulderPads]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
+            [ItemCategoryID.Breastplates]: {[CharacterAttributeID.MaxHealthPoints]: 1, [CharacterAttributeID.AttackPower]: 1},
+            [ItemCategoryID.Bracers]: {[CharacterAttributeID.MaxHealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
+            [ItemCategoryID.Gloves]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
+            [ItemCategoryID.Belts]: {[CharacterAttributeID.MaxHealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
+            [ItemCategoryID.Pants]: {[CharacterAttributeID.MaxHealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
+            [ItemCategoryID.Boots]: {[CharacterAttributeID.MaxHealthPoints]: 0.4, [CharacterAttributeID.AttackPower]: 0.4},
+            [ItemCategoryID.Amulets]: {[CharacterAttributeID.MaxHealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
+            [ItemCategoryID.Rings]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
+            [ItemCategoryID.OneHandedSwords]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
+            [ItemCategoryID.TwoHandedSwords]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
+            [ItemCategoryID.Daggers]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
+            [ItemCategoryID.Shields]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
         };
         this._config.healthPointsCommonEquipSets = {
             [ItemCategoryID.Helmets]: {count: 1},
@@ -178,10 +178,10 @@ export default class ItemCharacterAttributeGenerator {
         let heroHealthPoints = balance.heroHealthPointsByLevel(heroLevel, this._config.heroHealthPointsStep);
 
         let breastplateHealthPointsValue = balance.breastplateHealthPoints(heroHealthPoints, _.round(_.sum(_.map(this._config.healthPointsCommonEquipSets, (item, innerItemCategoryID) => {
-            return this._getItemCategoryRatio(innerItemCategoryID as ItemCategoryID, CharacterAttributeID.HealthPoints) * item.count;
+            return this._getItemCategoryRatio(innerItemCategoryID as ItemCategoryID, CharacterAttributeID.MaxHealthPoints) * item.count;
         })), 2));
 
-        let characterAttributeValue = balance.itemHealthPointsByBreastplate(breastplateHealthPointsValue, this._getItemCategoryRatio(itemCategoryID, CharacterAttributeID.HealthPoints));
+        let characterAttributeValue = balance.itemHealthPointsByBreastplate(breastplateHealthPointsValue, this._getItemCategoryRatio(itemCategoryID, CharacterAttributeID.MaxHealthPoints));
 
         return characterAttributeValue;
     }

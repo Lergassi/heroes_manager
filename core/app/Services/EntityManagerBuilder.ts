@@ -564,8 +564,8 @@ export default class EntityManagerBuilder {
             ],
         );
         heroClassFactory.create(
-            HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
-            HeroClassID.PlateDamageDealerWithTwoTwoHandedWeapon,
+            HeroClassID.PlateDamageDealer1,
+            HeroClassID.PlateDamageDealer1,
             IconID.Sword02,
             500,
             HeroRoleID.DamageDealer,
@@ -585,8 +585,8 @@ export default class EntityManagerBuilder {
             ],
         );
         heroClassFactory.create(
-            HeroClassID.PlateDamageDealer1,
-            HeroClassID.PlateDamageDealer1,
+            HeroClassID.PlateDamageDealer2,
+            HeroClassID.PlateDamageDealer2,
             IconID.Sword02,
             500,
             HeroRoleID.DamageDealer,
@@ -607,8 +607,8 @@ export default class EntityManagerBuilder {
             ],
         );
         heroClassFactory.create(
-            HeroClassID.PlateDamageDealer2,
-            HeroClassID.PlateDamageDealer2,
+            HeroClassID.PlateDamageDealer3,
+            HeroClassID.PlateDamageDealer3,
             IconID.Sword02,
             500,
             HeroRoleID.DamageDealer,
@@ -821,8 +821,8 @@ export default class EntityManagerBuilder {
         );
         //support
         heroClassFactory.create(
-            HeroClassID.Priest,
-            HeroClassID.Priest,
+            HeroClassID.Support4,
+            HeroClassID.Support4,
             IconID.Question01,
             560,
             HeroRoleID.Support,
@@ -839,8 +839,8 @@ export default class EntityManagerBuilder {
             ],
         );
         heroClassFactory.create(
-            HeroClassID.Druid,
-            HeroClassID.Druid,
+            HeroClassID.Support5,
+            HeroClassID.Support5,
             IconID.Question01,
             560,
             HeroRoleID.Support,
@@ -1050,11 +1050,11 @@ export default class EntityManagerBuilder {
                     ItemCategoryID.Staffs,
                     ItemCategoryID.Wands,
                 ],
-                [HeroClassID.Priest]: [
+                [HeroClassID.Support4]: [
                     ItemCategoryID.Staffs,
                     ItemCategoryID.Wands,
                 ],
-                [HeroClassID.Druid]: [
+                [HeroClassID.Support5]: [
                     ItemCategoryID.Staffs,
                     ItemCategoryID.Wands,
                 ],
@@ -1089,10 +1089,10 @@ export default class EntityManagerBuilder {
                 [HeroClassID.Warlock]: [
                     ItemCategoryID.Wands,
                 ],
-                [HeroClassID.Priest]: [
+                [HeroClassID.Support4]: [
                     ItemCategoryID.Wands,
                 ],
-                [HeroClassID.Druid]: [
+                [HeroClassID.Support5]: [
                     ItemCategoryID.Wands,
                 ],
             },

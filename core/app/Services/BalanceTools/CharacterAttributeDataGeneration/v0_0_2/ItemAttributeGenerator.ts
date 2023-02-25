@@ -1,7 +1,7 @@
 import config from '../../../../../config/config.js';
 import {database} from '../../../../../data/ts/database.js';
-import {CharacterAttributeID} from '../../../../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
+import {ItemAttributeID} from '../../../../../types/enums/ItemAttributeID.js';
 import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
 import {item_attributes_formulas} from '../../formulas/item_attributes_formulas.js';
 
@@ -28,7 +28,7 @@ export default class ItemAttributeGenerator {
         //
         return item_attributes_formulas.healthPoints({
             default: this.defaultHealthPoints(itemLevel),
-            ratio: database.item_categories.ratios.ratio(itemCategoryID, CharacterAttributeID.MaxHealthPoints),
+            ratio: database.item_categories.ratios.ratioByItemAttribute(itemCategoryID, ItemAttributeID.Agility),
         });
     }
 
@@ -52,7 +52,7 @@ export default class ItemAttributeGenerator {
 
         return item_attributes_formulas.attackPower({
             default: this.defaultAttackPower(itemLevel),
-            ratio: database.item_categories.ratios.ratio(itemCategoryID, CharacterAttributeID.AttackPower),
+            ratio: database.item_categories.ratios.ratioByItemAttribute(itemCategoryID, ItemAttributeID.AttackPower),
         });
     }
 

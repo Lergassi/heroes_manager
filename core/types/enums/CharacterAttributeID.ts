@@ -13,11 +13,6 @@ export enum CharacterAttributeID {
      */
     Intelligence = 'Intelligence',
 
-    //...
-    /**
-     * @deprecated Понятия HealthPoints не нужно пока. Максимальное значение и текущее. Текущее значение - пока не атрибут.
-     */
-    HealthPoints = 'HealthPoints',
     MaxHealthPoints = 'MaxHealthPoints',
     Protection = 'Protection',              //Числовой показатель.
     // Armor = 'Armor',                        //Процентный показатель блокировки урона. Высчитываемый атрибут.

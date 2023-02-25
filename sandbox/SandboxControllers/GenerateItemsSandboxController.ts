@@ -502,7 +502,7 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
                 if (this._getMetadata(positions[level][itemCategoryIndex]).requireArmorMaterial) itemAttributes.ArmorMaterialID = armorMaterialID;
                 if (this._getMetadata(positions[level][itemCategoryIndex]).twoHandWeapon) itemAttributes.TwoHandWeapon = true;
 
-                itemAttributes[CharacterAttributeID.HealthPoints] = itemCharacterAttributeGenerator.healthPoints(itemLevel, positions[level][itemCategoryIndex]);
+                itemAttributes[CharacterAttributeID.MaxHealthPoints] = itemCharacterAttributeGenerator.healthPoints(itemLevel, positions[level][itemCategoryIndex]);
                 itemAttributes[CharacterAttributeID.Strength] = itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, positions[level][itemCategoryIndex]);
                 console.log(itemAttributes);
             }

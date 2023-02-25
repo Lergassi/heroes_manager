@@ -2,9 +2,8 @@
 import config from '../../../config/config.js';
 import {database} from '../../../data/ts/database.js';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
-import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
 import {HeroClassID} from '../../../types/enums/HeroClassID.js';
-import {enemy_character_attributes_formulas} from './formulas/enemy_character_attributes_formulas.js';
+import {ItemAttributeID} from '../../../types/enums/ItemAttributeID.js';
 import {hero_character_attributes_formulas} from './formulas/hero_character_attributes_formulas.js';
 
 import {item_attributes_formulas} from './formulas/item_attributes_formulas.js';
@@ -42,7 +41,7 @@ export default class HeroCharacterAttributeGenerator {
     }
 
     equipHeroMaxHealthPoints(level: number, heroClassID: HeroClassID): number {
-        let summaryRatio = this._summaryRatio(heroClassID, CharacterAttributeID.MaxHealthPoints);
+        let summaryRatio = this._summaryRatio(heroClassID, ItemAttributeID.HealthPoints);
         let itemLevel = this.itemLevelsCount(level);
 
         return _.round(
@@ -100,7 +99,7 @@ export default class HeroCharacterAttributeGenerator {
     equipHeroAttackPower(level: number, heroClassID: HeroClassID): number {
         let values: any = {};
         values.itemLevel = this.itemLevelsCount(level);
-        values.summaryRatio = this._summaryRatio(heroClassID, CharacterAttributeID.AttackPower);
+        values.summaryRatio = this._summaryRatio(heroClassID, ItemAttributeID.AttackPower);
 
         return _.round(
             ( config.start_item_level_attack_power + config.item_level_increase_attack_power * ( values.itemLevel - 1 ) ) *
@@ -124,13 +123,13 @@ export default class HeroCharacterAttributeGenerator {
     /**
      * Значение нужное для формулы после её упрощения (выноса за скобки). Пока тут.
      * @param heroClassID
-     * @param characterAttributeID
+     * @param itemAttributeID
      * @private
      */
-    private _summaryRatio(heroClassID: HeroClassID, characterAttributeID: CharacterAttributeID): number {
+    private _summaryRatio(heroClassID: HeroClassID, itemAttributeID: ItemAttributeID): number {
         let summaryRatio = 0;
         database.heroes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
-            summaryRatio += _.round(database.item_categories.ratios.ratio(itemCategoryID, characterAttributeID) * count, 2);
+            summaryRatio += _.round(database.item_categories.ratios.ratioByItemAttribute(itemCategoryID, itemAttributeID) * count, 2);
         });
 
         return _.round(summaryRatio, 2);

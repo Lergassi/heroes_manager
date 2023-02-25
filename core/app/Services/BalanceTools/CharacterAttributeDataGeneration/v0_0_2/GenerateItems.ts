@@ -171,7 +171,7 @@ export default class GenerateItems {
                     itemAttributes.ID += sprintf('_%s', _.padStart(String(this._IDs[itemAttributes.ID]), 2, '0'));
 
                     //todo: Разделить атрибуты предметов и атрибуты героев. Не всегда логика 1:1. Атрибуты у предметов это просто число (несколько чисел).
-                    itemAttributes[CharacterAttributeID.HealthPoints] = this._itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategories[i]);
+                    itemAttributes[CharacterAttributeID.MaxHealthPoints] = this._itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategories[i]);
                     //Пока все атрибуты одинаковые. Класс сам выбререт нужный.
                     itemAttributes[CharacterAttributeID.Strength] = this._itemCharacterAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, itemCategories[i]);
                     itemAttributes[CharacterAttributeID.Agility] = this._itemCharacterAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, itemCategories[i]);
