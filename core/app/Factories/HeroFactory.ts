@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {database} from '../../data/ts/database.js';
 import {assertNotNil} from '../../source/assert.js';
 import GameObject from '../../source/GameObject.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
@@ -180,8 +181,9 @@ export default class HeroFactory {
         hero.set<CharacterAttributes>(ComponentID.CharacterAttributes, characterAttributes);
 
         //todo: Переделать хранение главных атрибутов у классов.
-        let mainCharacterAttributes = heroClass.mainCharacterAttributes;
-        //todo: Переделать при создании логики создания разных показателей для каждого класса.
+        let mainCharacterAttributes = database.hero_classes.data.mainCharacterAttributes(heroClass.id as HeroClassID, (ID) => {
+            return ID;
+        });
         let modifier = function (value) {
             return value + _.ceil(value * 0.5); //todo: Для каждого класса нужно уникальное значение. Особено где зависимость от двух атрибутов.
         };
@@ -189,7 +191,8 @@ export default class HeroFactory {
         for (let i = 0; i < characterAttributeIDs.length; i++) {
             let baseValueModifier;
             if (_.filter(mainCharacterAttributes, (value) => {
-                return value.id === characterAttributeIDs[i];
+                // return value.id === characterAttributeIDs[i];
+                return value === characterAttributeIDs[i];
             }).length) {
                 baseValueModifier = modifier;
             }
@@ -207,8 +210,8 @@ export default class HeroFactory {
         //todo: Цепочка? builder? .create(...).decorate(...).decorate(...).build().
         characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new AttackPowerDependentIncreaseDecorator({
             attackPower: hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
-            dependentCharacterAttributes: _.filter(_.map(heroClass.mainCharacterAttributes, (characterAttribute) => {   //todo: Через индекс.
-                return hero.get<CharacterAttributeInterface>(characterAttribute.id);    //todo: Доступ.
+            dependentCharacterAttributes: _.filter(_.map(mainCharacterAttributes, (characterAttributeID) => {   //todo: Через индекс.
+                return hero.get<CharacterAttributeInterface>(characterAttributeID);    //todo: Доступ.
             }), value => value != undefined),
         }));
 

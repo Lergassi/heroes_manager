@@ -232,12 +232,12 @@ export default class AttributeGeneratorSandboxController extends AbstractSandbox
 
             values.defaultHP = itemAttributeGenerator.defaultHealthPoints(itemLevel);
             // values[] = itemAttributeGenerator.healthPoints(itemLevel, ItemCategoryID.Helmets);
-            database.heroes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
+            database.hero_classes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
                 values[sprintf('%sHP', itemCategoryID)] = itemAttributeGenerator.healthPoints(itemLevel, itemCategoryID);
             });
 
             values.defaultAP = itemAttributeGenerator.defaultAttackPower(itemLevel);
-            database.heroes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
+            database.hero_classes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
                 values[sprintf('%sAP', itemCategoryID)] = itemAttributeGenerator.attackPower(itemLevel, itemCategoryID);
             });
 

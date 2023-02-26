@@ -172,7 +172,6 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
             let hero = this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
                 heroPatterns[i].heroClassID,
                 1,
-                this.container.get<HeroFactory>(ServiceID.HeroFactory),
             );
 
             //Начальная экипировка.

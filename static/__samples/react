@@ -1,0 +1,6 @@
+<div className={'widget'}>
+    <div className={'widget__title'}>%TITLE%</div>
+    <div className={'widget__content'}>
+
+    </div>{/*end widget__content*/}
+</div>{/*end widget*/}

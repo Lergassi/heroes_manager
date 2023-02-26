@@ -14,6 +14,9 @@ import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import {IconID} from '../../../types/enums/IconID.js';
 import Icon from '../../Entities/Icon.js';
 
+/**
+ * @deprecated
+ */
 export default class HeroClassFactory {
     private readonly _entityManager: EntityManagerInterface;
 

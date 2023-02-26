@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import debug from 'debug';
-import DetailHeroRC from '../../../client/public/Components/DetailHeroRC.js';
+import DetailHeroRC from '../../../client/public/RComponents/DetailHeroRC.js';
 import {assertNotNil} from '../../source/assert.js';
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';

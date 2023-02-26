@@ -52,7 +52,6 @@ export default class CreateRandomHeroClassCommand extends Command {
                 mainHeroList.createHero(
                     Random.one(heroClasses),
                     1,
-                    heroFactory,
                 );
             } catch (e) {
                 console.log(e);

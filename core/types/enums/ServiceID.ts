@@ -24,6 +24,8 @@ export enum ServiceID {
     CharacterAttributeValueGenerator = 'player.CharacterAttributeValueGenerator',
     Wallet = 'player.Wallet',
 
+    Tavern = 'player.Tavern',
+    TavernController = 'player.TavernController',
     Shop = 'player.Shop',
     Fence = 'player.Fence',
 

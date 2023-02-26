@@ -57,6 +57,7 @@ export default class ItemStorageComponent {
 
         for (const slotsKey in this._slots) {
             count = this._slots[slotsKey].addItem(item, count);
+            // count = this._slots[slotsKey].;
         }
         // for (let i = 0; i < this._itemStackControllers.length; i++) {
         //     count = this._itemStackControllers[i].addItem(item, count);

@@ -16,15 +16,15 @@ import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import {UI_ShortHero} from '../../core/types/main.js';
 import UIUpdater from '../app/UIUpdater.js';
 import GameConsoleRC from './_React/GameConsoleRC.js';
-import DetailHeroRC from './Components/DetailHeroRC.js';
-import DetailLocationRC from './Components/DetailLocationRC.js';
-import EquipItemListRC from './Components/EquipItemListRC.js';
-import GameRC from './Components/GameRC.js';
-import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
-import LeftSidebarRC from './Components/LeftSidebarRC.js';
-import MainHeroListRC from './Components/MainHeroListRC.js';
-import MainLocationListRC from './Components/MainLocationListRC.js';
-import WalletRC from './Components/WalletRC.js';
+import DetailHeroRC from './RComponents/DetailHeroRC.js';
+import DetailLocationRC from './RComponents/DetailLocationRC.js';
+import EquipItemListRC from './RComponents/EquipItemListRC.js';
+import GameRC from './RComponents/GameRC.js';
+import ItemStorageControllerRC from './RComponents/ItemStorageControllerRC.js';
+import LeftSidebarRC from './RComponents/LeftSidebarRC.js';
+import MainHeroListRC from './RComponents/MainHeroListRC.js';
+import MainLocationListRC from './RComponents/MainLocationListRC.js';
+import WalletRC from './RComponents/WalletRC.js';
 
 export default class GameUI {
     private readonly _container: ContainerInterface;

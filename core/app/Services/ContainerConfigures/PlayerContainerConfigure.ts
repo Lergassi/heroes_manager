@@ -17,6 +17,8 @@ import ItemStorageController from '../../Components/ItemStorageController.js';
 import MainHeroList from '../../Components/MainHeroList.js';
 import MainLocationList from '../../Components/MainLocationList.js';
 import Shop from '../../Components/Shop.js';
+import Tavern from '../../Components/Tavern.js';
+import TavernController from '../../Components/TavernController.js';
 import Item from '../../Entities/Item.js';
 import EnemyCharacterAttributeFactory from '../../Factories/EnemyCharacterAttributeFactory.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
@@ -132,6 +134,14 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EntityManagerInterface>(ServiceID.EntityManager),
             );
         });
+        container.set<Tavern>(ServiceID.Tavern, (container) => {
+            return new Tavern();
+        });
+        container.set<TavernController>(ServiceID.TavernController, (container) => {
+            return new TavernController(
+                container.get<Tavern>(ServiceID.Tavern),
+            );
+        });
         // container.set<MainItemStorageListComponent>(ContainerID.MainItemStorageList, (container) => {
         //     let itemStorageCollectionGameObject = container.get<GameObjectFactory>(ContainerID.GameObjectFactory).create();
         //
@@ -192,6 +202,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
 
             let mainHeroListComponent = heroListControllerGameObject.addComponent(new MainHeroList(
                 container.get<GameObjectStorage>(ServiceID.GameObjectStorage),
+                container.get<HeroFactory>(ServiceID.HeroFactory),
                 // 10,
                 100,    //todo: В настройки.
                 // 1000,    //todo: В настройки.

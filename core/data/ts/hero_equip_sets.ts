@@ -50,6 +50,16 @@ let weapon_sets_data: TSDB_WeaponSet = {
     },
 };
 
+let ___ = {
+    itemCategoryID: '',
+    count: '',
+    //..
+    //..
+    //..
+    //..
+};
+
+//todo: Переделать на return map
 export const hero_equip_sets = {
     armorSet: function (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void): void {
         _.map(common_armor_equip_set_data, (data, itemCategoryID) => {
@@ -61,7 +71,8 @@ export const hero_equip_sets = {
             callback(itemCategoryID as ItemCategoryID, data.count);
         });
     },
-    equipSet: function (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void) {
+    //todo: jw sets
+    equipSet: function (heroClassID: HeroClassID, callback: (itemCategoryID: ItemCategoryID, count: number) => void): void {
         // console.log('this', this);
         // console.log('this.armorSet', this.armorSet);
         // console.log('this.armorSet', this.armorSet);

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {
     DetailLocationRCEnemyElement,
     DetailLocationRCHeroElement
-} from '../../../client/public/Components/DetailLocationRC.js';
+} from '../../../client/public/RComponents/DetailLocationRC.js';
 import {separate} from '../../debug_functions.js';
 import {assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';

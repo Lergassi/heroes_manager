@@ -77,6 +77,8 @@ import EntityManagerSandboxController from './SandboxControllers/EntityManagerSa
 import TavernSandboxController from './SandboxControllers/TavernSandboxController.js';
 import AverageItemLevel from '../core/app/Components/AverageItemLevel.js';
 import HeroSandboxController from './SandboxControllers/HeroSandboxController.js';
+import BlankGameplaySandboxController from './SandboxControllers/BlankGameplaySandboxController.js';
+import TypescriptSandboxController from './SandboxControllers/TypescriptSandboxController.js';
 
 // let p = './core/data/json/auto_generated_equip_24.02.2023_06_02_55.json';
 // let a = import(p);
@@ -115,6 +117,8 @@ export default class SandboxController {
     }
 
     main() {
+        // (new TypescriptSandboxController(this._container)).run();
+
         // this._inversifyjsGetStarted();
         // (new InversifyJSGetStarted()).run();
 
@@ -132,6 +136,8 @@ export default class SandboxController {
         // (new FightSandboxController(this._container)).run();
         // (new LocationSandboxController(this._container)).run();
         // (new AttributeGeneratorSandboxController(this._container)).run();
+        // (new TavernSandboxController(this._container)).run();
+        (new BlankGameplaySandboxController(this._container)).run();
 
         // (new GenerateItemsSandboxController(this._container)).run();
         // (new GenerateItemsV002SandboxController(this._container)).run();

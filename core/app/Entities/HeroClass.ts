@@ -6,6 +6,9 @@ import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import Icon from './Icon.js';
 
+/**
+ * @deprecated
+ */
 export default class HeroClass {
     private readonly _id: string;
     private readonly _name: string;

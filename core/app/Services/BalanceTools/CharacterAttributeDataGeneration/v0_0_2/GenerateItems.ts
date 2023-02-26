@@ -41,7 +41,7 @@ export default class GenerateItems {
         ];
 
         let armorItemCategories = [];
-        database.heroes.equip_sets.armorSet(undefined,(itemCategoryID, count) => {
+        database.hero_classes.equip_sets.armorSet(undefined,(itemCategoryID, count) => {
             armorItemCategories.push({
                 itemCategoryID: itemCategoryID,
                 count: count,
@@ -59,7 +59,7 @@ export default class GenerateItems {
         let weaponItemCategories = {};
         for (let i = 0; i < heroClassIDs.length; i++) {
             weaponItemCategories[heroClassIDs[i]] = [];
-            database.heroes.equip_sets.weaponSet(heroClassIDs[i], (itemCategoryID, count) => {
+            database.hero_classes.equip_sets.weaponSet(heroClassIDs[i], (itemCategoryID, count) => {
                 _.map(_.range(0, count), () => {
                     weaponItemCategories[heroClassIDs[i]].push({
                         itemCategoryID: itemCategoryID,

@@ -4,13 +4,13 @@ import {sprintf} from 'sprintf-js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import DetailHeroRC from '../public/Components/DetailHeroRC.js';
-import DetailLocationRC from '../public/Components/DetailLocationRC.js';
-import ItemStorageControllerRC from '../public/Components/ItemStorageControllerRC.js';
-import ItemStorageRC from '../public/Components/ItemStorageRC.js';
-import MainHeroListRC from '../public/Components/MainHeroListRC.js';
-import MainLocationListRC from '../public/Components/MainLocationListRC.js';
-import WalletRC from '../public/Components/WalletRC.js';
+import DetailHeroRC from '../public/RComponents/DetailHeroRC.js';
+import DetailLocationRC from '../public/RComponents/DetailLocationRC.js';
+import ItemStorageControllerRC from '../public/RComponents/ItemStorageControllerRC.js';
+import ItemStorageRC from '../public/RComponents/ItemStorageRC.js';
+import MainHeroListRC from '../public/RComponents/MainHeroListRC.js';
+import MainLocationListRC from '../public/RComponents/MainLocationListRC.js';
+import WalletRC from '../public/RComponents/WalletRC.js';
 
 enum UIState {
     Stop = 'Stop',
@@ -23,6 +23,7 @@ export default class UIUpdater {
     private readonly _container: ContainerInterface;
     private readonly _updateIntervalDelay: number = 100;
     private _updateUIIntervalID: NodeJS.Timer;
+    // private _updateUIIntervalID: number;
 
     private readonly _elements;
 
@@ -49,7 +50,7 @@ export default class UIUpdater {
             for (let i = 0; i < this._elements.length; i++) {
                 this._elements[i]?.updateByRequest();
             }
-        }, this._updateIntervalDelay)
+        }, this._updateIntervalDelay);
 
         this._state = UIState.Run;
         debug(DebugNamespaceID.Log)(sprintf('%s started.', ServiceID.UI_Updater));

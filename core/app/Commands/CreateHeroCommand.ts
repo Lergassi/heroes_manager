@@ -30,7 +30,6 @@ export default class CreateHeroCommand extends Command {
         this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
             heroClass,
             level,
-            this.container.get<HeroFactory>(ServiceID.HeroFactory),
         );
     }
 }

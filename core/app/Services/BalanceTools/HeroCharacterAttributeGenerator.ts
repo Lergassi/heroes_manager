@@ -36,7 +36,7 @@ export default class HeroCharacterAttributeGenerator {
     baseHeroMaxHealthPoints(level: number, heroClassID: HeroClassID): number {
         return hero_character_attributes_formulas.baseHeroMaxHealthPoints({
             defaultValue: this.defaultBaseHeroMaxHealthPoints(level),
-            ratio: database.heroes.character_attributes.ratio(heroClassID, CharacterAttributeID.MaxHealthPoints),
+            ratio: database.hero_classes.character_attributes.ratio(heroClassID, CharacterAttributeID.MaxHealthPoints),
         });
     }
 
@@ -92,7 +92,7 @@ export default class HeroCharacterAttributeGenerator {
     baseHeroAttackPower(level: number, heroClassID: HeroClassID): number {
         return hero_character_attributes_formulas.baseHeroAttackPower({
             defaultValue: this.defaultBaseHeroAttackPower(level),
-            ratio: database.heroes.character_attributes.ratio(heroClassID, CharacterAttributeID.AttackPower),
+            ratio: database.hero_classes.character_attributes.ratio(heroClassID, CharacterAttributeID.AttackPower),
         });
     }
 
@@ -128,7 +128,7 @@ export default class HeroCharacterAttributeGenerator {
      */
     private _summaryRatio(heroClassID: HeroClassID, itemAttributeID: ItemAttributeID): number {
         let summaryRatio = 0;
-        database.heroes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
+        database.hero_classes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
             summaryRatio += _.round(database.item_categories.ratios.ratioByItemAttribute(itemCategoryID, itemAttributeID) * count, 2);
         });
 

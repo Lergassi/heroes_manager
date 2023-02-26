@@ -1,4 +1,3 @@
-import debug from 'debug';
 import React from 'react';
 import ReactDOM, {Root} from 'react-dom/client';
 import Bag from '../../core/app/Components/Bag.js';
@@ -6,8 +5,9 @@ import ItemStorageController from '../../core/app/Components/ItemStorageControll
 import Location from '../../core/app/Components/Location.js';
 import MainHeroList from '../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../core/app/Components/MainLocationList.js';
+import Tavern from '../../core/app/Components/Tavern.js';
+import TavernController from '../../core/app/Components/TavernController.js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
-import Icon from '../../core/app/Entities/Icon.js';
 import EnemyFactory from '../../core/app/Factories/EnemyFactory.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
@@ -26,23 +26,19 @@ import GameObject from '../../core/source/GameObject.js';
 import GameObjectStorage from '../../core/source/GameObjectStorage.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
-import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {EnemyTypeID} from '../../core/types/enums/EnemyTypeID.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
-import {IconID} from '../../core/types/enums/IconID.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import ClientContainerConfigure from '../app/ClientContainerConfigure.js';
-import DetailHeroRC from './Components/DetailHeroRC.js';
-import DetailLocationRC from './Components/DetailLocationRC.js';
-import ItemStorageControllerRC from './Components/ItemStorageControllerRC.js';
-import ItemStorageRC from './Components/ItemStorageRC.js';
-import ItemStorageRC_Legacy from './Components/ItemStorageRC_Legacy.js';
-import LeftSidebarRC from './Components/LeftSidebarRC.js';
-import MainHeroListRC from './Components/MainHeroListRC.js';
-import MainLocationListRC from './Components/MainLocationListRC.js';
+import UIUpdater from '../app/UIUpdater.js';
+import ItemStorageControllerRC from './RComponents/ItemStorageControllerRC.js';
+import ItemStorageRC from './RComponents/ItemStorageRC.js';
+import ItemStorageRC_Legacy from './RComponents/ItemStorageRC_Legacy.js';
+import LeftSidebarRC from './RComponents/LeftSidebarRC.js';
+import TavernRC from './RComponents/TavernRC.js';
 
 function Hello(props) {
     console.log('Hello.this', this);
@@ -73,28 +69,28 @@ export default class SandboxUI {
         window['app']['sandbox'] = {};
         // window['_sandbox']['ui'] = {};
 
-        window['app']['ui'] = {};
-        window['app']['ui']['startUpdate'] = () => {
-            debug(DebugNamespaceID.Log)('startUpdate');
-            this._updateUIIntervalID = setInterval(() => {
-                //todo: Сделать отдельный класс для добавление/удаления компоненток для обновления.
-                this._container.get<ItemStorageControllerRC>(ServiceID.UI_ItemStorageController)?.updateByRequest();
-                this._container.get<ItemStorageRC>(ServiceID.UI_ItemStorage + '.0')?.updateByRequest();
-                this._container.get<ItemStorageRC>(ServiceID.UI_ItemStorage + '.1')?.updateByRequest();
-                this._container.get<ItemStorageRC>(ServiceID.UI_ItemStorage + '.2')?.updateByRequest();
-
-                this._container.get<DetailHeroRC>(ServiceID.UI_DetailHero)?.updateByRequest();
-                this._container.get<MainHeroListRC>(ServiceID.UI_MainHeroList)?.updateByRequest();
-                this._container.get<DetailLocationRC>(ServiceID.UI_DetailLocation)?.updateByRequest();
-                this._container.get<MainLocationListRC>(ServiceID.UI_MainLocationList)?.updateByRequest();
-            }, 100);
-        };
-        window['app']['ui']['stopUpdate'] = () => {
-            debug(DebugNamespaceID.Log)('stopUpdate');
-            clearInterval(this._updateUIIntervalID);
-        };
-
-        window['app']['ui']['startUpdate']();
+        // window['app']['ui'] = {};
+        // window['app']['ui']['startUpdate'] = () => {
+        //     debug(DebugNamespaceID.Log)('startUpdate');
+        //     this._updateUIIntervalID = setInterval(() => {
+        //         //todo: Сделать отдельный класс для добавление/удаления компоненток для обновления.
+        //         this._container.get<ItemStorageControllerRC>(ServiceID.UI_ItemStorageController)?.updateByRequest();
+        //         this._container.get<ItemStorageRC>(ServiceID.UI_ItemStorage + '.0')?.updateByRequest();
+        //         this._container.get<ItemStorageRC>(ServiceID.UI_ItemStorage + '.1')?.updateByRequest();
+        //         this._container.get<ItemStorageRC>(ServiceID.UI_ItemStorage + '.2')?.updateByRequest();
+        //
+        //         this._container.get<DetailHeroRC>(ServiceID.UI_DetailHero)?.updateByRequest();
+        //         this._container.get<MainHeroListRC>(ServiceID.UI_MainHeroList)?.updateByRequest();
+        //         this._container.get<DetailLocationRC>(ServiceID.UI_DetailLocation)?.updateByRequest();
+        //         this._container.get<MainLocationListRC>(ServiceID.UI_MainLocationList)?.updateByRequest();
+        //     }, 100);
+        // };
+        // window['app']['ui']['stopUpdate'] = () => {
+        //     debug(DebugNamespaceID.Log)('stopUpdate');
+        //     clearInterval(this._updateUIIntervalID);
+        // };
+        //
+        // window['app']['ui']['startUpdate']();
     }
 
     async run() {
@@ -109,7 +105,7 @@ export default class SandboxUI {
         // this.uiGetStarted();
         // this.testWithoutJSX();
 
-        this.devLayout();
+        // this.devLayout();
         // this._renderItemStorageController();
 
         // this.devItemStorage();
@@ -120,6 +116,10 @@ export default class SandboxUI {
 
         // this._devDetailLocation();
         // this._devMainLocationList();
+
+        this._devTavern();
+
+        this._container.get<UIUpdater>(ServiceID.UI_Updater).run();
     }
 
     uiGetStarted() {
@@ -189,19 +189,6 @@ export default class SandboxUI {
     }
 
     private devLayout() {
-        let menuItems = [
-            {name: 'Главная', icon: this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Icon>(EntityID.Icon, IconID.Shield01),},
-            {name: 'Инвентарь', icon: '',},
-            {name: 'Таверна', icon: '',},
-            {name: 'Герои', icon: '',},
-            {name: 'Локации', icon: '',},
-            {name: 'Подземелья и рейды', icon: '',},
-            {name: 'Строительство', icon: '',},
-            {name: 'Крафт', icon: '',},
-            {name: 'Исследования', icon: '',},
-            {name: 'PvP', icon: '',},
-        ];
-
         return this._root.render(
             <div>
                 <div className={'header'}>
@@ -381,7 +368,11 @@ export default class SandboxUI {
         let em = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
         let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
 
-        let mainHeroList = new MainHeroList(this._container.get<GameObjectStorage>(ServiceID.GameObjectStorage), 100);
+        let mainHeroList = new MainHeroList(
+            this._container.get<GameObjectStorage>(ServiceID.GameObjectStorage),
+            this._container.get<HeroFactory>(ServiceID.HeroFactory),
+            100,
+        );
 
         // mainHeroList.addHero(heroFactory.create(HeroClassID.Warrior, 1));
         // mainHeroList.addHero(heroFactory.create(HeroClassID.Warrior, 1));
@@ -417,7 +408,11 @@ export default class SandboxUI {
         let warrior = heroFactory.create(em.get<HeroClass>(EntityID.HeroClass, HeroClassID.Warrior), 1);
         let rogue = heroFactory.create(em.get<HeroClass>(EntityID.HeroClass, HeroClassID.Rogue), 1);
 
-        let mainHeroList = new MainHeroList(this._container.get<GameObjectStorage>(ServiceID.GameObjectStorage), 100);
+        let mainHeroList = new MainHeroList(
+            this._container.get<GameObjectStorage>(ServiceID.GameObjectStorage),
+            this._container.get<HeroFactory>(ServiceID.HeroFactory),
+            100,
+        );
         // mainHeroList.addHero(warrior);
         // mainHeroList.addHero(rogue);
 
@@ -567,6 +562,30 @@ export default class SandboxUI {
                 {/*    container={this._container}*/}
                 {/*    mainLocationList={mainLocationList}*/}
                 {/*/>*/}
+            </div>
+        );
+    }
+
+    private _devTavern() {
+        let tavern = new Tavern();
+
+        // tavern.add(HeroClassID.Warrior, 3);
+        // tavern.add(HeroClassID.FireMage, 3);
+        // tavern.add(HeroClassID.Gunslinger, 0);
+        // tavern.add(HeroClassID.Warrior, 4);
+        // tavern.add(HeroClassID.Support1, 1);
+        console.log(tavern);
+
+        window['app']['sandbox']['tavern'] = tavern;
+        window['app']['sandbox']['tavernController'] = new TavernController(tavern);
+
+        this._root.render(
+            <div>
+                <TavernRC
+                    container={this._container}
+                    tavern={tavern}
+                    window={{show: true}}
+                />
             </div>
         );
     }

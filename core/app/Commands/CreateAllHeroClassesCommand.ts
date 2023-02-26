@@ -51,7 +51,6 @@ export default class CreateAllHeroClassesCommand extends Command {
             mainHeroList.createHero(
                 heroClasses[i],
                 1,
-                heroFactory,
             );
         }
     }

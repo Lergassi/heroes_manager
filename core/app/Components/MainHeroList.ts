@@ -1,6 +1,6 @@
 import debug from 'debug';
 import _ from 'lodash';
-import {MainHeroListRCElement} from '../../../client/public/Components/MainHeroListRC.js';
+import {MainHeroListRCElement} from '../../../client/public/RComponents/MainHeroListRC.js';
 import {assertIsInstanceOf, assertIsPositive, assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
 import EventSystem from '../../source/EventSystem.js';
@@ -39,8 +39,9 @@ export interface MainHeroListRenderInterface {
  */
 export default class MainHeroList {
     private readonly _gameObjectStorage: GameObjectStorage;
+    private readonly _heroFactory: HeroFactory;
     private readonly _heroes: GameObject[];
-    private _max: unsigned; //todo: Значение нужно увеличить с ростом уровня игрока.
+    private _max: number; //todo: Значение нужно увеличить с ростом уровня игрока.
     private readonly _options = {
         heroesForPage: 10,
     };
@@ -54,25 +55,25 @@ export default class MainHeroList {
 
     constructor(
         gameObjectStorage: GameObjectStorage,
-        max: unsigned,
+        heroFactory: HeroFactory,
+        max: number,
     ) {
         this._gameObjectStorage = gameObjectStorage;
+        this._heroFactory = heroFactory;
         this._max = max;
         this._heroes = [];
     }
 
     createHero(
         heroClass: HeroClass | HeroClassID,
-        level: unsigned,
-        heroFactory: HeroFactory,
+        level: number,
     ): GameObject {
         assertNotNil(heroClass);
         assertIsPositive(level);
-        assertNotNil(heroFactory);
 
         if (!this.canCreateHero()) return null;
 
-        let hero = heroFactory.create(
+        let hero = this._heroFactory.create(
             heroClass,
             level,
         );

@@ -6,6 +6,8 @@ import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
 import {LocationTypeID} from '../../../types/enums/LocationTypeID.js';
 import Location from '../../Components/Location.js';
 import MainLocationList from '../../Components/MainLocationList.js';
+import Tavern from '../../Components/Tavern.js';
+import TavernController from '../../Components/TavernController.js';
 import Item from '../../Entities/Item.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
@@ -38,10 +40,15 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
 
     async execute(input: Input) {
         // await this._createItemStorages();
+        await this._configTavern();
+        await this._configMoney();
         await this._createItems();
-        await this._addMoney();
         await this._createHeroes();
         await this._createLocations();
+    }
+
+    private async _configTavern() {
+        this.container.get<TavernController>(ServiceID.TavernController).update();
     }
 
     private async _createItemStorages() {
@@ -120,7 +127,6 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
             let hero = this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
                 heroPatterns[i].heroClassID,
                 1,
-                this.container.get<HeroFactory>(ServiceID.HeroFactory),
             );
 
             //Начальная экипировка.
@@ -182,7 +188,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         this.container.get<MainLocationList>(ServiceID.MainLocationList).add(locationGO);
     }
 
-    private async _addMoney() {
+    private async _configMoney() {
         await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['1000']);
     }
 }

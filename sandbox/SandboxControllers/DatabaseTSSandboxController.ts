@@ -6,7 +6,8 @@ import AbstractSandboxController from './AbstractSandboxController.js';
 export default class DatabaseTSSandboxController extends AbstractSandboxController {
     run(): void {
         // this._getStarted();
-        this._devTestThis();
+        // this._devTestThis();
+        this._devHeroClasses();
     }
 
     private _getStarted() {
@@ -27,5 +28,16 @@ export default class DatabaseTSSandboxController extends AbstractSandboxControll
         // database.heroes.equip_sets.equipSet(HeroClassID.Warrior, (itemCategoryID, count) => {
         //     console.log(itemCategoryID);
         // })
+    }
+
+    private _devHeroClasses() {
+        console.log(database.hero_classes.data.heroRole(HeroClassID.Warrior));
+        console.log(database.hero_classes.data.heroRole(HeroClassID.FireMage));
+        database.hero_classes.data.armorMaterials(HeroClassID.Warrior, (ID) => {
+            console.log(ID);
+        });
+        database.hero_classes.data.armorMaterials(HeroClassID.FireMage, (ID) => {
+            console.log(ID);
+        });
     }
 }

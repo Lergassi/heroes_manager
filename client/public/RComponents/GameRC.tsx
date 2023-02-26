@@ -2,6 +2,7 @@ import React from 'react';
 import ItemStorageController from '../../../core/app/Components/ItemStorageController.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../../core/app/Components/MainLocationList.js';
+import Tavern from '../../../core/app/Components/Tavern.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
 import {assertNotNil} from '../../../core/source/assert.js';
@@ -14,6 +15,7 @@ import ItemStorageControllerRC from './ItemStorageControllerRC.js';
 import LeftSidebarRC from './LeftSidebarRC.js';
 import MainHeroListRC from './MainHeroListRC.js';
 import MainLocationListRC from './MainLocationListRC.js';
+import TavernRC from './TavernRC.js';
 import WalletRC from './WalletRC.js';
 
 export type GameRCProps = {
@@ -35,6 +37,7 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
         this.state = {
             panels: {
                 [UI_PanelID.Homepage]: {ID: UI_PanelID.Homepage, show: false,},
+                [UI_PanelID.Tavern]: {ID: UI_PanelID.Tavern, show: false,},
                 [UI_PanelID.ItemStorages]: {ID: UI_PanelID.ItemStorages, show: false,},
                 [UI_PanelID.Heroes]: {ID: UI_PanelID.Heroes, show: false,},
                 [UI_PanelID.Locations]: {ID: UI_PanelID.Locations, show: false,},
@@ -77,6 +80,14 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                         container={this.props.container}
                     />
                     <div className={'content'}>
+                        <TavernRC
+                            container={this.props.container}
+                            tavern={this.props.container.get<Tavern>(ServiceID.Tavern)}
+                            window={{
+                                show: this.state.panels.Tavern.show,
+                            }}
+                        />
+
                         <MainHeroListRC
                             container={this.props.container}
                             mainHeroList={this.props.container.get<MainHeroList>(ServiceID.MainHeroList)}

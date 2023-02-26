@@ -6,10 +6,8 @@ import {assertIsArray, assertIsInstanceOf, assertIsNumber, assertNotNil} from '.
 export default class GameObjectStorage {
     private readonly _gameObjects: GameObject[];
 
-    constructor(gameObjects: GameObject[] = []) {
-        assertIsArray(gameObjects);
-
-        this._gameObjects = gameObjects;
+    constructor() {
+        this._gameObjects = [];
     }
 
     add(gameObject: GameObject): void {
