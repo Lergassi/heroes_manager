@@ -4,7 +4,8 @@ import AbstractSandboxController from './AbstractSandboxController.js';
 
 export default class TypescriptSandboxController extends AbstractSandboxController {
     run(): void {
-        this._testKeyIteration();
+        // this._testKeyIteration();
+        this._testTypes();
     }
 
     private _testKeyIteration() {
@@ -68,5 +69,57 @@ export default class TypescriptSandboxController extends AbstractSandboxControll
         // let o1: {[key in keyof E]?: O} = {
         //     [E.One]: {},
         // };
+    }
+
+    private _testTypes() {
+        // type SomeUnion = 'Foo' | 'Bar' | 'Baz';
+        // type SomeUnion1 = keyof SomeUnion;
+        //
+        // let o: SomeUnion1 = Some;
+
+        enum Door {
+            Open = "open",
+            Closed = "closed",
+            Ajar = "ajar" // half open, half closed
+        }
+
+        enum DoorFrame {
+            Missing = "noDoor"
+        }
+
+        type DoorState = Door | DoorFrame;
+
+        // let a: DoorState = DoorState;
+
+        enum Move {
+            LEFT = 'Left',
+            RIGHT = 'Right',
+            FORWARD = 'Forward',
+            BACKWARD = 'Backward'
+        }
+        const myMove = {
+            ...Move,
+            JUMP: 'Jump'
+        }
+        enum Move1 {
+
+        }
+
+        let a = myMove.FORWARD;
+
+        enum Color1 {
+            Red = "Red",
+            Green = "Green"
+        }
+
+        enum Color2 {
+            Yellow = "Yellow",
+            Blue = "Blue"
+        }
+
+        type Colors = Color1 | Color2;
+        const Colors = { ...Color2, ...Color1 };
+
+        let color: Colors = Colors.Red;
     }
 }

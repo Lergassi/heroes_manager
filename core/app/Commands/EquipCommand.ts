@@ -1,14 +1,14 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import GameObject from '../../source/GameObject.js';
-import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
+import ItemStorageSlotComponent from '../Components/ItemStorages/ItemStorageSlotComponent.js';
 import AppError from '../../source/Errors/AppError.js';
 import EquipSlotComponent from '../Components/EquipSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {assert, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
-import ItemStorageComponent from '../Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../Components/ItemStorages/ItemStorageComponent.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 

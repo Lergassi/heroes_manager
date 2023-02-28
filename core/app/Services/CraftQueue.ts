@@ -4,8 +4,8 @@ import EntityManager from '../../source/EntityManager.js';
 import Recipe from '../Entities/Recipe.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import Bag from '../Components/Bag.js';
-import InfinityItemStorage from '../Components/InfinityItemStorage.js';
+import ItemStorage from '../Components/ItemStorages/ItemStorage.js';
+import InfinityItemStorage from '../Components/ItemStorages/InfinityItemStorage.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
@@ -37,7 +37,7 @@ export default class CraftQueue {
 
         for (let i = 0; i < recipe.requireItems.length; i++) {
             itemStorage.removeItem(<ItemID>recipe.requireItems[i].item.id, recipe.requireItems[i].count);
-            this._resourcesItemStorage.addItem(recipe.requireItems[i].item, recipe.requireItems[i].count);
+            this._resourcesItemStorage._addItem(recipe.requireItems[i].item, recipe.requireItems[i].count);
         }
 
         this._queue.push(recipe);

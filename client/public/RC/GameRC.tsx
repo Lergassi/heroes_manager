@@ -1,5 +1,6 @@
 import React from 'react';
-import ItemStorageController from '../../../core/app/Components/ItemStorageController.js';
+import Production from '../../../core/app/Components/Craft/Production.js';
+import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../../core/app/Components/MainLocationList.js';
 import Tavern from '../../../core/app/Components/Tavern.js';
@@ -15,6 +16,7 @@ import ItemStorageControllerRC from './ItemStorageControllerRC.js';
 import LeftSidebarRC from './LeftSidebarRC.js';
 import MainHeroListRC from './MainHeroListRC.js';
 import MainLocationListRC from './MainLocationListRC.js';
+import ProductionRC from './ProductionRC.js';
 import TavernRC from './TavernRC.js';
 import WalletRC from './WalletRC.js';
 
@@ -41,6 +43,7 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                 [UI_PanelID.ItemStorages]: {ID: UI_PanelID.ItemStorages, show: false,},
                 [UI_PanelID.Heroes]: {ID: UI_PanelID.Heroes, show: false,},
                 [UI_PanelID.Locations]: {ID: UI_PanelID.Locations, show: false,},
+                [UI_PanelID.Production]: {ID: UI_PanelID.Production, show: false,},
             },
             activePanel: UI_PanelID.Homepage,
         };
@@ -130,6 +133,15 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                             itemStorageController={this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)}
                             window={{
                                 show: this.state.panels.ItemStorages.show,
+                            }}
+                        />
+
+                        <ProductionRC
+                            container={this.props.container}
+                            production={this.props.container.get<Production>(ServiceID.Production)}
+                            playerItemStorage={this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController)}
+                            window={{
+                                show: this.state.panels.Production.show,
                             }}
                         />
                     </div>{/*content*/}

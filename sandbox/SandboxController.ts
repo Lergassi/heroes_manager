@@ -47,15 +47,15 @@ import Vein from '../core/app/Components/Vein.js';
 import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
 import Gatherer from '../core/app/Components/Gatherer.js';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
-import ItemStorageControllerWithLimit from '../core/app/Components/ItemStorageControllerWithLimit.js';
+import ItemStorageControllerWithLimit from '../core/app/Components/ItemStorages/ItemStorageControllerWithLimit.js';
 import ItemStorageInterface from '../core/app/Interfaces/ItemStorageInterface.js';
 import {EntityID} from '../core/types/enums/EntityID.js';
 import Currency from '../core/app/Entities/Currency.js';
 import {EventCode} from '../core/types/enums/EventCode.js';
 import TestGenerics from '../test/TestGenerics.js';
 import EventSystem2 from '../core/source/EventSystem2.js';
-import Bag from '../core/app/Components/Bag.js';
-import ItemStackController from '../core/app/Components/ItemStackController.js';
+import ItemStorage from '../core/app/Components/ItemStorages/ItemStorage.js';
+import ItemStackController from '../core/app/Components/ItemStorages/ItemStackController.js';
 import AttributeGeneratorSandboxController from './SandboxControllers/AttributeGeneratorSandboxController.js';
 import DatabaseTSSandboxController from './SandboxControllers/DatabaseTSSandboxController.js';
 import EnemySandboxController from './SandboxControllers/EnemySandboxController.js';
@@ -67,17 +67,17 @@ import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGet
 import DevUISystemController from './SandboxControllers/DevUISystemController.js';
 import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseController.js';
 import FightSandboxController from './SandboxControllers/FightSandboxController.js';
-import BagSandboxController from './SandboxControllers/BagSandboxController.js';
+import ItemStorageSandboxController from './SandboxControllers/ItemStorageSandboxController.js';
 import CraftSystemSandboxController from './SandboxControllers/CraftSystemSandboxController.js';
 import RecipeSandboxController from './SandboxControllers/RecipeSandboxController.js';
 import RecipesSandboxController from './SandboxControllers/RecipesSandboxController.js';
 import ShopSandboxController from './SandboxControllers/ShopSandboxController.js';
 import WalletInterface from '../core/app/Interfaces/WalletInterface.js';
 import EntityManagerSandboxController from './SandboxControllers/EntityManagerSandboxController.js';
-import TavernSandboxController from './SandboxControllers/TavernSandboxController.js';
+import _TavernSandboxController from './SandboxControllers/TavernSandboxController.js';
 import AverageItemLevel from '../core/app/Components/AverageItemLevel.js';
 import HeroSandboxController from './SandboxControllers/HeroSandboxController.js';
-import BlankGameplaySandboxController from './SandboxControllers/BlankGameplaySandboxController.js';
+import TavernSandboxController from './SandboxControllers/BlankGameplaySandboxController.js';
 import TypescriptSandboxController from './SandboxControllers/TypescriptSandboxController.js';
 
 // let p = './core/data/json/auto_generated_equip_24.02.2023_06_02_55.json';
@@ -127,7 +127,7 @@ export default class SandboxController {
         // (new DatabaseTSSandboxController(this._container)).run();
 
         // (new FightSandboxController(this._container)).run();
-        // (new BagSandboxController(this._container)).run();
+        (new ItemStorageSandboxController(this._container)).run();
         // (new RecipesSandboxController(this._container)).run();
         // (new ShopSandboxController(this._container)).run();
         // (new CraftSystemSandboxController(this._container)).run();
@@ -136,8 +136,8 @@ export default class SandboxController {
         // (new FightSandboxController(this._container)).run();
         // (new LocationSandboxController(this._container)).run();
         // (new AttributeGeneratorSandboxController(this._container)).run();
+        // (new _TavernSandboxController(this._container)).run();
         // (new TavernSandboxController(this._container)).run();
-        (new BlankGameplaySandboxController(this._container)).run();
 
         // (new GenerateItemsSandboxController(this._container)).run();
         // (new GenerateItemsV002SandboxController(this._container)).run();
@@ -297,7 +297,7 @@ export default class SandboxController {
             {item: ItemID.MagicResource01, count: 1},
         ]);
 
-        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20);
+        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20);
 
         // itemKit.create(
         //     itemStorage.get<ItemStorageInterface>(GameObjectKey.ItemStorageComponent),
@@ -780,7 +780,7 @@ export default class SandboxController {
         let entityManager = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
         let itemDatabase = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
-        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(10).get<ItemStorageInterface>(ComponentID.ItemStorage);
+        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(10).get<ItemStorageInterface>(ComponentID.ItemStorage);
         // let itemStorageManager = this._container.get<ItemStorageManager>(ContainerID.ItemStorageManager);
         // itemStorageManager.addItem(itemDatabase.get(ItemID.Wood), 12);
         // console.log(itemStorageManager);
@@ -830,11 +830,11 @@ export default class SandboxController {
         let itemDatabase = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
         let itemStorages = [
-            itemStorageFactory.create(10),
-            itemStorageFactory.create(10),
-            itemStorageFactory.create(10),
-            itemStorageFactory.create(10),
-            itemStorageFactory.create(10),
+            itemStorageFactory.createGameObject(10),
+            itemStorageFactory.createGameObject(10),
+            itemStorageFactory.createGameObject(10),
+            itemStorageFactory.createGameObject(10),
+            itemStorageFactory.createGameObject(10),
         ]
 
         // let itemStorageController = new ItemStorageController([
@@ -844,7 +844,7 @@ export default class SandboxController {
         // ]);
         let maxItemStorages = 5;
         let itemStorageController = new ItemStorageControllerWithLimit(maxItemStorages);
-        itemStorageController.addItemStorage(itemStorageFactory.create(2));
+        itemStorageController.addItemStorage(itemStorageFactory.createGameObject(2));
         // itemStorageController.addItemStorage(itemStorages[3]);
         // itemStorageController.addItemStorage(itemStorages[4]);
         // itemStorageController.addItemStorage(itemStorages[4]);
@@ -962,13 +962,13 @@ export default class SandboxController {
         //     new ItemStackController(),
         //     new ItemStackController(),
         // ]);
-        let itemStorage = new Bag(2, entityManager);
+        let itemStorage = new ItemStorage(2, entityManager);
         //equip slotIDFrom slotIDTo
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
@@ -978,15 +978,15 @@ export default class SandboxController {
     private _devItemStorageV2() {
         let itemDatabase = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
-        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20);
+        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20);
 
-        let itemStorageComponent = itemStorage.get<Bag>(ComponentID.ItemStorage);
+        let itemStorageComponent = itemStorage.get<ItemStorage>(ComponentID.ItemStorage);
 
-        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.IronOre), 24));
-        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 24));
-        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 24));
-        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.IronOre), 24));
-        console.log(itemStorageComponent.addItem(itemDatabase.get(ItemID.Wood), 24));
+        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.IronOre), 24));
+        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.Wood), 24));
+        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.Wood), 24));
+        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.IronOre), 24));
+        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.Wood), 24));
 
         console.log(itemStorageComponent);
 

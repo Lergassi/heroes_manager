@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM, {Root} from 'react-dom/client';
-import Bag from '../../core/app/Components/Bag.js';
-import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
+import Production from '../../core/app/Components/Craft/Production.js';
+import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
+import ItemStorageController from '../../core/app/Components/ItemStorages/ItemStorageController.js';
 import Location from '../../core/app/Components/Location.js';
 import MainHeroList from '../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../core/app/Components/MainLocationList.js';
@@ -34,11 +35,12 @@ import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import ClientContainerConfigure from '../app/ClientContainerConfigure.js';
 import UIUpdater from '../app/UIUpdater.js';
-import ItemStorageControllerRC from './RComponents/ItemStorageControllerRC.js';
-import ItemStorageRC from './RComponents/ItemStorageRC.js';
-import ItemStorageRC_Legacy from './RComponents/ItemStorageRC_Legacy.js';
-import LeftSidebarRC from './RComponents/LeftSidebarRC.js';
-import TavernRC from './RComponents/TavernRC.js';
+import ItemStorageControllerRC from './RC/ItemStorageControllerRC.js';
+import ItemStorageRC from './RC/ItemStorageRC.js';
+import ItemStorageRC_Legacy from './RC/ItemStorageRC_Legacy.js';
+import LeftSidebarRC from './RC/LeftSidebarRC.js';
+import ProductionRC from './RC/ProductionRC.js';
+import TavernRC from './RC/TavernRC.js';
 
 function Hello(props) {
     console.log('Hello.this', this);
@@ -117,7 +119,8 @@ export default class SandboxUI {
         // this._devDetailLocation();
         // this._devMainLocationList();
 
-        this._devTavern();
+        // this._devTavern();
+        this._devProduction();
 
         this._container.get<UIUpdater>(ServiceID.UI_Updater).run();
     }
@@ -131,14 +134,14 @@ export default class SandboxUI {
         // let root = ReactDOM.createRoot(domContainer);
 
         let size = 20;
-        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(size);
+        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(size);
 
         //todo: В заготовки.
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.WoodBoards), 12);
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 5);
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.PlateHelmet01), 5);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.WoodBoards), 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 5);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.PlateHelmet01), 5);
 
         // itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorageComponent).show();
         // console.log(itemStorage);
@@ -288,18 +291,18 @@ export default class SandboxUI {
         // let itemStorage = this._container.get<GameObject>(ContainerID.StubItemStorage01);
         // let itemStorage = this._container.get<StubFactory>(ServiceID.StubFactory).createDefaultItemStorage();
         // let itemStorage = new ItemStorageV2(20);
-        let itemStorageGO = itemStorageFactory.create(20);
+        let itemStorageGO = itemStorageFactory.createGameObject(20);
 
         let itemStorage = itemStorageGO.get<ItemStorageInterface>(ComponentID.ItemStorage)
-        itemStorage.addItem(ItemID.Wood, 12);
-        itemStorage.addItem(ItemID.IronOre, 12);
-        itemStorage.addItem(ItemID.IronOre, 12);
-        itemStorage.addItem(ItemID.Wood, 12);
-        itemStorage.addItem(ItemID.Wood, 12);
-        itemStorage.addItem(ItemID.OneHandedSword01, 5);
-        itemStorage.addItem(ItemID.Leather01, 12);
-        itemStorage.addItem(ItemID.Leather01, 12);
-        itemStorage.addItem(ItemID.Leather01, 12);
+        itemStorage._addItem(ItemID.Wood, 12);
+        itemStorage._addItem(ItemID.IronOre, 12);
+        itemStorage._addItem(ItemID.IronOre, 12);
+        itemStorage._addItem(ItemID.Wood, 12);
+        itemStorage._addItem(ItemID.Wood, 12);
+        itemStorage._addItem(ItemID.OneHandedSword01, 5);
+        itemStorage._addItem(ItemID.Leather01, 12);
+        itemStorage._addItem(ItemID.Leather01, 12);
+        itemStorage._addItem(ItemID.Leather01, 12);
 
         this._root.render(
             <div>
@@ -316,18 +319,18 @@ export default class SandboxUI {
 
     private _devItemStorageController() {
         let itemStorageController = new ItemStorageController(100);
-        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20));
-        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20));
-        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20));
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20));
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20));
+        itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20));
 
         let count = 40;
-        itemStorageController.addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
-        itemStorageController.addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
-        itemStorageController.addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
-        itemStorageController.addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), count);
-        itemStorageController.addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
-        itemStorageController.addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), count);
-        itemStorageController.addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), count);
+        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), count);
+        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
 
         window['app']['sandbox']['itemStorageController'] = itemStorageController;
 
@@ -500,7 +503,7 @@ export default class SandboxUI {
         let walletFactory = this._container.get<WalletFactory>(ServiceID.WalletFactory);
 
         let mainLocationList = new MainLocationList(100);
-        let itemStorage = itemStorageFactory.create(100);
+        let itemStorage = itemStorageFactory.createGameObject(100);
         let wallet = walletFactory.create(0);
 
         let locations = [
@@ -584,6 +587,24 @@ export default class SandboxUI {
                 <TavernRC
                     container={this._container}
                     tavern={tavern}
+                    window={{show: true}}
+                />
+            </div>
+        );
+    }
+
+    private _devProduction() {
+        let production = this._container.get<Production>(ServiceID.Production);
+        // let itemStorageController = this._container.get<ItemStorageInterface>(ServiceID.ItemStorageController);
+        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(200);
+        itemStorage.addItem(ItemID.IronIngot, 42424242);
+
+        this._root.render(
+            <div>
+                <ProductionRC
+                    container={this._container}
+                    production={production}
+                    playerItemStorage={itemStorage}
                     window={{show: true}}
                 />
             </div>

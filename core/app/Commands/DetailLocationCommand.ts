@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import debug from 'debug';
-import DetailLocationRC from '../../../client/public/RComponents/DetailLocationRC.js';
+import DetailLocationRC from '../../../client/public/RC/DetailLocationRC.js';
 import {assertNotNil} from '../../source/assert.js';
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';

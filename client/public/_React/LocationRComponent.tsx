@@ -3,13 +3,13 @@ import GameObject from '../../../core/source/GameObject.js';
 import Location, {LocationEventCode} from '../../../core/app/Components/Location.js';
 import HeroGroup from '../../../core/app/Components/HeroGroup.js';
 import _, {values} from 'lodash';
-import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
-import Bag from '../../../core/app/Components/Bag.js';
-import ItemStorageRC_Legacy from '../RComponents/ItemStorageRC_Legacy.js';
+import ItemStorage from '../../../core/app/Components/ItemStorages/ItemStorage.js';
+import ItemStorageRC_Legacy from '../RC/ItemStorageRC_Legacy.js';
 
 export interface LocationRComponentProps {
     container: ContainerInterface;

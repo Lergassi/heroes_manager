@@ -1,4 +1,4 @@
-import Bag from '../../core/app/Components/Bag.js';
+import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import Experience from '../../core/app/Components/Experience.js';
 import HealthPoints from '../../core/app/Components/HealthPoints.js';
 import Wallet from '../../core/app/Components/Wallet.js';
@@ -20,7 +20,7 @@ export default class GenerateEnemySandboxController extends AbstractSandboxContr
         let enemy = enemyFactory.createSquad(EnemyTypeID.EnemyType01, 1);
         console.log(enemy);
 
-        let itemStorage = new Bag(20, this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        let itemStorage = new ItemStorage(20, this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
         let wallet = new Wallet();
         let exp = new Experience(1, 100);
         enemy.get<HealthPoints>(ComponentID.HealthPoints).kill({

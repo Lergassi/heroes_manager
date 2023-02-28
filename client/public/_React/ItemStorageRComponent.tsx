@@ -1,9 +1,9 @@
 import React from 'react';
 import GameObject from '../../../core/source/GameObject.js';
-import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorageSlotComponent.js';
+import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorages/ItemStorageSlotComponent.js';
 import ItemStorageComponent, {
     ItemStorageComponentEventCode
-} from '../../../core/app/Components/ItemStorageComponent.js';
+} from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import MainItemStorageListComponent from '../../../core/app/Components/MainItemStorageListComponent.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';

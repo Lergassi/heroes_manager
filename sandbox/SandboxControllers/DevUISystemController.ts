@@ -1,5 +1,5 @@
 import debug from 'debug';
-import Bag from '../../core/app/Components/Bag.js';
+import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import Location from '../../core/app/Components/Location.js';
 import Wallet from '../../core/app/Components/Wallet.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
@@ -32,11 +32,11 @@ export default class DevUISystemController extends AbstractSandboxController {
     private _itemStorage() {
         let viewer = new Viewer();
 
-        let itemStorage = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20);
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
-        itemStorage.get<Bag>(ComponentID.ItemStorage).addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 2);
+        let itemStorage = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 2);
         // console.log(itemStorage);
 
         // itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).view(viewer);

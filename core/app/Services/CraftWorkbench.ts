@@ -3,12 +3,12 @@ import debug from 'debug';
 import Recipe from '../Entities/Recipe.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import InfinityItemStorage from '../Components/InfinityItemStorage.js';
-import Bag from '../Components/Bag.js';
+import InfinityItemStorage from '../Components/ItemStorages/InfinityItemStorage.js';
+import ItemStorage from '../Components/ItemStorages/ItemStorage.js';
 import CraftQueue from './CraftQueue.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import ItemStackController from '../Components/ItemStackController.js';
+import ItemStackController from '../Components/ItemStorages/ItemStackController.js';
 import {sprintf} from 'sprintf-js';
 
 enum CraftWorkbenchState {
@@ -34,8 +34,8 @@ export default class CraftWorkbench {
         this._state = CraftWorkbenchState.Free;
         this._craftQueue = new CraftQueue(entityManager);
         this._resourcesItemStorage = new InfinityItemStorage(entityManager);
-        this._resultItemStorage = new Bag(1, entityManager);
-        this._tempResultItemSlot = new ItemStackController();
+        this._resultItemStorage = new ItemStorage(1, entityManager);
+        this._tempResultItemSlot = new ItemStackController(entityManager);
     }
 
     addRecipe(recipe: Recipe, itemStorage: ItemStorageInterface): boolean {
@@ -105,7 +105,7 @@ export default class CraftWorkbench {
     }
 
     getResult(itemStorage: ItemStorageInterface): void {
-        this._resultItemStorage.moveTo(itemStorage);
+        this._resultItemStorage.moveAllItemsTo(itemStorage);
         this._tempResultItemSlot.moveTo(this._resultItemStorage);
         if (this._tempResultItemSlot.isFree()) {
             this._state = CraftWorkbenchState.Free;

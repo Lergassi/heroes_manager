@@ -11,13 +11,13 @@ import {assertIsGreaterThanOrEqual} from '../../source/assert.js';
  * @deprecated Неудачное решение.
  */
 export default class EndlessItemStorage implements ItemStorageInterface {
-    addItem(item: Item | ItemID, count: unsigned): unsigned {
+    _addItem(item: Item | ItemID, count: unsigned): unsigned {
         assertIsGreaterThanOrEqual(count, 0);
 
         return 0;
     }
 
-    moveTo(itemStorage: ItemStorageInterface): void {
+    moveAllItemsTo(itemStorage: ItemStorageInterface): void {
         throw AppError.notImplements();
     }
 
@@ -31,7 +31,7 @@ export default class EndlessItemStorage implements ItemStorageInterface {
         return 2147483647;
     }
 
-    canAddItem(item: Item, count: number): number {
+    canAddItem(itemID: ItemID, count: number): number {
         return count;
     }
 
@@ -40,5 +40,24 @@ export default class EndlessItemStorage implements ItemStorageInterface {
     }
 
     clear(index: number): void {
+    }
+
+    clearAllItems(): void {
+    }
+
+    hasItem(itemID: ItemID, count): boolean {
+        return true;
+    }
+
+    debug(): void {
+        throw AppError.notImplements();
+    }
+
+    isEmpty(): boolean {
+        return false;
+    }
+
+    addItem(item: Item | ItemID, count: number): number {
+        return 0;
     }
 }

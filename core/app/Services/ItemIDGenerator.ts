@@ -33,7 +33,6 @@ export default class ItemIDGenerator {
             armorMaterialID?: ArmorMaterialID,
         },
     ): string {
-        // let IDPattern = database.metadata.items.requireArmorMaterial(itemCategoryID) ? this._IDPatterns.withArmorMaterial : this._IDPatterns.withoutArmorMaterial;
         let IDPattern = options?.armorMaterialID ? this._IDPatterns.withArmorMaterial : this._IDPatterns.withoutArmorMaterial;
 
         let IDPatternParams = [];
@@ -41,7 +40,7 @@ export default class ItemIDGenerator {
         IDPatternParams.push(qualityID);
         if (options?.armorMaterialID) IDPatternParams.push(options.armorMaterialID);
         IDPatternParams.push(database.metadata.items.singleItemName(itemCategoryID));
-        IDPatternParams.push(itemLevel);
+        IDPatternParams.push(_.padStart(String(itemLevel), 3, '0'));
 
         let ID = sprintf(IDPattern, ..._.filter(IDPatternParams, (value, key) => {
             return value !== undefined;

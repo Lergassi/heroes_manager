@@ -1,6 +1,6 @@
 import debug from 'debug';
 import _ from 'lodash';
-import {MainHeroListRCElement} from '../../../client/public/RComponents/MainHeroListRC.js';
+import {MainHeroListRCElement} from '../../../client/public/RC/MainHeroListRC.js';
 import {assertIsInstanceOf, assertIsPositive, assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
 import EventSystem from '../../source/EventSystem.js';

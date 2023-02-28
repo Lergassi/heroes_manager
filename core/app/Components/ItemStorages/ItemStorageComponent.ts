@@ -1,19 +1,19 @@
 import ItemStorageSlotComponent from './ItemStorageSlotComponent.js';
-import ItemStack from '../RuntimeObjects/ItemStack.js';
-import Item from '../Entities/Item.js';
-import ItemStackFactory from '../Factories/ItemStackFactory.js';
-import GameObject from '../../source/GameObject.js';
-import {unsigned} from '../../types/main.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
-import AppError from '../../source/Errors/AppError.js';
-import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
-import EventSystem from '../../source/EventSystem.js';
+import ItemStack from '../../RuntimeObjects/ItemStack.js';
+import Item from '../../Entities/Item.js';
+import ItemStackFactory from '../../Factories/ItemStackFactory.js';
+import GameObject from '../../../source/GameObject.js';
+import {unsigned} from '../../../types/main.js';
+import {ComponentID} from '../../../types/enums/ComponentID.js';
+import AppError from '../../../source/Errors/AppError.js';
+import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../../source/assert.js';
+import EventSystem from '../../../source/EventSystem.js';
 import debug from 'debug';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import RenderInterface from '../Interfaces/RenderInterface.js';
-import {ItemID} from '../../types/enums/ItemID.js';
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
+import RenderInterface from '../../Interfaces/RenderInterface.js';
+import {ItemID} from '../../../types/enums/ItemID.js';
 
 export enum ItemStorageComponentEventCode {
     AddItem = 'ItemStorageComponent.AddItem',
@@ -136,7 +136,7 @@ export default class ItemStorageComponent {
     moveTo(itemStorage: ItemStorageInterface) {
         for (const slotKey in this._slots) {
             if (!this._slots[slotKey].isFree()) {
-                if (!itemStorage.addItem(this._slots[slotKey].itemStack.item, this._slots[slotKey].itemStack.count)) {
+                if (!itemStorage._addItem(this._slots[slotKey].itemStack.item, this._slots[slotKey].itemStack.count)) {
                     this._slots[slotKey].destroyItemStack();
                 }
             }

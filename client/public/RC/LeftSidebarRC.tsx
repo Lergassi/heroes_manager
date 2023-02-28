@@ -31,7 +31,7 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
                 {panelID: UI_PanelID.ItemStorages, name: 'Склад', icon: '', enable: true},
                 {panelID: UI_PanelID.Heroes, name: 'Герои', icon: '', enable: true},
                 {panelID: UI_PanelID.Locations, name: 'Локации', icon: '', enable: true},
-                {panelID: undefined, name: 'Крафт', icon: '', enable: false},
+                {panelID: UI_PanelID.Production, name: 'Производство', icon: '', enable: true},
                 {panelID: undefined, name: 'Подземелья и рейды', icon: '', enable: false},
                 {panelID: undefined, name: 'Строительство', icon: '', enable: false},
                 {panelID: undefined, name: 'Исследования', icon: '', enable: false},

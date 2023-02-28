@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import EquipController from '../../../core/app/Components/EquipController.js';
 import ItemStorageController, {
     ItemStorageControllerRender
-} from '../../../core/app/Components/ItemStorageController.js';
+} from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
 import {ItemStorageInterfaceRender} from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';

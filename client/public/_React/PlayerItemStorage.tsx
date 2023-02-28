@@ -1,6 +1,6 @@
 import React from 'react';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
 import PlayerItemStorageSlot from './PlayerItemStorageSlot.js';
 import EntityManagerInterface from '../../../core/app/Interfaces/EntityManagerInterface.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';

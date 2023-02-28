@@ -13,7 +13,7 @@ import debug from 'debug';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
-import ItemStorageComponent from '../ItemStorageComponent.js';
+import ItemStorageComponent from '../ItemStorages/ItemStorageComponent.js';
 import {GatheringItemPoint} from '../Location.js';
 import HealthPoints from '../HealthPoints.js';
 

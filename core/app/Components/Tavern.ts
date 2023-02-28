@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
-import {TavernRCInterface, TavernRenderInterface, UI_TavernHero} from '../../../client/public/RComponents/TavernRC.js';
+import {TavernRCInterface, TavernRenderInterface, UI_TavernHero} from '../../../client/public/RC/TavernRC.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import HeroClass from '../Entities/HeroClass.js';

@@ -56,7 +56,7 @@ export default class MainItemStorageListComponent {
 
         this._canAddItemStorage();
 
-        let itemStorage = itemStorageFactory.create(size)
+        let itemStorage = itemStorageFactory.createGameObject(size)
         this._itemStorages.push(itemStorage);
 
         EventSystem.event(MainItemStorageListComponentEventCode.Update, this);

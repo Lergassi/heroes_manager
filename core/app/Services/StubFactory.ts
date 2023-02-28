@@ -3,7 +3,7 @@ import debug from 'debug';
 import ContainerInterface from '../../source/ContainerInterface.js';
 import ItemDatabase from '../../source/ItemDatabase.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
-import Bag from '../Components/Bag.js';
+import ItemStorage from '../Components/ItemStorages/ItemStorage.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 

@@ -1,9 +1,9 @@
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import GameObject from '../../core/source/GameObject.js';
 import {sprintf} from 'sprintf-js';
-import ItemStorageSlotComponent from '../../core/app/Components/ItemStorageSlotComponent.js';
+import ItemStorageSlotComponent from '../../core/app/Components/ItemStorages/ItemStorageSlotComponent.js';
 import _ from 'lodash';
-import ItemStorageComponent from '../../core/app/Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../../core/app/Components/ItemStorages/ItemStorageComponent.js';
 import UUIDGenerator from '../../core/source/UUIDGenerator.js';
 import ItemStackFactory from '../../core/app/Factories/ItemStackFactory.js';
 import EntityManager from '../../core/source/EntityManager.js';
@@ -24,7 +24,7 @@ let itemStorageFactory = new ItemStorageFactory(
 );
 
 let size = 10;
-let itemStorage = itemStorageFactory.create(size);
+let itemStorage = itemStorageFactory.createGameObject(size);
 
 //expected
 let expectedComponentLength = 11;

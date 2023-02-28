@@ -54,7 +54,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
     }
 
     moveTo(itemStorage: ItemStorageInterface): boolean {
-        if (itemStorage.addItem(this._item, 1) !== 0) {
+        if (itemStorage._addItem(this._item, 1) !== 0) {
             return false;
         }
 

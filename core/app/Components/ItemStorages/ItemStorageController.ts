@@ -1,21 +1,21 @@
 import debug from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
-import {assertIsPositive, assertNotNil} from '../../source/assert.js';
-import AppError from '../../source/Errors/AppError.js';
-import EventSystem from '../../source/EventSystem.js';
-import GameObject from '../../source/GameObject.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import {EventCode} from '../../types/enums/EventCode.js';
-import {ItemID} from '../../types/enums/ItemID.js';
-import {UI_ItemStorage, UI_ItemStorageSlot, unsigned} from '../../types/main.js';
-import Item from '../Entities/Item.js';
-import {ItemStorageControllerInterfaceRender} from '../Interfaces/ItemStorageControllerInterface.js';
-import ItemStorageInterface, {ItemStorageInterfaceRender} from '../Interfaces/ItemStorageInterface.js';
-import Bag from './Bag.js';
-import EquipController from './EquipController.js';
+import {assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../../source/assert.js';
+import AppError from '../../../source/Errors/AppError.js';
+import EventSystem from '../../../source/EventSystem.js';
+import GameObject from '../../../source/GameObject.js';
+import {ComponentID} from '../../../types/enums/ComponentID.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
+import {EventCode} from '../../../types/enums/EventCode.js';
+import {ItemID} from '../../../types/enums/ItemID.js';
+import {UI_ItemStorage, UI_ItemStorageSlot, unsigned} from '../../../types/main.js';
+import Item from '../../Entities/Item.js';
+import {ItemStorageControllerInterfaceRender} from '../../Interfaces/ItemStorageControllerInterface.js';
+import ItemStorageInterface, {ItemStorageInterfaceRender} from '../../Interfaces/ItemStorageInterface.js';
+import EquipController from '../EquipController.js';
+import ItemStorage from './ItemStorage.js';
 
 export interface ItemStorageControllerRender {
     updateSlots?(itemStorageID: number, slots: UI_ItemStorageSlot[]): void;
@@ -72,16 +72,14 @@ export default class ItemStorageController implements ItemStorageInterface {
      * @param count
      * @return Остаток.
      */
-    addItem(item: Item | ItemID, count: unsigned): unsigned {
+    _addItem(item: Item | ItemID, count: unsigned): unsigned {
         if (!this._itemStorages.length) {
-            console.log();
-            debug(DebugNamespaceID.Throw)('Предмет не добавлен. Не найдено ни одного ItemStorage.');
+            debug(DebugNamespaceID.Throw)('Не найдено ни одного ItemStorage.');
             return count;
         }
 
         for (let i = 0; i < this._itemStorages.length; i++) {
-            // count -= count - this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorageComponent)?.addItem(item, count);
-            count = this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage)?.addItem(item, count);
+            count = this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage)?._addItem(item, count);
             if (count <= 0) break;
         }
         // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
@@ -89,7 +87,23 @@ export default class ItemStorageController implements ItemStorageInterface {
         return count;
     }
 
-    moveTo(itemStorage: ItemStorageInterface): void {
+    addItem(item: Item | ItemID, count: number): number {
+        if (!this._itemStorages.length) {
+            debug(DebugNamespaceID.Throw)('Не найдено ни одного ItemStorage.');
+            return 0;
+        }
+
+        let originCount = count;
+        for (let i = 0; i < this._itemStorages.length; i++) {
+            count -= this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage)?.addItem(item, count);
+            if (count <= 0) break;
+        }
+        // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
+
+        return originCount - count;
+    }
+
+    moveAllItemsTo(itemStorage: ItemStorageInterface): void {
         throw AppError.notImplements();
     }
 
@@ -121,7 +135,13 @@ export default class ItemStorageController implements ItemStorageInterface {
         return count;
     }
 
-    canAddItem(item: Item, count: number): number {
+    hasItem(itemID: ItemID, count): boolean {
+        assertIsGreaterThanOrEqual(count, 1);
+
+        return this.containItem(itemID) >= count;
+    }
+
+    canAddItem(itemID: ItemID, count: number): number {
         return 0;
     }
 
@@ -170,12 +190,28 @@ export default class ItemStorageController implements ItemStorageInterface {
         throw AppError.notWorking('Использовать clear для ItemStorage.');
     }
 
+    clearAllItems(): void {
+        for (let i = 0; i < this._itemStorages.length; i++) {
+            this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage).clearAllItems();
+        }
+    }
+
     moveToEquipSlotByEquipController(itemStorageID: number, itemStorageSlotID: number, equipController: EquipController, equipSlotID: EquipSlotID): boolean {
         let itemStorage = _.find(this._itemStorages, (itemStorage) => {
             return itemStorage.ID === itemStorageID;
         });
         assertNotNil(itemStorage, sprintf('Сумка c ID: "%s" не найдена.', itemStorageID));
 
-        return itemStorage.get<Bag>(ComponentID.ItemStorage).moveToEquipSlotByEquipController(itemStorageSlotID, equipController, equipSlotID);
+        return itemStorage.get<ItemStorage>(ComponentID.ItemStorage).moveToEquipSlotByEquipController(itemStorageSlotID, equipController, equipSlotID);
+    }
+
+    debug(): void {
+        throw AppError.notImplements();
+    }
+
+    isEmpty(): boolean {
+        return _.every(_.map(this._itemStorages, (value) => {
+            return value.get<ItemStorageInterface>(ComponentID.ItemStorage).isEmpty();
+        }));
     }
 }

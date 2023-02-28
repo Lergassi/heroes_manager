@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {
     DetailLocationRCEnemyElement,
     DetailLocationRCHeroElement
-} from '../../../client/public/RComponents/DetailLocationRC.js';
+} from '../../../client/public/RC/DetailLocationRC.js';
 import {separate} from '../../debug_functions.js';
 import {assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
@@ -262,7 +262,7 @@ export default class Location {
     }): void {
         if (!this._canModify()) return;
 
-        if (rewardOptions.itemStorage) this._itemStorage.moveTo(rewardOptions.itemStorage);
+        if (rewardOptions.itemStorage) this._itemStorage.moveAllItemsTo(rewardOptions.itemStorage);
         if (rewardOptions.wallet) this._wallet.moveTo(rewardOptions.wallet);
         EventSystem.event(LocationEventCode.Update, this);
     }

@@ -8,7 +8,7 @@ import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import ItemStorageComponent from '../Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../Components/ItemStorages/ItemStorageComponent.js';
 import ItemDatabase from '../../source/ItemDatabase.js';
 import {assertNotEmpty, assertNotNil} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
@@ -35,6 +35,6 @@ export default class CreateItemCommand extends Command {
         let item = this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(itemID);
         assertNotNil(item, sprintf('Предмет ID(%s) не найден.', itemID));
 
-        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item, count);
+        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController)._addItem(item, count);
     }
 }

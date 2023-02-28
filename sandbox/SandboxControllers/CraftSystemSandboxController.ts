@@ -1,39 +1,40 @@
-import AbstractSandboxController from './AbstractSandboxController.js';
-import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import {EntityID} from '../../core/types/enums/EntityID.js';
-import Recipe from '../../core/app/Entities/Recipe.js';
-import {RecipeID} from '../../core/types/enums/RecipeID.js';
-import EndlessItemStorage from '../../core/app/Components/EndlessItemStorage.js';
-import CraftWorkbench from '../../core/app/Services/CraftWorkbench.js';
-import {debugItemStorage} from '../../core/debug/debug_functions.js';
+import Production from '../../core/app/Components/Craft/Production.js';
+import ProductionConfigurator from '../../core/app/Components/ProductionConfigurator.js';
+import InfinityItemStorage from '../../core/app/Components/ItemStorages/InfinityItemStorage.js';
+import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import Item from '../../core/app/Entities/Item.js';
-import InfinityItemStorage from '../../core/app/Components/InfinityItemStorage.js';
+import Recipe from '../../core/app/Entities/Recipe.js';
+import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
+import CraftWorkbench from '../../core/app/Services/CraftWorkbench.js';
+import {separate} from '../../core/debug_functions.js';
+import {EntityID} from '../../core/types/enums/EntityID.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
-import CraftQueue from '../../core/app/Services/CraftQueue.js';
-import Bag from '../../core/app/Components/Bag.js';
+import {RecipeID} from '../../core/types/enums/RecipeID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
+import AbstractSandboxController from './AbstractSandboxController.js';
 
 export default class CraftSystemSandboxController extends AbstractSandboxController {
     run(): void {
-        this._getStarted();
+        // this._devInfinityItemStorage();
+        this._devCraft();
     }
 
-    private _getStarted() {
+    private _devInfinityItemStorage() {
         let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         // let resourcesItemStorage = new ItemStorageV2();
 
         let resourcesItemStorage = new InfinityItemStorage(em);
         // resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
-        resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 100);
-        resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 100);
-        resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Coal), 100);
-        resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.IronIngot), 100);
-        resourcesItemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Leather01), 100);
+        resourcesItemStorage._addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 100);
+        resourcesItemStorage._addItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 100);
+        resourcesItemStorage._addItem(em.get<Item>(EntityID.Item, ItemID.Coal), 100);
+        resourcesItemStorage._addItem(em.get<Item>(EntityID.Item, ItemID.IronIngot), 100);
+        resourcesItemStorage._addItem(em.get<Item>(EntityID.Item, ItemID.Leather01), 100);
         // let resourcesItemStorage = new EndlessItemStorage();
 
         // let resultItemStorage = new InfinityItemStorage();
-        let resultItemStorage = new Bag(20, em);
+        let resultItemStorage = new ItemStorage(20, em);
 
         let woodBoards = em.get<Recipe>(EntityID.Recipe, RecipeID.WoodBoards);
         let oneHandedSword01 = em.get<Recipe>(EntityID.Recipe, RecipeID.OneHandedSword01);
@@ -85,5 +86,32 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
                 console.log('resultItemStorage', resultItemStorage);
             };
         });
+    }
+
+    private _devCraft() {
+        let itemStorage = new ItemStorage(20, this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        // itemStorage.addItem(ItemID.IronIngot, 60);
+        itemStorage.addItem(ItemID.IronIngot, 70);
+        // itemStorage.addItem(ItemID.IronIngot, 121);
+        // itemStorage.addItem(ItemID.IronIngot, 59);
+        // itemStorage.addItem(ItemID.IronIngot, 0);
+        itemStorage.debug();
+        separate();
+
+        let craft = new Production(
+            this.container.get<EntityManagerInterface>(ServiceID.EntityManager),
+        );
+
+        let craftConfigurator = new ProductionConfigurator();
+        craftConfigurator.configure(craft);
+        console.log(craft);
+        // craft.addItem(ItemID.Amulet01);
+        // craft.addItem(ItemID.Uncommon_OneHandedSword_006_01);
+
+        // craft.createItem(ItemID.Amulet01, itemStorage);
+        craft.createItem(ItemID.Uncommon_OneHandedSword_006_01, itemStorage);
+        craft.createItem(ItemID.Uncommon_OneHandedSword_006_01, itemStorage);
+
+        itemStorage.debug();
     }
 }

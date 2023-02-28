@@ -1,6 +1,6 @@
 import ItemStorageSlotComponent, {
     ItemStorageSlotComponentEventCode
-} from '../../../core/app/Components/ItemStorageSlotComponent.js';
+} from '../../../core/app/Components/ItemStorages/ItemStorageSlotComponent.js';
 import React from 'react';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';

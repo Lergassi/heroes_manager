@@ -19,7 +19,7 @@ import ItemCategory from '../core/app/Entities/ItemCategory.js';
 import {extractItems_dev} from '../core/app/indev.js';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
 import {debugHero, debugItemStorage, debugNewItemStorage} from '../core/debug/debug_functions.js';
-import ItemStorageComponent from '../core/app/Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../core/app/Components/ItemStorages/ItemStorageComponent.js';
 import GameObjectAsReact, {LocationType} from '../core/source/GameObjectAsReact.js';
 import GameContainer from '../core/source/GameContainer.js';
 import ItemSlot from '../core/app/Components_v2/ItemSlot.js';
@@ -64,7 +64,7 @@ import AttackControllerInterface from '../core/app/Interfaces/AttackControllerIn
 import HeroActivityStateController from '../core/app/Components/HeroActivityStateController.js';
 import MainItemStorageListComponent from '../core/app/Components/MainItemStorageListComponent.js';
 import ItemStorageUnion from '../core/app/Components/ItemStorageUnion.js';
-import Bag from '../core/app/Components/Bag.js';
+import ItemStorage from '../core/app/Components/ItemStorages/ItemStorage.js';
 import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
 
 //todo: Перемести часть кода в общий test/dev/sandbox.
@@ -317,7 +317,7 @@ export default class _SandboxController {
         let db: ItemDatabase = this._container.get(ServiceID.ItemDatabase);
         let itemStackFactory: ItemStackFactory = this._container.get(ServiceID.ItemStackFactory);
 
-        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(10);
+        let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(10);
         let itemStorageComponent = itemStorage.getComponent<ItemStorageComponent>(ComponentID.ItemStorage);
         // console.log(itemStorageComponent);
         // debugItemStorage(itemStorage);
@@ -362,7 +362,7 @@ export default class _SandboxController {
     private testNewComponents() {
         let itemStorageFactory = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory);
 
-        let itemStorage = itemStorageFactory.create(20);
+        let itemStorage = itemStorageFactory.createGameObject(20);
         // console.log(itemStorage);
         // debugNewItemStorage(itemStorage);
         let controller = itemStorage.getComponent<ItemStorageComponent>(ComponentID.ItemStorage);
@@ -1259,7 +1259,7 @@ export default class _SandboxController {
             {item: itemDatabase.get(ItemID.Wood), count: 4},    //32
         ];
 
-        let itemStorage = itemStorageFactory.create(10);
+        let itemStorage = itemStorageFactory.createGameObject(10);
         for (let i = 0; i < items.length; i++) {
             itemStorage.get<ItemStorageComponent>(ItemStorageComponent.name).addItem(items[i].item, items[i].count);
         }
@@ -1298,23 +1298,23 @@ export default class _SandboxController {
         let itemDatabase = this._container.get<ItemDatabase>(ServiceID.ItemDatabase);
         let itemStackFactory = this._container.get<ItemStackFactory>(ServiceID.ItemStackFactory);
 
-        let itemStorage = new Bag(
+        let itemStorage = new ItemStorage(
             10,
             itemStackFactory,
         );
         // console.log(itemStorage);
 
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 40));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 40));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
         console.log(itemStorage);
     }
 }

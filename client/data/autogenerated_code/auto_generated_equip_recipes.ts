@@ -1,2 +1,2 @@
-import _auto_generated_equip_recipes_db_data from '../../../core/data/json/auto_generated_equip_recipes_24.02.2023_06_02_55.json';
-export const auto_generated_equip_recipes_db_data = _auto_generated_equip_recipes_db_data;
+import _auto_generated_equip_recipes_db_data from '../../../core/data/json/auto_generated_equip_recipes_27.02.2023_05_09_10.json';
+export const auto_generated_equip_recipes_db_data = _auto_generated_equip_recipes_db_data;console.log('auto_generated_equip_recipes_db_data: auto_generated_equip_recipes_27.02.2023_05_09_10.json');

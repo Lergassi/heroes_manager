@@ -10,6 +10,9 @@ import {ItemCategoryID} from './enums/ItemCategoryID.js';
 import {ItemID} from './enums/ItemID.js';
 
 export type integer = number;
+/**
+ * @deprecated
+ */
 export type unsigned = number;
 export type float = number;
 

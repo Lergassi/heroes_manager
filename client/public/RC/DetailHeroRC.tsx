@@ -4,7 +4,7 @@ import EquipController from '../../../core/app/Components/EquipController.js';
 import Experience from '../../../core/app/Components/Experience.js';
 import HealthPoints from '../../../core/app/Components/HealthPoints.js';
 import HeroComponent from '../../../core/app/Components/HeroComponent.js';
-import ItemStorageController from '../../../core/app/Components/ItemStorageController.js';
+import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
 import CharacterAttributeInterface from '../../../core/app/Decorators/CharacterAttributeInterface.js';
 import EquipSlotInterface from '../../../core/app/Interfaces/EquipSlotInterface.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';

@@ -36,7 +36,7 @@ export default class Vein {
         if (!this.canGather()) return 0;
 
         let count = this._generateCount();
-        let reminder = itemStorage.addItem(this._item, count);  //todo: А вообще можно не учитывать заполнение сумок - пусть игрок контролирует.
+        let reminder = itemStorage._addItem(this._item, count);  //todo: А вообще можно не учитывать заполнение сумок - пусть игрок контролирует.
 
         this._count -= count - reminder;
 

@@ -15,7 +15,7 @@ import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
 export type UI_TavernHero = {
     heroClassID: HeroClassID;
     count: number;
-};
+}
 
 //todo: В RC. Вне ui доступ не нужен.
 /**

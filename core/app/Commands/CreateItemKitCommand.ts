@@ -12,7 +12,7 @@ import Item from '../Entities/Item.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import ItemStorageComponent from '../Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../Components/ItemStorages/ItemStorageComponent.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import {parseInt} from 'lodash';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
@@ -124,7 +124,7 @@ export default class CreateItemKitCommand extends Command {
             // );
             this.container
                 .get<ItemStorageInterface>(ServiceID.ItemStorageController)
-                .addItem(
+                ._addItem(
                     this.container
                         .get<ItemDatabase>(ServiceID.ItemDatabase)
                         .get(this._kits[name][i].itemID),

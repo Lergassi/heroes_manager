@@ -170,7 +170,7 @@ export default class GenerateItemsByPattern {
 
                                 //todo: Надо придумать как не экспортировать все типы нужные только внутри бд.
                                 let recipe: TSDB_Recipe = {
-                                    ID: ID,
+                                    ID: ID as ItemID,
                                     requireItems: [
                                         {
                                             ID: mainResource,

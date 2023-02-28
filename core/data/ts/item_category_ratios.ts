@@ -24,6 +24,7 @@ let item_category_ratios_data: TSDB_ItemCategoryRatio = {
     [ItemCategoryID.Daggers]:           {[ItemAttributeID.HealthPoints]: 0,     [ItemAttributeID.AttackPower]: 2.5,     [ItemAttributeID.CraftRatio]:   2.5},
     [ItemCategoryID.Staffs]:            {[ItemAttributeID.HealthPoints]: 0,     [ItemAttributeID.AttackPower]: 8,       [ItemAttributeID.CraftRatio]:   8},
     [ItemCategoryID.Revolvers]:         {[ItemAttributeID.HealthPoints]: 0,     [ItemAttributeID.AttackPower]: 3,       [ItemAttributeID.CraftRatio]:   3},
+    [ItemCategoryID.Bows]:              {[ItemAttributeID.HealthPoints]: 0,     [ItemAttributeID.AttackPower]: 3,       [ItemAttributeID.CraftRatio]:   3},
 
     [ItemCategoryID.Shields]:           {[ItemAttributeID.HealthPoints]: 2,     [ItemAttributeID.AttackPower]: 0.2,     [ItemAttributeID.CraftRatio]:   0.2},
 };

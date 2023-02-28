@@ -5,8 +5,8 @@ import Item from '../Entities/Item.js';
 import GameObject from '../../source/GameObject.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import Bag from './Bag.js';
-import ItemStorageController from './ItemStorageController.js';
+import ItemStorage from './ItemStorages/ItemStorage.js';
+import ItemStorageController from './ItemStorages/ItemStorageController.js';
 
 export default class EquipController {
     private readonly _hero: GameObject;

@@ -1,20 +1,20 @@
 import _ from 'lodash';
 import debug from 'debug';
-import {EntityID} from '../../types/enums/EntityID.js';
-import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-import ItemStorageInterface, {ItemStorageInterfaceRender} from '../Interfaces/ItemStorageInterface.js';
+import {EntityID} from '../../../types/enums/EntityID.js';
+import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
+import ItemStorageInterface, {ItemStorageInterfaceRender} from '../../Interfaces/ItemStorageInterface.js';
 import ItemStackController from './ItemStackController.js';
 import InfinityItemStackController from './InfinityItemStackController.js';
-import Item from '../Entities/Item.js';
-import {ItemID} from '../../types/enums/ItemID.js';
-import {unsigned} from '../../types/main.js';
-import AppError from '../../source/Errors/AppError.js';
+import Item from '../../Entities/Item.js';
+import {ItemID} from '../../../types/enums/ItemID.js';
+import {unsigned} from '../../../types/main.js';
+import AppError from '../../../source/Errors/AppError.js';
 
 /**
  * Не стекуемые предметы тоже объединяются. Пока на них нету баффов и других эффектов.
  */
 export default class InfinityItemStorage implements ItemStorageInterface {
-    private _items: Partial<{[ID in ItemID]: InfinityItemStackController}>;
+    private readonly _items: Partial<{[ID in ItemID]: InfinityItemStackController}>;
     private readonly _entityManager: EntityManagerInterface;
 
     constructor(entityManager: EntityManagerInterface) {
@@ -22,7 +22,7 @@ export default class InfinityItemStorage implements ItemStorageInterface {
         this._items = {};
     }
 
-    addItem(item: Item | ItemID, count: unsigned): unsigned {
+    _addItem(item: Item | ItemID, count: unsigned): unsigned {
         item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
 
         if (!this.containItem(<ItemID>item.id)) {
@@ -38,7 +38,11 @@ export default class InfinityItemStorage implements ItemStorageInterface {
         return this._items.hasOwnProperty(ID) ? this._items[ID].containItem(ID) : 0;
     }
 
-    moveTo(itemStorage: ItemStorageInterface): void {
+    hasItem(itemID: ItemID, count): boolean {
+        return this.containItem(itemID) >= count;
+    }
+
+    moveAllItemsTo(itemStorage: ItemStorageInterface): void {
         throw AppError.notImplements();
     }
 
@@ -54,7 +58,7 @@ export default class InfinityItemStorage implements ItemStorageInterface {
         return originCount - count;
     }
 
-    canAddItem(item: Item, count: number): number {
+    canAddItem(itemID: ItemID, count: number): number {
         return 0;
     }
 
@@ -63,5 +67,20 @@ export default class InfinityItemStorage implements ItemStorageInterface {
     }
 
     clear(index: number): void {
+    }
+
+    clearAllItems(): void {
+    }
+
+    debug(): void {
+        throw AppError.notImplements();
+    }
+
+    isEmpty(): boolean {
+        return false;
+    }
+
+    addItem(item: Item | ItemID, count: number): number {
+        return 0;
     }
 }

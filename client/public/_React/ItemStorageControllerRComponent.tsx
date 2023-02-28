@@ -12,9 +12,9 @@ import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import EventSystemFactory from '../../../core/app/Services/EventSystemFactory.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import PlayerItemStorage from './PlayerItemStorage.js';
-import ItemStorageComponent from '../../../core/app/Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
-import ItemStorageRC_Legacy from '../RComponents/ItemStorageRC_Legacy.js';
+import ItemStorageRC_Legacy from '../RC/ItemStorageRC_Legacy.js';
 
 export interface ItemStorageControllerRComponentProps {
     container: ContainerInterface;

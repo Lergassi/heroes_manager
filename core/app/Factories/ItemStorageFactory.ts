@@ -1,6 +1,6 @@
-import ItemStorageComponent from '../Components/ItemStorageComponent.js';
+import ItemStorageComponent from '../Components/ItemStorages/ItemStorageComponent.js';
 import GameObject from '../../source/GameObject.js';
-import ItemStorageSlotComponent from '../Components/ItemStorageSlotComponent.js';
+import ItemStorageSlotComponent from '../Components/ItemStorages/ItemStorageSlotComponent.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageFactoryInterface from './ItemStorageFactoryInterface.js';
@@ -8,7 +8,7 @@ import ItemStackFactory from './ItemStackFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import {unsigned} from '../../types/main.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
-import Bag from '../Components/Bag.js';
+import ItemStorage from '../Components/ItemStorages/ItemStorage.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export default class ItemStorageFactory {
@@ -29,7 +29,7 @@ export default class ItemStorageFactory {
         this._entityManager = entityManager;
     }
 
-    create(size: number): GameObject {
+    createGameObject(size: number): GameObject {
         let itemStorage = this._gameObjectFactory.create();
 
         itemStorage.name = 'ItemStorage';
@@ -38,6 +38,10 @@ export default class ItemStorageFactory {
         this.createIn(size, itemStorage);
 
         return itemStorage;
+    }
+
+    create(size: number): ItemStorageInterface {
+        return new ItemStorage(size, this._entityManager);
     }
 
     /**
@@ -58,7 +62,7 @@ export default class ItemStorageFactory {
         //     slots,
         //     this._itemStackFactory,
         // ));
-        let itemStorage = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorage, new Bag(
+        let itemStorage = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorage, new ItemStorage(
             size,
             this._entityManager,
         ));

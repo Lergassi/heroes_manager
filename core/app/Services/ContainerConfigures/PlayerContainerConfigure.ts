@@ -12,10 +12,12 @@ import {ComponentID} from '../../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
+import Production from '../../Components/Craft/Production.js';
 import Fence from '../../Components/Fence.js';
-import ItemStorageController from '../../Components/ItemStorageController.js';
+import ItemStorageController from '../../Components/ItemStorages/ItemStorageController.js';
 import MainHeroList from '../../Components/MainHeroList.js';
 import MainLocationList from '../../Components/MainLocationList.js';
+import ProductionConfigurator from '../../Components/ProductionConfigurator.js';
 import Shop from '../../Components/Shop.js';
 import Tavern from '../../Components/Tavern.js';
 import TavernController from '../../Components/TavernController.js';
@@ -191,6 +193,12 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             );
         });
         container.set<VeinFactory>(ServiceID.VeinFactory, new VeinFactory());
+        container.set<Production>(ServiceID.Production, (container) => {
+            return new Production(
+                container.get<EntityManagerInterface>(ServiceID.EntityManager),
+            );
+        });
+        (new ProductionConfigurator()).configure(container.get<Production>(ServiceID.Production));
 
         //Фасады
         // container.set<ItemStorageManager>(ContainerID.ItemStorageManager, (container) => {

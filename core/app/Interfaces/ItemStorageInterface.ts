@@ -17,16 +17,22 @@ export interface ItemStorageInterfaceRender {
  */
 export default interface ItemStorageInterface {
     /**
+     * @deprecated Не использовать. Не удобный return.
+     * @param item
+     * @param count
+     * @return Остаток. Сколько предметов НЕ добавлено. 0 = добавлены все предметы.
+     */
+    _addItem(item: Item | ItemID, count: unsigned): unsigned;
+
+    /**
      *
      * @param item
      * @param count
      * @return Остаток. Сколько предметов НЕ добавлено. 0 = добавлены все предметы.
      */
-    addItem(item: Item | ItemID, count: unsigned): unsigned;
-
-    // totalItem(ID: ItemID): number;
-    // containItem(ID: ItemID, count: number): boolean;
+    addItem(item: Item | ItemID, count: number): number;
     containItem(ID: ItemID): number;
+    hasItem(itemID: ItemID, count): boolean;
     /**
      * Удаляет предметы из хранилища. Стекуемые и не стекуемые.
      * @param ID
@@ -34,24 +40,19 @@ export default interface ItemStorageInterface {
      * @return Кол-во удаленных предметов из сумки. 0 = не удалено ни одного предмета, return = count = удалены все предметы.
      */
     removeItem(ID: ItemID, count: number): number;
-
-    moveTo(itemStorage: ItemStorageInterface): void;
+    moveAllItemsTo(itemStorage: ItemStorageInterface): void;
 
     /**
      *
-     * @param item
+     * @param itemID
      * @param count
      * @return Остаток.
      */
-    canAddItem(item: Item, count: number): number;
+    canAddItem(itemID: ItemID, count: number): number;
     renderByRequest(ui: ItemStorageInterfaceRender): void;
     clear(index: number): void;
+    clearAllItems(): void;
+    isEmpty(): boolean;
 
-    /**
-     * Только для сумки.
-     * @param itemStorageSlotID
-     * @param equipController
-     * @param equipSlotID
-     */
-    //
+    debug(): void;
 }

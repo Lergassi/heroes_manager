@@ -7,20 +7,20 @@ import DefaultContainerConfigure from '../../core/app/Services/ContainerConfigur
 import ClientContainerConfigure from '../app/ClientContainerConfigure.js';
 import CoreContainerConfigure from '../../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import PlayerContainerConfigure from '../../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
-import ItemStorageRC_Legacy from './RComponents/ItemStorageRC_Legacy.js';
+import ItemStorageRC_Legacy from './RC/ItemStorageRC_Legacy.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import Bag from '../../core/app/Components/Bag.js';
+import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
-import MainHeroListRC_Legacy from './RComponents/MainHeroListRC_Legacy.js';
-import LeftSidebarRC from './RComponents/LeftSidebarRC.js';
+import MainHeroListRC_Legacy from './RC/MainHeroListRC_Legacy.js';
+import LeftSidebarRC from './RC/LeftSidebarRC.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import Icon from '../../core/app/Entities/Icon.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import {IconID} from '../../core/types/enums/IconID.js';
-import LoremRC from './RComponents/LoremRC.js';
+import LoremRC from './RC/LoremRC.js';
 import Buttons from './UI/Buttons.js';
 
 export default class Theme {

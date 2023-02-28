@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Experience from '../../core/app/Components/Experience.js';
 import HeroComponent from '../../core/app/Components/HeroComponent.js';
-import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
+import ItemStorageController from '../../core/app/Components/ItemStorages/ItemStorageController.js';
 import MainHeroList from '../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../core/app/Components/MainLocationList.js';
 import ItemStorageInterface from '../../core/app/Interfaces/ItemStorageInterface.js';
@@ -16,15 +16,16 @@ import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import {UI_ShortHero} from '../../core/types/main.js';
 import UIUpdater from '../app/UIUpdater.js';
 import GameConsoleRC from './_React/GameConsoleRC.js';
-import DetailHeroRC from './RComponents/DetailHeroRC.js';
-import DetailLocationRC from './RComponents/DetailLocationRC.js';
-import EquipItemListRC from './RComponents/EquipItemListRC.js';
-import GameRC from './RComponents/GameRC.js';
-import ItemStorageControllerRC from './RComponents/ItemStorageControllerRC.js';
-import LeftSidebarRC from './RComponents/LeftSidebarRC.js';
-import MainHeroListRC from './RComponents/MainHeroListRC.js';
-import MainLocationListRC from './RComponents/MainLocationListRC.js';
-import WalletRC from './RComponents/WalletRC.js';
+import DetailHeroRC from './RC/DetailHeroRC.js';
+import DetailLocationRC from './RC/DetailLocationRC.js';
+import EquipItemListRC from './RC/EquipItemListRC.js';
+import GameMenuRC from './RC/GameMenuRC.js';
+import GameRC from './RC/GameRC.js';
+import ItemStorageControllerRC from './RC/ItemStorageControllerRC.js';
+import LeftSidebarRC from './RC/LeftSidebarRC.js';
+import MainHeroListRC from './RC/MainHeroListRC.js';
+import MainLocationListRC from './RC/MainLocationListRC.js';
+import WalletRC from './RC/WalletRC.js';
 
 export default class GameUI {
     private readonly _container: ContainerInterface;
@@ -64,6 +65,9 @@ export default class GameUI {
     private _renderPreGameUI(root) {
         root.render(
             <div className={'wrapper'}>
+                <GameMenuRC
+                    gameConsole={this._container.get<GameConsole>(ServiceID.GameConsole)}
+                />
                 <GameConsoleRC
                     container={this._container}
                     executeUrl={'http://api.heroes.sd44.ru/game_console/execute'}

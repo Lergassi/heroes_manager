@@ -4,4 +4,5 @@ export enum UI_PanelID {
     ItemStorages = 'ItemStorages',
     Heroes = 'Heroes',
     Locations = 'Locations',
+    Production = 'Production',
 }

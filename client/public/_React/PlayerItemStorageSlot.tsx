@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
-import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorageSlotComponent.js';
+import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorages/ItemStorageSlotComponent.js';
 import {sprintf} from 'sprintf-js';
 import Icon from '../../../core/app/Entities/Icon.js';
 

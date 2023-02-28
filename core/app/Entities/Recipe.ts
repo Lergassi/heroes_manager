@@ -62,13 +62,13 @@ export default class Recipe {
      * @return Остаток.
      */
     createItem(itemStorage: ItemStorageInterface): number {
-        return itemStorage.addItem(this._resultItem, this._resultCount);
+        return itemStorage._addItem(this._resultItem, this._resultCount);
     }
 
     createRequireItems(itemStorage: ItemStorageInterface): void {
         for (let i = 0; i < this._requireItems.length; i++) {
             //todo: Нужно учитывать, что может не хватить места. Что делать в таком случае? Проверка и ничего не делать? callback и/или отдельный класс?
-            itemStorage.addItem(this._requireItems[i].item, this._requireItems[i].count);
+            itemStorage._addItem(this._requireItems[i].item, this._requireItems[i].count);
         }
     }
 

@@ -1,21 +1,17 @@
-import AbstractSandboxController from './AbstractSandboxController.js';
-import StubFactory from '../../core/app/Services/StubFactory.js';
-import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import {ItemID} from '../../core/types/enums/ItemID.js';
-import ItemStackController from '../../core/app/Components/ItemStackController.js';
-import ItemDatabase from '../../core/source/ItemDatabase.js';
-import ItemStorageController from '../../core/app/Components/ItemStorageController.js';
-import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
-import ItemStorageInterface from '../../core/app/Interfaces/ItemStorageInterface.js';
 import EndlessItemStorage from '../../core/app/Components/EndlessItemStorage.js';
-import InfinityItemStackController from '../../core/app/Components/InfinityItemStackController.js';
-import InfinityItemStorage from '../../core/app/Components/InfinityItemStorage.js';
-import Bag from '../../core/app/Components/Bag.js';
+import InfinityItemStackController from '../../core/app/Components/ItemStorages/InfinityItemStackController.js';
+import InfinityItemStorage from '../../core/app/Components/ItemStorages/InfinityItemStorage.js';
+import ItemStackController from '../../core/app/Components/ItemStorages/ItemStackController.js';
+import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
+import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import Item from '../../core/app/Entities/Item.js';
-import {EntityID} from '../../core/types/enums/EntityID.js';
+import ItemStorageInterface from '../../core/app/Interfaces/ItemStorageInterface.js';
+import ItemDatabase from '../../core/source/ItemDatabase.js';
+import {ItemID} from '../../core/types/enums/ItemID.js';
+import {ServiceID} from '../../core/types/enums/ServiceID.js';
+import AbstractSandboxController from './AbstractSandboxController.js';
 
-export default class BagSandboxController extends AbstractSandboxController {
+export default class ItemStorageSandboxController extends AbstractSandboxController {
     run(): void {
         // this._devItemStackController();
         // this._devItemStorage();
@@ -23,7 +19,10 @@ export default class BagSandboxController extends AbstractSandboxController {
         // this._devEndlessBag();
         // this._devInfinityItemStackController();
         // this._devInfinityBag();
-        this._devCanAddItem();
+        // this._devCanAddItem();
+
+        this._testItemStorage();
+        this._testItemStackController();
     }
 
     private _devItemStorage() {
@@ -38,9 +37,9 @@ export default class BagSandboxController extends AbstractSandboxController {
 
         let itemID = ItemID.Wood;
         // let itemID = ItemID.IronOre;
-        let itemStackController = new ItemStackController();
-        itemStackController.addItem(itemDatabase.get(itemID), 5);
-        itemStackController.addItem(itemDatabase.get(itemID), 5);
+        let itemStackController = new ItemStackController(this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        itemStackController._addItem(itemDatabase.get(itemID), 5);
+        itemStackController._addItem(itemDatabase.get(itemID), 5);
         // console.log(itemStackController);
         // console.log(itemStackController.containItem(itemID, 1) === true);
         // console.log(itemStackController.containItem(itemID, 9) === true);
@@ -96,10 +95,10 @@ export default class BagSandboxController extends AbstractSandboxController {
     private _testEndlessItemStorage(itemStorage: EndlessItemStorage) {
         let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
 
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 0) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 1) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 11111111) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 1111111111111111) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 0) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 1) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 11111111) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 1111111111111111) === 0);
         // console.log(itemStorage.containItem(ItemID.Wood, 0) === false);
         // console.log(itemStorage.containItem(ItemID.Wood, 1) === true);
         // console.log(itemStorage.containItem(ItemID.Wood, 11111111111111111111111111111) === true);
@@ -134,18 +133,18 @@ export default class BagSandboxController extends AbstractSandboxController {
         let entityManager = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
         let itemStorage = new InfinityItemStorage(entityManager);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
-        console.log(itemStorage.addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
+        console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
         console.log(itemStorage);
 
         // console.log(itemStorage.containItem(ItemID.Wood, -1) === false);
@@ -185,7 +184,7 @@ export default class BagSandboxController extends AbstractSandboxController {
     private _devCanAddItem() {
         let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
-        let itemStackController = new ItemStackController();
+        let itemStackController = new ItemStackController(em);
         // console.log(itemStackController.canAddItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 1));
         // console.log(itemStackController.canAddItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
@@ -198,15 +197,69 @@ export default class BagSandboxController extends AbstractSandboxController {
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
 
-        let itemStorage = new Bag(2, em);
+        let itemStorage = new ItemStorage(2, em);
 
         // console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 10));
-        console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.OneHandedSword01), 10));
+        // console.log(itemStorage._addItem(em.get<Item>(EntityID.Item, ItemID.OneHandedSword01), 10));
         // console.log(itemStorage.canAddItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
-        console.log(itemStorage.canAddItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 10));
-        console.log(itemStorage.canAddItem(em.get<Item>(EntityID.Item, ItemID.OneHandedSword01), 10));
+        // console.log(itemStorage.canAddItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 10));
+        // console.log(itemStorage.canAddItem(em.get<Item>(EntityID.Item, ItemID.OneHandedSword01), 10));
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 10);
         // console.log(itemStorage.canAddItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 10));
+    }
+
+    private _testItemStorage() {
+        // let itemStorage = new ItemStorage(20, this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        //
+        // console.log(itemStorage.addItem(ItemID.Wood, 0) === 0);
+        // console.log(itemStorage.addItem(ItemID.Wood, 1) === 1);
+        // console.log(itemStorage.addItem(ItemID.Wood, 10) === 10);
+        // console.log(itemStorage.addItem(ItemID.OneHandedSword01, 0) === 0);
+        // console.log(itemStorage.addItem(ItemID.OneHandedSword01, 1) === 1);
+        // console.log(itemStorage.addItem(ItemID.OneHandedSword01, 2) === 2);
+    }
+
+    private _testItemStackController() {
+        let itemStackController = new ItemStackController(this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        console.log(itemStackController.canAddItem(ItemID.Wood, 0) === 0);
+        console.log(itemStackController.canAddItem(ItemID.Wood, 10) === 10);
+        console.log(itemStackController.canAddItem(ItemID.Wood, 50) === 50);
+        console.log(itemStackController.canAddItem(ItemID.Wood, 51) === 50);
+        console.log(itemStackController.canAddItem(ItemID.Wood, 123123123) === 50);
+        console.log(itemStackController.canAddItem(ItemID.OneHandedSword01, 1) === 1);
+        console.log(itemStackController.canAddItem(ItemID.OneHandedSword01, 2) === 1);
+        console.log(itemStackController.canAddItem(ItemID.OneHandedSword01, 10) === 1);
+
+        // itemStackController.addItem(ItemID.Wood, 12);
+        console.log(itemStackController.isFree());
+
+        let itemStorage = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(5);
+        console.log(itemStorage.canAddItem(ItemID.Wood, -2131321) === 0);
+        console.log(itemStorage.canAddItem(ItemID.Wood, -2) === 0);
+        console.log(itemStorage.canAddItem(ItemID.Wood, -1) === 0);
+        console.log(itemStorage.canAddItem(ItemID.Wood, 0) === 0);
+        console.log(itemStorage.canAddItem(ItemID.Wood, 1) === 1);
+        console.log(itemStorage.canAddItem(ItemID.Wood, 48) === 48);
+        console.log(itemStorage.canAddItem(ItemID.Wood, 49) === 49);
+        console.log(itemStorage.canAddItem(ItemID.Wood, 50) === 50);
+        console.log(itemStorage.canAddItem(ItemID.Wood, 250) === 250);
+        console.log(itemStorage.canAddItem(ItemID.Wood, 251) === 250);
+        console.log(itemStorage.canAddItem(ItemID.Wood, 121124141) === 250);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -1231231) === 0);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -2) === 0);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -1) === 0);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 0) === 0);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 1) === 1);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 2) === 2);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 3) === 3);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 4) === 4);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 5) === 5);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 6) === 5);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 7) === 5);
+        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 101313213) === 5);
+
+        // itemStorage.addItem(ItemID.Wood, 12);
+        console.log(itemStorage.isEmpty());
     }
 }

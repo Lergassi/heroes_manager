@@ -3,8 +3,8 @@ import _ from 'lodash';
 import {
     DetailLocationRCEnemyElement,
     DetailLocationRCHeroElement, DetailLocationRCVeinElement
-} from '../../../client/public/RComponents/DetailLocationRC.js';
-import {MainLocationListRCElement} from '../../../client/public/RComponents/MainLocationListRC.js';
+} from '../../../client/public/RC/DetailLocationRC.js';
+import {MainLocationListRCElement} from '../../../client/public/RC/MainLocationListRC.js';
 import {assert, assertIsInstanceOf} from '../../source/assert.js';
 import EventSystem from '../../source/EventSystem.js';
 import GameObject from '../../source/GameObject.js';

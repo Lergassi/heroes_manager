@@ -23,8 +23,8 @@ export default class RecipeSandboxController extends AbstractSandboxController {
     }
 
     private _devDatabase() {
-        console.log(database.recipes.data.resultCount(ItemID.Uncommon_Plate_Breastplate_9_01));
-        database.recipes.data.requireItems(ItemID.Uncommon_Plate_Breastplate_9_01, (ID, count) => {
+        console.log(database.recipes.data.resultCount(ItemID.Uncommon_OneHandedSword_006_01));
+        database.recipes.data.requireItems(ItemID.Amulet01, (ID, count) => {
             console.log(ID, count);
         });
     }

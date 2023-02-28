@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import ItemStorageController from '../../../core/app/Components/ItemStorageController.js';
+import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';

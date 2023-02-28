@@ -1,19 +1,19 @@
-import _ from 'lodash';
 import debug from 'debug';
-import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import Item from '../Entities/Item.js';
-import {unsigned} from '../../types/main.js';
-import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import _ from 'lodash';
+import {assertIsGreaterThanOrEqual, assertNotNil} from '../../../source/assert.js';
+import {DebugFormatterID} from '../../../types/enums/DebugFormatterID.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import {EntityID} from '../../../types/enums/EntityID.js';
+import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
+import {ItemID} from '../../../types/enums/ItemID.js';
+import Item from '../../Entities/Item.js';
+import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
+import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
 import ItemStackControllerInterface, {
     ItemStackControllerInterfaceRender
-} from '../Interfaces/ItemStackControllerInterface.js';
-import AppError from '../../source/Errors/AppError.js';
-import Viewer from '../../source/Viewer.js';
-import {ItemID} from '../../types/enums/ItemID.js';
-import EquipController from './EquipController.js';
+} from '../../Interfaces/ItemStackControllerInterface.js';
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
+import EquipController from '../EquipController.js';
 
 export default class ItemStackController implements ItemStackControllerInterface {
     private _item: Item;
@@ -21,14 +21,21 @@ export default class ItemStackController implements ItemStackControllerInterface
      * Если значение равно нулю, на рендер отдается null.
      * @private
      */
-    private _count: unsigned;
+    private _count: number;
+    private readonly _entityManager: EntityManagerInterface;
 
-    constructor() {
+    constructor(entityManager: EntityManagerInterface) {
+        this._entityManager = entityManager;
         this._item = null;  //todo: Далее тут может быть ItemStack без ограничений через композицию.
         this._count = 0;
     }
 
-    addItem(item: Item, count: unsigned): unsigned {
+    /**
+     * @deprecated
+     * @param item
+     * @param count
+     */
+    _addItem(item: Item, count: number): number {
         assertNotNil(item);
         assertIsGreaterThanOrEqual(count, 0);
 
@@ -51,6 +58,45 @@ export default class ItemStackController implements ItemStackControllerInterface
         } else {
             this._count += flaw;
             count -= flaw;
+        }
+
+        if (this._count > 0) {
+            this._item = item;
+        }
+
+        return count;
+    }
+
+    /**
+     *
+     * @param item
+     * @param count
+     * @return Кол-во добавленных предметов. return = 0 - не добавлено ни одного предмета.
+     */
+    addItem(item: Item | ItemID, count: number): number {
+        assertNotNil(item);
+        assertIsGreaterThanOrEqual(count, 0);
+        item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
+
+        if (this._item && item !== this._item) {
+            //@note: Возможно не надо возвращать ошибок. Метод называется addItem(), а не replace. Нужно заменить, поместить с заменой - это другая логика. Хотя для разработки можно оставить, а для игрока отключить.
+            // debug(DebugNamespaceID.Throw)('ItemStackController занят другим предметом.');
+            return 0;
+        }
+
+        let flaw = 0;
+        if (this._item) {
+            flaw = item.stackSize - this._count;
+        } else {
+            flaw = item.stackSize;
+        }
+
+        if (count <= flaw) {
+            this._count += count;
+            // count = 0;
+        } else {
+            this._count += flaw;
+            count = flaw;
         }
 
         if (this._count > 0) {
@@ -84,7 +130,7 @@ export default class ItemStackController implements ItemStackControllerInterface
     moveTo(target: ItemStorageInterface): void {
         if (this.isFree()) return;
 
-        let reminder = this._count - target.addItem(this._item, this._count);
+        let reminder = this._count - target._addItem(this._item, this._count);
         this.removeItem(<ItemID>this._item.id, reminder);
     }
 
@@ -100,13 +146,17 @@ export default class ItemStackController implements ItemStackControllerInterface
         return _.isNil(this._item);
     }
 
-    canAddItem(item: Item, count: number): number {
-        if (!this._item) return item.stackSize >= count ? 0 : count - item.stackSize;
-        if (this._item && this._item !== item) return count;
+    canAddItem(itemID: ItemID, count: number): number {
+        let item = this._entityManager.get<Item>(EntityID.Item, itemID);
+        assertNotNil(item);
+
+        if (count <= 0) return 0;
+        if (!this._item) return item.stackSize >= count ? count : item.stackSize;
+        if (this._item && this._item !== item) return 0;
 
         let reminder = this._item.stackSize - this._count;
 
-        return reminder >= count ? 0 : count - reminder;
+        return reminder >= count ? count : reminder;
     }
 
     clear(): void {
@@ -148,5 +198,12 @@ export default class ItemStackController implements ItemStackControllerInterface
 
     renderByRequest(ui: ItemStackControllerInterfaceRender): void {
         ui.updateItem?.(this._item ? this._item.id : undefined, this._count > 0 ? this._count : undefined);
+    }
+
+    debug(): void {
+        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+            item: this._item ? this._item.id : undefined,
+            count: this._item ? this._count : undefined,
+        });
     }
 }

@@ -4,13 +4,13 @@ import {sprintf} from 'sprintf-js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import DetailHeroRC from '../public/RComponents/DetailHeroRC.js';
-import DetailLocationRC from '../public/RComponents/DetailLocationRC.js';
-import ItemStorageControllerRC from '../public/RComponents/ItemStorageControllerRC.js';
-import ItemStorageRC from '../public/RComponents/ItemStorageRC.js';
-import MainHeroListRC from '../public/RComponents/MainHeroListRC.js';
-import MainLocationListRC from '../public/RComponents/MainLocationListRC.js';
-import WalletRC from '../public/RComponents/WalletRC.js';
+import DetailHeroRC from '../public/RC/DetailHeroRC.js';
+import DetailLocationRC from '../public/RC/DetailLocationRC.js';
+import ItemStorageControllerRC from '../public/RC/ItemStorageControllerRC.js';
+import ItemStorageRC from '../public/RC/ItemStorageRC.js';
+import MainHeroListRC from '../public/RC/MainHeroListRC.js';
+import MainLocationListRC from '../public/RC/MainLocationListRC.js';
+import WalletRC from '../public/RC/WalletRC.js';
 
 enum UIState {
     Stop = 'Stop',

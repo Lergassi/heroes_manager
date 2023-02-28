@@ -1,7 +1,7 @@
 import {formatDuration, intervalToDuration} from 'date-fns';
 import _ from 'lodash';
 import React from 'react';
-import ItemStorageController from '../../../core/app/Components/ItemStorageController.js';
+import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
 import Location, {LocationRender, LocationHuntingState} from '../../../core/app/Components/Location.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
@@ -357,17 +357,6 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                             </div>
                         </div>{/* end widget Выбор героев */}
                         <div className={'widget'}>
-                            <div className={'widget__title'}>Информация</div>
-                            <div className={'widget__content'}>
-                                <ul>
-                                    <li>Уровень: {this.state.level}</li>
-                                    {/*<li>Эффективность сбора: {this.state.gatheringPerformance}</li>*/}
-                                    <li>Время до закрытия: {formatDuration(intervalToDuration({start: 0, end: this.state.timeToClose * 1000}))} часов</li>
-                                    <li>Золото: {this.state.money}</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className={'widget'}>
                             <div className={'widget__title'}>Управление</div>
                             <div className={'widget__content'}>
                                 {this.state.state === LocationHuntingState.Waiting ?
@@ -466,6 +455,17 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                             </div>
                         </div>
                         <div className={'widget'}>
+                            <div className={'widget__title'}>Информация</div>
+                            <div className={'widget__content'}>
+                                <ul>
+                                    <li>Уровень: {this.state.level}</li>
+                                    {/*<li>Эффективность сбора: {this.state.gatheringPerformance}</li>*/}
+                                    <li>Время до закрытия: {formatDuration(intervalToDuration({start: 0, end: this.state.timeToClose * 1000}))} часов</li>
+                                    <li>Золото: {this.state.money}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className={'widget'}>
                             <div className={'widget__title'}>Добыча</div>
                             <div className={'widget__content'}>
                                 <table className={'basic-table'}>
@@ -482,10 +482,6 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     })}
                                     </tbody>
                                 </table>
-                                {/*<ItemStorageRC*/}
-                                {/*    size={10}*/}
-                                {/*    columns={5}*/}
-                                {/*/>*/}
                             </div>
                         </div>
                     </div>{/*end col*/}

@@ -1,6 +1,6 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
-import ItemStorageController from '../Components/ItemStorageController.js';
+import ItemStorageController from '../Components/ItemStorages/ItemStorageController.js';
 import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import {unsigned} from '../../types/main.js';
@@ -31,6 +31,6 @@ export default class CreateItemStorageCommand extends Command {
         this
             .container
             .get<ItemStorageController>(ServiceID.ItemStorageController)
-            .addItemStorage(this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(size));
+            .addItemStorage(this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(size));
     }
 }

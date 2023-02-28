@@ -81,7 +81,7 @@ export default class LocationFactory {
         let locationGO = this._gameObjectFactory.create();
 
         let wallet = new Wallet(0);
-        let itemStorage = this._itemStorageFactory.create(this._internalItemStorageSize).get<ItemStorageInterface>(ComponentID.ItemStorage);
+        let itemStorage = this._itemStorageFactory.createGameObject(this._internalItemStorageSize).get<ItemStorageInterface>(ComponentID.ItemStorage);
 
         //todo: Предметы должны устаналиваться более строго. А вдруг в бд не будет предметов категории? Надо чтобы items всегда был в рабочем состоянии.
         // let items = this._itemDatabase.findByItemCategory(this._entityManager.get<ItemCategory>(EntityID.ItemCategory, ItemCategoryID.Resources));

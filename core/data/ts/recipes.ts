@@ -4,13 +4,14 @@ import {RecipeID} from '../../types/enums/RecipeID.js';
 import _ from 'lodash';
 
 export type TSDB_Recipe = {
-    ID: ItemID | string,
+    ID: ItemID,
     resultItemCount: number,
+    //todo: cost: number,
     requireItems: {ID: ItemID | string, count: number}[],
 };
 
 export type TSDB_RecipeDB = {
-    [ID in ItemID | string]?: TSDB_Recipe;
+    [ID in ItemID]?: TSDB_Recipe;
 };
 /*
     кузнечное дело
@@ -66,9 +67,12 @@ export const recipes = {
     resultCount: function (ID: ItemID): number {
         return recipes_db[ID]?.resultItemCount ?? 0;
     },
-    requireItems: function (ID: ItemID, callback: (ID: ItemID, count: number) => void): void {
-        _.forEach(recipes_db[ID]?.requireItems ?? [], (value) => {
-            callback(value.ID as ItemID, value.count);
+    requireItems: function<T> (ID: ItemID, callback: (ID: ItemID, count: number) => T): T[] {
+        return _.map(recipes_db[ID]?.requireItems ?? [], (value) => {
+            return callback(value.ID as ItemID, value.count);
         });
+    },
+    hasRecipe(itemID: ItemID): boolean {
+        return recipes_db.hasOwnProperty(itemID);
     },
 };
