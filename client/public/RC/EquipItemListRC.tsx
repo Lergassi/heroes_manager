@@ -106,9 +106,9 @@ export default class EquipItemListRC extends React.Component<EquipItemListRCProp
                 <select name="" id="" onChange={this.handlerOnChangeItemStorageSlot}>
                     {_.map(this.state.itemStorages, (itemStorage, itemStorageIndex) => {
                         return _.map(itemStorage.slots, (slot, itemStorageSlotIndex) => {
-                            if (!slot.item.itemName) return;
+                            if (!slot.item.itemID) return;
 
-                            return <option key={itemStorageSlotIndex} value={[String(itemStorage.ID), String(slot.ID)]}>{slot.item.itemName}</option>
+                            return <option key={itemStorageSlotIndex} value={[String(itemStorage.ID), String(slot.ID)]}>{slot.item.itemID}</option>
                         });
                     })}
                 </select>

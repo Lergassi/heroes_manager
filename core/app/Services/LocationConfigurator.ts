@@ -16,10 +16,12 @@ export default class LocationConfigurator {
 
     configure(location: Location /*strategy или разные LocationConfigurator*/): void {
         //veins
+        database.locations.resources.find(location.type, (itemID, count) => {
+            location.addResource(itemID, _.random(count.min, count.max));
+        });
 
         //enemies
-        database.locations.enemies.find(LocationTypeID.Forrest, (enemyTypeID, count) => {
-            //todo: Число врагов брать из бд.
+        database.locations.enemies.find(location.type, (enemyTypeID, count) => {
             location.addEnemy(this._enemyFactory.createSquad(enemyTypeID, location.level, _.random(count.min, count.max)));
         });
     }

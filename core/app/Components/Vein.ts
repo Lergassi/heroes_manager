@@ -1,3 +1,4 @@
+import {ItemID} from '../../types/enums/ItemID.js';
 import Item from '../Entities/Item.js';
 import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
 import _ from 'lodash';
@@ -14,15 +15,12 @@ export default class Vein {
     private readonly _minCountForGather: number = 1;
     private readonly _maxCountForGather: number = 4;  //todo: Шанс. Максимальное значение должно быть реже чем среднее.
 
-    private readonly _item: Item;
+    private readonly _itemID: ItemID;
     private _startCount: number;
     private _count: number;
 
-    constructor(item: Item, count: number) {
-        assertIsInstanceOf(item, Item);
-        assertIsGreaterThanOrEqual(count, 1);
-
-        this._item = item;
+    constructor(itemID: ItemID, count: number) {
+        this._itemID = itemID;
         this._startCount = count;
         this._count = count;
     }
@@ -30,17 +28,17 @@ export default class Vein {
     /**
      * todo: Только другим разработчикам и самому себе не понятно будет как этим пользоваться и зачем нужен посредник в виде Gatherer. Хотя вроде как очевидно, что при таком использовании жила не звисит от игрока, и поэтому явно нужна зависимость от состояния героя.
      * @param itemStorage
-     * @return Остаток в жиле.
+     * @return Собрано ресурсов.
      */
     gather(itemStorage: ItemStorageInterface): number {
         if (!this.canGather()) return 0;
 
         let count = this._generateCount();
-        let reminder = itemStorage._addItem(this._item, count);  //todo: А вообще можно не учитывать заполнение сумок - пусть игрок контролирует.
+        let gathered = itemStorage.addItem(this._itemID, count);  //todo: А вообще можно не учитывать заполнение сумок - пусть игрок контролирует.
 
-        this._count -= count - reminder;
+        this._count -= gathered;
 
-        return this._count;
+        return gathered;
     }
 
     isEmpty(): boolean {
@@ -48,7 +46,7 @@ export default class Vein {
     }
 
     canGather(): boolean {
-        if (this._count <= 0) {
+        if (this.isEmpty()) {
             debug(DebugNamespaceID.Throw)('Жила истощена.');
             return false;
         }
@@ -58,9 +56,9 @@ export default class Vein {
 
     renderByRequest(ui: VeinRender): void {
         ui.update?.({
-            itemName: this._item.id,
+            itemID    : this._itemID,
             startCount: this._startCount,
-            count: this._count,
+            count     : this._count,
         });
     }
 

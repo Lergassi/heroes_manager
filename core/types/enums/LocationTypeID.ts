@@ -1,9 +1,9 @@
 export enum LocationTypeID {
     // Barrens = 'Barrens',
     Forrest = 'Forrest',
-    Steppe = 'Steppe',
-    Desert = 'Desert',
-    Jungle = 'Jungle',
+    // Steppe = 'Steppe',
+    // Desert = 'Desert',
+    // Jungle = 'Jungle',
 
     Mountains = 'Mountains',
     Cave = 'Cave',

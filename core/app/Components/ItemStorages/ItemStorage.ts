@@ -183,7 +183,7 @@ export default class ItemStorage implements ItemStorageInterface {
         for (let i = 0; i < this._itemStackControllers.length; i++) {
             this._itemStackControllers[i].renderByRequest({
                 updateItem(itemName: string, count: number): void {
-                    items.push({ID: i, item: {itemName: itemName, count: count}});
+                    items.push({ID: i, item: {itemID: itemName as ItemID, count: count}});
                 },
             });
         }

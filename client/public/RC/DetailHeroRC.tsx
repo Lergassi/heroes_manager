@@ -312,7 +312,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
     updateEquipSlot(ID: EquipSlotID, item: UI_ItemCount): void {
         this.setState((state) => {
             let newState = {} as DetailHeroRCState;
-            newState[ID] = item.itemName;
+            newState[ID] = item.itemID;
 
             return newState;
         });

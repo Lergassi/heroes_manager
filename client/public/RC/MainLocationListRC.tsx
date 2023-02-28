@@ -135,16 +135,16 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                         <td>
                                             <ul>
                                                 {_.map(location.veins, (vein, index) => {
-                                                    return <li key={index}>{vein.itemName}: {vein.count}/{vein.startCount}</li>
+                                                    return <li key={index}>{vein.itemID}: {vein.count}/{vein.startCount}</li>
                                                 })}
                                             </ul>
                                         </td>
                                         <td>
                                             <ul>
                                                 {_.map(location.loot, (item, index) => {
-                                                    if (!item.itemName) return;
+                                                    if (!item.itemID) return;
 
-                                                    return <li key={index}>{item.itemName}: {item.count}</li>
+                                                    return <li key={index}>{item.itemID}: {item.count}</li>
                                                 })}
                                             </ul>
                                         </td>

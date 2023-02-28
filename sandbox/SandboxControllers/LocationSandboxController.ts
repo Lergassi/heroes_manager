@@ -17,7 +17,7 @@ export default class LocationSandboxController extends AbstractSandboxController
         // this._devDefaultScenario();
         // this._devGenerateEnemies();
         // this._createLocationsCommand();
-        this._devConfigureLocation();
+        // this._devConfigureLocation();
     }
 
     private _getStarted() {

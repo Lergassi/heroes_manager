@@ -4,6 +4,7 @@ import {hero_classes} from './hero_classes.js';
 import {hero_equip_sets} from './hero_equip_sets.js';
 import {item_category_ratios} from './item_category_ratios.js';
 import {location_enemies} from './location_enemies.js';
+import {location_resources} from './location_resources.js';
 import {metadata} from './metadata.js';
 import {recipes} from './recipes.js';
 import {test} from './test.js';
@@ -24,12 +25,13 @@ export const database = {
         character_attributes: hero_class_character_attributes,
         equip_sets: hero_equip_sets,
     },
+    locations: {
+        // data: locations_resources,
+        resources: location_resources,
+        enemies: location_enemies,
+    },
     enemies: {
         rewards: enemy_loot,
-    },
-    locations: {
-        // data: {},    Не data, а через метод.
-        enemies: location_enemies,
     },
     test: test,
 };

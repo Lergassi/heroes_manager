@@ -1,4 +1,5 @@
 import {sprintf} from 'sprintf-js';
+import {ItemID} from '../../../types/enums/ItemID.js';
 import EquipSlotInterface, {
     EquipSlotInterfaceRender,
     EquipSlotInterfaceRenderCallback
@@ -86,7 +87,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
     // }
 
     renderByRequest(ui: EquipSlotInterfaceRender): void {
-        ui.updateEquipSlot?.(this._ID, this._item ? {itemName: this._item.id, count: 1} : {itemName: undefined, count: undefined});
+        ui.updateEquipSlot?.(this._ID, this._item ? {itemID: this._item.id as ItemID, count: 1} : {itemID: undefined, count: undefined});
     }
 
     debug(): void {

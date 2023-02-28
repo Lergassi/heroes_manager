@@ -49,7 +49,7 @@ export type ItemCount = {
 }
 
 export type UI_ItemCount = {
-    itemName: string;
+    itemID: ItemID;
     count: number;
 }
 
@@ -64,7 +64,7 @@ export type UI_ItemStorageSlot = {
 }
 
 export type UI_VeinItemCount = {
-    itemName: string;
+    itemID: ItemID;
     startCount: number;
     count: number;
 }

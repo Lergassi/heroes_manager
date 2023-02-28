@@ -13,6 +13,7 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 import {LocationTypeID} from '../../types/enums/LocationTypeID.js';
 import {Seconds, UI_ItemCount, UI_ItemStorageSlot, UI_VeinItemCount} from '../../types/main.js';
 import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
@@ -283,6 +284,13 @@ export default class Location {
         }
 
         return true;
+    }
+
+    addResource(itemID: ItemID, count: number): void {
+        this._veins.push(new Vein(
+            itemID,
+            count,
+        ));
     }
 
     /**

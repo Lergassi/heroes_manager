@@ -1,4 +1,3 @@
-import {location_enemies} from '../../data/ts/location_enemies.js';
 import GameObject from '../../source/GameObject.js';
 import ItemDatabase from '../../source/ItemDatabase.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';

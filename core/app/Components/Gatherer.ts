@@ -20,7 +20,7 @@ export default class Gatherer implements GathererInterface {
      *
      * @param gatheringPoint
      * @param itemStorage
-     * @return Остаток в жиле.
+     * @return Собрано ресурсов.
      */
     gather(gatheringPoint: Vein, itemStorage: ItemStorageInterface): unsigned {
         if (!this.canGather()) return 0;

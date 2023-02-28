@@ -532,7 +532,7 @@ export default class SandboxUI {
             mainLocationList.add(locations[i]);
         }
 
-        window['app']['sandbox']['locations'] = locations;
+        window['app']['sandbox']['location_resources'] = locations;
         window['app']['sandbox']['mainLocationList'] = mainLocationList;
         window['app']['sandbox']['allStart'] = () => {
             for (let i = 0; i < locations.length; i++) {

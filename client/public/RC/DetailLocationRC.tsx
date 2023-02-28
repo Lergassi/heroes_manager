@@ -446,7 +446,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                         </tr>
                                         {_.map(veins, (vein, index) => {
                                             return <tr key={index}>
-                                                <td>{vein.itemName}</td>
+                                                <td>{vein.itemID}</td>
                                                 <td>{vein.count}</td>
                                             </tr>
                                         })}
@@ -476,7 +476,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     </tr>
                                     {_.map(loot, (data, index) => {
                                         return <tr key={index}>
-                                            <td>{data.itemName}</td>
+                                            <td>{data.itemID}</td>
                                             <td>{data.count}</td>
                                         </tr>
                                     })}

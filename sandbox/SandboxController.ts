@@ -57,7 +57,7 @@ import EventSystem2 from '../core/source/EventSystem2.js';
 import ItemStorage from '../core/app/Components/ItemStorages/ItemStorage.js';
 import ItemStackController from '../core/app/Components/ItemStorages/ItemStackController.js';
 import AttributeGeneratorSandboxController from './SandboxControllers/AttributeGeneratorSandboxController.js';
-import DatabaseTSSandboxController from './SandboxControllers/DatabaseTSSandboxController.js';
+import TSDB_DatabaseSandboxController from './SandboxControllers/TSDB_DatabaseSandboxController.js';
 import EnemySandboxController from './SandboxControllers/EnemySandboxController.js';
 import GenerateEnemySandboxController from './SandboxControllers/GenerateEnemySandboxController.js';
 import GenerateItemsSandboxController from './SandboxControllers/GenerateItemsSandboxController.js';
@@ -124,10 +124,10 @@ export default class SandboxController {
 
         // (new LoadItemDatabaseController(this._container)).run();
         // (new EntityManagerSandboxController(this._container)).run();
-        // (new DatabaseTSSandboxController(this._container)).run();
+        (new TSDB_DatabaseSandboxController(this._container)).run();
 
         // (new FightSandboxController(this._container)).run();
-        (new ItemStorageSandboxController(this._container)).run();
+        // (new ItemStorageSandboxController(this._container)).run();
         // (new RecipesSandboxController(this._container)).run();
         // (new ShopSandboxController(this._container)).run();
         // (new CraftSystemSandboxController(this._container)).run();
@@ -785,7 +785,7 @@ export default class SandboxController {
         // itemStorageManager.addItem(itemDatabase.get(ItemID.Wood), 12);
         // console.log(itemStorageManager);
 
-        let gatheringPoint = new Vein(itemDatabase.get(ItemID.Wood), 32);
+        let gatheringPoint = new Vein(ItemID.Wood, 32);
         // let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 1);
 
         let stateController = new LifeStateController();

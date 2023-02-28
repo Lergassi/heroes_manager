@@ -8,19 +8,23 @@ import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {ItemCount, ItemCountDBType, ItemLoot, RangeType} from '../../types/main.js';
 
+type TSDB_ItemLoot = {
+    ID: ItemID,
+    count: RangeType,
+    chance: number,
+}
+
 type TSDB_EnemyLoot = {
-    [ID in EnemyTypeID]?: {
-        items: {
-            ID: ItemID,
-            count: RangeType,
-            chance: number,
-        }[],
-        exp: number,
-        money: RangeType,
-    }
+    items: TSDB_ItemLoot[],
+    exp: number,
+    money: RangeType,
+}
+
+type TSDB_EnemyLootDB = {
+    [ID in EnemyTypeID]?: TSDB_EnemyLoot;
 };
 
-let enemy_loot_data: TSDB_EnemyLoot = {
+let enemy_loot_data: TSDB_EnemyLootDB = {
     [EnemyTypeID.Boar]: {
         exp: 42,
         items: [
