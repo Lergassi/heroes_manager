@@ -39,12 +39,12 @@ export default class ItemStorageSlotComponent implements ItemStackControllerInte
 
     constructor() {
         this._itemStack = null;
-        this._itemStackController = new ItemStackController(undefined);
+        this._itemStackController = new ItemStackController();
     }
 
     addItem(item: Item, count: unsigned): unsigned {
         EventSystem.event(ItemStorageSlotComponentEventCode.Update, this);
-        return this._itemStackController._addItem(item, count);
+        return this._itemStackController.addItem(item.id as ItemID, count);
     }
 
     moveTo(itemStorage: ItemStorageInterface): void {

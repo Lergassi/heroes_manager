@@ -12,6 +12,9 @@ import ItemStorageComponent from '../Components/ItemStorages/ItemStorageComponen
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 
+/**
+ * @deprecated
+ */
 export default class EquipCommand extends Command {
     get name(): string {
         return CommandID.equip_from_item_storage_slot;
@@ -47,8 +50,8 @@ export default class EquipCommand extends Command {
         let equipSlotComponent = <EquipSlotInterface>hero.get(equipSlotID);
         assertNotNil(equipSlotComponent);
 
-        if (equipSlotComponent.equip(itemStorageSlotComponent.itemStack.item)) {
-            itemStorageSlotComponent.destroyItemStack();
-        }
+        // if (equipSlotComponent.equip(itemStorageSlotComponent.itemStack.item.id)) {
+        //     itemStorageSlotComponent.destroyItemStack();
+        // }
     }
 }

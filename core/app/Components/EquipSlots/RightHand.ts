@@ -1,6 +1,6 @@
+import {ItemID} from '../../../types/enums/ItemID.js';
 import EquipSlotInterface, {
     EquipSlotInterfaceRender,
-    EquipSlotInterfaceRenderCallback
 } from '../../Interfaces/EquipSlotInterface.js';
 import Item from '../../Entities/Item.js';
 import LeftHand from './LeftHand.js';
@@ -22,8 +22,8 @@ export default class RightHand implements EquipSlotInterface {
         this._equipSlot = new DefaultEquipSlot(EquipSlotID.RightHand, averageItemLevel, itemCharacterAttributeCollector);
     }
 
-    equip(item: Item): boolean {
-        return this._equipSlot.equip(item);
+    equip(itemID: ItemID): boolean {
+        return this._equipSlot.equip(itemID);
     }
 
     clear(): void {
@@ -32,8 +32,8 @@ export default class RightHand implements EquipSlotInterface {
         this._equipSlot.clear();
     }
 
-    moveTo(itemStorage: ItemStorageInterface): boolean {
-        if (!this._equipSlot.moveTo(itemStorage)) return false;
+    removeEquipTo(itemStorage: ItemStorageInterface): boolean {
+        if (!this._equipSlot.removeEquipTo(itemStorage)) return false;
 
         this.clear();
 

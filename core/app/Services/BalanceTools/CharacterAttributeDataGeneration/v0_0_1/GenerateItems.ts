@@ -2,6 +2,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
 import {sprintf} from 'sprintf-js';
+import {TSDB_Item} from '../../../../../data/ts/items.js';
 import HeroClass from '../../../../Entities/HeroClass.js';
 import EntityManagerInterface from '../../../../Interfaces/EntityManagerInterface.js';
 import item_character_attribute_generation_functions
@@ -16,7 +17,6 @@ import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
 import {QualityID} from '../../../../../types/enums/QualityID.js';
 import {ServiceID} from '../../../../../types/enums/ServiceID.js';
-import {TSDB_Item} from '../../../../../types/TSDB_Item.js';
 import debug from 'debug';
 
 /**
@@ -45,109 +45,109 @@ export default class GenerateItems {
     }
 
     private _generate(heroClassID: HeroClassID, items: any[]) {
-        let constValues = {
-            slotsCount: 13,
-            firstLevelUpdate: _.random(2, 3),
-            maxLevel: 100,
-            updateRange: _.random(14, 17),
-            qualityID: QualityID.Uncommon,
-        };
-
-        let preparePositions = {
-            1: {
-                [ItemCategoryID.OneHandedSwords]: [constValues.firstLevelUpdate + 1],
-                [ItemCategoryID.Shields]: [constValues.firstLevelUpdate + 2],
-                [ItemCategoryID.Amulets]: [constValues.updateRange + constValues.firstLevelUpdate - 2],
-                [ItemCategoryID.Rings]: [constValues.firstLevelUpdate + 5, constValues.updateRange + constValues.firstLevelUpdate],
-            },
-        };
-
-        let positions = {};
-        for (let i = 1; i <= constValues.maxLevel; i++) {
-            positions[i] = [];
-        }
-
-        for (const sampleNumber in preparePositions) {
-            for (const itemCategoryID in preparePositions[sampleNumber]) {
-                for (let i = 0; i < preparePositions[sampleNumber][itemCategoryID].length; i++) {
-                    positions[preparePositions[sampleNumber][itemCategoryID][i]].push(itemCategoryID);
-                }
-            }
-        }
-
-        let calcValues: any = {};
-        let itemCategories = this._createPrepareItemCategorySet(1);
-        calcValues.currentSample = 1;
-        calcValues.rangeStepError = 1;
-        calcValues.rangeStep = _.round(constValues.updateRange / itemCategories.length);
-        calcValues.currentLevelUpdate = constValues.firstLevelUpdate + _.random(0, calcValues.rangeStep + calcValues.rangeStepError);
-        calcValues.currentMaxLevelRange = _.round(calcValues.currentLevelUpdate + constValues.updateRange * calcValues.currentSample);
-        while (calcValues.currentLevelUpdate <= constValues.maxLevel) {
-            for (let i = 0; i < itemCategories.length; i++) {
-                positions[calcValues.currentLevelUpdate].push(itemCategories[i]);
-                calcValues.currentLevelUpdate += calcValues.rangeStep +_.random(0, calcValues.rangeStepError);
-
-                if (calcValues.currentLevelUpdate >= constValues.maxLevel) break;
-            }
-
-            calcValues.currentSample++;
-            itemCategories = this._createPrepareItemCategorySet(calcValues.currentSample);
-        }
-
-        let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
-        for (const level in positions) {
-            for (let itemCategoryIndex = 0; itemCategoryIndex < positions[level].length; itemCategoryIndex++) {
-                let itemCategoryID = positions[level][itemCategoryIndex];
-                let itemMetadata = this._getMetadata(itemCategoryID);
-                let armorMaterialID = this._getMetadata(itemCategoryID).requireArmorMaterial ? this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<HeroClass>(EntityID.HeroClass, heroClassID).availableArmorMaterials[0].id : undefined;
-
-                // let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
-                let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), 0);
-                let itemAttributes: TSDB_Item = {
-                    ID: '',
-                    ItemCategoryID: itemCategoryID,
-                    ArmorMaterialID: '',
-                    ItemLevel: itemLevel,
-                    QualityID: constValues.qualityID,
-                    StackSize: 1,
-                    Strength: 0,
-                    Agility: 0,
-                    Intelligence: 0,
-                    HealthPoints: 0,
-                    Equipable: true,
-                    TwoHandWeapon: false,
-                    AttackPower: 0,
-                };
-
-                if (this._getMetadata(itemCategoryID).requireArmorMaterial) itemAttributes.ArmorMaterialID = armorMaterialID;
-                if (this._getMetadata(itemCategoryID).twoHandWeapon) itemAttributes.TwoHandWeapon = true;
-
-                let IDPattern = '%s_%s_%s';
-                let IDPatternParams = {
-                    armorMaterialID: this._getMetadata(itemCategoryID).requireArmorMaterial ? armorMaterialID : undefined,
-                    qualityID: constValues.qualityID,
-                    name: itemMetadata.name,
-                    itemLevel: itemLevel,
-                };
-
-                itemAttributes.ID = sprintf(IDPattern, ..._.filter(IDPatternParams, (value, key) => {
-                    return value !== undefined;
-                }));
-
-                if (this._IDs.hasOwnProperty(itemAttributes.ID)) {
-                    this._IDs[itemAttributes.ID] = ++this._IDs[itemAttributes.ID];
-                } else {
-                    this._IDs[itemAttributes.ID] = 1;
-                }
-                itemAttributes.ID += sprintf('_%s', _.padStart(String(this._IDs[itemAttributes.ID]), 2, '0'));
-
-                itemAttributes[CharacterAttributeID.MaxHealthPoints] = itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategoryID);
-                itemAttributes[CharacterAttributeID.Strength] = itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, itemCategoryID);
-                // console.log(itemAttributes);
-
-                items.push(itemAttributes);
-            }//end for positions[level]
-        }//end for positions
+        // let constValues = {
+        //     slotsCount: 13,
+        //     firstLevelUpdate: _.random(2, 3),
+        //     maxLevel: 100,
+        //     updateRange: _.random(14, 17),
+        //     qualityID: QualityID.Uncommon,
+        // };
+        //
+        // let preparePositions = {
+        //     1: {
+        //         [ItemCategoryID.OneHandedSwords]: [constValues.firstLevelUpdate + 1],
+        //         [ItemCategoryID.Shields]: [constValues.firstLevelUpdate + 2],
+        //         [ItemCategoryID.Amulets]: [constValues.updateRange + constValues.firstLevelUpdate - 2],
+        //         [ItemCategoryID.Rings]: [constValues.firstLevelUpdate + 5, constValues.updateRange + constValues.firstLevelUpdate],
+        //     },
+        // };
+        //
+        // let positions = {};
+        // for (let i = 1; i <= constValues.maxLevel; i++) {
+        //     positions[i] = [];
+        // }
+        //
+        // for (const sampleNumber in preparePositions) {
+        //     for (const itemCategoryID in preparePositions[sampleNumber]) {
+        //         for (let i = 0; i < preparePositions[sampleNumber][itemCategoryID].length; i++) {
+        //             positions[preparePositions[sampleNumber][itemCategoryID][i]].push(itemCategoryID);
+        //         }
+        //     }
+        // }
+        //
+        // let calcValues: any = {};
+        // let itemCategories = this._createPrepareItemCategorySet(1);
+        // calcValues.currentSample = 1;
+        // calcValues.rangeStepError = 1;
+        // calcValues.rangeStep = _.round(constValues.updateRange / itemCategories.length);
+        // calcValues.currentLevelUpdate = constValues.firstLevelUpdate + _.random(0, calcValues.rangeStep + calcValues.rangeStepError);
+        // calcValues.currentMaxLevelRange = _.round(calcValues.currentLevelUpdate + constValues.updateRange * calcValues.currentSample);
+        // while (calcValues.currentLevelUpdate <= constValues.maxLevel) {
+        //     for (let i = 0; i < itemCategories.length; i++) {
+        //         positions[calcValues.currentLevelUpdate].push(itemCategories[i]);
+        //         calcValues.currentLevelUpdate += calcValues.rangeStep +_.random(0, calcValues.rangeStepError);
+        //
+        //         if (calcValues.currentLevelUpdate >= constValues.maxLevel) break;
+        //     }
+        //
+        //     calcValues.currentSample++;
+        //     itemCategories = this._createPrepareItemCategorySet(calcValues.currentSample);
+        // }
+        //
+        // let itemCharacterAttributeGenerator = new ItemCharacterAttributeGenerator();
+        // for (const level in positions) {
+        //     for (let itemCategoryIndex = 0; itemCategoryIndex < positions[level].length; itemCategoryIndex++) {
+        //         let itemCategoryID = positions[level][itemCategoryIndex];
+        //         let itemMetadata = this._getMetadata(itemCategoryID);
+        //         let armorMaterialID = this._getMetadata(itemCategoryID).requireArmorMaterial ? this._container.get<EntityManagerInterface>(ServiceID.EntityManager).get<HeroClass>(EntityID.HeroClass, heroClassID).availableArmorMaterials[0].id : undefined;
+        //
+        //         // let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
+        //         let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), 0);
+        //         let itemAttributes: TSDB_Item = {
+        //             ID: '',
+        //             ItemCategoryID: itemCategoryID,
+        //             ArmorMaterialID: '',
+        //             ItemLevel: itemLevel,
+        //             QualityID: constValues.qualityID,
+        //             StackSize: 1,
+        //             Strength: 0,
+        //             Agility: 0,
+        //             Intelligence: 0,
+        //             HealthPoints: 0,
+        //             Equipable: true,
+        //             TwoHandWeapon: false,
+        //             AttackPower: 0,
+        //         };
+        //
+        //         if (this._getMetadata(itemCategoryID).requireArmorMaterial) itemAttributes.ArmorMaterialID = armorMaterialID;
+        //         if (this._getMetadata(itemCategoryID).twoHandWeapon) itemAttributes.TwoHandWeapon = true;
+        //
+        //         let IDPattern = '%s_%s_%s';
+        //         let IDPatternParams = {
+        //             armorMaterialID: this._getMetadata(itemCategoryID).requireArmorMaterial ? armorMaterialID : undefined,
+        //             qualityID: constValues.qualityID,
+        //             name: itemMetadata.name,
+        //             itemLevel: itemLevel,
+        //         };
+        //
+        //         itemAttributes.ID = sprintf(IDPattern, ..._.filter(IDPatternParams, (value, key) => {
+        //             return value !== undefined;
+        //         }));
+        //
+        //         if (this._IDs.hasOwnProperty(itemAttributes.ID)) {
+        //             this._IDs[itemAttributes.ID] = ++this._IDs[itemAttributes.ID];
+        //         } else {
+        //             this._IDs[itemAttributes.ID] = 1;
+        //         }
+        //         itemAttributes.ID += sprintf('_%s', _.padStart(String(this._IDs[itemAttributes.ID]), 2, '0'));
+        //
+        //         itemAttributes[CharacterAttributeID.MaxHealthPoints] = itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategoryID);
+        //         itemAttributes[CharacterAttributeID.Strength] = itemCharacterAttributeGenerator.characterAttribute(itemLevel, heroClassID, itemCategoryID);
+        //         // console.log(itemAttributes);
+        //
+        //         items.push(itemAttributes);
+        //     }//end for positions[level]
+        // }//end for positions
     }
 
     private _createPrepareItemCategorySet(sampleNumber: number) {

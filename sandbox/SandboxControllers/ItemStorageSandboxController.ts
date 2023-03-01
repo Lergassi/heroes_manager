@@ -1,6 +1,4 @@
-import EndlessItemStorage from '../../core/app/Components/EndlessItemStorage.js';
-import InfinityItemStackController from '../../core/app/Components/ItemStorages/InfinityItemStackController.js';
-import InfinityItemStorage from '../../core/app/Components/ItemStorages/InfinityItemStorage.js';
+import {log} from 'debug';
 import ItemStackController from '../../core/app/Components/ItemStorages/ItemStackController.js';
 import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
@@ -37,9 +35,9 @@ export default class ItemStorageSandboxController extends AbstractSandboxControl
 
         let itemID = ItemID.Wood;
         // let itemID = ItemID.IronOre;
-        let itemStackController = new ItemStackController(this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
-        itemStackController._addItem(itemDatabase.get(itemID), 5);
-        itemStackController._addItem(itemDatabase.get(itemID), 5);
+        let itemStackController = new ItemStackController();
+        itemStackController.addItem(itemID, 5);
+        itemStackController.addItem(itemID, 5);
         // console.log(itemStackController);
         // console.log(itemStackController.containItem(itemID, 1) === true);
         // console.log(itemStackController.containItem(itemID, 9) === true);
@@ -76,8 +74,8 @@ export default class ItemStorageSandboxController extends AbstractSandboxControl
     }
 
     private _devEndlessBag() {
-        let itemStorage = new EndlessItemStorage();
-        this._testEndlessItemStorage(itemStorage);
+        // let itemStorage = new EndlessItemStorage();
+        // this._testEndlessItemStorage(itemStorage);
     }
 
     private _testDefaultStubItemStorage(itemStorage: ItemStorageInterface) {
@@ -92,60 +90,36 @@ export default class ItemStorageSandboxController extends AbstractSandboxControl
         // console.log(itemStorage.containItem(ItemID.Wood, 1) === false);
     }
 
-    private _testEndlessItemStorage(itemStorage: EndlessItemStorage) {
-        let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
-
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 0) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 1) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 11111111) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 1111111111111111) === 0);
-        // console.log(itemStorage.containItem(ItemID.Wood, 0) === false);
-        // console.log(itemStorage.containItem(ItemID.Wood, 1) === true);
-        // console.log(itemStorage.containItem(ItemID.Wood, 11111111111111111111111111111) === true);
-    }
-
-    private _devInfinityItemStackController() {
-        let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
-
-        let infinityItemStackController = new InfinityItemStackController();
-        console.log(infinityItemStackController.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(infinityItemStackController.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(infinityItemStackController.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(infinityItemStackController.addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(infinityItemStackController);
-
-        // console.log(infinityItemStackController.containItem(ItemID.Wood, -1) === false);
-        // console.log(infinityItemStackController.containItem(ItemID.Wood, 0) === false);
-        // console.log(infinityItemStackController.containItem(ItemID.Wood, 1) === true);
-        // console.log(infinityItemStackController.containItem(ItemID.Wood, 120 * 4) === true);
-        // console.log(infinityItemStackController.containItem(ItemID.Wood, 120 * 4 + 1) === false);
-
-        console.log(infinityItemStackController.removeItem(ItemID.Wood, 120) === 120);
-        console.log(infinityItemStackController.removeItem(ItemID.Wood, 120) === 120);
-        console.log(infinityItemStackController.removeItem(ItemID.Wood, 120) === 120);
-        console.log(infinityItemStackController.removeItem(ItemID.Wood, 120) === 120);
-        console.log(infinityItemStackController.removeItem(ItemID.Wood, 120) === 0);
-        console.log(infinityItemStackController);
-    }
+    // private _testEndlessItemStorage(itemStorage: EndlessItemStorage) {
+    //     let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
+    //
+    //     console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 0) === 0);
+    //     console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 1) === 0);
+    //     console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 11111111) === 0);
+    //     console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 1111111111111111) === 0);
+    //     // console.log(itemStorage.containItem(ItemID.Wood, 0) === false);
+    //     // console.log(itemStorage.containItem(ItemID.Wood, 1) === true);
+    //     // console.log(itemStorage.containItem(ItemID.Wood, 11111111111111111111111111111) === true);
+    // }
 
     private _devInfinityBag() {
-        let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
-        let entityManager = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
-
-        let itemStorage = new InfinityItemStorage(entityManager);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
-        console.log(itemStorage);
+        // let itemDatabase = this.container.get<ItemDatabase>(ServiceID.ItemDatabase);
+        // let entityManager = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
+        //
+        // let itemStorage = new InfinityItemStorage(entityManager);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.OneHandedSword01), 120) === 0);
+        // console.log(itemStorage);
 
         // console.log(itemStorage.containItem(ItemID.Wood, -1) === false);
         // console.log(itemStorage.containItem(ItemID.Wood, 0) === false);
@@ -184,7 +158,7 @@ export default class ItemStorageSandboxController extends AbstractSandboxControl
     private _devCanAddItem() {
         let em = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
 
-        let itemStackController = new ItemStackController(em);
+        let itemStackController = new ItemStackController();
         // console.log(itemStackController.canAddItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 1));
         // console.log(itemStackController.canAddItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
@@ -221,45 +195,78 @@ export default class ItemStorageSandboxController extends AbstractSandboxControl
     }
 
     private _testItemStackController() {
-        let itemStackController = new ItemStackController(this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
-        console.log(itemStackController.canAddItem(ItemID.Wood, 0) === 0);
-        console.log(itemStackController.canAddItem(ItemID.Wood, 10) === 10);
-        console.log(itemStackController.canAddItem(ItemID.Wood, 50) === 50);
-        console.log(itemStackController.canAddItem(ItemID.Wood, 51) === 50);
-        console.log(itemStackController.canAddItem(ItemID.Wood, 123123123) === 50);
-        console.log(itemStackController.canAddItem(ItemID.OneHandedSword01, 1) === 1);
-        console.log(itemStackController.canAddItem(ItemID.OneHandedSword01, 2) === 1);
-        console.log(itemStackController.canAddItem(ItemID.OneHandedSword01, 10) === 1);
+        let validData_for_canAddItem = [
+            // [ItemID.Wood, null, 0],
+            // [ItemID.Wood, undefined, 0],
+            [ItemID.Wood, -1000000, 0],
+            [ItemID.Wood, -3, 0],
+            [ItemID.Wood, -2, 0],
+            [ItemID.Wood, -1, 0],
+            [ItemID.Wood, 0, 0],
+            [ItemID.Wood, 1, 1],
+            [ItemID.Wood, 2, 2],
+            [ItemID.Wood, 3, 3],
+            [ItemID.Wood, 10, 10],
+            [ItemID.Wood, 48, 48],
+            [ItemID.Wood, 49, 49],
+            [ItemID.Wood, 50, 50],
+            [ItemID.Wood, 51, 50],
+            [ItemID.Wood, 52, 50],
+            [ItemID.Wood, 1000000, 50],
+            [ItemID.OneHandedSword01, -1000000, 0],
+            [ItemID.OneHandedSword01, -2, 0],
+            [ItemID.OneHandedSword01, -1, 0],
+            [ItemID.OneHandedSword01, 0, 0],
+            [ItemID.OneHandedSword01, 1, 1],
+            [ItemID.OneHandedSword01, 2, 1],
+            [ItemID.OneHandedSword01, 10, 1],
+            [ItemID.OneHandedSword01, 48, 1],
+            [ItemID.OneHandedSword01, 49, 1],
+            [ItemID.OneHandedSword01, 50, 1],
+            [ItemID.OneHandedSword01, 51, 1],
+            [ItemID.OneHandedSword01, 52, 1],
+            [ItemID.OneHandedSword01, 1000000, 1],
+        ];
+        _.forEach(validData_for_canAddItem, (value) => {
+            let actual = (new ItemStackController()).canAddItem(value[0] as ItemID, value[1] as number);
+            if (actual !== value[2]) console.log('F', actual, value);
+        });
+        _.forEach(validData_for_canAddItem, (value) => {
+            let actual = (new ItemStackController()).addItem(value[0] as ItemID, value[1] as number);
+            if (actual !== value[2]) console.log('F', actual, value);
+        });
 
-        // itemStackController.addItem(ItemID.Wood, 12);
-        console.log(itemStackController.isFree());
-
-        let itemStorage = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(5);
-        console.log(itemStorage.canAddItem(ItemID.Wood, -2131321) === 0);
-        console.log(itemStorage.canAddItem(ItemID.Wood, -2) === 0);
-        console.log(itemStorage.canAddItem(ItemID.Wood, -1) === 0);
-        console.log(itemStorage.canAddItem(ItemID.Wood, 0) === 0);
-        console.log(itemStorage.canAddItem(ItemID.Wood, 1) === 1);
-        console.log(itemStorage.canAddItem(ItemID.Wood, 48) === 48);
-        console.log(itemStorage.canAddItem(ItemID.Wood, 49) === 49);
-        console.log(itemStorage.canAddItem(ItemID.Wood, 50) === 50);
-        console.log(itemStorage.canAddItem(ItemID.Wood, 250) === 250);
-        console.log(itemStorage.canAddItem(ItemID.Wood, 251) === 250);
-        console.log(itemStorage.canAddItem(ItemID.Wood, 121124141) === 250);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -1231231) === 0);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -2) === 0);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -1) === 0);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 0) === 0);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 1) === 1);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 2) === 2);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 3) === 3);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 4) === 4);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 5) === 5);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 6) === 5);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 7) === 5);
-        console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 101313213) === 5);
+        _.forEach(validData_for_canAddItem, (value) => {
+            let actual = (this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(1)).addItem(value[0] as ItemID, value[1] as number);
+            if (actual !== value[2]) console.log('F', actual, value);
+        });
+        console.log('test end');
+        // let itemStorage = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(5);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, -2131321) === 0);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, -2) === 0);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, -1) === 0);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, 0) === 0);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, 1) === 1);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, 48) === 48);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, 49) === 49);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, 50) === 50);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, 250) === 250);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, 251) === 250);
+        // console.log(itemStorage.canAddItem(ItemID.Wood, 121124141) === 250);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -1231231) === 0);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -2) === 0);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, -1) === 0);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 0) === 0);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 1) === 1);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 2) === 2);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 3) === 3);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 4) === 4);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 5) === 5);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 6) === 5);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 7) === 5);
+        // console.log(itemStorage.canAddItem(ItemID.OneHandedSword01, 101313213) === 5);
 
         // itemStorage.addItem(ItemID.Wood, 12);
-        console.log(itemStorage.isEmpty());
+        // console.log(itemStorage.isEmpty());
     }
 }

@@ -7,11 +7,11 @@ import ItemAttributeGenerator
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import {database} from '../../core/data/ts/database.js';
+import {TSDB_ItemDB} from '../../core/data/ts/items.js';
 import {TSDB_Recipe, TSDB_RecipeDB} from '../../core/data/ts/recipes.js';
 import EntityManager from '../../core/source/EntityManager.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import {TSDB_Item, TSDB_ItemDB} from '../../core/types/TSDB_Item.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 
 export default class RecipeSandboxController extends AbstractSandboxController {
@@ -41,9 +41,9 @@ export default class RecipeSandboxController extends AbstractSandboxController {
             this.container.get<ItemAttributeGenerator>(ServiceID.ItemAttributeGenerator),
             this.container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
         );
-        generateItems.run(items, recipes);
-        console.log(items);
-        console.log(recipes);
+        // generateItems.run(items, recipes);
+        // console.log(items);
+        // console.log(recipes);
     }
 
     private _devFileDB() {

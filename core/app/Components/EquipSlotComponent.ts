@@ -63,7 +63,7 @@ export default class EquipSlotComponent implements ItemStackPlaceInterface {
     placeItemStack(itemStack: ItemStack): void {
         this.canPlaceItem(itemStack.item);
         this._itemStack = itemStack;
-        this._itemAttributeCollectionComponent.addItem(itemStack.item);
+        // this._itemAttributeCollectionComponent.addItem(itemStack.item);
     }
 
     //todo: Сделать один интерфейс.
@@ -76,12 +76,12 @@ export default class EquipSlotComponent implements ItemStackPlaceInterface {
 
         this.canPlaceItem(options.item);
         this._itemStack = options.itemStackFactory.create(options.item, options.count);
-        this._itemAttributeCollectionComponent.addItem(options.item);
+        // this._itemAttributeCollectionComponent.addItem(options.item);
     }
 
     clear(): void { //todo: Переименовать в destroy.
         if (this.isBusy()) {
-            this._itemAttributeCollectionComponent.removeItem(this._itemStack.item);
+            // this._itemAttributeCollectionComponent.removeItem(this._itemStack.item);
             this._itemStack = null;
             EventSystem.event(EquipSlotComponentEventCode.DestroyItemStack, this);
         }

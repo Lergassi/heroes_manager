@@ -66,7 +66,7 @@ export default class ShopSandboxController extends AbstractSandboxController {
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
-        itemStorage._addItem(em.get<Item>(EntityID.Item, ItemID.OneHandedSword01), 10);
+        // itemStorage._addItem(em.get<Item>(EntityID.Item, ItemID.OneHandedSword01), 10);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.OneHandedSword01), 10);
         console.log(itemStorage);
 

@@ -1304,17 +1304,17 @@ export default class _SandboxController {
         );
         // console.log(itemStorage);
 
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 40));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
-        console.log(itemStorage);
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 12));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 40));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        // console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 100));
+        // console.log(itemStorage);
     }
 }

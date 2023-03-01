@@ -421,6 +421,9 @@
     margin-left: 220px;
     /*padding-left: 15px;*/
     padding: 15px;
+
+    /*todo: Для консоли, которая пока внизу, чтобы не мешала контенту. */
+    margin-bottom: 100px;
 }
 
 .container {

@@ -9,11 +9,11 @@ import GenerateItemsByPattern
 import ItemAttributeGenerator
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';
+import {TSDB_ItemDB} from '../../core/data/ts/items.js';
 import {TSDB_Recipe, TSDB_RecipeDB} from '../../core/data/ts/recipes.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import {TSDB_Item, TSDB_ItemDB} from '../../core/types/TSDB_Item.js';
 import _ from 'lodash';
 
 export const generate_items_by_patterns = (container: ContainerInterface) => {

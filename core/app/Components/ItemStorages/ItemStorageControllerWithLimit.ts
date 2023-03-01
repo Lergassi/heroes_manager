@@ -51,8 +51,8 @@ export default class ItemStorageControllerWithLimit {
         return this._itemStorages.length
     }
 
-    addItem(item: Item, count: unsigned): unsigned {
-        return this._itemStorageController._addItem(item, count);
+    addItem(itemID: ItemID, count: number): number {
+        return this._itemStorageController.addItem(itemID, count);
     }
 
     moveTo(itemStorage: ItemStorageInterface): void {

@@ -1,16 +1,16 @@
 import _ from 'lodash';
 import debug from 'debug';
+import {TSDB_Item} from '../../data/ts/items.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {QualityID} from '../../types/enums/QualityID.js';
-import {TSDB_Item} from '../../types/TSDB_Item.js';
 
 export default class TSDB_ItemBuilder {
-    ID: ItemID | string;
-    ItemCategoryID: ItemCategoryID | string;
-    ArmorMaterialID: ArmorMaterialID | string;
-    QualityID: QualityID | string;
+    ID: ItemID;
+    ItemCategoryID: ItemCategoryID;
+    ArmorMaterialID: ArmorMaterialID;
+    QualityID: QualityID;
     StackSize: number;
     ItemLevel: number;
     Strength: number;
@@ -24,13 +24,13 @@ export default class TSDB_ItemBuilder {
     TwoHandWeapon: boolean;
 
     constructor(values: {
-        ID: ItemID | string,
+        ID: ItemID,
         itemCategoryID: ItemCategoryID,
     }) {
         this.ID = values.ID;
         this.ItemCategoryID = values.itemCategoryID;
 
-        this.ArmorMaterialID = '';
+        this.ArmorMaterialID = null;
         this.QualityID = QualityID.Common;
         this.StackSize = 1;
         this.ItemLevel = 1;

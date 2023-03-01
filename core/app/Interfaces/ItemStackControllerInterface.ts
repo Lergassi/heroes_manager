@@ -1,7 +1,8 @@
+import {ItemID} from '../../types/enums/ItemID.js';
 import ItemStorageInterface from './ItemStorageInterface.js';
 
 export interface ItemStackControllerInterfaceRender {
-    updateItem(itemName: string, count: number): void;
+    updateItem(itemID: ItemID, count: number): void;
     // removeItem(): void;
 }
 

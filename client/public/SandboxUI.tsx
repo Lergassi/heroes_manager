@@ -137,11 +137,11 @@ export default class SandboxUI {
         let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(size);
 
         //todo: В заготовки.
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.WoodBoards), 12);
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 5);
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.PlateHelmet01), 5);
+        // itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
+        // itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.WoodBoards), 12);
+        // itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
+        // itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 5);
+        // itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.PlateHelmet01), 5);
 
         // itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorageComponent).show();
         // console.log(itemStorage);
@@ -294,15 +294,15 @@ export default class SandboxUI {
         let itemStorageGO = itemStorageFactory.createGameObject(20);
 
         let itemStorage = itemStorageGO.get<ItemStorageInterface>(ComponentID.ItemStorage)
-        itemStorage._addItem(ItemID.Wood, 12);
-        itemStorage._addItem(ItemID.IronOre, 12);
-        itemStorage._addItem(ItemID.IronOre, 12);
-        itemStorage._addItem(ItemID.Wood, 12);
-        itemStorage._addItem(ItemID.Wood, 12);
-        itemStorage._addItem(ItemID.OneHandedSword01, 5);
-        itemStorage._addItem(ItemID.Leather01, 12);
-        itemStorage._addItem(ItemID.Leather01, 12);
-        itemStorage._addItem(ItemID.Leather01, 12);
+        // itemStorage._addItem(ItemID.Wood, 12);
+        // itemStorage._addItem(ItemID.IronOre, 12);
+        // itemStorage._addItem(ItemID.IronOre, 12);
+        // itemStorage._addItem(ItemID.Wood, 12);
+        // itemStorage._addItem(ItemID.Wood, 12);
+        // itemStorage._addItem(ItemID.OneHandedSword01, 5);
+        // itemStorage._addItem(ItemID.Leather01, 12);
+        // itemStorage._addItem(ItemID.Leather01, 12);
+        // itemStorage._addItem(ItemID.Leather01, 12);
 
         this._root.render(
             <div>
@@ -324,13 +324,13 @@ export default class SandboxUI {
         itemStorageController.addItemStorage(this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20));
 
         let count = 40;
-        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
-        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
-        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
-        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), count);
-        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
-        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), count);
-        itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        // itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        // itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        // itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        // itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), count);
+        // itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
+        // itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), count);
+        // itemStorageController._addItem(this._container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), count);
 
         window['app']['sandbox']['itemStorageController'] = itemStorageController;
 

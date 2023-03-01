@@ -32,65 +32,82 @@ export default class ItemStorage implements ItemStorageInterface {
         this._size = size;
         this._itemStackControllers = [];
         for (let i = 0; i < this._size; i++) {
-            this._itemStackControllers.push(new ItemStackController(entityManager));
+            this._itemStackControllers.push(new ItemStackController());
         }
     }
 
-    /**
-     * @deprecated
-     * @param item
-     * @param count
-     */
-    _addItem(item: Item | ItemID, count: unsigned): unsigned {
-        item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
-        assertNotNil(item);
+    // /**
+    //  * @deprecated
+    //  * @param item
+    //  * @param count
+    //  */
+    // _addItem(item: Item | ItemID, count: unsigned): unsigned {
+    //     item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
+    //     assertNotNil(item);
+    //
+    //     // assertIsGreaterThanOrEqual(count, 0);
+    //     if (count <= 0) return 0;   //А почему было удалено?
+    //
+    //     let originCount = count;
+    //     for (let i = 0; i < this._itemStackControllers.length; i++) {
+    //         count = this._itemStackControllers[i]._addItem(item, count);
+    //         if (count <= 0) break;
+    //     }
+    //
+    //     if (originCount !== count) {
+    //         debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
+    //     }
+    //
+    //     //todo: Можно ввести уровень сообщений.
+    //     // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
+    //     // this._updateHandler?.(this._itemStackControllers);
+    //     // for (let i = 0; i < this._handlers.length; i++) {
+    //     //     this._handlers[i].updateSlotHandler();
+    //     // }
+    //
+    //     return count;
+    // }
 
-        // assertIsGreaterThanOrEqual(count, 0);
-        if (count <= 0) return 0;   //А почему было удалено?
+    // /**
+    //  *
+    //  * @param item
+    //  * @param count
+    //  * @return Кол-во добавленных предметов.
+    //  */
+    // _addItem2(item: Item | ItemID, count: number): number {
+    //     item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
+    //     assertNotNil(item);
+    //
+    //     if (count <= 0) return count;
+    //
+    //     let originCount = count;
+    //     for (let i = 0; i < this._itemStackControllers.length; i++) {
+    //         count -= this._itemStackControllers[i]._addItem2(item, count);
+    //         if (count <= 0) break;
+    //     }
+    //
+    //     if (originCount !== count) {
+    //         debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
+    //     }
+    //
+    //     return originCount - count;
+    // }
+
+    addItem(itemID: ItemID, count: number): number {
+        if (count <= 0) return 0;
 
         let originCount = count;
         for (let i = 0; i < this._itemStackControllers.length; i++) {
-            count = this._itemStackControllers[i]._addItem(item, count);
+            count -= this._itemStackControllers[i].addItem(itemID, count);
             if (count <= 0) break;
         }
+        let addedItemsCount = originCount - count;
 
         if (originCount !== count) {
-            debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
+            debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', itemID, addedItemsCount, originCount));
         }
 
-        //todo: Можно ввести уровень сообщений.
-        // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
-        // this._updateHandler?.(this._itemStackControllers);
-        // for (let i = 0; i < this._handlers.length; i++) {
-        //     this._handlers[i].updateSlotHandler();
-        // }
-
-        return count;
-    }
-
-    /**
-     *
-     * @param item
-     * @param count
-     * @return Кол-во добавленных предметов.
-     */
-    addItem(item: Item | ItemID, count: number): number {
-        item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
-        assertNotNil(item);
-
-        if (count <= 0) return count;
-
-        let originCount = count;
-        for (let i = 0; i < this._itemStackControllers.length; i++) {
-            count -= this._itemStackControllers[i].addItem(item, count);
-            if (count <= 0) break;
-        }
-
-        if (originCount !== count) {
-            debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
-        }
-
-        return originCount - count;
+        return addedItemsCount;
     }
 
     moveAllItemsTo(target: ItemStorageInterface): void {
@@ -172,10 +189,10 @@ export default class ItemStorage implements ItemStorageInterface {
     //     return this._itemStackControllers[itemStorageSlotID].moveToEquipSlot(equipSlot);
     // }
 
-    moveToEquipSlotByEquipController(slotID: number, equipController: EquipController, equipSlotID: EquipSlotID): boolean {
-        assertNotNil(this._itemStackControllers[slotID], 'Слот не найден.');
+    moveToEquipSlotByEquipController(index: number, equipController: EquipController, equipSlotID: EquipSlotID): boolean {
+        assertNotNil(this._itemStackControllers[index], 'Слот не найден.');
 
-        return this._itemStackControllers[slotID].moveToEquipSlotByEquipController(equipSlotID, equipController);
+        return this._itemStackControllers[index].moveToEquipSlotByEquipController(equipSlotID, equipController);
     }
 
     renderByRequest(ui: ItemStorageInterfaceRender): void {

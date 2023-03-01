@@ -16,21 +16,7 @@ export interface ItemStorageInterfaceRender {
  * todo: Теперь это интерфейс для сумок. Всё что не сумки пока не обязательные методы до момента разделения.
  */
 export default interface ItemStorageInterface {
-    /**
-     * @deprecated Не использовать. Не удобный return.
-     * @param item
-     * @param count
-     * @return Остаток. Сколько предметов НЕ добавлено. 0 = добавлены все предметы.
-     */
-    _addItem(item: Item | ItemID, count: unsigned): unsigned;
-
-    /**
-     *
-     * @param item
-     * @param count
-     * @return Остаток. Сколько предметов НЕ добавлено. 0 = добавлены все предметы.
-     */
-    addItem(item: Item | ItemID, count: number): number;
+    addItem(itemID: ItemID, count: number): number;
     containItem(ID: ItemID): number;
     hasItem(itemID: ItemID, count): boolean;
     /**
@@ -41,7 +27,6 @@ export default interface ItemStorageInterface {
      */
     removeItem(ID: ItemID, count: number): number;
     moveAllItemsTo(itemStorage: ItemStorageInterface): void;
-
     /**
      *
      * @param itemID
@@ -49,10 +34,11 @@ export default interface ItemStorageInterface {
      * @return Остаток.
      */
     canAddItem(itemID: ItemID, count: number): number;
-    renderByRequest(ui: ItemStorageInterfaceRender): void;
     clear(index: number): void;
     clearAllItems(): void;
     isEmpty(): boolean;
+
+    renderByRequest(ui: ItemStorageInterfaceRender): void;
 
     debug(): void;
 }

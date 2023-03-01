@@ -66,28 +66,28 @@ export default class ItemStorageController implements ItemStorageInterface {
         return this._itemStorages.length;
     }
 
-    /**
-     *
-     * @param item
-     * @param count
-     * @return Остаток.
-     */
-    _addItem(item: Item | ItemID, count: unsigned): unsigned {
-        if (!this._itemStorages.length) {
-            debug(DebugNamespaceID.Throw)('Не найдено ни одного ItemStorage.');
-            return count;
-        }
+    // /**
+    //  *
+    //  * @param item
+    //  * @param count
+    //  * @return Остаток.
+    //  */
+    // _addItem(item: Item | ItemID, count: unsigned): unsigned {
+    //     if (!this._itemStorages.length) {
+    //         debug(DebugNamespaceID.Throw)('Не найдено ни одного ItemStorage.');
+    //         return count;
+    //     }
+    //
+    //     for (let i = 0; i < this._itemStorages.length; i++) {
+    //         count = this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage)?._addItem(item, count);
+    //         if (count <= 0) break;
+    //     }
+    //     // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
+    //
+    //     return count;
+    // }
 
-        for (let i = 0; i < this._itemStorages.length; i++) {
-            count = this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage)?._addItem(item, count);
-            if (count <= 0) break;
-        }
-        // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
-
-        return count;
-    }
-
-    addItem(item: Item | ItemID, count: number): number {
+    addItem(itemID: ItemID, count: number): number {
         if (!this._itemStorages.length) {
             debug(DebugNamespaceID.Throw)('Не найдено ни одного ItemStorage.');
             return 0;
@@ -95,12 +95,13 @@ export default class ItemStorageController implements ItemStorageInterface {
 
         let originCount = count;
         for (let i = 0; i < this._itemStorages.length; i++) {
-            count -= this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage)?.addItem(item, count);
+            count -= this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage)?.addItem(itemID, count);
             if (count <= 0) break;
         }
-        // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', item.name, originCount - count, originCount));
+        let addedItemsCount = originCount - count;
+        // debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', itemID, addedItemsCount, originCount));
 
-        return originCount - count;
+        return addedItemsCount;
     }
 
     moveAllItemsTo(itemStorage: ItemStorageInterface): void {
@@ -203,6 +204,7 @@ export default class ItemStorageController implements ItemStorageInterface {
         assertNotNil(itemStorage, sprintf('Сумка c ID: "%s" не найдена.', itemStorageID));
 
         return itemStorage.get<ItemStorage>(ComponentID.ItemStorage).moveToEquipSlotByEquipController(itemStorageSlotID, equipController, equipSlotID);
+        // return equipController.equipFrom(equipSlotID, );
     }
 
     debug(): void {

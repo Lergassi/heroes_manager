@@ -139,7 +139,9 @@ yargs(hideBin(process.argv))
     .command('generate_equip', '', (yargs) => {
         return yargs;
     }, (argv) => {
+
         throw AppError.legacy();
+
         //todo: Спросить для перезаписи или записывать в новый файл. Существующий файл не трогать.
         let items = [];
         let generateItems = new GenerateItems(container);

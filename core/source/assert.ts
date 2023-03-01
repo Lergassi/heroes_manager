@@ -1,3 +1,4 @@
+import {ItemID} from '../types/enums/ItemID.js';
 import AppError from './Errors/AppError.js';
 import AssertError from './Errors/AssertError.js';
 import _ from 'lodash';
@@ -99,4 +100,8 @@ export function assertIsInteger(value: number, message?: string) {
 
 // export function assertIsLength(value: string, message?: string) {
 //     assert(_.isInteger(value), 'Значение должно быть целым числом.');
+// }
+
+// export function assertItemNotFound(itemID: ItemID): void {
+//     assert(condition, 'Действие не доступно.');
 // }

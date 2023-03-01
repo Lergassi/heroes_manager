@@ -71,7 +71,7 @@ export default class Production implements ProductionRenderInterface {
         // }
 
         database.recipes.data.requireItems(itemID, (ID, count) => {
-            this._resourcesItemStorage.addItem(ID, itemStorage.removeItem(ID, count));
+            this._resourcesItemStorage.addItem(ID, itemStorage.removeItem(ID, count));  //todo: Может не хватить места, если использовать обычную сумку со слотами.
         });
 
         //Доп проверка.
@@ -85,7 +85,8 @@ export default class Production implements ProductionRenderInterface {
         }
 
         let resultCount = database.recipes.data.resultCount(itemID);
-        let flow = resultCount - itemStorage.addItem(itemID, resultCount);
+        let addedItemsCount = itemStorage.addItem(itemID, resultCount); //Предмет производиться в не зависимости от наличия места.
+        let flow = resultCount - addedItemsCount;
         this._resourcesItemStorage.clearAllItems();
         if (flow !== 0) {
             this._resultItemStorage.addItem(itemID, flow);

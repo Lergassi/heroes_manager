@@ -176,15 +176,15 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
 
             //Начальная экипировка.
             for (const equipSlotID in heroPatterns[i].equip) {
-                let item = this.container.get<EntityManagerInterface>(ServiceID.EntityManager).get<Item>(EntityID.Item, heroPatterns[i].equip[equipSlotID]);
-                if (!item) {
+                let itemID = heroPatterns[i].equip[equipSlotID] as ItemID;
+                if (!itemID) {
                     debug(DebugNamespaceID.Warning)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
                     continue;
                 }
 
                 hero
                     .get<EquipSlotInterface>(equipSlotID)
-                    ?.equip(item);
+                    ?.equip(itemID);
             }
         }
     }

@@ -1,6 +1,8 @@
 import {database} from '../../core/data/ts/database.js';
+import {items} from '../../core/data/ts/items.js';
 import {EnemyTypeID} from '../../core/types/enums/EnemyTypeID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
+import {ItemID} from '../../core/types/enums/ItemID.js';
 import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 
@@ -9,7 +11,8 @@ export default class TSDB_DatabaseSandboxController extends AbstractSandboxContr
         // this._getStarted();
         // this._devTestThis();
         // this._devHeroClasses();
-        this._devLocations();
+        // this._devLocations();
+        this._devItems();
     }
 
     private _getStarted() {
@@ -46,9 +49,19 @@ export default class TSDB_DatabaseSandboxController extends AbstractSandboxContr
     private _devLocations() {
         database.locations.resources.find(LocationTypeID.Forrest, (itemID, count) => {
             console.log(LocationTypeID.Forrest, itemID, count);
-        })
+        });
         database.locations.enemies.find(LocationTypeID.Forrest, (enemyTypeID, count) => {
             console.log(LocationTypeID.Forrest, enemyTypeID, count);
-        })
+        });
+    }
+
+    private _devItems() {
+        let itemID = ItemID.OneHandedSword01;
+        console.log(items);
+        console.log(items.hasItem(itemID));
+        console.log(items.itemLevel(itemID));
+        console.log(items.armorMaterial(itemID));
+        console.log(items.itemCategory(itemID));
+        console.log(items.qualityID(itemID));
     }
 }

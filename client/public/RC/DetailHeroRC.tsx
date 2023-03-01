@@ -321,7 +321,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
 
     clearEquipSlot(equipSlotID: EquipSlotID) {
         // this.state.hero.get<EquipController>(ComponentID.EquipController).clear(equipSlotID);
-        this.state.hero.get<EquipController>(ComponentID.EquipController).moveTo(equipSlotID, this.props.itemStorage);
+        this.state.hero.get<EquipController>(ComponentID.EquipController).removeEquip(equipSlotID, this.props.itemStorage);
     }
 
     render() {

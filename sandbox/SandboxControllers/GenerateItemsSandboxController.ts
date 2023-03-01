@@ -9,6 +9,7 @@ import balance from '../../core/app/Services/BalanceTools/CharacterAttributeData
 import ItemCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/ItemCharacterAttributeGenerator.js';
 import config from '../../core/config/config.js';
 import GenerateItems from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
+import {TSDB_Item} from '../../core/data/ts/items.js';
 import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
@@ -16,7 +17,6 @@ import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
 import {QualityID} from '../../core/types/enums/QualityID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import {TSDB_Item} from '../../core/types/TSDB_Item.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 import copy = Simulate.copy;
 
@@ -484,19 +484,34 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
                 // let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), config.item_level_step_by_hero_level);
                 let itemLevel = item_character_attribute_generation_functions.itemLevel(Number(level), 0);
                 let itemAttributes: TSDB_Item = {
-                    ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
-                    ItemCategoryID: positions[level][itemCategoryIndex],
-                    ArmorMaterialID: '',
-                    ItemLevel: itemLevel,
-                    QualityID: qualityID,
-                    StackSize: 1,
-                    Strength: 0,
-                    Agility: 0,
-                    Intelligence: 0,
-                    HealthPoints: 0,
-                    Equipable: true,
-                    TwoHandWeapon: false,
-                    AttackPower: 0,
+                    Agility         : 0,
+                    ArmorMaterialID : undefined,
+                    AttackPower     : 0,
+                    DefaultBuyPrice : 0,
+                    DefaultSellPrice: 0,
+                    Equipable       : false,
+                    HealthPoints    : 0,
+                    ID              : undefined,
+                    Intelligence    : 0,
+                    ItemCategoryID  : undefined,
+                    ItemLevel       : 0,
+                    QualityID       : undefined,
+                    StackSize       : 0,
+                    Strength        : 0,
+                    TwoHandWeapon   : false
+                    // ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
+                    // ItemCategoryID: positions[level][itemCategoryIndex],
+                    // ArmorMaterialID: '',
+                    // ItemLevel: itemLevel,
+                    // QualityID: qualityID,
+                    // StackSize: 1,
+                    // Strength: 0,
+                    // Agility: 0,
+                    // Intelligence: 0,
+                    // HealthPoints: 0,
+                    // Equipable: true,
+                    // TwoHandWeapon: false,
+                    // AttackPower: 0,
                 };
 
                 if (this._getMetadata(positions[level][itemCategoryIndex]).requireArmorMaterial) itemAttributes.ArmorMaterialID = armorMaterialID;

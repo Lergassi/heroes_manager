@@ -57,6 +57,9 @@ export interface ItemOptions {
 }
 
 //todo: Идеи по private/public.
+/**
+ * @deprecated Entity больше (временно?) не актуальны. Использовать TSDB.
+ */
 export default class Item {                             //private or public? Фильтр и поиск не учитывается.
     private readonly _id: string;                        //Пока не понятно как пользоваться.
     private readonly _name: string;                      //Много где но в основном тоже только для игрока при выводе.

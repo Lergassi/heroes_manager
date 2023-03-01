@@ -136,7 +136,7 @@ export default class ItemStorageComponent {
     moveTo(itemStorage: ItemStorageInterface) {
         for (const slotKey in this._slots) {
             if (!this._slots[slotKey].isFree()) {
-                if (!itemStorage._addItem(this._slots[slotKey].itemStack.item, this._slots[slotKey].itemStack.count)) {
+                if (!itemStorage.addItem(this._slots[slotKey].itemStack.item.id as ItemID, this._slots[slotKey].itemStack.count)) {
                     this._slots[slotKey].destroyItemStack();
                 }
             }

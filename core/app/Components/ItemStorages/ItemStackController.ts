@@ -1,6 +1,13 @@
-import debug from 'debug';
+import debug, {log} from 'debug';
 import _ from 'lodash';
-import {assertIsGreaterThanOrEqual, assertNotNil} from '../../../source/assert.js';
+import {database} from '../../../data/ts/database.js';
+import {
+    assert,
+    assertIsGreaterThanOrEqual,
+    assertIsInteger,
+    assertIsNumber,
+    assertNotNil
+} from '../../../source/assert.js';
 import {DebugFormatterID} from '../../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
@@ -16,7 +23,7 @@ import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 import EquipController from '../EquipController.js';
 
 export default class ItemStackController implements ItemStackControllerInterface {
-    private _item: Item;
+    private _itemID: ItemID;
     /**
      * Если значение равно нулю, на рендер отдается null.
      * @private
@@ -24,83 +31,120 @@ export default class ItemStackController implements ItemStackControllerInterface
     private _count: number;
     private readonly _entityManager: EntityManagerInterface;
 
-    constructor(entityManager: EntityManagerInterface) {
-        this._entityManager = entityManager;
-        this._item = null;  //todo: Далее тут может быть ItemStack без ограничений через композицию.
+    constructor() {
+        this._itemID = null;
         this._count = 0;
     }
 
-    /**
-     * @deprecated
-     * @param item
-     * @param count
-     */
-    _addItem(item: Item, count: number): number {
-        assertNotNil(item);
-        assertIsGreaterThanOrEqual(count, 0);
+    // /**
+    //  * @deprecated
+    //  * @param item
+    //  * @param count
+    //  */
+    // _addItem(item: Item, count: number): number {
+    //     assertNotNil(item);
+    //     assertIsGreaterThanOrEqual(count, 0);
+    //
+    //     if (this._item && item !== this._item) {
+    //         //@note: Возможно не надо возвращать ошибок. Метод называется addItem(), а не replace. Нужно заменить, поместить с заменой - это другая логика. Хотя для разработки можно оставить, а для игрока отключить.
+    //         // debug(DebugNamespaceID.Throw)('ItemStackController занят другим предметом.');
+    //         return count;
+    //     }
+    //
+    //     let flaw = 0;
+    //     if (!this._item) {
+    //         flaw = item.stackSize;
+    //     } else {
+    //         flaw = item.stackSize - this._count;
+    //     }
+    //
+    //     if (count <= flaw) {
+    //         this._count += count;
+    //         count = 0;
+    //     } else {
+    //         this._count += flaw;
+    //         count -= flaw;
+    //     }
+    //
+    //     if (this._count > 0) {
+    //         this._item = item;
+    //     }
+    //
+    //     return count;
+    // }
 
-        if (this._item && item !== this._item) {
-            //@note: Возможно не надо возвращать ошибок. Метод называется addItem(), а не replace. Нужно заменить, поместить с заменой - это другая логика. Хотя для разработки можно оставить, а для игрока отключить.
-            // debug(DebugNamespaceID.Throw)('ItemStackController занят другим предметом.');
-            return count;
-        }
-
-        let flaw = 0;
-        if (!this._item) {
-            flaw = item.stackSize;
-        } else {
-            flaw = item.stackSize - this._count;
-        }
-
-        if (count <= flaw) {
-            this._count += count;
-            count = 0;
-        } else {
-            this._count += flaw;
-            count -= flaw;
-        }
-
-        if (this._count > 0) {
-            this._item = item;
-        }
-
-        return count;
-    }
+    // /**
+    //  *
+    //  * @param item
+    //  * @param count
+    //  * @return Кол-во добавленных предметов. return = 0 - не добавлено ни одного предмета.
+    //  */
+    // _addItem2(item: Item | ItemID, count: number): number {
+    //     item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
+    //     assertNotNil(item);
+    //
+    //     if (count <= 0) return 0;
+    //
+    //     if (this._item && item !== this._item) {
+    //         //@note: Возможно не надо возвращать ошибок. Метод называется addItem(), а не replace. Нужно заменить, поместить с заменой - это другая логика. Хотя для разработки можно оставить, а для игрока отключить.
+    //         // debug(DebugNamespaceID.Throw)('ItemStackController занят другим предметом.');
+    //         return 0;
+    //     }
+    //
+    //     let flaw = 0;
+    //     if (this._item) {
+    //         flaw = item.stackSize - this._count;
+    //     } else {
+    //         flaw = item.stackSize;
+    //     }
+    //
+    //     if (count <= flaw) {
+    //         this._count += count;
+    //         // count = 0;
+    //     } else {
+    //         this._count += flaw;
+    //         count = flaw;
+    //     }
+    //
+    //     if (this._count > 0) {
+    //         this._item = item;
+    //     }
+    //
+    //     return count;
+    // }
 
     /**
      *
-     * @param item
+     * @param itemID
      * @param count
      * @return Кол-во добавленных предметов. return = 0 - не добавлено ни одного предмета.
      */
-    addItem(item: Item | ItemID, count: number): number {
-        assertNotNil(item);
-        assertIsGreaterThanOrEqual(count, 0);
-        item = !(item instanceof Item) ? this._entityManager.get<Item>(EntityID.Item, item) : item;
+    addItem(itemID: ItemID, count: number): number {
+        assert(database.items.data.hasItem(itemID), 'Предмет не найден.');
 
-        if (this._item && item !== this._item) {
-            //@note: Возможно не надо возвращать ошибок. Метод называется addItem(), а не replace. Нужно заменить, поместить с заменой - это другая логика. Хотя для разработки можно оставить, а для игрока отключить.
-            // debug(DebugNamespaceID.Throw)('ItemStackController занят другим предметом.');
-            return 0;
-        }
+        if (count <= 0) return 0;
+        if (!this.isFree() && !this.containItem(itemID)) return 0;
+        //@note: Возможно не надо возвращать ошибок. Метод называется addItem(), а не replace. Нужно заменить, поместить с заменой - это другая логика. Хотя для разработки можно оставить, а для игрока отключить.
+        // debug(DebugNamespaceID.Throw)('ItemStackController занят другим предметом.');
+
+        let stackSize = database.items.data.stackSize(itemID);
 
         let flaw = 0;
-        if (this._item) {
-            flaw = item.stackSize - this._count;
+        if (!this.isFree()) {
+            flaw = stackSize - this._count;
         } else {
-            flaw = item.stackSize;
+            flaw = stackSize;
         }
 
         if (count <= flaw) {
             this._count += count;
-            // count = 0;
         } else {
             this._count += flaw;
             count = flaw;
         }
 
         if (this._count > 0) {
-            this._item = item;
+            this._itemID = itemID;
         }
 
         return count;
@@ -121,7 +165,7 @@ export default class ItemStackController implements ItemStackControllerInterface
         }
 
         if (this._count <= 0) {
-            this._item = null;
+            this._itemID = null;
         }
 
         return reminder;
@@ -130,37 +174,45 @@ export default class ItemStackController implements ItemStackControllerInterface
     moveTo(target: ItemStorageInterface): void {
         if (this.isFree()) return;
 
-        let reminder = this._count - target._addItem(this._item, this._count);
-        this.removeItem(<ItemID>this._item.id, reminder);
+        this.removeItem(this._itemID, target.addItem(this._itemID, this._count));
     }
 
     totalItem(ID: ItemID): number {
-        return (this._item && !_.isNil(ID) && this._item.id === ID) ? this._count : 0;
+        if (!this._itemID) return 0;
+        if ((this._itemID !== ID)) return 0;
+
+        return this._count;
     }
 
+    //??
     containItem(ID: ItemID): number {
-        return !_.isNil(this._item) && this._item.id === ID ? this._count : 0;
+        if (!this._itemID) return 0;
+        if ((this._itemID !== ID)) return 0;
+
+        return this._count;
     }
 
     isFree(): boolean {
-        return _.isNil(this._item);
+        return _.isNil(this._itemID);
     }
 
     canAddItem(itemID: ItemID, count: number): number {
-        let item = this._entityManager.get<Item>(EntityID.Item, itemID);
-        assertNotNil(item);
+        assert(database.items.data.hasItem(itemID), 'Предмет не найден.');
+        assertIsInteger(count);
+
+        let stackSize = database.items.data.stackSize(itemID);
 
         if (count <= 0) return 0;
-        if (!this._item) return item.stackSize >= count ? count : item.stackSize;
-        if (this._item && this._item !== item) return 0;
+        if (this.isFree()) return stackSize >= count ? count : stackSize;
+        if (!this.isFree() && !this.containItem(itemID)) return 0;
 
-        let reminder = this._item.stackSize - this._count;
+        let reminder = stackSize - this._count;
 
         return reminder >= count ? count : reminder;
     }
 
     clear(): void {
-        this._item = undefined;
+        this._itemID = null;
         this._count = 0;
     }
 
@@ -170,7 +222,7 @@ export default class ItemStackController implements ItemStackControllerInterface
             return false;
         }
 
-        if (!equipSlot.equip(this._item)) {
+        if (!equipSlot.equip(this._itemID)) {
             debug(DebugNamespaceID.Throw)('Ошибка экипировки.');
             return false;
         }
@@ -186,7 +238,7 @@ export default class ItemStackController implements ItemStackControllerInterface
             return false;
         }
 
-        if (!equipController.equip(equipSlotID, this._item)) {
+        if (!equipController.equip(equipSlotID, this._itemID)) {
             debug(DebugNamespaceID.Throw)('Ошибка экипировки.');
             return false;
         }
@@ -197,13 +249,14 @@ export default class ItemStackController implements ItemStackControllerInterface
     }
 
     renderByRequest(ui: ItemStackControllerInterfaceRender): void {
-        ui.updateItem?.(this._item ? this._item.id : undefined, this._count > 0 ? this._count : undefined);
+        // ui.updateItem?.(this._item ? this._item.id : undefined, this._count > 0 ? this._count : undefined);
+        ui.updateItem?.(this._itemID, this._count);
     }
 
     debug(): void {
         debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
-            item: this._item ? this._item.id : undefined,
-            count: this._item ? this._count : undefined,
+            itemID: this.isFree() ? null : this._itemID,
+            count: this.isFree() ? null : this._count,
         });
     }
 }

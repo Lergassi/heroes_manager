@@ -102,11 +102,11 @@ export default class HeroFactory {
             EquipSlotID.Foots,
         ];
 
-        let jewelSlotIDs = [
+        let jewelrySlotIDs = [
             EquipSlotID.Neck,
             EquipSlotID.Finger01,
             EquipSlotID.Finger02,
-            EquipSlotID.Trinket,
+            // EquipSlotID.Trinket,
         ];
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
@@ -125,14 +125,14 @@ export default class HeroFactory {
             hero.set<EquipSlotInterface>(armorEquipSlotIDs[i], equipSlot);
         }
 
-        for (let i = 0; i < jewelSlotIDs.length; i++) {
+        for (let i = 0; i < jewelrySlotIDs.length; i++) {
             let equipSlot = equipSlotFactory.create(
-                this._entityManager.get<EquipSlot>(EntityID.EquipSlot, jewelSlotIDs[i]),
+                this._entityManager.get<EquipSlot>(EntityID.EquipSlot, jewelrySlotIDs[i]),
                 heroClass,
                 itemCharacterAttributeCollector,
                 averageItemLevel,
             );
-            hero.set<EquipSlotInterface>(jewelSlotIDs[i], equipSlot);
+            hero.set<EquipSlotInterface>(jewelrySlotIDs[i], equipSlot);
         }
 
         let leftHand: EquipSlotInterface = equipSlotFactory.createLeftHand(

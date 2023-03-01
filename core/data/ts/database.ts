@@ -3,6 +3,7 @@ import {hero_class_character_attributes} from './hero_class_character_attributes
 import {hero_classes} from './hero_classes.js';
 import {hero_equip_sets} from './hero_equip_sets.js';
 import {item_category_ratios} from './item_category_ratios.js';
+import {items} from './items.js';
 import {location_enemies} from './location_enemies.js';
 import {location_resources} from './location_resources.js';
 import {metadata} from './metadata.js';
@@ -15,7 +16,7 @@ export const database = {
         ratios: item_category_ratios,
     },
     items: {
-        // data: {},
+        data: items,
     },
     recipes: {
         data: recipes,

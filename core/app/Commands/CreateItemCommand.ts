@@ -1,5 +1,6 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 import Item from '../Entities/Item.js';
 import ItemStorageManager from '../Services/ItemStorageManager.js';
 import EntityManager from '../../source/EntityManager.js';
@@ -28,13 +29,14 @@ export default class CreateItemCommand extends Command {
     }
 
     async execute(input: Input) {
-        let itemID = input.getArgument('item_id');
+        let itemID = input.getArgument('item_id') as ItemID;
         let count = parseInt(input.getArgument('count'), 10);
         assertNotEmpty(itemID);
 
-        let item = this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(itemID);
-        assertNotNil(item, sprintf('Предмет ID(%s) не найден.', itemID));
+        // let item = this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(itemID);
+        // assertNotNil(item, sprintf('Предмет ID(%s) не найден.', itemID));
 
-        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController)._addItem(item, count);
+        // this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController)._addItem(item, count);
+        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(itemID, count);
     }
 }

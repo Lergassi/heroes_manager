@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import debug from 'debug';
+import {database} from '../../data/ts/database.js';
+import {ItemID} from '../../types/enums/ItemID.js';
 import Item from '../Entities/Item.js';
 
 export interface AverageItemLevelRender {
@@ -7,7 +9,7 @@ export interface AverageItemLevelRender {
 }
 
 export default class AverageItemLevel {
-    private readonly _items: Item[];
+    private readonly _items: ItemID[];
     private _value: number;
 
     get value(): number {
@@ -19,13 +21,13 @@ export default class AverageItemLevel {
         this._value = 0;
     }
 
-    addItem(item: Item): void {
-        this._items.push(item);
+    addItem(itemID: ItemID): void {
+        this._items.push(itemID);
         this._calculate();
     }
 
-    removeItem(item: Item): void {
-        _.pullAt(this._items, _.indexOf(this._items, item));
+    removeItem(itemID: ItemID): void {
+        _.pullAt(this._items, _.indexOf(this._items, itemID));
         this._calculate();
     }
 
@@ -44,7 +46,7 @@ export default class AverageItemLevel {
         let count = 0;
 
         for (let i = 0; i < this._items.length; i++) {
-            sum += this._items[i].itemLevel;
+            sum += Number(database.items.data.itemLevel(this._items[i]));
             ++count;
         }
 

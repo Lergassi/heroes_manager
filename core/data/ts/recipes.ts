@@ -6,8 +6,8 @@ import _ from 'lodash';
 export type TSDB_Recipe = {
     ID: ItemID,
     resultItemCount: number,
-    //todo: cost: number,
     requireItems: {ID: ItemID | string, count: number}[],
+    //todo: cost: number,
 };
 
 export type TSDB_RecipeDB = {

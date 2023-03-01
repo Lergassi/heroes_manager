@@ -25,7 +25,7 @@ export default class ItemLootGenerator {
     generate(itemStorage: ItemStorageInterface): void {
         debug(DebugNamespaceID.Indev)('Генерация лута без шанса.');
         for (let i = 0; i < this._items.length; i++) {
-            itemStorage._addItem(this._items[i].ID, _.random(this._items[i].count.min, this._items[i].count.max));
+            itemStorage.addItem(this._items[i].ID, _.random(this._items[i].count.min, this._items[i].count.max));
         }
     }
 }

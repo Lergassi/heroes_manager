@@ -124,14 +124,14 @@ export default class SandboxController {
 
         // (new LoadItemDatabaseController(this._container)).run();
         // (new EntityManagerSandboxController(this._container)).run();
-        (new TSDB_DatabaseSandboxController(this._container)).run();
+        // (new TSDB_DatabaseSandboxController(this._container)).run();
 
         // (new FightSandboxController(this._container)).run();
         // (new ItemStorageSandboxController(this._container)).run();
         // (new RecipesSandboxController(this._container)).run();
         // (new ShopSandboxController(this._container)).run();
         // (new CraftSystemSandboxController(this._container)).run();
-        // (new HeroSandboxController(this._container)).run();
+        (new HeroSandboxController(this._container)).run();
         // (new EnemySandboxController(this._container)).run();
         // (new FightSandboxController(this._container)).run();
         // (new LocationSandboxController(this._container)).run();
@@ -287,14 +287,14 @@ export default class SandboxController {
 
     private _devItemKit() {
         let itemKit = new ItemKit([
-            {item: ItemID.Wood, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.IronOre, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.IronIngot, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.Herb01, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.Leather01, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.Wood, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.IronOre, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.IronIngot, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.Herb01, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.BoarSkin, count: DEFAULT_STACK_SIZE},
+            {itemID: ItemID.Leather01, count: DEFAULT_STACK_SIZE},
             // {item: ItemID.BoarMeat, count: DEFAULT_STACK_SIZE},
-            {item: ItemID.MagicResource01, count: 1},
+            {itemID: ItemID.MagicResource01, count: 1},
         ]);
 
         let itemStorage = this._container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20);
@@ -850,9 +850,9 @@ export default class SandboxController {
         // itemStorageController.addItemStorage(itemStorages[4]);
         // itemStorageController.addItemStorage(itemStorages[4]);
 
-        console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
-        console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
-        console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
+        // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 50));
         // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
         // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
         // console.log(itemStorageController.addItem(itemDatabase.get(ItemID.Wood), 24));
@@ -964,11 +964,11 @@ export default class SandboxController {
         // ]);
         let itemStorage = new ItemStorage(2, entityManager);
         //equip slotIDFrom slotIDTo
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
-        console.log(itemStorage._addItem(itemDatabase.get(ItemID.Wood), 24), itemStorage);
+        console.log(itemStorage.addItem(ItemID.IronOre, 24), itemStorage);
+        console.log(itemStorage.addItem(ItemID.Wood, 24), itemStorage);
+        console.log(itemStorage.addItem(ItemID.Wood, 24), itemStorage);
+        console.log(itemStorage.addItem(ItemID.IronOre, 24), itemStorage);
+        console.log(itemStorage.addItem(ItemID.Wood, 24), itemStorage);
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
         // console.log(itemStorage.addItem(itemDatabase.get(ItemID.IronOre), 24), itemStorage);
@@ -982,11 +982,11 @@ export default class SandboxController {
 
         let itemStorageComponent = itemStorage.get<ItemStorage>(ComponentID.ItemStorage);
 
-        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.IronOre), 24));
-        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.Wood), 24));
-        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.Wood), 24));
-        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.IronOre), 24));
-        console.log(itemStorageComponent._addItem(itemDatabase.get(ItemID.Wood), 24));
+        console.log(itemStorageComponent.addItem(ItemID.IronOre, 24));
+        console.log(itemStorageComponent.addItem(ItemID.Wood, 24));
+        console.log(itemStorageComponent.addItem(ItemID.Wood, 24));
+        console.log(itemStorageComponent.addItem(ItemID.IronOre, 24));
+        console.log(itemStorageComponent.addItem(ItemID.Wood, 24));
 
         console.log(itemStorageComponent);
 
@@ -1019,29 +1019,29 @@ export default class SandboxController {
     }
 
     private _averageItemLevel() {
-        let entityManager = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
-
-        let items = [
-            entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01),
-            entityManager.get<Item>(EntityID.Item, ItemID.PlateHelmet01),
-            entityManager.get<Item>(EntityID.Item, ItemID.PlateBreastplate01),
-        ];
-
-        let averageItemLevel = new AverageItemLevel();
-        averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
-        averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
-        averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
-        averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.PlateHelmet01));
-        averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.PlateHelmet01));
-        averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.PlateBreastplate01));
-        averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.PlateBreastplate01));
-        console.log(averageItemLevel);
-        console.log(averageItemLevel.value);
-        averageItemLevel.removeItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
-        averageItemLevel.removeItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
-        averageItemLevel.removeItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
-        averageItemLevel.removeItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
-        console.log(averageItemLevel);
+        // let entityManager = this._container.get<EntityManagerInterface>(ServiceID.EntityManager);
+        //
+        // let items = [
+        //     entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01),
+        //     entityManager.get<Item>(EntityID.Item, ItemID.PlateHelmet01),
+        //     entityManager.get<Item>(EntityID.Item, ItemID.PlateBreastplate01),
+        // ];
+        //
+        // let averageItemLevel = new AverageItemLevel();
+        // averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
+        // averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
+        // averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
+        // averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.PlateHelmet01));
+        // averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.PlateHelmet01));
+        // averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.PlateBreastplate01));
+        // averageItemLevel.addItem(entityManager.get<Item>(EntityID.Item, ItemID.PlateBreastplate01));
+        // console.log(averageItemLevel);
+        // console.log(averageItemLevel.value);
+        // averageItemLevel.removeItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
+        // averageItemLevel.removeItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
+        // averageItemLevel.removeItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
+        // averageItemLevel.removeItem(entityManager.get<Item>(EntityID.Item, ItemID.OneHandedSword01));
+        // console.log(averageItemLevel);
     }
 
     private _testRandom() {

@@ -80,7 +80,15 @@ export default class EquipItemListRC extends React.Component<EquipItemListRCProp
     }
 
     move(): void {
-        this.props.itemStorageController.moveToEquipSlotByEquipController(this.state.selectedItemStorageID, this.state.selectedItemStorageSlotID, this.props.equipController, this.state.selectedEquipSlotID);
+        this
+            .props
+            .itemStorageController
+            .moveToEquipSlotByEquipController(
+                this.state.selectedItemStorageID,
+                this.state.selectedItemStorageSlotID,
+                this.props.equipController,
+                this.state.selectedEquipSlotID
+            );
     }
 
     handlerOnChangeItemStorageSlot(event): void {

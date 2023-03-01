@@ -33,10 +33,10 @@ export default class DevUISystemController extends AbstractSandboxController {
         let viewer = new Viewer();
 
         let itemStorage = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(20);
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.Wood), 12);
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.IronOre), 12);
-        itemStorage.get<ItemStorage>(ComponentID.ItemStorage)._addItem(this.container.get<ItemDatabase>(ServiceID.ItemDatabase).get(ItemID.OneHandedSword01), 2);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage).addItem(ItemID.Wood, 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage).addItem(ItemID.Wood, 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage).addItem(ItemID.IronOre, 12);
+        itemStorage.get<ItemStorage>(ComponentID.ItemStorage).addItem(ItemID.OneHandedSword01, 2);
         // console.log(itemStorage);
 
         // itemStorage.get<ItemStorageV2>(ComponentID.ItemStorageComponent).view(viewer);

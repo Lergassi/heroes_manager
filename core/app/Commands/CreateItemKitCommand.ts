@@ -124,10 +124,8 @@ export default class CreateItemKitCommand extends Command {
             // );
             this.container
                 .get<ItemStorageInterface>(ServiceID.ItemStorageController)
-                ._addItem(
-                    this.container
-                        .get<ItemDatabase>(ServiceID.ItemDatabase)
-                        .get(this._kits[name][i].itemID),
+                .addItem(
+                    this._kits[name][i].itemID,
                     this._kits[name][i].count * multiplier
                 );
         }

@@ -1,3 +1,7 @@
+import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
+import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import EquipSlotArmorMaterialRule from '../Components/EquipSlots/EquipSlotArmorMaterialRule.js';
+import EquipSlotItemCategoryRule from '../Components/EquipSlots/EquipSlotItemCategoryRule.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import DefaultEquipSlot from '../Components/EquipSlots/DefaultEquipSlot.js';
 import EquipSlotWithItemCollectorDecorator from '../Components/EquipSlots/EquipSlotWithItemCollectorDecorator.js';
@@ -29,10 +33,10 @@ export default class EquipSlotFactory {
     ): EquipSlotInterface {
         let equipSlot: EquipSlotInterface = new DefaultEquipSlot(<EquipSlotID>equipSlotData.id, averageItemLevel, itemCharacterAttributeCollector);
 
-        equipSlot = new EquipSlotWithItemCategoryDecorator(
-            equipSlot,
-            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
-        );
+        // equipSlot = new EquipSlotWithItemCategoryDecorator(
+        //     equipSlot,
+        //     equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
+        // );
 
         return equipSlot;
     }
@@ -43,16 +47,28 @@ export default class EquipSlotFactory {
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
         averageItemLevel: AverageItemLevel,
     ): EquipSlotInterface {
-        let equipSlot: EquipSlotInterface = new DefaultEquipSlot(<EquipSlotID>equipSlotData.id, averageItemLevel, itemCharacterAttributeCollector);
+        let equipSlot: EquipSlotInterface = new DefaultEquipSlot(
+            <EquipSlotID>equipSlotData.id,
+            averageItemLevel,
+            itemCharacterAttributeCollector,
+            [
+                new EquipSlotItemCategoryRule(_.map(equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID), (itemCategory) => {
+                    return itemCategory.id;
+                }) as ItemCategoryID[]),
+                new EquipSlotArmorMaterialRule(_.map(heroClass.availableArmorMaterials, (armorMaterial) => {
+                    return armorMaterial.id;
+                }) as ArmorMaterialID[]),
+            ],
+        );
 
-        equipSlot = new EquipSlotWithArmorMaterialDecorator(
-            equipSlot,
-            heroClass.availableArmorMaterials,
-        );
-        equipSlot = new EquipSlotWithItemCategoryDecorator(
-            equipSlot,
-            equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
-        );
+        // equipSlot = new EquipSlotWithArmorMaterialDecorator(
+        //     equipSlot,
+        //     heroClass.availableArmorMaterials,
+        // );
+        // equipSlot = new EquipSlotWithItemCategoryDecorator(
+        //     equipSlot,
+        //     equipSlotData.itemCategories.getItemCategories(heroClass.id as HeroClassID),
+        // );
 
         return equipSlot;
     }
@@ -64,12 +80,21 @@ export default class EquipSlotFactory {
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
         averageItemLevel: AverageItemLevel,
     ): EquipSlotInterface {
-        let rightHand : EquipSlotInterface = new DefaultEquipSlot(<EquipSlotID>equipSlotData.id, averageItemLevel, itemCharacterAttributeCollector);
-
-        rightHand = new EquipSlotWithItemCategoryDecorator(
-            rightHand,
-            heroClass.rightHandItemCategories,
+        let rightHand : EquipSlotInterface = new DefaultEquipSlot(
+            <EquipSlotID>equipSlotData.id,
+            averageItemLevel,
+            itemCharacterAttributeCollector,
+            [
+                new EquipSlotItemCategoryRule(_.map(heroClass.rightHandItemCategories, (itemCategory) => {
+                    return itemCategory.id;
+                }) as ItemCategoryID[]),
+            ],
         );
+
+        // rightHand = new EquipSlotWithItemCategoryDecorator(
+        //     rightHand,
+        //     heroClass.rightHandItemCategories,
+        // );
 
         return rightHand;
     }
@@ -80,12 +105,21 @@ export default class EquipSlotFactory {
         itemCharacterAttributeCollector: ItemCharacterAttributeCollector,
         averageItemLevel: AverageItemLevel,
     ): EquipSlotInterface {
-        let leftHand: EquipSlotInterface = new DefaultEquipSlot(<EquipSlotID>equipSlotData.id, averageItemLevel, itemCharacterAttributeCollector);
-
-        leftHand = new EquipSlotWithItemCategoryDecorator(
-            leftHand,
-            heroClass.leftHandItemCategories,
+        let leftHand: EquipSlotInterface = new DefaultEquipSlot(
+            <EquipSlotID>equipSlotData.id,
+            averageItemLevel,
+            itemCharacterAttributeCollector,
+            [
+                new EquipSlotItemCategoryRule(_.map(heroClass.leftHandItemCategories, (itemCategory) => {
+                    return itemCategory.id;
+                }) as ItemCategoryID[]),
+            ],
         );
+
+        // leftHand = new EquipSlotWithItemCategoryDecorator(
+        //     leftHand,
+        //     heroClass.leftHandItemCategories,
+        // );
 
         return leftHand;
     }

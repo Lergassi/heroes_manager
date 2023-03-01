@@ -2,13 +2,14 @@ import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import config from '../../../../../config/config.js';
 import {database} from '../../../../../data/ts/database.js';
+import {TSDB_Item} from '../../../../../data/ts/items.js';
 import ContainerInterface from '../../../../../source/ContainerInterface.js';
 import {ArmorMaterialID} from '../../../../../types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../../../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
+import {ItemID} from '../../../../../types/enums/ItemID.js';
 import {QualityID} from '../../../../../types/enums/QualityID.js';
-import {TSDB_Item} from '../../../../../types/TSDB_Item.js';
 import item_character_attribute_generation_functions from '../v0_0_1/item_character_attribute_generation_functions.js';
 import {item_attributes_formulas} from '../../formulas/item_attributes_formulas.js';
 import ItemAttributeGenerator from './ItemAttributeGenerator.js';
@@ -129,19 +130,21 @@ export default class GenerateItems {
                         ratio: config.hero_level_corresponds_to_item_level_ratio,
                     });
                     let itemAttributes: TSDB_Item = {
-                        ID: '',
-                        ItemCategoryID: itemCategories[i],
-                        ArmorMaterialID: '',
-                        ItemLevel: itemLevel,
-                        QualityID: constValues.qualityID,
-                        StackSize: 1,
-                        Strength: 0,
-                        Agility: 0,
-                        Intelligence: 0,
-                        HealthPoints: 0,
-                        Equipable: true,
-                        TwoHandWeapon: false,
-                        AttackPower: 0,
+                        Agility         : 0,
+                        ArmorMaterialID : undefined,
+                        AttackPower     : 0,
+                        DefaultBuyPrice : 0,
+                        DefaultSellPrice: 0,
+                        Equipable       : false,
+                        HealthPoints    : 0,
+                        ID              : undefined,
+                        Intelligence    : 0,
+                        ItemCategoryID  : undefined,
+                        ItemLevel       : 0,
+                        QualityID       : undefined,
+                        StackSize       : 0,
+                        Strength        : 0,
+                        TwoHandWeapon   : false
                     };
 
                     if (database.metadata.items.requireArmorMaterial(itemCategories[i])) itemAttributes.ArmorMaterialID = options.armorMaterialID;
@@ -161,14 +164,14 @@ export default class GenerateItems {
 
                     itemAttributes.ID = sprintf(IDPattern, ..._.filter(IDPatternParams, (value, key) => {
                         return value !== undefined;
-                    }));
+                    })) as ItemID;
 
                     if (this._IDs.hasOwnProperty(itemAttributes.ID)) {
                         this._IDs[itemAttributes.ID] = ++this._IDs[itemAttributes.ID];
                     } else {
                         this._IDs[itemAttributes.ID] = 1;
                     }
-                    itemAttributes.ID += sprintf('_%s', _.padStart(String(this._IDs[itemAttributes.ID]), 2, '0'));
+                    itemAttributes.ID = (itemAttributes.ID + sprintf('_%s', _.padStart(String(this._IDs[itemAttributes.ID]), 2, '0'))) as ItemID;
 
                     //todo: Разделить атрибуты предметов и атрибуты героев. Не всегда логика 1:1. Атрибуты у предметов это просто число (несколько чисел).
                     itemAttributes[CharacterAttributeID.MaxHealthPoints] = this._itemCharacterAttributeGenerator.healthPoints(itemLevel, itemCategories[i]);
