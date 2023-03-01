@@ -15,6 +15,7 @@ export enum ComponentID {
     AverageItemLevel = 'AverageItemLevel',
 
     CharacterAttributes = 'CharacterAttributes',
+    CharacterAttributeManager = 'CharacterAttributeManager',
     AttackController = 'AttackController',
     DamageController = 'DamageController',
     HealthPoints = 'HealthPoints',

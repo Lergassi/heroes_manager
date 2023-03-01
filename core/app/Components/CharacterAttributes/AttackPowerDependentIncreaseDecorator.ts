@@ -16,16 +16,21 @@ export default class AttackPowerDependentIncreaseDecorator implements CharacterA
     private readonly _dependentsCharacterAttributes: CharacterAttributeInterface[];
     private readonly _dependentCharacterAttributeMultiplier: unsigned;
 
-    get baseValue(): number {
-        return this._attackPower.baseValue;
-    }
-
-    get finalValue(): number {
-        return this._attackPower.finalValue +
+    get value(): number {
+        return this._attackPower.value +
             _.sum(_.map(this._dependentsCharacterAttributes, (characterAttribute) => {
                 return characterAttribute.finalValue * this._dependentCharacterAttributeMultiplier;
             }))
             ;
+    }
+
+    get finalValue(): number {
+        // return this._attackPower.finalValue +
+        //     _.sum(_.map(this._dependentsCharacterAttributes, (characterAttribute) => {
+        //         return characterAttribute.finalValue * this._dependentCharacterAttributeMultiplier;
+        //     }))
+        //     ;
+        return this.value;
     }
 
     constructor(options: {
@@ -37,8 +42,12 @@ export default class AttackPowerDependentIncreaseDecorator implements CharacterA
         this._dependentCharacterAttributeMultiplier = 2;
     }
 
-    increaseBaseValue(value: unsigned): void {
-        this._attackPower.increaseBaseValue(value);
+    increase(value: number): number {
+        return this._attackPower.increase(value);
+    }
+
+    decrease(value: number): number {
+        return this._attackPower.decrease(value);
     }
 
     renderByRequest(ui: CharacterAttributeInterfaceRender): void {
@@ -48,7 +57,7 @@ export default class AttackPowerDependentIncreaseDecorator implements CharacterA
     debug(): void {
         debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             ID: CharacterAttributeID.AttackPower,
-            baseValue: this.baseValue,
+            baseValue: this.value,
             finalValue: this.finalValue,
         });
     }

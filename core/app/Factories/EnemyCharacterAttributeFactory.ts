@@ -40,12 +40,7 @@ export default class EnemyCharacterAttributeFactory {
 
         let characterAttribute = new CharacterAttribute(
             characterAttributeID,
-            new ItemCharacterAttributeCollector(),  //Временно, для совместимости.
             options?.baseValue ?? value,
-            // options?.baseValue ?? this._enemyCharacterAttributeStartValueFactory.generate(
-            //     characterAttributeID,
-            //     level,
-            // ),
         );
 
         return characterAttribute;

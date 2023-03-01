@@ -6,13 +6,18 @@ export interface CharacterAttributeInterfaceRender {
 }
 
 export default interface CharacterAttributeInterface {
-    get baseValue(): number;
+    get value(): number;
+
+    /**
+     * @deprecated
+     */
     get finalValue(): number;
     /**
      * Значение, которое есть у игрока всегда без экипировки и усилений.
      * @param value
      */
-    increaseBaseValue(value: unsigned): void;   //todo: Возможно стоит оставить только value(), а increaseBaseValue только там где хранится атрибут.
+    increase(value: number): number;   //todo: Возможно стоит оставить только value(), а increaseBaseValue только там где хранится атрибут.
+    decrease(value: number): number;   //todo: Возможно стоит оставить только value(), а increaseBaseValue только там где хранится атрибут.
     renderByRequest(ui: CharacterAttributeInterfaceRender): void;
     debug(): void;
 }

@@ -1,37 +1,27 @@
-import _ from 'lodash';
-import Command from '../../../source/GameConsole/Command.js';
-import Input from '../../../source/GameConsole/Input.js';
-import {ComponentID} from '../../../types/enums/ComponentID.js';
-import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
-import {LocationTypeID} from '../../../types/enums/LocationTypeID.js';
-import Location from '../../Components/Location.js';
-import MainLocationList from '../../Components/MainLocationList.js';
-import Tavern from '../../Components/Tavern.js';
-import TavernController from '../../Components/TavernController.js';
-import Item from '../../Entities/Item.js';
-import EnemyFactory from '../../Factories/EnemyFactory.js';
-import LocationFactory from '../../Factories/LocationFactory.js';
-import ItemStorageManager from '../../Services/ItemStorageManager.js';
-import HeroFactory from '../../Factories/HeroFactory.js';
-import ItemStorageFactoryInterface from '../../Factories/ItemStorageFactoryInterface.js';
-import MainHeroList from '../../Components/MainHeroList.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../../consts.js';
-import MainItemStorageListComponent from '../../Components/MainItemStorageListComponent.js';
-import {unsigned} from '../../../types/main.js';
-import {ServiceID} from '../../../types/enums/ServiceID.js';
-import ItemStackFactory from '../../Factories/ItemStackFactory.js';
-import {HeroClassID} from '../../../types/enums/HeroClassID.js';
-import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
-import {ItemID} from '../../../types/enums/ItemID.js';
-import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
-import {CommandID} from '../../../types/enums/CommandID.js';
-import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
-import {EntityID} from '../../../types/enums/EntityID.js';
-import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import debug from 'debug';
 import {sprintf} from 'sprintf-js';
+import Command from '../../../source/GameConsole/Command.js';
 import GameConsole from '../../../source/GameConsole/GameConsole.js';
-import ItemStorageFactory from '../../Factories/ItemStorageFactory.js';
+import Input from '../../../source/GameConsole/Input.js';
+import {CommandID} from '../../../types/enums/CommandID.js';
+import {ComponentID} from '../../../types/enums/ComponentID.js';
+import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
+import {HeroClassID} from '../../../types/enums/HeroClassID.js';
+import {ItemID} from '../../../types/enums/ItemID.js';
+import {LocationTypeID} from '../../../types/enums/LocationTypeID.js';
+import {ServiceID} from '../../../types/enums/ServiceID.js';
+import {unsigned} from '../../../types/main.js';
+import Production from '../../Components/Craft/Production.js';
+import Location from '../../Components/Location.js';
+import MainHeroList from '../../Components/MainHeroList.js';
+import MainLocationList from '../../Components/MainLocationList.js';
+import ProductionConfigurator from '../../Components/ProductionConfigurator.js';
+import Tavern from '../../Components/Tavern.js';
+import TavernController from '../../Components/TavernController.js';
+import EnemyFactory from '../../Factories/EnemyFactory.js';
+import LocationFactory from '../../Factories/LocationFactory.js';
+import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
 
 export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -41,6 +31,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     async execute(input: Input) {
         // await this._createItemStorages();
         await this._configTavern();
+        await this._configProduction();
         await this._configMoney();
         await this._createItems();
         await this._createHeroes();
@@ -48,7 +39,11 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     }
 
     private async _configTavern() {
-        this.container.get<TavernController>(ServiceID.TavernController).update();
+        // this.container.get<TavernController>(ServiceID.TavernController).update();
+        let tavern = this.container.get<Tavern>(ServiceID.Tavern);
+        let tavernController = this.container.get<TavernController>(ServiceID.TavernController);
+
+        // tavern.add(HeroClassID.Barbarian, 1);
     }
 
     private async _createItemStorages() {
@@ -62,44 +57,44 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     private _createHeroes() {
         let heroPatterns: {
             heroClassID: HeroClassID,
-            level: unsigned,
+            level: number,
             equip: Partial<{[ID in EquipSlotID]: ItemID}>,
         }[] = [
-            {
-                heroClassID: HeroClassID.Warrior,
-                level: 1,
-                equip: {
-                    [EquipSlotID.Head]: ItemID.PlateHelmet02,
-                    [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
-                    [EquipSlotID.Legs]: ItemID.PlatePants01,
-                    [EquipSlotID.Foots]: ItemID.PlateBoots01,
-                    [EquipSlotID.RightHand]: ItemID.OneHandedSword01,
-                    [EquipSlotID.LeftHand]: ItemID.Shield01,
-                },
-            },
+            // {
+            //     heroClassID: HeroClassID.Warrior,
+            //     level: 1,
+            //     equip: {
+            //         [EquipSlotID.Head]: ItemID.PlateHelmet02,
+            //         [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
+            //         [EquipSlotID.Legs]: ItemID.PlatePants01,
+            //         [EquipSlotID.Foots]: ItemID.PlateBoots01,
+            //         [EquipSlotID.RightHand]: ItemID.OneHandedSword01,
+            //         [EquipSlotID.LeftHand]: ItemID.Shield01,
+            //     },
+            // },
             {
                 heroClassID: HeroClassID.Barbarian,
                 level: 1,
                 equip: {
-                    [EquipSlotID.Head]: ItemID.PlateHelmet02,
+                    // [EquipSlotID.Head]: ItemID.PlateHelmet02,
                     [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
                     [EquipSlotID.Legs]: ItemID.PlatePants01,
                     [EquipSlotID.Foots]: ItemID.PlateBoots01,
-                    [EquipSlotID.RightHand]: ItemID.OneHandedSword01,
-                    [EquipSlotID.LeftHand]: ItemID.Shield01,
+                    [EquipSlotID.RightHand]: ItemID.TwoHandedSword01,
+                    // [EquipSlotID.LeftHand]: ItemID.Shield01,
                 },
             },
-            {
-                heroClassID: HeroClassID.Rogue,
-                level: 1,
-                equip: {
-                    [EquipSlotID.Chest]: ItemID.LeatherBreastplate01,
-                    [EquipSlotID.Legs]: ItemID.LeatherPants01,
-                    [EquipSlotID.Foots]: ItemID.LeatherBoots01,
-                    [EquipSlotID.RightHand]: ItemID.Dagger01,
-                    [EquipSlotID.LeftHand]: ItemID.Dagger01,
-                },
-            },
+            // {
+            //     heroClassID: HeroClassID.Rogue,
+            //     level: 1,
+            //     equip: {
+            //         [EquipSlotID.Chest]: ItemID.LeatherBreastplate01,
+            //         [EquipSlotID.Legs]: ItemID.LeatherPants01,
+            //         [EquipSlotID.Foots]: ItemID.LeatherBoots01,
+            //         [EquipSlotID.RightHand]: ItemID.Dagger01,
+            //         [EquipSlotID.LeftHand]: ItemID.Dagger01,
+            //     },
+            // },
             // {
             //     heroClassID: HeroClassID.FireMage,
             //     level: 1,
@@ -190,5 +185,9 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
 
     private async _configMoney() {
         await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['1000']);
+    }
+
+    private async _configProduction() {
+        (new ProductionConfigurator()).configure(this.container.get<Production>(ServiceID.Production));
     }
 }

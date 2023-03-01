@@ -7,6 +7,7 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 /**
  * И не важно теперь где и как располается предмет в каком слоте и какая логика слота.
  * todo: Пока один класс на все атрибуты. Дальше можно разделить.
+ * @deprecated Использовать CharacterAttributeManager. Заметка по решению. Например не удобно при сохранении. Отдельный объект. При простом увеличении значения можно хранить только 1 значение (или baseValue/finalValue) и предметы в слотах.
  */
 export default class ItemCharacterAttributeCollector {
     private readonly _items: ItemID[];

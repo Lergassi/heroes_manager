@@ -19,7 +19,7 @@ type TSDB_LocationEnemyDB = {
 let enemies_db: TSDB_LocationEnemyDB = {
     [LocationTypeID.Forrest]: [
         {enemyTypeID: EnemyTypeID.Boar, count: {min: 4, max: 6}},
-        {enemyTypeID: EnemyTypeID.Bear, count: {min: 1, max: 2}},
+        // {enemyTypeID: EnemyTypeID.Bear, count: {min: 1, max: 2}},
     ],
 };
 

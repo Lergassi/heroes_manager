@@ -35,7 +35,6 @@ export default class GameMenuRC extends React.Component<GameMenuRCProps, GameMen
     }
 
     async run(command) {
-        console.log(command);
         this.setState({
             window: {
                 show: false,

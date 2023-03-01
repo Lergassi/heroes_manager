@@ -712,11 +712,11 @@ export default class SandboxController {
         // stateController1.removeState('state2123');
 
         let healthPoints1 = new HealthPoints(
-            new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, new ItemCharacterAttributeCollector(), 100),
+            new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, 100),
             stateController1,
         );
         let healthPoints2 = new HealthPoints(
-            new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, new ItemCharacterAttributeCollector(), 100),
+            new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, 100),
             new LifeStateController(),
         );
         // console.log(1);

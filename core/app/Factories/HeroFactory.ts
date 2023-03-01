@@ -10,6 +10,7 @@ import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {CharacterAttributes, unsigned} from '../../types/main.js';
 import AttackController from '../Components/AttackController.js';
 import AverageItemLevel from '../Components/AverageItemLevel.js';
+import CharacterAttributeManager from '../Components/CharacterAttributeManager.js';
 import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
 import AttackPowerDependentIncreaseDecorator
     from '../Components/CharacterAttributes/AttackPowerDependentIncreaseDecorator.js';
@@ -109,8 +110,8 @@ export default class HeroFactory {
             // EquipSlotID.Trinket,
         ];
 
-        let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector();
-        hero.set(ItemCharacterAttributeCollector.name, itemCharacterAttributeCollector);
+        let characterAttributeManager = new CharacterAttributeManager(hero);
+        hero.set(ComponentID.CharacterAttributeManager, characterAttributeManager);
 
         let averageItemLevel = new AverageItemLevel();
         hero.set(ComponentID.AverageItemLevel, averageItemLevel);
@@ -119,7 +120,7 @@ export default class HeroFactory {
             let equipSlot = equipSlotFactory.createArmor(
                 this._entityManager.get<EquipSlot>(EntityID.EquipSlot, armorEquipSlotIDs[i]),
                 heroClass,
-                itemCharacterAttributeCollector,
+                characterAttributeManager,
                 averageItemLevel,
             );
             hero.set<EquipSlotInterface>(armorEquipSlotIDs[i], equipSlot);
@@ -129,7 +130,7 @@ export default class HeroFactory {
             let equipSlot = equipSlotFactory.create(
                 this._entityManager.get<EquipSlot>(EntityID.EquipSlot, jewelrySlotIDs[i]),
                 heroClass,
-                itemCharacterAttributeCollector,
+                characterAttributeManager,
                 averageItemLevel,
             );
             hero.set<EquipSlotInterface>(jewelrySlotIDs[i], equipSlot);
@@ -138,14 +139,14 @@ export default class HeroFactory {
         let leftHand: EquipSlotInterface = equipSlotFactory.createLeftHand(
             this._entityManager.get<EquipSlot>(EntityID.EquipSlot, EquipSlotID.LeftHand),
             heroClass,
-            itemCharacterAttributeCollector,
+            characterAttributeManager,
             averageItemLevel,
         );
         let rightHand : EquipSlotInterface = equipSlotFactory.createRightHand(
             leftHand as LeftHand,
             this._entityManager.get<EquipSlot>(EntityID.EquipSlot, EquipSlotID.RightHand),
             heroClass,
-            itemCharacterAttributeCollector,
+            characterAttributeManager,
             averageItemLevel,
         );
 
@@ -200,7 +201,6 @@ export default class HeroFactory {
                 heroClass.id as HeroClassID,
                 characterAttributeIDs[i] as CharacterAttributeID,
                 level,
-                itemCharacterAttributeCollector,
                 {
                     baseValue: options?.baseCharacterAttributeValues?.[characterAttributeIDs[i]],
                 },

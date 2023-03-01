@@ -3,6 +3,7 @@ import EquipSlotInterface, {
     EquipSlotInterfaceRender,
 } from '../../Interfaces/EquipSlotInterface.js';
 import Item from '../../Entities/Item.js';
+import CharacterAttributeManager from '../CharacterAttributeManager.js';
 import LeftHand from './LeftHand.js';
 import DefaultEquipSlot from './DefaultEquipSlot.js';
 import {assertNotNil} from '../../../source/assert.js';
@@ -15,11 +16,11 @@ export default class RightHand implements EquipSlotInterface {
     private readonly _equipSlot: EquipSlotInterface;
     private readonly _leftHand: LeftHand;
 
-    constructor(leftHand: LeftHand, averageItemLevel: AverageItemLevel, itemCharacterAttributeCollector: ItemCharacterAttributeCollector) {
+    constructor(leftHand: LeftHand, averageItemLevel: AverageItemLevel, characterAttributeManager: CharacterAttributeManager) {
         assertNotNil(leftHand);
 
         this._leftHand = leftHand;
-        this._equipSlot = new DefaultEquipSlot(EquipSlotID.RightHand, averageItemLevel, itemCharacterAttributeCollector);
+        this._equipSlot = new DefaultEquipSlot(EquipSlotID.RightHand, averageItemLevel, characterAttributeManager);
     }
 
     equip(itemID: ItemID): boolean {

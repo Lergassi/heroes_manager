@@ -1,8 +1,8 @@
 import AverageItemLevel from '../../core/app/Components/AverageItemLevel.js';
+import CharacterAttributeManager from '../../core/app/Components/CharacterAttributeManager.js';
 import DefaultEquipSlot from '../../core/app/Components/EquipSlots/DefaultEquipSlot.js';
 import EquipSlotArmorMaterialRule from '../../core/app/Components/EquipSlots/EquipSlotArmorMaterialRule.js';
 import EquipSlotItemCategoryRule from '../../core/app/Components/EquipSlots/EquipSlotItemCategoryRule.js';
-import ItemCharacterAttributeCollector from '../../core/app/Components/ItemCharacterAttributeCollector.js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
@@ -22,7 +22,8 @@ export default class HeroSandboxController extends AbstractSandboxController {
         // this._devEquipController();
         // this._devViewHero();
         // this._devCreateHeroWithStrategy();
-        this._devEquipSlotRules();
+        // this._devEquipSlotRules();
+        this._devCharacterAttributeManager();
 
         // this._useHeroFactory();
     }
@@ -85,11 +86,14 @@ export default class HeroSandboxController extends AbstractSandboxController {
     }
 
     private _devEquipSlotRules() {
+        let hero = this.container.get<HeroFactory>(ServiceID.HeroFactory).create(HeroClassID.Warrior, 1);
+        let characterAttributeManager = new CharacterAttributeManager(hero);
+
         let ID = EquipSlotID.Chest;
         let equipSlot = new DefaultEquipSlot(
             ID,
             new AverageItemLevel(),
-            new ItemCharacterAttributeCollector(),
+            characterAttributeManager,
             [
                 new EquipSlotItemCategoryRule([
                     // ItemCategoryID.OneHandedSwords,
@@ -111,5 +115,9 @@ export default class HeroSandboxController extends AbstractSandboxController {
         equipSlot.equip(itemID);
 
         this.container.get<HeroFactory>(ServiceID.HeroFactory).create(HeroClassID.Warrior, 1);
+    }
+
+    private _devCharacterAttributeManager() {
+
     }
 }

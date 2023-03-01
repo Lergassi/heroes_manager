@@ -25,7 +25,7 @@ export default class CreateItemCommand extends Command {
     configure() {
         super.configure();
         this.addArgument('item_id', '', true);
-        this.addArgument('count', '', true, 1);
+        this.addArgument('count', '', false, 1);
     }
 
     async execute(input: Input) {

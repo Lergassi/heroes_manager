@@ -12,6 +12,7 @@ function maxHealthPoints(values: {
     defaultFinalHeroAttackPower: number,
     heroHitRatioToEnemy: number,
 }) {
+    console.log('values.defaultFinalHeroAttackPower', values.defaultFinalHeroAttackPower);
     return _.round(values.defaultFinalHeroAttackPower / values.heroHitRatioToEnemy);
 }
 

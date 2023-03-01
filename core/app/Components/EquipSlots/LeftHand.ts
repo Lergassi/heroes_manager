@@ -3,6 +3,7 @@ import EquipSlotInterface, {
     EquipSlotInterfaceRender,
 } from '../../Interfaces/EquipSlotInterface.js';
 import Item from '../../Entities/Item.js';
+import CharacterAttributeManager from '../CharacterAttributeManager.js';
 import DefaultEquipSlot from './DefaultEquipSlot.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import AverageItemLevel from '../AverageItemLevel.js';
@@ -13,8 +14,8 @@ export default class LeftHand implements EquipSlotInterface {
     private _equipSlot: EquipSlotInterface
     private _isBlock: boolean
 
-    constructor(averageItemLevel: AverageItemLevel, itemCharacterAttributeCollector: ItemCharacterAttributeCollector) {
-        this._equipSlot = new DefaultEquipSlot(EquipSlotID.LeftHand, averageItemLevel, itemCharacterAttributeCollector);
+    constructor(averageItemLevel: AverageItemLevel, characterAttributeManager: CharacterAttributeManager) {
+        this._equipSlot = new DefaultEquipSlot(EquipSlotID.LeftHand, averageItemLevel, characterAttributeManager);
         this._isBlock = false;
     }
 

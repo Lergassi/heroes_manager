@@ -82,10 +82,7 @@ export default class EnemyFactory {
                 if (target?.itemStorage) itemLootGeneratorComponent.generate(target.itemStorage);
             },
         ));
-        // enemy.set<DamageControllerInterface>(ComponentID.DamageController, healthPoints);
-        // const f = (healthPoints: HealthPoints) => {
-        //     return new SquadDamageController(healthPoints, 10);
-        // }
+
         enemy.set<DamageControllerInterface>(ComponentID.DamageController, new SquadDamageController(
             healthPoints,
             // this._enemyCharacterAttributeFactory.create(

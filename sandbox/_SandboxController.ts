@@ -859,17 +859,15 @@ export default class _SandboxController {
     }) {
         let protection = new CharacterAttribute(
             CharacterAttributeID.Protection,
-            new ItemCharacterAttributeCollector(),
             0,
         );
 
-        protection.increaseBaseValue(options.protectionBaseValue);
+        protection.increase(options.protectionBaseValue);
 
         let defence = new ArmorDecorator(
             new HealthPoints(
                 new CharacterAttribute(
                     CharacterAttributeID.MaxHealthPoints,
-                    new ItemCharacterAttributeCollector(),
                     0,
                 ),
                 new HeroActivityStateController(),
@@ -1044,8 +1042,8 @@ export default class _SandboxController {
         let enemyFactory = this._container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
         let itemCharacterAttributeCollector = new ItemCharacterAttributeCollector()
-        let maxHealthPoints = new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, itemCharacterAttributeCollector, 0);
-        maxHealthPoints.increaseBaseValue(100);
+        let maxHealthPoints = new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, 0);
+        maxHealthPoints.increase(100);
 
         let healthPoints: DamageControllerInterface = new HealthPoints(
         // let healthPoints = new HealthPointsComponent(
@@ -1055,11 +1053,10 @@ export default class _SandboxController {
 
         let protection = new CharacterAttribute(
             CharacterAttributeID.Protection,
-            itemCharacterAttributeCollector,
             0,
         );
         // protection.increaseBaseValue(-100);
-        protection.increaseBaseValue(0);
+        protection.increase(0);
         // protection.increaseBaseValue(42);
         // protection.increaseBaseValue(100);
         // protection.increaseBaseValue(10000000);

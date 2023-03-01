@@ -198,7 +198,6 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EntityManagerInterface>(ServiceID.EntityManager),
             );
         });
-        (new ProductionConfigurator()).configure(container.get<Production>(ServiceID.Production));
 
         //Фасады
         // container.set<ItemStorageManager>(ContainerID.ItemStorageManager, (container) => {

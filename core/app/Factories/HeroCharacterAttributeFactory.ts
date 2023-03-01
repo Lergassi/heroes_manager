@@ -3,6 +3,7 @@ import {database} from '../../data/ts/database.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
+import CharacterAttributeManager from '../Components/CharacterAttributeManager.js';
 import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import HeroCharacterAttributeGenerator from '../Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import CharacterAttributeValueGeneratorByConfig from '../Services/CharacterAttributeValueGeneratorByConfig.js';
@@ -24,7 +25,6 @@ export default class HeroCharacterAttributeFactory {
         heroClassID: HeroClassID,
         characterAttributeID: CharacterAttributeID,
         level: number,
-        itemCharacterAttributeCollector: ItemCharacterAttributeCollector,   //todo: В декоратор.
         options?: { //todo: Времено пока в разработке. Далее для каждого класса будет своя логика без передачи из вне.
             baseValue?: number,
             // baseValueModifier?: CharacterAttributeValueModifier,
@@ -48,7 +48,6 @@ export default class HeroCharacterAttributeFactory {
 
         let characterAttribute = new CharacterAttribute(
             characterAttributeID,
-            itemCharacterAttributeCollector,
             // options?.baseValue ?? this._generatorByConfig.generate(heroClassID, characterAttributeID),
             // options?.baseValue ?? database.heroes.character_attributes.startValue(heroClassID, characterAttributeID),
             options?.baseValue ?? value,

@@ -1,5 +1,6 @@
 import debug, {log} from 'debug';
 import _ from 'lodash';
+import {sprintf} from 'sprintf-js';
 import {database} from '../../../data/ts/database.js';
 import {
     assert,
@@ -120,7 +121,7 @@ export default class ItemStackController implements ItemStackControllerInterface
      * @return Кол-во добавленных предметов. return = 0 - не добавлено ни одного предмета.
      */
     addItem(itemID: ItemID, count: number): number {
-        assert(database.items.data.hasItem(itemID), 'Предмет не найден.');
+        assert(database.items.data.hasItem(itemID), sprintf('Предмет "%s" не найден в базе данных.', itemID));
 
         if (count <= 0) return 0;
         if (!this.isFree() && !this.containItem(itemID)) return 0;
