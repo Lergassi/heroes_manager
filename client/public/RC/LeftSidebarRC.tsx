@@ -6,8 +6,6 @@ import GameRC from './GameRC.js';
 
 type LeftSidebarMenuItem = {
     panelID: UI_PanelID;
-    name: string;
-    icon: string;
     enable: boolean;
 };
 
@@ -26,16 +24,16 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
 
         this.state = {
             items: [
-                {panelID: UI_PanelID.Homepage, name: 'Главная', icon: '', enable: true},
-                {panelID: UI_PanelID.Tavern, name: 'Таверна', icon: '', enable: true},
-                {panelID: UI_PanelID.ItemStorages, name: 'Склад', icon: '', enable: true},
-                {panelID: UI_PanelID.Heroes, name: 'Герои', icon: '', enable: true},
-                {panelID: UI_PanelID.Locations, name: 'Локации', icon: '', enable: true},
-                {panelID: UI_PanelID.Production, name: 'Производство', icon: '', enable: true},
-                {panelID: undefined, name: 'Подземелья и рейды', icon: '', enable: false},
-                {panelID: undefined, name: 'Строительство', icon: '', enable: false},
-                {panelID: undefined, name: 'Исследования', icon: '', enable: false},
-                {panelID: undefined, name: 'PvP', icon: '', enable: false},
+                {panelID: UI_PanelID.Homepage, enable: true},
+                {panelID: UI_PanelID.Tavern, enable: true},
+                {panelID: UI_PanelID.ItemStorages, enable: true},
+                {panelID: UI_PanelID.Heroes, enable: true},
+                {panelID: UI_PanelID.Locations, enable: true},
+                {panelID: UI_PanelID.Production, enable: true},
+                {panelID: UI_PanelID.DungeonAndRaid, enable: false},
+                {panelID: UI_PanelID.Building, enable: false},
+                {panelID: UI_PanelID.Research, enable: false},
+                {panelID: UI_PanelID.PvP, enable: false},
             ],
         };
     }
@@ -57,7 +55,7 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
                         {/*<span className={'left-sidebar__icon-wrapper'}>*/}
                         {/*    <span className={'icon icon_Question01 icon_32'}></span>*/}
                         {/*</span>*/}
-                        <span className={'left-sidebar__menu-text'}>{items[i].name}</span>
+                        <span className={'left-sidebar__menu-text'}>{items[i].panelID}</span>
                     </a>
                 </div>);
         }

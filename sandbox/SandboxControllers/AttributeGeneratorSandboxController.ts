@@ -205,10 +205,10 @@ export default class AttributeGeneratorSandboxController extends AbstractSandbox
 
         console.log('enemies');
 
-        console.log('enemyHP 1 level', enemyCharacterAttributeGenerator.enemyMaxHealthPoints(1));
-        console.log('enemyHP 100 level', enemyCharacterAttributeGenerator.enemyMaxHealthPoints(100));
-        console.log('enemyAP 1 level', enemyCharacterAttributeGenerator.enemyAttackPower(1));
-        console.log('enemyAP 100 level', enemyCharacterAttributeGenerator.enemyAttackPower(100));
+        console.log('enemyHP 1 level', enemyCharacterAttributeGenerator.maxHealthPoints(1));
+        console.log('enemyHP 100 level', enemyCharacterAttributeGenerator.maxHealthPoints(100));
+        console.log('enemyAP 1 level', enemyCharacterAttributeGenerator.attackPower(1));
+        console.log('enemyAP 100 level', enemyCharacterAttributeGenerator.attackPower(100));
     }
 
     private _devItems() {

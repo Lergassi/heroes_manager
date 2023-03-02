@@ -31,12 +31,18 @@ export default class EnemyCharacterAttributeFactory {
         let value = 0;
         switch (characterAttributeID) {
             case CharacterAttributeID.MaxHealthPoints:
-                value = this._enemyCharacterAttributeGenerator.defaultEnemyMaxHealthPoints(level);
+                value = this._enemyCharacterAttributeGenerator.maxHealthPoints(level);
                 break;
             case CharacterAttributeID.AttackPower:
-                value = this._enemyCharacterAttributeGenerator.defaultEnemyAttackPower(level);
+                value = this._enemyCharacterAttributeGenerator.attackPower(level);
                 break;
         }
+
+        //hack До исправления расчетов для начальных уровней, пока не собрана экипировка.
+        // if (level <= 10) {
+        //     value = _.round(value * 0.5);
+        // }
+        //end hack
 
         let characterAttribute = new CharacterAttribute(
             characterAttributeID,

@@ -360,10 +360,10 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                             <div className={'widget__title'}>Управление</div>
                             <div className={'widget__content'}>
                                 {this.state.state === LocationHuntingState.Waiting ?
-                                    <button className={'btn btn_primary'} onClick={this.startHunting}>startHunting</button> :
-                                    <button className={'btn btn_primary'} onClick={this.stopHunting}>stopHunting</button>
+                                    <button className={'btn btn_primary'} onClick={this.startHunting}>START_HUNTING</button> :
+                                    <button className={'btn btn_primary'} onClick={this.stopHunting}>STOP_HUNTING</button>
                                 }
-                                <button className={'btn btn_primary'} onClick={this.getRewards}>getRewards</button>
+                                <button className={'btn btn_primary'} onClick={this.getRewards}>GET_REWARDS</button>
                                 {/*<button className={'btn btn_danger'}>Удалить локацию</button>*/}
                             </div>
                         </div>{/* end widget Управление */}
@@ -390,7 +390,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                                 <td>
                                                     <button className={'btn btn_default'} onClick={() => {
                                                         this.removeHero(hero.ID);
-                                                    }}>remove</button>
+                                                    }}>REMOVE</button>
                                                 </td>
                                             </tr>
                                         })}

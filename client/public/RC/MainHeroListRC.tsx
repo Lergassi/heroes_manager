@@ -179,14 +179,10 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                             <td>
                                                 <button className={'btn btn_default'} onClick={() => {
                                                     this.props.container.get<DetailHeroRC>(ServiceID.UI_DetailHero).updateHero(hero.hero, {show: true});
-                                                }}>
-                                                    detail
-                                                </button>
+                                                }}>DETAIL</button>
                                                 <button className={'btn btn_default'} onClick={() => {
                                                     hero.deleteHandler();
-                                                }}>
-                                                    delete
-                                                </button>
+                                                }}>DELETE</button>
                                             </td>
                                         </tr>
                                     })}

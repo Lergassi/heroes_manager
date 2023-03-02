@@ -16,14 +16,14 @@ export default class EnemyCharacterAttributeGenerator {
     // enemies.HealthPoints
     //**********************************
 
-    defaultEnemyMaxHealthPoints(level: number /* todo: enemyTypeID ratio */): number {
+    defaultMaxHealthPoints(level: number /* todo: enemyTypeID ratio */): number {
         return enemy_character_attributes_formulas.maxHealthPoints({
             defaultFinalHeroAttackPower: this._heroCharacterAttributeGenerator.defaultFinalHeroAttackPower(level),
             heroHitRatioToEnemy: config.default_hero_hit_ratio_to_enemy,
         });
     }
 
-    enemyMaxHealthPoints(level: number /* todo: enemyTypeID ratio */): number {
+    maxHealthPoints(level: number /* todo: enemyTypeID ratio */): number {
         return enemy_character_attributes_formulas.maxHealthPoints({
             defaultFinalHeroAttackPower: this._heroCharacterAttributeGenerator.defaultFinalHeroAttackPower(level),
             heroHitRatioToEnemy: config.default_hero_hit_ratio_to_enemy,
@@ -34,7 +34,7 @@ export default class EnemyCharacterAttributeGenerator {
     // enemies.AttackPower
     //**********************************
 
-    defaultEnemyAttackPower(level: number): number {
+    defaultAttackPower(level: number): number {
         return enemy_character_attributes_formulas.attackPower({
             heroHealthPoints: this._heroCharacterAttributeGenerator.defaultFinalHeroMaxHealthPoints(level),
             enemyDamageRatioToHero: config.default_enemy_damage_ratio_to_hero,
@@ -42,7 +42,7 @@ export default class EnemyCharacterAttributeGenerator {
         });
     }
 
-    enemyAttackPower(level: number): number {
+    attackPower(level: number): number {
         return enemy_character_attributes_formulas.attackPower({
             heroHealthPoints: this._heroCharacterAttributeGenerator.defaultFinalHeroMaxHealthPoints(level),
             heroHitRatioToEnemy: config.default_hero_hit_ratio_to_enemy,

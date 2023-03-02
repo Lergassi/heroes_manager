@@ -78,7 +78,7 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                             event.preventDefault();
                             this.props.production.getPreviousProduction(this.props.playerItemStorage);
                         }
-                        }>getPreviousProduction</button>
+                        }>GET_PREVIOUS_PRODUCTION</button>
                         <table className={'basic-table'}>
                             <tbody>
                                 {_.map(this.state.items, (item, index, collection) => {

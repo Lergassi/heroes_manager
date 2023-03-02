@@ -36,7 +36,8 @@ export default {
     // intelligence_to_attack_power_ratio: 2,
 
     //enemies
-    default_enemy_damage_ratio_to_hero: 0.3,
+    // default_enemy_damage_ratio_to_hero: 0.3,
+    default_enemy_damage_ratio_to_hero: 0.2,
     default_hero_hit_ratio_to_enemy: 0.15,
 
     //craft

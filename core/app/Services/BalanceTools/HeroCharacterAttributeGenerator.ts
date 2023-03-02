@@ -44,9 +44,17 @@ export default class HeroCharacterAttributeGenerator {
         let summaryRatio = this._summaryRatio(heroClassID, ItemAttributeID.HealthPoints);
         let itemLevel = this.itemLevelsCount(level);
 
-        return _.round(
+        let value = _.round(
             ( config.start_item_level_health_points + config.item_level_increase_health_points * ( itemLevel - 1) ) * summaryRatio
         );
+
+        //hack
+        if (level <= 5) {
+            value = _.round(value * 0.1);
+        }
+        //end hack
+
+        return value;
     }
 
     finalHeroMaxHealthPoints(level: number, heroClassID): number {
@@ -101,10 +109,18 @@ export default class HeroCharacterAttributeGenerator {
         values.itemLevel = this.itemLevelsCount(level);
         values.summaryRatio = this._summaryRatio(heroClassID, ItemAttributeID.AttackPower);
 
-        return _.round(
+        let value = _.round(
             ( config.start_item_level_attack_power + config.item_level_increase_attack_power * ( values.itemLevel - 1 ) ) *
             values.summaryRatio
         );
+
+        //hack
+        if (level <= 5) {
+            value = _.round(value * 0.1);
+        }
+        //end hack
+
+        return value;
     }
 
     /**
@@ -120,21 +136,6 @@ export default class HeroCharacterAttributeGenerator {
     //region tools todo: Убрать в другое место.
     //**********************************
 
-    /**
-     * Значение нужное для формулы после её упрощения (выноса за скобки). Пока тут.
-     * @param heroClassID
-     * @param itemAttributeID
-     * @private
-     */
-    private _summaryRatio(heroClassID: HeroClassID, itemAttributeID: ItemAttributeID): number {
-        let summaryRatio = 0;
-        database.hero_classes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
-            summaryRatio += _.round(database.item_categories.ratios.ratioByItemAttribute(itemCategoryID, itemAttributeID) * count, 2);
-        });
-
-        return _.round(summaryRatio, 2);
-    }
-
     itemLevelsCount(level: number): number {
         return item_attributes_formulas.heroLevelCorrespondsToItemLevel({
             heroLevel: level,
@@ -147,5 +148,21 @@ export default class HeroCharacterAttributeGenerator {
             heroLevel: level,
             ratio: config.hero_level_corresponds_to_item_level_ratio,
         });
+    }
+
+    /**
+     * Значение нужное для формулы после её упрощения (выноса за скобки). Пока тут.
+     * todo: Перенести в формулу.
+     * @param heroClassID
+     * @param itemAttributeID
+     * @private
+     */
+    private _summaryRatio(heroClassID: HeroClassID, itemAttributeID: ItemAttributeID): number {
+        let summaryRatio = 0;
+        database.hero_classes.equip_sets.equipSet(heroClassID, (itemCategoryID, count) => {
+            summaryRatio += _.round(database.item_categories.ratios.ratioByItemAttribute(itemCategoryID, itemAttributeID) * count, 2);
+        });
+
+        return _.round(summaryRatio, 2);
     }
 }

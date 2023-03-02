@@ -152,7 +152,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                         <td>
                                             <button className={'btn btn_default'} onClick={() => {
                                                 this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
-                                            }}>detail</button>
+                                            }}>DETAIL</button>
                                         </td>
                                     </tr>
                                 })}
