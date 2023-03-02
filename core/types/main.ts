@@ -59,7 +59,7 @@ export type UI_ItemStorage = {
 }
 
 export type UI_ItemStorageSlot = {
-    ID: number;
+    index: number;
     item: UI_ItemCount;
 }
 

@@ -321,7 +321,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
 
     clearEquipSlot(equipSlotID: EquipSlotID) {
         // this.state.hero.get<EquipController>(ComponentID.EquipController).clear(equipSlotID);
-        this.state.hero.get<EquipController>(ComponentID.EquipController).removeEquip(equipSlotID, this.props.itemStorage);
+        this.state.hero.get<EquipController>(ComponentID.EquipController).removeEquipTo(equipSlotID, this.props.itemStorage);
     }
 
     render() {
@@ -388,7 +388,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         return <tr key={ID}>
             <td>{ID}</td>
             <td>{this.state[ID] ? this.state[ID] : 'free'}</td>
-            <td><button className={'btn btn_default'} onClick={this.clearEquipSlot.bind(this, ID)}>clear</button></td>
+            <td><button className={'btn btn_default'} onClick={this.clearEquipSlot.bind(this, ID)}>CLEAR</button></td>
         </tr>
     }
 }

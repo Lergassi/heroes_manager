@@ -34,12 +34,12 @@ export default class EquipController {
         this._hero.get<EquipSlotInterface>(ID)?.clear();
     }
 
-    removeEquip(ID: EquipSlotID, itemStorage: ItemStorageInterface): boolean {
+    removeEquipTo(ID: EquipSlotID, itemStorage: ItemStorageInterface): boolean {
         if (!this._hero.get<EquipSlotInterface>(ID).removeEquipTo(itemStorage)) {
             return false;
         }
 
-        this.clear(ID);
+        // this.clear(ID);
 
         return true;
     }

@@ -37,8 +37,8 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
         this.state = {
             slots: _.map(_.range(0, this._size), (index) => {
                 return {
-                    ID: index,
-                    item: {
+                    index: index,
+                    item : {
                         itemID: undefined,
                         count : undefined,
                     },
@@ -88,7 +88,7 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
                                     return <tr key={index}>
                                         <td>{slot.item.itemID}</td>
                                         <td>{slot.item.count}</td>
-                                        <td><button className={'btn btn_default'} onClick={this.clear.bind(this, index)}>clear</button></td>
+                                        <td><button className={'btn btn_danger'} onClick={this.clear.bind(this, index)}>DELETE</button></td>
                                     </tr>
                                 })}
                             </tbody>

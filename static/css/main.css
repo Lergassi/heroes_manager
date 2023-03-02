@@ -235,13 +235,18 @@
     margin-bottom: 15px;
 }
 
+.basic-table tr {
+    height: 36px;
+}
+
 .basic-table th {
     text-align: left;
 }
 
 .basic-table th,
 .basic-table td {
-    line-height: 36px;
+    /*line-height: 36px;*/
+    /*height: 36px;*/
 }
 
 .basic-table th,

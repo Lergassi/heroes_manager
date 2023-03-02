@@ -188,6 +188,6 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     }
 
     private async _configProduction() {
-        (new ProductionConfigurator()).configure(this.container.get<Production>(ServiceID.Production));
+        // (new ProductionConfigurator()).configure(this.container.get<Production>(ServiceID.Production));
     }
 }

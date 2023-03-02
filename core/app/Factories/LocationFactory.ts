@@ -71,7 +71,7 @@ export default class LocationFactory {
     }
 
     create(
-        type: LocationTypeID,
+        locationTypeID: LocationTypeID,
         level: number,
         options?: {
             configureStrategy: string,
@@ -96,7 +96,7 @@ export default class LocationFactory {
         // ];
 
         let location = locationGO.set<Location>(ComponentID.Location, new Location(
-            type,
+            locationTypeID,
             level,
             this._itemStackFactory,
             itemStorage,

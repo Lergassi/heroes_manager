@@ -74,13 +74,21 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                 <div className={'widget'}>
                     <div className={'widget__title'}>Производство</div>
                     <div className={'widget__content'}>
-                        <button className={'btn btn_default'} onClick={(event) => {
-                            event.preventDefault();
-                            this.props.production.getPreviousProduction(this.props.playerItemStorage);
-                        }
-                        }>GET_PREVIOUS_PRODUCTION</button>
+                        <div className={'block'}>
+                            <button className={'btn btn_default'} onClick={(event) => {
+                                event.preventDefault();
+                                this.props.production.getPreviousProduction(this.props.playerItemStorage);
+                            }
+                            }>GET_PREVIOUS_PRODUCTION</button>
+                        </div>
                         <table className={'basic-table'}>
                             <tbody>
+                                <tr>
+                                    <th>ITEM_ID</th>
+                                    <th>RESULT_COUNT</th>
+                                    <th>REQUIRE_ITEMS</th>
+                                    <th>CTRL</th>
+                                </tr>
                                 {_.map(this.state.items, (item, index, collection) => {
                                     return <tr key={index}>
                                         <td>{item.itemID}</td>

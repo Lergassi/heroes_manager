@@ -77,7 +77,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
     clear(): boolean {
         if (!this.canRemoveEquip()) {
-            debug(DebugNamespaceID.Throw)(sprintf('Ошибка очищения слота.'));
+            debug(DebugNamespaceID.Throw)(sprintf('Ошибка удаления экипировки из слота.'));
             return false;
         }
 
@@ -98,7 +98,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
     removeEquipTo(itemStorage: ItemStorageInterface): boolean {
         if (!this.canRemoveEquip()) {
-            debug(DebugNamespaceID.Throw)(sprintf('Ошибка очищения слота.'));
+            debug(DebugNamespaceID.Throw)(sprintf('Ошибка удаления экипировки из слота.'));
             return false;
         }
 
@@ -131,7 +131,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
     canRemoveEquip(): boolean {
         if (this.isFree()) {
-            debug(DebugNamespaceID.Throw)(sprintf('Слот пустой.'));
+            debug(DebugNamespaceID.Throw)(sprintf('Слот экипировки пустой.'));
             return false;
         }
 

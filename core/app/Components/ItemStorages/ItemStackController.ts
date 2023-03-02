@@ -34,7 +34,7 @@ export default class ItemStackController implements ItemStackControllerInterface
 
     constructor() {
         this._itemID = null;
-        this._count = 0;
+        this._count = null;
     }
 
     // /**
@@ -166,7 +166,7 @@ export default class ItemStackController implements ItemStackControllerInterface
         }
 
         if (this._count <= 0) {
-            this._itemID = null;
+            this.clear();
         }
 
         return reminder;
@@ -214,12 +214,12 @@ export default class ItemStackController implements ItemStackControllerInterface
 
     clear(): void {
         this._itemID = null;
-        this._count = 0;
+        this._count = null;
     }
 
     moveToEquipSlot(equipSlot: EquipSlotInterface): boolean {
         if (this.isFree()) {
-            debug(DebugNamespaceID.Throw)('Слот пустой.');
+            debug(DebugNamespaceID.Throw)('Слот сумки пустой.');
             return false;
         }
 
@@ -235,7 +235,7 @@ export default class ItemStackController implements ItemStackControllerInterface
 
     moveToEquipSlotByEquipController(equipSlotID: EquipSlotID, equipController: EquipController): boolean {
         if (this.isFree()) {
-            debug(DebugNamespaceID.Throw)('Слот пустой.');
+            debug(DebugNamespaceID.Throw)('Слот сумки пустой.');
             return false;
         }
 
@@ -251,6 +251,7 @@ export default class ItemStackController implements ItemStackControllerInterface
 
     renderByRequest(ui: ItemStackControllerInterfaceRender): void {
         // ui.updateItem?.(this._item ? this._item.id : undefined, this._count > 0 ? this._count : undefined);
+        // ui.updateItem?.(this._itemID, this.isFree() ? null : this._count);
         ui.updateItem?.(this._itemID, this._count);
     }
 

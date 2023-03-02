@@ -72,7 +72,7 @@ export default class EquipItemListRC extends React.Component<EquipItemListRCProp
 
             if (_.isNil(state.selectedItemStorageID) && itemStorages.length) {
                 newState.selectedItemStorageID = itemStorages[0].ID;
-                newState.selectedItemStorageSlotID = itemStorages[0].slots[0].ID;
+                newState.selectedItemStorageSlotID = itemStorages[0].slots[0].index;
             }
 
             return newState;
@@ -116,11 +116,11 @@ export default class EquipItemListRC extends React.Component<EquipItemListRCProp
                         return _.map(itemStorage.slots, (slot, itemStorageSlotIndex) => {
                             if (!slot.item.itemID) return;
 
-                            return <option key={itemStorageSlotIndex} value={[String(itemStorage.ID), String(slot.ID)]}>{slot.item.itemID}</option>
+                            return <option key={itemStorageSlotIndex} value={[String(itemStorage.ID), String(slot.index)]}>{slot.item.itemID}</option>
                         });
                     })}
                 </select>
-                <button className={'btn btn_default'} onClick={this.move}>move</button>
+                <button className={'btn btn_default'} onClick={this.move}>MOVE</button>
             </div>
         );
     }
