@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import Endurance from '../../../core/app/Components/Endurance.js';
 import EquipController from '../../../core/app/Components/EquipController.js';
 import Experience from '../../../core/app/Components/Experience.js';
 import HealthPoints from '../../../core/app/Components/HealthPoints.js';
@@ -337,6 +338,9 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                             <button className={'btn btn_default'} onClick={() => {
                                 this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
                             }}>RESURRECT</button>
+                            <button className={'btn btn_default'} onClick={() => {
+                                this.state.hero.get<Endurance>(ComponentID.Endurance).reset();
+                            }}>RESET_ENDURANCE</button>
                             {/*<button className={'btn btn_danger'} onClick={() => {*/}
                             {/*    this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).kill();*/}
                             {/*}}>KILL</button>*/}

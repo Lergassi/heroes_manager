@@ -13,6 +13,7 @@ import AverageItemLevel from '../Components/AverageItemLevel.js';
 import CharacterAttributeManager from '../Components/CharacterAttributeManager.js';
 import AttackPowerDependentIncreaseDecorator
     from '../Components/CharacterAttributes/AttackPowerDependentIncreaseDecorator.js';
+import Endurance from '../Components/Endurance.js';
 import EquipController from '../Components/EquipController.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import Experience from '../Components/Experience.js';
@@ -21,7 +22,7 @@ import HealthPointsController from '../Components/HealthPointsController.js';
 import HealthPoints from '../Components/HealthPoints.js';
 import HeroActivityStateController from '../Components/HeroActivityStateController.js';
 import HeroComponent from '../Components/HeroComponent.js';
-import LifeStateController from '../Components/LifeStateController.js';
+import ActionStateController from '../Components/ActionStateController.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import HeroClass from '../Entities/HeroClass.js';
@@ -73,8 +74,10 @@ export default class HeroFactory {
         hero.name = 'Hero: ' + heroClass.id;
         hero.addTags('#hero');
 
-        let lifeStateController = hero.set(ComponentID.LifeStateController, new LifeStateController());
+        let actionStateController = hero.set(ComponentID.LifeStateController, new ActionStateController());
         hero.set(ComponentID.HeroActivityStateController, new HeroActivityStateController());
+
+        let endurance = hero.set(ComponentID.Endurance, new Endurance(actionStateController));
 
         let heroComponent = hero.set(ComponentID.Hero, new HeroComponent(
             heroClass.name,
@@ -216,7 +219,7 @@ export default class HeroFactory {
         //К компоненту с очками здоровья возможно не будет доступа вообще.
         let healthPoints = new HealthPoints(
             hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxHealthPoints,
-            lifeStateController,
+            actionStateController,
         );
         hero.set(ComponentID.HealthPointsController, new HealthPointsController(healthPoints));
         // let damageController = new ArmorDecorator(
@@ -228,7 +231,8 @@ export default class HeroFactory {
 
         hero.set<AttackControllerInterface>(ComponentID.AttackController, new AttackController(
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
-            lifeStateController,
+            actionStateController,
+            endurance,
         ));
 
         //todo: Очки магии добавляются только для магов. Магов надо помечать или настраивать для каждого класса по отдельности.
@@ -242,7 +246,7 @@ export default class HeroFactory {
         //     hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxMagicPoints,
         // ));
 
-        hero.set(ComponentID.Gatherer, new Gatherer(lifeStateController));
+        hero.set(ComponentID.Gatherer, new Gatherer(actionStateController));
 
         return hero;
     }

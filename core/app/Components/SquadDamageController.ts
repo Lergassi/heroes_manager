@@ -10,7 +10,7 @@ import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
 import {FightGroupControllerInterface} from '../Interfaces/FightGroupControllerInterface.js';
 import CharacterAttribute from './CharacterAttribute.js';
 import HealthPoints from './HealthPoints.js';
-import LifeStateController from './LifeStateController.js';
+import ActionStateController from './ActionStateController.js';
 
 //todo: Перенести в отряд.
 export interface SquadDamageControllerRenderInterface {
@@ -32,20 +32,6 @@ export default class SquadDamageController implements DamageControllerInterface 
         this._count = count;
     }
 
-    canDamage(): boolean {
-        if (this._count <= 0) {
-            debug(DebugNamespaceID.Log)('Отряд мёрт.');
-            return false;
-        }
-
-        if (this._healthPoints.isDead) {
-            debug(DebugNamespaceID.Error)('Враг в отряде мертвый.');
-            return false;
-        }
-
-        return false;
-    }
-
     damage(damage: number, rewardOptions?: RewardOptions): number {
         let resultDamage = this._healthPoints.damage(damage, rewardOptions);
 
@@ -58,6 +44,20 @@ export default class SquadDamageController implements DamageControllerInterface 
         }
 
         return resultDamage;
+    }
+
+    canDamage(): boolean {
+        if (this._count <= 0) {
+            debug(DebugNamespaceID.Log)('Отряд мёрт.');
+            return false;
+        }
+
+        if (this._healthPoints.isDead) {
+            debug(DebugNamespaceID.Error)('Враг в отряде мертвый.');
+            return false;
+        }
+
+        return false;
     }
 
     renderByRequest(ui: SquadDamageControllerRenderInterface): void {

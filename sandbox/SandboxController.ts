@@ -1,4 +1,4 @@
-import LifeStateController from '../core/app/Components/LifeStateController.js';
+import ActionStateController from '../core/app/Components/ActionStateController.js';
 import ContainerInterface from '../core/source/ContainerInterface.js';
 import Container from '../core/source/Container.js';
 import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
@@ -690,7 +690,7 @@ export default class SandboxController {
         let heroFactory = this._container.get<HeroFactory>(ServiceID.HeroFactory);
 
         // let stateController1 = new HeroActivityStateController();
-        let stateController1 = new LifeStateController();
+        let stateController1 = new ActionStateController();
         // stateController1.addState('state1');
         // stateController1.addState('state2');
         // stateController1.addState('state3');
@@ -717,7 +717,7 @@ export default class SandboxController {
         );
         let healthPoints2 = new HealthPoints(
             new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, 100),
-            new LifeStateController(),
+            new ActionStateController(),
         );
         // console.log(1);
         healthPoints1.kill();
@@ -788,7 +788,7 @@ export default class SandboxController {
         let gatheringPoint = new Vein(ItemID.Wood, 32);
         // let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 1);
 
-        let stateController = new LifeStateController();
+        let stateController = new ActionStateController();
         // stateController.addState(CharacterStateCode.Dead);
         // let gatherer = new Gatherer(stateController, itemStorageManager);
         let gatherer = new Gatherer(stateController);

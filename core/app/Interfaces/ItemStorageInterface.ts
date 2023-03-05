@@ -32,7 +32,7 @@ export default interface ItemStorageInterface {
      *
      * @param itemID
      * @param count
-     * @return Остаток.
+     * @return Сколько можно добавить из указанных.
      */
     canAddItem(itemID: ItemID, count: number): number;
     clear(index: number): void;

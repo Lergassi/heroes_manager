@@ -142,7 +142,19 @@ export default class ItemStorageController implements ItemStorageInterface {
     }
 
     canAddItem(itemID: ItemID, count: number): number {
-        return 0;
+        let totalCanAddItemCount = 0
+        let itemStackControllerCanAddItemCount = 0;
+        for (let i = 0; i < this._itemStorages.length; i++) {
+            itemStackControllerCanAddItemCount = this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage).canAddItem(itemID, count);
+            totalCanAddItemCount += itemStackControllerCanAddItemCount;
+            count -= itemStackControllerCanAddItemCount;
+
+            itemStackControllerCanAddItemCount = 0;
+
+            if (count <= 0) break;
+        }
+
+        return totalCanAddItemCount;
     }
 
     //todo: Тут явно это не нужно. Надо разделить интерфейс для сумки и коллекции сумок. Название временное.

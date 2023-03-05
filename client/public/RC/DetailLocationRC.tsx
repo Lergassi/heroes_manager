@@ -62,6 +62,8 @@ export interface DetailLocationRCHeroElement {
     currentHealthPoints: number;
     maxHealthPoints: number;
     isDead: boolean;
+    endurance: number;
+    maxEndurance: number;
     //управление
 }
 
@@ -442,7 +444,10 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                 <table className={'basic-table'}>
                                     <tbody>
                                         <tr>
-                                            <th>HeroClassID</th>
+                                            <th>Hero</th>
+                                            {/*<th>Endurance</th>*/}
+                                            {/*<th>ВЫН/ВНС/ВНС/STM</th>*/}
+                                            <th>END</th>
                                             <th>Level</th>
                                             <th>HP</th>
                                             <th>AP</th>
@@ -451,6 +456,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                         {_.map(heroes, (hero, index) => {
                                             return <tr key={index}>
                                                 <td>{hero.heroClassName} {hero.isDead ? '(X)' : ''}</td>
+                                                <td>{hero.endurance}/{hero.maxEndurance}</td>
                                                 <td>{hero.level}</td>
                                                 <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
                                                 <td>{hero.attackPower}</td>
@@ -548,9 +554,15 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
 
                                                 if (!item.item?.itemID) return;
 
-                                                let addedItemsCount = this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item.item.itemID, 1);
-                                                this.state.location.get<Location>(ComponentID.Location).removeItem(item.item.itemID, addedItemsCount);
-
+                                                //todo: Отдельный класс для логики с отменой перемещения.
+                                                if (
+                                                    this.state.location.get<Location>(ComponentID.Location).heroesItems.hasItem(item.item.itemID, 1) &&
+                                                    this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).canAddItem(item.item.itemID, 1)
+                                                ) {
+                                                    if (this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item.item.itemID, 1) === 1) {
+                                                        this.state.location.get<Location>(ComponentID.Location).heroesItems.removeItem(item.item.itemID, 1);
+                                                    }
+                                                }
                                                 // this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).removeByIndexTo();
                                             }}>REMOVE</button></td>
                                         </tr>

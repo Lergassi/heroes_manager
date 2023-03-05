@@ -23,6 +23,7 @@ import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import LevelInterface from '../Interfaces/LevelInterface.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import CharacterAttribute from './CharacterAttribute.js';
+import Endurance from './Endurance.js';
 import Experience from './Experience.js';
 import FightController from './FightController.js';
 import FightGroupController from './FightGroupController.js';
@@ -31,7 +32,7 @@ import HealthPointsController from './HealthPointsController.js';
 import HealthPoints from './HealthPoints.js';
 import HeroActivityStateController, {HeroActivityStateCode} from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
-import LifeStateController from './LifeStateController.js';
+import ActionStateController from './ActionStateController.js';
 import SquadDamageController from './SquadDamageController.js';
 import Vein from './Vein.js';
 
@@ -64,17 +65,17 @@ export type GatheringItemPoint = {
     readonly type: GatheringPointTypeID;
 }
 
-export enum LocationEventCode {
-    Start = 'Location.Start',
-    Stop = 'Location.Stop',
-    AddHero = 'Location.AddHero',
-    RemoveHero = 'Location.RemoveHero',
-    AddEnemy = 'Location.AddEnemy',
-    RemoveEnemy = 'Location.RemoveEnemy',
-    GatheringItems = 'Location.GatheringItems',
-    GetItems = 'Location.GetItems',
-    Update = 'Location.Update',
-}
+// export enum LocationEventCode {
+//     Start = 'Location.Start',
+//     Stop = 'Location.Stop',
+//     AddHero = 'Location.AddHero',
+//     RemoveHero = 'Location.RemoveHero',
+//     AddEnemy = 'Location.AddEnemy',
+//     RemoveEnemy = 'Location.RemoveEnemy',
+//     GatheringItems = 'Location.GatheringItems',
+//     GetItems = 'Location.GetItems',
+//     Update = 'Location.Update',
+// }
 
 export interface LocationRender {
     updateID?(ID: string): void;
@@ -175,7 +176,6 @@ export default class Location {
 
         if (!this._heroFightGroupController.addCharacter(hero)) return false;
         this._heroes.push(hero);    //todo: Не будет работать после удаления исключений.
-        EventSystem.event(LocationEventCode.AddHero, this);    //todo: Или достаточно события из группы? Может как то связать их? "Цепочка" событыий.
 
         hero.get<HeroActivityStateController>(ComponentID.HeroActivityStateController).setState(HeroActivityStateCode.InLocation);
 
@@ -189,7 +189,6 @@ export default class Location {
 
         if (!this._heroFightGroupController.removeCharacter(hero)) return false;
         _.pull(this._heroes, hero);
-        EventSystem.event(LocationEventCode.RemoveHero, this);
         hero.get<HeroActivityStateController>(ComponentID.HeroActivityStateController).free();
 
         return true;
@@ -230,33 +229,34 @@ export default class Location {
             itemStorage: this._itemStorage,
         };
         this._intervalID = setInterval(() => {
-            this._gather();
-
-            this._fightController.fight(rewardOptions);
-            separate();
-
             for (let i = 0; i < this._heroes.length; i++) {
                 this._heroes[i].get<HealthPointsController>(ComponentID.HealthPointsController)?.update(this._heroGroupItemStorage);
             }
 
+            this._fightController.fight(rewardOptions);
+            separate();
+
+            this._gather();
+
             //И другие действия...
         }, this._options.intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
         debug(DebugNamespaceID.Log)('Охота запущена.');
-        EventSystem.event(LocationEventCode.Start, this);
 
         return true;
     }
 
-    stopHunting() {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
+    stopHunting(): boolean {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
         if (this._huntingState !== LocationHuntingState.Hunting) {
-            throw new AppError('Охота не запущена.');
+            debug(DebugNamespaceID.Log)('Охота не запущена.');
+            return false;
         }
 
         this._huntingState = LocationHuntingState.Waiting;
         // this._heroGroupComponent.unblock(this);
         clearInterval(this._intervalID);
         debug(DebugNamespaceID.Log)('Охота остановлена.');
-        EventSystem.event(LocationEventCode.Stop, this);
+
+        return true;
     }
 
     toggleState(): void {
@@ -275,7 +275,6 @@ export default class Location {
 
         if (rewardOptions.itemStorage) this._itemStorage.moveAllItemsTo(rewardOptions.itemStorage);
         if (rewardOptions.wallet) this._wallet.moveAllTo(rewardOptions.wallet);
-        EventSystem.event(LocationEventCode.Update, this);
     }
 
     canModify(): boolean {
@@ -330,46 +329,54 @@ export default class Location {
     renderByRequest(ui: LocationRender): void {
         let heroes: DetailLocationRCHeroElement[] = [];
         for (let i = 0; i < this._heroes.length; i++) {
-            let data: DetailLocationRCHeroElement = {
-                ID: String(this._heroes[i].ID),
-                attackPower: 0,
+            let hero: DetailLocationRCHeroElement = {
+                ID                 : String(this._heroes[i].ID),
+                attackPower        : 0,
                 currentHealthPoints: 0,
-                heroClassName: '',
-                isDead: false,
-                level: 0,
-                maxHealthPoints: 0,
+                heroClassName      : '',
+                isDead             : false,
+                level              : 0,
+                maxHealthPoints    : 0,
+                endurance          : 0,
+                maxEndurance       : 0,
             };
 
             //todo: На каждого героя нужно сделать свою функцию в переменной.
             this._heroes[i].get<HeroComponent>(ComponentID.Hero).renderByRequest({
                 updateHeroClassName(value: string) {
-                    data.heroClassName = value;
+                    hero.heroClassName = value;
                 },
             });
             this._heroes[i].get<Experience>(ComponentID.Experience).renderByRequest({
                 updateExp(value: number): void {
 
                 }, updateLevel(value: number): void {
-                    data.level = value;
+                    hero.level = value;
                 }, updateTotalExpToLevelUp(value: number): void {
 
                 },
             });
             this._heroes[i].get<CharacterAttribute>(CharacterAttributeID.AttackPower).renderByRequest({
                 updateCharacterAttributeFinalValue(ID: CharacterAttributeID, value: number): void {
-                    data.attackPower = value;
+                    hero.attackPower = value;
                 },
             });
             this._heroes[i].get<HealthPoints>(ComponentID.HealthPoints).renderByRequest({
                 updateHealthPoints(currentHealthPoints: number, maxHealthPoints: number): void {
-                    data.currentHealthPoints = currentHealthPoints;
-                    data.maxHealthPoints = maxHealthPoints;
+                    hero.currentHealthPoints = currentHealthPoints;
+                    hero.maxHealthPoints = maxHealthPoints;
                 }, updateDeadState(isDead: boolean): void {
-                    data.isDead = isDead;
+                    hero.isDead = isDead;
+                },
+            });
+            this._heroes[i].get<Endurance>(ComponentID.Endurance).renderByRequest({
+                update(endurance: number, max: number) {
+                    hero.endurance = endurance;
+                    hero.maxEndurance = max;
                 },
             });
 
-            heroes.push(data);
+            heroes.push(hero);
         }
 
         let enemies: DetailLocationRCEnemyElement[] = [];
@@ -482,7 +489,7 @@ export default class Location {
             return false;
         }
 
-        if (!hero.get<LifeStateController>(ComponentID.LifeStateController).canAction()) {
+        if (!hero.get<ActionStateController>(ComponentID.LifeStateController).canAction()) {
             //todo: Нужно передавать объект собирающий ошибки. А в начала или конце списка добавлять заголовок для серии ошибок.
             return false;
         }
@@ -517,7 +524,6 @@ export default class Location {
 
                 this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._veins[j], this._itemStorage);
                 // if (this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._veins[j], this._itemStorage)) {
-                EventSystem.event(LocationEventCode.GatheringItems, this);
                 // }
                 // if (this._veins[j].gather3(this._itemStorage)) {
                 //     EventSystem.event(LocationEventCode.GatheringItems, this);

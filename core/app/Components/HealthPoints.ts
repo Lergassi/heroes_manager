@@ -8,7 +8,7 @@ import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterfa
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
 import {HeroActivityStateCode} from './HeroActivityStateController.js';
-import LifeStateController, {CharacterLifeStateCode} from './LifeStateController.js';
+import ActionStateController, {CharacterActionStateCode} from './ActionStateController.js';
 
 export enum HealthPointsComponentEventCode {
     Damage = 'HealthPointsComponent.Damage',
@@ -25,7 +25,7 @@ export default class HealthPoints implements DamageControllerInterface {
     private _currentHealthPoints: number;
     private readonly _maxHealthPoints: CharacterAttributeInterface;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
-    private readonly _lifeStateController: LifeStateController;
+    private readonly _actionStateController: ActionStateController;
     private readonly _afterDiedCallback: Function;
 
     get currentHealthPoints(): number {
@@ -55,16 +55,16 @@ export default class HealthPoints implements DamageControllerInterface {
 
     constructor(
         maxHealthPoints: CharacterAttributeInterface,
-        lifeStateController: LifeStateController,
+        actionStateController: ActionStateController,
         afterDiedCallback?: Function,
     ) {
         assertNotNil(maxHealthPoints);
-        assertNotNil(lifeStateController);
+        assertNotNil(actionStateController);
 
         this._maxHealthPoints = maxHealthPoints;
         this._currentHealthPoints = maxHealthPoints.finalValue;
         this._isDead = false;
-        this._lifeStateController = lifeStateController;
+        this._actionStateController = actionStateController;
         this._afterDiedCallback = afterDiedCallback; //todo: Скрыть - логика передачи лута будет всегда. Позже в виде отдельного класса.
     }
 
@@ -73,10 +73,10 @@ export default class HealthPoints implements DamageControllerInterface {
     damage(damage: number, enemyRewardOptions?: RewardOptions): number {
         assertIsGreaterThanOrEqual(damage, 0);
 
-        // if (!this._lifeStateController.canAction()) {
+        // if (!this._actionStateController.canAction()) {
         if (!this.canDamage()) {
             debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
-            return;
+            return 0;   //todo: @ts_bug Было return при объявлении возвращаемого значения у функции как number. ts не выдавал ошибку и была ошибка в логике NaN при подсчете урона.
         }
 
         damage = _.floor(damage, 0);    //todo: Округление. Выбрать место. Для damage сделть отдельный класс.
@@ -107,8 +107,8 @@ export default class HealthPoints implements DamageControllerInterface {
         this._currentHealthPoints = 0;
         this._isDead = true;
         debug(DebugNamespaceID.Log)('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
-        // this._lifeStateController.state('Dead', 'State message: Персонаж мертвый.');
-        this._lifeStateController.setState(CharacterLifeStateCode.Dead);
+        // this._actionStateController.state('Dead', 'State message: Персонаж мертвый.');
+        this._actionStateController.addState(CharacterActionStateCode.Dead);
         if (this._afterDiedCallback && enemyRewardOptions) {
             this._afterDiedCallback(enemyRewardOptions);
         }
@@ -149,34 +149,35 @@ export default class HealthPoints implements DamageControllerInterface {
     }
 
     resurrect(): boolean {
-        // if (this._lifeStateController.canAction()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
+        // if (this._actionStateController.canAction()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
         if (!this.canResurrect()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
             debug(DebugNamespaceID.Throw)('Персонаж не может быть воскрешен.');   //todo: Или универсальное сообщение, например "Нельзя совершить подобное действие."
             return false;
         }
 
-        this._currentHealthPoints = this._maxHealthPoints.finalValue;
+        this._currentHealthPoints = this._maxHealthPoints.value;
         this._isDead = false;
-        this._lifeStateController.setState(CharacterLifeStateCode.Life);
-        debug(DebugNamespaceID.Log)('Персонаж воскрес.');
+        this._actionStateController.removeState(CharacterActionStateCode.Dead);
+        debug(DebugNamespaceID.Log)('Персонаж воскрешен.');
 
         return true;
     }
 
     canDamage(): boolean {
-        return this._lifeStateController.canAction();
+        return this._actionStateController.canAction();
     }
 
     canKill(): boolean {
-        return this._lifeStateController.canAction();
+        return this._actionStateController.canAction();
     }
 
     canHeal(): boolean {
-        return this._lifeStateController.canAction();
+        return this._actionStateController.canAction();
     }
 
     canResurrect(): boolean {
-        return !this._lifeStateController.canAction();
+        // return !this._actionStateController.canAction();
+        return true;    //Воксресить героя ничего не должно мешать.
     }
 
     renderByRequest(ui: HealthPointsRender): void {

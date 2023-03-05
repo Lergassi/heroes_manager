@@ -39,6 +39,8 @@ export class MainHeroListRCElement {
     state: string;
     averageItemLevel: number;
 
+    endurance: number;
+    maxEndurance: number;
     level: number;
     exp: number;
     totalExpToLevelUp: number;
@@ -156,6 +158,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                 <tr className={''}>
                                     {/*<th></th>*/}
                                     <th>HeroClassID (ID)</th>
+                                    <th>Endurance</th>
                                     <th>Level</th>
                                     <th>HeroRole</th>
                                     <th>ActivityState</th>
@@ -170,6 +173,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                     {_.map(this.state.heroes, (hero, index) => {
                                         return <tr key={index}>
                                             <td>{hero.heroClassName} ({hero.ID}) {hero.isDead ? 'X' : ''}</td>
+                                            <td>{hero.endurance}/{hero.maxEndurance}</td>
                                             <td>{hero.level}</td>
                                             <td>{hero.heroRoleName}</td>
                                             <td>{hero.state}</td>

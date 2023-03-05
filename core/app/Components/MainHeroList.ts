@@ -10,16 +10,15 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import {unsigned} from '../../types/main.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import HeroClass from '../Entities/HeroClass.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import AverageItemLevel from './AverageItemLevel.js';
+import Endurance from './Endurance.js';
 import Experience from './Experience.js';
 import HealthPoints from './HealthPoints.js';
 import HeroActivityStateController from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
-import TakeComponent from './TakeComponent.js';
 
 export enum MainHeroListComponentEventCode {
     CreateHero = 'MainHeroListComponent.CreateHero',
@@ -144,27 +143,30 @@ export default class MainHeroList {
         let heroes: MainHeroListRCElement[] = [];
         for (let i = offset; i < heroesForPage && i < this._heroes.length; i++) {
             let hero: MainHeroListRCElement = {
-                hero: this._heroes[i],
-                ID: '',
-                agility: 0,
-                attackPower: 0,
+                endurance          : 0,
+                maxEndurance: 0,
+                hero               : this._heroes[i],
+                ID                 : '',
+                agility            : 0,
+                attackPower        : 0,
                 currentHealthPoints: 0, state: '',
-                exp: 0,
-                heroClassName: '',
-                heroRoleName: '',
-                intelligence: 0,
-                averageItemLevel: 0,
+                exp                : 0,
+                heroClassName      : '',
+                heroRoleName       : '',
+                intelligence       : 0,
+                averageItemLevel   : 0,
                 level: 0,
                 maxHealthPoints: 0,
                 strength: 0,
                 totalExpToLevelUp: 0,
                 isDead: false,
-                deleteHandler: (): void => {
+                deleteHandler      : (): void => {
                     this.deleteHero(this._heroes[i]);
-                },
+                }
             };
 
             hero.ID = String(this._heroes[i].ID);
+
             this._heroes[i].get<HeroActivityStateController>(ComponentID.HeroActivityStateController).renderByRequest({
                 updateState(state: string) {
                     hero.state = state;
@@ -225,6 +227,13 @@ export default class MainHeroList {
             this._heroes[i].get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower).renderByRequest({
                 updateCharacterAttributeFinalValue(ID: CharacterAttributeID, value: number): void {
                     hero.attackPower = value;
+                },
+            });
+
+            this._heroes[i].get<Endurance>(ComponentID.Endurance).renderByRequest({
+                update(endurance: number, max: number) {
+                    hero.endurance = endurance;
+                    hero.maxEndurance = max;
                 },
             });
 

@@ -4,31 +4,42 @@ import {assertNotEmpty} from '../../source/assert.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
-export enum CharacterLifeStateCode {
-    Life = 'Life',
+export enum CharacterActionStateCode {
+    // Life = 'Life',
     Dead = 'Dead',
+    Tired = 'Tired',
 }
 
 /**
  * Нужно ли состояние отдельно от очков жизни?
  * todo: Пока на возможность какого либо действия будет отвечать только смерть. Дальше доработать.
  */
-export default class LifeStateController {
-    private _code: CharacterLifeStateCode;
+export default class ActionStateController {
+    private _codes: CharacterActionStateCode[];
 
     constructor() {
-        this._code = CharacterLifeStateCode.Life;
+        this._codes = [];
     }
 
-    setState(code: CharacterLifeStateCode): void {
-        assertNotEmpty(code);
+    addState(code: CharacterActionStateCode): void {
+        if (_.includes(this._codes, code)) {
+            return;
+        }
 
-        this._code = code;
+        this._codes.push(code);
+    }
+
+    removeState(code: CharacterActionStateCode): void {
+        _.pull(this._codes, code);
+    }
+
+    hasState(code: CharacterActionStateCode) : boolean {
+        return _.includes(this._codes, code);
     }
 
     canAction(): boolean {
-        if (this._code !== CharacterLifeStateCode.Life) {
-            debug(DebugNamespaceID.Throw)('Персонаж мертв.');
+        if (this._codes.length) {
+            debug(DebugNamespaceID.Throw)('Персонаж не может совершить действие.');
             return false;
         }
 
@@ -37,7 +48,7 @@ export default class LifeStateController {
 
     debug(): void {
         debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
-            code: this._code,
+            code: this._codes,
         });
     }
 }

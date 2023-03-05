@@ -1,6 +1,6 @@
 import React from 'react';
 import GameObject from '../../../core/source/GameObject.js';
-import Location, {LocationEventCode} from '../../../core/app/Components/Location.js';
+import Location from '../../../core/app/Components/Location.js';
 import HeroGroup from '../../../core/app/Components/HeroGroup.js';
 import _, {values} from 'lodash';
 import ItemStorageComponent from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
@@ -38,12 +38,12 @@ export class LocationRComponent extends React.Component<LocationRComponentProps,
 
         EventSystem.addListener({
             codes: [
-                LocationEventCode.AddHero,
-                LocationEventCode.RemoveHero,
-                LocationEventCode.Start,
-                LocationEventCode.GatheringItems,
-                LocationEventCode.GetItems,
-                LocationEventCode.Update,
+                // LocationEventCode.AddHero,
+                // LocationEventCode.RemoveHero,
+                // LocationEventCode.Start,
+                // LocationEventCode.GatheringItems,
+                // LocationEventCode.GetItems,
+                // LocationEventCode.Update,
             ],
             listener: {
                 callback: (target) => {

@@ -25,6 +25,7 @@ export enum ComponentID {
     HealthPointsController = 'HealthPointsController',
     HeroActivityStateController = 'HeroActivityStateController',
     TakeController = 'TakeController',
+    Endurance = 'Endurance',
 
     ItemCharacterAttributeCollector = 'ItemCharacterAttributeCollector',
     Gatherer = 'Gatherer',

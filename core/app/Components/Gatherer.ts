@@ -1,19 +1,16 @@
-import GathererInterface from '../Interfaces/GathererInterface.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import {unsigned} from '../../types/main.js';
 import HeroActivityStateController, {HeroActivityStateCode} from './HeroActivityStateController.js';
-import Item from '../Entities/Item.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import Vein from './Vein.js';
-import LifeStateController from './LifeStateController.js';
+import ActionStateController from './ActionStateController.js';
 
-export default class Gatherer implements GathererInterface {
-    private readonly _lifeStateController: LifeStateController;
+export default class Gatherer {
+    private readonly _actionStateController: ActionStateController;
 
-    constructor(lifeStateController: LifeStateController) {
-        this._lifeStateController = lifeStateController;
+    constructor(lifeStateController: ActionStateController) {
+        this._actionStateController = lifeStateController;
     }
 
     /**
@@ -29,8 +26,7 @@ export default class Gatherer implements GathererInterface {
     }
 
     canGather(): boolean {
-        //todo: Поменять на состояния действия.
-        if (!this._lifeStateController.canAction()) {
+        if (!this._actionStateController.canAction()) {
             debug(DebugNamespaceID.Throw)('Сбор не возможен.');
             return false;
         }

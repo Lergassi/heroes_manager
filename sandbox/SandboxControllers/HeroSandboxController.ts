@@ -1,12 +1,13 @@
+import ActionStateController, {CharacterActionStateCode} from '../../core/app/Components/ActionStateController.js';
 import AverageItemLevel from '../../core/app/Components/AverageItemLevel.js';
 import CharacterAttribute from '../../core/app/Components/CharacterAttribute.js';
 import CharacterAttributeManager from '../../core/app/Components/CharacterAttributeManager.js';
+import Endurance from '../../core/app/Components/Endurance.js';
 import DefaultEquipSlot from '../../core/app/Components/EquipSlots/DefaultEquipSlot.js';
 import EquipSlotArmorMaterialRule from '../../core/app/Components/EquipSlots/EquipSlotArmorMaterialRule.js';
 import EquipSlotItemCategoryRule from '../../core/app/Components/EquipSlots/EquipSlotItemCategoryRule.js';
-import HealthPointsController from '../../core/app/Components/HealthPointsController.js';
 import HealthPoints from '../../core/app/Components/HealthPoints.js';
-import LifeStateController from '../../core/app/Components/LifeStateController.js';
+import HealthPointsController from '../../core/app/Components/HealthPointsController.js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
@@ -30,7 +31,8 @@ export default class HeroSandboxController extends AbstractSandboxController {
         // this._devCreateHeroWithStrategy();
         // this._devEquipSlotRules();
         // this._devCharacterAttributeManager();
-        this._devHealthPointsController();
+        // this._devHealthPointsController();
+        this._devEndurance();
 
         // this._useHeroFactory();
     }
@@ -134,7 +136,7 @@ export default class HeroSandboxController extends AbstractSandboxController {
 
         let healPoints = new HealthPoints(
             new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, 100),
-            new LifeStateController(),
+            new ActionStateController(),
         );
         itemStorage.debug();
         healPoints.debug();
@@ -153,5 +155,17 @@ export default class HeroSandboxController extends AbstractSandboxController {
         healPointsController.update(itemStorage);
         healPointsController.update(itemStorage);
         healPoints.debug();
+    }
+
+    private _devEndurance() {
+        let actionStateController = new ActionStateController();
+        let endurance = new Endurance(actionStateController);
+
+        // actionStateController.addState(CharacterActionStateCode.Dead);
+        endurance.remove(0);
+
+        console.log(actionStateController);
+        console.log(endurance);
+        console.log(actionStateController.canAction());
     }
 }

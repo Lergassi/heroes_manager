@@ -2,7 +2,7 @@ import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
 import Experience from '../app/Components/Experience.js';
-import LifeStateController from '../app/Components/LifeStateController.js';
+import ActionStateController from '../app/Components/ActionStateController.js';
 import CharacterAttributeInterface from '../app/Decorators/CharacterAttributeInterface.js';
 import EquipSlotInterface from '../app/Interfaces/EquipSlotInterface.js';
 import {debug_header} from '../debug_functions.js';
@@ -376,7 +376,7 @@ export function debug_detailHero(hero: GameObject) {
 
     debug_header('debug_detailHero');
     // hero.get<HeroComponent>(ComponentID.Hero)?.renderByRequest(this);
-    hero.get<LifeStateController>(ComponentID.LifeStateController)?.debug();
+    hero.get<ActionStateController>(ComponentID.LifeStateController)?.debug();
     hero.get<Experience>(ComponentID.Experience)?.debug();
     hero.get<HealthPoints>(ComponentID.HealthPoints)?.debug();
     debug_header('character_attributes');

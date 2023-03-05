@@ -8,7 +8,6 @@ import WalletInterface, {WalletInterfaceRender} from '../Interfaces/WalletInterf
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import EventSystem from '../../source/EventSystem.js';
 import {EventCode} from '../../types/enums/EventCode.js';
-import RenderInterface from '../Interfaces/RenderInterface.js';
 import EventSystem2 from '../../source/EventSystem2.js';
 import useCustomHook from '../../../client/public/_React/Test/test.js';
 import Func = jest.Func;

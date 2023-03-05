@@ -12,7 +12,6 @@ import debug from 'debug';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-import RenderInterface from '../../Interfaces/RenderInterface.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
 
 export enum ItemStorageComponentEventCode {

@@ -27,7 +27,7 @@ export default class DamageGroupController implements DamageControllerInterface 
         _.pullAt(this._damageControllers, _.indexOf(this._damageControllers, damageController));
     }
 
-    damage(value: unsigned, afterDiedCallback?): number {
+    damage(value: number, afterDiedCallback?): number {
         value = _.floor(value);
 
         if (!this.canDamage()) {
@@ -52,9 +52,7 @@ export default class DamageGroupController implements DamageControllerInterface 
     }
 
     canDamage(): boolean {
-        console.log('this._damageControllers', this._damageControllers);
         return !_.every(_.map(this._damageControllers, (damageController) => {
-            console.log('damageController', damageController);
             return !damageController.canDamage();
         }));
     }

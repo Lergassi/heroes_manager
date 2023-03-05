@@ -4,6 +4,7 @@ import {sprintf} from 'sprintf-js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
+import RCUpdateInterface from '../public/Interfaces/RCUpdateInterface.js';
 import DetailHeroRC from '../public/RC/DetailHeroRC.js';
 import DetailLocationRC from '../public/RC/DetailLocationRC.js';
 import ItemStorageControllerRC from '../public/RC/ItemStorageControllerRC.js';
@@ -69,7 +70,7 @@ export default class UIUpdater {
      * Последовательность не важна, ID не нужны. Только для обновления данных из объектов.
      * @param element
      */
-    add(element): void {
+    add(element: RCUpdateInterface): void {
         if (!_.includes(this._elements, element)) {
             this._elements.push(element);
         }
