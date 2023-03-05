@@ -20,6 +20,7 @@ import MainLocationList from '../../Components/MainLocationList.js';
 import ProductionConfigurator from '../../Components/ProductionConfigurator.js';
 import Shop from '../../Components/Shop.js';
 import Tavern from '../../Components/Tavern.js';
+import Tavern_v2 from '../../Components/Tavern_v2.js';
 import TavernController from '../../Components/TavernController.js';
 import Item from '../../Entities/Item.js';
 import EnemyCharacterAttributeFactory from '../../Factories/EnemyCharacterAttributeFactory.js';
@@ -138,6 +139,9 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         });
         container.set<Tavern>(ServiceID.Tavern, (container) => {
             return new Tavern();
+        });
+        container.set<Tavern_v2>(ServiceID.Tavern_v2, (container) => {
+            return new Tavern_v2();
         });
         container.set<TavernController>(ServiceID.TavernController, (container) => {
             return new TavernController(

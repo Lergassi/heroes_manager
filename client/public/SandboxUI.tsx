@@ -8,6 +8,7 @@ import MainHeroList from '../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../core/app/Components/MainLocationList.js';
 import Tavern from '../../core/app/Components/Tavern.js';
 import TavernController from '../../core/app/Components/TavernController.js';
+import Wallet from '../../core/app/Components/Wallet.js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
 import EnemyFactory from '../../core/app/Factories/EnemyFactory.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
@@ -605,6 +606,7 @@ export default class SandboxUI {
                     container={this._container}
                     production={production}
                     playerItemStorage={itemStorage}
+                    wallet={new Wallet()}
                     window={{show: true}}
                 />
             </div>

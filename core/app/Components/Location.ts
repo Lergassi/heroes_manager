@@ -1,9 +1,6 @@
 import debug from 'debug';
 import _ from 'lodash';
-import {
-    DetailLocationRCEnemyElement,
-    DetailLocationRCHeroElement
-} from '../../../client/public/RC/DetailLocationRC.js';
+import {DetailLocationRCEnemyElement, DetailLocationRCHeroElement} from '../../../client/public/RC/DetailLocationRC.js';
 import {separate} from '../../debug_functions.js';
 import {assertNotNil} from '../../source/assert.js';
 import AppError from '../../source/Errors/AppError.js';
@@ -20,6 +17,7 @@ import {ONE_SECOND_IN_MILLISECONDS} from '../consts.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import Item from '../Entities/Item.js';
 import ItemStackFactory from '../Factories/ItemStackFactory.js';
+import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import LevelInterface from '../Interfaces/LevelInterface.js';
@@ -29,6 +27,7 @@ import Experience from './Experience.js';
 import FightController from './FightController.js';
 import FightGroupController from './FightGroupController.js';
 import Gatherer from './Gatherer.js';
+import HealthPointsController from './HealthPointsController.js';
 import HealthPoints from './HealthPoints.js';
 import HeroActivityStateController, {HeroActivityStateCode} from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
@@ -87,6 +86,7 @@ export interface LocationRender {
     updateVeins?(veins: UI_VeinItemCount[]): void;
     updateLoot?(loot: UI_ItemCount[]): void;
     updateMoney?(value: number): void;
+    updateHeroGroupItems?(items: UI_ItemStorageSlot[]): void;
 }
 
 export default class Location {
@@ -100,6 +100,8 @@ export default class Location {
 
     private readonly _enemies: GameObject[];
     private readonly _enemyFightGroupController: FightGroupController;
+
+    private readonly _heroGroupItemStorage: ItemStorageInterface;
 
     private readonly _itemStorage: ItemStorageInterface;   //Визуально может никак не быть связанным с сумками.
     private readonly _wallet: WalletInterface;
@@ -125,11 +127,11 @@ export default class Location {
         type: LocationTypeID,
         levelRange: number,
         itemStackFactory: ItemStackFactory,         //todo: Убрать в генератор лута.
-        itemStorage: ItemStorageInterface,
+        itemStorageFactory: ItemStorageFactory,
         wallet: WalletInterface,
     ) {
-        assertNotNil(itemStorage);
-        assertNotNil(itemStackFactory);
+        // assertNotNil(itemStorage);
+        // assertNotNil(itemStackFactory);
 
         this._huntingState = LocationHuntingState.Waiting;
 
@@ -150,8 +152,12 @@ export default class Location {
         this._fightController = new FightController(this._heroFightGroupController, this._enemyFightGroupController);
 
         //лут
-        this._itemStorage = itemStorage;    //todo: Убрать. Если нужно передать из вне - логику поменять, а не делать чтото на всякий случай. И кошелек тоже.
+        this._itemStorage = itemStorageFactory.create(5);    //todo: Убрать. Если нужно передать из вне - логику поменять, а не делать чтото на всякий случай. И кошелек тоже.
+        this._heroGroupItemStorage = itemStorageFactory.create(5);
         this._wallet = wallet;
+
+        //dev
+        // this._heroGroupItemStorage.addItem(ItemID.HealthPotion01, 4);
     }
 
     addHero(hero: GameObject): boolean {
@@ -229,6 +235,10 @@ export default class Location {
             this._fightController.fight(rewardOptions);
             separate();
 
+            for (let i = 0; i < this._heroes.length; i++) {
+                this._heroes[i].get<HealthPointsController>(ComponentID.HealthPointsController)?.update(this._heroGroupItemStorage);
+            }
+
             //И другие действия...
         }, this._options.intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
         debug(DebugNamespaceID.Log)('Охота запущена.');
@@ -264,7 +274,7 @@ export default class Location {
         if (!this._canModify()) return;
 
         if (rewardOptions.itemStorage) this._itemStorage.moveAllItemsTo(rewardOptions.itemStorage);
-        if (rewardOptions.wallet) this._wallet.moveTo(rewardOptions.wallet);
+        if (rewardOptions.wallet) this._wallet.moveAllTo(rewardOptions.wallet);
         EventSystem.event(LocationEventCode.Update, this);
     }
 
@@ -291,6 +301,26 @@ export default class Location {
             itemID,
             count,
         ));
+    }
+
+    addItem(itemID: ItemID, count: number): number {
+        if (!this.canModify()) return 0;
+
+        return this._heroGroupItemStorage.addItem(itemID, count);
+    }
+
+    //todo: Если не раскрывать реализацию, но при этом нужно удалить предмет с определенного слота - то как это сделать без копирования интерфейс? Как вариант делать доп интерфейс поверх внутреннего. Например clear(index), а внутри может быть всё что угодно. В том числе через доп объект-геттер. ИДЕЯ: Внутри будет не сумка, а другой объект с интерфейсом как у сумки. А также нужно контролировать возможность управления сумкой во время охоты.
+    removeItem(itemID: ItemID, count: number): number {
+        if (!this.canModify()) return 0;
+
+        return this._heroGroupItemStorage.removeItem(itemID, count);
+    }
+
+    /**
+     * @deprecated @hack Решения доступа к предметам, при такой реализации, быстро найти не получилось.
+     */
+    get heroesItems(): ItemStorageInterface {
+        return this._heroGroupItemStorage;
     }
 
     /**
@@ -387,21 +417,36 @@ export default class Location {
             enemies.push(data);
         }
 
-        let items: UI_VeinItemCount[] = [];
+        let veinItems: UI_VeinItemCount[] = [];
         for (let i = 0; i < this._veins.length; i++) {
             this._veins[i].renderByRequest({
                 update(item: UI_VeinItemCount) {
-                    items.push(item);
+                    veinItems.push(item);
                 },
             });
         }
+
+        let heroGroupItems: UI_ItemStorageSlot[] = [];
+        this._heroGroupItemStorage.renderByRequest({
+            updateItems(slots: UI_ItemStorageSlot[]) {
+                for (let i = 0; i < slots.length; i++) {
+                    // if (_.isNil(slots[i].item)) continue;
+
+                    heroGroupItems.push({
+                        index: slots[i].index,
+                        item: slots[i].item,
+                    });
+                }
+            },
+        });
 
         ui.updateName?.(this._type);
         ui.updateState?.(this._huntingState);
         ui.updateLevel?.(this._level);
         ui.updateHeroes?.(heroes);
         ui.updateEnemies?.(enemies);
-        ui.updateVeins?.(items);
+        ui.updateVeins?.(veinItems);
+        ui.updateHeroGroupItems?.(heroGroupItems);
 
         this._wallet.renderByRequest({
             updateValue(value: number) {
@@ -416,7 +461,7 @@ export default class Location {
                 }));
             }
         });
-    }
+    }//end renderByRequest
 
     private _canAddHero(hero: GameObject): boolean {
         if (!this.canModify()) return false;

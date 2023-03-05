@@ -16,6 +16,8 @@ let resources: TSDB_LocationResourceBD = {
     [LocationTypeID.Forrest]: [
         // {itemID: ItemID.Wood, count: {min: 1000, max: 1000}},
         {itemID: ItemID.IronOre, count: {min: 1000, max: 1000}},
+        {itemID: ItemID.Herb01, count: {min: 1000, max: 1000}},
+        {itemID: ItemID.Herb02, count: {min: 1000, max: 1000}},
     ],
 };
 

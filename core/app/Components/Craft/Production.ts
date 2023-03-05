@@ -11,6 +11,7 @@ import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
+import WalletInterface from '../../Interfaces/WalletInterface.js';
 import ItemStorage from '../ItemStorages/ItemStorage.js';
 
 /**
@@ -27,8 +28,8 @@ export default class Production implements ProductionRenderInterface {
     //todo: Далее тут будет бд вместо сущностей.
     constructor(entityManager: EntityManagerInterface) {
         this._items = {};
-        this._resourcesItemStorage = new ItemStorage(100, entityManager);   //todo: Фабрика.
-        this._resultItemStorage = new ItemStorage(100, entityManager);      //todo: Фабрика.
+        this._resourcesItemStorage = new ItemStorage(100);   //todo: Фабрика.
+        this._resultItemStorage = new ItemStorage(100);      //todo: Фабрика.
     }
 
     addItem(itemID: ItemID): boolean {
@@ -49,7 +50,7 @@ export default class Production implements ProductionRenderInterface {
         return this._items.hasOwnProperty(itemID);
     }
 
-    createItem(itemID: ItemID, itemStorage: ItemStorageInterface): boolean {
+    createItem(itemID: ItemID, itemStorage: ItemStorageInterface, wallet: WalletInterface): boolean {
         if (!this.available(itemID)) {
             debug(DebugNamespaceID.Throw)(sprintf('Предмет "%s" не доступен для производства.', itemID));
             return false;
@@ -57,6 +58,11 @@ export default class Production implements ProductionRenderInterface {
 
         if (!this._hasRequireItems(itemID, itemStorage)) {
             debug(DebugNamespaceID.Throw)(sprintf('Не достаточно ресурсов для производства "%s".', itemID));
+            return false;
+        }
+
+        if (wallet.value < database.recipes.data.cost(itemID)) {
+            debug(DebugNamespaceID.Throw)(sprintf('Не достаточно денег.'));
             return false;
         }
 
@@ -71,26 +77,28 @@ export default class Production implements ProductionRenderInterface {
         // }
 
         database.recipes.data.requireItems(itemID, (ID, count) => {
-            this._resourcesItemStorage.addItem(ID, itemStorage.removeItem(ID, count));  //todo: Может не хватить места, если использовать обычную сумку со слотами.
+            // this._resourcesItemStorage.addItem(ID, itemStorage.removeItem(ID, count));  //todo: Может не хватить места, если использовать обычную сумку со слотами.
+            itemStorage.removeItem(ID, count);
         });
+        wallet.remove(database.recipes.data.cost(itemID));
 
         //Доп проверка.
-        if (!this._hasRequireItems(itemID, this._resourcesItemStorage)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Не достаточно ресурсов для производства "%s". Ошибка при перещении.', itemID));
-
-            this._resourcesItemStorage.moveAllItemsTo(itemStorage);
-            this._resourcesItemStorage.clearAllItems();  //todo: Если предеты не поместились, сейчас просто удаляются. Учесть в будущем.
-
-            return false;
-        }
+        // if (!this._hasRequireItems(itemID, this._resourcesItemStorage)) {
+        //     debug(DebugNamespaceID.Throw)(sprintf('Не достаточно ресурсов для производства "%s". Ошибка при перещении.', itemID));
+        //
+        //     this._resourcesItemStorage.moveAllItemsTo(itemStorage);
+        //     this._resourcesItemStorage.clearAllItems();  //todo: Если предметы не поместились, сейчас просто удаляются. Учесть в будущем.
+        //
+        //     return false;
+        // }
 
         let resultCount = database.recipes.data.resultCount(itemID);
         let addedItemsCount = itemStorage.addItem(itemID, resultCount); //Предмет производиться в не зависимости от наличия места.
         let flow = resultCount - addedItemsCount;
-        this._resourcesItemStorage.clearAllItems();
+        // this._resourcesItemStorage.clearAllItems();
         if (flow !== 0) {
             this._resultItemStorage.addItem(itemID, flow);
-            debug(DebugNamespaceID.Throw)('Не достаточно места. Предмет прмещен во временное хранилище.');
+            debug(DebugNamespaceID.Throw)('Не достаточно места для результата производства. Предмет помещены во временное хранилище.');
         }
 
         return true;    //todo: Тут явно не правильная логика. Метод не гарантирует правильность выполнения. Например если не хватит места под результат, то предметы добавятся в временное хранилище/на землю/на почту.

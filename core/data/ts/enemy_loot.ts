@@ -10,14 +10,14 @@ import {ItemCount, ItemCountDBType, ItemLoot, RangeType} from '../../types/main.
 
 type TSDB_ItemLoot = {
     ID: ItemID,
-    count: RangeType,
+    count: number,
     chance: number,
 }
 
 type TSDB_EnemyLoot = {
     items: TSDB_ItemLoot[],
     exp: number,
-    money: RangeType,
+    money: number,
 }
 
 type TSDB_EnemyLootDB = {
@@ -26,26 +26,26 @@ type TSDB_EnemyLootDB = {
 
 let enemy_loot_data: TSDB_EnemyLootDB = {
     [EnemyTypeID.Boar]: {
-        exp: 42,
+        exp  : 42,
         items: [
-            {ID: ItemID.Wood, count: {min: 0, max: 2}, chance: 1},
-            {ID: ItemID.Skin01, count: {min: 2, max: 4}, chance: 1},
-            {ID: ItemID.Leather01, count: {min: 0, max: 1}, chance: 1},
+            // {ID: ItemID.Wood, startCount: 2, chance: 1},
+            {ID: ItemID.Skin01, count: 4, chance: 1},
+            // {ID: ItemID.Leather01, startCount: 1, chance: 1},
         ],
-        money: {min: 100, max: 200},
+        money: 20,
     },
 };
 
 export const enemy_loot = {
-    items: function (enemyTypeID: EnemyTypeID, callback: (itemID: ItemID, count: RangeType, chance: number) => void): void {
-        _.map(enemy_loot_data[enemyTypeID]?.items, (data) => {
-            callback(data.ID, data.count, data.chance);
+    items: function<T> (enemyTypeID: EnemyTypeID, callback: (itemID: ItemID, startCount: number, chance: number) => T): T[] {
+        return _.map(enemy_loot_data[enemyTypeID]?.items, (data) => {
+            return callback(data.ID, data.count, data.chance);
         });
     },
     exp: function (enemyTypeID: EnemyTypeID): number {
         return enemy_loot_data[enemyTypeID]?.exp ?? 0;
     },
-    money: function (enemyTypeID: EnemyTypeID): RangeType {
-        return enemy_loot_data[enemyTypeID]?.money ?? {min: 0, max: 0};
+    money: function (enemyTypeID: EnemyTypeID): number {
+        return enemy_loot_data[enemyTypeID]?.money ?? 0;
     },
 };

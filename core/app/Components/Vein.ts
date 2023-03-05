@@ -12,12 +12,12 @@ export interface VeinRender {
 }
 
 export default class Vein {
-    private readonly _minCountForGather: number = 1;
-    private readonly _maxCountForGather: number = 4;  //todo: Шанс. Максимальное значение должно быть реже чем среднее.
-
     private readonly _itemID: ItemID;
     private _startCount: number;
     private _count: number;
+    private readonly _options = {
+        itemsCountForHit: 1,
+    };
 
     constructor(itemID: ItemID, count: number) {
         this._itemID = itemID;
@@ -33,12 +33,10 @@ export default class Vein {
     gather(itemStorage: ItemStorageInterface): number {
         if (!this.canGather()) return 0;
 
-        let count = this._generateCount();
-        let gathered = itemStorage.addItem(this._itemID, count);  //todo: А вообще можно не учитывать заполнение сумок - пусть игрок контролирует.
+        let gatheredCount = itemStorage.addItem(this._itemID, this._options.itemsCountForHit);  //todo: А вообще можно не учитывать заполнение сумок - пусть игрок контролирует.
+        this._count -= gatheredCount;
 
-        this._count -= gathered;
-
-        return gathered;
+        return gatheredCount;
     }
 
     isEmpty(): boolean {
@@ -60,13 +58,5 @@ export default class Vein {
             startCount: this._startCount,
             count     : this._count,
         });
-    }
-
-    private _generateCount(): number {
-        // if (!this.canGather()) return 0; //todo: Нужна ли тут проверка? ---> Можно сделать что возвращается 0 если жила пустая, а потом объект адялется.
-        if (this._count <= 0) return 0;
-        if (this._count === 1) return 1;
-
-        return _.random(this._minCountForGather, this._maxCountForGather <= this._count ? this._maxCountForGather : this._count);
     }
 }

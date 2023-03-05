@@ -1,13 +1,19 @@
 import AverageItemLevel from '../../core/app/Components/AverageItemLevel.js';
+import CharacterAttribute from '../../core/app/Components/CharacterAttribute.js';
 import CharacterAttributeManager from '../../core/app/Components/CharacterAttributeManager.js';
 import DefaultEquipSlot from '../../core/app/Components/EquipSlots/DefaultEquipSlot.js';
 import EquipSlotArmorMaterialRule from '../../core/app/Components/EquipSlots/EquipSlotArmorMaterialRule.js';
 import EquipSlotItemCategoryRule from '../../core/app/Components/EquipSlots/EquipSlotItemCategoryRule.js';
+import HealthPointsController from '../../core/app/Components/HealthPointsController.js';
+import HealthPoints from '../../core/app/Components/HealthPoints.js';
+import LifeStateController from '../../core/app/Components/LifeStateController.js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
+import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import {debug_detailHero} from '../../core/debug/debug_functions.js';
 import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
+import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
@@ -23,7 +29,8 @@ export default class HeroSandboxController extends AbstractSandboxController {
         // this._devViewHero();
         // this._devCreateHeroWithStrategy();
         // this._devEquipSlotRules();
-        this._devCharacterAttributeManager();
+        // this._devCharacterAttributeManager();
+        this._devHealthPointsController();
 
         // this._useHeroFactory();
     }
@@ -119,5 +126,32 @@ export default class HeroSandboxController extends AbstractSandboxController {
 
     private _devCharacterAttributeManager() {
 
+    }
+
+    private _devHealthPointsController() {
+        let itemStorage = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).create(20);
+        itemStorage.addItem(ItemID.HealthPotion01, 10);
+
+        let healPoints = new HealthPoints(
+            new CharacterAttribute(CharacterAttributeID.MaxHealthPoints, 100),
+            new LifeStateController(),
+        );
+        itemStorage.debug();
+        healPoints.debug();
+        // healPoints.kill();
+
+        healPoints.damage(99);
+        healPoints.debug();
+
+        let healPointsController = new HealthPointsController(
+            healPoints,
+        );
+
+        healPointsController.update(itemStorage);
+        healPointsController.update(itemStorage);
+        healPointsController.update(itemStorage);
+        healPointsController.update(itemStorage);
+        healPointsController.update(itemStorage);
+        healPoints.debug();
     }
 }

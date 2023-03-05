@@ -29,15 +29,21 @@ export type TSDB_ItemDB = {
     [ID in ItemID]?: TSDB_Item;
 };
 
-let manual_created_items_data = _manual_created_items_data as TSDB_ItemDB;
+let csv_created_items_data = _manual_created_items_data as TSDB_ItemDB;
 let auto_generated_equip_db_data = _auto_generated_equip_db_data as TSDB_ItemDB;
 
-// console.log(manual_created_items_data);
+// console.log(csv_created_items_data);
 // console.log(auto_generated_equip_db_data);
+
+// let item
+//
+// let _items_db: TSDB_ItemDB = {
+//     [ItemID.HealthPotion01] = {},
+// };
 
 let items_db: TSDB_ItemDB = _.assign(
     {},
-    manual_created_items_data,
+    csv_created_items_data,
     auto_generated_equip_db_data,
 );
 

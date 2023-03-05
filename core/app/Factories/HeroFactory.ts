@@ -7,23 +7,21 @@ import {ComponentID} from '../../types/enums/ComponentID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import {CharacterAttributes, unsigned} from '../../types/main.js';
+import {CharacterAttributes} from '../../types/main.js';
 import AttackController from '../Components/AttackController.js';
 import AverageItemLevel from '../Components/AverageItemLevel.js';
 import CharacterAttributeManager from '../Components/CharacterAttributeManager.js';
-import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
 import AttackPowerDependentIncreaseDecorator
     from '../Components/CharacterAttributes/AttackPowerDependentIncreaseDecorator.js';
 import EquipController from '../Components/EquipController.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import Experience from '../Components/Experience.js';
 import Gatherer from '../Components/Gatherer.js';
+import HealthPointsController from '../Components/HealthPointsController.js';
 import HealthPoints from '../Components/HealthPoints.js';
 import HeroActivityStateController from '../Components/HeroActivityStateController.js';
 import HeroComponent from '../Components/HeroComponent.js';
-import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import LifeStateController from '../Components/LifeStateController.js';
-import MagicPointsComponent from '../Components/MagicPointsComponent.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import HeroClass from '../Entities/HeroClass.js';
@@ -216,16 +214,17 @@ export default class HeroFactory {
         }));
 
         //К компоненту с очками здоровья возможно не будет доступа вообще.
-        let healthPointsComponent = new HealthPoints(
+        let healthPoints = new HealthPoints(
             hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).MaxHealthPoints,
             lifeStateController,
         );
+        hero.set(ComponentID.HealthPointsController, new HealthPointsController(healthPoints));
         // let damageController = new ArmorDecorator(
-        //     healthPointsComponent as DamageControllerInterface,
+        //     healthPoints as DamageControllerInterface,
         //     hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Protection,
         // );
-        hero.set<HealthPoints>(ComponentID.HealthPoints, healthPointsComponent); //Пока только для рендера.
-        hero.set<DamageControllerInterface>(ComponentID.DamageController, healthPointsComponent);
+        hero.set<HealthPoints>(ComponentID.HealthPoints, healthPoints); //Пока только для рендера.
+        hero.set<DamageControllerInterface>(ComponentID.DamageController, healthPoints);
 
         hero.set<AttackControllerInterface>(ComponentID.AttackController, new AttackController(
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),

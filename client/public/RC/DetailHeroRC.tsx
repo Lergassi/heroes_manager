@@ -333,6 +333,14 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                 <div className={'widget'}>
                     <div className={'widget__title'}>Герой<button className={'btn btn_default btn_right'} onClick={this.hide}>close</button></div>
                     <div className={'widget__content'}>
+                        <div className={'block'}>
+                            <button className={'btn btn_default'} onClick={() => {
+                                this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
+                            }}>RESURRECT</button>
+                            {/*<button className={'btn btn_danger'} onClick={() => {*/}
+                            {/*    this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).kill();*/}
+                            {/*}}>KILL</button>*/}
+                        </div>
                         <div>{this.state.heroClassName}, {this.state.level} ({this.state.exp}/{this.state.totalExpToLevelUp})</div>
                         <div>Здоровье: {this.state.currentHealthPoints}/{this.state.maxHealthPoints}</div>
                         <div>Состояние: {!this.state.isDead ? 'Живой' : 'Мертвый'}</div>

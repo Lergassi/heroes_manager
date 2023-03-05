@@ -24,7 +24,7 @@ export default class ShopSandboxController extends AbstractSandboxController {
         console.log(wallet.value);
 
         // let itemStorage = new InfinityItemStorage();
-        let itemStorage = new ItemStorage(5, em);
+        let itemStorage = new ItemStorage(5);
 
         // console.log(wallet.remove(10));
         // console.log(wallet.remove(10));
@@ -60,7 +60,7 @@ export default class ShopSandboxController extends AbstractSandboxController {
         });
         console.log(fence);
 
-        let itemStorage = new ItemStorage(5, em);
+        let itemStorage = new ItemStorage(5);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 9);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);
         // itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10);

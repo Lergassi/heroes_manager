@@ -31,11 +31,6 @@ export default class Wallet implements WalletInterface {
         this._value = value;
     }
 
-    /**
-     *
-     * @param value
-     * @return Остаток.
-     */
     add(value: number): number {
         assertIsPositive(value);
 
@@ -43,9 +38,8 @@ export default class Wallet implements WalletInterface {
 
         this._value += value;
         debug(DebugNamespaceID.Log)(sprintf('Добавлена валюта: %s. Остаток: %s', value, this._value));
-        // EventSystem.event(EventCode.Wallet_AddCurrency, this);
 
-        return 0;
+        return value;
     }
 
     /**
@@ -71,15 +65,17 @@ export default class Wallet implements WalletInterface {
         return removedValue;
     }
 
-    moveTo(target: WalletInterface): number {
+    /**
+     *
+     * @param target
+     * @return Кол-во перемещенных денег.
+     */
+    moveAllTo(target: WalletInterface): number {
         if (this._value <= 0) {
             return 0;
         }
 
-        this._value = target.add(this._value);
-        // EventSystem.event(EventCode.Wallet_RemoveCurrency, this);
-
-        return this._value;
+        return this.remove(target.add(this._value));
     }
 
     renderByRequest(ui: WalletInterfaceRender): void {

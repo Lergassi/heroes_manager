@@ -22,7 +22,7 @@ export default class WalletFactory {
     }
 
     create(
-        value: unsigned = 0,
+        value: number = 0,
     ): GameObject {
         let wallet = this._gameObjectFactory.create();
 

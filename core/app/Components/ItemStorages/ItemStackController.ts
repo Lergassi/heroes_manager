@@ -172,6 +172,20 @@ export default class ItemStackController implements ItemStackControllerInterface
         return reminder;
     }
 
+    removeItemByIndex(count: number): number {
+        if (this.isEmpty()) return 0;
+
+        return this.removeItem(this._itemID, count);
+    }
+
+    removeItemByIndexTo(count: number, itemStorage: ItemStorageInterface): number {
+        if (this.isEmpty()) return 0;   //todo: Как сделать так, чтобы вызывать проверку только 1 раз?
+
+        let addedItemsCount = itemStorage.addItem(this._itemID, count);
+
+        return this.removeItem(this._itemID, addedItemsCount);
+    }
+
     moveTo(target: ItemStorageInterface): void {
         if (this.isFree()) return;
 
@@ -193,7 +207,17 @@ export default class ItemStackController implements ItemStackControllerInterface
         return this._count;
     }
 
+    has(itemID: ItemID, count: number): boolean {
+        if (count <= 0) return false;
+
+        return this.containItem(itemID) === count;
+    }
+
     isFree(): boolean {
+        return _.isNil(this._itemID);
+    }
+
+    isEmpty(): boolean {
         return _.isNil(this._itemID);
     }
 

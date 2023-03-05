@@ -2,10 +2,8 @@ import debug from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import {assertAction, assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../source/assert.js';
-import EventSystem from '../../source/EventSystem.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {unsigned} from '../../types/main.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
@@ -24,18 +22,25 @@ export interface HealthPointsRender {
 }
 
 export default class HealthPoints implements DamageControllerInterface {
-    private _currentHealthPoints: unsigned;
+    private _currentHealthPoints: number;
     private readonly _maxHealthPoints: CharacterAttributeInterface;
     private _isDead: boolean;    //todo: Может ли герой или враг быть живым или мертвым без компонента здоровья?
     private readonly _lifeStateController: LifeStateController;
     private readonly _afterDiedCallback: Function;
 
-    get currentHealthPoints(): unsigned {
+    get currentHealthPoints(): number {
         return this._currentHealthPoints;
     }
 
+    /**
+     * @deprecated Если нужно, то возвращать число.
+     */
     get maxHealthPoints(): CharacterAttributeInterface {
         return this._maxHealthPoints;
+    }
+
+    get currentHealPointsToMaxRatio(): number {
+        return _.round(this._currentHealthPoints / this._maxHealthPoints.value, 2);
     }
 
     get isDead(): boolean {
@@ -43,7 +48,7 @@ export default class HealthPoints implements DamageControllerInterface {
     }
 
     get flawHealthPoints(): number {
-        let flawHealthPoints = this._maxHealthPoints.finalValue - this.currentHealthPoints;
+        let flawHealthPoints = this._maxHealthPoints.value - this.currentHealthPoints;
 
         return flawHealthPoints >= 0 ? flawHealthPoints : 0;
     }
@@ -68,7 +73,8 @@ export default class HealthPoints implements DamageControllerInterface {
     damage(damage: number, enemyRewardOptions?: RewardOptions): number {
         assertIsGreaterThanOrEqual(damage, 0);
 
-        if (!this._lifeStateController.canAction()) {
+        // if (!this._lifeStateController.canAction()) {
+        if (!this.canDamage()) {
             debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
             return;
         }
@@ -79,7 +85,6 @@ export default class HealthPoints implements DamageControllerInterface {
 
         this._currentHealthPoints -= resultDamage;
         debug(DebugNamespaceID.Log)(sprintf('Получено урона (остаток/макс): %s (%s/%s)', resultDamage, this._currentHealthPoints, this._maxHealthPoints.finalValue));
-        EventSystem.event(HealthPointsComponentEventCode.Damage, this);
         if (this._currentHealthPoints <= 0) {
             this.dead(enemyRewardOptions);
         }
@@ -95,7 +100,7 @@ export default class HealthPoints implements DamageControllerInterface {
 
     kill(enemyRewardOptions?: RewardOptions): void {
         if (!this.canKill()) {
-            debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
+            debug(DebugNamespaceID.Throw)('Персонаж не может умереть.');
             return;
         }
 
@@ -104,7 +109,6 @@ export default class HealthPoints implements DamageControllerInterface {
         debug(DebugNamespaceID.Log)('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
         // this._lifeStateController.state('Dead', 'State message: Персонаж мертвый.');
         this._lifeStateController.setState(CharacterLifeStateCode.Dead);
-        EventSystem.event(HealthPointsComponentEventCode.Died, this);
         if (this._afterDiedCallback && enemyRewardOptions) {
             this._afterDiedCallback(enemyRewardOptions);
         }
@@ -117,14 +121,6 @@ export default class HealthPoints implements DamageControllerInterface {
                     Труп имеет владельца: первый атаковавший если не в группе, по #локага_распределения_лута# если в группе.
                 Прочие события: баффы на персонажа, вызов другого врага...
          */
-    }
-
-    canKill(): boolean {
-        return this._lifeStateController.canAction();
-    }
-
-    canHeal(): boolean {
-        return this._lifeStateController.canAction();
     }
 
     /**
@@ -153,8 +149,9 @@ export default class HealthPoints implements DamageControllerInterface {
     }
 
     resurrect(): boolean {
-        if (this._lifeStateController.canAction()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
-            debug(DebugNamespaceID.Throw)('Персонаж живой.');   //todo: Или универсальное сообщение, например "Нельзя совершить подобное действие."
+        // if (this._lifeStateController.canAction()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
+        if (!this.canResurrect()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
+            debug(DebugNamespaceID.Throw)('Персонаж не может быть воскрешен.');   //todo: Или универсальное сообщение, например "Нельзя совершить подобное действие."
             return false;
         }
 
@@ -162,13 +159,24 @@ export default class HealthPoints implements DamageControllerInterface {
         this._isDead = false;
         this._lifeStateController.setState(CharacterLifeStateCode.Life);
         debug(DebugNamespaceID.Log)('Персонаж воскрес.');
-        EventSystem.event(HealthPointsComponentEventCode.Resurrect, this);
 
         return true;
     }
 
     canDamage(): boolean {
         return this._lifeStateController.canAction();
+    }
+
+    canKill(): boolean {
+        return this._lifeStateController.canAction();
+    }
+
+    canHeal(): boolean {
+        return this._lifeStateController.canAction();
+    }
+
+    canResurrect(): boolean {
+        return !this._lifeStateController.canAction();
     }
 
     renderByRequest(ui: HealthPointsRender): void {

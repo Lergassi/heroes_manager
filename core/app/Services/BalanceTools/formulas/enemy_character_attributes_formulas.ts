@@ -12,7 +12,7 @@ function maxHealthPoints(values: {
     defaultFinalHeroAttackPower: number,
     heroHitRatioToEnemy: number,
 }) {
-    console.log('values.defaultFinalHeroAttackPower', values.defaultFinalHeroAttackPower);
+    //todo: Не понятно что за формула. Что такое default. Формула должна быть похожа на созданную формулу.
     return _.round(values.defaultFinalHeroAttackPower / values.heroHitRatioToEnemy);
 }
 

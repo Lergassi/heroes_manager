@@ -26,6 +26,7 @@ export enum ServiceID {
     Production = 'player.Production',
 
     Tavern = 'player.Tavern',
+    Tavern_v2 = 'player.Tavern_v2',
     TavernController = 'player.TavernController',
     Shop = 'player.Shop',
     Fence = 'player.Fence',
@@ -66,6 +67,7 @@ export enum ServiceID {
     UI_ItemStorage = 'player.ui.PlayerItemStorage',
     UI_ItemStorageController = 'player.ui.ItemStorageController',
     UI_Wallet = 'player.ui.Wallet',
+    UI_WalletMoneyCounter = 'player.ui.WalletMoneyCounter', //todo: Возможно не стоит на каждый ui делать ID.
     UI_MainHeroList = 'player.ui.MainHeroList',
     UI_DetailHero = 'player.ui.DetailHero',
     UI_MainLocationList = 'player.ui.MainLocationList',

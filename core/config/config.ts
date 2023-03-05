@@ -17,28 +17,36 @@ export default {
     item_level_step: 5,
     hero_level_corresponds_to_item_level_ratio: 1.6,
 
-    //items                                             //todo: а также перенести в бд.
+    //character attributes
+    start_default_hero_health_points: 100,
+    default_hero_health_points_level_increase: 20,
+
+    start_default_hero_attack_power: 20,
+    // start_default_hero_attack_power: 30,
+    default_hero_attack_power_level_increase: 8,
+
+    //items
     start_item_level_attack_power: 2,                   //зависит от материала или сделать default
     item_level_increase_attack_power: 2,                //зависит от материала или сделать default
 
     start_item_level_health_points: 20,                 //зависит от материала или сделать default
     item_level_increase_health_points: 10,              //зависит от материала или сделать default
 
-    start_default_hero_health_points: 100,
-    default_hero_health_points_level_increase: 20,
-
-    start_default_hero_attack_power: 20,
-    default_hero_attack_power_level_increase: 8,
-
-    default_character_attribute_to_attack_power_ratio: 2,
+    default_character_attribute_to_attack_power_ratio: 2,   //атрибут => сила атаки = 10 силы * 2 = 20 АП
     // strength_to_attack_power_ratio: 2,
     // agility_to_attack_power_ratio: 2,
     // intelligence_to_attack_power_ratio: 2,
 
     //enemies
-    // default_enemy_damage_ratio_to_hero: 0.3,
-    default_enemy_damage_ratio_to_hero: 0.2,
-    default_hero_hit_ratio_to_enemy: 0.15,
+    // default_enemy_damage_ratio_to_hero: 0.9,
+    // default_enemy_damage_ratio_to_hero: 0.2,            //кол-во урона от врага за бой
+    default_enemy_damage_ratio_to_hero: 0.15,
+    default_enemy_hit_ratio_to_enemy: 0.2,
+    // default_enemy_damage_ratio_to_hero: 0.15,
+    // default_enemy_damage_ratio_to_hero: 0.1,
+    // default_hero_hit_ratio_to_enemy: 0.2,
+    default_hero_hit_ratio_to_enemy: 0.2,               //кол-во урона за удар от общего урона. Одно значение для героя и врага так как скорость атаки одинаковая и привязана к setInterval.
+
 
     //craft
     //Далее будет ресурс1, ресурс2, но пока для удобства используются названия предметов.

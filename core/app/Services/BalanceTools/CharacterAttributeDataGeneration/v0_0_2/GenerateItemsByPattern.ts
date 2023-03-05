@@ -178,6 +178,7 @@ export default class GenerateItemsByPattern {
                                         },
                                     ],
                                     resultItemCount: 1,
+                                    cost: 0,
                                 };
 
                                 let tsdb_item = tsdb_itemBuilder.build();
@@ -215,6 +216,7 @@ export default class GenerateItemsByPattern {
                                     },
                                 ],
                                 resultItemCount: 1,
+                                cost: 0,
                             };
 
                             let tsdb_item = tsdb_itemBuilder.build();
@@ -251,6 +253,7 @@ export default class GenerateItemsByPattern {
                                         },
                                     ],
                                     resultItemCount: 1,
+                                    cost: 0,
                                 };
 
                                 let tsdb_item = tsdb_itemBuilder.build();
@@ -289,6 +292,7 @@ export default class GenerateItemsByPattern {
                                         },
                                     ],
                                     resultItemCount: 1,
+                                    cost: 0,
                                 };
 
                                 let tsdb_item = tsdb_itemBuilder.build();

@@ -48,7 +48,7 @@ export default class HeroCharacterAttributeGenerator {
             ( config.start_item_level_health_points + config.item_level_increase_health_points * ( itemLevel - 1) ) * summaryRatio
         );
 
-        //hack
+        //@hack Снижение силы атаки от экипировка, тк полный сет собирается не с 1ого уровня (особенность расчетов).
         if (level <= 5) {
             value = _.round(value * 0.1);
         }
@@ -114,7 +114,7 @@ export default class HeroCharacterAttributeGenerator {
             values.summaryRatio
         );
 
-        //hack
+        //@hack
         if (level <= 5) {
             value = _.round(value * 0.1);
         }

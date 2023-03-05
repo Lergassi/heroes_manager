@@ -65,7 +65,6 @@ export default class Tavern implements TavernRenderInterface {
         if (!UI.updateHero) return;
 
         let heroes: UI_TavernHero[] = [];
-
         let key: HeroClassID;
         for (key in this._heroes) {
             if (!this._heroes[key].count) continue;

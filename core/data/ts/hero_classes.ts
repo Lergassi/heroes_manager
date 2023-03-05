@@ -16,15 +16,6 @@ type TSDB_HeroClass = {
 
 type TSDB_HeroClassDB = {[ID in HeroClassID]?: TSDB_HeroClass};
 
-let a: TSDB_HeroClass = {
-    ID  : undefined,
-    armorMaterialIDs         : [],
-    heroRoleID               : undefined,
-    leftHandItemCategoryIDs  : [],
-    mainCharacterAttributeIDs: [],
-    rightHandItemCategoryIDs : []
-};
-
 let hero_classes_data: TSDB_HeroClassDB = {
     [HeroClassID.Tank1]: {
         ID                       : HeroClassID.Tank1,

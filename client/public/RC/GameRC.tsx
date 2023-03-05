@@ -4,10 +4,12 @@ import ItemStorageController from '../../../core/app/Components/ItemStorages/Ite
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../../core/app/Components/MainLocationList.js';
 import Tavern from '../../../core/app/Components/Tavern.js';
+import Tavern_v2 from '../../../core/app/Components/Tavern_v2.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
 import {assertNotNil} from '../../../core/source/assert.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
+import {HeroClassID} from '../../../core/types/enums/HeroClassID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_PanelID} from '../../types/UI_PanelID.js';
 import DetailHeroRC from './DetailHeroRC.js';
@@ -18,6 +20,8 @@ import MainHeroListRC from './MainHeroListRC.js';
 import MainLocationListRC from './MainLocationListRC.js';
 import ProductionRC from './ProductionRC.js';
 import TavernRC from './TavernRC.js';
+import TavernRC_v2 from './TavernRC_v2.js';
+import WalletMoneyCounterRC from './WalletMoneyCounterRC.js';
 import WalletRC from './WalletRC.js';
 
 export type GameRCProps = {
@@ -77,15 +81,30 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                     <div className={'header__site-title'}>
                         HEROES MANAGER
                     </div>
+                    <div className={'header__wallet-money-counter'}>
+                        <WalletMoneyCounterRC
+                            container={this.props.container}
+                            wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
+                        />
+                    </div>
                 </div>
                 <div className={'container'}>
                     <LeftSidebarRC
                         container={this.props.container}
                     />
                     <div className={'content'}>
-                        <TavernRC
+                        {/*<TavernRC*/}
+                        {/*    container={this.props.container}*/}
+                        {/*    tavern={this.props.container.get<Tavern>(ServiceID.Tavern)}*/}
+                        {/*    window={{*/}
+                        {/*        show: this.state.panels.Tavern.show,*/}
+                        {/*    }}*/}
+                        {/*/>*/}
+                        <TavernRC_v2
                             container={this.props.container}
-                            tavern={this.props.container.get<Tavern>(ServiceID.Tavern)}
+                            tavern={this.props.container.get<Tavern_v2>(ServiceID.Tavern_v2)}
+                            mainHeroList={this.props.container.get<MainHeroList>(ServiceID.MainHeroList)}
+                            wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
                             window={{
                                 show: this.state.panels.Tavern.show,
                             }}
@@ -140,6 +159,7 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                             container={this.props.container}
                             production={this.props.container.get<Production>(ServiceID.Production)}
                             playerItemStorage={this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController)}
+                            wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
                             window={{
                                 show: this.state.panels.Production.show,
                             }}

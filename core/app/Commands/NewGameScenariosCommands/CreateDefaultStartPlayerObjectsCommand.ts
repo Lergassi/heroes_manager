@@ -11,14 +11,11 @@ import {HeroClassID} from '../../../types/enums/HeroClassID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
 import {LocationTypeID} from '../../../types/enums/LocationTypeID.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
-import {unsigned} from '../../../types/main.js';
 import Production from '../../Components/Craft/Production.js';
 import Location from '../../Components/Location.js';
 import MainHeroList from '../../Components/MainHeroList.js';
 import MainLocationList from '../../Components/MainLocationList.js';
-import ProductionConfigurator from '../../Components/ProductionConfigurator.js';
-import Tavern from '../../Components/Tavern.js';
-import TavernController from '../../Components/TavernController.js';
+import Tavern_v2 from '../../Components/Tavern_v2.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
@@ -40,10 +37,21 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
 
     private async _configTavern() {
         // this.container.get<TavernController>(ServiceID.TavernController).update();
-        let tavern = this.container.get<Tavern>(ServiceID.Tavern);
-        let tavernController = this.container.get<TavernController>(ServiceID.TavernController);
+        // let tavern = this.container.get<Tavern>(ServiceID.Tavern);
+        // let tavernController = this.container.get<TavernController>(ServiceID.TavernController);
+        //
+        // // tavern.add(HeroClassID.Barbarian, 1);
+        // tavern.add(HeroClassID.Warrior, 1);
 
-        // tavern.add(HeroClassID.Barbarian, 1);
+        let tavern = this.container.get<Tavern_v2>(ServiceID.Tavern_v2);
+
+        tavern.add(HeroClassID.Warrior, 1, 400);
+
+        // tavern.add(HeroClassID.Rogue, 1, 80);
+        tavern.add(HeroClassID.Gunslinger, 1, 200);
+        tavern.add(HeroClassID.FireMage, 1, 600);
+
+        tavern.add(HeroClassID.Support1, 1, 1000);
     }
 
     private async _createItemStorages() {
@@ -76,7 +84,6 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
                 heroClassID: HeroClassID.Barbarian,
                 level: 1,
                 equip: {
-                    // [EquipSlotID.Head]: ItemID.PlateHelmet02,
                     [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
                     [EquipSlotID.Legs]: ItemID.PlatePants01,
                     [EquipSlotID.Foots]: ItemID.PlateBoots01,
@@ -84,17 +91,17 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
                     // [EquipSlotID.LeftHand]: ItemID.Shield01,
                 },
             },
-            // {
-            //     heroClassID: HeroClassID.Rogue,
-            //     level: 1,
-            //     equip: {
-            //         [EquipSlotID.Chest]: ItemID.LeatherBreastplate01,
-            //         [EquipSlotID.Legs]: ItemID.LeatherPants01,
-            //         [EquipSlotID.Foots]: ItemID.LeatherBoots01,
-            //         [EquipSlotID.RightHand]: ItemID.Dagger01,
-            //         [EquipSlotID.LeftHand]: ItemID.Dagger01,
-            //     },
-            // },
+            {
+                heroClassID: HeroClassID.Rogue,
+                level: 1,
+                equip: {
+                    [EquipSlotID.Chest]: ItemID.LeatherBreastplate01,
+                    [EquipSlotID.Legs]: ItemID.LeatherPants01,
+                    [EquipSlotID.Foots]: ItemID.LeatherBoots01,
+                    [EquipSlotID.RightHand]: ItemID.Dagger01,
+                    [EquipSlotID.LeftHand]: ItemID.Dagger01,
+                },
+            },
             // {
             //     heroClassID: HeroClassID.FireMage,
             //     level: 1,
@@ -173,6 +180,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
             configureStrategy: 'default',
         });
         let location = locationGO.get<Location>(ComponentID.Location);
+        // location.addItem(ItemID.HealthPotion01, 22);
 
         // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
         // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
@@ -184,10 +192,14 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     }
 
     private async _configMoney() {
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['1000']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['1000']);
     }
 
     private async _configProduction() {
         // (new ProductionConfigurator()).configure(this.container.get<Production>(ServiceID.Production));
+
+        let production = this.container.get<Production>(ServiceID.Production);
+
+        production.addItem(ItemID.HealthPotion01);
     }
 }

@@ -54,10 +54,10 @@ export default class EnemyEntity {
     }
 
     createGoldLootGenerator() {
-        return new GoldLootGenerator({
-            min: this._gold[0],
-            max: this._gold[1],
-        });
+        // return new GoldLootGenerator({
+        //     min: this._gold[0],
+        //     max: this._gold[1],
+        // });
     }
 
     createExperienceLootGenerator() {

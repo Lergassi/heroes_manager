@@ -14,7 +14,7 @@ export default class ItemLootGenerator {
         this._items = [];
     }
 
-    addItem(itemID: ItemID, count: RangeType, chance: number): void {
+    addItem(itemID: ItemID, count: number, chance: number): void {
         this._items.push({
             ID: itemID,
             count: count,
@@ -23,9 +23,9 @@ export default class ItemLootGenerator {
     }
 
     generate(itemStorage: ItemStorageInterface): void {
-        debug(DebugNamespaceID.Indev)('Генерация лута без шанса.');
+        debug(DebugNamespaceID.Indev)('Генерация лута без шанса выпадения.');
         for (let i = 0; i < this._items.length; i++) {
-            itemStorage.addItem(this._items[i].ID, _.random(this._items[i].count.min, this._items[i].count.max));
+            itemStorage.addItem(this._items[i].ID, this._items[i].count);
         }
     }
 }

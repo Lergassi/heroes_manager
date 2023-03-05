@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import Production from '../../../core/app/Components/Craft/Production.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
+import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
 import {database} from '../../../core/data/ts/database.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import {ItemID} from '../../../core/types/enums/ItemID.js';
@@ -24,6 +25,7 @@ export interface ProductionRCProps {
     container: ContainerInterface;
     production: Production;
     playerItemStorage: ItemStorageInterface;
+    wallet: WalletInterface;
     window: UI_WindowOptions;
 }
 
@@ -87,6 +89,7 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                                     <th>ITEM_ID</th>
                                     <th>RESULT_COUNT</th>
                                     <th>REQUIRE_ITEMS</th>
+                                    <th>COST</th>
                                     <th>CTRL</th>
                                 </tr>
                                 {_.map(this.state.items, (item, index, collection) => {
@@ -97,12 +100,13 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                                         <td>{database.recipes.data.requireItems(item.itemID, (ID, count) => {
                                             return <div key={ID}>{ID}: {count}</div>
                                         })}</td>
+                                        <td>{database.recipes.data.cost(item.itemID)}</td>
                                         <td>
                                             <button className={'btn btn_default'} onClick={(event) => {
                                                 event.preventDefault();
-                                                this.props.production.createItem(item.itemID, this.props.playerItemStorage);
+                                                this.props.production.createItem(item.itemID, this.props.playerItemStorage, this.props.wallet);
                                             }
-                                            }>create</button>
+                                            }>CREATE</button>
                                         </td>
                                     </tr>
                                 })}
@@ -112,5 +116,5 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                 </div>{/*end widget*/}
             </div>
         );
-    }
+    }//end render
 }

@@ -41,7 +41,7 @@ export default class ItemStorageFactory {
     }
 
     create(size: number): ItemStorageInterface {
-        return new ItemStorage(size, this._entityManager);
+        return new ItemStorage(size);
     }
 
     /**
@@ -64,7 +64,6 @@ export default class ItemStorageFactory {
         // ));
         let itemStorage = gameObject.set<ItemStorageInterface>(ComponentID.ItemStorage, new ItemStorage(
             size,
-            this._entityManager,
         ));
 
         return itemStorage;    //todo: Тут будет контроллер.

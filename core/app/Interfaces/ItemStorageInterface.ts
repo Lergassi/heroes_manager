@@ -26,6 +26,7 @@ export default interface ItemStorageInterface {
      * @return Кол-во удаленных предметов из сумки. 0 = не удалено ни одного предмета, return = count = удалены все предметы.
      */
     removeItem(ID: ItemID, count: number): number;
+    // removeItemTo(itemID: ItemID, count: number, itemStorage: ItemStorageInterface): number;
     moveAllItemsTo(itemStorage: ItemStorageInterface): void;
     /**
      *
@@ -41,4 +42,10 @@ export default interface ItemStorageInterface {
     renderByRequest(ui: ItemStorageInterfaceRender): void;
 
     debug(): void;
+
+    //todo: Для слотов. В отдельный интерфейс.
+    // addByIndex(index: number, itemID: ItemID, count: number): number;
+    // addByIndexFrom(index: number, itemID: ItemID, count: number, itemStorage: ItemStorageInterface): number;
+    removeByIndex(index: number, count: number): number;
+    removeByIndexTo(index: number, count: number, itemStorage: ItemStorageInterface): number;
 }

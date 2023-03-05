@@ -5,10 +5,6 @@ import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import _ from 'lodash';
 import debug from 'debug';
 
-type TSDB_CharacterAttributeType = {
-    [ID in CharacterAttributeID]?: number;
-};
-
 type TSDB_CharacterAttributeRatio = {
     [ID in HeroClassID]?: {[ID in CharacterAttributeID]?: number};
 };

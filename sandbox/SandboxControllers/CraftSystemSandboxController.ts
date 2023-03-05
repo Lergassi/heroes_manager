@@ -1,6 +1,7 @@
 import Production from '../../core/app/Components/Craft/Production.js';
 import ProductionConfigurator from '../../core/app/Components/ProductionConfigurator.js';
 import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
+import Wallet from '../../core/app/Components/Wallet.js';
 import Item from '../../core/app/Entities/Item.js';
 import Recipe from '../../core/app/Entities/Recipe.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
@@ -87,7 +88,8 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
     }
 
     private _devCraft() {
-        let itemStorage = new ItemStorage(20, this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        let itemStorage = new ItemStorage(20);
+        let wallet = new Wallet();
         // itemStorage.addItem(ItemID.IronIngot, 60);
         itemStorage.addItem(ItemID.IronIngot, 70);
         // itemStorage.addItem(ItemID.IronIngot, 121);
@@ -107,8 +109,8 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
         // craft.addItem(ItemID.Uncommon_OneHandedSword_006_01);
 
         // craft.createItem(ItemID.Amulet01, itemStorage);
-        craft.createItem(ItemID.Uncommon_OneHandedSword_006_01, itemStorage);
-        craft.createItem(ItemID.Uncommon_OneHandedSword_006_01, itemStorage);
+        craft.createItem(ItemID.Uncommon_OneHandedSword_006_01, itemStorage, wallet);
+        craft.createItem(ItemID.Uncommon_OneHandedSword_006_01, itemStorage, wallet);
 
         itemStorage.debug();
     }

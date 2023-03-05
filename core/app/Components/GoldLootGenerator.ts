@@ -6,15 +6,14 @@ import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 export default class GoldLootGenerator {
-    private readonly _value: RangeType;
+    private readonly _value: number;
 
-    constructor(value: RangeType) {
+    constructor(value: number) {
         this._value = value;
     }
 
     transfer(wallet: WalletInterface) {
-        let gold = _.random(this._value.min, this._value.max);
-        wallet.add(gold);
-        debug(DebugNamespaceID.Debug)('Генерация золота в луте: ' + gold);
+        wallet.add(this._value);
+        debug(DebugNamespaceID.Log)('Генерация золота в луте: ' + this._value);
     }
 }

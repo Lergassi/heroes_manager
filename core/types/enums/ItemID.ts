@@ -38,9 +38,6 @@ export enum ItemID {
     BoarMeat = 'BoarMeat',
     BearMeat = 'BearMeat',
 
-    HealthPotion01 = 'HealthPotion01',
-    MagicPotion02 = 'MagicPotion02',
-
     PlateHelmet01 = 'PlateHelmet01',
     PlateHelmet02 = 'PlateHelmet02',
     PlateShoulders01 = 'PlateShoulders01',
@@ -98,6 +95,9 @@ export enum ItemID {
     Revolver01 = 'Revolver01',
     Bow01 = 'Bow01',
     Crossbow01 = 'Crossbow01',
+
+    HealthPotion01 = 'HealthPotion01',
+    MagicPotion02 = 'MagicPotion02',
 
     // Stub01 = 'Stub01',
     // Stub02 = 'Stub02',

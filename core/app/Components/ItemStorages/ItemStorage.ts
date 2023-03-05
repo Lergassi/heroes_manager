@@ -19,15 +19,11 @@ import ItemStackController from './ItemStackController.js';
 export default class ItemStorage implements ItemStorageInterface {
     private readonly _size: number;
     private readonly _itemStackControllers: ItemStackController[];
-    private readonly _entityManager: EntityManagerInterface;
 
-    constructor(size: number, entityManager: EntityManagerInterface) {
+    constructor(size: number) {
         assertIsGreaterThanOrEqual(size, 1);
-        assertNotNil(entityManager);
         // this._itemStackControllers = itemStackControllers;
         // this._size = itemStackControllers.length;
-
-        this._entityManager = entityManager;
 
         this._size = size;
         this._itemStackControllers = [];
@@ -136,8 +132,12 @@ export default class ItemStorage implements ItemStorageInterface {
             count -= this._itemStackControllers[i].removeItem(ID, count);
             if (count <= 0) break;
         }
+
         let removedItemsCount = originCount - count;
-        debug(DebugNamespaceID.Log)(sprintf('Удалено предметов "%s": %s из %s.', ID, removedItemsCount, originCount));
+
+        if (removedItemsCount !== 0) {
+            debug(DebugNamespaceID.Log)(sprintf('Удалено предметов "%s": %s из %s.', ID, removedItemsCount, originCount));
+        }
 
         return removedItemsCount;
     }
@@ -173,10 +173,10 @@ export default class ItemStorage implements ItemStorageInterface {
         return totalCanAddItemCount;
     }
 
-    clear(slotID: number): void {
-        assertNotNil(this._itemStackControllers[slotID], 'Слот не найден.');
+    clear(index: number): void {
+        assertNotNil(this._itemStackControllers[index], 'Слот не найден.');
 
-        this._itemStackControllers[slotID].clear();
+        this._itemStackControllers[index].clear();
     }
 
     clearAllItems(): void {
@@ -220,5 +220,17 @@ export default class ItemStorage implements ItemStorageInterface {
         return _.every(_.map(this._itemStackControllers, (value) => {
             return value.isFree();
         }));
+    }
+
+    removeByIndex(index: number, count: number): number {
+        if (!this._itemStackControllers[index]) return 0;
+
+        return this._itemStackControllers[index].removeItemByIndex(count);
+    }
+
+    removeByIndexTo(index: number, count: number, itemStorage: ItemStorageInterface): number {
+        if (!this._itemStackControllers[index]) return 0;
+
+        return this._itemStackControllers[index].removeItemByIndexTo(count, itemStorage);
     }
 }

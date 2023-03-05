@@ -31,7 +31,7 @@ export type RangeType = {
 
 export type ItemLoot = {
     ID: ItemID;
-    count: RangeType;
+    count: number;
     /**
      * Целое число в диапазоне 0-100. Но может быть и больше.
      */

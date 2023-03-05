@@ -120,7 +120,7 @@ export default class EnemyFactory {
             stateController,
         ));
 
-        //todo: configure
+        //todo: configure в отдельный класс.
         let itemLootGeneratorComponent = enemy.set<ItemLootGenerator>(ComponentID.ItemLootGenerator, new ItemLootGenerator());
         database.enemies.rewards.items(enemyTypeID, (itemID, count, chance) => {
             itemLootGeneratorComponent.addItem(itemID, count, chance);

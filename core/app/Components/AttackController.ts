@@ -17,7 +17,7 @@ import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 
 export default class AttackController implements AttackControllerInterface {
     private readonly _rangeSide: number;  //todo: Диапазон должен быть задан, а не вычисляемым.
-    private readonly _attackPowerCharacterAttribute: CharacterAttributeInterface;
+    private readonly _attackPower: CharacterAttributeInterface;
     private readonly _lifeStateController: LifeStateController;
 
     constructor(
@@ -28,7 +28,7 @@ export default class AttackController implements AttackControllerInterface {
         assert(!_.isNil(lifeStateController));
 
         this._rangeSide = 2;
-        this._attackPowerCharacterAttribute = attackPowerCharacterAttribute;
+        this._attackPower = attackPowerCharacterAttribute;
         this._lifeStateController = lifeStateController;
     }
 
@@ -36,12 +36,12 @@ export default class AttackController implements AttackControllerInterface {
      * @deprecated Нужно сразу указывать диапазон без таких вычислений.
      */
     value(): {left: number; right: number} {
-        let left = this._attackPowerCharacterAttribute.finalValue -
+        let left = this._attackPower.finalValue -
             round(this._rangeSide, 0)
         ;
         left = left < 0 ? 0 : left;
 
-        let right = this._attackPowerCharacterAttribute.finalValue +
+        let right = this._attackPower.finalValue +
             round(this._rangeSide, 0)
             ;
 
@@ -71,6 +71,7 @@ export default class AttackController implements AttackControllerInterface {
     private _generateAttack(): number {
         let value = this.value();
 
-        return _.random(value.left, value.right);
+        // return _.random(value.left, value.right);
+        return this._attackPower.value;
     }
 }

@@ -20,7 +20,6 @@ export interface PlayerTableItemStorageRCProps {
 }
 
 interface PlayerTableItemStorageRCState {
-    itemStorage: ItemStorageInterface;
     slots: UI_ItemStorageSlot[];
 }
 
@@ -44,7 +43,6 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
                     },
                 };
             }),
-            itemStorage: props.itemStorage,
             // itemStorageID: props.itemStorage.itemStorageID,
         };
 
@@ -68,7 +66,7 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
     }
 
     clear(index: number) {
-        this.state.itemStorage.clear(index);
+        this.props.itemStorage.clear(index);
     }
 
     render() {

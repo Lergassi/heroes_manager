@@ -26,12 +26,6 @@ export default class LifeStateController {
         this._code = code;
     }
 
-    debug(): void {
-        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
-            code: this._code,
-        });
-    }
-
     canAction(): boolean {
         if (this._code !== CharacterLifeStateCode.Life) {
             debug(DebugNamespaceID.Throw)('Персонаж мертв.');
@@ -39,5 +33,11 @@ export default class LifeStateController {
         }
 
         return true;
+    }
+
+    debug(): void {
+        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+            code: this._code,
+        });
     }
 }

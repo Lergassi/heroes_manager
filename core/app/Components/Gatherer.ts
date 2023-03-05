@@ -22,13 +22,14 @@ export default class Gatherer implements GathererInterface {
      * @param itemStorage
      * @return Собрано ресурсов.
      */
-    gather(gatheringPoint: Vein, itemStorage: ItemStorageInterface): unsigned {
+    gather(gatheringPoint: Vein, itemStorage: ItemStorageInterface): number {
         if (!this.canGather()) return 0;
 
         return gatheringPoint.gather(itemStorage);
     }
 
     canGather(): boolean {
+        //todo: Поменять на состояния действия.
         if (!this._lifeStateController.canAction()) {
             debug(DebugNamespaceID.Throw)('Сбор не возможен.');
             return false;

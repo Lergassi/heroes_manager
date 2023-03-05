@@ -38,12 +38,6 @@ export default class EnemyCharacterAttributeFactory {
                 break;
         }
 
-        //hack До исправления расчетов для начальных уровней, пока не собрана экипировка.
-        // if (level <= 10) {
-        //     value = _.round(value * 0.5);
-        // }
-        //end hack
-
         let characterAttribute = new CharacterAttribute(
             characterAttributeID,
             options?.baseValue ?? value,

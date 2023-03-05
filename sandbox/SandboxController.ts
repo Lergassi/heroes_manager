@@ -962,7 +962,7 @@ export default class SandboxController {
         //     new ItemStackController(),
         //     new ItemStackController(),
         // ]);
-        let itemStorage = new ItemStorage(2, entityManager);
+        let itemStorage = new ItemStorage(2);
         //equip slotIDFrom slotIDTo
         console.log(itemStorage.addItem(ItemID.IronOre, 24), itemStorage);
         console.log(itemStorage.addItem(ItemID.Wood, 24), itemStorage);

@@ -2,11 +2,13 @@ import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import HealthPoints from '../../../core/app/Components/HealthPoints.js';
 import MainHeroList, {MainHeroListRenderInterface} from '../../../core/app/Components/MainHeroList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import GameObject from '../../../core/source/GameObject.js';
 import {CommandID} from '../../../core/types/enums/CommandID.js';
+import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
@@ -153,7 +155,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                 {/*<tr className={'hero-list-table-row'}>*/}
                                 <tr className={''}>
                                     {/*<th></th>*/}
-                                    <th>HeroClass (ID)</th>
+                                    <th>HeroClassID (ID)</th>
                                     <th>Level</th>
                                     <th>HeroRole</th>
                                     <th>ActivityState</th>
@@ -180,9 +182,12 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                                 <button className={'btn btn_default'} onClick={() => {
                                                     this.props.container.get<DetailHeroRC>(ServiceID.UI_DetailHero).updateHero(hero.hero, {show: true});
                                                 }}>DETAIL</button>
-                                                <button className={'btn btn_danger'} onClick={() => {
-                                                    hero.deleteHandler();
-                                                }}>DELETE</button>
+                                                <button className={'btn btn_default'} onClick={() => {
+                                                    hero.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
+                                                }}>RESURRECT</button>
+                                                {/*<button className={'btn btn_danger'} onClick={() => {*/}
+                                                {/*    hero.deleteHandler();*/}
+                                                {/*}}>DELETE</button>*/}
                                             </td>
                                         </tr>
                                     })}

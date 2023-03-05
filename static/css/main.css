@@ -186,6 +186,10 @@
     width: 300px;
 }
 
+.btn_disabled {
+    text-decoration: line-through;
+}
+
 /****************************************************************/
 /* block */
 /****************************************************************/
@@ -330,9 +334,18 @@
     /*background-color: red;*/
     /*text-align: center;*/
     padding-left: 25px;
+    padding-right: 25px;
     box-sizing: border-box;
     font-size: 18px;
     font-weight: bold;
+    /*position: absolute;*/
+    float: left;
+}
+
+.header__wallet-money-counter {
+    float: right;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 /****************************************************************/

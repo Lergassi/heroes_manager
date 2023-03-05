@@ -10,8 +10,7 @@ import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {EventCode} from '../../../types/enums/EventCode.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
-import {UI_ItemStorage, UI_ItemStorageSlot, unsigned} from '../../../types/main.js';
-import Item from '../../Entities/Item.js';
+import {UI_ItemStorage, UI_ItemStorageSlot} from '../../../types/main.js';
 import {ItemStorageControllerInterfaceRender} from '../../Interfaces/ItemStorageControllerInterface.js';
 import ItemStorageInterface, {ItemStorageInterfaceRender} from '../../Interfaces/ItemStorageInterface.js';
 import EquipController from '../EquipController.js';
@@ -187,10 +186,6 @@ export default class ItemStorageController implements ItemStorageInterface {
         ui.updateItemStorages?.(itemStorages);
     }
 
-    clear(index: number): void {
-        throw AppError.notWorking('Использовать clear для ItemStorage.');
-    }
-
     clearAllItems(): void {
         for (let i = 0; i < this._itemStorages.length; i++) {
             this._itemStorages[i].get<ItemStorageInterface>(ComponentID.ItemStorage).clearAllItems();
@@ -215,5 +210,49 @@ export default class ItemStorageController implements ItemStorageInterface {
         return _.every(_.map(this._itemStorages, (value) => {
             return value.get<ItemStorageInterface>(ComponentID.ItemStorage).isEmpty();
         }));
+    }
+
+    _removeByIndex(itemStorageIndex: number, slotIndex: number, count: number): number {
+        let itemStorage = _.find(this._itemStorages, (itemStorage) => {
+            return itemStorage.ID === itemStorageIndex;
+        });
+        // if (!this._itemStorages[itemStorageIndex]) return 0;
+        if (!itemStorage) return 0;
+
+        // return this._itemStorages[itemStorageIndex].get<ItemStorageInterface>(ComponentID.ItemStorage).removeByIndex(slotIndex, count);
+        return itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorage).removeByIndex(slotIndex, count);
+    }
+
+    _removeByIndexTo(itemStorageIndex: number, slotIndex: number, count: number, itemStorage: ItemStorageInterface): number {
+    // _removeByIndexTo(itemStorageIndex: number, slotIndex: number, count: number, target: {addItem: (itemID: ItemID, count: number) => number}): number {
+        let _itemStorage = _.find(this._itemStorages, (itemStorage) => {
+            return itemStorage.ID === itemStorageIndex;
+        });
+        // if (!this._itemStorages[itemStorageIndex]) return 0;
+        if (!_itemStorage) return 0;
+
+        // return this._itemStorages[itemStorageIndex].get<ItemStorageInterface>(ComponentID.ItemStorage).removeByIndex(slotIndex, count);
+        return _itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorage).removeByIndexTo(slotIndex, count, itemStorage);
+        // return _itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorage).removeByIndexTo(slotIndex, count, );
+    }
+
+    //****
+    //todo: Удалить после удаления ItemStorageInterface из коллекции.
+    //****
+
+    clear(index: number): void {
+        throw AppError.notImplements();
+    }
+
+    removeByIndex(index: number, count: number): number {
+        throw AppError.notImplements();
+
+        return 0;
+    }
+
+    removeByIndexTo(index: number, count: number, itemStorage: ItemStorageInterface): number {
+        throw AppError.notImplements();
+
+        return 0;
     }
 }

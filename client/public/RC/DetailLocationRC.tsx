@@ -2,7 +2,7 @@ import {formatDuration, intervalToDuration} from 'date-fns';
 import _ from 'lodash';
 import React from 'react';
 import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
-import Location, {LocationRender, LocationHuntingState} from '../../../core/app/Components/Location.js';
+import Location, {LocationHuntingState, LocationRender} from '../../../core/app/Components/Location.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
@@ -13,12 +13,10 @@ import GameObject from '../../../core/source/GameObject.js';
 import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import {UI_ItemCount, UI_ShortHero} from '../../../core/types/main.js';
+import {UI_ItemCount, UI_ItemStorage, UI_ItemStorageSlot} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
-import HeroListSelectRC from './HeroListSelectRC.js';
 import HeroScrolledListSelectRC from './HeroScrolledListSelectRC.js';
-import {MainHeroListRCElement} from './MainHeroListRC.js';
 
 export interface DetailLocationRCProps {
     container: ContainerInterface;
@@ -26,7 +24,7 @@ export interface DetailLocationRCProps {
     window: UI_WindowOptions;
 }
 
-export interface DetailLocationRCState {
+interface DetailLocationRCState {
     location: GameObject;
     ID: string;
 
@@ -38,12 +36,18 @@ export interface DetailLocationRCState {
     // gatheringPerformance: number;
     timeToClose: number;
 
+    // items: UI_ItemStorageSlot[];
+    items: UI_ItemStorage[];
+
     heroes: DetailLocationRCHeroElement[];
     enemies: DetailLocationRCEnemyElement[];
     // veins: DetailLocationRCVeinElement[];
-    veins: UI_ItemCount[];
 
-    items: UI_ItemCount[];
+    heroGroupItems: UI_ItemStorageSlot[];
+
+    veinItems: UI_ItemCount[];
+
+    lootItems: UI_ItemCount[];
     money: number;
 
     selectedHeroID: string;
@@ -100,12 +104,16 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
             timeToClose: 0,
             // timeToClose: 8 * 60 * 60 * 24 + 1 + 60 * 60,
 
-            heroes: [],
-            enemies: [],
-            veins: [],
+            items   : [],
 
-            items: [],
-            money: 0,
+            heroes   : [],
+            enemies  : [],
+            heroGroupItems: [],
+
+            veinItems: [],
+
+            lootItems: [],
+            money    : 0,
 
             // selectedHeroID: props.heroes[0] ? props.heroes[0].ID : undefined,
             selectedHeroID: '', //todo: Отдельный компонент выбора. Только для ui.
@@ -131,6 +139,55 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
 
         this.updateID(String(this.state.location.ID));  //todo: Будет так до новой системы GameObject.
         this.state.location?.get<Location>(ComponentID.Location).renderByRequest(this);
+
+        let items: UI_ItemStorage[] = [];
+        // this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).renderByRequest({
+        //     updateItems(slots: UI_ItemStorageSlot[]) {
+        //         for (let i = 0; i < slots.length; i++) {
+        //             if (!slots[i].item.itemID) continue;
+        //
+        //             items.push({
+        //                 index: slots[i].index,
+        //                 item: {
+        //                     itemID: slots[i].item.itemID,
+        //                     count: slots[i].item.count,
+        //                 },
+        //             });
+        //         }
+        //     },
+        // });
+        this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController).renderItemStorageControllerByRequest({
+            updateItemStorages(itemStorages: UI_ItemStorage[]) {
+                // console.log('updateItemStorages', itemStorages);
+                for (let i = 0; i < itemStorages.length; i++) {
+                    let index = items.push({
+                        ID: itemStorages[i].ID,
+                        slots: [],
+                    }) - 1;
+                    for (let j = 0; j < itemStorages[i].slots.length; j++) {
+                        if (!itemStorages[i].slots[j].item.itemID) continue;
+
+                        items[index].slots.push({
+                            index: itemStorages[i].slots[j].index,
+                            item: {
+                                itemID: itemStorages[i].slots[j].item.itemID,
+                                count: itemStorages[i].slots[j].item.count,
+                            },
+                        });
+                    }
+                }
+            },
+            updateSlots(itemStorageID: number, slots: UI_ItemStorageSlot[]) {
+                console.log('updateSlots', itemStorageID, slots);
+
+            },
+        });
+        // console.log('items', items);
+        this.setState((state) => {
+            return {
+                items: items,
+            } as DetailLocationRCState;
+        });
         // this.props.mainHeroList.renderByRequest(this);
     }
 
@@ -270,7 +327,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
     updateVeins(veins: UI_ItemCount[]): void {
         this.setState((state) => {
             return {
-                veins: veins,
+                veinItems: veins,
             } as DetailLocationRCState;
         });
     }
@@ -278,7 +335,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
     updateLoot(items: UI_ItemCount[]): void {
         this.setState((state) => {
             return {
-                items: items,
+                lootItems: items,
             } as DetailLocationRCState;
         });
     }
@@ -329,14 +386,24 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         });
     }
 
+    updateHeroGroupItems(items: UI_ItemStorageSlot[]): void {
+        this.setState((state) => {
+            return {
+                heroGroupItems: items,
+            } as DetailLocationRCState;
+        });
+    }
+
     render() {
         if (!(this.state.window.show && this.props.window.show)) return;
         if (!this.state.location) return;
 
         let heroes = this.state.heroes;
         let enemies = this.state.enemies;
-        let veins = this.state.veins;
-        let loot = this.state.items;
+        let veins = this.state.veinItems;
+        let loot = this.state.lootItems;
+
+        // console.log('render this.state.items', this.state.items);
 
         return (
             <div>
@@ -375,7 +442,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                 <table className={'basic-table'}>
                                     <tbody>
                                         <tr>
-                                            <th>HeroClass</th>
+                                            <th>HeroClassID</th>
                                             <th>Level</th>
                                             <th>HP</th>
                                             <th>AP</th>
@@ -404,7 +471,37 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     {/*/>*/}
                                 </div>
                             </div>{/*end widget__content*/}
-                        </div>{/*end widget*/}
+                        </div>{/*end widget hero*/}
+                        <div className={'widget'}>
+                            <div className={'widget__title'}>Player items</div>
+                            <div className={'widget__content'}>
+                                <table className={'basic-table'}>
+                                    <tbody>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Count</th>
+                                        <th>Ctrl</th>
+                                    </tr>
+                                    {_.map(this.state.items, (itemStorage) => {
+                                        return _.map(itemStorage.slots, (slot, index) => {
+                                            // console.log(slot);
+                                            return <tr key={index}>
+                                                {/*<td>{item.index}</td>*/}
+                                                <td>{slot.item.itemID}</td>
+                                                <td>{slot.item.count}</td>
+                                                <td><button className={'btn btn_default'} onClick={(event) => {
+                                                    event.preventDefault();
+
+                                                    // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndex(itemStorage.ID, slot.index, 1);
+                                                    this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndexTo(itemStorage.ID, slot.index, 1, this.state.location.get<Location>(ComponentID.Location).heroesItems);
+                                                }}>ADD</button></td>
+                                            </tr>;
+                                        });
+                                    })}
+                                    </tbody>
+                                </table>
+                            </div>{/*end widget__content*/}
+                        </div>{/*end widget Player items*/}
                     </div>{/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
@@ -431,7 +528,37 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>{/*end enemies*/}
+                        <div className={'widget'}>
+                            <div className={'widget__title'}>Hero group items</div>
+                            <div className={'widget__content'}>
+                                <table className={'basic-table'}>
+                                    <tbody>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Count</th>
+                                        <th>Ctrl</th>
+                                    </tr>
+                                    {_.map(this.state.heroGroupItems, (item, index) => {
+                                        return <tr key={index}>
+                                            <td>{item.item?.itemID ?? ''}</td>
+                                            <td>{item.item?.count ?? ''}</td>
+                                            <td><button className={'btn btn_default'} onClick={(event) => {
+                                                event.preventDefault();
+
+                                                if (!item.item?.itemID) return;
+
+                                                let addedItemsCount = this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item.item.itemID, 1);
+                                                this.state.location.get<Location>(ComponentID.Location).removeItem(item.item.itemID, addedItemsCount);
+
+                                                // this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).removeByIndexTo();
+                                            }}>REMOVE</button></td>
+                                        </tr>
+                                    })}
+                                    </tbody>
+                                </table>
+                            </div>{/*end widget__content*/}
+                        </div>{/*end widget Hero group items*/}
                     </div>{/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>

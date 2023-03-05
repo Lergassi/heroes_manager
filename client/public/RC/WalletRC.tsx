@@ -7,6 +7,8 @@ import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
+import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
+import WalletMoneyCounterRC from './WalletMoneyCounterRC.js';
 
 export interface WalletRCProps {
     container: ContainerInterface;
@@ -15,38 +17,39 @@ export interface WalletRCProps {
 }
 
 export interface WalletRCState {
-    money: number;
+    // money: number;
     window: UI_WindowOptions;
 }
 
-export default class WalletRC extends React.Component<WalletRCProps, WalletRCState> implements WalletInterfaceRender {
+// export default class WalletRC extends React.Component<WalletRCProps, WalletRCState> implements RCUpdateInterface, WalletInterfaceRender {
+export default class WalletRC extends React.Component<WalletRCProps, WalletRCState> {
     constructor(props: WalletRCProps) {
         super(props);
 
         this.state = {
-            money: 0,
+            // money: 0,
             window: {
                 show: true,
             },
         };
 
-        this.props.container.set<WalletRC>(ServiceID.UI_Wallet, this);
-        this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
+        // this.props.container.set<WalletRC>(ServiceID.UI_Wallet, this);
+        // this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
     }
 
-    updateByRequest(): void {
-        if (!(this.state.window.show && this.props.window.show)) return;
-
-        this.props.wallet.renderByRequest(this);
-    }
-
-    updateValue(value: number): void {
-        this.setState((state) => {
-            return {
-                money: value,
-            } as WalletRCState;
-        });
-    }
+    // updateByRequest(): void {
+    //     if (!(this.state.window.show && this.props.window.show)) return;
+    //
+    //     this.props.wallet.renderByRequest(this);
+    // }
+    //
+    // updateValue(value: number): void {
+    //     this.setState((state) => {
+    //         return {
+    //             money: value,
+    //         } as WalletRCState;
+    //     });
+    // }
 
     render() {
         if (!(this.state.window.show && this.props.window.show)) return;
@@ -56,7 +59,11 @@ export default class WalletRC extends React.Component<WalletRCProps, WalletRCSta
                 <div className={'widget'}>
                     <div className={'widget__title'}>Золото</div>
                     <div className={'widget__content'}>
-                        {this.state.money}
+                        {/*{this.state.money}*/}
+                        <WalletMoneyCounterRC
+                            container={this.props.container}
+                            wallet={this.props.wallet}
+                        />
                     </div>
                 </div>
             </div>

@@ -171,7 +171,7 @@ export default class ItemStorageSandboxController extends AbstractSandboxControl
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStackController.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
 
-        let itemStorage = new ItemStorage(2, em);
+        // let itemStorage = new ItemStorage(2, em);
 
         // console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.Wood), 10));
         // console.log(itemStorage.addItem(em.get<Item>(EntityID.Item, ItemID.IronOre), 10));

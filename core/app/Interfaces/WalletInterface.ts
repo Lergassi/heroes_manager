@@ -9,14 +9,14 @@ export default interface WalletInterface {
 
     /**
      * @param value
-     * @return Остаток.
+     * @return Кол-во добавленных денег.
      */
     add(value: number): number;
 
     /**
      *
      * @param value
-     * @return Кол-во удаленных единиц валюты.
+     * @return Кол-во удаленных денег.
      */
     remove(value: number): number;
     /**
@@ -24,7 +24,7 @@ export default interface WalletInterface {
      * @param target
      * @return Остаток в кошельке.
      */
-    moveTo(target: WalletInterface): number;
+    moveAllTo(target: WalletInterface): number;
     // has(value: unsigned): boolean;
     // render(callb);
     // addListener();

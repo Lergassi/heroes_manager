@@ -64,7 +64,6 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
                 heroClassID: HeroClassID.Warrior,
                 level: 1,
                 equip: {
-                    [EquipSlotID.Head]: ItemID.PlateHelmet02,
                     [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
                     [EquipSlotID.Legs]: ItemID.PlatePants01,
                     [EquipSlotID.Foots]: ItemID.PlateBoots01,
@@ -73,10 +72,19 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
                 },
             },
             {
+                heroClassID: HeroClassID.Barbarian,
+                level: 1,
+                equip: {
+                    [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
+                    [EquipSlotID.Legs]: ItemID.PlatePants01,
+                    [EquipSlotID.Foots]: ItemID.PlateBoots01,
+                    [EquipSlotID.RightHand]: ItemID.TwoHandedSword01,
+                },
+            },
+            {
                 heroClassID: HeroClassID.Paladin,
                 level: 1,
                 equip: {
-                    [EquipSlotID.Head]: ItemID.PlateHelmet02,
                     [EquipSlotID.Chest]: ItemID.PlateBreastplate01,
                     [EquipSlotID.Legs]: ItemID.PlatePants01,
                     [EquipSlotID.Foots]: ItemID.PlateBoots01,

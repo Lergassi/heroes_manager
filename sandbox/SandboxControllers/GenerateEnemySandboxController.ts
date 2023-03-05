@@ -20,7 +20,7 @@ export default class GenerateEnemySandboxController extends AbstractSandboxContr
         let enemy = enemyFactory.createSquad(EnemyTypeID.EnemyType01, 1);
         console.log(enemy);
 
-        let itemStorage = new ItemStorage(20, this.container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        let itemStorage = new ItemStorage(20);
         let wallet = new Wallet();
         let exp = new Experience(1, 100);
         enemy.get<HealthPoints>(ComponentID.HealthPoints).kill({

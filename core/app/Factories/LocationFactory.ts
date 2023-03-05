@@ -99,7 +99,7 @@ export default class LocationFactory {
             locationTypeID,
             level,
             this._itemStackFactory,
-            itemStorage,
+            this._itemStorageFactory,
             wallet,
         ));
 
