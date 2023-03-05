@@ -1,10 +1,11 @@
+import config from '../../config/config.js';
 import {startCharacterAttributeConfig} from '../../config/start_character_values.js';
 import {database} from '../../data/ts/database.js';
+import {hero_classes} from '../../data/ts/hero_classes.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import CharacterAttribute from '../Components/CharacterAttribute.js';
-import CharacterAttributeManager from '../Components/CharacterAttributeManager.js';
-import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
+import {item_attributes_formulas} from '../Services/BalanceTools/formulas/item_attributes_formulas.js';
 import HeroCharacterAttributeGenerator from '../Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import CharacterAttributeValueGeneratorByConfig from '../Services/CharacterAttributeValueGeneratorByConfig.js';
 import EnemyCharacterAttributeStartValueGenerator from '../Services/EnemyCharacterAttributeStartValueGenerator.js';
@@ -27,8 +28,6 @@ export default class HeroCharacterAttributeFactory {
         level: number,
         options?: { //todo: Времено пока в разработке. Далее для каждого класса будет своя логика без передачи из вне.
             baseValue?: number,
-            // baseValueModifier?: CharacterAttributeValueModifier,
-            // increaseValueModifier?: CharacterAttributeValueModifier,
         },
     ) {
         let value = 0;
@@ -37,7 +36,18 @@ export default class HeroCharacterAttributeFactory {
                 value = this._heroCharacterAttributeGenerator.baseHeroMaxHealthPoints(level, heroClassID);
                 break;
             case CharacterAttributeID.AttackPower:
-                value = this._heroCharacterAttributeGenerator.baseHeroAttackPower(level, heroClassID);
+                // value = this._heroCharacterAttributeGenerator.baseHeroAttackPower(level, heroClassID);
+                break;
+            case CharacterAttributeID.Strength:
+            case CharacterAttributeID.Agility:
+            case CharacterAttributeID.Intelligence:
+                let attackPower = this._heroCharacterAttributeGenerator.baseHeroAttackPower(level, heroClassID);
+
+                hero_classes.mainCharacterAttributes(heroClassID, (ID, startValueRatio) => {
+                    if (ID === characterAttributeID) {
+                        value = _.round(item_attributes_formulas.attackPowerToCharacterAttribute_revers(attackPower, config.default_character_attribute_to_attack_power_ratio) * startValueRatio);
+                    }
+                });
                 break;
             default:
                 // value = database.heroes.character_attributes.startValue(heroClassID, characterAttributeID);
@@ -48,14 +58,7 @@ export default class HeroCharacterAttributeFactory {
 
         let characterAttribute = new CharacterAttribute(
             characterAttributeID,
-            // options?.baseValue ?? this._generatorByConfig.generate(heroClassID, characterAttributeID),
-            // options?.baseValue ?? database.heroes.character_attributes.startValue(heroClassID, characterAttributeID),
             options?.baseValue ?? value,
-            // options?.baseValue ?? this._characterAttributeStartValueFactory.generate(
-            //     characterAttributeID,
-            //     level,
-            //     options?.baseValueModifier,
-            // )
         );
 
         return characterAttribute;

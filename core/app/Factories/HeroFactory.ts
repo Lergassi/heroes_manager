@@ -183,7 +183,7 @@ export default class HeroFactory {
         hero.set<CharacterAttributes>(ComponentID.CharacterAttributes, characterAttributes);
 
         //todo: Переделать хранение главных атрибутов у классов.
-        let mainCharacterAttributes = database.hero_classes.data.mainCharacterAttributes(heroClass.id as HeroClassID, (ID) => {
+        let mainCharacterAttributeIDs = database.hero_classes.data.mainCharacterAttributes(heroClass.id as HeroClassID, (ID) => {
             return ID;
         });
         let modifier = function (value) {
@@ -192,7 +192,7 @@ export default class HeroFactory {
 
         for (let i = 0; i < characterAttributeIDs.length; i++) {
             let baseValueModifier;
-            if (_.filter(mainCharacterAttributes, (value) => {
+            if (_.filter(mainCharacterAttributeIDs, (value) => {
                 // return value.id === characterAttributeIDs[i];
                 return value === characterAttributeIDs[i];
             }).length) {
@@ -211,7 +211,7 @@ export default class HeroFactory {
         //todo: Цепочка? builder? .create(...).decorate(...).decorate(...).build().
         characterAttributes[CharacterAttributeID.AttackPower] = hero.set<CharacterAttributeInterface>(CharacterAttributeID.AttackPower, new AttackPowerDependentIncreaseDecorator({
             attackPower: hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
-            dependentCharacterAttributes: _.filter(_.map(mainCharacterAttributes, (characterAttributeID) => {   //todo: Через индекс.
+            dependentCharacterAttributes: _.filter(_.map(mainCharacterAttributeIDs, (characterAttributeID) => {   //todo: Через индекс.
                 return hero.get<CharacterAttributeInterface>(characterAttributeID);    //todo: Доступ.
             }), value => value != undefined),
         }));

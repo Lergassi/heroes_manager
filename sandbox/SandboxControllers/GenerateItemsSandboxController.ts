@@ -187,12 +187,12 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
          */
 
         calcValues.breastplateHealthPoints = balance.breastplateHealthPoints(constValues.heroHP, _.sum(_.map(itemHealthPointsRatio, (item) => {
-            return item.ratio * item.count;
+            return item.start_value_ratio * item.count;
         })));
 
         let equipHealthPointsByRatio: any = {};
         for (const key in itemHealthPointsRatio) {
-            equipHealthPointsByRatio[key] = balance.itemHealthPointsByBreastplate(calcValues.breastplateHealthPoints, equipRatio[key].ratio);
+            equipHealthPointsByRatio[key] = balance.itemHealthPointsByBreastplate(calcValues.breastplateHealthPoints, equipRatio[key].start_value_ratio);
         }
         console.log('equipHealthPointsByRatio', equipHealthPointsByRatio);
         console.log('-'.repeat(64));
@@ -202,12 +202,12 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
          */
 
         calcValues.breastplateAttackPower = balance.breastplateAttackPower(calcValues.heroAttackPowerWithOnlyEquip, _.sum(_.map(itemAttackPowerRatio, (item) => {
-            return item.ratio * item.count;
+            return item.start_value_ratio * item.count;
         })));
 
         let itemAttackPowerByRatio: any = {};
         for (const key in equipRatio) {
-            itemAttackPowerByRatio[key] = balance.itemAttackPowerByBreastplate(calcValues.breastplateAttackPower, equipRatio[key].ratio);
+            itemAttackPowerByRatio[key] = balance.itemAttackPowerByBreastplate(calcValues.breastplateAttackPower, equipRatio[key].start_value_ratio);
         }
         console.log('itemAttackPowerByRatio', itemAttackPowerByRatio);
 

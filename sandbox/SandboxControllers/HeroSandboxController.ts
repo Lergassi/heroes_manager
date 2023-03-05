@@ -1,4 +1,4 @@
-import ActionStateController, {CharacterActionStateCode} from '../../core/app/Components/ActionStateController.js';
+import ActionStateController from '../../core/app/Components/ActionStateController.js';
 import AverageItemLevel from '../../core/app/Components/AverageItemLevel.js';
 import CharacterAttribute from '../../core/app/Components/CharacterAttribute.js';
 import CharacterAttributeManager from '../../core/app/Components/CharacterAttributeManager.js';
@@ -12,6 +12,7 @@ import HeroClass from '../../core/app/Entities/HeroClass.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
+import {hero_classes} from '../../core/data/ts/hero_classes.js';
 import {debug_detailHero} from '../../core/debug/debug_functions.js';
 import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
@@ -32,7 +33,8 @@ export default class HeroSandboxController extends AbstractSandboxController {
         // this._devEquipSlotRules();
         // this._devCharacterAttributeManager();
         // this._devHealthPointsController();
-        this._devEndurance();
+        // this._devEndurance();
+        this._devIncreaseCharacterAttributeByLevelUp();
 
         // this._useHeroFactory();
     }
@@ -167,5 +169,14 @@ export default class HeroSandboxController extends AbstractSandboxController {
         console.log(actionStateController);
         console.log(endurance);
         console.log(actionStateController.canAction());
+    }
+
+    private _devIncreaseCharacterAttributeByLevelUp() {
+        // hero_classes.mainCharacterAttributes(HeroClassID.Warrior, (ID, ratio) => {
+        //     console.log(ID, ratio);
+        // });
+        // console.log(hero_classes.armorMaterials(HeroClassID.Warrior, (ID, a, b) => {
+        //     console.log(ID, a, b);
+        // }));
     }
 }

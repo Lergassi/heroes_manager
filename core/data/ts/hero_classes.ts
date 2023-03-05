@@ -8,7 +8,11 @@ type TSDB_HeroClass = {
     ID: HeroClassID;
     heroRoleID: HeroRoleID;
     armorMaterialIDs: ArmorMaterialID[];
-    mainCharacterAttributeIDs: CharacterAttributeID[];
+    /**
+     * ratio в сумме должно быть 1.
+     * todo: Перенести в атрибуты.
+     */
+    mainCharacterAttributeIDs: {ID: CharacterAttributeID, start_value_ratio: number}[];
     //todo: Временно, до переноса логики в слоты.
     rightHandItemCategoryIDs: ItemCategoryID[];
     leftHandItemCategoryIDs: ItemCategoryID[];
@@ -21,7 +25,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Tank1,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
     },
@@ -29,7 +35,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Warrior,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 1}
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
     },
@@ -37,7 +45,10 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Paladin,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength, CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 0.5},
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 0.5},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
     },
@@ -45,7 +56,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Tank2,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
     },
@@ -53,7 +66,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Tank3,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
     },
@@ -61,7 +76,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Gladiator,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.OneHandedSwords]
     },
@@ -69,7 +86,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Barbarian,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.TwoHandedSwords],
         leftHandItemCategoryIDs  : []
     },
@@ -77,7 +96,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.PlateDamageDealer1,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.TwoHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.TwoHandedSwords]
     },
@@ -85,7 +106,10 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.PlateDamageDealer2,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength, CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 0.5},
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 0.5},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.OneHandedSwords]
     },
@@ -93,7 +117,10 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.PlateDamageDealer3,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Strength, CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Strength, start_value_ratio: 0.5},
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 0.5},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
     },
@@ -101,7 +128,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.LeatherDamageDealer1,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Agility],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Agility, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
         leftHandItemCategoryIDs  : []
     },
@@ -109,7 +138,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Rogue,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Agility],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Agility, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Daggers],
         leftHandItemCategoryIDs  : [ItemCategoryID.Daggers]
     },
@@ -117,7 +148,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Archer,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Agility],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Agility, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Boots],
         leftHandItemCategoryIDs  : []
     },
@@ -125,7 +158,10 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.LeatherDamageDealer2,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Agility, CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Agility, start_value_ratio: 0.5},
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 0.5},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Daggers],
         leftHandItemCategoryIDs  : []
     },
@@ -133,7 +169,10 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Gunslinger,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Agility, CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Agility, start_value_ratio: 0.5},
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 0.5},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Revolvers],
         leftHandItemCategoryIDs  : [ItemCategoryID.Revolvers]
     },
@@ -141,7 +180,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Necromancer,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -149,7 +190,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Mage1,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -157,7 +200,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Mage2,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -165,7 +210,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Warlock,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -173,7 +220,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.FireMage,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -181,7 +230,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Support1,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -189,7 +240,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Support2,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -197,7 +250,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Support3,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -205,7 +260,9 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Support4,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
@@ -213,21 +270,28 @@ let hero_classes_data: TSDB_HeroClassDB = {
         ID                       : HeroClassID.Support5,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
-        mainCharacterAttributeIDs: [CharacterAttributeID.Intelligence],
+        mainCharacterAttributeIDs: [
+            {ID: CharacterAttributeID.Intelligence, start_value_ratio: 1},
+        ],
         rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
         leftHandItemCategoryIDs  : []
     },
 };
 
 export const hero_classes = {
+    // armorMaterials: function<T> (ID: HeroClassID, callback: (ID: ArmorMaterialID) => T): T[] {
     armorMaterials: function<T> (ID: HeroClassID, callback: (ID: ArmorMaterialID) => T): T[] {
-        return _.map(hero_classes_data[ID]?.armorMaterialIDs ?? [], callback);
+        return _.map(hero_classes_data[ID]?.armorMaterialIDs ?? [], (value, index, collection) => {
+            return callback(value);
+        });
     },
     heroRole: function (ID: HeroClassID): HeroRoleID {
         return hero_classes_data[ID]?.heroRoleID;
     },
-    mainCharacterAttributes: function<T> (ID: HeroClassID, callback: (ID: CharacterAttributeID) => T): T[] {
-        return _.map(hero_classes_data[ID]?.mainCharacterAttributeIDs ?? [], callback);
+    mainCharacterAttributes: function<T> (ID: HeroClassID, callback: (ID: CharacterAttributeID, startValueRatio: number) => T): T[] {
+        return _.map(hero_classes_data[ID]?.mainCharacterAttributeIDs ?? [], (data) => {
+            return callback(data.ID, data.start_value_ratio);
+        });
     },
     availableWeapons: function<T> (ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
         return this.rightHandItemCategories(ID, callback);
@@ -238,7 +302,9 @@ export const hero_classes = {
      * @param callback
      */
     rightHandItemCategories: function<T> (ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
-        return _.map(hero_classes_data[ID]?.rightHandItemCategoryIDs ?? [], callback);
+        return _.map(hero_classes_data[ID]?.rightHandItemCategoryIDs ?? [], (value, index, collection) => {
+            return callback(value);
+        });
     },
     /**
      * @deprecated Для совместимости.
@@ -246,6 +312,8 @@ export const hero_classes = {
      * @param callback
      */
     leftHandItemCategories: function<T> (ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
-        return _.map(hero_classes_data[ID]?.leftHandItemCategoryIDs ?? [], callback);
+        return _.map(hero_classes_data[ID]?.leftHandItemCategoryIDs ?? [], (value, index, collection) => {
+            return callback(value);
+        });
     },
 };
