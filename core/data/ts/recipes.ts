@@ -61,6 +61,38 @@ let recipes_db: TSDB_RecipeDB = {
         ],
         cost: 40,
     },
+    [ItemID.IronIngot]: {
+        ID: ItemID.IronIngot,
+        resultItemCount: 1,
+        requireItems: [
+            {ID: ItemID.IronOre, count: 2},
+        ],
+        cost: 40,
+    },
+    [ItemID.Leather01]: {
+        ID: ItemID.Leather01,
+        resultItemCount: 1,
+        requireItems: [
+            {ID: ItemID.Skin01, count: 5},
+        ],
+        cost: 40,
+    },
+    [ItemID.CottonThread]: {
+        ID: ItemID.CottonThread,
+        resultItemCount: 5,
+        requireItems: [
+            {ID: ItemID.Cotton, count: 10},
+        ],
+        cost: 40,
+    },
+    [ItemID.CottonCloth]: {
+        ID: ItemID.CottonCloth,
+        resultItemCount: 1,
+        requireItems: [
+            {ID: ItemID.CottonThread, count: 5},
+        ],
+        cost: 40,
+    },
 };
 
 recipes_db = _.assign({}, recipes_db, auto_generated_equip_recipes_db_data);

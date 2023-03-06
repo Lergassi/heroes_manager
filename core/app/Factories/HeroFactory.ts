@@ -87,6 +87,7 @@ export default class HeroFactory {
         hero.set<HeroClassID>(ComponentID.HeroClassID, heroClass.id as HeroClassID)
         hero.set<Experience>(ComponentID.Experience, this._experienceComponentFactory.create({
             level: level,
+            hero: hero,
         }));
 
         let equipSlotFactory = new EquipSlotFactory(

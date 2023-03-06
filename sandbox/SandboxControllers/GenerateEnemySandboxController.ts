@@ -22,7 +22,8 @@ export default class GenerateEnemySandboxController extends AbstractSandboxContr
 
         let itemStorage = new ItemStorage(20);
         let wallet = new Wallet();
-        let exp = new Experience(1, 100);
+        // let exp = new Experience(1, 100, undefined);
+        let exp = undefined;
         enemy.get<HealthPoints>(ComponentID.HealthPoints).kill({
             itemStorage: itemStorage,
             wallet: wallet,

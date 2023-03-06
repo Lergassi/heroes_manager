@@ -16,9 +16,6 @@ import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
 
 export type UI_ProductionItem = {
     itemID: ItemID;
-    //Всё остальное из бд.
-    // resultCount: ItemID;
-    // requireItemIDs: ItemID;
 }
 
 export interface ProductionRCProps {
@@ -87,6 +84,7 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                             <tbody>
                                 <tr>
                                     <th>ITEM_ID</th>
+                                    <th>ITEM_CATEGORY_ID</th>
                                     <th>RESULT_COUNT</th>
                                     <th>REQUIRE_ITEMS</th>
                                     <th>COST</th>
@@ -95,8 +93,8 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                                 {_.map(this.state.items, (item, index, collection) => {
                                     return <tr key={index}>
                                         <td>{item.itemID}</td>
+                                        <td>{database.items.data.itemCategory(item.itemID)}</td>
                                         <td>{database.recipes.data.resultCount(item.itemID)}</td>
-                                        {/*<td>{database.items.}</td>*/}
                                         <td>{database.recipes.data.requireItems(item.itemID, (ID, count) => {
                                             return <div key={ID}>{ID}: {count}</div>
                                         })}</td>

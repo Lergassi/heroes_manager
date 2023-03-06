@@ -201,5 +201,55 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         let production = this.container.get<Production>(ServiceID.Production);
 
         production.addItem(ItemID.HealthPotion01);
+
+        production.addItem(ItemID.IronIngot);
+        production.addItem(ItemID.Leather01);
+        production.addItem(ItemID.CottonThread);
+        production.addItem(ItemID.CottonCloth);
+
+        production.addItem(ItemID.Uncommon_Plate_Gloves_003_01);
+        production.addItem(ItemID.Uncommon_Plate_Belt_003_01);
+        production.addItem(ItemID.Uncommon_Plate_Breastplate_009_01);
+        production.addItem(ItemID.Uncommon_Plate_Boots_009_01);
+        production.addItem(ItemID.Uncommon_Plate_Helmet_012_01);
+        production.addItem(ItemID.Uncommon_Plate_Bracer_012_01);
+        production.addItem(ItemID.Uncommon_Plate_ShoulderPads_019_01);
+        production.addItem(ItemID.Uncommon_Plate_Pants_022_01);
+
+        production.addItem(ItemID.Uncommon_Leather_Gloves_003_01);
+        production.addItem(ItemID.Uncommon_Leather_Belt_003_01);
+        production.addItem(ItemID.Uncommon_Leather_Breastplate_009_01);
+        production.addItem(ItemID.Uncommon_Leather_Boots_009_01);
+        production.addItem(ItemID.Uncommon_Leather_Helmet_012_01);
+        production.addItem(ItemID.Uncommon_Leather_Bracer_012_01);
+        production.addItem(ItemID.Uncommon_Leather_ShoulderPads_019_01);
+        production.addItem(ItemID.Uncommon_Leather_Pants_022_01);
+
+        production.addItem(ItemID.Uncommon_Cloth_Gloves_003_01);
+        production.addItem(ItemID.Uncommon_Cloth_Belt_003_01);
+        production.addItem(ItemID.Uncommon_Cloth_Breastplate_009_01);
+        production.addItem(ItemID.Uncommon_Cloth_Boots_009_01);
+        production.addItem(ItemID.Uncommon_Cloth_Helmet_012_01);
+        production.addItem(ItemID.Uncommon_Cloth_Bracer_012_01);
+        production.addItem(ItemID.Uncommon_Cloth_ShoulderPads_019_01);
+        production.addItem(ItemID.Uncommon_Cloth_Pants_022_01);
+
+        production.addItem(ItemID.Uncommon_OneHandedSword_006_01);
+        production.addItem(ItemID.Uncommon_TwoHandedSword_006_01);
+        production.addItem(ItemID.Uncommon_Staff_006_01);
+        production.addItem(ItemID.Uncommon_Dagger_006_01);
+        production.addItem(ItemID.Uncommon_Bow_006_01);
+        production.addItem(ItemID.Uncommon_Revolver_006_01);
+        production.addItem(ItemID.Uncommon_Shield_006_01);
+
+        production.addItem(ItemID.Uncommon_Ring_009_01);
+        production.addItem(ItemID.Uncommon_Ring_009_02);
+        production.addItem(ItemID.Uncommon_Ring_009_03);
+        production.addItem(ItemID.Uncommon_Amulet_019_01);
+        production.addItem(ItemID.Uncommon_Amulet_019_02);
+        production.addItem(ItemID.Uncommon_Amulet_019_03);
+        production.addItem(ItemID.Uncommon_Ring_022_01);
+        production.addItem(ItemID.Uncommon_Ring_022_02);
+        production.addItem(ItemID.Uncommon_Ring_022_03);
     }
 }

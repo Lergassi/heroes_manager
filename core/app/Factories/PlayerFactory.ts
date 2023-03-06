@@ -40,9 +40,10 @@ export default class PlayerFactory {
 
         ));
 
-        playerGameObject.set(ComponentID.Experience, this._experienceComponentFactory.create({
-            level: 1,
-        }));
+        //todo: Временно удалено. Тут будет другой компонент.
+        // playerGameObject.set(ComponentID.Experience, this._experienceComponentFactory.create({
+        //     level: 1,
+        // }));
 
         return playerGameObject;
     }

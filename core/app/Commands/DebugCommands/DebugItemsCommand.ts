@@ -1,3 +1,4 @@
+import {database} from '../../../data/ts/database.js';
 import EntityManager from '../../../source/EntityManager.js';
 import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
@@ -21,6 +22,7 @@ export default class DebugItemsCommand extends Command {
         let entityManager = this.container.get<EntityManagerInterface>(ServiceID.EntityManager) as EntityManager;
 
         entityManager.debug.items();
+        database.items.data.debug();
 
         // let items = itemDatabase['_items'] as {[ID: string]: Item};
         // assertNotNil(items);

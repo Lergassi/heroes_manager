@@ -1,13 +1,19 @@
-import {unsigned} from '../../types/main.js';
 import debug from 'debug';
-import MaxLevelReachedError from '../../source/Errors/MaxLevelReachedError.js';
-import MaxIterationsReachedError from '../../source/Errors/MaxIterationsReachedError.js';
-import EventSystem from '../../source/EventSystem.js';
 import {sprintf} from 'sprintf-js';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
+import {database} from '../../data/ts/database.js';
+import MaxIterationsReachedError from '../../source/Errors/MaxIterationsReachedError.js';
+import MaxLevelReachedError from '../../source/Errors/MaxLevelReachedError.js';
+import EventSystem from '../../source/EventSystem.js';
+import GameObject from '../../source/GameObject.js';
+import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
+import {ComponentID} from '../../types/enums/ComponentID.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
-import _ from 'lodash';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {HeroClassID} from '../../types/enums/HeroClassID.js';
+import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
+import HeroCharacterAttributeGenerator from '../Services/BalanceTools/HeroCharacterAttributeGenerator.js';
+import CharacterAttributeManager from './CharacterAttributeManager.js';
+import HealthPoints from './HealthPoints.js';
 
 export enum ExperienceComponentEventCode {
     AddExp = 'ExperienceComponent.AddExp',
@@ -22,26 +28,28 @@ export interface ExperienceRender {
 
 //todo: ExperienceDistributorInterface - зачем это тут?
 export default class Experience implements ExperienceDistributorInterface {
-    private _level: unsigned;
-    private readonly _maxLevel: unsigned;
-    private _exp: unsigned;
-    private readonly _expForFirstLevel: unsigned;
-    private readonly _increaseExpForNextLevel: unsigned;
-    private readonly _firstNextLevel: unsigned;
+    private _level: number;
+    private readonly _maxLevel: number;
+    private _exp: number;
+    private readonly _expForFirstLevel: number;
+    private readonly _increaseExpForNextLevel: number;
+    private readonly _firstNextLevel: number;
+    private readonly _hero: GameObject;
+    private readonly _heroCharacterAttributeValueGenerator: HeroCharacterAttributeGenerator;
 
-    get level(): unsigned {
+    get level(): number {
         return this._level;
     }
 
-    get maxLevel(): unsigned {
+    get maxLevel(): number {
         return this._maxLevel;
     }
 
-    get exp(): unsigned {
+    get exp(): number {
         return this._exp;
     }
 
-    get totalExpForNextLevel(): unsigned {
+    get totalExpForNextLevel(): number {
         if (this._nextLevel() === this._firstNextLevel) {
             return this._expForFirstLevel;
         } else {
@@ -52,16 +60,21 @@ export default class Experience implements ExperienceDistributorInterface {
     constructor(
         level: number,
         maxLevel: number,
+        hero: GameObject,
+        heroCharacterAttributeValueGenerator: HeroCharacterAttributeGenerator,
     ) {
+        this._exp = 0;
         this._level = level;
         this._maxLevel = maxLevel;
-        this._exp = 0;
-        this._firstNextLevel = 2;
-        //todo: validate
 
         //todo: Временно. Далее через настройки или в виде отдельного класса.
-        this._expForFirstLevel = 1000;
-        this._increaseExpForNextLevel = 100;  //2: 1000 - 3:1100 - 4:1200 - ...
+        this._expForFirstLevel = 600;
+        this._increaseExpForNextLevel = 100;
+
+        this._firstNextLevel = 2;
+
+        this._hero = hero;
+        this._heroCharacterAttributeValueGenerator = heroCharacterAttributeValueGenerator;
     }
 
     addExp(value: number): void {
@@ -116,16 +129,27 @@ export default class Experience implements ExperienceDistributorInterface {
         }
 
         ++this._level;
-        // this._resetExp();
         debug(DebugNamespaceID.Log)(sprintf('Уровень повышен: %s.', this._level));
-        EventSystem.event(ExperienceComponentEventCode.AddLevel, this);
+
+        let heroClassID = this._hero.get<HeroClassID>(ComponentID.HeroClassID);
+
+        this._hero.get<CharacterAttributeManager>(ComponentID.CharacterAttributeManager).increase(CharacterAttributeID.MaxHealthPoints, this._heroCharacterAttributeValueGenerator.increaseBaseHealthPointsForLevel(this._level, heroClassID));
+
+        let value = this._heroCharacterAttributeValueGenerator.increaseBaseAttackPowerForLevel(this._level, heroClassID);
+        database.hero_classes.data.mainCharacterAttributes(heroClassID, (ID, ratio) => {
+            this._hero.get<CharacterAttributeManager>(ComponentID.CharacterAttributeManager).increase(ID, _.round(value * ratio));
+        });
+
+
+        this._hero.get<HealthPoints>(ComponentID.HealthPoints).resetHealthPoints();
+        //todo: Ресет других атрибутов.
     }
 
     private _resetExp(): void {
         this._exp = 0;
     }
 
-    private _nextLevel(): unsigned {
+    private _nextLevel(): number {
         return this._level + 1;
     }
 }

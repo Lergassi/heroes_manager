@@ -26,7 +26,7 @@ type TSDB_EnemyLootDB = {
 
 let enemy_loot_data: TSDB_EnemyLootDB = {
     [EnemyTypeID.Boar]: {
-        exp  : 42,
+        exp  : 40,
         items: [
             // {ID: ItemID.Wood, startCount: 2, chance: 1},
             {ID: ItemID.Skin01, count: 4, chance: 1},

@@ -29,10 +29,11 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
                 {panelID: UI_PanelID.ItemStorages, enable: true},
                 {panelID: UI_PanelID.Heroes, enable: true},
                 {panelID: UI_PanelID.Locations, enable: true},
-                {panelID: UI_PanelID.Production, enable: true},
                 {panelID: UI_PanelID.DungeonAndRaid, enable: false},
-                {panelID: UI_PanelID.Building, enable: false},
+                {panelID: UI_PanelID.Production, enable: true},
                 {panelID: UI_PanelID.Research, enable: false},
+                {panelID: UI_PanelID.Building, enable: false},
+                {panelID: UI_PanelID.Auction, enable: false},
                 {panelID: UI_PanelID.PvP, enable: false},
             ],
         };

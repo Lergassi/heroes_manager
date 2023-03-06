@@ -9,4 +9,5 @@ export enum UI_PanelID {
     Building = 'Building',
     Research = 'Research',
     PvP = 'PvP',
+    Auction = 'Auction',
 }

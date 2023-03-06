@@ -2,7 +2,7 @@
   "Wood": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -19,7 +19,7 @@
   "WoodBoards": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -36,7 +36,7 @@
   "IronOre": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -53,7 +53,7 @@
   "IronIngot": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -70,7 +70,7 @@
   "CopperOre": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -87,7 +87,7 @@
   "CopperIngot": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -104,7 +104,7 @@
   "TinOre": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -121,7 +121,7 @@
   "BronzeIngot": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -138,7 +138,7 @@
   "GoldOre": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -155,7 +155,7 @@
   "GoldIngot": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -172,7 +172,7 @@
   "Coal": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -189,7 +189,7 @@
   "Herb01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -206,7 +206,7 @@
   "Herb02": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -223,7 +223,7 @@
   "Herb03": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -240,7 +240,7 @@
   "Cotton": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -257,7 +257,7 @@
   "CottonThread": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -271,15 +271,15 @@
     "Strength": 0,
     "TwoHandWeapon": false
   },
-  "CottonFabric": {
+  "CottonCloth": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
     "HealthPoints": 0,
-    "ID": "CottonFabric",
+    "ID": "CottonCloth",
     "Intelligence": 0,
     "ItemCategoryID": "Materials",
     "ItemLevel": 1,
@@ -291,7 +291,7 @@
   "Skin01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -308,7 +308,7 @@
   "RabbitSkin": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -325,7 +325,7 @@
   "FoxSkin": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -342,7 +342,7 @@
   "DeerSkin": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -359,7 +359,7 @@
   "WolfSkin": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -376,7 +376,7 @@
   "BearSkin": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -393,7 +393,7 @@
   "BoarSkin": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -410,7 +410,7 @@
   "Leather01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -427,7 +427,7 @@
   "MagicResource01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -444,7 +444,7 @@
   "MagicMaterial01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -461,7 +461,7 @@
   "Powder": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -478,7 +478,7 @@
   "Sulfur": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -495,7 +495,7 @@
   "Saltpeter": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -512,7 +512,7 @@
   "HealthPotion01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -529,7 +529,7 @@
   "MagicPotion01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 10,
     "DefaultSellPrice": 2,
     "Equipable": false,
@@ -545,8 +545,8 @@
   },
   "PlateHelmet01": {
     "Agility": 0,
-    "ArmorMaterialID": "Plate",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -562,8 +562,8 @@
   },
   "PlateShoulders01": {
     "Agility": 0,
-    "ArmorMaterialID": "Plate",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -579,8 +579,8 @@
   },
   "PlateBreastplate01": {
     "Agility": 0,
-    "ArmorMaterialID": "Plate",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -596,8 +596,8 @@
   },
   "PlateBracer01": {
     "Agility": 0,
-    "ArmorMaterialID": "Plate",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -613,8 +613,8 @@
   },
   "PlateGloves01": {
     "Agility": 0,
-    "ArmorMaterialID": "Plate",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -630,8 +630,8 @@
   },
   "PlateBelt01": {
     "Agility": 0,
-    "ArmorMaterialID": "Plate",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -647,8 +647,8 @@
   },
   "PlatePants01": {
     "Agility": 0,
-    "ArmorMaterialID": "Plate",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -664,8 +664,8 @@
   },
   "PlateBoots01": {
     "Agility": 0,
-    "ArmorMaterialID": "Plate",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -681,8 +681,8 @@
   },
   "LeatherHelmet01": {
     "Agility": 0,
-    "ArmorMaterialID": "Leather",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -698,8 +698,8 @@
   },
   "LeatherShoulders01": {
     "Agility": 0,
-    "ArmorMaterialID": "Leather",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -715,8 +715,8 @@
   },
   "LeatherBreastplate01": {
     "Agility": 0,
-    "ArmorMaterialID": "Leather",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -732,8 +732,8 @@
   },
   "LeatherBracer01": {
     "Agility": 0,
-    "ArmorMaterialID": "Leather",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -749,8 +749,8 @@
   },
   "LeatherGloves01": {
     "Agility": 0,
-    "ArmorMaterialID": "Leather",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -766,8 +766,8 @@
   },
   "LeatherBelt01": {
     "Agility": 0,
-    "ArmorMaterialID": "Leather",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -783,8 +783,8 @@
   },
   "LeatherPants01": {
     "Agility": 0,
-    "ArmorMaterialID": "Leather",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -800,8 +800,8 @@
   },
   "LeatherBoots01": {
     "Agility": 0,
-    "ArmorMaterialID": "Leather",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -817,8 +817,8 @@
   },
   "ClothHelmet01": {
     "Agility": 0,
-    "ArmorMaterialID": "Cloth",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -834,8 +834,8 @@
   },
   "ClothShoulders_01": {
     "Agility": 0,
-    "ArmorMaterialID": "Cloth",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -851,8 +851,8 @@
   },
   "ClothBreastplate01": {
     "Agility": 0,
-    "ArmorMaterialID": "Cloth",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -868,8 +868,8 @@
   },
   "ClothBracer01": {
     "Agility": 0,
-    "ArmorMaterialID": "Cloth",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -885,8 +885,8 @@
   },
   "ClothGloves01": {
     "Agility": 0,
-    "ArmorMaterialID": "Cloth",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -902,8 +902,8 @@
   },
   "ClothBelt01": {
     "Agility": 0,
-    "ArmorMaterialID": "Cloth",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -919,8 +919,8 @@
   },
   "ClothPants01": {
     "Agility": 0,
-    "ArmorMaterialID": "Cloth",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -936,8 +936,8 @@
   },
   "ClothBoots01": {
     "Agility": 0,
-    "ArmorMaterialID": "Cloth",
-    "AttackPower": 0,
+    "ArmorMaterialID": null,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -954,7 +954,7 @@
   "Shield01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -971,7 +971,7 @@
   "Shield02": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -988,7 +988,7 @@
   "Amulet01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1005,7 +1005,7 @@
   "Amulet02": {
     "Agility": 10,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1022,7 +1022,7 @@
   "Amulet03": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1039,7 +1039,7 @@
   "Amulet04": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1056,7 +1056,7 @@
   "Amulet05": {
     "Agility": 10,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1073,7 +1073,7 @@
   "Ring01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1090,7 +1090,7 @@
   "Ring02": {
     "Agility": 10,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1107,7 +1107,7 @@
   "Ring03": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1124,7 +1124,7 @@
   "Ring04": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1141,7 +1141,7 @@
   "Ring05": {
     "Agility": 10,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1158,7 +1158,7 @@
   "Trinket01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1175,7 +1175,7 @@
   "Trinket02": {
     "Agility": 10,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1192,7 +1192,7 @@
   "Trinket03": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1209,7 +1209,7 @@
   "Trinket04": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1226,7 +1226,7 @@
   "Trinket05": {
     "Agility": 10,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1243,7 +1243,7 @@
   "OneHandedSword01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1260,7 +1260,7 @@
   "TwoHandedSword01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1277,7 +1277,7 @@
   "Dagger01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1294,7 +1294,7 @@
   "OneHandedAxe01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1311,7 +1311,7 @@
   "TwoHandedAxe01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1328,7 +1328,7 @@
   "Staff01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1345,7 +1345,7 @@
   "Wand01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,
@@ -1362,7 +1362,7 @@
   "Revolver01": {
     "Agility": 0,
     "ArmorMaterialID": null,
-    "AttackPower": 0,
+    "AttackPower": null,
     "DefaultBuyPrice": 100,
     "DefaultSellPrice": 20,
     "Equipable": true,

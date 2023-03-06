@@ -40,26 +40,25 @@ export default class ConventItems {
 
         let tsdbItemDB: TSDB_ItemDB = {};
         for (let i = 0; i < csv_json.length; i++) {
-            // tsdbItemDB[csv_json[i].ID] = csv_json[i];
             tsdbItemDB[csv_json[i].ID as ItemID] = {
-                Agility         : Number(csv_json[i].Agility),
+                Agility         : Number(csv_json[i].Agility ?? 0),
                 ArmorMaterialID : csv_json[i].ArmorMaterialID ? String(csv_json[i].ArmorMaterialID) as ArmorMaterialID : null,
-                AttackPower     : Number(csv_json[i].AttackPower),
-                DefaultBuyPrice : Number(csv_json[i].DefaultBuyPrice),
-                DefaultSellPrice: Number(csv_json[i].DefaultSellPrice),
-                Equipable       : Boolean(csv_json[i].Equipable),
-                HealthPoints    : Number(csv_json[i].HealthPoints),
+                AttackPower     : Number(csv_json[i].AttackPower ?? 0),
+                DefaultBuyPrice : Number(csv_json[i].DefaultBuyPrice ?? 0),
+                DefaultSellPrice: Number(csv_json[i].DefaultSellPrice ?? 0),
+                Equipable       : Boolean(csv_json[i].Equipable ?? 0),
+                HealthPoints    : Number(csv_json[i].HealthPoints ?? 0),
                 ID              : String(csv_json[i].ID) as ItemID,
-                Intelligence    : Number(csv_json[i].Intelligence),
+                Intelligence    : Number(csv_json[i].Intelligence ?? 0),
                 ItemCategoryID  : String(csv_json[i].ItemCategoryID) as ItemCategoryID,
-                ItemLevel       : Number(csv_json[i].ItemLevel),
+                ItemLevel       : Number(csv_json[i].ItemLevel ?? 0),
                 QualityID       : String(csv_json[i].QualityID) as QualityID,
-                StackSize       : Number(csv_json[i].StackSize),
-                Strength        : Number(csv_json[i].Strength),
+                StackSize       : Number(csv_json[i].StackSize ?? 0),
+                Strength        : Number(csv_json[i].Strength ?? 0),
                 TwoHandWeapon   : Boolean(csv_json[i].TwoHandWeapon)
             };
+            console.log(tsdbItemDB[csv_json[i].ID as ItemID]);
         }
-        // console.log(tsdbItemDB);
 
         let tsdbItemDBString = JSON.stringify(tsdbItemDB);
         fs.writeFile(output, tsdbItemDBString, (error) => {

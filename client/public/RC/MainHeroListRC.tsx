@@ -2,6 +2,7 @@ import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import Endurance from '../../../core/app/Components/Endurance.js';
 import HealthPoints from '../../../core/app/Components/HealthPoints.js';
 import MainHeroList, {MainHeroListRenderInterface} from '../../../core/app/Components/MainHeroList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
@@ -158,13 +159,13 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                 <tr className={''}>
                                     {/*<th></th>*/}
                                     <th>HeroClassID (ID)</th>
+                                    {/*<th style={{width: '220px'}}>Level (xp)</th>*/}
+                                    <th>Level (xp)</th>
+                                    <th>HP</th>
                                     <th>Endurance</th>
-                                    <th>Level</th>
                                     <th>HeroRole</th>
                                     <th>ActivityState</th>
-                                    <th style={{width: '220px'}}>Level (xp)</th>
                                     <th>ilvl</th>
-                                    <th>HP</th>
                                     <th>AP</th>
                                     <th>STR/AGI/INT</th>
                                     <th>Ctrl</th>
@@ -173,13 +174,12 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                     {_.map(this.state.heroes, (hero, index) => {
                                         return <tr key={index}>
                                             <td>{hero.heroClassName} ({hero.ID}) {hero.isDead ? 'X' : ''}</td>
+                                            <td>{hero.level} ({hero.exp}/{hero.totalExpToLevelUp})</td>
+                                            <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
                                             <td>{hero.endurance}/{hero.maxEndurance}</td>
-                                            <td>{hero.level}</td>
                                             <td>{hero.heroRoleName}</td>
                                             <td>{hero.state}</td>
-                                            <td>{hero.level} ({hero.exp}/{hero.totalExpToLevelUp})</td>
                                             <td>{hero.averageItemLevel}</td>
-                                            <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
                                             <td>{hero.attackPower}</td>
                                             <td>{hero.strength}/{hero.agility}/{hero.intelligence}</td>
                                             <td>
@@ -189,6 +189,9 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                                 <button className={'btn btn_default'} onClick={() => {
                                                     hero.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
                                                 }}>RESURRECT</button>
+                                                <button className={'btn btn_default'} onClick={() => {
+                                                    hero.hero.get<Endurance>(ComponentID.Endurance).reset();
+                                                }}>RESET_ENDURANCE</button>
                                                 {/*<button className={'btn btn_danger'} onClick={() => {*/}
                                                 {/*    hero.deleteHandler();*/}
                                                 {/*}}>DELETE</button>*/}

@@ -88,10 +88,13 @@ export default class EntityManager implements EntityManagerInterface {
                     itemCategory: this._entities[EntityID.Item][key].itemCategory.id,
                     itemLevel: this._entities[EntityID.Item][key].itemLevel,
                     quality: this._entities[EntityID.Item][key].quality.id,
+                    armorMaterial: this._entities[EntityID.Item][key].properties?.armorMaterial?.id ?? null,
                     // stackSize: this._entities[EntityID.Item][key].stackSize,
                 });
                 count++;
             }
+
+            debug(DebugNamespaceID.Debug)(this._entities[EntityID.Item]);
 
             debug(DebugNamespaceID.Debug)(sprintf('Всего предметов: %s.', count));
         },

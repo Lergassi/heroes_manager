@@ -163,6 +163,12 @@ export default class HealthPoints implements DamageControllerInterface {
         return true;
     }
 
+    resetHealthPoints(): void {
+        if (!this._actionStateController.canAction()) return;
+
+        this._currentHealthPoints = this._maxHealthPoints.value;
+    }
+
     canDamage(): boolean {
         return this._actionStateController.canAction();
     }

@@ -13,12 +13,10 @@ export default class CharacterAttributeManager {
     }
 
     increase(characterAttributeID: CharacterAttributeID, value: number): number {
-        // console.log(sprintf('CharacterAttributeManager: Значение увеличено %s %s', characterAttributeID, value));
         return this._character.get<CharacterAttributeInterface>(characterAttributeID)?.increase(value) ?? 0;
     }
 
     decrease(characterAttributeID: CharacterAttributeID, value: number): number {
-        // console.log(sprintf('CharacterAttributeManager: Значение уменьшено %s %s', characterAttributeID, value));
         return this._character.get<CharacterAttributeInterface>(characterAttributeID)?.decrease(value) ?? 0;
     }
 }

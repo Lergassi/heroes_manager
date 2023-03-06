@@ -33,6 +33,24 @@ export default class HeroCharacterAttributeGenerator {
     // heroes.HealthPoints
     //**********************************
 
+    increaseBaseHealthPointsForLevel(level: number, heroClassID: HeroClassID): number {
+        if (level === 1) return 0;
+        // if (level >= 100) return 0;
+
+        return _.round(
+            this.baseHeroMaxHealthPoints(level, heroClassID) - this.baseHeroMaxHealthPoints(level - 1, heroClassID)
+        );
+    }
+
+    increaseBaseAttackPowerForLevel(level: number, heroClassID: HeroClassID): number {
+        if (level === 1) return 0;
+        // if (level >= 100) return 0;
+
+        return _.round(
+            this.baseHeroAttackPower(level, heroClassID) - this.baseHeroAttackPower(level - 1, heroClassID)
+        );
+    }
+
     baseHeroMaxHealthPoints(level: number, heroClassID: HeroClassID): number {
         return hero_character_attributes_formulas.baseHeroMaxHealthPoints({
             defaultValue: this.defaultBaseHeroMaxHealthPoints(level),
@@ -148,6 +166,10 @@ export default class HeroCharacterAttributeGenerator {
             heroLevel: level,
             ratio: config.hero_level_corresponds_to_item_level_ratio,
         });
+    }
+
+    attackPowerToCharacterAttribute_revers(attackPower: number): number {
+        return item_attributes_formulas.attackPowerToCharacterAttribute_revers(attackPower, config.default_character_attribute_to_attack_power_ratio);
     }
 
     /**

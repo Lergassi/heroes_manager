@@ -481,7 +481,8 @@ export default class SandboxController {
             // heroFightController.attackTo2(enemyFightController, {
             heroFightController.attackTo(enemyFightController, {
                 wallet: this._container.get<WalletFactory>(ServiceID.WalletFactory).create().get<WalletInterface>(ComponentID.Wallet),
-                experienceDistributor: new Experience(1, 100),
+                // experienceDistributor: new Experience(1, 100, undefined),
+                experienceDistributor: undefined,
             });
             console.log(separator('enemyFightController атакует heroFightController'));
             console.log('heroes', extractHealthPoints(heroes));

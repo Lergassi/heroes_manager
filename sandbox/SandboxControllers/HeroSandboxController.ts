@@ -6,16 +6,18 @@ import Endurance from '../../core/app/Components/Endurance.js';
 import DefaultEquipSlot from '../../core/app/Components/EquipSlots/DefaultEquipSlot.js';
 import EquipSlotArmorMaterialRule from '../../core/app/Components/EquipSlots/EquipSlotArmorMaterialRule.js';
 import EquipSlotItemCategoryRule from '../../core/app/Components/EquipSlots/EquipSlotItemCategoryRule.js';
+import Experience from '../../core/app/Components/Experience.js';
 import HealthPoints from '../../core/app/Components/HealthPoints.js';
 import HealthPointsController from '../../core/app/Components/HealthPointsController.js';
 import HeroClass from '../../core/app/Entities/HeroClass.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import {hero_classes} from '../../core/data/ts/hero_classes.js';
+import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import {debug_detailHero} from '../../core/debug/debug_functions.js';
 import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
+import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import {EquipSlotID} from '../../core/types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
@@ -178,5 +180,25 @@ export default class HeroSandboxController extends AbstractSandboxController {
         // console.log(hero_classes.armorMaterials(HeroClassID.Warrior, (ID, a, b) => {
         //     console.log(ID, a, b);
         // }));
+        let generator = new HeroCharacterAttributeGenerator();
+
+        let heroClassID = HeroClassID.Warrior;
+        // let heroClassID = HeroClassID.Paladin;
+        let level = 2;
+        let maxLevel = 100;
+        // console.log(generator.baseHeroMaxHealthPoints(level, heroClassID));
+        // console.log(generator.baseHeroMaxHealthPoints(level - 1, heroClassID));
+        // console.log(level, generator.increaseForLevel(level++, heroClassID));
+
+        // while (level <= maxLevel) {
+        //     console.log(level, generator.increaseForLevel(level, heroClassID), generator.baseHeroMaxHealthPoints(level, heroClassID), generator.baseHeroMaxHealthPoints(level - 1, heroClassID));
+        //     level++;
+        // }
+
+        let hero = this.container.get<HeroFactory>(ServiceID.HeroFactory).create(heroClassID, 1);
+        debug_detailHero(hero);
+
+        hero.get<Experience>(ComponentID.Experience).addExp(200);
+        debug_detailHero(hero);
     }
 }

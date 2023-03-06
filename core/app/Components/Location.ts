@@ -271,7 +271,8 @@ export default class Location {
         itemStorage?: ItemStorageInterface,
         wallet?: WalletInterface,
     }): void {
-        if (!this._canModify()) return;
+        //todo: В настройки.
+        // if (!this.canModify()) return;
 
         if (rewardOptions.itemStorage) this._itemStorage.moveAllItemsTo(rewardOptions.itemStorage);
         if (rewardOptions.wallet) this._wallet.moveAllTo(rewardOptions.wallet);
@@ -280,6 +281,15 @@ export default class Location {
     canModify(): boolean {
         if (this._huntingState !== LocationHuntingState.Waiting) {
             debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
+            return false;
+        }
+
+        return true;
+    }
+
+    canGetRewards(): boolean {
+        if (!this.canModify()) {
+            debug(DebugNamespaceID.Throw)('Нельзя забрать награду.');
             return false;
         }
 
@@ -499,15 +509,6 @@ export default class Location {
 
     private _canRemoveHero(): boolean {
         return this.canModify();
-    }
-
-    private _canModify(): boolean {
-        if (this._huntingState !== LocationHuntingState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
-            return false;
-        }
-
-        return true;
     }
 
     /**

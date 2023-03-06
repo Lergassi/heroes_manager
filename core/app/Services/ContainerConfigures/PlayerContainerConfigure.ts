@@ -87,6 +87,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         container.set<ExperienceComponentFactory>(ServiceID.ExperienceComponentFactory, (container) => {
             return new ExperienceComponentFactory({
                 maxLevel: config.max_hero_level,
+                heroCharacterAttributeValueGenerator: container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
             });
         });
         //endregion Фабрики компонентов.
