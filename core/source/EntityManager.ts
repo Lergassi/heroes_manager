@@ -89,7 +89,11 @@ export default class EntityManager implements EntityManagerInterface {
                     itemLevel: this._entities[EntityID.Item][key].itemLevel,
                     quality: this._entities[EntityID.Item][key].quality.id,
                     armorMaterial: this._entities[EntityID.Item][key].properties?.armorMaterial?.id ?? null,
-                    // stackSize: this._entities[EntityID.Item][key].stackSize,
+                    attributes: {
+                        STR: this._entities[EntityID.Item][key].characterAttributes.Strength,
+                        AGI: this._entities[EntityID.Item][key].characterAttributes.Agility,
+                        INT: this._entities[EntityID.Item][key].characterAttributes.Intelligence,
+                    },
                 });
                 count++;
             }

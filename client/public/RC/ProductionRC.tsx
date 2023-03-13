@@ -85,6 +85,9 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                                 <tr>
                                     <th>ITEM_ID</th>
                                     <th>ITEM_CATEGORY_ID</th>
+                                    <th>AP</th>
+                                    <th>HP</th>
+                                    <th>STR/AGI/INT</th>
                                     <th>RESULT_COUNT</th>
                                     <th>REQUIRE_ITEMS</th>
                                     <th>COST</th>
@@ -94,11 +97,15 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                                     return <tr key={index}>
                                         <td>{item.itemID}</td>
                                         <td>{database.items.data.itemCategory(item.itemID)}</td>
+                                        <td>{database.items.data.attackPower(item.itemID)}</td>
+                                        <td>{database.items.data.healthPoints(item.itemID)}</td>
+                                        <td>{database.items.data.strength(item.itemID)}/{database.items.data.agility(item.itemID)}/{database.items.data.intelligence(item.itemID)}</td>
                                         <td>{database.recipes.data.resultCount(item.itemID)}</td>
                                         <td>{database.recipes.data.requireItems(item.itemID, (ID, count) => {
-                                            return <div key={ID}>{ID}: {count}</div>
+                                            return <div key={ID}>{ID}: {count}/{this.props.playerItemStorage.containItem(ID)}</div>
                                         })}</td>
-                                        <td>{database.recipes.data.cost(item.itemID)}</td>
+                                        {/*todo: Возможная ошибка. Данные берутся не из бд, а из другого логического компонента. При этом из компонента производства считываются только ID доступных предметов. */}
+                                        <td>{database.recipes.data.cost(item.itemID)}/{this.props.container.get<WalletInterface>(ServiceID.Wallet).value}</td>
                                         <td>
                                             <button className={'btn btn_default'} onClick={(event) => {
                                                 event.preventDefault();

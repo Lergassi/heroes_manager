@@ -24,9 +24,19 @@ let container = new Container();
 
 yargs(hideBin(process.argv))
     .command('generate_equip', '', (yargs) => {
-        return yargs;
+        return yargs
+            // .positional('only_generate', {
+            //     // describe
+            // })
+            ;
     }, (argv) => {
-        generate_items_by_patterns(container);
+        generate_items_by_patterns(container, {
+            onlyGenerate: Boolean(argv['g']) ?? false,
+        });
+    })
+    .option('only_generate', {
+        alias: 'g',
+        type: 'boolean',
     })
     .parse()
 ;

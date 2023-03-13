@@ -9,7 +9,7 @@ import ItemAttributeGenerator
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import {database} from '../../core/data/ts/database.js';
-import {TSDB_Item} from '../../core/data/ts/items.js';
+import {TSDB_Item, TSDB_ItemDB} from '../../core/data/ts/items.js';
 import {TSDB_RecipeDB} from '../../core/data/ts/recipes.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
@@ -329,15 +329,15 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
     }
 
     private _gevGenerateItemsByPatterns() {
-        let command = new GenerateItemsByPattern(
+        let generateItemsByPattern = new GenerateItemsByPattern(
             this.container,
             this.container.get<ItemAttributeGenerator>(ServiceID.ItemAttributeGenerator),
             this.container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
         );
 
-        // let items: TSDB_ItemDB = {};
-        // let recipes: TSDB_RecipeDB = {};
-        // command.run(items, recipes);
+        let items: TSDB_ItemDB = {};
+        let recipes: TSDB_RecipeDB = {};
+        generateItemsByPattern.run(items, recipes);
         // console.log(items);
         // console.log(recipes);
     }

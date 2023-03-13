@@ -19,6 +19,7 @@ import Tavern_v2 from '../../Components/Tavern_v2.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import ItemStorageInterface from "../../Interfaces/ItemStorageInterface";
 
 export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -45,11 +46,11 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
 
         let tavern = this.container.get<Tavern_v2>(ServiceID.Tavern_v2);
 
-        tavern.add(HeroClassID.Warrior, 1, 400);
+        tavern.add(HeroClassID.Warrior, 1, 350);
 
         // tavern.add(HeroClassID.Rogue, 1, 80);
         tavern.add(HeroClassID.Gunslinger, 1, 200);
-        tavern.add(HeroClassID.FireMage, 1, 600);
+        tavern.add(HeroClassID.FireMage, 1, 450);
 
         tavern.add(HeroClassID.Support1, 1, 1000);
     }
@@ -59,7 +60,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     }
 
     private async _createItems() {
-
+        // this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.EndurancePotion01, 10);
     }
 
     private _createHeroes() {
@@ -88,7 +89,6 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
                     [EquipSlotID.Legs]: ItemID.PlatePants01,
                     [EquipSlotID.Foots]: ItemID.PlateBoots01,
                     [EquipSlotID.RightHand]: ItemID.TwoHandedSword01,
-                    // [EquipSlotID.LeftHand]: ItemID.Shield01,
                 },
             },
             {
@@ -151,7 +151,18 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
         // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
         // this._manualCreateLocations();
-        this._createDevLocations();
+        // this._createDevLocations();
+
+        let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
+        let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
+
+        let locationGO = locationFactory.create(LocationTypeID.Forrest, 1, {
+            configureStrategy: 'default',
+        });
+        let location = locationGO.get<Location>(ComponentID.Location);
+        // location.addItem(ItemID.HealthPotion01, 22);
+
+        this.container.get<MainLocationList>(ServiceID.MainLocationList).add(locationGO);
     }
 
     private async _manualCreateLocations() {
@@ -173,26 +184,14 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     }
 
     private _createDevLocations(): void {
-        let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
-        let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let locationGO = locationFactory.create(LocationTypeID.Forrest, 1, {
-            configureStrategy: 'default',
-        });
-        let location = locationGO.get<Location>(ComponentID.Location);
-        // location.addItem(ItemID.HealthPotion01, 22);
-
-        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
-        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
-        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
-        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
-        // location.addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, 1));
-
-        this.container.get<MainLocationList>(ServiceID.MainLocationList).add(locationGO);
     }
 
     private async _configMoney() {
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['1000']);
+        /*
+            При увеличении начального золота нужно кооректировать стоимость всего остального.
+        */
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['100']);
     }
 
     private async _configProduction() {
@@ -200,56 +199,61 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
 
         let production = this.container.get<Production>(ServiceID.Production);
 
-        production.addItem(ItemID.HealthPotion01);
-
         production.addItem(ItemID.IronIngot);
         production.addItem(ItemID.Leather01);
         production.addItem(ItemID.CottonThread);
         production.addItem(ItemID.CottonCloth);
 
+        production.addItem(ItemID.HealthPotion01);
+        production.addItem(ItemID.EndurancePotion01);
+
         production.addItem(ItemID.Uncommon_Plate_Gloves_003_01);
         production.addItem(ItemID.Uncommon_Plate_Belt_003_01);
         production.addItem(ItemID.Uncommon_Plate_Breastplate_009_01);
-        production.addItem(ItemID.Uncommon_Plate_Boots_009_01);
-        production.addItem(ItemID.Uncommon_Plate_Helmet_012_01);
-        production.addItem(ItemID.Uncommon_Plate_Bracer_012_01);
-        production.addItem(ItemID.Uncommon_Plate_ShoulderPads_019_01);
-        production.addItem(ItemID.Uncommon_Plate_Pants_022_01);
-
+        // production.addItem(ItemID.Uncommon_Plate_Boots_009_01);
+        // production.addItem(ItemID.Uncommon_Plate_Helmet_012_01);
+        // production.addItem(ItemID.Uncommon_Plate_Bracer_012_01);
+        // production.addItem(ItemID.Uncommon_Plate_ShoulderPads_019_01);
+        // production.addItem(ItemID.Uncommon_Plate_Pants_022_01);
+        //
         production.addItem(ItemID.Uncommon_Leather_Gloves_003_01);
         production.addItem(ItemID.Uncommon_Leather_Belt_003_01);
         production.addItem(ItemID.Uncommon_Leather_Breastplate_009_01);
-        production.addItem(ItemID.Uncommon_Leather_Boots_009_01);
-        production.addItem(ItemID.Uncommon_Leather_Helmet_012_01);
-        production.addItem(ItemID.Uncommon_Leather_Bracer_012_01);
-        production.addItem(ItemID.Uncommon_Leather_ShoulderPads_019_01);
-        production.addItem(ItemID.Uncommon_Leather_Pants_022_01);
-
-        production.addItem(ItemID.Uncommon_Cloth_Gloves_003_01);
-        production.addItem(ItemID.Uncommon_Cloth_Belt_003_01);
-        production.addItem(ItemID.Uncommon_Cloth_Breastplate_009_01);
-        production.addItem(ItemID.Uncommon_Cloth_Boots_009_01);
-        production.addItem(ItemID.Uncommon_Cloth_Helmet_012_01);
-        production.addItem(ItemID.Uncommon_Cloth_Bracer_012_01);
-        production.addItem(ItemID.Uncommon_Cloth_ShoulderPads_019_01);
-        production.addItem(ItemID.Uncommon_Cloth_Pants_022_01);
+        // production.addItem(ItemID.Uncommon_Leather_Boots_009_01);
+        // production.addItem(ItemID.Uncommon_Leather_Helmet_012_01);
+        // production.addItem(ItemID.Uncommon_Leather_Bracer_012_01);
+        // production.addItem(ItemID.Uncommon_Leather_ShoulderPads_019_01);
+        // production.addItem(ItemID.Uncommon_Leather_Pants_022_01);
+        //
+        // production.addItem(ItemID.Uncommon_Cloth_Gloves_003_01);
+        // production.addItem(ItemID.Uncommon_Cloth_Belt_003_01);
+        // production.addItem(ItemID.Uncommon_Cloth_Breastplate_009_01);
+        // production.addItem(ItemID.Uncommon_Cloth_Boots_009_01);
+        // production.addItem(ItemID.Uncommon_Cloth_Helmet_012_01);
+        // production.addItem(ItemID.Uncommon_Cloth_Bracer_012_01);
+        // production.addItem(ItemID.Uncommon_Cloth_ShoulderPads_019_01);
+        // production.addItem(ItemID.Uncommon_Cloth_Pants_022_01);
 
         production.addItem(ItemID.Uncommon_OneHandedSword_006_01);
         production.addItem(ItemID.Uncommon_TwoHandedSword_006_01);
-        production.addItem(ItemID.Uncommon_Staff_006_01);
+        // production.addItem(ItemID.Uncommon_Staff_006_01);
         production.addItem(ItemID.Uncommon_Dagger_006_01);
-        production.addItem(ItemID.Uncommon_Bow_006_01);
+        // production.addItem(ItemID.Uncommon_Bow_006_01);
         production.addItem(ItemID.Uncommon_Revolver_006_01);
         production.addItem(ItemID.Uncommon_Shield_006_01);
 
         production.addItem(ItemID.Uncommon_Ring_009_01);
-        production.addItem(ItemID.Uncommon_Ring_009_02);
+        // production.addItem(ItemID.Uncommon_Ring_009_02);
         production.addItem(ItemID.Uncommon_Ring_009_03);
-        production.addItem(ItemID.Uncommon_Amulet_019_01);
-        production.addItem(ItemID.Uncommon_Amulet_019_02);
-        production.addItem(ItemID.Uncommon_Amulet_019_03);
-        production.addItem(ItemID.Uncommon_Ring_022_01);
-        production.addItem(ItemID.Uncommon_Ring_022_02);
-        production.addItem(ItemID.Uncommon_Ring_022_03);
+        production.addItem(ItemID.Uncommon_Ring_009_04);
+        // production.addItem(ItemID.Uncommon_Ring_009_05);
+        // production.addItem(ItemID.Uncommon_Ring_009_02);
+        // production.addItem(ItemID.Uncommon_Ring_009_03);
+        // production.addItem(ItemID.Uncommon_Amulet_019_01);
+        // production.addItem(ItemID.Uncommon_Amulet_019_02);
+        // production.addItem(ItemID.Uncommon_Amulet_019_03);
+        // production.addItem(ItemID.Uncommon_Ring_022_01);
+        // production.addItem(ItemID.Uncommon_Ring_022_02);
+        // production.addItem(ItemID.Uncommon_Ring_022_03);
     }
 }

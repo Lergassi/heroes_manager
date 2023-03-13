@@ -9,7 +9,7 @@ export default class HealthPointsController {
 
     private readonly _options = {
         healPointsValueForHealRatio          : 0.5,
-        resurrectHealthPointsByHealthPotion01: 20,  //Если не указано ratio, то это числое значение.
+        resurrectHealthPointsByHealthPotion01: 35,  //Если не указан суффикс ratio, то это числое значение.
     };
 
     constructor(healthPoints: HealthPoints) {

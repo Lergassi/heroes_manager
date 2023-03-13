@@ -1,6 +1,7 @@
 import {UI_TavernHero_v2} from '../../../client/public/RC/TavernRC_v2.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import ActionStateController, {CharacterActionStateCode} from './ActionStateController.js';
+import _ from "lodash";
 
 export interface EnduranceRCInterface {
     update?(endurance: number, max: number): void;
@@ -20,17 +21,53 @@ export default class Endurance implements EnduranceRenderInterface {
 
     private readonly _actionStateController: ActionStateController;
 
+    /**
+     * @deprecated @dev Пока не будет сделан метод восстановления по зелью/эффекту.
+     */
+    get endurance(): number {
+        return this._endurance;
+    }
+
+    /**
+     * @deprecated @dev Пока не будет сделан метод восстановления по зелью/эффекту.
+     */
+    get maxEndurance(): number {
+        return this._maxEndurance;
+    }
+
+    get currentEnduranceToMaxRatio(): number {
+        return _.round(this._endurance / this._maxEndurance, 2);
+    }
+
     constructor(actionStateController: ActionStateController) {
         this._actionStateController = actionStateController;
         this._maxEndurance = 100;
         this._endurance = this._maxEndurance;
     }
 
-    add(endurance: number): void {
+    add(endurance: number): number {
+        // if (!this._actionStateController.canAction()) return 0;
 
+        let value = this._endurance + endurance;
+        let addedValue = 0;
+        if (value > this._maxEndurance) {
+            addedValue = this._maxEndurance - this._endurance;
+            this._endurance = this._maxEndurance;
+        } else {
+            addedValue = endurance;
+            this._endurance = value;
+        }
+
+        if (this._endurance > 0) {
+            this._actionStateController.removeState(CharacterActionStateCode.Tired);
+        }
+
+        return addedValue;
     }
 
     remove(endurance: number): number {
+        // if (!this._actionStateController.canAction()) return 0;
+
         if (this._endurance <= 0) return 0;
 
         let _endurance = this._endurance - endurance;
@@ -51,12 +88,18 @@ export default class Endurance implements EnduranceRenderInterface {
     }
 
     reset(): number {
+        // if (!this._actionStateController.canAction()) return 0;
+
         this._endurance = this._maxEndurance;
 
         this._actionStateController.removeState(CharacterActionStateCode.Tired);
 
         return this._endurance;
     }
+
+    // recoveryByEffect(callback: () => void): number {
+    //
+    // }
 
     update(options: {
         itemStorage: ItemStorageInterface;

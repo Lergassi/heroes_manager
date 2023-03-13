@@ -32,7 +32,7 @@ let enemy_loot_data: TSDB_EnemyLootDB = {
             {ID: ItemID.Skin01, count: 4, chance: 1},
             // {ID: ItemID.Leather01, startCount: 1, chance: 1},
         ],
-        money: 20,
+        money: 10,
     },
 };
 

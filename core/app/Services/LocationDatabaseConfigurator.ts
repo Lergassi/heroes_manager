@@ -7,7 +7,7 @@ import Location from '../Components/Location.js';
 import EnemyFactory from '../Factories/EnemyFactory.js';
 
 //@indev Далее будет разделение. Пока просто добавляет всех врагов из бд в локацию.
-export default class LocationConfigurator {
+export default class LocationDatabaseConfigurator {
     private readonly _enemyFactory: EnemyFactory;
 
     constructor(enemyFactory: EnemyFactory) {

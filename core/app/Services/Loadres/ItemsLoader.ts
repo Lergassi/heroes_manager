@@ -20,7 +20,8 @@ export default class ItemsLoader {
             let characterAttributes = {};
             if (data[key][CharacterAttributeID.Strength]) characterAttributes[CharacterAttributeID.Strength] = Number(data[key][CharacterAttributeID.Strength]);
             if (data[key][CharacterAttributeID.Agility]) characterAttributes[CharacterAttributeID.Agility] = Number(data[key][CharacterAttributeID.Agility]);
-            if (data[key][CharacterAttributeID.Intelligence]) characterAttributes[CharacterAttributeID.Intelligence] = Number(data[key][CharacterAttributeID.Strength]);
+            if (data[key][CharacterAttributeID.Intelligence]) characterAttributes[CharacterAttributeID.Intelligence] = Number(data[key][CharacterAttributeID.Intelligence]);
+            // console.log(data[key], characterAttributes);
 
             itemFactory.createByBuilder(
                 data[key].ID,

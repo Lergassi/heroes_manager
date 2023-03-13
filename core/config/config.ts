@@ -26,6 +26,9 @@ export default {
     default_hero_attack_power_level_increase: 8,
 
     //items
+    start_equip_production_cost: 100,
+    equip_item_level_increase_production_cost: 40,
+
     start_item_level_attack_power: 2,                   //зависит от материала или сделать default
     item_level_increase_attack_power: 2,                //зависит от материала или сделать default
 

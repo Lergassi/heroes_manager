@@ -89,7 +89,6 @@ export default class FightGroupController implements FightGroupControllerInterfa
         if (rewardOptions) rewardOptions.experienceDistributor = this._experienceGroupDistributor;
 
         let resultDamage = 0;
-        console.log(this._characters);
         for (let i = 0; i < this._characters.length; i++) {
             resultDamage += target.damageFirstLife(this._characters[i].get<AttackControllerInterface>(ComponentID.AttackController), rewardOptions);
         }

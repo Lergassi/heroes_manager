@@ -8,7 +8,7 @@ export type TSDB_Recipe = {
     ID: ItemID,
     resultItemCount: number,
     requireItems: {ID: ItemID | string, count: number}[],
-    cost: number,
+    productionCost: number,
 };
 
 export type TSDB_RecipeDB = {
@@ -59,7 +59,16 @@ let recipes_db: TSDB_RecipeDB = {
             {ID: ItemID.Herb01, count: 10},
             {ID: ItemID.Herb02, count: 5},
         ],
-        cost: 40,
+        productionCost: 15,
+    },
+    [ItemID.EndurancePotion01]: {
+        ID: ItemID.EndurancePotion01,
+        resultItemCount: 2,
+        requireItems: [
+            // {ID: ItemID.Herb01, count: 10},
+            {ID: ItemID.Herb02, count: 10},
+        ],
+        productionCost: 20,
     },
     [ItemID.IronIngot]: {
         ID: ItemID.IronIngot,
@@ -67,7 +76,7 @@ let recipes_db: TSDB_RecipeDB = {
         requireItems: [
             {ID: ItemID.IronOre, count: 2},
         ],
-        cost: 40,
+        productionCost: 0,
     },
     [ItemID.Leather01]: {
         ID: ItemID.Leather01,
@@ -75,7 +84,7 @@ let recipes_db: TSDB_RecipeDB = {
         requireItems: [
             {ID: ItemID.Skin01, count: 5},
         ],
-        cost: 40,
+        productionCost: 0,
     },
     [ItemID.CottonThread]: {
         ID: ItemID.CottonThread,
@@ -83,7 +92,7 @@ let recipes_db: TSDB_RecipeDB = {
         requireItems: [
             {ID: ItemID.Cotton, count: 10},
         ],
-        cost: 40,
+        productionCost: 0,
     },
     [ItemID.CottonCloth]: {
         ID: ItemID.CottonCloth,
@@ -91,7 +100,7 @@ let recipes_db: TSDB_RecipeDB = {
         requireItems: [
             {ID: ItemID.CottonThread, count: 5},
         ],
-        cost: 40,
+        productionCost: 0,
     },
 };
 
@@ -110,6 +119,6 @@ export const recipes = {
         });
     },
     cost(ID: ItemID): number {
-        return recipes_db[ID]?.cost ?? 0;
+        return recipes_db[ID]?.productionCost ?? 0;
     },
 };

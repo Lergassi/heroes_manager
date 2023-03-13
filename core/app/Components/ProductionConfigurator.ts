@@ -4,7 +4,7 @@ import {database} from '../../data/ts/database.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import Production from './Craft/Production.js';
 
-//Временно. Добавляются сразу все предметы. Позже будет игровая логика.
+//todo: Переделать на автоматическую сборку.
 export default class ProductionConfigurator {
     private readonly _items = [
         //manual

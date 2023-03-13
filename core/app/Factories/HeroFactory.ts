@@ -34,6 +34,7 @@ import EquipSlotFactory from './EquipSlotFactory.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import HeroCharacterAttributeFactory from './HeroCharacterAttributeFactory.js';
+import EnduranceController from "../Components/EnduranceController";
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -223,6 +224,8 @@ export default class HeroFactory {
             actionStateController,
         );
         hero.set(ComponentID.HealthPointsController, new HealthPointsController(healthPoints));
+        //todo: Алгоритм будет другой - не с зельями. Возможно с едой и хватать будет на часы или даже дни. С прокачкой.
+        hero.set(ComponentID.EnduranceController, new EnduranceController(endurance));
         // let damageController = new ArmorDecorator(
         //     healthPoints as DamageControllerInterface,
         //     hero.get<CharacterAttributes>(ComponentID.CharacterAttributes).Protection,
@@ -233,6 +236,7 @@ export default class HeroFactory {
         hero.set<AttackControllerInterface>(ComponentID.AttackController, new AttackController(
             hero.get<CharacterAttributeInterface>(CharacterAttributeID.AttackPower),
             actionStateController,
+            hero.get<EquipSlotInterface>(EquipSlotID.RightHand),
             endurance,
         ));
 

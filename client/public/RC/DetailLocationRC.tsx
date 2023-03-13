@@ -17,6 +17,7 @@ import {UI_ItemCount, UI_ItemStorage, UI_ItemStorageSlot} from '../../../core/ty
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import HeroScrolledListSelectRC from './HeroScrolledListSelectRC.js';
+import {ItemID} from "../../../core/types/enums/ItemID";
 
 export interface DetailLocationRCProps {
     container: ContainerInterface;
@@ -37,7 +38,8 @@ interface DetailLocationRCState {
     timeToClose: number;
 
     // items: UI_ItemStorageSlot[];
-    items: UI_ItemStorage[];
+    // items: UI_ItemStorage[];
+    items: {[itemID in ItemID]?: {count: number}};
 
     heroes: DetailLocationRCHeroElement[];
     enemies: DetailLocationRCEnemyElement[];
@@ -106,7 +108,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
             timeToClose: 0,
             // timeToClose: 8 * 60 * 60 * 24 + 1 + 60 * 60,
 
-            items   : [],
+            items   : {},
 
             heroes   : [],
             enemies  : [],
@@ -142,40 +144,32 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         this.updateID(String(this.state.location.ID));  //todo: Будет так до новой системы GameObject.
         this.state.location?.get<Location>(ComponentID.Location).renderByRequest(this);
 
-        let items: UI_ItemStorage[] = [];
-        // this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).renderByRequest({
-        //     updateItems(slots: UI_ItemStorageSlot[]) {
-        //         for (let i = 0; i < slots.length; i++) {
-        //             if (!slots[i].item.itemID) continue;
-        //
-        //             items.push({
-        //                 index: slots[i].index,
-        //                 item: {
-        //                     itemID: slots[i].item.itemID,
-        //                     count: slots[i].item.count,
-        //                 },
-        //             });
-        //         }
-        //     },
-        // });
+        // let items: UI_ItemStorage[] = [];
+        let items = {};
         this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController).renderItemStorageControllerByRequest({
             updateItemStorages(itemStorages: UI_ItemStorage[]) {
                 // console.log('updateItemStorages', itemStorages);
                 for (let i = 0; i < itemStorages.length; i++) {
-                    let index = items.push({
-                        ID: itemStorages[i].ID,
-                        slots: [],
-                    }) - 1;
+                    // let index = items.push({
+                    //     ID: itemStorages[i].ID,
+                    //     slots: [],
+                    // }) - 1;
                     for (let j = 0; j < itemStorages[i].slots.length; j++) {
                         if (!itemStorages[i].slots[j].item.itemID) continue;
 
-                        items[index].slots.push({
-                            index: itemStorages[i].slots[j].index,
-                            item: {
-                                itemID: itemStorages[i].slots[j].item.itemID,
-                                count: itemStorages[i].slots[j].item.count,
-                            },
-                        });
+                        if (!items.hasOwnProperty(itemStorages[i].slots[j].item.itemID)) {
+                            items[itemStorages[i].slots[j].item.itemID] = {count: 0};
+                        }
+
+                        items[itemStorages[i].slots[j].item.itemID].count += itemStorages[i].slots[j].item.count;
+
+                        // items[index].slots.push({
+                        //     index: itemStorages[i].slots[j].index,
+                        //     item: {
+                        //         itemID: itemStorages[i].slots[j].item.itemID,
+                        //         count: itemStorages[i].slots[j].item.count,
+                        //     },
+                        // });
                     }
                 }
             },
@@ -488,21 +482,24 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                         <th>Count</th>
                                         <th>Ctrl</th>
                                     </tr>
-                                    {_.map(this.state.items, (itemStorage) => {
-                                        return _.map(itemStorage.slots, (slot, index) => {
-                                            // console.log(slot);
-                                            return <tr key={index}>
-                                                {/*<td>{item.index}</td>*/}
-                                                <td>{slot.item.itemID}</td>
-                                                <td>{slot.item.count}</td>
-                                                <td><button className={'btn btn_default'} onClick={(event) => {
-                                                    event.preventDefault();
+                                    {_.map(this.state.items, (data, itemID: ItemID) => {
+                                        return <tr key={itemID}>
+                                            {/*<td>{item.index}</td>*/}
+                                            <td>{itemID}</td>
+                                            <td>{data.count}</td>
+                                            <td><button className={'btn btn_default'} onClick={(event) => {
+                                                event.preventDefault();
 
-                                                    // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndex(itemStorage.ID, slot.index, 1);
-                                                    this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndexTo(itemStorage.ID, slot.index, 1, this.state.location.get<Location>(ComponentID.Location).heroesItems);
-                                                }}>ADD</button></td>
-                                            </tr>;
-                                        });
+                                                // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndex(itemStorage.ID, slot.index, 1);
+                                                // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndexTo(itemStorage.ID, slot.index, 1, this.state.location.get<Location>(ComponentID.Location).heroesItems);
+                                                // if (this.state.location.get<Location>(ComponentID.Location))
+                                                this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController).removeItem(
+                                                    itemID,
+                                                    this.state.location.get<Location>(ComponentID.Location).heroesItems.addItem(itemID, 1),
+                                                );
+
+                                            }}>ADD</button></td>
+                                        </tr>;
                                     })}
                                     </tbody>
                                 </table>

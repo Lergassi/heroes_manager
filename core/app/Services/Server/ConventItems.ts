@@ -57,8 +57,8 @@ export default class ConventItems {
                 Strength        : Number(csv_json[i].Strength ?? 0),
                 TwoHandWeapon   : Boolean(csv_json[i].TwoHandWeapon)
             };
-            console.log(tsdbItemDB[csv_json[i].ID as ItemID]);
         }
+        //todo: Генерация ID для enum.
 
         let tsdbItemDBString = JSON.stringify(tsdbItemDB);
         fs.writeFile(output, tsdbItemDBString, (error) => {

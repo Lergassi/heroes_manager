@@ -42,7 +42,7 @@ import EnemyCharacterAttributeGenerator from '../BalanceTools/EnemyCharacterAttr
 import HeroCharacterAttributeGenerator from '../BalanceTools/HeroCharacterAttributeGenerator.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
-import LocationConfigurator from '../LocationConfigurator.js';
+import LocationDatabaseConfigurator from '../LocationDatabaseConfigurator';
 import StubFactory from '../StubFactory.js';
 
 /**
@@ -182,7 +182,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EnemyCharacterAttributeFactory>(ServiceID.EnemyCharacterAttributeFactory),
             );
         });
-        container.set<LocationConfigurator>(ServiceID.LocationConfigurator, new LocationConfigurator(
+        container.set<LocationDatabaseConfigurator>(ServiceID.LocationConfigurator, new LocationDatabaseConfigurator(
             container.get<EnemyFactory>(ServiceID.EnemyFactory),
         ));
         container.set<LocationFactory>(ServiceID.LocationFactory, (container) => {
@@ -194,7 +194,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory),
                 container.get<WalletFactory>(ServiceID.WalletFactory),
                 container.get<EnemyFactory>(ServiceID.EnemyFactory),
-                container.get<LocationConfigurator>(ServiceID.LocationConfigurator),
+                container.get<LocationDatabaseConfigurator>(ServiceID.LocationConfigurator),
             );
         });
         container.set<VeinFactory>(ServiceID.VeinFactory, new VeinFactory());

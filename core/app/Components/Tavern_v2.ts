@@ -12,6 +12,8 @@ import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import HeroClass from '../Entities/HeroClass.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import MainHeroList from './MainHeroList.js';
+import EquipSlotInterface from "../Interfaces/EquipSlotInterface";
+import {EquipSlotID} from "../../types/enums/EquipSlotID";
 
 export default class Tavern_v2 implements TavernRenderInterface_v2 {
     private readonly _heroes: {heroClassID: HeroClassID, level: number, cost: number}[];
@@ -54,11 +56,15 @@ export default class Tavern_v2 implements TavernRenderInterface_v2 {
         }
 
         if (
-            wallet.remove(this._heroes[index].cost) === this._heroes[index].cost &&
-            mainHeroList.createHero(this._heroes[index].heroClassID, this._heroes[index].level) //todo: проверка на возможность создания героя.
+            wallet.remove(this._heroes[index].cost) === this._heroes[index].cost
+            //todo: проверка на возможность создания героя.
         ) {
-            debug(DebugNamespaceID.Log)(sprintf('Герой "%s" нанят.', this._heroes[index].heroClassID));
-            _.pullAt(this._heroes, index);
+            let hero =  mainHeroList.createHero(this._heroes[index].heroClassID, this._heroes[index].level);
+            if (hero) {
+                debug(DebugNamespaceID.Log)(sprintf('Герой "%s" нанят.', this._heroes[index].heroClassID));
+                _.pullAt(this._heroes, index);
+                // hero.get<EquipSlotInterface>(EquipSlotID.RightHand).equip(ItemID.);
+            }
         }
 
         return true;

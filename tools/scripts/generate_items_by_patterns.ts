@@ -16,7 +16,9 @@ import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import _ from 'lodash';
 
-export const generate_items_by_patterns = (container: ContainerInterface) => {
+export const generate_items_by_patterns = (container: ContainerInterface, options?: {
+    onlyGenerate: boolean,
+}) => {
     debug(DebugNamespaceID.Log)(sprintf('Алгоритм by_pattern, v%s.', '0.0.1'));
 
     let items: TSDB_ItemDB = {};
@@ -27,6 +29,11 @@ export const generate_items_by_patterns = (container: ContainerInterface) => {
         container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
     );
     generateItems.run(items, recipes);
+
+    if (options?.onlyGenerate) {
+        debug(DebugNamespaceID.Log)('Данные сгенерированы, но не записаны. Флаг onlyGenerate=true');
+        return;
+    }
 
     let time = format(new Date(), 'dd.MM.yyyy_HH_mm_ss');
 

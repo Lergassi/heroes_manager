@@ -28,7 +28,7 @@ export default class ItemAttributeGenerator {
         //
         return item_attributes_formulas.healthPoints({
             default: this.defaultHealthPoints(itemLevel),
-            ratio: database.item_categories.ratios.ratioByItemAttribute(itemCategoryID, ItemAttributeID.Agility),
+            ratio: database.item_categories.ratios.ratioByItemAttribute(itemCategoryID, ItemAttributeID.HealthPoints),
         });
     }
 
@@ -58,5 +58,13 @@ export default class ItemAttributeGenerator {
 
     characterAttributeFromAttackPower_reverse(itemLevel: number, itemCategoryID: ItemCategoryID, heroClassID?: HeroClassID): number {
         return item_attributes_formulas.attackPowerToCharacterAttribute_revers(this.attackPower(itemLevel, itemCategoryID, heroClassID), config.default_character_attribute_to_attack_power_ratio);
+    }
+
+    productionCost(itemLevel: number, itemCategoryID: ItemCategoryID) {
+        return item_attributes_formulas.productionCost({
+            itemLevel: itemLevel,
+            startValue: config.start_equip_production_cost,
+            valueForItemLevel: config.equip_item_level_increase_production_cost,
+        });
     }
 }

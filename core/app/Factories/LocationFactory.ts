@@ -6,7 +6,7 @@ import Location, {GatheringPointTypeID} from '../Components/Location.js';
 import Wallet from '../Components/Wallet.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import LocationConfigurator from '../Services/LocationConfigurator.js';
+import LocationDatabaseConfigurator from '../Services/LocationDatabaseConfigurator';
 import EnemyFactory from './EnemyFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import ItemStackFactory from './ItemStackFactory.js';
@@ -43,7 +43,7 @@ export default class LocationFactory {
     private readonly _itemStorageFactory: ItemStorageFactory;
     private readonly _walletFactory: WalletFactory;
     private readonly _enemyFactory: EnemyFactory;
-    private readonly _locationConfigurator: LocationConfigurator;
+    private readonly _locationConfigurator: LocationDatabaseConfigurator;
 
     constructor(
         gameObjectFactory: GameObjectFactory,
@@ -53,7 +53,7 @@ export default class LocationFactory {
         itemStorageFactory: ItemStorageFactory,
         walletFactory: WalletFactory,
         enemyFactory: EnemyFactory,
-        locationConfigurator: LocationConfigurator,
+        locationConfigurator: LocationDatabaseConfigurator,
     ) {
         this._maxGatheringItemPointsCount = 3;
         this._internalItemStorageSize = 5;

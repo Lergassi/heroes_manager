@@ -35,6 +35,7 @@ import HeroComponent from './HeroComponent.js';
 import ActionStateController from './ActionStateController.js';
 import SquadDamageController from './SquadDamageController.js';
 import Vein from './Vein.js';
+import EnduranceController from "./EnduranceController";
 
 export enum LocationHuntingState {
     Waiting = 'Waiting',
@@ -231,6 +232,7 @@ export default class Location {
         this._intervalID = setInterval(() => {
             for (let i = 0; i < this._heroes.length; i++) {
                 this._heroes[i].get<HealthPointsController>(ComponentID.HealthPointsController)?.update(this._heroGroupItemStorage);
+                this._heroes[i].get<EnduranceController>(ComponentID.EnduranceController)?.update(this._heroGroupItemStorage);
             }
 
             this._fightController.fight(rewardOptions);

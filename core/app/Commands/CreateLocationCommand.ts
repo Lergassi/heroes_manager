@@ -7,7 +7,7 @@ import {ServiceID} from '../../types/enums/ServiceID.js';
 import Location from '../Components/Location.js';
 import MainLocationList from '../Components/MainLocationList.js';
 import LocationFactory from '../Factories/LocationFactory.js';
-import LocationConfigurator from '../Services/LocationConfigurator.js';
+import LocationDatabaseConfigurator from '../Services/LocationDatabaseConfigurator';
 
 export default class CreateLocationCommand extends Command {
     get name(): string {
