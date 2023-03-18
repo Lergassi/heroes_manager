@@ -16,6 +16,7 @@ import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
+import {ProductionValueGenerator} from '../../core/app/Services/BalanceTools/ProductionValueGenerator';
 
 export default class GenerateItemsV002SandboxController extends AbstractSandboxController {
     run(): void {
@@ -330,9 +331,9 @@ export default class GenerateItemsV002SandboxController extends AbstractSandboxC
 
     private _gevGenerateItemsByPatterns() {
         let generateItemsByPattern = new GenerateItemsByPattern(
-            this.container,
             this.container.get<ItemAttributeGenerator>(ServiceID.ItemAttributeGenerator),
             this.container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
+            this.container.get<ProductionValueGenerator>(ServiceID.ProductionValueGenerator),
         );
 
         let items: TSDB_ItemDB = {};

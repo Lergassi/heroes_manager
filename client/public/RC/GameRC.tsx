@@ -1,5 +1,5 @@
 import React from 'react';
-import Production from '../../../core/app/Components/Craft/Production.js';
+import Production from '../../../core/app/Components/Production';
 import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../../core/app/Components/MainLocationList.js';
@@ -18,11 +18,14 @@ import ItemStorageControllerRC from './ItemStorageControllerRC.js';
 import LeftSidebarRC from './LeftSidebarRC.js';
 import MainHeroListRC from './MainHeroListRC.js';
 import MainLocationListRC from './MainLocationListRC.js';
-import ProductionRC from './ProductionRC.js';
+import ProductionRC from './ProductionRC';
 import TavernRC from './TavernRC.js';
 import TavernRC_v2 from './TavernRC_v2.js';
 import WalletMoneyCounterRC from './WalletMoneyCounterRC.js';
 import WalletRC from './WalletRC.js';
+import ProductionListRC from "./ProductionListRC";
+import {ConstructionRC} from './ConstructionRC';
+import {Construction} from '../../../core/app/Components/Construction';
 
 export type GameRCProps = {
     container: ContainerInterface;
@@ -48,6 +51,7 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                 [UI_PanelID.Heroes]: {ID: UI_PanelID.Heroes, show: false,},
                 [UI_PanelID.Locations]: {ID: UI_PanelID.Locations, show: false,},
                 [UI_PanelID.Production]: {ID: UI_PanelID.Production, show: false,},
+                [UI_PanelID.Construction]: {ID: UI_PanelID.Construction, show: false,},
             },
             activePanel: UI_PanelID.Homepage,
         };
@@ -155,15 +159,30 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                             }}
                         />
 
-                        <ProductionRC
+                        <ProductionListRC
                             container={this.props.container}
-                            production={this.props.container.get<Production>(ServiceID.Production)}
-                            playerItemStorage={this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController)}
-                            wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
                             window={{
                                 show: this.state.panels.Production.show,
                             }}
                         />
+
+                        <ConstructionRC
+                            container={this.props.container}
+                            construction={this.props.container.get<Construction>(ServiceID.Construction)}
+                            window={{
+                                show: this.state.panels.Construction.show,
+                            }}
+                        />
+
+                        {/*<ProductionRC*/}
+                        {/*    container={this.props.container}*/}
+                        {/*    production={this.props.container.get<Production>(ServiceID.Production)}*/}
+                        {/*    playerItemStorage={this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController)}*/}
+                        {/*    wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}*/}
+                        {/*    window={{*/}
+                        {/*        show: this.state.panels.Production.show,*/}
+                        {/*    }}*/}
+                        {/*/>*/}
                     </div>{/*content*/}
                 </div>{/*container*/}
             </div>

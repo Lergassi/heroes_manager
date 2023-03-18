@@ -2,7 +2,7 @@ import _ from 'lodash';
 import debug from 'debug';
 import {database} from '../../data/ts/database.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import Production from './Craft/Production.js';
+import Production from './Production';
 
 //todo: Переделать на автоматическую сборку.
 export default class ProductionConfigurator {

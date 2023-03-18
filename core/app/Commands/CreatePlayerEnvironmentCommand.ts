@@ -35,7 +35,9 @@ export default class CreatePlayerEnvironmentCommand extends Command {
     }
 
     private async _createItemStorages() {
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_storage, [String(DEFAULT_ITEM_STORAGE_SIZE)]);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_storage, [String(DEFAULT_ITEM_STORAGE_SIZE)]);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_storage, ['100']);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_storage, ['20']);
     }
 
     private _createWallets() {

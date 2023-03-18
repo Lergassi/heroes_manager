@@ -9,6 +9,7 @@ import {location_resources} from './location_resources.js';
 import {metadata} from './metadata.js';
 import {recipes} from './recipes.js';
 import {test} from './test.js';
+import {buildings} from './buildings';
 
 export const database = {
     metadata: metadata,
@@ -35,4 +36,5 @@ export const database = {
         rewards: enemy_loot,
     },
     test: test,
+    buildings: buildings,
 };

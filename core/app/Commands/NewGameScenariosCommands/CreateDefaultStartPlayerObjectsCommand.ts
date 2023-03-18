@@ -11,7 +11,7 @@ import {HeroClassID} from '../../../types/enums/HeroClassID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
 import {LocationTypeID} from '../../../types/enums/LocationTypeID.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
-import Production from '../../Components/Craft/Production.js';
+import Production from '../../Components/Production';
 import Location from '../../Components/Location.js';
 import MainHeroList from '../../Components/MainHeroList.js';
 import MainLocationList from '../../Components/MainLocationList.js';
@@ -19,7 +19,10 @@ import Tavern_v2 from '../../Components/Tavern_v2.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
-import ItemStorageInterface from "../../Interfaces/ItemStorageInterface";
+import _ from "lodash";
+import {EnemyTypeID} from "../../../types/enums/EnemyTypeID";
+import GameObject from "../../../source/GameObject";
+import ItemStorageInterface from '../../Interfaces/ItemStorageInterface';
 
 export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -61,6 +64,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
 
     private async _createItems() {
         // this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.EndurancePotion01, 10);
+        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.Wood, 100);
     }
 
     private _createHeroes() {
@@ -156,13 +160,30 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
         let enemyFactory = this.container.get<EnemyFactory>(ServiceID.EnemyFactory);
 
-        let locationGO = locationFactory.create(LocationTypeID.Forrest, 1, {
-            configureStrategy: 'default',
-        });
-        let location = locationGO.get<Location>(ComponentID.Location);
-        // location.addItem(ItemID.HealthPotion01, 22);
+        let level = 1;
 
-        this.container.get<MainLocationList>(ServiceID.MainLocationList).add(locationGO);
+        let locations: GameObject[] = [];
+
+        locations.push(locationFactory.create(LocationTypeID.Barrens, level));
+
+        locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, level, 1000));
+        locations[locations.length - 1].get<Location>(ComponentID.Location).configResource(ItemID.IronOre, 1000);
+        locations[locations.length - 1].get<Location>(ComponentID.Location).configResource(ItemID.Herb01, 1000);
+
+        // locations.push(locationFactory.create(LocationTypeID.Forrest, level));
+        //
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, level, 1000));
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).addResource(ItemID.Herb01, 1000);
+        //
+        // locations.push(locationFactory.create(LocationTypeID.Forrest, level));
+        //
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, level, 1000));
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).addResource(ItemID.Herb02, 1000);
+        // console.log(locations);
+
+        for (let i = 0; i < locations.length; i++) {
+            this.container.get<MainLocationList>(ServiceID.MainLocationList).add(locations[i]);
+        }
     }
 
     private async _manualCreateLocations() {
@@ -194,66 +215,133 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['100']);
     }
 
+    // private async _configProduction() {
+    //     // (new ProductionConfigurator()).configure(this.container.get<Production>(ServiceID.Production));
+    //
+    //     let production = this.container.get<Production>(ServiceID.Production);
+    //
+    //     production.addItem(ItemID.IronIngot);
+    //     production.addItem(ItemID.Leather01);
+    //     production.addItem(ItemID.CottonThread);
+    //     production.addItem(ItemID.CottonCloth);
+    //
+    //     production.addItem(ItemID.HealthPotion01);
+    //     production.addItem(ItemID.EndurancePotion01);
+    //
+    //     production.addItem(ItemID.Uncommon_Plate_Gloves_003_01);
+    //     production.addItem(ItemID.Uncommon_Plate_Belt_003_01);
+    //     production.addItem(ItemID.Uncommon_Plate_Breastplate_009_01);
+    //     // production.addItem(ItemID.Uncommon_Plate_Boots_009_01);
+    //     // production.addItem(ItemID.Uncommon_Plate_Helmet_012_01);
+    //     // production.addItem(ItemID.Uncommon_Plate_Bracer_012_01);
+    //     // production.addItem(ItemID.Uncommon_Plate_ShoulderPads_019_01);
+    //     // production.addItem(ItemID.Uncommon_Plate_Pants_022_01);
+    //     //
+    //     production.addItem(ItemID.Uncommon_Leather_Gloves_003_01);
+    //     production.addItem(ItemID.Uncommon_Leather_Belt_003_01);
+    //     production.addItem(ItemID.Uncommon_Leather_Breastplate_009_01);
+    //     // production.addItem(ItemID.Uncommon_Leather_Boots_009_01);
+    //     // production.addItem(ItemID.Uncommon_Leather_Helmet_012_01);
+    //     // production.addItem(ItemID.Uncommon_Leather_Bracer_012_01);
+    //     // production.addItem(ItemID.Uncommon_Leather_ShoulderPads_019_01);
+    //     // production.addItem(ItemID.Uncommon_Leather_Pants_022_01);
+    //     //
+    //     // production.addItem(ItemID.Uncommon_Cloth_Gloves_003_01);
+    //     // production.addItem(ItemID.Uncommon_Cloth_Belt_003_01);
+    //     // production.addItem(ItemID.Uncommon_Cloth_Breastplate_009_01);
+    //     // production.addItem(ItemID.Uncommon_Cloth_Boots_009_01);
+    //     // production.addItem(ItemID.Uncommon_Cloth_Helmet_012_01);
+    //     // production.addItem(ItemID.Uncommon_Cloth_Bracer_012_01);
+    //     // production.addItem(ItemID.Uncommon_Cloth_ShoulderPads_019_01);
+    //     // production.addItem(ItemID.Uncommon_Cloth_Pants_022_01);
+    //
+    //     production.addItem(ItemID.Uncommon_OneHandedSword_006_01);
+    //     production.addItem(ItemID.Uncommon_TwoHandedSword_006_01);
+    //     // production.addItem(ItemID.Uncommon_Staff_006_01);
+    //     production.addItem(ItemID.Uncommon_Dagger_006_01);
+    //     // production.addItem(ItemID.Uncommon_Bow_006_01);
+    //     production.addItem(ItemID.Uncommon_Revolver_006_01);
+    //     production.addItem(ItemID.Uncommon_Shield_006_01);
+    //
+    //     production.addItem(ItemID.Uncommon_Ring_009_01);
+    //     // production.addItem(ItemID.Uncommon_Ring_009_02);
+    //     production.addItem(ItemID.Uncommon_Ring_009_03);
+    //     production.addItem(ItemID.Uncommon_Ring_009_04);
+    //     // production.addItem(ItemID.Uncommon_Ring_009_05);
+    //     // production.addItem(ItemID.Uncommon_Ring_009_02);
+    //     // production.addItem(ItemID.Uncommon_Ring_009_03);
+    //     // production.addItem(ItemID.Uncommon_Amulet_019_01);
+    //     // production.addItem(ItemID.Uncommon_Amulet_019_02);
+    //     // production.addItem(ItemID.Uncommon_Amulet_019_03);
+    //     // production.addItem(ItemID.Uncommon_Ring_022_01);
+    //     // production.addItem(ItemID.Uncommon_Ring_022_02);
+    //     // production.addItem(ItemID.Uncommon_Ring_022_03);
+    // }
+
     private async _configProduction() {
-        // (new ProductionConfigurator()).configure(this.container.get<Production>(ServiceID.Production));
+        let blacksmith = this.container.get<Production>(ServiceID.Blacksmith);
+        let leatherWorking = this.container.get<Production>(ServiceID.LeatherWorking);
+        let tailoring = this.container.get<Production>(ServiceID.Tailoring);
+        let alchemy = this.container.get<Production>(ServiceID.Alchemy);
+        let jewelry = this.container.get<Production>(ServiceID.Jewelry);
 
-        let production = this.container.get<Production>(ServiceID.Production);
+        blacksmith.addItem(ItemID.IronIngot);
 
-        production.addItem(ItemID.IronIngot);
-        production.addItem(ItemID.Leather01);
-        production.addItem(ItemID.CottonThread);
-        production.addItem(ItemID.CottonCloth);
+        blacksmith.addItem(ItemID.Uncommon_Plate_Gloves_003_01);
+        blacksmith.addItem(ItemID.Uncommon_Plate_Belt_003_01);
+        blacksmith.addItem(ItemID.Uncommon_Plate_Breastplate_009_01);
+        // blacksmith.addItem(ItemID.Uncommon_Plate_Boots_009_01);
+        // blacksmith.addItem(ItemID.Uncommon_Plate_Helmet_012_01);
+        // blacksmith.addItem(ItemID.Uncommon_Plate_Bracer_012_01);
+        // blacksmith.addItem(ItemID.Uncommon_Plate_ShoulderPads_019_01);
+        // blacksmith.addItem(ItemID.Uncommon_Plate_Pants_022_01);
 
-        production.addItem(ItemID.HealthPotion01);
-        production.addItem(ItemID.EndurancePotion01);
+        blacksmith.addItem(ItemID.Uncommon_OneHandedSword_006_01);
+        blacksmith.addItem(ItemID.Uncommon_TwoHandedSword_006_01);
+        // blacksmith.addItem(ItemID.Uncommon_Staff_006_01);
+        blacksmith.addItem(ItemID.Uncommon_Dagger_006_01);
+        // blacksmith.addItem(ItemID.Uncommon_Bow_006_01);
+        blacksmith.addItem(ItemID.Uncommon_Revolver_006_01);
+        blacksmith.addItem(ItemID.Uncommon_Shield_006_01);
 
-        production.addItem(ItemID.Uncommon_Plate_Gloves_003_01);
-        production.addItem(ItemID.Uncommon_Plate_Belt_003_01);
-        production.addItem(ItemID.Uncommon_Plate_Breastplate_009_01);
-        // production.addItem(ItemID.Uncommon_Plate_Boots_009_01);
-        // production.addItem(ItemID.Uncommon_Plate_Helmet_012_01);
-        // production.addItem(ItemID.Uncommon_Plate_Bracer_012_01);
-        // production.addItem(ItemID.Uncommon_Plate_ShoulderPads_019_01);
-        // production.addItem(ItemID.Uncommon_Plate_Pants_022_01);
-        //
-        production.addItem(ItemID.Uncommon_Leather_Gloves_003_01);
-        production.addItem(ItemID.Uncommon_Leather_Belt_003_01);
-        production.addItem(ItemID.Uncommon_Leather_Breastplate_009_01);
-        // production.addItem(ItemID.Uncommon_Leather_Boots_009_01);
-        // production.addItem(ItemID.Uncommon_Leather_Helmet_012_01);
-        // production.addItem(ItemID.Uncommon_Leather_Bracer_012_01);
-        // production.addItem(ItemID.Uncommon_Leather_ShoulderPads_019_01);
-        // production.addItem(ItemID.Uncommon_Leather_Pants_022_01);
-        //
-        // production.addItem(ItemID.Uncommon_Cloth_Gloves_003_01);
-        // production.addItem(ItemID.Uncommon_Cloth_Belt_003_01);
-        // production.addItem(ItemID.Uncommon_Cloth_Breastplate_009_01);
-        // production.addItem(ItemID.Uncommon_Cloth_Boots_009_01);
-        // production.addItem(ItemID.Uncommon_Cloth_Helmet_012_01);
-        // production.addItem(ItemID.Uncommon_Cloth_Bracer_012_01);
-        // production.addItem(ItemID.Uncommon_Cloth_ShoulderPads_019_01);
-        // production.addItem(ItemID.Uncommon_Cloth_Pants_022_01);
+        leatherWorking.addItem(ItemID.Leather01);
 
-        production.addItem(ItemID.Uncommon_OneHandedSword_006_01);
-        production.addItem(ItemID.Uncommon_TwoHandedSword_006_01);
-        // production.addItem(ItemID.Uncommon_Staff_006_01);
-        production.addItem(ItemID.Uncommon_Dagger_006_01);
-        // production.addItem(ItemID.Uncommon_Bow_006_01);
-        production.addItem(ItemID.Uncommon_Revolver_006_01);
-        production.addItem(ItemID.Uncommon_Shield_006_01);
+        leatherWorking.addItem(ItemID.Uncommon_Leather_Gloves_003_01);
+        leatherWorking.addItem(ItemID.Uncommon_Leather_Belt_003_01);
+        leatherWorking.addItem(ItemID.Uncommon_Leather_Breastplate_009_01);
+        // blacksmith.addItem(ItemID.Uncommon_Leather_Boots_009_01);
+        // blacksmith.addItem(ItemID.Uncommon_Leather_Helmet_012_01);
+        // blacksmith.addItem(ItemID.Uncommon_Leather_Bracer_012_01);
+        // blacksmith.addItem(ItemID.Uncommon_Leather_ShoulderPads_019_01);
+        // blacksmith.addItem(ItemID.Uncommon_Leather_Pants_022_01);
 
-        production.addItem(ItemID.Uncommon_Ring_009_01);
-        // production.addItem(ItemID.Uncommon_Ring_009_02);
-        production.addItem(ItemID.Uncommon_Ring_009_03);
-        production.addItem(ItemID.Uncommon_Ring_009_04);
-        // production.addItem(ItemID.Uncommon_Ring_009_05);
-        // production.addItem(ItemID.Uncommon_Ring_009_02);
-        // production.addItem(ItemID.Uncommon_Ring_009_03);
-        // production.addItem(ItemID.Uncommon_Amulet_019_01);
-        // production.addItem(ItemID.Uncommon_Amulet_019_02);
-        // production.addItem(ItemID.Uncommon_Amulet_019_03);
-        // production.addItem(ItemID.Uncommon_Ring_022_01);
-        // production.addItem(ItemID.Uncommon_Ring_022_02);
-        // production.addItem(ItemID.Uncommon_Ring_022_03);
+        tailoring.addItem(ItemID.CottonThread);
+        tailoring.addItem(ItemID.CottonCloth);
+
+        tailoring.addItem(ItemID.Uncommon_Cloth_Gloves_003_01);
+        tailoring.addItem(ItemID.Uncommon_Cloth_Belt_003_01);
+        tailoring.addItem(ItemID.Uncommon_Cloth_Breastplate_009_01);
+        // tailoring.addItem(ItemID.Uncommon_Cloth_Boots_009_01);
+        // tailoring.addItem(ItemID.Uncommon_Cloth_Helmet_012_01);
+        // tailoring.addItem(ItemID.Uncommon_Cloth_Bracer_012_01);
+        // tailoring.addItem(ItemID.Uncommon_Cloth_ShoulderPads_019_01);
+        // tailoring.addItem(ItemID.Uncommon_Cloth_Pants_022_01);
+
+        alchemy.addItem(ItemID.HealthPotion01);
+        alchemy.addItem(ItemID.EndurancePotion01);
+
+        jewelry.addItem(ItemID.Uncommon_Ring_009_01);
+        // jewelry.addItem(ItemID.Uncommon_Ring_009_02);
+        jewelry.addItem(ItemID.Uncommon_Ring_009_03);
+        jewelry.addItem(ItemID.Uncommon_Ring_009_04);
+        // jewelry.addItem(ItemID.Uncommon_Ring_009_05);
+        // jewelry.addItem(ItemID.Uncommon_Ring_009_02);
+        // jewelry.addItem(ItemID.Uncommon_Ring_009_03);
+        // jewelry.addItem(ItemID.Uncommon_Amulet_019_01);
+        // jewelry.addItem(ItemID.Uncommon_Amulet_019_02);
+        // jewelry.addItem(ItemID.Uncommon_Amulet_019_03);
+        // jewelry.addItem(ItemID.Uncommon_Ring_022_01);
+        // jewelry.addItem(ItemID.Uncommon_Ring_022_02);
+        // jewelry.addItem(ItemID.Uncommon_Ring_022_03);
     }
 }

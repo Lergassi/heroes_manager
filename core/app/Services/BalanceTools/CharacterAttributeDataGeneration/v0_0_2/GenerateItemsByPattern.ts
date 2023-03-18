@@ -1,13 +1,10 @@
 import _ from 'lodash';
-import config from '../../../../../config/config.js';
 import {database} from '../../../../../data/ts/database.js';
 import {TSDB_ItemDB} from '../../../../../data/ts/items.js';
 import {TSDB_Recipe, TSDB_RecipeDB} from '../../../../../data/ts/recipes.js';
 // import {TSDB_Recipe} from '../../../../../data/ts/recipes.js';
-import ContainerInterface from '../../../../../source/ContainerInterface.js';
 import {ArmorMaterialID} from '../../../../../types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../../../../types/enums/CharacterAttributeID.js';
-import {ItemAttributeID} from '../../../../../types/enums/ItemAttributeID.js';
 import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
 import {ItemID} from '../../../../../types/enums/ItemID.js';
 import {QualityID} from '../../../../../types/enums/QualityID.js';
@@ -15,6 +12,9 @@ import TSDB_ItemBuilder from '../../../../Builders/TSDB_ItemBuilder.js';
 import ItemIDGenerator from '../../../ItemIDGenerator.js';
 import HeroCharacterAttributeGenerator from '../../HeroCharacterAttributeGenerator.js';
 import ItemAttributeGenerator from './ItemAttributeGenerator.js';
+import {ItemCount} from '../../../../../types/main';
+import {ProductionValueGenerator} from '../../ProductionValueGenerator';
+import {ProductionID} from '../../../../../types/enums/ProductionID';
 
 export default class GenerateItemsByPattern {
     //ArmorMaterial проще указать в паттерне чем выдумывать сложную логику. Для оружия нет материала.
@@ -128,17 +128,17 @@ export default class GenerateItemsByPattern {
 
     private readonly _itemAttributeGenerator: ItemAttributeGenerator;
     private readonly _heroCharacterAttributeGenerator: HeroCharacterAttributeGenerator;
-    private readonly _container: ContainerInterface;
     private readonly _itemIDGenerator: ItemIDGenerator;
+    private readonly _productionValueGenerator: ProductionValueGenerator;
 
     constructor(
-        container: ContainerInterface,
         itemAttributeGenerator: ItemAttributeGenerator,
         heroCharacterAttributeGenerator: HeroCharacterAttributeGenerator,
+        productionValueGenerator: ProductionValueGenerator,
     ) {
-        this._container = container;
         this._itemAttributeGenerator = itemAttributeGenerator;
         this._heroCharacterAttributeGenerator = heroCharacterAttributeGenerator;
+        this._productionValueGenerator = productionValueGenerator;
         this._itemIDGenerator = new ItemIDGenerator();
     }
 
@@ -149,16 +149,16 @@ export default class GenerateItemsByPattern {
         let rangeIndex = 0;
         while (rangeStart + (rangeIndex * rangeLength) <= rangeEnd) {
             for (let i = 0; i < this._patterns.length; i++) {
-                let level = this._patterns[i].level + (rangeIndex * rangeLength)
-                let itemLevel = this._heroCharacterAttributeGenerator.itemLevelCorrespondsToItemLevel(level);   //todo: Убрать зависимость генерации атрибутов предметов от генерации атрибутов героев.
+                let heroLevel = this._patterns[i].level + (rangeIndex * rangeLength)
+                let itemLevel = this._heroCharacterAttributeGenerator.heroLevelCorrespondsToItemLevel(heroLevel);   //todo: Убрать зависимость генерации атрибутов предметов от генерации атрибутов героев.
 
                 for (let j = 0; j < this._patterns[i].itemCategories.length; j++) {
-                    // console.log('ITEM_CATEGORY', this._patterns[i].itemCategories[j].itemCategoryID, level, itemLevel);
+                    // console.log('ITEM_CATEGORY', this._patterns[i].itemCategories[j].itemCategoryID, heroLevel, itemLevel);
                     switch (this._patterns[i].itemCategories[j].strategy) {
                         case 'armor':
-                            // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                            // console.log(heroLevel, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             for (let k = 0; k < this._armorMaterialIDs.length; k++) {
-                                // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID, this._armorMaterialIDs[k]);
+                                // console.log(heroLevel, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID, this._armorMaterialIDs[k]);
                                 let ID = this._itemIDGenerator.generate(
                                     this._patterns[i].itemCategories[j].itemCategoryID,
                                     itemLevel,
@@ -180,18 +180,37 @@ export default class GenerateItemsByPattern {
                                 tsdb_itemBuilder.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
 
                                 let characterAttributeValue = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
-                                let mainResource: ItemID;
+                                let requireItems: ItemCount[] = [];
                                 switch (this._armorMaterialIDs[k]) {
                                     case ArmorMaterialID.Plate:
-                                        mainResource = ItemID.IronIngot;
+                                        requireItems.push(
+                                            {
+                                                itemID: ItemID.IronIngot,
+                                                count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.IronIngot, this._patterns[i].itemCategories[j].itemCategoryID),
+                                            },
+                                            {
+                                                itemID: ItemID.CopperIngot,
+                                                count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
+                                            },
+                                        );
                                         tsdb_itemBuilder.Strength = characterAttributeValue;
                                         break;
                                     case ArmorMaterialID.Leather:
-                                        mainResource = ItemID.Leather01;
+                                        requireItems.push(
+                                            {
+                                                itemID: ItemID.Leather01,
+                                                count: this._productionValueGenerator.requireItemsCount(ProductionID.LeatherWorking, itemLevel, ItemID.Leather01, this._patterns[i].itemCategories[j].itemCategoryID),
+                                            },
+                                        );
                                         tsdb_itemBuilder.Agility = characterAttributeValue;
                                         break;
                                     case ArmorMaterialID.Cloth:
-                                        mainResource = ItemID.CottonCloth;
+                                        requireItems.push(
+                                            {
+                                                itemID: ItemID.CottonCloth,
+                                                count: this._productionValueGenerator.requireItemsCount(ProductionID.Tailoring, itemLevel, ItemID.CottonCloth, this._patterns[i].itemCategories[j].itemCategoryID),
+                                            },
+                                        );
                                         tsdb_itemBuilder.Intelligence = characterAttributeValue;
                                         break;
                                 }
@@ -199,14 +218,9 @@ export default class GenerateItemsByPattern {
                                 //todo: Надо придумать как не экспортировать все типы нужные только внутри бд.
                                 let recipe: TSDB_Recipe = {
                                     ID: ID as ItemID,
-                                    requireItems: [
-                                        {
-                                            ID: mainResource,
-                                            count: _.round((config.start_item_level_blacksmith_iron_ingot + config.increase_item_level_blacksmith_iron_ingot * (itemLevel - 1)) * database.item_categories.ratios.ratioByItemAttribute(this._patterns[i].itemCategories[j].itemCategoryID, ItemAttributeID.CraftRatio)),
-                                        },
-                                    ],
+                                    requireItems: requireItems,
                                     resultItemCount: 1,
-                                    productionCost: this._itemAttributeGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
+                                    productionCost: this._productionValueGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
                                 };
 
                                 let tsdb_item = tsdb_itemBuilder.build();
@@ -217,7 +231,7 @@ export default class GenerateItemsByPattern {
 
                             break;
                         case 'shields':
-                        // console.log('SHIELDS', this._patterns[i].itemCategories[j].itemCategoryID, level, itemLevel);
+                        // console.log('SHIELDS', this._patterns[i].itemCategories[j].itemCategoryID, heroLevel, itemLevel);
                         {//А так можно было?
                             let ID = this._itemIDGenerator.generate(
                                 this._patterns[i].itemCategories[j].itemCategoryID,
@@ -241,12 +255,16 @@ export default class GenerateItemsByPattern {
                                 ID: ID as ItemID,
                                 requireItems: [
                                     {
-                                        ID: ItemID.IronIngot,   //todo: Будет отдельная логика.
-                                        count: _.round((config.start_item_level_blacksmith_iron_ingot + config.increase_item_level_blacksmith_iron_ingot * (itemLevel - 1)) * database.item_categories.ratios.ratioByItemAttribute(this._patterns[i].itemCategories[j].itemCategoryID, ItemAttributeID.CraftRatio)),
+                                        itemID: ItemID.IronIngot,
+                                        count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.IronIngot, this._patterns[i].itemCategories[j].itemCategoryID),
+                                    },
+                                    {
+                                        itemID: ItemID.CopperIngot,
+                                        count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
                                     },
                                 ],
                                 resultItemCount: 1,
-                                productionCost: this._itemAttributeGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
+                                productionCost: this._productionValueGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
                             };
 
                             let tsdb_item = tsdb_itemBuilder.build();
@@ -257,7 +275,7 @@ export default class GenerateItemsByPattern {
 
                             break;
                         case 'weapon':
-                            // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                            // console.log(heroLevel, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             let ID = this._itemIDGenerator.generate(
                                 this._patterns[i].itemCategories[j].itemCategoryID,
                                 itemLevel,
@@ -280,12 +298,16 @@ export default class GenerateItemsByPattern {
                                 ID: ID as ItemID,
                                 requireItems: [
                                     {
-                                        ID: ItemID.IronIngot,   //todo: Будет отдельная логика.
-                                        count: _.round((config.start_item_level_blacksmith_iron_ingot + config.increase_item_level_blacksmith_iron_ingot * (itemLevel - 1)) * database.item_categories.ratios.ratioByItemAttribute(this._patterns[i].itemCategories[j].itemCategoryID, ItemAttributeID.CraftRatio)),
+                                        itemID: ItemID.IronIngot,
+                                        count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.IronIngot, this._patterns[i].itemCategories[j].itemCategoryID),
+                                    },
+                                    {
+                                        itemID: ItemID.CopperIngot,
+                                        count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
                                     },
                                 ],
                                 resultItemCount: 1,
-                                productionCost: this._itemAttributeGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
+                                productionCost: this._productionValueGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
                             };
 
                             let tsdb_item = tsdb_itemBuilder.build();
@@ -294,9 +316,9 @@ export default class GenerateItemsByPattern {
 
                             break;
                         case 'jewelry':
-                            // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
+                            // console.log(heroLevel, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             for (const jewelryStrategiesKey in this._jewelryStrategies) {
-                                // console.log(level, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID, this._jewelryStrategies[jewelryStrategiesKey].characterAttributeID);
+                                // console.log(heroLevel, itemLevel, this._patterns[i].itemCategories[j].itemCategoryID, this._jewelryStrategies[jewelryStrategiesKey].characterAttributeID);
                                 let ID = this._itemIDGenerator.generate(
                                     this._patterns[i].itemCategories[j].itemCategoryID,
                                     itemLevel,
@@ -322,12 +344,12 @@ export default class GenerateItemsByPattern {
                                     ID: ID as ItemID,
                                     requireItems: [
                                         {
-                                            ID: ItemID.IronIngot,   //todo: Будет отдельная логика.
-                                            count: _.round((config.start_item_level_jewelry_iron_ingot + config.increase_item_level_jewelry_iron_ingot * (itemLevel - 1)) * database.item_categories.ratios.ratioByItemAttribute(this._patterns[i].itemCategories[j].itemCategoryID, ItemAttributeID.CraftRatio)),
+                                            itemID: ItemID.GoldIngot,
+                                            count: this._productionValueGenerator.requireItemsCount(ProductionID.Jewelry, itemLevel, ItemID.GoldIngot, this._patterns[i].itemCategories[j].itemCategoryID),
                                         },
                                     ],
                                     resultItemCount: 1,
-                                    productionCost: this._itemAttributeGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
+                                    productionCost: this._productionValueGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
                                 };
 
                                 let tsdb_item = tsdb_itemBuilder.build();

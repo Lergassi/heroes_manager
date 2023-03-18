@@ -6,7 +6,6 @@ import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import {ItemCount, ItemCountDBType, ItemLoot, RangeType} from '../../types/main.js';
 
 type TSDB_ItemLoot = {
     ID: ItemID,

@@ -87,14 +87,6 @@ function universalCharacterAttributeByRatio(values: {
     return _.round(value);
 }
 
-function productionCost(values: {
-    itemLevel: number,
-    startValue: number,
-    valueForItemLevel: number,
-}) {
-    return _.round((values.startValue + values.valueForItemLevel * (values.itemLevel - 1)));
-}
-
 export const item_attributes_formulas = {
     defaultAttackPower: defaultAttackPower,
     attackPower: attackPower,
@@ -107,6 +99,4 @@ export const item_attributes_formulas = {
     itemLevelToHeroLevel: itemLevelToHeroLevel,
     heroLevelCorrespondsToItemLevel: heroLevelCorrespondsToItemLevel,
     universalCharacterAttributeByRatio: universalCharacterAttributeByRatio,
-
-    productionCost: productionCost,
 };

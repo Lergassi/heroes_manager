@@ -13,7 +13,7 @@ import GameObject from '../../../core/source/GameObject.js';
 import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import {UI_ItemCount, UI_ItemStorage, UI_ItemStorageSlot} from '../../../core/types/main.js';
+import {UI_ItemCount, UI_ItemStorage, UI_ItemStorageSlot, UI_VeinItemCount} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import HeroScrolledListSelectRC from './HeroScrolledListSelectRC.js';
@@ -48,6 +48,7 @@ interface DetailLocationRCState {
     heroGroupItems: UI_ItemStorageSlot[];
 
     veinItems: UI_ItemCount[];
+    // veinItems: UI_VeinItemCount[];
 
     lootItems: UI_ItemCount[];
     money: number;
@@ -390,6 +391,14 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         });
     }
 
+    updateSelectedResource(itemID: ItemID): void {
+        this.setState((state) => {
+            return {
+                selectedHeroID: itemID,
+            } as DetailLocationRCState;
+        });
+    }
+
     render() {
         if (!(this.state.window.show && this.props.window.show)) return;
         if (!this.state.location) return;
@@ -407,7 +416,6 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                     <div className={'widget__title'}>Локация ({this.state.ID})<button className={'btn btn_default btn_right'} onClick={this.hide}>close</button></div>
                 </div>
                 <div className={'row'} key={0}>
-                {/*<div className={''} key={0}>*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
                             <div className={'widget__title'}>Выбор героев</div>
@@ -429,7 +437,18 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                 <button className={'btn btn_primary'} onClick={this.getRewards}>GET_REWARDS</button>
                                 {/*<button className={'btn btn_danger'}>Удалить локацию</button>*/}
                             </div>
-                        </div>{/* end widget Управление */}
+                        </div>{/* end widget Control */}
+                        <div className={'widget'}>
+                            <div className={'widget__title'}>Информация</div>
+                            <div className={'widget__content'}>
+                                <ul>
+                                    <li>Уровень: {this.state.level}</li>
+                                    {/*<li>Эффективность сбора: {this.state.gatheringPerformance}</li>*/}
+                                    <li>Время до закрытия: {formatDuration(intervalToDuration({start: 0, end: this.state.timeToClose * 1000}))} часов</li>
+                                    <li>Золото: {this.state.money}</li>
+                                </ul>
+                            </div>
+                        </div>{/* end widget info */}
                     </div>{/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
@@ -470,8 +489,8 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     {/*    handleAddHeroChange={this.addHero}*/}
                                     {/*/>*/}
                                 </div>
-                            </div>{/*end widget__content*/}
-                        </div>{/*end widget hero*/}
+                            </div>
+                        </div>{/* end widget hero */}
                         <div className={'widget'}>
                             <div className={'widget__title'}>Player items</div>
                             <div className={'widget__content'}>
@@ -570,37 +589,29 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                         </div>{/*end widget Hero group items*/}
                     </div>{/*end col*/}
                     <div className={'col col-25'}>
-                        <div className={'widget'}>
-                            <div className={'widget__title'}>Ресурсы для сбора</div>
-                            <div className={'widget__content'}>
-                                <table className={'basic-table'}>
-                                    <tbody>
-                                        <tr>
-                                            <th>Ресурс</th>
-                                            <th>Кол-во</th>
-                                            {/*<th>Эффективность сбора (0.4)</th>*/}
-                                        </tr>
-                                        {_.map(veins, (vein, index) => {
-                                            return <tr key={index}>
-                                                <td>{vein.itemID}</td>
-                                                <td>{vein.count}</td>
-                                            </tr>
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className={'widget'}>
-                            <div className={'widget__title'}>Информация</div>
-                            <div className={'widget__content'}>
-                                <ul>
-                                    <li>Уровень: {this.state.level}</li>
-                                    {/*<li>Эффективность сбора: {this.state.gatheringPerformance}</li>*/}
-                                    <li>Время до закрытия: {formatDuration(intervalToDuration({start: 0, end: this.state.timeToClose * 1000}))} часов</li>
-                                    <li>Золото: {this.state.money}</li>
-                                </ul>
-                            </div>
-                        </div>
+                        {/*<div className={'widget'}>*/}
+                        {/*    <div className={'widget__title'}>Ресурсы для сбора</div>*/}
+                        {/*    <div className={'widget__content'}>*/}
+                        {/*        <table className={'basic-table'}>*/}
+                        {/*            <tbody>*/}
+                        {/*                <tr>*/}
+                        {/*                    <th>Ресурс</th>*/}
+                        {/*                    <th>Кол-во</th>*/}
+                        {/*                    /!*<th>Эффективность сбора (0.4)</th>*!/*/}
+                        {/*                </tr>*/}
+                        {/*                {_.map(this.state.veinItems, (vein, index) => {*/}
+                        {/*                    return <tr key={index}>*/}
+                        {/*                        <td><input checked={_.isNil(this.state.selectedHeroID) && index === 0 ? true : this.state.selectedHeroID === vein.itemID} type="radio" name={'selectResource'} value={vein.itemID} onChange={(event) => {*/}
+                        {/*                            this.state.location.get<Location>(ComponentID.Location).selectResource(vein.itemID);*/}
+                        {/*                        }}/></td>*/}
+                        {/*                        <td>{vein.itemID}</td>*/}
+                        {/*                        <td>{vein.count}</td>*/}
+                        {/*                    </tr>*/}
+                        {/*                })}*/}
+                        {/*            </tbody>*/}
+                        {/*        </table>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <div className={'widget'}>
                             <div className={'widget__title'}>Добыча</div>
                             <div className={'widget__content'}>
@@ -619,7 +630,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>{/* end loot */}
                     </div>{/*end col*/}
                 </div>{/*end row*/}
             </div>

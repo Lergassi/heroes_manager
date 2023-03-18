@@ -15,6 +15,7 @@ import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import _ from 'lodash';
+import {ProductionValueGenerator} from '../../core/app/Services/BalanceTools/ProductionValueGenerator';
 
 export const generate_items_by_patterns = (container: ContainerInterface, options?: {
     onlyGenerate: boolean,
@@ -24,9 +25,9 @@ export const generate_items_by_patterns = (container: ContainerInterface, option
     let items: TSDB_ItemDB = {};
     let recipes: TSDB_RecipeDB = {};
     let generateItems = new GenerateItemsByPattern(
-        container,
         container.get<ItemAttributeGenerator>(ServiceID.ItemAttributeGenerator),
         container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
+        container.get<ProductionValueGenerator>(ServiceID.ProductionValueGenerator),
     );
     generateItems.run(items, recipes);
 

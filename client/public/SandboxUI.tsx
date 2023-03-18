@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM, {Root} from 'react-dom/client';
-import Production from '../../core/app/Components/Craft/Production.js';
+import Production from '../../core/app/Components/Production';
 import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import ItemStorageController from '../../core/app/Components/ItemStorages/ItemStorageController.js';
 import Location from '../../core/app/Components/Location.js';
@@ -40,7 +40,7 @@ import ItemStorageControllerRC from './RC/ItemStorageControllerRC.js';
 import ItemStorageRC from './RC/ItemStorageRC.js';
 import ItemStorageRC_Legacy from './RC/ItemStorageRC_Legacy.js';
 import LeftSidebarRC from './RC/LeftSidebarRC.js';
-import ProductionRC from './RC/ProductionRC.js';
+import ProductionRC from './RC/ProductionRC';
 import TavernRC from './RC/TavernRC.js';
 
 function Hello(props) {
@@ -605,6 +605,7 @@ export default class SandboxUI {
                 <ProductionRC
                     container={this._container}
                     production={production}
+                    title={''}
                     playerItemStorage={itemStorage}
                     wallet={new Wallet()}
                     window={{show: true}}

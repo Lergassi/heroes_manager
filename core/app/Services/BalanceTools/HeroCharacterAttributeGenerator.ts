@@ -11,7 +11,7 @@ import {item_attributes_formulas} from './formulas/item_attributes_formulas.js';
 /**
  * Базовый инструмент для генерации всех атрибутов на основе уровня героя и уровне врага. Всё что скрыто будет меняться, но генерация всегда будет на основе уровней.
  */
-export default class HeroCharacterAttributeGenerator {
+export default class ProductionValueGeneratorHeroCharacterAttributeGenerator {
     //**********************************
     // default.HealthPoints
     //**********************************
@@ -161,9 +161,9 @@ export default class HeroCharacterAttributeGenerator {
         });
     }
 
-    itemLevelCorrespondsToItemLevel(level: number): number {
+    heroLevelCorrespondsToItemLevel(heroLevel: number): number {
         return item_attributes_formulas.heroLevelCorrespondsToItemLevel({
-            heroLevel: level,
+            heroLevel: heroLevel,
             ratio: config.hero_level_corresponds_to_item_level_ratio,
         });
     }

@@ -18,6 +18,7 @@ export enum ItemID {
     Herb02 = 'Herb02',
     Herb03 = 'Herb03',
 
+    // Cloth01 = 'Cloth01', //todo: Синоним?
     Cotton = 'Cotton',
     CottonThread = 'CottonThread',
     CottonCloth = 'CottonCloth',

@@ -86,6 +86,7 @@ export interface LocationRender {
     updateHeroes?(heroes: DetailLocationRCHeroElement[]): void;
     updateEnemies?(enemies: DetailLocationRCEnemyElement[]): void;
     updateVeins?(veins: UI_VeinItemCount[]): void;
+    updateSelectedResource?(itemID: ItemID): void;
     updateLoot?(loot: UI_ItemCount[]): void;
     updateMoney?(value: number): void;
     updateHeroGroupItems?(items: UI_ItemStorageSlot[]): void;
@@ -94,7 +95,7 @@ export interface LocationRender {
 export default class Location {
     private readonly _type: LocationTypeID;
     private readonly _level: number;
-    private readonly _veins: Vein[];
+    private readonly _veins: {[ID in ItemID]?: Vein};
     private readonly _itemStackFactory: ItemStackFactory;
 
     private readonly _heroes: GameObject[];
@@ -108,6 +109,8 @@ export default class Location {
     private readonly _itemStorage: ItemStorageInterface;   //Визуально может никак не быть связанным с сумками.
     private readonly _wallet: WalletInterface;
 
+    private _selectedResourceID: ItemID;
+
     private _fightController: FightController;
     private _huntingState: LocationHuntingState;
     private _intervalID: NodeJS.Timer;
@@ -118,6 +121,13 @@ export default class Location {
 
     get level(): number {
         return this._level;
+    }
+
+    /**
+     * @deprecated @hack Решения доступа к предметам, при такой реализации, быстро найти не получилось.
+     */
+    get heroesItems(): ItemStorageInterface {
+        return this._heroGroupItemStorage;
     }
 
     private readonly _options = {
@@ -139,7 +149,7 @@ export default class Location {
 
         this._type = type;
         this._level = levelRange;
-        this._veins = [];
+        this._veins = {};
         this._itemStackFactory = itemStackFactory;
 
         //todo: Как сделать доступ к героям и там и тут?
@@ -158,8 +168,11 @@ export default class Location {
         this._heroGroupItemStorage = itemStorageFactory.create(5);
         this._wallet = wallet;
 
+        this._selectedResourceID = null;
+
         //dev
         // this._heroGroupItemStorage.addItem(ItemID.HealthPotion01, 4);
+        window['app']['sandbox']['location'] = this;
     }
 
     addHero(hero: GameObject): boolean {
@@ -224,6 +237,11 @@ export default class Location {
             return false;
         }
 
+        if (!this._selectedResourceID) {
+            debug(DebugNamespaceID.Throw)('Не выбран ресур для добычи.');
+            return false;
+        }
+
         this._huntingState = LocationHuntingState.Hunting;
         let rewardOptions: RewardOptions = {
             wallet: this._wallet,
@@ -238,7 +256,7 @@ export default class Location {
             this._fightController.fight(rewardOptions);
             separate();
 
-            this._gather();
+            // this._gather();
 
             //И другие действия...
         }, this._options.intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
@@ -307,11 +325,15 @@ export default class Location {
         return true;
     }
 
-    addResource(itemID: ItemID, count: number): void {
-        this._veins.push(new Vein(
-            itemID,
-            count,
-        ));
+    configResource(itemID: ItemID, count: number): void {
+        if (!this._veins.hasOwnProperty(itemID)) {
+            this._veins[itemID] = new Vein();
+        }
+
+        this._veins[itemID].config(itemID, count);
+        if (!this._selectedResourceID) {
+            this.selectResource(itemID);
+        }
     }
 
     addItem(itemID: ItemID, count: number): number {
@@ -327,11 +349,15 @@ export default class Location {
         return this._heroGroupItemStorage.removeItem(itemID, count);
     }
 
-    /**
-     * @deprecated @hack Решения доступа к предметам, при такой реализации, быстро найти не получилось.
-     */
-    get heroesItems(): ItemStorageInterface {
-        return this._heroGroupItemStorage;
+    selectResource(itemID: ItemID): void {
+        // if (!this.canModify()) return;
+
+        if (!this._veins.hasOwnProperty(itemID)) {
+            debug(DebugNamespaceID.Throw)('Ресурс не найден.');
+            return;
+        }
+
+        this._selectedResourceID = itemID;
     }
 
     /**
@@ -437,8 +463,8 @@ export default class Location {
         }
 
         let veinItems: UI_VeinItemCount[] = [];
-        for (let i = 0; i < this._veins.length; i++) {
-            this._veins[i].renderByRequest({
+        for (const veinKey in this._veins) {
+            this._veins[veinKey].renderByRequest({
                 update(item: UI_VeinItemCount) {
                     veinItems.push(item);
                 },
@@ -465,6 +491,7 @@ export default class Location {
         ui.updateHeroes?.(heroes);
         ui.updateEnemies?.(enemies);
         ui.updateVeins?.(veinItems);
+        ui.updateSelectedResource?.(this._selectedResourceID);
         ui.updateHeroGroupItems?.(heroGroupItems);
 
         this._wallet.renderByRequest({
@@ -517,21 +544,31 @@ export default class Location {
      * todo: В отдельный класс. За сбор ресурсов будет отвечать другой объект. Т.е. локация тут вообще ничего делать не будет. Gathering
      * @private
      */
-    private _gather(): void {
-        if (!this._veins.length) return;
+    private __gather(): void {
+        // if (!this._veins.length) return;
 
         // this._heroFightGroupController.gather(this._gatheringItemPoints, this._itemStorage, this._options.intervalPeriod);
         for (let i = 0; i < this._heroes.length; i++) {
-            for (let j = 0; j < this._veins.length; j++) {
-                if (this._veins[j].isEmpty()) continue;
+            for (const key in this._veins) {
+                if (this._veins[key].isEmpty()) continue;
 
-                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._veins[j], this._itemStorage);
-                // if (this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather3(this._veins[j], this._itemStorage)) {
-                // }
-                // if (this._veins[j].gather3(this._itemStorage)) {
-                //     EventSystem.event(LocationEventCode.GatheringItems, this);
-                // }
+                this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._veins[key], this._itemStorage);
             }
+        }
+    }
+
+    /**
+     * todo: В отдельный класс. За сбор ресурсов будет отвечать другой объект. Т.е. локация тут вообще ничего делать не будет. Gathering
+     * @private
+     */
+    private _gather(): void {
+        if (!this._veins[this._selectedResourceID]) {
+            debug(DebugNamespaceID.Throw)('Ресурс не найден.');
+            return;
+        }
+
+        for (let i = 0; i < this._heroes.length; i++) {
+            this._heroes[i].get<Gatherer>(ComponentID.Gatherer).gather(this._veins[this._selectedResourceID], this._itemStorage);
         }
     }
 }

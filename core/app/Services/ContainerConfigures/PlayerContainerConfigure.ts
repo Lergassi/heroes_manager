@@ -12,7 +12,7 @@ import {ComponentID} from '../../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
-import Production from '../../Components/Craft/Production.js';
+import Production from '../../Components/Production';
 import Fence from '../../Components/Fence.js';
 import ItemStorageController from '../../Components/ItemStorages/ItemStorageController.js';
 import MainHeroList from '../../Components/MainHeroList.js';
@@ -44,6 +44,8 @@ import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerato
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
 import LocationDatabaseConfigurator from '../LocationDatabaseConfigurator';
 import StubFactory from '../StubFactory.js';
+import {BuildingFactory} from '../../Factories/BuildingFactory';
+import {Construction} from '../../Components/Construction';
 
 /**
  * todo: Временно не актуально.
@@ -198,9 +200,33 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             );
         });
         container.set<VeinFactory>(ServiceID.VeinFactory, new VeinFactory());
-        container.set<Production>(ServiceID.Production, (container) => {
-            return new Production(
-                container.get<EntityManagerInterface>(ServiceID.EntityManager),
+        // container.set<Production>(ServiceID.Production, (container) => {
+        //     return new Production(
+        //         container.get<EntityManagerInterface>(ServiceID.EntityManager),
+        //     );
+        // });
+        container.set<Production>(ServiceID.Blacksmith, (container) => {
+            return new Production();
+        });
+        container.set<Production>(ServiceID.LeatherWorking, (container) => {
+            return new Production();
+        });
+        container.set<Production>(ServiceID.Tailoring, (container) => {
+            return new Production();
+        });
+        container.set<Production>(ServiceID.Alchemy, (container) => {
+            return new Production();
+        });
+        container.set<Production>(ServiceID.Jewelry, (container) => {
+            return new Production();
+        });
+
+        container.set<BuildingFactory>(ServiceID.BuildingFactory, (container) => {
+            return new BuildingFactory();
+        });
+        container.set<Construction>(ServiceID.Construction, (container) => {
+            return new Construction(
+                container.get<BuildingFactory>(ServiceID.BuildingFactory)
             );
         });
 

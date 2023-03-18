@@ -74,7 +74,7 @@ export default class LocationFactory {
         locationTypeID: LocationTypeID,
         level: number,
         options?: {
-            configureStrategy: string,
+            configureStrategy?: string,
         }
     ): GameObject {
         let locationGO = this._gameObjectFactory.create();

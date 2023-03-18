@@ -29,6 +29,7 @@ import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import EventSystemFactory from '../EventSystemFactory.js';
 import ItemCategoryFactory from '../../Factories/EntityFactories/ItemCategoryFactory.js';
 import RecipeFactory from '../../Factories/EntityFactories/RecipeFactory.js';
+import {ProductionValueGenerator} from '../BalanceTools/ProductionValueGenerator';
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -87,6 +88,9 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
         });
         container.set<ItemAttributeGenerator>(ServiceID.ItemAttributeGenerator, (container) => {
             return new ItemAttributeGenerator();
+        });
+        container.set<ProductionValueGenerator>(ServiceID.ProductionValueGenerator, (container) => {
+            return new ProductionValueGenerator();
         });
         container.set<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator, (container) => {
             return new HeroCharacterAttributeGenerator();

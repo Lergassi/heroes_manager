@@ -2,6 +2,7 @@ import HeroCharacterAttributeFactory from '../../app/Factories/HeroCharacterAttr
 
 export enum ServiceID {
     //core
+
     EventSystem = 'core.EventSystem',
     EventSystemFactory = 'core.EventSystemFactory',
     // AttributeGenerators = 'core.AttributeGenerators',
@@ -15,15 +16,28 @@ export enum ServiceID {
     ItemDatabase = 'core.ItemDatabase',
     GameConsole = 'core.GameConsole',
 
+    //generators
+    CharacterAttributeStartValueGenerator = 'core.CharacterAttributeStartValueGenerator',
+    CharacterAttributeValueGenerator = 'core.CharacterAttributeValueGenerator',
+    ProductionValueGenerator = 'core.ProductionValueGenerator',
+
     //player
     IDGenerator = 'player.realtimeObjectIdGenerator',
     GameObjectStorage = 'player.GameObjectStorage',
     GameObjectFactory = 'player.GameObjectFactory',
     ItemStorageFactory = 'player.ItemStorageFactory',
-    CharacterAttributeStartValueGenerator = 'player.CharacterAttributeStartValueGenerator',
-    CharacterAttributeValueGenerator = 'player.CharacterAttributeValueGenerator',
+
     Wallet = 'player.Wallet',
+    /**
+     * @deprecated
+     */
     Production = 'player.Production',
+
+    Blacksmith = 'player.Blacksmith',
+    LeatherWorking = 'player.LeatherWorking',
+    Tailoring = 'player.Tailoring',
+    Alchemy = 'player.Alchemy',
+    Jewelry = 'player.Jewelry',
 
     Tavern = 'player.Tavern',
     Tavern_v2 = 'player.Tavern_v2',
@@ -41,6 +55,8 @@ export enum ServiceID {
     LocationConfigurator = 'player.LocationConfigurator',
     VeinFactory = 'player.VeinFactory',
     EnemyFactory = 'player.EnemyFactory',
+    Construction = 'player.Construction',
+    BuildingFactory = 'player.BuildingFactory',
 
     //компоненты из GameObject
     ItemStorageController = 'player.ItemStorageController',

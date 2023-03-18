@@ -21,6 +21,10 @@ export default class AttackController implements AttackControllerInterface {
     private readonly _attackPower: CharacterAttributeInterface;
     private readonly _actionStateController: ActionStateController;
 
+    private readonly _options = {
+        enduranceForHit: 1,
+    };
+
     /**
      * @dev Для врагов null до разделения логики для героев и для врагов.
      * @private
@@ -59,7 +63,8 @@ export default class AttackController implements AttackControllerInterface {
         debug(DebugNamespaceID.Log)('Атака: ' + damage);
         let resultDamage = target.damage(damage, afterDiedTargetCallback);
 
-        this._endurance?.remove(2);
+        //todo: Перенести в другое место.
+        this._endurance?.remove(this._options.enduranceForHit);
         // this._endurance?.remove(90);
 
         return resultDamage;

@@ -1,3 +1,7 @@
+import {ItemID} from '../types/enums/ItemID';
+import Production from '../app/Components/Production';
+import {ProductionID} from '../types/enums/ProductionID';
+
 export default {
     max_player_level: 100,
     max_hero_level: 100,
@@ -53,12 +57,57 @@ export default {
 
     //craft
     //Далее будет ресурс1, ресурс2, но пока для удобства используются названия предметов.
-    start_item_level_blacksmith_iron_ingot: 10,
-    start_item_level_leather_working_leather01: 20,
-    start_item_level_tailoring_cloth01: 30,
-    start_item_level_jewelry_iron_ingot: 20,
-    increase_item_level_blacksmith_iron_ingot: 4,
-    increase_item_level_leather_working_iron_ingot: 8,
-    increase_item_level_tailoring_iron_ingot: 12,
-    increase_item_level_jewelry_iron_ingot: 12,
+    production_start_item_level: {
+        [ProductionID.Blacksmith]: {
+            [ItemID.IronIngot]: 20,
+            [ItemID.CopperIngot]: 10,
+        },
+        [ProductionID.LeatherWorking]: {
+            [ItemID.Leather01]: 40,
+        },
+        [ProductionID.Tailoring]: {
+            [ItemID.CottonCloth]: 60,
+        },
+        [ProductionID.Jewelry]: {
+            [ItemID.GoldIngot]: 30,
+        },
+    },
+    // blacksmith_start_item_level_iron_ingot: 10,
+    // blacksmith_start_item_level_copper_ingot: 2,
+
+    production_increase_item_level: {
+        [ProductionID.Blacksmith]: {
+            [ItemID.IronIngot]: 10,
+            [ItemID.CopperIngot]: 5,
+        },
+        [ProductionID.LeatherWorking]: {
+            [ItemID.Leather01]: 20,
+        },
+        [ProductionID.Tailoring]: {
+            [ItemID.CottonCloth]: 30,
+        },
+        [ProductionID.Jewelry]: {
+            [ItemID.GoldIngot]: 15,
+        },
+    },
+    // blacksmith_increase_item_level_iron_ingot: 4,
+    // blacksmith_increase_item_level_copper_ingot: 2,
+
+
+    // leather_working_start_item_level_leather01: 20,
+    // leather_working_start_item_level_cotton_thread01: 5,
+    //
+    // leather_working_increase_item_level_leather01: 8,
+    //
+    //
+    // tailoring_start_item_level_cloth01: 30,
+    // tailoring_start_item_level_cotton_thead01: 10,
+    //
+    // tailoring_increase_item_level_cloth01: 12,
+    // tailoring_increase_item_level_cotton_thread01: 4,
+    //
+    //
+    // jewelry_start_item_level_iron_ingot: 20,
+    //
+    // jewelry_increase_item_level_iron_ingot: 12,
 };

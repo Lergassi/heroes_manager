@@ -12,17 +12,24 @@ export interface VeinRender {
 }
 
 export default class Vein {
-    private readonly _itemID: ItemID;
+    private _itemID: ItemID;
     private _startCount: number;
     private _count: number;
+
     private readonly _options = {
         itemsCountForHit: 1,
     };
 
-    constructor(itemID: ItemID, count: number) {
+    constructor() {
+        this._itemID = null;
+        this._startCount = null;
+        this._count = null;
+    }
+
+    config(itemID: ItemID, count: number): void {
         this._itemID = itemID;
-        this._startCount = count;
         this._count = count;
+        this._startCount = count;
     }
 
     /**

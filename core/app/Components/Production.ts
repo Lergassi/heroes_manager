@@ -5,14 +5,14 @@ import {
     ProductionRCInterface,
     ProductionRenderInterface,
     UI_ProductionItem
-} from '../../../../client/public/RC/ProductionRC.js';
-import {database} from '../../../data/ts/database.js';
-import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {ItemID} from '../../../types/enums/ItemID.js';
-import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
-import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-import WalletInterface from '../../Interfaces/WalletInterface.js';
-import ItemStorage from '../ItemStorages/ItemStorage.js';
+} from '../../../client/public/RC/ProductionRC';
+import {database} from '../../data/ts/database';
+import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID';
+import {ItemID} from '../../types/enums/ItemID';
+import EntityManagerInterface from '../Interfaces/EntityManagerInterface';
+import ItemStorageInterface from '../Interfaces/ItemStorageInterface';
+import WalletInterface from '../Interfaces/WalletInterface';
+import ItemStorage from './ItemStorages/ItemStorage';
 
 /**
  * Мгновенный крафт.
@@ -26,7 +26,7 @@ export default class Production implements ProductionRenderInterface {
     }};
 
     //todo: Далее тут будет бд вместо сущностей.
-    constructor(entityManager: EntityManagerInterface) {
+    constructor() {
         this._items = {};
         this._resourcesItemStorage = new ItemStorage(100);   //todo: Фабрика.
         this._resultItemStorage = new ItemStorage(100);      //todo: Фабрика.
@@ -104,6 +104,10 @@ export default class Production implements ProductionRenderInterface {
         return true;    //todo: Тут явно не правильная логика. Метод не гарантирует правильность выполнения. Например если не хватит места под результат, то предметы добавятся в временное хранилище/на землю/на почту.
     }
 
+    getPreviousProduction(itemStorage: ItemStorageInterface): void {
+        this._resultItemStorage.moveAllItemsTo(itemStorage);
+    }
+
     renderByRequest(UI: ProductionRCInterface): void {
         let items: UI_ProductionItem[] = [];
         let key: ItemID;
@@ -115,10 +119,6 @@ export default class Production implements ProductionRenderInterface {
         //     {itemID: ItemID.Wood},
         //     {itemID: ItemID.Uncommon_OneHandedSword_006_01},
         // ]);
-    }
-
-    getPreviousProduction(itemStorage: ItemStorageInterface): void {
-        this._resultItemStorage.moveAllItemsTo(itemStorage);
     }
 
     //todo: Сделать уничерсальный механизм проверки списков предметов в хранилищах.

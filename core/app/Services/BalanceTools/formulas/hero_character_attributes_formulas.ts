@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import AppError from '../../../../source/Errors/AppError';
 
 //Нужна идея для подстановки формул.
 // export type BalanceFormula_DefaultBaseHeroAttackPowerType = {
@@ -45,7 +46,31 @@ function baseHeroAttackPower(values: {
     return _.round(values.defaultValue * values.ratio);
 }
 
+function itemLevelToHeroLevel(values: {
+    itemLevel: number,
+    startItemLevel: number,
+    itemLevelStep: number,
+}): number {
+    throw AppError.indev();
+
+    return 0;
+}
+
+/**
+ * Минимальный средний ilvl героя на определенный уровен.
+ * @param values
+ */
+function heroLevelCorrespondsToItemLevel(values: {
+    heroLevel: number,
+    ratio: number,
+}): number {
+    return _.floor(values.heroLevel * values.ratio);
+}
+
 export const hero_character_attributes_formulas = {
+    itemLevelToHeroLevel: itemLevelToHeroLevel,
+    heroLevelCorrespondsToItemLevel: heroLevelCorrespondsToItemLevel,
+
     defaultBaseHeroMaxHealthPoints: defaultBaseHeroMaxHealthPoints,
     baseHeroMaxHealthPoints: baseHeroMaxHealthPoints,
     defaultBaseHeroAttackPower: defaultBaseHeroAttackPower,

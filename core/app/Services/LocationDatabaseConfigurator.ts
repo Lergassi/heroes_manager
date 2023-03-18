@@ -17,7 +17,7 @@ export default class LocationDatabaseConfigurator {
     configure(location: Location /*strategy или разные LocationConfigurator*/): void {
         //veins
         database.locations.resources.find(location.type, (itemID, count) => {
-            location.addResource(itemID, _.random(count.min, count.max));
+            location.configResource(itemID, _.random(count.min, count.max));
         });
 
         //enemies

@@ -68,7 +68,7 @@ import DevUISystemController from './SandboxControllers/DevUISystemController.js
 import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseController.js';
 import FightSandboxController from './SandboxControllers/FightSandboxController.js';
 import ItemStorageSandboxController from './SandboxControllers/ItemStorageSandboxController.js';
-import CraftSystemSandboxController from './SandboxControllers/CraftSystemSandboxController.js';
+import ProductionSandboxController from './SandboxControllers/ProductionSandboxController';
 import RecipeSandboxController from './SandboxControllers/RecipeSandboxController.js';
 import RecipesSandboxController from './SandboxControllers/RecipesSandboxController.js';
 import ShopSandboxController from './SandboxControllers/ShopSandboxController.js';
@@ -79,6 +79,7 @@ import AverageItemLevel from '../core/app/Components/AverageItemLevel.js';
 import HeroSandboxController from './SandboxControllers/HeroSandboxController.js';
 import TavernSandboxController from './SandboxControllers/BlankGameplaySandboxController.js';
 import TypescriptSandboxController from './SandboxControllers/TypescriptSandboxController.js';
+import {ToolsSandboxController} from './SandboxControllers/ToolsSandboxController';
 
 // let p = './core/data/json/auto_generated_equip_24.02.2023_06_02_55.json';
 // let a = import(p);
@@ -130,7 +131,8 @@ export default class SandboxController {
         // (new ItemStorageSandboxController(this._container)).run();
         // (new RecipesSandboxController(this._container)).run();
         // (new ShopSandboxController(this._container)).run();
-        // (new CraftSystemSandboxController(this._container)).run();
+        (new ProductionSandboxController(this._container)).run();
+        // (new ToolsSandboxController(this._container)).run();
         // (new HeroSandboxController(this._container)).run();
         // (new EnemySandboxController(this._container)).run();
         // (new FightSandboxController(this._container)).run();
@@ -140,7 +142,7 @@ export default class SandboxController {
         // (new TavernSandboxController(this._container)).run();
 
         // (new GenerateItemsSandboxController(this._container)).run();
-        (new GenerateItemsV002SandboxController(this._container)).run();
+        // (new GenerateItemsV002SandboxController(this._container)).run();
         // (new RecipeSandboxController(this._container)).run();
         // (new GenerateEnemySandboxController(this._container)).run();
 
@@ -786,7 +788,8 @@ export default class SandboxController {
         // itemStorageManager.addItem(itemDatabase.get(ItemID.Wood), 12);
         // console.log(itemStorageManager);
 
-        let gatheringPoint = new Vein(ItemID.Wood, 32);
+        // let gatheringPoint = new Vein(ItemID.Wood, 32);
+        let gatheringPoint = new Vein();
         // let gatheringPoint = new GatheringPoint(GatheringPointTypeID.normal, itemDatabase.get(ItemID.Wood), 1);
 
         let stateController = new ActionStateController();

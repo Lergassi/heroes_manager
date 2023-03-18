@@ -44,7 +44,7 @@ export type ItemCountDBType = {
 }
 
 export type ItemCount = {
-    item: Item;
+    itemID: ItemID;
     count: number;
 }
 

@@ -13,6 +13,7 @@ import EntityManager from '../../core/source/EntityManager.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
+import {ProductionValueGenerator} from '../../core/app/Services/BalanceTools/ProductionValueGenerator';
 
 export default class RecipeSandboxController extends AbstractSandboxController {
     run(): void {
@@ -37,9 +38,9 @@ export default class RecipeSandboxController extends AbstractSandboxController {
         let items: TSDB_ItemDB = {};
         let recipes: TSDB_RecipeDB = {};
         let generateItems = new GenerateItemsByPattern(
-            this.container,
             this.container.get<ItemAttributeGenerator>(ServiceID.ItemAttributeGenerator),
             this.container.get<HeroCharacterAttributeGenerator>(ServiceID.HeroCharacterAttributeGenerator),
+            this.container.get<ProductionValueGenerator>(ServiceID.ProductionValueGenerator),
         );
         // generateItems.run(items, recipes);
         // console.log(items);

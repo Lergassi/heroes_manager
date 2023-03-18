@@ -17,6 +17,7 @@ export enum ItemAttributeID {
     HealthPoints = 'HealthPoints',              //default -> itemCategory
     AttackPower = 'AttackPower',                //default -> itemCategory
 
+    //todo: Пока тут.
     CraftRatio = 'CraftRatio',                  //default -> itemCategory
     // StrengthRatio = 'StrengthRatio',            //default -> itemCategory
     // AgilityRatio = 'AgilityRatio',              //default -> itemCategory

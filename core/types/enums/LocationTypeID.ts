@@ -1,5 +1,5 @@
 export enum LocationTypeID {
-    // Barrens = 'Barrens',
+    Barrens = 'Barrens',
     Forrest = 'Forrest',
     // Steppe = 'Steppe',
     // Desert = 'Desert',

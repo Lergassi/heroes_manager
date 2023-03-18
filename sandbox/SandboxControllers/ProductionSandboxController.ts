@@ -1,21 +1,21 @@
-import Production from '../../core/app/Components/Craft/Production.js';
+import Production from '../../core/app/Components/Production';
 import ProductionConfigurator from '../../core/app/Components/ProductionConfigurator.js';
 import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import Wallet from '../../core/app/Components/Wallet.js';
-import Item from '../../core/app/Entities/Item.js';
-import Recipe from '../../core/app/Entities/Recipe.js';
-import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import {separate} from '../../core/debug_functions.js';
-import {EntityID} from '../../core/types/enums/EntityID.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
-import {RecipeID} from '../../core/types/enums/RecipeID.js';
-import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
+// import fns, {differenceInSeconds} from 'date-fns';
+import {BuildingID} from '../../core/types/enums/BuildingID';
+import {Construction} from '../../core/app/Components/Construction';
+import {BuildingFactory} from '../../core/app/Factories/BuildingFactory';
 
-export default class CraftSystemSandboxController extends AbstractSandboxController {
+export default class ProductionSandboxController extends AbstractSandboxController {
     run(): void {
         // this._devInfinityItemStorage();
-        this._devCraft();
+        // this._devCraft();
+        // this._devV2();
+        this._devBuildings();
     }
 
     private _devInfinityItemStorage() {
@@ -98,9 +98,7 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
         itemStorage.debug();
         separate();
 
-        let craft = new Production(
-            this.container.get<EntityManagerInterface>(ServiceID.EntityManager),
-        );
+        let craft = new Production();
 
         let craftConfigurator = new ProductionConfigurator();
         craftConfigurator.configure(craft);
@@ -113,5 +111,36 @@ export default class CraftSystemSandboxController extends AbstractSandboxControl
         craft.createItem(ItemID.Uncommon_OneHandedSword_006_01, itemStorage, wallet);
 
         itemStorage.debug();
+    }
+
+    private _devV2() {
+        let blacksmith = new Production();
+        console.log(blacksmith);
+    }
+
+    private _devBuildings() {
+        // let date1 = new Date('03.15.2022');
+        // console.log(date1);
+        // let now = new Date();
+        // // console.log(now - date1);
+        // console.log(fns);
+        // // console.log(differenceInSeconds(now, date1));
+        // console.log(fns.differenceInSeconds(now, date1));
+        // // console.log(fns.differenceInSeconds(date1, now));
+
+        // let mine = new Mining(ItemID.IronOre, 10, 1);
+        // let mine = new Mine(ItemID.IronOre, 20, 60);
+        // console.log(mine);
+
+        // console.log(database.buildings.find(BuildingID.IronOreMine));
+        // console.log(database.buildings.find(BuildingID.CopperOreMine));
+
+        let construction = new Construction(
+            new BuildingFactory(),
+        );
+        let itemStorage = new ItemStorage(20);
+        itemStorage.addItem(ItemID.Wood, 100);
+
+        construction.build(BuildingID.IronOreMine, itemStorage);
     }
 }
