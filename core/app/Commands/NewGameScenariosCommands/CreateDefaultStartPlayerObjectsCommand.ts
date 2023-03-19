@@ -23,6 +23,7 @@ import _ from "lodash";
 import {EnemyTypeID} from "../../../types/enums/EnemyTypeID";
 import GameObject from "../../../source/GameObject";
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface';
+import {Farming} from '../../Components/Farming';
 
 export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -32,6 +33,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     async execute(input: Input) {
         // await this._createItemStorages();
         await this._configTavern();
+        await this._configFarming();
         await this._configProduction();
         await this._configMoney();
         await this._createItems();
@@ -65,6 +67,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     private async _createItems() {
         // this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.EndurancePotion01, 10);
         this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.Wood, 100);
+        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.Herb01Seed, 10);
     }
 
     private _createHeroes() {
@@ -343,5 +346,11 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         // jewelry.addItem(ItemID.Uncommon_Ring_022_01);
         // jewelry.addItem(ItemID.Uncommon_Ring_022_02);
         // jewelry.addItem(ItemID.Uncommon_Ring_022_03);
+    }
+
+    private async _configFarming() {
+        // let farming = this.container.get<Farming>(ServiceID.Farming);
+        //
+        // farming.buildGardenBed()
     }
 }

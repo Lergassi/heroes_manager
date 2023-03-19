@@ -28,6 +28,7 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
                 {panelID: UI_PanelID.Tavern, enable: true},
                 {panelID: UI_PanelID.ItemStorages, enable: true},
                 {panelID: UI_PanelID.Heroes, enable: true},
+                {panelID: UI_PanelID.Farming, enable: true},
                 {panelID: UI_PanelID.Construction, enable: true},
                 {panelID: UI_PanelID.Production, enable: true},
                 {panelID: UI_PanelID.Research, enable: false},

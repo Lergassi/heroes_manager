@@ -44,8 +44,9 @@ import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerato
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
 import LocationDatabaseConfigurator from '../LocationDatabaseConfigurator';
 import StubFactory from '../StubFactory.js';
-import {BuildingFactory} from '../../Factories/BuildingFactory';
+import {MineFactory} from '../../Factories/MineFactory';
 import {Construction} from '../../Components/Construction';
+import {Farming} from '../../Components/Farming';
 
 /**
  * todo: Временно не актуально.
@@ -221,13 +222,16 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new Production();
         });
 
-        container.set<BuildingFactory>(ServiceID.BuildingFactory, (container) => {
-            return new BuildingFactory();
+        container.set<MineFactory>(ServiceID.MineFactory, (container) => {
+            return new MineFactory();
         });
         container.set<Construction>(ServiceID.Construction, (container) => {
             return new Construction(
-                container.get<BuildingFactory>(ServiceID.BuildingFactory)
+                container.get<MineFactory>(ServiceID.MineFactory)
             );
+        });
+        container.set<Farming>(ServiceID.Farming, (container) => {
+            return new Farming();
         });
 
         //Фасады

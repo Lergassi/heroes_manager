@@ -7,6 +7,7 @@ export enum UI_PanelID {
     Production = 'Production',
     DungeonAndRaid = 'DungeonAndRaid',
     Construction = 'Construction',
+    Farming = 'Farming',
     Research = 'Research',
     PvP = 'PvP',
     Auction = 'Auction',

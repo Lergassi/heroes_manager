@@ -8,14 +8,16 @@ import AbstractSandboxController from './AbstractSandboxController.js';
 // import fns, {differenceInSeconds} from 'date-fns';
 import {BuildingID} from '../../core/types/enums/BuildingID';
 import {Construction} from '../../core/app/Components/Construction';
-import {BuildingFactory} from '../../core/app/Factories/BuildingFactory';
+import {MineFactory} from '../../core/app/Factories/MineFactory';
+import {Farming} from '../../core/app/Components/Farming';
 
 export default class ProductionSandboxController extends AbstractSandboxController {
     run(): void {
         // this._devInfinityItemStorage();
         // this._devCraft();
         // this._devV2();
-        this._devBuildings();
+        // this._devBuildings();
+        this._devFarming();
     }
 
     private _devInfinityItemStorage() {
@@ -136,11 +138,31 @@ export default class ProductionSandboxController extends AbstractSandboxControll
         // console.log(database.buildings.find(BuildingID.CopperOreMine));
 
         let construction = new Construction(
-            new BuildingFactory(),
+            new MineFactory(),
         );
         let itemStorage = new ItemStorage(20);
         itemStorage.addItem(ItemID.Wood, 100);
 
         construction.build(BuildingID.IronOreMine, itemStorage);
+    }
+
+    private _devFarming() {
+        // console.log(database.seeds.find(ItemID.Herb01Seed));
+        // console.log(database.seeds.find(ItemID.IronOre));
+
+        let itemStorage = new ItemStorage(10);
+        itemStorage.addItem(ItemID.Wood, 123);
+        itemStorage.addItem(ItemID.Herb01Seed, 10);
+
+        // let money = 0;
+        // let money = 41;
+        let money = 100;
+        let wallet = new Wallet(money);
+
+        let farming = new Farming();
+
+        farming.buildGardenBed(itemStorage, wallet);
+
+        farming.plant(0, ItemID.Herb01Seed, itemStorage);
     }
 }

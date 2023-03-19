@@ -149,12 +149,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         let items = {};
         this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController).renderItemStorageControllerByRequest({
             updateItemStorages(itemStorages: UI_ItemStorage[]) {
-                // console.log('updateItemStorages', itemStorages);
                 for (let i = 0; i < itemStorages.length; i++) {
-                    // let index = items.push({
-                    //     ID: itemStorages[i].ID,
-                    //     slots: [],
-                    // }) - 1;
                     for (let j = 0; j < itemStorages[i].slots.length; j++) {
                         if (!itemStorages[i].slots[j].item.itemID) continue;
 
@@ -163,19 +158,10 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                         }
 
                         items[itemStorages[i].slots[j].item.itemID].count += itemStorages[i].slots[j].item.count;
-
-                        // items[index].slots.push({
-                        //     index: itemStorages[i].slots[j].index,
-                        //     item: {
-                        //         itemID: itemStorages[i].slots[j].item.itemID,
-                        //         count: itemStorages[i].slots[j].item.count,
-                        //     },
-                        // });
                     }
                 }
             },
             updateSlots(itemStorageID: number, slots: UI_ItemStorageSlot[]) {
-                console.log('updateSlots', itemStorageID, slots);
 
             },
         });

@@ -53,6 +53,10 @@ export type UI_ItemCount = {
     count: number;
 }
 
+export type UI_ItemCountObject = {
+    [ID in ItemID]?: number;
+}
+
 export type UI_ItemStorage = {
     ID: number;
     slots: UI_ItemStorageSlot[];

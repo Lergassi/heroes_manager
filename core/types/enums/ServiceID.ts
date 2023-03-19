@@ -39,6 +39,9 @@ export enum ServiceID {
     Alchemy = 'player.Alchemy',
     Jewelry = 'player.Jewelry',
 
+    Construction = 'player.Construction',
+    Farming = 'player.Farming',
+
     Tavern = 'player.Tavern',
     Tavern_v2 = 'player.Tavern_v2',
     TavernController = 'player.TavernController',
@@ -55,8 +58,7 @@ export enum ServiceID {
     LocationConfigurator = 'player.LocationConfigurator',
     VeinFactory = 'player.VeinFactory',
     EnemyFactory = 'player.EnemyFactory',
-    Construction = 'player.Construction',
-    BuildingFactory = 'player.BuildingFactory',
+    MineFactory = 'player.MineFactory',
 
     //компоненты из GameObject
     ItemStorageController = 'player.ItemStorageController',

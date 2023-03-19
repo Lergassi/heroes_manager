@@ -25,7 +25,7 @@ export default interface WalletInterface {
      * @return Остаток в кошельке.
      */
     moveAllTo(target: WalletInterface): number;
-    // has(value: unsigned): boolean;
+    has(value: number): boolean;
     // render(callb);
     // addListener();
     renderByRequest(ui: WalletInterfaceRender): void;

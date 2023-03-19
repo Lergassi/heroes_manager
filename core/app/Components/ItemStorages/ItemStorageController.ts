@@ -10,7 +10,7 @@ import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {EventCode} from '../../../types/enums/EventCode.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
-import {UI_ItemStorage, UI_ItemStorageSlot} from '../../../types/main.js';
+import {ItemCount, UI_ItemStorage, UI_ItemStorageSlot} from '../../../types/main.js';
 import {ItemStorageControllerInterfaceRender} from '../../Interfaces/ItemStorageControllerInterface.js';
 import ItemStorageInterface, {ItemStorageInterfaceRender} from '../../Interfaces/ItemStorageInterface.js';
 import EquipController from '../EquipController.js';
@@ -126,6 +126,12 @@ export default class ItemStorageController implements ItemStorageInterface {
         return originCount - count;
     }
 
+    removeItems(items: ItemCount[]): void {
+        for (let i = 0; i < items.length; i++) {
+            this.removeItem(items[i].itemID, items[i].count);
+        }
+    }
+
     containItem(ID: ItemID): number {
         let count = 0;
         for (let i = 0; i < this._itemStorages.length; i++) {
@@ -139,6 +145,20 @@ export default class ItemStorageController implements ItemStorageInterface {
         assertIsGreaterThanOrEqual(count, 1);
 
         return this.containItem(itemID) >= count;
+    }
+
+    hasItems(items: ItemCount[]): boolean {
+        if (!items.length) return false;
+        if (!this._itemStorages.length) return false;
+
+        for (let i = 0; i < items.length; i++) {
+            for (let j = 0; j < this._itemStorages.length; j++) {
+                if (!this._itemStorages[j].get<ItemStorageInterface>(ComponentID.ItemStorage).hasItems(items)) return false;
+            }
+        }
+
+        //todo: Надо всё таки по другому делать. Иначе ошибка в коде будет приводить к true. По умолчанию, наверное, лучше должно быть false;
+        return true;
     }
 
     canAddItem(itemID: ItemID, count: number): number {

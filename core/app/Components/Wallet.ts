@@ -77,6 +77,10 @@ export default class Wallet implements WalletInterface {
         return this.remove(target.add(this._value));
     }
 
+    has(value: number): boolean {
+        return this._value >= value;
+    }
+
     renderByRequest(ui: WalletInterfaceRender): void {
         ui.updateValue?.(this._value);
     }

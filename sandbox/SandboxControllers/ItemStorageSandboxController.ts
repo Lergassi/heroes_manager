@@ -1,6 +1,4 @@
-import {log} from 'debug';
 import ItemStackController from '../../core/app/Components/ItemStorages/ItemStackController.js';
-import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import ItemStorageFactory from '../../core/app/Factories/ItemStorageFactory.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../../core/app/Interfaces/ItemStorageInterface.js';
@@ -8,6 +6,9 @@ import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
+import {ItemCount} from '../../core/types/main';
+import ItemStorageController from '../../core/app/Components/ItemStorages/ItemStorageController';
+import {ComponentID} from '../../core/types/enums/ComponentID';
 
 export default class ItemStorageSandboxController extends AbstractSandboxController {
     run(): void {
@@ -19,8 +20,9 @@ export default class ItemStorageSandboxController extends AbstractSandboxControl
         // this._devInfinityBag();
         // this._devCanAddItem();
 
-        this._testItemStorage();
-        this._testItemStackController();
+        // this._testItemStorage();
+        // this._testItemStackController();
+        this._testHasItems();
     }
 
     private _devItemStorage() {
@@ -268,5 +270,25 @@ export default class ItemStorageSandboxController extends AbstractSandboxControl
 
         // itemStorage.addItem(ItemID.Wood, 12);
         // console.log(itemStorage.isEmpty());
+    }
+
+    private _testHasItems() {
+        // let itemStorage = new ItemStorage(10);
+        let itemStorageGO = this.container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory).createGameObject(10);
+        let itemStorage = itemStorageGO.get<ItemStorageInterface>(ComponentID.ItemStorage);
+
+        let itemStorageController = new ItemStorageController(5);
+        itemStorageController.addItemStorage(itemStorageGO);
+
+        itemStorage.addItem(ItemID.Wood, 10);
+        itemStorage.addItem(ItemID.IronOre, 10);
+
+        let items: ItemCount[] = [
+            {itemID: ItemID.Wood, count: 10},
+            {itemID: ItemID.IronOre, count: 10},
+        ];
+
+        console.log(itemStorage.hasItems(items));
+        console.log(itemStorageController.hasItems(items));
     }
 }

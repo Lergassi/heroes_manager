@@ -7,7 +7,7 @@ import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
-import {UI_ItemCount, UI_ItemStorageSlot, unsigned} from '../../../types/main.js';
+import {ItemCount, UI_ItemCount, UI_ItemStorageSlot, unsigned} from '../../../types/main.js';
 import HeroClass from '../../Entities/HeroClass.js';
 import Item from '../../Entities/Item.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
@@ -142,6 +142,12 @@ export default class ItemStorage implements ItemStorageInterface {
         return removedItemsCount;
     }
 
+    removeItems(items: ItemCount[]): void {
+        for (let i = 0; i < items.length; i++) {
+            this.removeItem(items[i].itemID, items[i].count);
+        }
+    }
+
     containItem(ID: ItemID): number {
         let count = 0;
         for (let i = 0; i < this._itemStackControllers.length; i++) {
@@ -155,6 +161,17 @@ export default class ItemStorage implements ItemStorageInterface {
         assertIsGreaterThanOrEqual(count, 1);
 
         return this.containItem(itemID) >= count;
+    }
+
+    hasItems(items: ItemCount[]): boolean {
+        if (!items.length) return false;
+        // if (!this._itemStackControllers.length) return false;
+
+        for (let i = 0; i < items.length; i++) {
+            if (!this.hasItem(items[i].itemID, items[i].count)) return false;
+        }
+
+        return true;
     }
 
     canAddItem(itemID: ItemID, count: number): number {

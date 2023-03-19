@@ -1,7 +1,7 @@
 import {ItemID} from '../../types/enums/ItemID';
 import {Mine} from './Mine';
 import {BuildingID} from '../../types/enums/BuildingID';
-import {BuildingFactory} from '../Factories/BuildingFactory';
+import {MineFactory} from '../Factories/MineFactory';
 import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface';
@@ -18,7 +18,7 @@ import {
 
 export class Construction implements ConstructionRenderInterface {
     private readonly _buildings: {ID: BuildingID, building: Mine}[];
-    private readonly _buildingFactory: BuildingFactory;
+    private readonly _mineFactory: MineFactory;
 
     private _maxBuildings = {
         [BuildingID.CoalMine]: 1,
@@ -26,9 +26,9 @@ export class Construction implements ConstructionRenderInterface {
         [BuildingID.CopperOreMine]: 1,
     };
 
-    constructor(buildingFactory: BuildingFactory) {
+    constructor(mineFactory: MineFactory) {
         this._buildings = [];
-        this._buildingFactory = buildingFactory;
+        this._mineFactory = mineFactory;
     }
 
     build(buildingID: BuildingID, itemStorage: ItemStorageInterface): void {
@@ -49,7 +49,7 @@ export class Construction implements ConstructionRenderInterface {
         }
         this._buildings.push({
             ID: buildingID, //meta?
-            building: this._buildingFactory.createMine(buildingID, itemStorage),
+            building: this._mineFactory.createMine(buildingID, itemStorage),
         });
         debug(DebugNamespaceID.Log)('Здание построено.');
     }

@@ -10,23 +10,30 @@ import {metadata} from './metadata.js';
 import {recipes} from './recipes.js';
 import {test} from './test.js';
 import {buildings} from './buildings';
+import {seeds} from './seeds';
+import {mines} from './mines';
 
 export const database = {
     metadata: metadata,
+
     item_categories: {
         ratios: item_category_ratios,
     },
+
     items: {
         data: items,
     },
     recipes: {
         data: recipes,
     },
+    seeds: seeds,
+
     hero_classes: {
         data: hero_classes,
         character_attributes: hero_class_character_attributes,
         equip_sets: hero_equip_sets,
     },
+
     locations: {
         // data: locations_resources,
         resources: location_resources,
@@ -35,6 +42,9 @@ export const database = {
     enemies: {
         rewards: enemy_loot,
     },
-    test: test,
+
     buildings: buildings,
+    mines: mines,
+
+    test: test,
 };

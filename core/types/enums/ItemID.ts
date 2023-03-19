@@ -39,6 +39,10 @@ export enum ItemID {
     BoarMeat = 'BoarMeat',
     BearMeat = 'BearMeat',
 
+    Herb01Seed = 'Herb01Seed',
+    Herb02Seed = 'Herb02Seed',
+    CottonSeed = 'CottonSeed',
+
     PlateHelmet01 = 'PlateHelmet01',
     PlateHelmet02 = 'PlateHelmet02',
     PlateShoulders01 = 'PlateShoulders01',

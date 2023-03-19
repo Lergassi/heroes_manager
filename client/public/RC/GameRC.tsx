@@ -26,6 +26,8 @@ import WalletRC from './WalletRC.js';
 import ProductionListRC from "./ProductionListRC";
 import {ConstructionRC} from './ConstructionRC';
 import {Construction} from '../../../core/app/Components/Construction';
+import {FarmingRC} from './FarmingRC';
+import {Farming} from '../../../core/app/Components/Farming';
 
 export type GameRCProps = {
     container: ContainerInterface;
@@ -51,6 +53,7 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                 [UI_PanelID.Heroes]: {ID: UI_PanelID.Heroes, show: false,},
                 [UI_PanelID.Locations]: {ID: UI_PanelID.Locations, show: false,},
                 [UI_PanelID.Production]: {ID: UI_PanelID.Production, show: false,},
+                [UI_PanelID.Farming]: {ID: UI_PanelID.Farming, show: false,},
                 [UI_PanelID.Construction]: {ID: UI_PanelID.Construction, show: false,},
             },
             activePanel: UI_PanelID.Homepage,
@@ -61,6 +64,8 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
         }
 
         this.props.container.set<GameRC>(ServiceID.UI_Game, this);
+
+        this._configWindowSandbox();
     }
 
     showPanel(ID: UI_PanelID): void {
@@ -174,6 +179,14 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                             }}
                         />
 
+                        <FarmingRC
+                            container={this.props.container}
+                            farming={this.props.container.get<Farming>(ServiceID.Farming)}
+                            window={{
+                                show: this.state.panels.Farming.show,
+                            }}
+                        />
+
                         {/*<ProductionRC*/}
                         {/*    container={this.props.container}*/}
                         {/*    production={this.props.container.get<Production>(ServiceID.Production)}*/}
@@ -187,5 +200,14 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                 </div>{/*container*/}
             </div>
         );
+    }
+
+    private _configWindowSandbox(): void {
+        window['app']['sandbox']['buildGardenBed'] = () => {
+            this.props.container.get<Farming>(ServiceID.Farming).buildGardenBed(
+                this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
+                this.props.container.get<WalletInterface>(ServiceID.Wallet),
+            );
+        };
     }
 }

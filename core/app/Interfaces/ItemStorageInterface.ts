@@ -1,7 +1,7 @@
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import EquipController from '../Components/EquipController.js';
 import Item from '../Entities/Item.js';
-import {UI_ItemCount, UI_ItemStorageSlot, unsigned} from '../../types/main.js';
+import {ItemCount, UI_ItemCount, UI_ItemStorageSlot, unsigned} from '../../types/main.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 
 export interface ItemStorageInterfaceRender {
@@ -19,6 +19,7 @@ export default interface ItemStorageInterface {
     addItem(itemID: ItemID, count: number): number;
     containItem(ID: ItemID): number;
     hasItem(itemID: ItemID, count): boolean;
+    hasItems(items: ItemCount[]): boolean;
     /**
      * Удаляет предметы из хранилища. Стекуемые и не стекуемые.
      * @param ID
@@ -26,6 +27,7 @@ export default interface ItemStorageInterface {
      * @return Кол-во удаленных предметов из сумки. 0 = не удалено ни одного предмета, return = count = удалены все предметы.
      */
     removeItem(ID: ItemID, count: number): number;
+    removeItems(items: ItemCount[]): void;
     // removeItemTo(itemID: ItemID, count: number, itemStorage: ItemStorageInterface): number;
     moveAllItemsTo(itemStorage: ItemStorageInterface): void;
     /**
