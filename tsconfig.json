@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "alwaysStrict": true,
-    "moduleResolution": "Node",
     "module": "CommonJS",
+	"moduleResolution": "Node",
     "target": "ES6",
+	"alwaysStrict": true,
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "outDir": "dist",
-    "paths": {
-
-    },
     "types": ["reflect-metadata"],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+	"paths": {
+
+    }
   },
   "include": [
     "core/**/*",

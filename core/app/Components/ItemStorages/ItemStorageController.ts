@@ -142,13 +142,13 @@ export default class ItemStorageController implements ItemStorageInterface {
     }
 
     hasItem(itemID: ItemID, count): boolean {
-        assertIsGreaterThanOrEqual(count, 1);
+        // assertIsGreaterThanOrEqual(count, 1);
 
         return this.containItem(itemID) >= count;
     }
 
     hasItems(items: ItemCount[]): boolean {
-        if (!items.length) return false;
+        if (!items.length) return true;
         if (!this._itemStorages.length) return false;
 
         for (let i = 0; i < items.length; i++) {

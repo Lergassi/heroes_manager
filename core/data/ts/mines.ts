@@ -13,23 +13,29 @@ type TSDB_MineDB = {
 }
 
 let db: TSDB_MineDB = {
+    [BuildingID.Sawmill]: {
+        buildingID: BuildingID.Sawmill,
+        resultItemID: ItemID.Wood,
+        interval: 10,
+        countForInterval: 2,
+    },
     [BuildingID.CoalMine]: {
         buildingID: BuildingID.CoalMine,
         resultItemID: ItemID.Coal,
-        interval: 10,
+        interval: 20,
         countForInterval: 10,
     },
     [BuildingID.IronOreMine]: {
         buildingID: BuildingID.IronOreMine,
         resultItemID: ItemID.IronOre,
-        interval: 10,
+        interval: 20,
         countForInterval: 20,
     },
     [BuildingID.CopperOreMine]: {
         buildingID: BuildingID.CopperOreMine,
         resultItemID: ItemID.CopperOre,
         interval: 10,
-        countForInterval: 10,
+        countForInterval: 4,
     },
 };
 

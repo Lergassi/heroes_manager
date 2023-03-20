@@ -188,10 +188,10 @@ export default class GenerateItemsByPattern {
                                                 itemID: ItemID.IronIngot,
                                                 count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.IronIngot, this._patterns[i].itemCategories[j].itemCategoryID),
                                             },
-                                            {
-                                                itemID: ItemID.CopperIngot,
-                                                count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
-                                            },
+                                            // {
+                                            //     itemID: ItemID.CopperIngot,
+                                            //     count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
+                                            // },
                                         );
                                         tsdb_itemBuilder.Strength = characterAttributeValue;
                                         break;
@@ -258,10 +258,10 @@ export default class GenerateItemsByPattern {
                                         itemID: ItemID.IronIngot,
                                         count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.IronIngot, this._patterns[i].itemCategories[j].itemCategoryID),
                                     },
-                                    {
-                                        itemID: ItemID.CopperIngot,
-                                        count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
-                                    },
+                                    // {
+                                    //     itemID: ItemID.CopperIngot,
+                                    //     count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
+                                    // },
                                 ],
                                 resultItemCount: 1,
                                 productionCost: this._productionValueGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),
@@ -301,10 +301,10 @@ export default class GenerateItemsByPattern {
                                         itemID: ItemID.IronIngot,
                                         count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.IronIngot, this._patterns[i].itemCategories[j].itemCategoryID),
                                     },
-                                    {
-                                        itemID: ItemID.CopperIngot,
-                                        count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
-                                    },
+                                    // {
+                                    //     itemID: ItemID.CopperIngot,
+                                    //     count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
+                                    // },
                                 ],
                                 resultItemCount: 1,
                                 productionCost: this._productionValueGenerator.productionCost(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID),

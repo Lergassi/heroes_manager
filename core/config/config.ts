@@ -22,7 +22,10 @@ export default {
     hero_level_corresponds_to_item_level_ratio: 1.6,
 
     //character attributes
-    start_default_hero_health_points: 100,
+    // start_default_hero_health_points: 100,
+    // start_default_hero_health_points: 120,
+    // start_default_hero_health_points: 140,
+    start_default_hero_health_points: 200,
     default_hero_health_points_level_increase: 20,
 
     start_default_hero_attack_power: 20,
@@ -30,8 +33,8 @@ export default {
     default_hero_attack_power_level_increase: 8,
 
     //items
-    start_equip_production_cost: 100,
-    equip_item_level_increase_production_cost: 40,
+    start_equip_production_cost: 80,
+    equip_item_level_increase_production_cost: 10,
 
     start_item_level_attack_power: 2,                   //зависит от материала или сделать default
     item_level_increase_attack_power: 2,                //зависит от материала или сделать default
@@ -47,8 +50,14 @@ export default {
     //enemies
     // default_enemy_damage_ratio_to_hero: 0.9,
     // default_enemy_damage_ratio_to_hero: 0.2,            //кол-во урона от врага за бой
-    default_enemy_damage_ratio_to_hero: 0.15,
-    default_enemy_hit_ratio_to_enemy: 0.2,
+    // default_enemy_damage_ratio_to_hero: 0.15,
+    default_enemy_damage_ratio_to_hero: 0.10,
+    // default_enemy_damage_ratio_to_hero: 0.08,
+    // default_enemy_damage_ratio_to_hero: 0.05,
+    // default_enemy_hit_ratio_to_enemy: 0.2,
+    // default_enemy_hit_ratio_to_enemy: 0.10,
+    default_enemy_hit_ratio_to_enemy: 0.05,
+    // default_enemy_hit_ratio_to_enemy: 0.1,
     // default_enemy_damage_ratio_to_hero: 0.15,
     // default_enemy_damage_ratio_to_hero: 0.1,
     // default_hero_hit_ratio_to_enemy: 0.2,
@@ -59,14 +68,14 @@ export default {
     //Далее будет ресурс1, ресурс2, но пока для удобства используются названия предметов.
     production_start_item_level: {
         [ProductionID.Blacksmith]: {
-            [ItemID.IronIngot]: 20,
-            [ItemID.CopperIngot]: 10,
+            [ItemID.IronIngot]: 10,
+            // [ItemID.CopperIngot]: 10,
         },
         [ProductionID.LeatherWorking]: {
-            [ItemID.Leather01]: 40,
+            [ItemID.Leather01]: 20,
         },
         [ProductionID.Tailoring]: {
-            [ItemID.CottonCloth]: 60,
+            [ItemID.CottonCloth]: 30,
         },
         [ProductionID.Jewelry]: {
             [ItemID.GoldIngot]: 30,
@@ -77,17 +86,17 @@ export default {
 
     production_increase_item_level: {
         [ProductionID.Blacksmith]: {
-            [ItemID.IronIngot]: 10,
-            [ItemID.CopperIngot]: 5,
+            [ItemID.IronIngot]: 2,
+            // [ItemID.CopperIngot]: 5,
         },
         [ProductionID.LeatherWorking]: {
-            [ItemID.Leather01]: 20,
+            [ItemID.Leather01]: 4,
         },
         [ProductionID.Tailoring]: {
-            [ItemID.CottonCloth]: 30,
+            [ItemID.CottonCloth]: 6,
         },
         [ProductionID.Jewelry]: {
-            [ItemID.GoldIngot]: 15,
+            [ItemID.GoldIngot]: 10,
         },
     },
     // blacksmith_increase_item_level_iron_ingot: 4,

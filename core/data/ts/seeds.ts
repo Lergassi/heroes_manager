@@ -16,19 +16,19 @@ let db: TSDB_SeedDB = {
         itemID: ItemID.CottonSeed,
         resultItemID: ItemID.Cotton,
         resultItemsCount: 2,
-        growthDuration: 60,
+        growthDuration: 30,
     },
     [ItemID.Herb01Seed]: {
         itemID: ItemID.Herb01Seed,
         resultItemID: ItemID.Herb01,
-        resultItemsCount: 10,
-        growthDuration: 5,
+        resultItemsCount: 8,
+        growthDuration: 15,
     },
     [ItemID.Herb02Seed]: {
         itemID: ItemID.Herb02Seed,
         resultItemID: ItemID.Herb02,
-        resultItemsCount: 5,
-        growthDuration: 60,
+        resultItemsCount: 4,
+        growthDuration: 30,
     },
 };
 

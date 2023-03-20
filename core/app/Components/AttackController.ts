@@ -64,8 +64,7 @@ export default class AttackController implements AttackControllerInterface {
         let resultDamage = target.damage(damage, afterDiedTargetCallback);
 
         //todo: Перенести в другое место.
-        this._endurance?.remove(this._options.enduranceForHit);
-        // this._endurance?.remove(90);
+        // this._endurance?.remove(this._options.enduranceForHit);
 
         return resultDamage;
     }

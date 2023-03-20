@@ -80,6 +80,10 @@ import HeroSandboxController from './SandboxControllers/HeroSandboxController.js
 import TavernSandboxController from './SandboxControllers/BlankGameplaySandboxController.js';
 import TypescriptSandboxController from './SandboxControllers/TypescriptSandboxController.js';
 import {ToolsSandboxController} from './SandboxControllers/ToolsSandboxController';
+import mysql, {createConnection} from 'mysql';
+import * as net from 'net';
+import {sprintf} from 'sprintf-js';
+// import cookie from 'cookie';
 
 // let p = './core/data/json/auto_generated_equip_24.02.2023_06_02_55.json';
 // let a = import(p);
@@ -107,6 +111,7 @@ export default class SandboxController {
     async run() {
         this._initContainer();
         this.main();
+        // this.main123();
 
         // console.log(a);
         // await test;
@@ -1084,4 +1089,8 @@ export default class SandboxController {
         // console.log(firstWinIteration);
         console.log(winIterations);
     }
+
+    // private main123() {
+    //
+    // }
 }

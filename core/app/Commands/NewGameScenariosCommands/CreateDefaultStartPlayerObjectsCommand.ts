@@ -67,7 +67,8 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     private async _createItems() {
         // this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.EndurancePotion01, 10);
         this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.Wood, 100);
-        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.Herb01Seed, 10);
+        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.Herb01Seed, 100);
+        this.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(ItemID.Herb02Seed, 100);
     }
 
     private _createHeroes() {
@@ -169,20 +170,26 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
 
         locations.push(locationFactory.create(LocationTypeID.Barrens, level));
 
-        locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, level, 1000));
-        locations[locations.length - 1].get<Location>(ComponentID.Location).configResource(ItemID.IronOre, 1000);
-        locations[locations.length - 1].get<Location>(ComponentID.Location).configResource(ItemID.Herb01, 1000);
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, level, 1000));
+        locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Goblin, level, 20));
+        locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, level, 10));
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Skeleton, level, 20));
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Skeleton, level, 5));
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).configResource(ItemID.IronOre, 1000);
+        // locations[locations.length - 1].get<Location>(ComponentID.Location).configResource(ItemID.Herb01, 1000);
 
-        // locations.push(locationFactory.create(LocationTypeID.Forrest, level));
-        //
-        // locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, level, 1000));
+        locations.push(locationFactory.create(LocationTypeID.Forrest, level));
+
+        locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Wolf, 3, 20));
+        locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Bear, 5, 1));
         // locations[locations.length - 1].get<Location>(ComponentID.Location).addResource(ItemID.Herb01, 1000);
-        //
-        // locations.push(locationFactory.create(LocationTypeID.Forrest, level));
-        //
-        // locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Boar, level, 1000));
+
+        locations.push(locationFactory.create(LocationTypeID.Forrest, level));
+
+        locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.Bandit, 5, 30));
+        locations[locations.length - 1].get<Location>(ComponentID.Location).addEnemy(enemyFactory.createSquad(EnemyTypeID.ForrestDog, 3, 10));
         // locations[locations.length - 1].get<Location>(ComponentID.Location).addResource(ItemID.Herb02, 1000);
-        // console.log(locations);
+        console.log(locations);
 
         for (let i = 0; i < locations.length; i++) {
             this.container.get<MainLocationList>(ServiceID.MainLocationList).add(locations[i]);
@@ -215,7 +222,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         /*
             При увеличении начального золота нужно кооректировать стоимость всего остального.
         */
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['100']);
+        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['100']);
     }
 
     // private async _configProduction() {

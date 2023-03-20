@@ -164,7 +164,7 @@ export default class ItemStorage implements ItemStorageInterface {
     }
 
     hasItems(items: ItemCount[]): boolean {
-        if (!items.length) return false;
+        if (!items.length) return true;
         // if (!this._itemStackControllers.length) return false;
 
         for (let i = 0; i < items.length; i++) {

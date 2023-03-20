@@ -24,14 +24,50 @@ type TSDB_EnemyLootDB = {
 };
 
 let enemy_loot_data: TSDB_EnemyLootDB = {
+    [EnemyTypeID.Goblin]: {
+        exp  : 60,
+        items: [
+            // {ID: ItemID.Wood, startCount: 2, chance: 1},
+            // {ID: ItemID.Skin01, count: 4, chance: 1},
+            // {ID: ItemID.Leather01, startCount: 1, chance: 1},
+        ],
+        money: 20,
+    },
     [EnemyTypeID.Boar]: {
         exp  : 40,
+        items: [
+            // {ID: ItemID.Wood, startCount: 2, chance: 1},
+            {ID: ItemID.Skin01, count: 2, chance: 1},
+            // {ID: ItemID.Leather01, startCount: 1, chance: 1},
+        ],
+        money: 10,
+    },
+    [EnemyTypeID.Skeleton]: {
+        exp  : 40,
+        items: [
+            // {ID: ItemID.Wood, startCount: 2, chance: 1},
+            // {ID: ItemID.Skin01, count: 2, chance: 1},
+            // {ID: ItemID.Leather01, startCount: 1, chance: 1},
+        ],
+        money: 20,
+    },
+    [EnemyTypeID.Bear]: {
+        exp  : 80,
+        items: [
+            // {ID: ItemID.Wood, startCount: 2, chance: 1},
+            {ID: ItemID.Skin01, count: 10, chance: 1},
+            // {ID: ItemID.Leather01, startCount: 1, chance: 1},
+        ],
+        money: 40,
+    },
+    [EnemyTypeID.Wolf]: {
+        exp  : 60,
         items: [
             // {ID: ItemID.Wood, startCount: 2, chance: 1},
             {ID: ItemID.Skin01, count: 4, chance: 1},
             // {ID: ItemID.Leather01, startCount: 1, chance: 1},
         ],
-        money: 10,
+        money: 20,
     },
 };
 

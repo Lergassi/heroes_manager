@@ -13,33 +13,40 @@ type TSDB_BuildingDB = {
 }
 
 let db: TSDB_BuildingDB = {
+    [BuildingID.Sawmill]: {
+        ID: BuildingID.Sawmill,
+        requireItems: [
+            // {itemID: ItemID.Wood, count: 10},
+        ],
+        cost: 20,
+    },
     [BuildingID.CoalMine]: {
         ID: BuildingID.CoalMine,
         requireItems: [
-            {itemID: ItemID.Wood, count: 10},
+            // {itemID: ItemID.Wood, count: 50},
         ],
-        cost: 0,
+        cost: 50,
     },
     [BuildingID.IronOreMine]: {
         ID: BuildingID.IronOreMine,
         requireItems: [
-            {itemID: ItemID.Wood, count: 10},
+            // {itemID: ItemID.Wood, count: 10},
         ],
-        cost: 0,
+        cost: 100,
     },
     [BuildingID.CopperOreMine]: {
         ID: BuildingID.CopperOreMine,
         requireItems: [
-            {itemID: ItemID.Wood, count: 5},
+            // {itemID: ItemID.Wood, count: 5},
         ],
-        cost: 0,
+        cost: 20,
     },
     [BuildingID.GardenBed]: {
         ID: BuildingID.GardenBed,
         requireItems: [
-            {itemID: ItemID.Wood, count: 5},
+            // {itemID: ItemID.Wood, count: 5},
         ],
-        cost: 42,
+        cost: 40,
     },
 };
 

@@ -143,7 +143,7 @@ export default class ProductionSandboxController extends AbstractSandboxControll
         let itemStorage = new ItemStorage(20);
         itemStorage.addItem(ItemID.Wood, 100);
 
-        construction.build(BuildingID.IronOreMine, itemStorage);
+        construction.build(BuildingID.IronOreMine, itemStorage, undefined);
     }
 
     private _devFarming() {

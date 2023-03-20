@@ -4,4 +4,5 @@ export enum BuildingID {
     CoalMine = 'CoalMine',
 
     GardenBed = 'GardenBed',
+    Sawmill = 'Sawmill',
 }

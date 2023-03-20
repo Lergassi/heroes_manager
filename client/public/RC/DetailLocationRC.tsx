@@ -424,17 +424,6 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                 {/*<button className={'btn btn_danger'}>Удалить локацию</button>*/}
                             </div>
                         </div>{/* end widget Control */}
-                        <div className={'widget'}>
-                            <div className={'widget__title'}>Информация</div>
-                            <div className={'widget__content'}>
-                                <ul>
-                                    <li>Уровень: {this.state.level}</li>
-                                    {/*<li>Эффективность сбора: {this.state.gatheringPerformance}</li>*/}
-                                    <li>Время до закрытия: {formatDuration(intervalToDuration({start: 0, end: this.state.timeToClose * 1000}))} часов</li>
-                                    <li>Золото: {this.state.money}</li>
-                                </ul>
-                            </div>
-                        </div>{/* end widget info */}
                     </div>{/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
@@ -598,6 +587,17 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                         {/*        </table>*/}
                         {/*    </div>*/}
                         {/*</div>*/}
+                        <div className={'widget'}>
+                            <div className={'widget__title'}>Информация</div>
+                            <div className={'widget__content'}>
+                                <ul>
+                                    <li>Уровень: {this.state.level}</li>
+                                    {/*<li>Эффективность сбора: {this.state.gatheringPerformance}</li>*/}
+                                    <li>Время до закрытия: {formatDuration(intervalToDuration({start: 0, end: this.state.timeToClose * 1000}))} часов</li>
+                                    <li>Золото: {this.state.money}</li>
+                                </ul>
+                            </div>
+                        </div>{/* end widget info */}
                         <div className={'widget'}>
                             <div className={'widget__title'}>Добыча</div>
                             <div className={'widget__content'}>

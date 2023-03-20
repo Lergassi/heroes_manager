@@ -10,11 +10,11 @@ type TSDB_CharacterAttributeRatio = {
 };
 
 let character_attribute_ratios_data: TSDB_CharacterAttributeRatio = {
-    [HeroClassID.Tank1]:                {[CharacterAttributeID.MaxHealthPoints]: 2.2,   [CharacterAttributeID.AttackPower]: 0.8},
-    [HeroClassID.Warrior]:              {[CharacterAttributeID.MaxHealthPoints]: 2.2,   [CharacterAttributeID.AttackPower]: 0.8},
-    [HeroClassID.Paladin]:              {[CharacterAttributeID.MaxHealthPoints]: 2.2,   [CharacterAttributeID.AttackPower]: 0.8},
-    [HeroClassID.Tank2]:                {[CharacterAttributeID.MaxHealthPoints]: 2.2,   [CharacterAttributeID.AttackPower]: 0.8},
-    [HeroClassID.Tank3]:                {[CharacterAttributeID.MaxHealthPoints]: 2.2,   [CharacterAttributeID.AttackPower]: 0.8},
+    [HeroClassID.Tank1]:                {[CharacterAttributeID.MaxHealthPoints]: 1.5,   [CharacterAttributeID.AttackPower]: 0.8},
+    [HeroClassID.Warrior]:              {[CharacterAttributeID.MaxHealthPoints]: 1.5,   [CharacterAttributeID.AttackPower]: 0.8},
+    [HeroClassID.Paladin]:              {[CharacterAttributeID.MaxHealthPoints]: 1.5,   [CharacterAttributeID.AttackPower]: 0.8},
+    [HeroClassID.Tank2]:                {[CharacterAttributeID.MaxHealthPoints]: 1.5,   [CharacterAttributeID.AttackPower]: 0.8},
+    [HeroClassID.Tank3]:                {[CharacterAttributeID.MaxHealthPoints]: 1.5,   [CharacterAttributeID.AttackPower]: 0.8},
 
     [HeroClassID.Gladiator]:            {[CharacterAttributeID.MaxHealthPoints]: 1,     [CharacterAttributeID.AttackPower]: 1},
     [HeroClassID.Barbarian]:            {[CharacterAttributeID.MaxHealthPoints]: 1,     [CharacterAttributeID.AttackPower]: 1},
@@ -22,11 +22,11 @@ let character_attribute_ratios_data: TSDB_CharacterAttributeRatio = {
     [HeroClassID.PlateDamageDealer2]:   {[CharacterAttributeID.MaxHealthPoints]: 1,     [CharacterAttributeID.AttackPower]: 1},
     [HeroClassID.PlateDamageDealer3]:   {[CharacterAttributeID.MaxHealthPoints]: 1,     [CharacterAttributeID.AttackPower]: 1},
 
-    [HeroClassID.LeatherDamageDealer1]: {[CharacterAttributeID.MaxHealthPoints]: 0.8,   [CharacterAttributeID.AttackPower]: 1.2},
-    [HeroClassID.Rogue]:                {[CharacterAttributeID.MaxHealthPoints]: 0.8,   [CharacterAttributeID.AttackPower]: 1.2},
-    [HeroClassID.Archer]:               {[CharacterAttributeID.MaxHealthPoints]: 0.8,   [CharacterAttributeID.AttackPower]: 1.2},
-    [HeroClassID.LeatherDamageDealer2]: {[CharacterAttributeID.MaxHealthPoints]: 0.8,   [CharacterAttributeID.AttackPower]: 1.2},
-    [HeroClassID.Gunslinger]:           {[CharacterAttributeID.MaxHealthPoints]: 0.8,   [CharacterAttributeID.AttackPower]: 1.2},
+    [HeroClassID.LeatherDamageDealer1]: {[CharacterAttributeID.MaxHealthPoints]: 0.7,   [CharacterAttributeID.AttackPower]: 1.4},
+    [HeroClassID.Rogue]:                {[CharacterAttributeID.MaxHealthPoints]: 0.7,   [CharacterAttributeID.AttackPower]: 1.4},
+    [HeroClassID.Archer]:               {[CharacterAttributeID.MaxHealthPoints]: 0.7,   [CharacterAttributeID.AttackPower]: 1.4},
+    [HeroClassID.LeatherDamageDealer2]: {[CharacterAttributeID.MaxHealthPoints]: 0.7,   [CharacterAttributeID.AttackPower]: 1.4},
+    [HeroClassID.Gunslinger]:           {[CharacterAttributeID.MaxHealthPoints]: 0.7,   [CharacterAttributeID.AttackPower]: 1.4},
 
     [HeroClassID.Necromancer]:          {[CharacterAttributeID.MaxHealthPoints]: 0.6,   [CharacterAttributeID.AttackPower]: 1.4},
     [HeroClassID.Mage1]:                {[CharacterAttributeID.MaxHealthPoints]: 0.6,   [CharacterAttributeID.AttackPower]: 1.4},

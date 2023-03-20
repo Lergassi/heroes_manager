@@ -9,6 +9,9 @@ import {GardenBed} from './GardenBed';
 import {ItemID} from '../../types/enums/ItemID';
 import {FarmingRCInterface, FarmingRenderInterface, UI_GardenBed} from '../../../client/public/RC/FarmingRC';
 
+/**
+ * Ограничений по семенам нет. Какие у игрока семена есть - такие и может посадить. Как они получены - не важно.
+ */
 export class Farming implements FarmingRenderInterface {
     private readonly _gardenBeds: GardenBed[];
     private _options = {
@@ -39,6 +42,7 @@ export class Farming implements FarmingRenderInterface {
         }
 
         itemStorage.removeItems(data.requireItems);
+        wallet.remove(data.cost);
         this._gardenBeds.push(new GardenBed());
         debug(DebugNamespaceID.Log)('Грядка построена.');
 

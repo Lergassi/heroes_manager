@@ -95,7 +95,11 @@ export class ConstructionRC extends React.Component<ConstructionRCProps, Constru
                                     <td>{database.buildings.find(availableBuildingID).cost}/{this.props.container.get<WalletInterface>(ServiceID.Wallet).value}</td>
                                     <td><button className={'btn btn_default'} onClick={(event) => {
                                         event.preventDefault();
-                                        this.props.construction.build(availableBuildingID, this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController));
+                                        this.props.construction.build(
+                                            availableBuildingID,
+                                            this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
+                                            this.props.container.get<WalletInterface>(ServiceID.Wallet),
+                                        );
                                     }}>BUILD</button></td>
                                 </tr>
                             })}

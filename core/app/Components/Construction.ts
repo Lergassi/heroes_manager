@@ -15,12 +15,14 @@ import {
     ConstructionRenderInterface,
     UI_Building
 } from '../../../client/public/RC/ConstructionRC';
+import WalletInterface from '../Interfaces/WalletInterface';
 
 export class Construction implements ConstructionRenderInterface {
     private readonly _buildings: {ID: BuildingID, building: Mine}[];
     private readonly _mineFactory: MineFactory;
 
     private _maxBuildings = {
+        [BuildingID.Sawmill]: 1,
         [BuildingID.CoalMine]: 1,
         [BuildingID.IronOreMine]: 1,
         [BuildingID.CopperOreMine]: 1,
@@ -31,7 +33,7 @@ export class Construction implements ConstructionRenderInterface {
         this._mineFactory = mineFactory;
     }
 
-    build(buildingID: BuildingID, itemStorage: ItemStorageInterface): void {
+    build(buildingID: BuildingID, itemStorage: ItemStorageInterface, wallet: WalletInterface): boolean {
         let data = database.buildings.find(buildingID);
         assertNotNil(data);
 
@@ -41,17 +43,29 @@ export class Construction implements ConstructionRenderInterface {
         assert(sum < (this._maxBuildings[buildingID] ?? 0), 'Достигнуто максимальное кол-во зданий.');
 
         for (let i = 0; i < data.requireItems.length; i++) {
-            if (!itemStorage.hasItem(data.requireItems[i].itemID, data.requireItems[i].count)) throw new AppError('Не достаточно ресурсов для постройки здания.');
+            // if (!itemStorage.hasItem(data.requireItems[i].itemID, data.requireItems[i].count)) throw new AppError('Не достаточно ресурсов для постройки здания.');
+            if (!itemStorage.hasItem(data.requireItems[i].itemID, data.requireItems[i].count)) {
+                debug(DebugNamespaceID.Throw)('Не достаточно ресурсов для постройки здания.');
+                return false;
+            }
+        }
+
+        if (!wallet.has(data.cost)) {
+            debug(DebugNamespaceID.Throw)('Не достаточно денег.');
+            return false;
         }
 
         for (let i = 0; i < data.requireItems.length; i++) {
             itemStorage.removeItem(data.requireItems[i].itemID, data.requireItems[i].count);
         }
+        wallet.remove(data.cost);
         this._buildings.push({
             ID: buildingID, //meta?
             building: this._mineFactory.createMine(buildingID, itemStorage),
         });
         debug(DebugNamespaceID.Log)('Здание построено.');
+
+        return true;
     }
 
     renderByRequest(UI: ConstructionRCInterface): void {

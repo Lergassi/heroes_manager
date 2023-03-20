@@ -26,6 +26,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "convert-csv-to-json": "^1.4.0",
+    "cookie": "^0.5.0",
     "csv-parse": "^5.3.2",
     "date-fns": "^2.28.0",
     "debug": "^4.3.4",
@@ -46,6 +47,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
+    "@types/cookie": "^0.5.1",
     "@babel/core": "^7.18.5",
     "@babel/plugin-transform-modules-commonjs": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
@@ -57,11 +59,11 @@
     "@types/node": "^17.0.42",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/serialize-javascript": "^5.0.2",
     "@types/serve-static": "^1.13.10",
     "@types/sprintf-js": "^1.1.2",
     "@types/uuid": "^8.3.4",
     "@types/yargs": "^17.0.11",
-    "@types/serialize-javascript": "^5.0.2",
     "babel-loader": "^8.2.5",
     "jest": "^28.1.1",
     "nodemon": "^2.0.16",

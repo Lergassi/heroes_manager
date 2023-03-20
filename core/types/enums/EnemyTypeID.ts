@@ -1,6 +1,8 @@
 export enum EnemyTypeID {
-    Boar = 'Boar',
     Skeleton = 'Skeleton',
+    Goblin = 'Goblin',
+    Bandit = 'Bandit',
+    Boar = 'Boar',
     Bear = 'Bear',
     Fox = 'Fox',
     Rabbit = 'Rabbit',
@@ -116,4 +118,5 @@ export enum EnemyTypeID {
     EnemyType98 = 'EnemyType98',
     EnemyType99 = 'EnemyType99',
     EnemyType100 = 'EnemyType100',
+    ForrestDog = 'ForrestDog',
 }

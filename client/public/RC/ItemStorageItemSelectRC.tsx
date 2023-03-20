@@ -78,7 +78,7 @@ export class ItemStorageItemSelectRC extends React.Component<ItemStorageItemSele
                 <button className={'btn btn_default'} onClick={(event) => {
                     event.preventDefault();
                     this.props.handler?.(this.state.selectedItemID, this.props.itemStorageController);
-                }}>SELECT</button>
+                }}>PLANT</button>
             </div>
         );
     }

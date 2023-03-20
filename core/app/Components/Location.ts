@@ -237,10 +237,10 @@ export default class Location {
             return false;
         }
 
-        if (!this._selectedResourceID) {
-            debug(DebugNamespaceID.Throw)('Не выбран ресур для добычи.');
-            return false;
-        }
+        // if (!this._selectedResourceID) {
+        //     debug(DebugNamespaceID.Throw)('Не выбран ресур для добычи.');
+        //     return false;
+        // }
 
         this._huntingState = LocationHuntingState.Hunting;
         let rewardOptions: RewardOptions = {
@@ -250,7 +250,7 @@ export default class Location {
         this._intervalID = setInterval(() => {
             for (let i = 0; i < this._heroes.length; i++) {
                 this._heroes[i].get<HealthPointsController>(ComponentID.HealthPointsController)?.update(this._heroGroupItemStorage);
-                this._heroes[i].get<EnduranceController>(ComponentID.EnduranceController)?.update(this._heroGroupItemStorage);
+                // this._heroes[i].get<EnduranceController>(ComponentID.EnduranceController)?.update(this._heroGroupItemStorage);
             }
 
             this._fightController.fight(rewardOptions);
