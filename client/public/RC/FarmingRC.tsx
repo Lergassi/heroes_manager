@@ -83,7 +83,7 @@ export class FarmingRC extends React.Component<FarmingRCProps, FarmingRCState> i
                                 this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
                                 this.props.container.get<WalletInterface>(ServiceID.Wallet),
                             );
-                        }}>BUILD</button>
+                        }}>BUILD_GARDEN_BED</button>
                         <table className={'basic-table'}>
                             <tbody>
                                 {_.map(this.state.gardenBeds, (gardenBed, index, collection) => {

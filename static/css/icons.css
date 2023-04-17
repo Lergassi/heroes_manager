@@ -166,7 +166,7 @@
 .icon_Boot01:before {
     background-image: url('/images/icons/white/Boot01.png');
 }
-.icon_Bracelet01:before {
+.icon_Bracer01:before {
     background-image: url('/images/icons/white/Bracelet01.png');
 }
 .icon_Breastplate01:before {
@@ -189,4 +189,43 @@
 }
 .icon_Trinket01:before {
     background-image: url('/images/icons/white/Trinket01.png');
+}
+.icon_Brewery01:before {
+    background-image: url('/images/icons/white/Brewery01.png');
+}
+.icon_Brickwall01:before {
+    background-image: url('/images/icons/white/Brickwall01.png');
+}
+.icon_Chest01:before {
+    background-image: url('/images/icons/white/Chest01.png');
+}
+.icon_Dungeon01:before {
+    background-image: url('/images/icons/white/Dungeon01.png');
+}
+.icon_Farming01:before {
+    background-image: url('/images/icons/white/Farming01.png');
+}
+.icon_Growth01:before {
+    background-image: url('/images/icons/white/Growth01.png');
+}
+.icon_Home01:before {
+    background-image: url('/images/icons/white/Home01.png');
+}
+.icon_Knight01:before {
+    background-image: url('/images/icons/white/Knight01.png');
+}
+.icon_MagicWand01:before {
+    background-image: url('/images/icons/white/MagicWand01.png');
+}
+.icon_Production01:before {
+    background-image: url('/images/icons/white/Production01.png');
+}
+.icon_TwoSword01:before {
+    background-image: url('/images/icons/white/TwoSword01.png');
+}
+.icon_Location01:before {
+    background-image: url('/images/icons/white/Location01.png');
+}
+.icon_Research01:before {
+    background-image: url('/images/icons/white/Research01.png');
 }

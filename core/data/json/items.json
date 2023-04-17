@@ -14,7 +14,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Wood01"
   },
   "WoodBoards": {
     "Agility": 0,
@@ -31,7 +32,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Board01"
   },
   "IronOre": {
     "Agility": 0,
@@ -48,7 +50,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ore01"
   },
   "IronIngot": {
     "Agility": 0,
@@ -65,7 +68,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ingot01"
   },
   "CopperOre": {
     "Agility": 0,
@@ -82,7 +86,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ore01"
   },
   "CopperIngot": {
     "Agility": 0,
@@ -99,7 +104,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ingot01"
   },
   "TinOre": {
     "Agility": 0,
@@ -116,7 +122,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ore01"
   },
   "BronzeIngot": {
     "Agility": 0,
@@ -133,7 +140,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ingot01"
   },
   "GoldOre": {
     "Agility": 0,
@@ -150,7 +158,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ore01"
   },
   "GoldIngot": {
     "Agility": 0,
@@ -167,7 +176,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ingot01"
   },
   "Coal": {
     "Agility": 0,
@@ -184,7 +194,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ore01"
   },
   "Herb01": {
     "Agility": 0,
@@ -201,7 +212,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Plant01"
   },
   "Herb02": {
     "Agility": 0,
@@ -218,7 +230,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Plant01"
   },
   "Herb03": {
     "Agility": 0,
@@ -235,7 +248,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Plant01"
   },
   "Cotton": {
     "Agility": 0,
@@ -252,7 +266,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Flower01"
   },
   "CottonThread": {
     "Agility": 0,
@@ -269,7 +284,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Thread01"
   },
   "CottonCloth": {
     "Agility": 0,
@@ -286,7 +302,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Fabric01"
   },
   "Skin01": {
     "Agility": 0,
@@ -303,7 +320,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Leather01"
   },
   "RabbitSkin": {
     "Agility": 0,
@@ -320,7 +338,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Leather01"
   },
   "FoxSkin": {
     "Agility": 0,
@@ -337,7 +356,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Leather01"
   },
   "DeerSkin": {
     "Agility": 0,
@@ -354,7 +374,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Leather01"
   },
   "WolfSkin": {
     "Agility": 0,
@@ -371,7 +392,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Leather01"
   },
   "BearSkin": {
     "Agility": 0,
@@ -388,7 +410,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Leather01"
   },
   "BoarSkin": {
     "Agility": 0,
@@ -405,7 +428,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Leather01"
   },
   "Leather01": {
     "Agility": 0,
@@ -422,7 +446,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Leather02"
   },
   "MagicResource01": {
     "Agility": 0,
@@ -439,7 +464,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "MagicMaterial01": {
     "Agility": 0,
@@ -456,7 +482,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "Powder": {
     "Agility": 0,
@@ -473,7 +500,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "Sulfur": {
     "Agility": 0,
@@ -490,7 +518,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "Saltpeter": {
     "Agility": 0,
@@ -507,7 +536,8 @@
     "QualityID": "Common",
     "StackSize": 100,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "HealthPotion01": {
     "Agility": 0,
@@ -524,7 +554,8 @@
     "QualityID": "Common",
     "StackSize": 10,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "EndurancePotion01": {
     "Agility": 0,
@@ -541,7 +572,8 @@
     "QualityID": "Common",
     "StackSize": 10,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "MagicPotion01": {
     "Agility": 0,
@@ -558,7 +590,8 @@
     "QualityID": "Common",
     "StackSize": 10,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "PlateHelmet01": {
     "Agility": 0,
@@ -575,7 +608,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Helmet01"
   },
   "PlateShoulders01": {
     "Agility": 0,
@@ -592,7 +626,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "ShoulderPads01"
   },
   "PlateBreastplate01": {
     "Agility": 0,
@@ -609,7 +644,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Breastplate01"
   },
   "PlateBracer01": {
     "Agility": 0,
@@ -626,7 +662,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Bracer01"
   },
   "PlateGloves01": {
     "Agility": 0,
@@ -643,7 +680,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Gloves01"
   },
   "PlateBelt01": {
     "Agility": 0,
@@ -660,7 +698,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Belt01"
   },
   "PlatePants01": {
     "Agility": 0,
@@ -677,7 +716,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Pants01"
   },
   "PlateBoots01": {
     "Agility": 0,
@@ -694,7 +734,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Boot01"
   },
   "LeatherHelmet01": {
     "Agility": 0,
@@ -711,7 +752,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Helmet01"
   },
   "LeatherShoulders01": {
     "Agility": 0,
@@ -728,7 +770,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "ShoulderPads01"
   },
   "LeatherBreastplate01": {
     "Agility": 0,
@@ -745,7 +788,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Breastplate01"
   },
   "LeatherBracer01": {
     "Agility": 0,
@@ -762,7 +806,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Bracer01"
   },
   "LeatherGloves01": {
     "Agility": 0,
@@ -779,7 +824,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Gloves01"
   },
   "LeatherBelt01": {
     "Agility": 0,
@@ -796,7 +842,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Belt01"
   },
   "LeatherPants01": {
     "Agility": 0,
@@ -813,7 +860,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Pants01"
   },
   "LeatherBoots01": {
     "Agility": 0,
@@ -830,7 +878,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Boot01"
   },
   "ClothHelmet01": {
     "Agility": 0,
@@ -847,7 +896,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Helmet01"
   },
   "ClothShoulders_01": {
     "Agility": 0,
@@ -864,7 +914,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "ShoulderPads01"
   },
   "ClothBreastplate01": {
     "Agility": 0,
@@ -881,7 +932,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Breastplate01"
   },
   "ClothBracer01": {
     "Agility": 0,
@@ -898,7 +950,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Bracer01"
   },
   "ClothGloves01": {
     "Agility": 0,
@@ -915,7 +968,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Gloves01"
   },
   "ClothBelt01": {
     "Agility": 0,
@@ -932,7 +986,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Belt01"
   },
   "ClothPants01": {
     "Agility": 0,
@@ -949,7 +1004,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Pants01"
   },
   "ClothBoots01": {
     "Agility": 0,
@@ -966,7 +1022,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Boot01"
   },
   "Shield01": {
     "Agility": 0,
@@ -983,7 +1040,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 10,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Shield01"
   },
   "Shield02": {
     "Agility": 0,
@@ -1000,7 +1058,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 10,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Shield01"
   },
   "Amulet01": {
     "Agility": 0,
@@ -1017,7 +1076,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 10,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Amulet01"
   },
   "Amulet02": {
     "Agility": 10,
@@ -1034,7 +1094,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Amulet01"
   },
   "Amulet03": {
     "Agility": 0,
@@ -1051,7 +1112,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Amulet01"
   },
   "Amulet04": {
     "Agility": 0,
@@ -1068,7 +1130,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 10,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Amulet01"
   },
   "Amulet05": {
     "Agility": 10,
@@ -1085,7 +1148,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Amulet01"
   },
   "Ring01": {
     "Agility": 0,
@@ -1102,7 +1166,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 10,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ring01"
   },
   "Ring02": {
     "Agility": 10,
@@ -1119,7 +1184,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ring01"
   },
   "Ring03": {
     "Agility": 0,
@@ -1136,7 +1202,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ring01"
   },
   "Ring04": {
     "Agility": 0,
@@ -1153,7 +1220,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 10,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ring01"
   },
   "Ring05": {
     "Agility": 10,
@@ -1170,7 +1238,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Ring01"
   },
   "Trinket01": {
     "Agility": 0,
@@ -1187,7 +1256,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 10,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Trinket01"
   },
   "Trinket02": {
     "Agility": 10,
@@ -1204,7 +1274,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Trinket01"
   },
   "Trinket03": {
     "Agility": 0,
@@ -1221,7 +1292,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Trinket01"
   },
   "Trinket04": {
     "Agility": 0,
@@ -1238,7 +1310,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 10,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Trinket01"
   },
   "Trinket05": {
     "Agility": 10,
@@ -1255,7 +1328,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Trinket01"
   },
   "OneHandedSword01": {
     "Agility": 0,
@@ -1272,7 +1346,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Sword01"
   },
   "TwoHandedSword01": {
     "Agility": 0,
@@ -1289,7 +1364,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": true
+    "TwoHandWeapon": true,
+    "IconID": "Sword01"
   },
   "Dagger01": {
     "Agility": 0,
@@ -1306,7 +1382,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Sword01"
   },
   "OneHandedAxe01": {
     "Agility": 0,
@@ -1323,7 +1400,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Sword01"
   },
   "TwoHandedAxe01": {
     "Agility": 0,
@@ -1340,7 +1418,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": true
+    "TwoHandWeapon": true,
+    "IconID": "Sword01"
   },
   "Staff01": {
     "Agility": 0,
@@ -1357,7 +1436,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": true
+    "TwoHandWeapon": true,
+    "IconID": "Sword01"
   },
   "Wand01": {
     "Agility": 0,
@@ -1374,7 +1454,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Sword01"
   },
   "Revolver01": {
     "Agility": 0,
@@ -1391,7 +1472,8 @@
     "QualityID": "Common",
     "StackSize": 1,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Sword01"
   },
   "Herb01Seed": {
     "Agility": 0,
@@ -1408,7 +1490,8 @@
     "QualityID": "Common",
     "StackSize": 1000,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   },
   "Herb02Seed": {
     "Agility": 0,
@@ -1425,6 +1508,7 @@
     "QualityID": "Common",
     "StackSize": 1000,
     "Strength": 0,
-    "TwoHandWeapon": false
+    "TwoHandWeapon": false,
+    "IconID": "Question02"
   }
 }

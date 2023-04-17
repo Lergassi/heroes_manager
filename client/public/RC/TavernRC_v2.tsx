@@ -12,6 +12,7 @@ import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
+import {sprintf} from 'sprintf-js';
 
 export type UI_TavernHero_v2 = {
     heroClassID: HeroClassID;
@@ -94,7 +95,10 @@ export default class TavernRC_v2 extends React.Component<TavernRCProps_v2, Taver
                                 </tr>
                                 {_.map(this.state.heroes, (hero, index) => {
                                     return <tr key={index}>
-                                        <td>{hero.heroClassID} {index}</td>
+                                        <td>
+                                            <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.hero_classes.data.find(hero.heroClassID).iconId)}></span>
+                                            <span className={'first-table-column-padding-for-icon'}>{hero.heroClassID} {index}</span>
+                                        </td>
                                         <td>{database.hero_classes.data.heroRole(hero.heroClassID)}</td>
                                         <td>{hero.level}</td>
                                         <td>

@@ -5,6 +5,7 @@ import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {QualityID} from '../../types/enums/QualityID.js';
+import {IconID} from '../../types/enums/IconID.js';
 
 export default class TSDB_ItemBuilder {
     ID: ItemID;
@@ -22,6 +23,7 @@ export default class TSDB_ItemBuilder {
     DefaultSellPrice?: number;
     Equipable: boolean;
     TwoHandWeapon: boolean;
+    IconId: string;
 
     constructor(values: {
         ID: ItemID,
@@ -43,6 +45,7 @@ export default class TSDB_ItemBuilder {
         this.DefaultSellPrice = 0;
         this.Equipable = false;
         this.TwoHandWeapon = false;
+        this.IconId = IconID.Question02;
     }
 
     build(): TSDB_Item {
@@ -62,6 +65,7 @@ export default class TSDB_ItemBuilder {
             Strength: this.Strength,
             TwoHandWeapon: this.TwoHandWeapon,
             AttackPower: this.AttackPower,
+            IconID: this.IconId,
         };
     }
 }

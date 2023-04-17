@@ -332,66 +332,89 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Герой<button className={'btn btn_default btn_right'} onClick={this.hide}>close</button></div>
+                    <div className={'widget__title'}>DetailHeroRC<button className={'btn btn_default btn_right'} onClick={this.hide}>close</button></div>
                     <div className={'widget__content'}>
-                        <div className={'block'}>
-                            <button className={'btn btn_default'} onClick={() => {
-                                this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
-                            }}>RESURRECT</button>
-                            <button className={'btn btn_default'} onClick={() => {
-                                this.state.hero.get<Endurance>(ComponentID.Endurance).reset();
-                            }}>RESET_ENDURANCE</button>
-                            {/*<button className={'btn btn_danger'} onClick={() => {*/}
-                            {/*    this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).kill();*/}
-                            {/*}}>KILL</button>*/}
-                        </div>
-                        <div>{this.state.heroClassName}, {this.state.level} ({this.state.exp}/{this.state.totalExpToLevelUp})</div>
-                        <div>Здоровье: {this.state.currentHealthPoints}/{this.state.maxHealthPoints}</div>
-                        <div>Состояние: {!this.state.isDead ? 'Живой' : 'Мертвый'}</div>
-                        <div>
-                            <h4>Аттрибуты:</h4>
-                            <ul>
-                                <li>Сила: {this.state.Strength}</li>
-                                <li>Ловкость: {this.state.Agility}</li>
-                                <li>Интеллект: {this.state.Intelligence}</li>
-                                <li>Сила атаки: {this.state.AttackPower}</li>
-                                <li>Защита: {this.state.Protection}</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4>Экипировка:</h4>
-                            <table className={'basic-table'}>
-                                <tbody>
-                                    <tr>
-                                        <th style={{width: '300px'}}>EquipSlotID</th>
-                                        <th style={{width: '300px'}}>Item</th>
-                                        <th style={{}}>Ctrl</th>
-                                    </tr>
-                                    {this._renderEquipSlot(EquipSlotID.Head)}
-                                    {this._renderEquipSlot(EquipSlotID.Shoulders)}
-                                    {this._renderEquipSlot(EquipSlotID.Chest)}
-                                    {this._renderEquipSlot(EquipSlotID.Wrist)}
-                                    {this._renderEquipSlot(EquipSlotID.Hands)}
-                                    {this._renderEquipSlot(EquipSlotID.Waist)}
-                                    {this._renderEquipSlot(EquipSlotID.Legs)}
-                                    {this._renderEquipSlot(EquipSlotID.Foots)}
-                                    {this._renderEquipSlot(EquipSlotID.RightHand)}
-                                    {this._renderEquipSlot(EquipSlotID.LeftHand)}
-                                    {this._renderEquipSlot(EquipSlotID.Neck)}
-                                    {this._renderEquipSlot(EquipSlotID.Finger01)}
-                                    {this._renderEquipSlot(EquipSlotID.Finger02)}
-                                    {this._renderEquipSlot(EquipSlotID.Trinket)}
-                                </tbody>
-                            </table>
-                            <EquipItemListRC
-                                container={this.props.container}
-                                equipSlotIDs={this._equipSlotIDs}
-                                itemStorageController={this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)}
-                                equipController={this.state.hero.get<EquipController>(ComponentID.EquipController)}
-                            />
-                        </div>
-                    </div>
-                </div>
+                        <div className={'detail-hero'}>
+                            <div className={'detail-hero-summary'}>
+                                <div className={'block'}>
+                                    <button className={'btn btn_default'} onClick={() => {
+                                        this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
+                                    }}>RESURRECT</button>
+                                    <button className={'btn btn_default'} onClick={() => {
+                                        this.state.hero.get<Endurance>(ComponentID.Endurance).reset();
+                                    }}>RESET_ENDURANCE</button>
+                                    {/*<button className={'btn btn_danger'} onClick={() => {*/}
+                                    {/*    this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).kill();*/}
+                                    {/*}}>KILL</button>*/}
+                                </div>
+                                <div>{this.state.heroClassName}</div>
+                                <div>Уровень: {this.state.level}</div>
+                                <div>Опыт: ({this.state.exp}/{this.state.totalExpToLevelUp})</div>
+                                <div>Здоровье: {this.state.currentHealthPoints}/{this.state.maxHealthPoints}</div>
+                                <div>LifeState: {!this.state.isDead ? 'Живой' : 'Мертвый'}</div>
+                                <div>
+                                    <h4>Аттрибуты:</h4>
+                                    <table className={'basic-table'}>
+                                        <tr>
+                                            <td>{CharacterAttributeID.Strength}</td>
+                                            <td>{this.state.Strength}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{CharacterAttributeID.Agility}</td>
+                                            <td>{this.state.Agility}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{CharacterAttributeID.Intelligence}</td>
+                                            <td>{this.state.Intelligence}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{CharacterAttributeID.AttackPower}</td>
+                                            <td>{this.state.AttackPower}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{CharacterAttributeID.Protection}</td>
+                                            <td>{this.state.Protection}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div className={'detail-hero-equip'}>
+                                <div>
+                                    <h4>Экипировка:</h4>
+                                    <EquipItemListRC
+                                        container={this.props.container}
+                                        equipSlotIDs={this._equipSlotIDs}
+                                        itemStorageController={this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)}
+                                        equipController={this.state.hero.get<EquipController>(ComponentID.EquipController)}
+                                    />
+                                    <table className={'basic-table'}>
+                                        <tbody>
+                                        <tr>
+                                            <th style={{width: '300px'}}>EquipSlotID</th>
+                                            <th style={{width: '300px'}}>Item</th>
+                                            <th style={{}}>Ctrl</th>
+                                        </tr>
+                                        {this._renderEquipSlot(EquipSlotID.Head)}
+                                        {this._renderEquipSlot(EquipSlotID.Shoulders)}
+                                        {this._renderEquipSlot(EquipSlotID.Chest)}
+                                        {this._renderEquipSlot(EquipSlotID.Wrist)}
+                                        {this._renderEquipSlot(EquipSlotID.Hands)}
+                                        {this._renderEquipSlot(EquipSlotID.Waist)}
+                                        {this._renderEquipSlot(EquipSlotID.Legs)}
+                                        {this._renderEquipSlot(EquipSlotID.Foots)}
+                                        {this._renderEquipSlot(EquipSlotID.RightHand)}
+                                        {this._renderEquipSlot(EquipSlotID.LeftHand)}
+                                        {this._renderEquipSlot(EquipSlotID.Neck)}
+                                        {this._renderEquipSlot(EquipSlotID.Finger01)}
+                                        {this._renderEquipSlot(EquipSlotID.Finger02)}
+                                        {this._renderEquipSlot(EquipSlotID.Trinket)}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>{/*end detail-hero*/}
+                    </div>{/*end content*/}
+                </div>{/*end widget*/}
             </div>
         );
     }//end render

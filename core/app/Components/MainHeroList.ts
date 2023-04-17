@@ -160,6 +160,7 @@ export default class MainHeroList {
                 strength: 0,
                 totalExpToLevelUp: 0,
                 isDead: false,
+                heroClassId: '',
                 deleteHandler      : (): void => {
                     this.deleteHero(this._heroes[i]);
                 }
@@ -173,6 +174,9 @@ export default class MainHeroList {
                 },
             });
             this._heroes[i].get<HeroComponent>(ComponentID.Hero).renderByRequest({
+                updateHeroClassId(id: string) {
+                    hero.heroClassId = id;
+                },
                 updateHeroClassName(value: string): void {
                     hero.heroClassName = value;
                 },

@@ -3,9 +3,12 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {HeroRoleID} from '../../types/enums/HeroRoleID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
+import Icon from '../../app/Entities/Icon.js';
+import {IconID} from '../../types/enums/IconID.js';
 
 type TSDB_HeroClass = {
     ID: HeroClassID;
+    iconId: string;
     heroRoleID: HeroRoleID;
     armorMaterialIDs: ArmorMaterialID[];
     /**
@@ -23,6 +26,7 @@ type TSDB_HeroClassDB = {[ID in HeroClassID]?: TSDB_HeroClass};
 let hero_classes_data: TSDB_HeroClassDB = {
     [HeroClassID.Tank1]: {
         ID                       : HeroClassID.Tank1,
+        iconId: IconID.Shield01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
@@ -33,6 +37,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Warrior]: {
         ID                       : HeroClassID.Warrior,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
@@ -43,6 +48,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Paladin]: {
         ID                       : HeroClassID.Paladin,
+        iconId: IconID.Shield01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
@@ -54,6 +60,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Tank2]: {
         ID                       : HeroClassID.Tank2,
+        iconId: IconID.Shield01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
@@ -64,6 +71,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Tank3]: {
         ID                       : HeroClassID.Tank3,
+        iconId: IconID.Shield01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
@@ -74,6 +82,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Gladiator]: {
         ID                       : HeroClassID.Gladiator,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -84,6 +93,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Barbarian]: {
         ID                       : HeroClassID.Barbarian,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -94,6 +104,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.PlateDamageDealer1]: {
         ID                       : HeroClassID.PlateDamageDealer1,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -104,6 +115,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.PlateDamageDealer2]: {
         ID                       : HeroClassID.PlateDamageDealer2,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -115,6 +127,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.PlateDamageDealer3]: {
         ID                       : HeroClassID.PlateDamageDealer3,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -126,6 +139,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.LeatherDamageDealer1]: {
         ID                       : HeroClassID.LeatherDamageDealer1,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -136,6 +150,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Rogue]: {
         ID                       : HeroClassID.Rogue,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -146,6 +161,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Archer]: {
         ID                       : HeroClassID.Archer,
+        iconId: IconID.Bow01,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -156,6 +172,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.LeatherDamageDealer2]: {
         ID                       : HeroClassID.LeatherDamageDealer2,
+        iconId: IconID.Sword01,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -167,6 +184,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Gunslinger]: {
         ID                       : HeroClassID.Gunslinger,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Leather],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -178,6 +196,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Necromancer]: {
         ID                       : HeroClassID.Necromancer,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -188,6 +207,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Mage1]: {
         ID                       : HeroClassID.Mage1,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -198,6 +218,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Mage2]: {
         ID                       : HeroClassID.Mage2,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -208,6 +229,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Warlock]: {
         ID                       : HeroClassID.Warlock,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -218,6 +240,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.FireMage]: {
         ID                       : HeroClassID.FireMage,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Cloth],
         heroRoleID               : HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
@@ -228,6 +251,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Support1]: {
         ID                       : HeroClassID.Support1,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
         mainCharacterAttributeIDs: [
@@ -238,6 +262,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Support2]: {
         ID                       : HeroClassID.Support2,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
         mainCharacterAttributeIDs: [
@@ -248,6 +273,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Support3]: {
         ID                       : HeroClassID.Support3,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
         mainCharacterAttributeIDs: [
@@ -258,6 +284,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Support4]: {
         ID                       : HeroClassID.Support4,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
         mainCharacterAttributeIDs: [
@@ -268,6 +295,7 @@ let hero_classes_data: TSDB_HeroClassDB = {
     },
     [HeroClassID.Support5]: {
         ID                       : HeroClassID.Support5,
+        iconId: IconID.Question02,
         armorMaterialIDs         : [ArmorMaterialID.Plate],
         heroRoleID               : HeroRoleID.Support,
         mainCharacterAttributeIDs: [
@@ -280,6 +308,10 @@ let hero_classes_data: TSDB_HeroClassDB = {
 
 export const hero_classes = {
     // armorMaterials: function<T> (ID: HeroClassID, callback: (ID: ArmorMaterialID) => T): T[] {
+    //
+    find: function (id: string): TSDB_HeroClass {
+        return hero_classes_data[id] ?? null;
+    },
     armorMaterials: function<T> (ID: HeroClassID, callback: (ID: ArmorMaterialID) => T): T[] {
         return _.map(hero_classes_data[ID]?.armorMaterialIDs ?? [], (value, index, collection) => {
             return callback(value);

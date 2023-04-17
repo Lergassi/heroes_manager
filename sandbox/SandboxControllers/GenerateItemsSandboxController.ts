@@ -19,6 +19,7 @@ import {QualityID} from '../../core/types/enums/QualityID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 import copy = Simulate.copy;
+import {IconID} from '../../core/types/enums/IconID.js';
 
 export default class GenerateItemsSandboxController extends AbstractSandboxController {
     private readonly _entityManager = this.container.get<EntityManagerInterface>(ServiceID.EntityManager);
@@ -498,7 +499,8 @@ export default class GenerateItemsSandboxController extends AbstractSandboxContr
                     QualityID       : undefined,
                     StackSize       : 0,
                     Strength        : 0,
-                    TwoHandWeapon   : false
+                    TwoHandWeapon   : false,
+                    IconID          : IconID.Question02,
                     // ID: sprintf('%s_%s_%s_%s_%s', armorMaterialID, this._getMetadata(positions[level][itemCategoryIndex]).name, qualityID, itemLevel, '01'),
                     // ItemCategoryID: positions[level][itemCategoryIndex],
                     // ArmorMaterialID: '',

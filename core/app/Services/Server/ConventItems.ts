@@ -26,6 +26,7 @@ type CSV_Item = {
     DefaultSellPrice?: number;
     Equipable: boolean;
     TwoHandWeapon: boolean;
+    IconID: string;
 };
 
 type CSV_ItemDB = CSV_Item[];
@@ -55,7 +56,8 @@ export default class ConventItems {
                 QualityID       : String(csv_json[i].QualityID) as QualityID,
                 StackSize       : Number(csv_json[i].StackSize ?? 0),
                 Strength        : Number(csv_json[i].Strength ?? 0),
-                TwoHandWeapon   : Boolean(csv_json[i].TwoHandWeapon)
+                TwoHandWeapon   : Boolean(csv_json[i].TwoHandWeapon),
+                IconID          : String(csv_json[i].IconID),
             };
         }
         //todo: Генерация ID для enum.

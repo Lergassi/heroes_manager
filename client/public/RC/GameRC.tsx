@@ -149,13 +149,13 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                             }}
                         />
 
-                        <WalletRC
-                            container={this.props.container}
-                            wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
-                            window={{
-                                show: this.state.panels.ItemStorages.show,
-                            }}
-                        />
+                        {/*<WalletRC*/}
+                        {/*    container={this.props.container}*/}
+                        {/*    wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}*/}
+                        {/*    window={{*/}
+                        {/*        show: this.state.panels.ItemStorages.show,*/}
+                        {/*    }}*/}
+                        {/*/>*/}
                         <ItemStorageControllerRC
                             container={this.props.container}
                             itemStorageController={this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)}

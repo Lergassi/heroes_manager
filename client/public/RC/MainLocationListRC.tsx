@@ -167,7 +167,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                     }}>{page}</span>
                                 })}
                             </span>
-                            <span>pages: {this.state.activePage}/{this.state.totalPages}, {this.state.totalLocations}</span>
+                            <span>pages: {this.state.activePage}/{this.state.totalPages}, totalLocations: {this.state.totalLocations}</span>
                         </div>
                     </div>{/*end widget__content*/}
                 </div>{/*end widget*/}

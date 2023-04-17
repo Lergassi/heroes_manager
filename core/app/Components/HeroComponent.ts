@@ -10,6 +10,7 @@ import _ from 'lodash';
 export interface HeroComponentRender {
     updateHeroClassName?(value: string): void;
     updateHeroRoleName?(value: string): void;
+    updateHeroClassId?(id: string): void;
 }
 
 /**
@@ -42,6 +43,7 @@ export default class HeroComponent {
     }
 
     renderByRequest(ui: HeroComponentRender): void {
+        ui.updateHeroClassId?.(this._heroClass.id);
         ui.updateHeroClassName?.(this._heroClass.id);
         ui.updateHeroRoleName?.(this._heroClass.heroRole.id);
     }

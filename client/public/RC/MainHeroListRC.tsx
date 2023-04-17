@@ -15,6 +15,8 @@ import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import DetailHeroRC from './DetailHeroRC.js';
 import {MainLocationListRCState} from './MainLocationListRC.js';
+import {sprintf} from 'sprintf-js';
+import {database} from '../../../core/data/ts/database.js';
 
 export interface MainHeroListRCProps {
     container: ContainerInterface;
@@ -35,6 +37,7 @@ export class MainHeroListRCElement {
     hero: GameObject;
     ID: string;
 
+    heroClassId: string;
     heroClassName: string;
     heroRoleName: string;
     state: string;
@@ -149,7 +152,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Героев</div>
+                    <div className={'widget__title'}>MainHeroListRC</div>
                     <div className={'widget__content'}>
                         <div className={'hero-list-wrapper'}>
                             {/*<table className={'hero-list-table'}>*/}
@@ -173,7 +176,10 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                 </tr>
                                     {_.map(this.state.heroes, (hero, index) => {
                                         return <tr key={index}>
-                                            <td>{hero.heroClassName} ({hero.ID}) {hero.isDead ? 'X' : ''}</td>
+                                            <td>
+                                                <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.hero_classes.data.find(hero.heroClassId).iconId)}></span>
+                                                <span className={'first-table-column-padding-for-icon'}>{hero.heroClassName} ({hero.ID}) {hero.isDead ? 'X' : ''}</span>
+                                            </td>
                                             <td>{hero.level} ({hero.exp}/{hero.totalExpToLevelUp})</td>
                                             <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
                                             <td>{hero.endurance}/{hero.maxEndurance}</td>
@@ -209,7 +215,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                         }}>{page}</span>
                                     })}
                                 </span>
-                                <span>pages: {this.state.activePage}/{this.state.totalPages}, {this.state.totalHeroes}</span>
+                                <span>pages: {this.state.activePage}/{this.state.totalPages}, totalHeroes: {this.state.totalHeroes}</span>
                             </div>
                         </div>
                     </div>

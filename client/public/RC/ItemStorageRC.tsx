@@ -10,6 +10,8 @@ import GameObject from '../../../core/source/GameObject.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemCount, UI_ItemStorageSlot} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
+import {sprintf} from 'sprintf-js';
+import {database} from '../../../core/data/ts/database.js';
 
 export interface PlayerTableItemStorageRCProps {
     ID: string;
@@ -73,7 +75,7 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Сумка ({this.props.itemStorageID})</div>
+                    <div className={'widget__title'}>ItemStorageRC ({this.props.itemStorageID})</div>
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
@@ -83,11 +85,22 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
                                     <th>Ctrl</th>
                                 </tr>
                                 {_.map(this.state.slots, (slot, index) => {
-                                    return <tr key={index}>
-                                        <td>{slot.item.itemID}</td>
-                                        <td>{slot.item.count}</td>
-                                        <td><button className={'btn btn_danger'} onClick={this.clear.bind(this, index)}>DELETE</button></td>
-                                    </tr>
+                                    if (slot.item.count) {
+                                        return <tr key={index}>
+                                            <td>
+                                                <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.items.data.iconId(slot.item.itemID))}></span>
+                                                <span className={'first-table-column-padding-for-icon'}>{slot.item.itemID}</span>
+                                            </td>
+                                            <td>{slot.item.count}</td>
+                                            <td><button className={'btn btn_danger'} onClick={this.clear.bind(this, index)}>DELETE</button></td>
+                                        </tr>
+                                    } else {
+                                        return <tr key={index}>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    }
                                 })}
                             </tbody>
                         </table>

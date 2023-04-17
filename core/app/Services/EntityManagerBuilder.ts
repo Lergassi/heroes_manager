@@ -1332,7 +1332,7 @@ export default class EntityManagerBuilder {
             IconID.Amulet01,
             IconID.Belt01,
             IconID.Boot01,
-            IconID.Bracelet01,
+            IconID.Bracer01,
             IconID.Breastplate01,
             IconID.Gloves01,
             IconID.Gloves02,

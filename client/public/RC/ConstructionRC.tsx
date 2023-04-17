@@ -76,7 +76,7 @@ export class ConstructionRC extends React.Component<ConstructionRCProps, Constru
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Available buildings</div>
+                    <div className={'widget__title'}>Available buildings (ConstructionRC)</div>
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
@@ -108,7 +108,7 @@ export class ConstructionRC extends React.Component<ConstructionRCProps, Constru
                     </div>{/*end widget__content*/}
                 </div>{/*end widget*/}
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Buildings</div>
+                    <div className={'widget__title'}>Buildings (ConstructionRC)</div>
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>

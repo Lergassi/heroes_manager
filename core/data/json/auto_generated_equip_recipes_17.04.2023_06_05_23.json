@@ -1,0 +1,4666 @@
+{
+  "Uncommon_Plate_Gloves_003_01": {
+    "ID": "Uncommon_Plate_Gloves_003_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 4
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 30
+  },
+  "Uncommon_Leather_Gloves_003_01": {
+    "ID": "Uncommon_Leather_Gloves_003_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 8
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 30
+  },
+  "Uncommon_Cloth_Gloves_003_01": {
+    "ID": "Uncommon_Cloth_Gloves_003_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 13
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 30
+  },
+  "Uncommon_Plate_Belt_003_01": {
+    "ID": "Uncommon_Plate_Belt_003_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 3
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 20
+  },
+  "Uncommon_Leather_Belt_003_01": {
+    "ID": "Uncommon_Leather_Belt_003_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 6
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 20
+  },
+  "Uncommon_Cloth_Belt_003_01": {
+    "ID": "Uncommon_Cloth_Belt_003_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 8
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 20
+  },
+  "Uncommon_OneHandedSword_006_01": {
+    "ID": "Uncommon_OneHandedSword_006_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 40
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 260
+  },
+  "Uncommon_TwoHandedSword_006_01": {
+    "ID": "Uncommon_TwoHandedSword_006_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 60
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 390
+  },
+  "Uncommon_Staff_006_01": {
+    "ID": "Uncommon_Staff_006_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 160
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1040
+  },
+  "Uncommon_Dagger_006_01": {
+    "ID": "Uncommon_Dagger_006_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 50
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 325
+  },
+  "Uncommon_Bow_006_01": {
+    "ID": "Uncommon_Bow_006_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 60
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 390
+  },
+  "Uncommon_Revolver_006_01": {
+    "ID": "Uncommon_Revolver_006_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 60
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 390
+  },
+  "Uncommon_Shield_006_01": {
+    "ID": "Uncommon_Shield_006_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 4
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 26
+  },
+  "Uncommon_Plate_Breastplate_009_01": {
+    "ID": "Uncommon_Plate_Breastplate_009_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 26
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 160
+  },
+  "Uncommon_Leather_Breastplate_009_01": {
+    "ID": "Uncommon_Leather_Breastplate_009_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 52
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 160
+  },
+  "Uncommon_Cloth_Breastplate_009_01": {
+    "ID": "Uncommon_Cloth_Breastplate_009_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 78
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 160
+  },
+  "Uncommon_Plate_Boots_009_01": {
+    "ID": "Uncommon_Plate_Boots_009_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 10
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 64
+  },
+  "Uncommon_Leather_Boots_009_01": {
+    "ID": "Uncommon_Leather_Boots_009_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 21
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 64
+  },
+  "Uncommon_Cloth_Boots_009_01": {
+    "ID": "Uncommon_Cloth_Boots_009_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 31
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 64
+  },
+  "Uncommon_Ring_009_01": {
+    "ID": "Uncommon_Ring_009_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 33
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 48
+  },
+  "Uncommon_Ring_009_02": {
+    "ID": "Uncommon_Ring_009_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 33
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 48
+  },
+  "Uncommon_Ring_009_03": {
+    "ID": "Uncommon_Ring_009_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 33
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 48
+  },
+  "Uncommon_Ring_009_04": {
+    "ID": "Uncommon_Ring_009_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 33
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 48
+  },
+  "Uncommon_Ring_009_05": {
+    "ID": "Uncommon_Ring_009_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 33
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 48
+  },
+  "Uncommon_Plate_Helmet_012_01": {
+    "ID": "Uncommon_Plate_Helmet_012_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 16
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 95
+  },
+  "Uncommon_Leather_Helmet_012_01": {
+    "ID": "Uncommon_Leather_Helmet_012_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 32
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 95
+  },
+  "Uncommon_Cloth_Helmet_012_01": {
+    "ID": "Uncommon_Cloth_Helmet_012_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 48
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 95
+  },
+  "Uncommon_Plate_Bracer_012_01": {
+    "ID": "Uncommon_Plate_Bracer_012_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 6
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 38
+  },
+  "Uncommon_Leather_Bracer_012_01": {
+    "ID": "Uncommon_Leather_Bracer_012_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 13
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 38
+  },
+  "Uncommon_Cloth_Bracer_012_01": {
+    "ID": "Uncommon_Cloth_Bracer_012_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 19
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 38
+  },
+  "Uncommon_OneHandedSword_016_01": {
+    "ID": "Uncommon_OneHandedSword_016_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 80
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 460
+  },
+  "Uncommon_TwoHandedSword_016_01": {
+    "ID": "Uncommon_TwoHandedSword_016_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 120
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 690
+  },
+  "Uncommon_Staff_016_01": {
+    "ID": "Uncommon_Staff_016_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 320
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1840
+  },
+  "Uncommon_Dagger_016_01": {
+    "ID": "Uncommon_Dagger_016_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 100
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 575
+  },
+  "Uncommon_Bow_016_01": {
+    "ID": "Uncommon_Bow_016_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 120
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 690
+  },
+  "Uncommon_Revolver_016_01": {
+    "ID": "Uncommon_Revolver_016_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 120
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 690
+  },
+  "Uncommon_Shield_016_01": {
+    "ID": "Uncommon_Shield_016_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 8
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 46
+  },
+  "Uncommon_Plate_ShoulderPads_019_01": {
+    "ID": "Uncommon_Plate_ShoulderPads_019_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 14
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 78
+  },
+  "Uncommon_Leather_ShoulderPads_019_01": {
+    "ID": "Uncommon_Leather_ShoulderPads_019_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 28
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 78
+  },
+  "Uncommon_Cloth_ShoulderPads_019_01": {
+    "ID": "Uncommon_Cloth_ShoulderPads_019_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 41
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 78
+  },
+  "Uncommon_Amulet_019_01": {
+    "ID": "Uncommon_Amulet_019_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 126
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 156
+  },
+  "Uncommon_Amulet_019_02": {
+    "ID": "Uncommon_Amulet_019_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 126
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 156
+  },
+  "Uncommon_Amulet_019_03": {
+    "ID": "Uncommon_Amulet_019_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 126
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 156
+  },
+  "Uncommon_Amulet_019_04": {
+    "ID": "Uncommon_Amulet_019_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 126
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 156
+  },
+  "Uncommon_Amulet_019_05": {
+    "ID": "Uncommon_Amulet_019_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 126
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 156
+  },
+  "Uncommon_Plate_Pants_022_01": {
+    "ID": "Uncommon_Plate_Pants_022_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 31
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 174
+  },
+  "Uncommon_Leather_Pants_022_01": {
+    "ID": "Uncommon_Leather_Pants_022_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 62
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 174
+  },
+  "Uncommon_Cloth_Pants_022_01": {
+    "ID": "Uncommon_Cloth_Pants_022_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 94
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 174
+  },
+  "Uncommon_Ring_022_01": {
+    "ID": "Uncommon_Ring_022_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 72
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 87
+  },
+  "Uncommon_Ring_022_02": {
+    "ID": "Uncommon_Ring_022_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 72
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 87
+  },
+  "Uncommon_Ring_022_03": {
+    "ID": "Uncommon_Ring_022_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 72
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 87
+  },
+  "Uncommon_Ring_022_04": {
+    "ID": "Uncommon_Ring_022_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 72
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 87
+  },
+  "Uncommon_Ring_022_05": {
+    "ID": "Uncommon_Ring_022_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 72
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 87
+  },
+  "Uncommon_Plate_Gloves_025_01": {
+    "ID": "Uncommon_Plate_Gloves_025_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 17
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 96
+  },
+  "Uncommon_Leather_Gloves_025_01": {
+    "ID": "Uncommon_Leather_Gloves_025_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 35
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 96
+  },
+  "Uncommon_Cloth_Gloves_025_01": {
+    "ID": "Uncommon_Cloth_Gloves_025_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 52
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 96
+  },
+  "Uncommon_Plate_Belt_025_01": {
+    "ID": "Uncommon_Plate_Belt_025_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 12
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 64
+  },
+  "Uncommon_Leather_Belt_025_01": {
+    "ID": "Uncommon_Leather_Belt_025_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 23
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 64
+  },
+  "Uncommon_Cloth_Belt_025_01": {
+    "ID": "Uncommon_Cloth_Belt_025_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 35
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 64
+  },
+  "Uncommon_OneHandedSword_028_01": {
+    "ID": "Uncommon_OneHandedSword_028_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 128
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 700
+  },
+  "Uncommon_TwoHandedSword_028_01": {
+    "ID": "Uncommon_TwoHandedSword_028_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 192
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1050
+  },
+  "Uncommon_Staff_028_01": {
+    "ID": "Uncommon_Staff_028_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 512
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2800
+  },
+  "Uncommon_Dagger_028_01": {
+    "ID": "Uncommon_Dagger_028_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 160
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 875
+  },
+  "Uncommon_Bow_028_01": {
+    "ID": "Uncommon_Bow_028_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 192
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1050
+  },
+  "Uncommon_Revolver_028_01": {
+    "ID": "Uncommon_Revolver_028_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 192
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1050
+  },
+  "Uncommon_Shield_028_01": {
+    "ID": "Uncommon_Shield_028_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 13
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 70
+  },
+  "Uncommon_Plate_Breastplate_032_01": {
+    "ID": "Uncommon_Plate_Breastplate_032_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 72
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 390
+  },
+  "Uncommon_Leather_Breastplate_032_01": {
+    "ID": "Uncommon_Leather_Breastplate_032_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 144
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 390
+  },
+  "Uncommon_Cloth_Breastplate_032_01": {
+    "ID": "Uncommon_Cloth_Breastplate_032_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 216
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 390
+  },
+  "Uncommon_Plate_Boots_032_01": {
+    "ID": "Uncommon_Plate_Boots_032_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 29
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 156
+  },
+  "Uncommon_Leather_Boots_032_01": {
+    "ID": "Uncommon_Leather_Boots_032_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 58
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 156
+  },
+  "Uncommon_Cloth_Boots_032_01": {
+    "ID": "Uncommon_Cloth_Boots_032_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 86
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 156
+  },
+  "Uncommon_Ring_032_01": {
+    "ID": "Uncommon_Ring_032_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 102
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 117
+  },
+  "Uncommon_Ring_032_02": {
+    "ID": "Uncommon_Ring_032_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 102
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 117
+  },
+  "Uncommon_Ring_032_03": {
+    "ID": "Uncommon_Ring_032_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 102
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 117
+  },
+  "Uncommon_Ring_032_04": {
+    "ID": "Uncommon_Ring_032_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 102
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 117
+  },
+  "Uncommon_Ring_032_05": {
+    "ID": "Uncommon_Ring_032_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 102
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 117
+  },
+  "Uncommon_Plate_Helmet_035_01": {
+    "ID": "Uncommon_Plate_Helmet_035_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 39
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 210
+  },
+  "Uncommon_Leather_Helmet_035_01": {
+    "ID": "Uncommon_Leather_Helmet_035_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 78
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 210
+  },
+  "Uncommon_Cloth_Helmet_035_01": {
+    "ID": "Uncommon_Cloth_Helmet_035_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 117
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 210
+  },
+  "Uncommon_Plate_Bracer_035_01": {
+    "ID": "Uncommon_Plate_Bracer_035_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 16
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 84
+  },
+  "Uncommon_Leather_Bracer_035_01": {
+    "ID": "Uncommon_Leather_Bracer_035_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 31
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 84
+  },
+  "Uncommon_Cloth_Bracer_035_01": {
+    "ID": "Uncommon_Cloth_Bracer_035_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 47
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 84
+  },
+  "Uncommon_OneHandedSword_038_01": {
+    "ID": "Uncommon_OneHandedSword_038_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 168
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 900
+  },
+  "Uncommon_TwoHandedSword_038_01": {
+    "ID": "Uncommon_TwoHandedSword_038_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 252
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1350
+  },
+  "Uncommon_Staff_038_01": {
+    "ID": "Uncommon_Staff_038_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 672
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3600
+  },
+  "Uncommon_Dagger_038_01": {
+    "ID": "Uncommon_Dagger_038_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 210
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1125
+  },
+  "Uncommon_Bow_038_01": {
+    "ID": "Uncommon_Bow_038_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 252
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1350
+  },
+  "Uncommon_Revolver_038_01": {
+    "ID": "Uncommon_Revolver_038_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 252
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1350
+  },
+  "Uncommon_Shield_038_01": {
+    "ID": "Uncommon_Shield_038_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 17
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 90
+  },
+  "Uncommon_Plate_ShoulderPads_041_01": {
+    "ID": "Uncommon_Plate_ShoulderPads_041_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 27
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 144
+  },
+  "Uncommon_Leather_ShoulderPads_041_01": {
+    "ID": "Uncommon_Leather_ShoulderPads_041_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 54
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 144
+  },
+  "Uncommon_Cloth_ShoulderPads_041_01": {
+    "ID": "Uncommon_Cloth_ShoulderPads_041_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 81
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 144
+  },
+  "Uncommon_Amulet_041_01": {
+    "ID": "Uncommon_Amulet_041_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 258
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Amulet_041_02": {
+    "ID": "Uncommon_Amulet_041_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 258
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Amulet_041_03": {
+    "ID": "Uncommon_Amulet_041_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 258
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Amulet_041_04": {
+    "ID": "Uncommon_Amulet_041_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 258
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Amulet_041_05": {
+    "ID": "Uncommon_Amulet_041_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 258
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Plate_Pants_044_01": {
+    "ID": "Uncommon_Plate_Pants_044_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 58
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 306
+  },
+  "Uncommon_Leather_Pants_044_01": {
+    "ID": "Uncommon_Leather_Pants_044_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 115
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 306
+  },
+  "Uncommon_Cloth_Pants_044_01": {
+    "ID": "Uncommon_Cloth_Pants_044_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 173
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 306
+  },
+  "Uncommon_Ring_044_01": {
+    "ID": "Uncommon_Ring_044_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 138
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 153
+  },
+  "Uncommon_Ring_044_02": {
+    "ID": "Uncommon_Ring_044_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 138
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 153
+  },
+  "Uncommon_Ring_044_03": {
+    "ID": "Uncommon_Ring_044_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 138
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 153
+  },
+  "Uncommon_Ring_044_04": {
+    "ID": "Uncommon_Ring_044_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 138
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 153
+  },
+  "Uncommon_Ring_044_05": {
+    "ID": "Uncommon_Ring_044_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 138
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 153
+  },
+  "Uncommon_Plate_Gloves_048_01": {
+    "ID": "Uncommon_Plate_Gloves_048_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 31
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 165
+  },
+  "Uncommon_Leather_Gloves_048_01": {
+    "ID": "Uncommon_Leather_Gloves_048_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 62
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 165
+  },
+  "Uncommon_Cloth_Gloves_048_01": {
+    "ID": "Uncommon_Cloth_Gloves_048_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 94
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 165
+  },
+  "Uncommon_Plate_Belt_048_01": {
+    "ID": "Uncommon_Plate_Belt_048_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 21
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 110
+  },
+  "Uncommon_Leather_Belt_048_01": {
+    "ID": "Uncommon_Leather_Belt_048_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 42
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 110
+  },
+  "Uncommon_Cloth_Belt_048_01": {
+    "ID": "Uncommon_Cloth_Belt_048_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 62
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 110
+  },
+  "Uncommon_OneHandedSword_051_01": {
+    "ID": "Uncommon_OneHandedSword_051_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 220
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1160
+  },
+  "Uncommon_TwoHandedSword_051_01": {
+    "ID": "Uncommon_TwoHandedSword_051_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 330
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1740
+  },
+  "Uncommon_Staff_051_01": {
+    "ID": "Uncommon_Staff_051_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 880
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4640
+  },
+  "Uncommon_Dagger_051_01": {
+    "ID": "Uncommon_Dagger_051_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 275
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1450
+  },
+  "Uncommon_Bow_051_01": {
+    "ID": "Uncommon_Bow_051_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 330
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1740
+  },
+  "Uncommon_Revolver_051_01": {
+    "ID": "Uncommon_Revolver_051_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 330
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1740
+  },
+  "Uncommon_Shield_051_01": {
+    "ID": "Uncommon_Shield_051_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 22
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 116
+  },
+  "Uncommon_Plate_Breastplate_054_01": {
+    "ID": "Uncommon_Plate_Breastplate_054_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 116
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 610
+  },
+  "Uncommon_Leather_Breastplate_054_01": {
+    "ID": "Uncommon_Leather_Breastplate_054_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 232
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 610
+  },
+  "Uncommon_Cloth_Breastplate_054_01": {
+    "ID": "Uncommon_Cloth_Breastplate_054_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 348
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 610
+  },
+  "Uncommon_Plate_Boots_054_01": {
+    "ID": "Uncommon_Plate_Boots_054_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 46
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 244
+  },
+  "Uncommon_Leather_Boots_054_01": {
+    "ID": "Uncommon_Leather_Boots_054_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 93
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 244
+  },
+  "Uncommon_Cloth_Boots_054_01": {
+    "ID": "Uncommon_Cloth_Boots_054_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 139
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 244
+  },
+  "Uncommon_Ring_054_01": {
+    "ID": "Uncommon_Ring_054_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 168
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 183
+  },
+  "Uncommon_Ring_054_02": {
+    "ID": "Uncommon_Ring_054_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 168
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 183
+  },
+  "Uncommon_Ring_054_03": {
+    "ID": "Uncommon_Ring_054_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 168
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 183
+  },
+  "Uncommon_Ring_054_04": {
+    "ID": "Uncommon_Ring_054_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 168
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 183
+  },
+  "Uncommon_Ring_054_05": {
+    "ID": "Uncommon_Ring_054_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 168
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 183
+  },
+  "Uncommon_Plate_Helmet_057_01": {
+    "ID": "Uncommon_Plate_Helmet_057_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 61
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 320
+  },
+  "Uncommon_Leather_Helmet_057_01": {
+    "ID": "Uncommon_Leather_Helmet_057_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 122
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 320
+  },
+  "Uncommon_Cloth_Helmet_057_01": {
+    "ID": "Uncommon_Cloth_Helmet_057_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 183
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 320
+  },
+  "Uncommon_Plate_Bracer_057_01": {
+    "ID": "Uncommon_Plate_Bracer_057_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 24
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 128
+  },
+  "Uncommon_Leather_Bracer_057_01": {
+    "ID": "Uncommon_Leather_Bracer_057_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 49
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 128
+  },
+  "Uncommon_Cloth_Bracer_057_01": {
+    "ID": "Uncommon_Cloth_Bracer_057_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 73
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 128
+  },
+  "Uncommon_OneHandedSword_060_01": {
+    "ID": "Uncommon_OneHandedSword_060_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 256
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1340
+  },
+  "Uncommon_TwoHandedSword_060_01": {
+    "ID": "Uncommon_TwoHandedSword_060_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 384
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2010
+  },
+  "Uncommon_Staff_060_01": {
+    "ID": "Uncommon_Staff_060_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1024
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 5360
+  },
+  "Uncommon_Dagger_060_01": {
+    "ID": "Uncommon_Dagger_060_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 320
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1675
+  },
+  "Uncommon_Bow_060_01": {
+    "ID": "Uncommon_Bow_060_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 384
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2010
+  },
+  "Uncommon_Revolver_060_01": {
+    "ID": "Uncommon_Revolver_060_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 384
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2010
+  },
+  "Uncommon_Shield_060_01": {
+    "ID": "Uncommon_Shield_060_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 26
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 134
+  },
+  "Uncommon_Plate_ShoulderPads_064_01": {
+    "ID": "Uncommon_Plate_ShoulderPads_064_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 41
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 213
+  },
+  "Uncommon_Leather_ShoulderPads_064_01": {
+    "ID": "Uncommon_Leather_ShoulderPads_064_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 82
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 213
+  },
+  "Uncommon_Cloth_ShoulderPads_064_01": {
+    "ID": "Uncommon_Cloth_ShoulderPads_064_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 122
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 213
+  },
+  "Uncommon_Amulet_064_01": {
+    "ID": "Uncommon_Amulet_064_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 396
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 426
+  },
+  "Uncommon_Amulet_064_02": {
+    "ID": "Uncommon_Amulet_064_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 396
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 426
+  },
+  "Uncommon_Amulet_064_03": {
+    "ID": "Uncommon_Amulet_064_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 396
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 426
+  },
+  "Uncommon_Amulet_064_04": {
+    "ID": "Uncommon_Amulet_064_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 396
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 426
+  },
+  "Uncommon_Amulet_064_05": {
+    "ID": "Uncommon_Amulet_064_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 396
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 426
+  },
+  "Uncommon_Plate_Pants_067_01": {
+    "ID": "Uncommon_Plate_Pants_067_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 85
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 444
+  },
+  "Uncommon_Leather_Pants_067_01": {
+    "ID": "Uncommon_Leather_Pants_067_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 170
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 444
+  },
+  "Uncommon_Cloth_Pants_067_01": {
+    "ID": "Uncommon_Cloth_Pants_067_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 256
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 444
+  },
+  "Uncommon_Ring_067_01": {
+    "ID": "Uncommon_Ring_067_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 207
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 222
+  },
+  "Uncommon_Ring_067_02": {
+    "ID": "Uncommon_Ring_067_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 207
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 222
+  },
+  "Uncommon_Ring_067_03": {
+    "ID": "Uncommon_Ring_067_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 207
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 222
+  },
+  "Uncommon_Ring_067_04": {
+    "ID": "Uncommon_Ring_067_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 207
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 222
+  },
+  "Uncommon_Ring_067_05": {
+    "ID": "Uncommon_Ring_067_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 207
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 222
+  },
+  "Uncommon_Plate_Gloves_070_01": {
+    "ID": "Uncommon_Plate_Gloves_070_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 44
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 231
+  },
+  "Uncommon_Leather_Gloves_070_01": {
+    "ID": "Uncommon_Leather_Gloves_070_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 89
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 231
+  },
+  "Uncommon_Cloth_Gloves_070_01": {
+    "ID": "Uncommon_Cloth_Gloves_070_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 133
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 231
+  },
+  "Uncommon_Plate_Belt_070_01": {
+    "ID": "Uncommon_Plate_Belt_070_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 30
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 154
+  },
+  "Uncommon_Leather_Belt_070_01": {
+    "ID": "Uncommon_Leather_Belt_070_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 59
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 154
+  },
+  "Uncommon_Cloth_Belt_070_01": {
+    "ID": "Uncommon_Cloth_Belt_070_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 89
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 154
+  },
+  "Uncommon_OneHandedSword_073_01": {
+    "ID": "Uncommon_OneHandedSword_073_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 308
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1600
+  },
+  "Uncommon_TwoHandedSword_073_01": {
+    "ID": "Uncommon_TwoHandedSword_073_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 462
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2400
+  },
+  "Uncommon_Staff_073_01": {
+    "ID": "Uncommon_Staff_073_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1232
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 6400
+  },
+  "Uncommon_Dagger_073_01": {
+    "ID": "Uncommon_Dagger_073_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 385
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2000
+  },
+  "Uncommon_Bow_073_01": {
+    "ID": "Uncommon_Bow_073_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 462
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2400
+  },
+  "Uncommon_Revolver_073_01": {
+    "ID": "Uncommon_Revolver_073_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 462
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2400
+  },
+  "Uncommon_Shield_073_01": {
+    "ID": "Uncommon_Shield_073_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 31
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 160
+  },
+  "Uncommon_Plate_Breastplate_076_01": {
+    "ID": "Uncommon_Plate_Breastplate_076_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 160
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 830
+  },
+  "Uncommon_Leather_Breastplate_076_01": {
+    "ID": "Uncommon_Leather_Breastplate_076_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 320
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 830
+  },
+  "Uncommon_Cloth_Breastplate_076_01": {
+    "ID": "Uncommon_Cloth_Breastplate_076_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 480
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 830
+  },
+  "Uncommon_Plate_Boots_076_01": {
+    "ID": "Uncommon_Plate_Boots_076_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 64
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 332
+  },
+  "Uncommon_Leather_Boots_076_01": {
+    "ID": "Uncommon_Leather_Boots_076_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 128
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 332
+  },
+  "Uncommon_Cloth_Boots_076_01": {
+    "ID": "Uncommon_Cloth_Boots_076_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 192
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 332
+  },
+  "Uncommon_Ring_076_01": {
+    "ID": "Uncommon_Ring_076_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 234
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 249
+  },
+  "Uncommon_Ring_076_02": {
+    "ID": "Uncommon_Ring_076_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 234
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 249
+  },
+  "Uncommon_Ring_076_03": {
+    "ID": "Uncommon_Ring_076_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 234
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 249
+  },
+  "Uncommon_Ring_076_04": {
+    "ID": "Uncommon_Ring_076_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 234
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 249
+  },
+  "Uncommon_Ring_076_05": {
+    "ID": "Uncommon_Ring_076_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 234
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 249
+  },
+  "Uncommon_Plate_Helmet_080_01": {
+    "ID": "Uncommon_Plate_Helmet_080_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 84
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 435
+  },
+  "Uncommon_Leather_Helmet_080_01": {
+    "ID": "Uncommon_Leather_Helmet_080_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 168
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 435
+  },
+  "Uncommon_Cloth_Helmet_080_01": {
+    "ID": "Uncommon_Cloth_Helmet_080_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 252
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 435
+  },
+  "Uncommon_Plate_Bracer_080_01": {
+    "ID": "Uncommon_Plate_Bracer_080_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 34
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 174
+  },
+  "Uncommon_Leather_Bracer_080_01": {
+    "ID": "Uncommon_Leather_Bracer_080_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 67
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 174
+  },
+  "Uncommon_Cloth_Bracer_080_01": {
+    "ID": "Uncommon_Cloth_Bracer_080_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 101
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 174
+  },
+  "Uncommon_OneHandedSword_083_01": {
+    "ID": "Uncommon_OneHandedSword_083_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 348
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1800
+  },
+  "Uncommon_TwoHandedSword_083_01": {
+    "ID": "Uncommon_TwoHandedSword_083_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 522
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2700
+  },
+  "Uncommon_Staff_083_01": {
+    "ID": "Uncommon_Staff_083_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1392
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 7200
+  },
+  "Uncommon_Dagger_083_01": {
+    "ID": "Uncommon_Dagger_083_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 435
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2250
+  },
+  "Uncommon_Bow_083_01": {
+    "ID": "Uncommon_Bow_083_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 522
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2700
+  },
+  "Uncommon_Revolver_083_01": {
+    "ID": "Uncommon_Revolver_083_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 522
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2700
+  },
+  "Uncommon_Shield_083_01": {
+    "ID": "Uncommon_Shield_083_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 35
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 180
+  },
+  "Uncommon_Plate_ShoulderPads_086_01": {
+    "ID": "Uncommon_Plate_ShoulderPads_086_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 54
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 279
+  },
+  "Uncommon_Leather_ShoulderPads_086_01": {
+    "ID": "Uncommon_Leather_ShoulderPads_086_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 108
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 279
+  },
+  "Uncommon_Cloth_ShoulderPads_086_01": {
+    "ID": "Uncommon_Cloth_ShoulderPads_086_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 162
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 279
+  },
+  "Uncommon_Amulet_086_01": {
+    "ID": "Uncommon_Amulet_086_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 528
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Amulet_086_02": {
+    "ID": "Uncommon_Amulet_086_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 528
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Amulet_086_03": {
+    "ID": "Uncommon_Amulet_086_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 528
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Amulet_086_04": {
+    "ID": "Uncommon_Amulet_086_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 528
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Amulet_086_05": {
+    "ID": "Uncommon_Amulet_086_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 528
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Plate_Pants_089_01": {
+    "ID": "Uncommon_Plate_Pants_089_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 112
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 576
+  },
+  "Uncommon_Leather_Pants_089_01": {
+    "ID": "Uncommon_Leather_Pants_089_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 223
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 576
+  },
+  "Uncommon_Cloth_Pants_089_01": {
+    "ID": "Uncommon_Cloth_Pants_089_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 335
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 576
+  },
+  "Uncommon_Ring_089_01": {
+    "ID": "Uncommon_Ring_089_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 273
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Ring_089_02": {
+    "ID": "Uncommon_Ring_089_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 273
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Ring_089_03": {
+    "ID": "Uncommon_Ring_089_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 273
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Ring_089_04": {
+    "ID": "Uncommon_Ring_089_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 273
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Ring_089_05": {
+    "ID": "Uncommon_Ring_089_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 273
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Plate_Gloves_092_01": {
+    "ID": "Uncommon_Plate_Gloves_092_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 58
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 297
+  },
+  "Uncommon_Leather_Gloves_092_01": {
+    "ID": "Uncommon_Leather_Gloves_092_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 115
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 297
+  },
+  "Uncommon_Cloth_Gloves_092_01": {
+    "ID": "Uncommon_Cloth_Gloves_092_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 173
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 297
+  },
+  "Uncommon_Plate_Belt_092_01": {
+    "ID": "Uncommon_Plate_Belt_092_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 38
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 198
+  },
+  "Uncommon_Leather_Belt_092_01": {
+    "ID": "Uncommon_Leather_Belt_092_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 77
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 198
+  },
+  "Uncommon_Cloth_Belt_092_01": {
+    "ID": "Uncommon_Cloth_Belt_092_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 115
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 198
+  },
+  "Uncommon_OneHandedSword_096_01": {
+    "ID": "Uncommon_OneHandedSword_096_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 400
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2060
+  },
+  "Uncommon_TwoHandedSword_096_01": {
+    "ID": "Uncommon_TwoHandedSword_096_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 600
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3090
+  },
+  "Uncommon_Staff_096_01": {
+    "ID": "Uncommon_Staff_096_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1600
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 8240
+  },
+  "Uncommon_Dagger_096_01": {
+    "ID": "Uncommon_Dagger_096_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 500
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2575
+  },
+  "Uncommon_Bow_096_01": {
+    "ID": "Uncommon_Bow_096_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 600
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3090
+  },
+  "Uncommon_Revolver_096_01": {
+    "ID": "Uncommon_Revolver_096_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 600
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3090
+  },
+  "Uncommon_Shield_096_01": {
+    "ID": "Uncommon_Shield_096_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 40
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 206
+  },
+  "Uncommon_Plate_Breastplate_099_01": {
+    "ID": "Uncommon_Plate_Breastplate_099_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 206
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1060
+  },
+  "Uncommon_Leather_Breastplate_099_01": {
+    "ID": "Uncommon_Leather_Breastplate_099_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 412
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1060
+  },
+  "Uncommon_Cloth_Breastplate_099_01": {
+    "ID": "Uncommon_Cloth_Breastplate_099_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 618
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1060
+  },
+  "Uncommon_Plate_Boots_099_01": {
+    "ID": "Uncommon_Plate_Boots_099_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 82
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 424
+  },
+  "Uncommon_Leather_Boots_099_01": {
+    "ID": "Uncommon_Leather_Boots_099_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 165
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 424
+  },
+  "Uncommon_Cloth_Boots_099_01": {
+    "ID": "Uncommon_Cloth_Boots_099_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 247
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 424
+  },
+  "Uncommon_Ring_099_01": {
+    "ID": "Uncommon_Ring_099_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 303
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 318
+  },
+  "Uncommon_Ring_099_02": {
+    "ID": "Uncommon_Ring_099_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 303
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 318
+  },
+  "Uncommon_Ring_099_03": {
+    "ID": "Uncommon_Ring_099_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 303
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 318
+  },
+  "Uncommon_Ring_099_04": {
+    "ID": "Uncommon_Ring_099_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 303
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 318
+  },
+  "Uncommon_Ring_099_05": {
+    "ID": "Uncommon_Ring_099_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 303
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 318
+  },
+  "Uncommon_Plate_Helmet_102_01": {
+    "ID": "Uncommon_Plate_Helmet_102_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 106
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 545
+  },
+  "Uncommon_Leather_Helmet_102_01": {
+    "ID": "Uncommon_Leather_Helmet_102_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 212
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 545
+  },
+  "Uncommon_Cloth_Helmet_102_01": {
+    "ID": "Uncommon_Cloth_Helmet_102_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 318
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 545
+  },
+  "Uncommon_Plate_Bracer_102_01": {
+    "ID": "Uncommon_Plate_Bracer_102_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 42
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 218
+  },
+  "Uncommon_Leather_Bracer_102_01": {
+    "ID": "Uncommon_Leather_Bracer_102_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 85
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 218
+  },
+  "Uncommon_Cloth_Bracer_102_01": {
+    "ID": "Uncommon_Cloth_Bracer_102_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 127
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 218
+  },
+  "Uncommon_OneHandedSword_105_01": {
+    "ID": "Uncommon_OneHandedSword_105_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 436
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2240
+  },
+  "Uncommon_TwoHandedSword_105_01": {
+    "ID": "Uncommon_TwoHandedSword_105_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 654
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3360
+  },
+  "Uncommon_Staff_105_01": {
+    "ID": "Uncommon_Staff_105_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1744
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 8960
+  },
+  "Uncommon_Dagger_105_01": {
+    "ID": "Uncommon_Dagger_105_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 545
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2800
+  },
+  "Uncommon_Bow_105_01": {
+    "ID": "Uncommon_Bow_105_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 654
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3360
+  },
+  "Uncommon_Revolver_105_01": {
+    "ID": "Uncommon_Revolver_105_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 654
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3360
+  },
+  "Uncommon_Shield_105_01": {
+    "ID": "Uncommon_Shield_105_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 44
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 224
+  },
+  "Uncommon_Plate_ShoulderPads_108_01": {
+    "ID": "Uncommon_Plate_ShoulderPads_108_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 67
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 345
+  },
+  "Uncommon_Leather_ShoulderPads_108_01": {
+    "ID": "Uncommon_Leather_ShoulderPads_108_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 134
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 345
+  },
+  "Uncommon_Cloth_ShoulderPads_108_01": {
+    "ID": "Uncommon_Cloth_ShoulderPads_108_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 202
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 345
+  },
+  "Uncommon_Amulet_108_01": {
+    "ID": "Uncommon_Amulet_108_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 660
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 690
+  },
+  "Uncommon_Amulet_108_02": {
+    "ID": "Uncommon_Amulet_108_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 660
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 690
+  },
+  "Uncommon_Amulet_108_03": {
+    "ID": "Uncommon_Amulet_108_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 660
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 690
+  },
+  "Uncommon_Amulet_108_04": {
+    "ID": "Uncommon_Amulet_108_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 660
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 690
+  },
+  "Uncommon_Amulet_108_05": {
+    "ID": "Uncommon_Amulet_108_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 660
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 690
+  },
+  "Uncommon_Plate_Pants_112_01": {
+    "ID": "Uncommon_Plate_Pants_112_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 139
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 714
+  },
+  "Uncommon_Leather_Pants_112_01": {
+    "ID": "Uncommon_Leather_Pants_112_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 278
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 714
+  },
+  "Uncommon_Cloth_Pants_112_01": {
+    "ID": "Uncommon_Cloth_Pants_112_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 418
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 714
+  },
+  "Uncommon_Ring_112_01": {
+    "ID": "Uncommon_Ring_112_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 342
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 357
+  },
+  "Uncommon_Ring_112_02": {
+    "ID": "Uncommon_Ring_112_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 342
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 357
+  },
+  "Uncommon_Ring_112_03": {
+    "ID": "Uncommon_Ring_112_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 342
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 357
+  },
+  "Uncommon_Ring_112_04": {
+    "ID": "Uncommon_Ring_112_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 342
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 357
+  },
+  "Uncommon_Ring_112_05": {
+    "ID": "Uncommon_Ring_112_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 342
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 357
+  },
+  "Uncommon_Plate_Gloves_115_01": {
+    "ID": "Uncommon_Plate_Gloves_115_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 71
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 366
+  },
+  "Uncommon_Leather_Gloves_115_01": {
+    "ID": "Uncommon_Leather_Gloves_115_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 143
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 366
+  },
+  "Uncommon_Cloth_Gloves_115_01": {
+    "ID": "Uncommon_Cloth_Gloves_115_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 214
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 366
+  },
+  "Uncommon_Plate_Belt_115_01": {
+    "ID": "Uncommon_Plate_Belt_115_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 48
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 244
+  },
+  "Uncommon_Leather_Belt_115_01": {
+    "ID": "Uncommon_Leather_Belt_115_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 95
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 244
+  },
+  "Uncommon_Cloth_Belt_115_01": {
+    "ID": "Uncommon_Cloth_Belt_115_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 143
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 244
+  },
+  "Uncommon_OneHandedSword_118_01": {
+    "ID": "Uncommon_OneHandedSword_118_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 488
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2500
+  },
+  "Uncommon_TwoHandedSword_118_01": {
+    "ID": "Uncommon_TwoHandedSword_118_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 732
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3750
+  },
+  "Uncommon_Staff_118_01": {
+    "ID": "Uncommon_Staff_118_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1952
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 10000
+  },
+  "Uncommon_Dagger_118_01": {
+    "ID": "Uncommon_Dagger_118_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 610
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3125
+  },
+  "Uncommon_Bow_118_01": {
+    "ID": "Uncommon_Bow_118_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 732
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3750
+  },
+  "Uncommon_Revolver_118_01": {
+    "ID": "Uncommon_Revolver_118_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 732
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3750
+  },
+  "Uncommon_Shield_118_01": {
+    "ID": "Uncommon_Shield_118_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 49
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 250
+  },
+  "Uncommon_Plate_Breastplate_121_01": {
+    "ID": "Uncommon_Plate_Breastplate_121_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 250
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1280
+  },
+  "Uncommon_Leather_Breastplate_121_01": {
+    "ID": "Uncommon_Leather_Breastplate_121_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 500
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1280
+  },
+  "Uncommon_Cloth_Breastplate_121_01": {
+    "ID": "Uncommon_Cloth_Breastplate_121_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 750
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1280
+  },
+  "Uncommon_Plate_Boots_121_01": {
+    "ID": "Uncommon_Plate_Boots_121_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 100
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 512
+  },
+  "Uncommon_Leather_Boots_121_01": {
+    "ID": "Uncommon_Leather_Boots_121_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 200
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 512
+  },
+  "Uncommon_Cloth_Boots_121_01": {
+    "ID": "Uncommon_Cloth_Boots_121_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 300
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 512
+  },
+  "Uncommon_Ring_121_01": {
+    "ID": "Uncommon_Ring_121_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 369
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 384
+  },
+  "Uncommon_Ring_121_02": {
+    "ID": "Uncommon_Ring_121_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 369
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 384
+  },
+  "Uncommon_Ring_121_03": {
+    "ID": "Uncommon_Ring_121_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 369
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 384
+  },
+  "Uncommon_Ring_121_04": {
+    "ID": "Uncommon_Ring_121_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 369
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 384
+  },
+  "Uncommon_Ring_121_05": {
+    "ID": "Uncommon_Ring_121_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 369
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 384
+  },
+  "Uncommon_Plate_Helmet_124_01": {
+    "ID": "Uncommon_Plate_Helmet_124_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 128
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 655
+  },
+  "Uncommon_Leather_Helmet_124_01": {
+    "ID": "Uncommon_Leather_Helmet_124_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 256
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 655
+  },
+  "Uncommon_Cloth_Helmet_124_01": {
+    "ID": "Uncommon_Cloth_Helmet_124_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 384
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 655
+  },
+  "Uncommon_Plate_Bracer_124_01": {
+    "ID": "Uncommon_Plate_Bracer_124_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 51
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 262
+  },
+  "Uncommon_Leather_Bracer_124_01": {
+    "ID": "Uncommon_Leather_Bracer_124_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 102
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 262
+  },
+  "Uncommon_Cloth_Bracer_124_01": {
+    "ID": "Uncommon_Cloth_Bracer_124_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 154
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 262
+  },
+  "Uncommon_OneHandedSword_128_01": {
+    "ID": "Uncommon_OneHandedSword_128_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 528
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2700
+  },
+  "Uncommon_TwoHandedSword_128_01": {
+    "ID": "Uncommon_TwoHandedSword_128_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 792
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4050
+  },
+  "Uncommon_Staff_128_01": {
+    "ID": "Uncommon_Staff_128_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 2112
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 10800
+  },
+  "Uncommon_Dagger_128_01": {
+    "ID": "Uncommon_Dagger_128_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 660
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3375
+  },
+  "Uncommon_Bow_128_01": {
+    "ID": "Uncommon_Bow_128_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 792
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4050
+  },
+  "Uncommon_Revolver_128_01": {
+    "ID": "Uncommon_Revolver_128_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 792
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4050
+  },
+  "Uncommon_Shield_128_01": {
+    "ID": "Uncommon_Shield_128_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 53
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 270
+  },
+  "Uncommon_Plate_ShoulderPads_131_01": {
+    "ID": "Uncommon_Plate_ShoulderPads_131_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 81
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 414
+  },
+  "Uncommon_Leather_ShoulderPads_131_01": {
+    "ID": "Uncommon_Leather_ShoulderPads_131_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 162
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 414
+  },
+  "Uncommon_Cloth_ShoulderPads_131_01": {
+    "ID": "Uncommon_Cloth_ShoulderPads_131_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 243
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 414
+  },
+  "Uncommon_Amulet_131_01": {
+    "ID": "Uncommon_Amulet_131_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 798
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 828
+  },
+  "Uncommon_Amulet_131_02": {
+    "ID": "Uncommon_Amulet_131_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 798
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 828
+  },
+  "Uncommon_Amulet_131_03": {
+    "ID": "Uncommon_Amulet_131_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 798
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 828
+  },
+  "Uncommon_Amulet_131_04": {
+    "ID": "Uncommon_Amulet_131_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 798
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 828
+  },
+  "Uncommon_Amulet_131_05": {
+    "ID": "Uncommon_Amulet_131_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 798
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 828
+  },
+  "Uncommon_Plate_Pants_134_01": {
+    "ID": "Uncommon_Plate_Pants_134_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 166
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 846
+  },
+  "Uncommon_Leather_Pants_134_01": {
+    "ID": "Uncommon_Leather_Pants_134_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 331
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 846
+  },
+  "Uncommon_Cloth_Pants_134_01": {
+    "ID": "Uncommon_Cloth_Pants_134_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 497
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 846
+  },
+  "Uncommon_Ring_134_01": {
+    "ID": "Uncommon_Ring_134_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 408
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 423
+  },
+  "Uncommon_Ring_134_02": {
+    "ID": "Uncommon_Ring_134_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 408
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 423
+  },
+  "Uncommon_Ring_134_03": {
+    "ID": "Uncommon_Ring_134_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 408
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 423
+  },
+  "Uncommon_Ring_134_04": {
+    "ID": "Uncommon_Ring_134_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 408
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 423
+  },
+  "Uncommon_Ring_134_05": {
+    "ID": "Uncommon_Ring_134_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 408
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 423
+  },
+  "Uncommon_Plate_Gloves_137_01": {
+    "ID": "Uncommon_Plate_Gloves_137_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 85
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 432
+  },
+  "Uncommon_Leather_Gloves_137_01": {
+    "ID": "Uncommon_Leather_Gloves_137_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 169
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 432
+  },
+  "Uncommon_Cloth_Gloves_137_01": {
+    "ID": "Uncommon_Cloth_Gloves_137_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 254
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 432
+  },
+  "Uncommon_Plate_Belt_137_01": {
+    "ID": "Uncommon_Plate_Belt_137_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 56
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Leather_Belt_137_01": {
+    "ID": "Uncommon_Leather_Belt_137_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 113
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_Cloth_Belt_137_01": {
+    "ID": "Uncommon_Cloth_Belt_137_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 169
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 288
+  },
+  "Uncommon_OneHandedSword_140_01": {
+    "ID": "Uncommon_OneHandedSword_140_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 576
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 2940
+  },
+  "Uncommon_TwoHandedSword_140_01": {
+    "ID": "Uncommon_TwoHandedSword_140_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 864
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4410
+  },
+  "Uncommon_Staff_140_01": {
+    "ID": "Uncommon_Staff_140_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 2304
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 11760
+  },
+  "Uncommon_Dagger_140_01": {
+    "ID": "Uncommon_Dagger_140_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 720
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3675
+  },
+  "Uncommon_Bow_140_01": {
+    "ID": "Uncommon_Bow_140_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 864
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4410
+  },
+  "Uncommon_Revolver_140_01": {
+    "ID": "Uncommon_Revolver_140_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 864
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4410
+  },
+  "Uncommon_Shield_140_01": {
+    "ID": "Uncommon_Shield_140_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 58
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 294
+  },
+  "Uncommon_Plate_Breastplate_144_01": {
+    "ID": "Uncommon_Plate_Breastplate_144_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 296
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1510
+  },
+  "Uncommon_Leather_Breastplate_144_01": {
+    "ID": "Uncommon_Leather_Breastplate_144_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 592
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1510
+  },
+  "Uncommon_Cloth_Breastplate_144_01": {
+    "ID": "Uncommon_Cloth_Breastplate_144_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 888
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1510
+  },
+  "Uncommon_Plate_Boots_144_01": {
+    "ID": "Uncommon_Plate_Boots_144_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 118
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 604
+  },
+  "Uncommon_Leather_Boots_144_01": {
+    "ID": "Uncommon_Leather_Boots_144_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 237
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 604
+  },
+  "Uncommon_Cloth_Boots_144_01": {
+    "ID": "Uncommon_Cloth_Boots_144_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 355
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 604
+  },
+  "Uncommon_Ring_144_01": {
+    "ID": "Uncommon_Ring_144_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 438
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 453
+  },
+  "Uncommon_Ring_144_02": {
+    "ID": "Uncommon_Ring_144_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 438
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 453
+  },
+  "Uncommon_Ring_144_03": {
+    "ID": "Uncommon_Ring_144_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 438
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 453
+  },
+  "Uncommon_Ring_144_04": {
+    "ID": "Uncommon_Ring_144_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 438
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 453
+  },
+  "Uncommon_Ring_144_05": {
+    "ID": "Uncommon_Ring_144_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 438
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 453
+  },
+  "Uncommon_Plate_Helmet_147_01": {
+    "ID": "Uncommon_Plate_Helmet_147_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 151
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 770
+  },
+  "Uncommon_Leather_Helmet_147_01": {
+    "ID": "Uncommon_Leather_Helmet_147_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 302
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 770
+  },
+  "Uncommon_Cloth_Helmet_147_01": {
+    "ID": "Uncommon_Cloth_Helmet_147_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 453
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 770
+  },
+  "Uncommon_Plate_Bracer_147_01": {
+    "ID": "Uncommon_Plate_Bracer_147_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 60
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 308
+  },
+  "Uncommon_Leather_Bracer_147_01": {
+    "ID": "Uncommon_Leather_Bracer_147_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 121
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 308
+  },
+  "Uncommon_Cloth_Bracer_147_01": {
+    "ID": "Uncommon_Cloth_Bracer_147_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 181
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 308
+  },
+  "Uncommon_OneHandedSword_150_01": {
+    "ID": "Uncommon_OneHandedSword_150_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 616
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3140
+  },
+  "Uncommon_TwoHandedSword_150_01": {
+    "ID": "Uncommon_TwoHandedSword_150_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 924
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4710
+  },
+  "Uncommon_Staff_150_01": {
+    "ID": "Uncommon_Staff_150_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 2464
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 12560
+  },
+  "Uncommon_Dagger_150_01": {
+    "ID": "Uncommon_Dagger_150_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 770
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3925
+  },
+  "Uncommon_Bow_150_01": {
+    "ID": "Uncommon_Bow_150_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 924
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4710
+  },
+  "Uncommon_Revolver_150_01": {
+    "ID": "Uncommon_Revolver_150_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 924
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4710
+  },
+  "Uncommon_Shield_150_01": {
+    "ID": "Uncommon_Shield_150_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 62
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 314
+  },
+  "Uncommon_Plate_ShoulderPads_153_01": {
+    "ID": "Uncommon_Plate_ShoulderPads_153_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 94
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 480
+  },
+  "Uncommon_Leather_ShoulderPads_153_01": {
+    "ID": "Uncommon_Leather_ShoulderPads_153_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 188
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 480
+  },
+  "Uncommon_Cloth_ShoulderPads_153_01": {
+    "ID": "Uncommon_Cloth_ShoulderPads_153_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 283
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 480
+  },
+  "Uncommon_Amulet_153_01": {
+    "ID": "Uncommon_Amulet_153_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 930
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 960
+  },
+  "Uncommon_Amulet_153_02": {
+    "ID": "Uncommon_Amulet_153_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 930
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 960
+  },
+  "Uncommon_Amulet_153_03": {
+    "ID": "Uncommon_Amulet_153_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 930
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 960
+  },
+  "Uncommon_Amulet_153_04": {
+    "ID": "Uncommon_Amulet_153_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 930
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 960
+  },
+  "Uncommon_Amulet_153_05": {
+    "ID": "Uncommon_Amulet_153_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 930
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 960
+  },
+  "Uncommon_Plate_Pants_156_01": {
+    "ID": "Uncommon_Plate_Pants_156_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 192
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 978
+  },
+  "Uncommon_Leather_Pants_156_01": {
+    "ID": "Uncommon_Leather_Pants_156_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 384
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 978
+  },
+  "Uncommon_Cloth_Pants_156_01": {
+    "ID": "Uncommon_Cloth_Pants_156_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 576
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 978
+  },
+  "Uncommon_Ring_156_01": {
+    "ID": "Uncommon_Ring_156_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 474
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 489
+  },
+  "Uncommon_Ring_156_02": {
+    "ID": "Uncommon_Ring_156_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 474
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 489
+  },
+  "Uncommon_Ring_156_03": {
+    "ID": "Uncommon_Ring_156_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 474
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 489
+  },
+  "Uncommon_Ring_156_04": {
+    "ID": "Uncommon_Ring_156_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 474
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 489
+  },
+  "Uncommon_Ring_156_05": {
+    "ID": "Uncommon_Ring_156_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 474
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 489
+  },
+  "Uncommon_Plate_Gloves_160_01": {
+    "ID": "Uncommon_Plate_Gloves_160_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 98
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 501
+  },
+  "Uncommon_Leather_Gloves_160_01": {
+    "ID": "Uncommon_Leather_Gloves_160_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 197
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 501
+  },
+  "Uncommon_Cloth_Gloves_160_01": {
+    "ID": "Uncommon_Cloth_Gloves_160_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 295
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 501
+  },
+  "Uncommon_Plate_Belt_160_01": {
+    "ID": "Uncommon_Plate_Belt_160_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 66
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 334
+  },
+  "Uncommon_Leather_Belt_160_01": {
+    "ID": "Uncommon_Leather_Belt_160_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 131
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 334
+  },
+  "Uncommon_Cloth_Belt_160_01": {
+    "ID": "Uncommon_Cloth_Belt_160_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 197
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 334
+  },
+  "Uncommon_OneHandedSword_163_01": {
+    "ID": "Uncommon_OneHandedSword_163_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 668
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3400
+  },
+  "Uncommon_TwoHandedSword_163_01": {
+    "ID": "Uncommon_TwoHandedSword_163_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1002
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 5100
+  },
+  "Uncommon_Staff_163_01": {
+    "ID": "Uncommon_Staff_163_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 2672
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 13600
+  },
+  "Uncommon_Dagger_163_01": {
+    "ID": "Uncommon_Dagger_163_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 835
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4250
+  },
+  "Uncommon_Bow_163_01": {
+    "ID": "Uncommon_Bow_163_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1002
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 5100
+  },
+  "Uncommon_Revolver_163_01": {
+    "ID": "Uncommon_Revolver_163_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1002
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 5100
+  },
+  "Uncommon_Shield_163_01": {
+    "ID": "Uncommon_Shield_163_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 67
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 340
+  },
+  "Uncommon_Plate_Breastplate_166_01": {
+    "ID": "Uncommon_Plate_Breastplate_166_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 340
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1730
+  },
+  "Uncommon_Leather_Breastplate_166_01": {
+    "ID": "Uncommon_Leather_Breastplate_166_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 680
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1730
+  },
+  "Uncommon_Cloth_Breastplate_166_01": {
+    "ID": "Uncommon_Cloth_Breastplate_166_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 1020
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1730
+  },
+  "Uncommon_Plate_Boots_166_01": {
+    "ID": "Uncommon_Plate_Boots_166_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 136
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 692
+  },
+  "Uncommon_Leather_Boots_166_01": {
+    "ID": "Uncommon_Leather_Boots_166_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 272
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 692
+  },
+  "Uncommon_Cloth_Boots_166_01": {
+    "ID": "Uncommon_Cloth_Boots_166_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 408
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 692
+  },
+  "Uncommon_Ring_166_01": {
+    "ID": "Uncommon_Ring_166_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 504
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 519
+  },
+  "Uncommon_Ring_166_02": {
+    "ID": "Uncommon_Ring_166_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 504
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 519
+  },
+  "Uncommon_Ring_166_03": {
+    "ID": "Uncommon_Ring_166_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 504
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 519
+  },
+  "Uncommon_Ring_166_04": {
+    "ID": "Uncommon_Ring_166_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 504
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 519
+  },
+  "Uncommon_Ring_166_05": {
+    "ID": "Uncommon_Ring_166_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 504
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 519
+  },
+  "Uncommon_Plate_Helmet_169_01": {
+    "ID": "Uncommon_Plate_Helmet_169_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 173
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 880
+  },
+  "Uncommon_Leather_Helmet_169_01": {
+    "ID": "Uncommon_Leather_Helmet_169_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 346
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 880
+  },
+  "Uncommon_Cloth_Helmet_169_01": {
+    "ID": "Uncommon_Cloth_Helmet_169_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 519
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 880
+  },
+  "Uncommon_Plate_Bracer_169_01": {
+    "ID": "Uncommon_Plate_Bracer_169_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 69
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 352
+  },
+  "Uncommon_Leather_Bracer_169_01": {
+    "ID": "Uncommon_Leather_Bracer_169_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 138
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 352
+  },
+  "Uncommon_Cloth_Bracer_169_01": {
+    "ID": "Uncommon_Cloth_Bracer_169_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 208
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 352
+  },
+  "Uncommon_OneHandedSword_172_01": {
+    "ID": "Uncommon_OneHandedSword_172_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 704
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 3580
+  },
+  "Uncommon_TwoHandedSword_172_01": {
+    "ID": "Uncommon_TwoHandedSword_172_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1056
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 5370
+  },
+  "Uncommon_Staff_172_01": {
+    "ID": "Uncommon_Staff_172_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 2816
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 14320
+  },
+  "Uncommon_Dagger_172_01": {
+    "ID": "Uncommon_Dagger_172_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 880
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 4475
+  },
+  "Uncommon_Bow_172_01": {
+    "ID": "Uncommon_Bow_172_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1056
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 5370
+  },
+  "Uncommon_Revolver_172_01": {
+    "ID": "Uncommon_Revolver_172_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 1056
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 5370
+  },
+  "Uncommon_Shield_172_01": {
+    "ID": "Uncommon_Shield_172_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 70
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 358
+  },
+  "Uncommon_Plate_ShoulderPads_176_01": {
+    "ID": "Uncommon_Plate_ShoulderPads_176_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 108
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 549
+  },
+  "Uncommon_Leather_ShoulderPads_176_01": {
+    "ID": "Uncommon_Leather_ShoulderPads_176_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 216
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 549
+  },
+  "Uncommon_Cloth_ShoulderPads_176_01": {
+    "ID": "Uncommon_Cloth_ShoulderPads_176_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 324
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 549
+  },
+  "Uncommon_Amulet_176_01": {
+    "ID": "Uncommon_Amulet_176_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 1068
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1098
+  },
+  "Uncommon_Amulet_176_02": {
+    "ID": "Uncommon_Amulet_176_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 1068
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1098
+  },
+  "Uncommon_Amulet_176_03": {
+    "ID": "Uncommon_Amulet_176_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 1068
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1098
+  },
+  "Uncommon_Amulet_176_04": {
+    "ID": "Uncommon_Amulet_176_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 1068
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1098
+  },
+  "Uncommon_Amulet_176_05": {
+    "ID": "Uncommon_Amulet_176_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 1068
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1098
+  },
+  "Uncommon_Plate_Pants_179_01": {
+    "ID": "Uncommon_Plate_Pants_179_01",
+    "requireItems": [
+      {
+        "itemID": "IronIngot",
+        "count": 220
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1116
+  },
+  "Uncommon_Leather_Pants_179_01": {
+    "ID": "Uncommon_Leather_Pants_179_01",
+    "requireItems": [
+      {
+        "itemID": "Leather01",
+        "count": 439
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1116
+  },
+  "Uncommon_Cloth_Pants_179_01": {
+    "ID": "Uncommon_Cloth_Pants_179_01",
+    "requireItems": [
+      {
+        "itemID": "CottonCloth",
+        "count": 659
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 1116
+  },
+  "Uncommon_Ring_179_01": {
+    "ID": "Uncommon_Ring_179_01",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 543
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Ring_179_02": {
+    "ID": "Uncommon_Ring_179_02",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 543
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Ring_179_03": {
+    "ID": "Uncommon_Ring_179_03",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 543
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Ring_179_04": {
+    "ID": "Uncommon_Ring_179_04",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 543
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  },
+  "Uncommon_Ring_179_05": {
+    "ID": "Uncommon_Ring_179_05",
+    "requireItems": [
+      {
+        "itemID": "GoldIngot",
+        "count": 543
+      }
+    ],
+    "resultItemCount": 1,
+    "productionCost": 558
+  }
+}

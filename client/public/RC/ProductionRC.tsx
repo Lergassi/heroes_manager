@@ -13,6 +13,7 @@ import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
+import {sprintf} from 'sprintf-js';
 
 export type UI_ProductionItem = {
     itemID: ItemID;
@@ -98,7 +99,11 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                                 </tr>
                                 {_.map(this.state.items, (item, index, collection) => {
                                     return <tr key={index}>
-                                        <td>{item.itemID}</td>
+                                        <td>
+                                            {/*todo: При использовании sprintf не работает замена.*/}
+                                            <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.items.data.iconId(item.itemID))}></span>
+                                            <span className={'first-table-column-padding-for-icon'}>{item.itemID}</span>
+                                        </td>
                                         <td>{database.items.data.itemCategory(item.itemID)}</td>
                                         {/*<td>{database.items.data.attackPower(item.itemID)}</td>*/}
                                         {/*<td>{database.items.data.healthPoints(item.itemID)}</td>*/}

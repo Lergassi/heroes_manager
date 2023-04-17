@@ -3,14 +3,17 @@ import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_PanelID} from '../../types/UI_PanelID.js';
 import GameRC from './GameRC.js';
+import {sprintf} from 'sprintf-js';
+import {database} from '../../../core/data/ts/database.js';
+import {IconID} from '../../../core/types/enums/IconID.js';
 
 type LeftSidebarMenuItem = {
     panelID: UI_PanelID;
+    iconId: string;
     enable: boolean;
 };
 
 export interface LeftSidebarProps {
-    // items: any;
     container: ContainerInterface;
 }
 
@@ -24,20 +27,22 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
 
         this.state = {
             items: [
-                {panelID: UI_PanelID.Homepage, enable: true},
-                {panelID: UI_PanelID.Tavern, enable: true},
-                {panelID: UI_PanelID.ItemStorages, enable: true},
-                {panelID: UI_PanelID.Heroes, enable: true},
-                {panelID: UI_PanelID.Farming, enable: true},
-                {panelID: UI_PanelID.Construction, enable: true},
-                {panelID: UI_PanelID.Production, enable: true},
-                {panelID: UI_PanelID.Research, enable: false},
-                {panelID: UI_PanelID.Locations, enable: true},
-                {panelID: UI_PanelID.DungeonAndRaid, enable: false},
-                {panelID: UI_PanelID.Auction, enable: false},
-                {panelID: UI_PanelID.PvP, enable: false},
+                // {panelID: UI_PanelID.Homepage, iconId: IconID.Home01, enable: true},
+                {panelID: UI_PanelID.Heroes, iconId: IconID.Knight01, enable: true},
+                {panelID: UI_PanelID.Tavern, iconId: IconID.Brewery01, enable: true},
+                {panelID: UI_PanelID.ItemStorages, iconId: IconID.Chest01, enable: true},
+                {panelID: UI_PanelID.Construction, iconId: IconID.Brickwall01, enable: true},
+                {panelID: UI_PanelID.Farming, iconId: IconID.Farming01, enable: true},
+                {panelID: UI_PanelID.Production, iconId: IconID.Production01, enable: true},
+                {panelID: UI_PanelID.Locations, iconId: IconID.Location01, enable: true},
+                {panelID: UI_PanelID.DungeonAndRaid, iconId: IconID.Dungeon01, enable: false},
+                {panelID: UI_PanelID.Research, iconId: IconID.Research01, enable: false},
+                {panelID: UI_PanelID.Auction, iconId: IconID.Growth01, enable: false},
+                {panelID: UI_PanelID.PvP, iconId: IconID.TwoSword01, enable: false},
             ],
         };
+
+        this.props.container.get<GameRC>(ServiceID.UI_Game).showPanel(UI_PanelID.Heroes);
     }
 
     render() {
@@ -54,9 +59,7 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
 
                         this.props.container.get<GameRC>(ServiceID.UI_Game).showPanel(items[i].panelID);
                     }}>
-                        {/*<span className={'left-sidebar__icon-wrapper'}>*/}
-                        {/*    <span className={'icon icon_Question01 icon_32'}></span>*/}
-                        {/*</span>*/}
+                        <span className={sprintf("icon icon_%s icon_32 left-sidebar__icon", items[i].iconId)}></span>
                         <span className={'left-sidebar__menu-text'}>{items[i].panelID}</span>
                     </a>
                 </div>);

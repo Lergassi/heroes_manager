@@ -13,6 +13,7 @@ import {QualityID} from '../../../../../types/enums/QualityID.js';
 import item_character_attribute_generation_functions from '../v0_0_1/item_character_attribute_generation_functions.js';
 import {item_attributes_formulas} from '../../formulas/item_attributes_formulas.js';
 import ItemAttributeGenerator from './ItemAttributeGenerator.js';
+import {IconID} from '../../../../../types/enums/IconID.js';
 
 export default class GenerateItems {
     private readonly _itemCharacterAttributeGenerator: ItemAttributeGenerator;
@@ -144,7 +145,8 @@ export default class GenerateItems {
                         QualityID       : undefined,
                         StackSize       : 0,
                         Strength        : 0,
-                        TwoHandWeapon   : false
+                        TwoHandWeapon   : false,
+                        IconID          : database.metadata.items.iconId(itemCategories[i]),
                     };
 
                     if (database.metadata.items.requireArmorMaterial(itemCategories[i])) itemAttributes.ArmorMaterialID = options.armorMaterialID;
