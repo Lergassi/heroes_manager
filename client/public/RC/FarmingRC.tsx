@@ -13,6 +13,9 @@ import {database} from '../../../core/data/ts/database';
 import * as fns from 'date-fns';
 import {GardenBed} from '../../../core/app/Components/GardenBed';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface';
+import {BuildingID} from '../../../core/types/enums/BuildingID.js';
+import {DATE_FORMAT_RU} from '../../../core/app/consts.js';
+import TimerValueRC from './TimerValueRC.js';
 
 export type UI_GardenBed = {
     gardenBed: GardenBed;   //Для управления.
@@ -28,13 +31,15 @@ interface FarmingRCProps {
 
 interface FarmingRCState {
     gardenBeds: UI_GardenBed[];
+    count: number;
+    max: number;
     window: UI_WindowOptions;
 }
 
 export interface FarmingRCInterface {
     // updateGardenBed?(index: number, seedID: ItemID, startGrow: Date): void;
     updateGardenBed?(gardenBeds: UI_GardenBed[]): void;
-    updateMaxGardenBed?(value: number): void;
+    updateGardenBedCount?(count: number, max: number): void;
 }
 
 export interface FarmingRenderInterface {
@@ -47,6 +52,8 @@ export class FarmingRC extends React.Component<FarmingRCProps, FarmingRCState> i
 
         this.state = {
             gardenBeds: [],
+            count: 0,
+            max: 0,
             window: {show: true},
         };
 
@@ -66,7 +73,13 @@ export class FarmingRC extends React.Component<FarmingRCProps, FarmingRCState> i
         });
     }
 
-    updateMaxGardenBed(value: number): void {
+    updateGardenBedCount(count: number, max: number): void {
+        this.setState((state) => {
+            return {
+                count: count,
+                max: max,
+            } as FarmingRCState;
+        });
     }
 
     render() {
@@ -77,15 +90,22 @@ export class FarmingRC extends React.Component<FarmingRCProps, FarmingRCState> i
                 <div className={'widget'}>
                     <div className={'widget__title'}>FarmingRC</div>
                     <div className={'widget__content'}>
-                        <button className={'btn btn_default'} onClick={(event) => {
-                            event.preventDefault();
-                            this.props.farming.buildGardenBed(
-                                this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
-                                this.props.container.get<WalletInterface>(ServiceID.Wallet),
-                            );
-                        }}>BUILD_GARDEN_BED</button>
+                        <div className={'block'}>
+                            <button className={'btn btn_default'} onClick={(event) => {
+                                event.preventDefault();
+                                this.props.farming.buildGardenBed(
+                                    this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
+                                    this.props.container.get<WalletInterface>(ServiceID.Wallet),
+                                );
+                            }}>BUILD_GARDEN_BED</button> cost: {database.buildings.find(BuildingID.GardenBed).cost}/{this.props.container.get<WalletInterface>(ServiceID.Wallet).value}, requireItems: , count: {this.state.count}/{this.state.max}
+                        </div>
                         <table className={'basic-table'}>
                             <tbody>
+                                <tr>
+                                    <th>SEED_ID</th>
+                                    <th>TIMER</th>
+                                    <th>CTRL</th>
+                                </tr>
                                 {_.map(this.state.gardenBeds, (gardenBed, index, collection) => {
                                     return <tr key={index}>
                                         <td>
@@ -93,14 +113,6 @@ export class FarmingRC extends React.Component<FarmingRCProps, FarmingRCState> i
                                                 'Free' :
                                                 (<span>
                                                     {gardenBed.seedID}:
-                                                </span>)
-                                            }
-                                        </td>
-                                        <td>
-                                            {gardenBed.gardenBed.isFree() ?
-                                                'Free' :
-                                                (<span>
-                                                    {fns.format(new Date(gardenBed.startGrowth.getTime() + database.seeds.find(gardenBed.seedID).growthDuration * 1000), 'dd.MM.yyyy HH:mm:ss')}
                                                 </span>)
                                             }
                                         </td>
@@ -113,22 +125,27 @@ export class FarmingRC extends React.Component<FarmingRCProps, FarmingRCState> i
                                                         handler={(itemID, itemStorage) => {
                                                             this.props.farming.plant(index, itemID, itemStorage);
                                                         }}
-                                                    />) :
-                                                    (<button className={'btn btn_default'} onClick={(event) => {
-                                                        event.preventDefault();
-                                                        this.props.farming.harvest(
-                                                            index,
-                                                            this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
-                                                        );
-                                                    }}>HARVEST</button>)
+                                                    />) : <TimerValueRC
+                                                        seconds={database.seeds.find(gardenBed.seedID).growthDuration}
+                                                    />
                                             }
+                                        </td>
+                                        <td>
+                                            {/*todo: Логику обработки кнопки в зависимости от состояния можно передать через колбек в сам метод.*/}
+                                            <button className={'btn btn_default ' + (!gardenBed.gardenBed.isReadyToHarvest() ? 'btn_default_disabled' : '')} disabled={!gardenBed.gardenBed.isReadyToHarvest()} onClick={(event) => {
+                                                    event.preventDefault();
+                                                    this.props.farming.harvest(
+                                                        index,
+                                                        this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
+                                                    );
+                                                }}>HARVEST</button>
                                         </td>
                                     </tr>
                                 })}
                             </tbody>
                         </table>
-                    </div>{/*end widget__content*/}
-                </div>{/*end widget*/}
+                    </div>
+                </div>
             </div>
         );
     }

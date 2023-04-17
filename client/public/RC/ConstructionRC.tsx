@@ -11,6 +11,7 @@ import {ItemID} from '../../../core/types/enums/ItemID';
 import UIUpdater from '../../app/UIUpdater';
 import ContainerInterface from '../../../core/source/ContainerInterface';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface';
+import TimerValueRC from './TimerValueRC.js';
 
 export type UI_Building = {
     ID: BuildingID;
@@ -108,7 +109,7 @@ export class ConstructionRC extends React.Component<ConstructionRCProps, Constru
                     </div>{/*end widget__content*/}
                 </div>{/*end widget*/}
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Buildings (ConstructionRC)</div>
+                    <div className={'widget__title'}>Mines (ConstructionRC)</div>
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
@@ -116,12 +117,19 @@ export class ConstructionRC extends React.Component<ConstructionRCProps, Constru
                                 <th>BUILDING_ID</th>
                                 <th>ITEM_ID</th>
                                 <th>COUNT/PERIOD(s)</th>
+                                <th>TIME_TO_ADD</th>
                             </tr>
                             {_.map(this.state.buildings, (building, index) => {
                                 return <tr key={index}>
                                     <td>{building.ID}</td>
                                     <td>{building.itemID}</td>
                                     <td>{building.count}/{building.interval}</td>
+                                    <td>
+                                        <TimerValueRC
+                                            seconds={building.interval}
+                                            options={{autoReset: true}}
+                                        />
+                                    </td>
                                 </tr>
                             })}
                             </tbody>

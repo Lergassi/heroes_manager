@@ -47,12 +47,12 @@ export class GardenBed implements GardenBedRenderInterface {
     harvest(itemStorage: ItemStorageInterface): boolean {
         if (this.isFree()) {
             debug(DebugNamespaceID.Throw)('Растение не посажено.');
+
             return false;
         }
 
-        let now = new Date();
-        let diff = fns.differenceInSeconds(now, this._startGrowth);
-        if (diff < database.seeds.find(this._seedID).growthDuration) {
+        if (!this.isReadyToHarvest()) {
+
             debug(DebugNamespaceID.Throw)('Растение еще не выросло.');
             return false;
         }
@@ -63,6 +63,19 @@ export class GardenBed implements GardenBedRenderInterface {
         debug(DebugNamespaceID.Log)('Урожай собран.');
 
         return true;
+    }
+
+    isReadyToHarvest(): boolean {
+        if (this.isFree()) return false;
+
+        let now = new Date();
+        let diff = fns.differenceInSeconds(now, this._startGrowth);
+        // if (diff < database.seeds.find(this._seedID).growthDuration) {
+        //     debug(DebugNamespaceID.Throw)('Растение еще не выросло.');
+        //     return false;
+        // }
+
+        return diff >= database.seeds.find(this._seedID).growthDuration;
     }
 
     isFree(): boolean {

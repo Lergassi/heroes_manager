@@ -18,6 +18,10 @@ export class Farming implements FarmingRenderInterface {
         max: 2,
     };
 
+    get count(): number {
+        return this._gardenBeds.length;
+    }
+
     constructor() {
         this._gardenBeds = [];
     }
@@ -73,6 +77,6 @@ export class Farming implements FarmingRenderInterface {
         }
 
         UI.updateGardenBed?.(gardenBeds);
-        UI.updateMaxGardenBed?.(this._options.max);
+        UI.updateGardenBedCount?.(this.count, this._options.max);
     }
 }
