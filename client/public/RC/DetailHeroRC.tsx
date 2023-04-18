@@ -332,7 +332,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>DetailHeroRC<button className={'btn btn_default btn_right'} onClick={this.hide}>close</button></div>
+                    <div className={'widget__title'}>DetailHeroRC<button className={'btn btn_default btn_right btn_close-table'} onClick={this.hide}>CLOSE</button></div>
                     <div className={'widget__content'}>
                         <div className={'detail-hero'}>
                             <div className={'detail-hero-summary'}>

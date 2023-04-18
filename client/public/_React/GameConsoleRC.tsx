@@ -17,12 +17,12 @@ export interface GameConsoleProps {
 }
 
 export default class GameConsoleRC extends React.Component<any, any>{
-    private _buttonCommands = [
-        CommandID.new_game,
-        CommandID.new_game + ' ' + 'empty',
-        CommandID.new_game + ' ' + 'basic',
-        CommandID.create_location,
-    ];
+    // private _buttonCommands = [
+    //     CommandID.new_game,
+    //     CommandID.new_game + ' ' + 'empty',
+    //     CommandID.new_game + ' ' + 'all_content',
+    //     CommandID.create_location,
+    // ];
 
     private readonly _container: ContainerInterface;
 

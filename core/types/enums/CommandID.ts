@@ -3,7 +3,7 @@ export enum CommandID {
     new_game = 'new_game',
     create_player_env = 'create_player_env',
     create_default_start_player_objects = 'create_default_start_player_objects',
-    create_basic_start_player_objects = 'create_basic_start_player_objects',
+    create_all_content_start_player_objects = 'create_all_content_start_player_objects',
     create_start_player_items = 'create_start_player_items',
 
     //player

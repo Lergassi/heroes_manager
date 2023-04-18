@@ -16,6 +16,7 @@ type TSDB_LocationEnemyDB = {
 //     type: ['Пустыня', 'Горы', 'Побережье и тд'],
 // };
 
+//todo: Не удобно работать с кодом. Нужно обязательно помнить что куда записать в плане бд.
 //todo: У локации может быть несколько вариантов.
 let enemies_db: TSDB_LocationEnemyDB = {
     [LocationTypeID.Barrens]: [
@@ -27,6 +28,11 @@ let enemies_db: TSDB_LocationEnemyDB = {
         {enemyTypeID: EnemyTypeID.Goblin, count: {min: 10, max: 30}},
         {enemyTypeID: EnemyTypeID.Wolf, count: {min: 5, max: 10}},
         {enemyTypeID: EnemyTypeID.Bear, count: {min: 1, max: 4}},   //todo: @bug? Если 0 попадет в отряд будет ошибка.
+    ],
+    [LocationTypeID.Mountains]: [
+        {enemyTypeID: EnemyTypeID.Bandit, count: {min: 20, max: 40}},
+        {enemyTypeID: EnemyTypeID.FireElemental, count: {min: 10, max: 20}},
+        {enemyTypeID: EnemyTypeID.Golem, count: {min: 1, max: 4}},
     ],
 };
 

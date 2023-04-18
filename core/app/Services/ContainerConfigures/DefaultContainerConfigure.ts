@@ -7,7 +7,7 @@ import CreateDefaultStartPlayerObjectsCommand from '../../Commands/NewGameScenar
 import DetailHeroCommand from '../../Commands/DetailHeroCommand.js';
 import DetailLocationCommand from '../../Commands/DetailLocationCommand.js';
 import NewGameCommand from '../../Commands/NewGameCommand.js';
-import CreateBasicStartPlayerObjectsCommand from '../../Commands/NewGameScenariosCommands/CreateBasicStartPlayerObjectsCommand.js';
+import CreateAllContentStartPlayerObjectsCommand from '../../Commands/NewGameScenariosCommands/CreateAllContentStartPlayerObjectsCommand.js';
 import CreateItemCommand from '../../Commands/CreateItemCommand.js';
 import CreateHeroCommand from '../../Commands/CreateHeroCommand.js';
 import CreateItemStorageCommand from '../../Commands/CreateItemStorageCommand.js';
@@ -87,7 +87,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         /* GAME */
         gameConsole.register(new NewGameCommand(container));
         gameConsole.register(new CreatePlayerEnvironmentCommand(container));
-        gameConsole.register(new CreateBasicStartPlayerObjectsCommand(container));
+        gameConsole.register(new CreateAllContentStartPlayerObjectsCommand(container));
         gameConsole.register(new CreateDefaultStartPlayerObjectsCommand(container));
 
         gameConsole.register(new AddMoneyCommand(container));

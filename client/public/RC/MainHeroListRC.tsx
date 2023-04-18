@@ -178,7 +178,12 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                         return <tr key={index}>
                                             <td>
                                                 <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.hero_classes.data.find(hero.heroClassId).iconId)}></span>
-                                                <span className={'first-table-column-padding-for-icon'}>{hero.heroClassName} ({hero.ID}) {hero.isDead ? 'X' : ''}</span>
+                                                <span className={'first-table-column-padding-for-icon'}>
+                                                    <a href="" onClick={(event) => {
+                                                        event.preventDefault();
+                                                        this.props.container.get<DetailHeroRC>(ServiceID.UI_DetailHero).updateHero(hero.hero, {show: true});
+                                                    }}>{hero.heroClassName} ({hero.ID}) {hero.isDead ? 'X' : ''}</a>
+                                                </span>
                                             </td>
                                             <td>{hero.level} ({hero.exp}/{hero.totalExpToLevelUp})</td>
                                             <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>

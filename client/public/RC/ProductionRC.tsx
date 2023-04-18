@@ -87,15 +87,15 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
                         <table className={'basic-table'}>
                             <tbody>
                                 <tr>
-                                    <th>ITEM_ID</th>
-                                    <th>ITEM_CATEGORY_ID</th>
+                                    <th className={'production-table-column-name'}>ITEM_ID</th>
+                                    <th className={'production-table-column-item-category'}>ITEM_CATEGORY_ID</th>
                                     {/*<th>AP</th>*/}
                                     {/*<th>HP</th>*/}
                                     {/*<th>STR/AGI/INT</th>*/}
-                                    <th>RESULT_COUNT</th>
-                                    <th>REQUIRE_ITEMS</th>
-                                    <th>COST</th>
-                                    <th>CTRL</th>
+                                    <th className={'production-table-column-result-count'}>RESULT_COUNT</th>
+                                    <th className={'production-table-column-require-items'}>REQUIRE_ITEMS</th>
+                                    <th className={'production-table-column-cost'}>COST</th>
+                                    <th className={'production-table-column-ctrl'}>CTRL</th>
                                 </tr>
                                 {_.map(this.state.items, (item, index, collection) => {
                                     return <tr key={index}>

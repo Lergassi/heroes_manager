@@ -18,6 +18,7 @@ import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import HeroScrolledListSelectRC from './HeroScrolledListSelectRC.js';
 import {ItemID} from "../../../core/types/enums/ItemID";
+import HelpTooltipRC from './HelpTooltipRC.js';
 
 export interface DetailLocationRCProps {
     container: ContainerInterface;
@@ -42,6 +43,7 @@ interface DetailLocationRCState {
     items: {[itemID in ItemID]?: {count: number}};
 
     heroes: DetailLocationRCHeroElement[];
+    maxHeroes: number;
     enemies: DetailLocationRCEnemyElement[];
     // veins: DetailLocationRCVeinElement[];
 
@@ -112,6 +114,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
             items   : {},
 
             heroes   : [],
+            maxHeroes   : 5,    //Короче 5. Долго лезть в группу.
             enemies  : [],
             heroGroupItems: [],
 
@@ -399,7 +402,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Локация ({this.state.ID})<button className={'btn btn_default btn_right'} onClick={this.hide}>close</button></div>
+                    <div className={'widget__title'}>Локация ({this.state.ID})<button className={'btn btn_default btn_right btn_close-table'} onClick={this.hide}>CLOSE</button></div>
                 </div>
                 <div className={'row'} key={0}>
                     <div className={'col col-25'}>
@@ -427,7 +430,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                     </div>{/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
-                            <div className={'widget__title'}>Герои</div>
+                            <div className={'widget__title'}>Герои, : {heroes.length}/5</div>
                             <div className={'widget__content'}>
                                 <table className={'basic-table'}>
                                     <tbody>
@@ -527,7 +530,8 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                             </div>
                         </div>{/*end enemies*/}
                         <div className={'widget'}>
-                            <div className={'widget__title'}>Hero group items</div>
+                            {/*<div className={'widget__title'}><span className={'widget__title-text'}>Hero group items</span> <HelpTooltip text={'Доступные предметы: HealthPotion01'}/></div>*/}
+                            <div className={'widget__title'}>Hero group items <HelpTooltipRC text={'Доступные предметы: HealthPotion01'}/></div>
                             <div className={'widget__content'}>
                                 <table className={'basic-table'}>
                                     <tbody>

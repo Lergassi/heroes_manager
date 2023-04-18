@@ -21,6 +21,9 @@ export interface HeroDetailRComponentState {
     visible: boolean,
 }
 
+/**
+ * @deprecated
+ */
 export default class HeroDetailRComponent extends React.Component<HeroDetailRComponentProps, HeroDetailRComponentState> {
     constructor(props: HeroDetailRComponentProps) {
         super(props);
@@ -88,7 +91,7 @@ export default class HeroDetailRComponent extends React.Component<HeroDetailRCom
         return (
             <div className={'block'}>
                 <div>Hero</div>
-                <button onClick={this.hide}>close</button>
+                <button onClick={this.hide}>CLOSE</button>
                 <table className={'basic-table'}>
                     <tbody>
                     <tr>

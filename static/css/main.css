@@ -236,6 +236,13 @@
 /*}*/
 
 /****************************************************************/
+/* custom buttons */
+/****************************************************************/
+.btn_close-table {
+    margin-top: 3px;
+}
+
+/****************************************************************/
 /* block */
 /****************************************************************/
 .block {
@@ -255,11 +262,16 @@
 }
 
 .widget__title {
+/*.widget__title:first-child {*/
     height: 36px;
     line-height: 36px;
     /*box-shadow: 1px 1px 1px 1px;*/
     padding: 0 15px;
     border-bottom: 2px solid #ddd;
+}
+
+.widget__title-text {
+    line-height: 36px;
 }
 
 /*.widget__hide-button {*/
@@ -324,6 +336,25 @@
 .first-table-column-padding-for-icon {
     /*padding-left: 32px;*/
     padding-left: 40px; /*32+8*/
+}
+
+.production-table-column-name {
+    width: 500px;
+}
+.production-table-column-item-category {
+    width: 150px;
+}
+.production-table-column-result-count {
+    width: 40px;
+}
+.production-table-column-require-items {
+    width: 200px;
+}
+.production-table-column-cost {
+    width: 80px;
+}
+.production-table-column-ctrl {
+    /*width: 220px;*/
 }
 
 /****************************************************************/
@@ -816,6 +847,37 @@
     content: ' ';
     clear: both;
     display: block;
+}
+
+.help-tooltip {
+    float: right;
+    position: relative;
+}
+
+.help-tooltip__text {
+    /*background-color: orange;*/
+
+    line-height: normal;    /*todo: До изменения верстки.*/
+
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 8px;
+    width: 300px;
+    bottom: 40px;
+    left: -80px;
+    border: 1px solid #ddd;
+}
+
+.help-tooltip__icon {
+    line-height: 36px;
+}
+
+.help-tooltip__icon:hover ~ .help-tooltip__text {
+/*.help-tooltip__text .help-tooltip__icon:hover {*/
+/*.help-tooltip__icon:hover {*/
+    display: block;
+    /*background-color: orange;*/
 }
 
 /****************************************************************/

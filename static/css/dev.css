@@ -1,0 +1,20 @@
+.block {
+    margin-bottom: 15px;
+    background-color: white;
+}
+
+.block__title {
+    margin-bottom: 5px;
+}
+
+.block__content {
+
+}
+
+.debug {
+
+}
+
+.debug_hide {
+    display: none;
+}

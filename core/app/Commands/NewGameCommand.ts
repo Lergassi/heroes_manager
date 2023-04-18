@@ -14,7 +14,7 @@ export default class NewGameCommand extends Command {
     private readonly _scenarios = {
         default: CommandID.create_default_start_player_objects,
         empty: undefined,   //С проверкой по условию.
-        basic: CommandID.create_basic_start_player_objects,
+        all_content: CommandID.create_all_content_start_player_objects,
     };
 
     get name(): string {

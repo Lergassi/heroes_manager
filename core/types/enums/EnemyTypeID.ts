@@ -8,6 +8,8 @@ export enum EnemyTypeID {
     Rabbit = 'Rabbit',
     Deer = 'Deer',
     Wolf = 'Wolf',
+    Golem = 'Golem',
+    FireElemental = 'FireElemental',
 
     EnemyType01 = 'EnemyType01',
     EnemyType02 = 'EnemyType02',

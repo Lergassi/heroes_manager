@@ -27,9 +27,9 @@ import GameObject from '../../../source/GameObject.js';
 import LocationConfiguratorByDB from '../../Services/LocationConfiguratorByDB.js';
 import Production from '../../Components/Production.js';
 
-export default class CreateBasicStartPlayerObjectsCommand extends Command {
+export default class CreateAllContentStartPlayerObjectsCommand extends Command {
     get name(): string {
-        return CommandID.create_basic_start_player_objects;
+        return CommandID.create_all_content_start_player_objects;
     }
 
     async execute(input: Input) {
@@ -179,23 +179,26 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
             },
         ];
 
+        let heroesForPattern = 2;
         for (let i = 0; i < heroPatterns.length; i++) {
-            let hero = this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
-                heroPatterns[i].heroClassID,
-                1,
-            );
+            for (let j = 0; j < heroesForPattern; j++) {
+                let hero = this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
+                    heroPatterns[i].heroClassID,
+                    1,
+                );
 
-            //Начальная экипировка.
-            for (const equipSlotID in heroPatterns[i].equip) {
-                let itemID = heroPatterns[i].equip[equipSlotID] as ItemID;
-                if (!itemID) {
-                    debug(DebugNamespaceID.Warning)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
-                    continue;
+                //Начальная экипировка.
+                for (const equipSlotID in heroPatterns[i].equip) {
+                    let itemID = heroPatterns[i].equip[equipSlotID] as ItemID;
+                    if (!itemID) {
+                        debug(DebugNamespaceID.Warning)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
+                        continue;
+                    }
+
+                    hero
+                        .get<EquipSlotInterface>(equipSlotID)
+                        ?.equip(itemID);
                 }
-
-                hero
-                    .get<EquipSlotInterface>(equipSlotID)
-                    ?.equip(itemID);
             }
         }
     }
@@ -260,8 +263,9 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
         let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
 
         let locationTypes = {
-            [LocationTypeID.Barrens]: 5,
-            [LocationTypeID.Forrest]: 5,
+            [LocationTypeID.Barrens]: 8,
+            [LocationTypeID.Forrest]: 8,
+            [LocationTypeID.Mountains]: 8,
         };
         let level = 1;
         for (const locationTypesID in locationTypes) {

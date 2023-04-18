@@ -115,7 +115,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                         <table className={'basic-table'}>
                             <tbody>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Type (ID)</th>
                                     <th>Level</th>
                                     <th>HuntingState</th>
                                     <th>Heroes (L/T)</th>
@@ -127,7 +127,12 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                 </tr>
                                 {_.map(this.state.locations, (location, index) => {
                                     return <tr key={index}>
-                                        <td>{location.name} ({location.ID})</td>
+                                        <td>
+                                            <a href="" onClick={(event) => {
+                                                event.preventDefault();
+                                                this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
+                                            }}>{location.name} ({location.ID})</a>
+                                        </td>
                                         <td>{location.level}</td>
                                         <td>{location.state}</td>
                                         <td>{location.lifeHeroesCount}/{location.totalHeroesCount}</td>
