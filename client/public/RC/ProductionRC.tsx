@@ -75,7 +75,7 @@ export default class ProductionRC extends React.Component<ProductionRCProps, Pro
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>{this.state.title}</div>
+                    <div className={'widget__title'}>{this.state.title} (ProductionRC)</div>
                     <div className={'widget__content'}>
                         <div className={'block'}>
                             <button className={'btn btn_default'} onClick={(event) => {

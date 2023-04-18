@@ -110,7 +110,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Локации</div>
+                    <div className={'widget__title'}>MainLocationListRC</div>
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>

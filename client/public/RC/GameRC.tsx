@@ -21,7 +21,7 @@ import MainLocationListRC from './MainLocationListRC.js';
 import ProductionRC from './ProductionRC';
 import TavernRC from './TavernRC.js';
 import TavernRC_v2 from './TavernRC_v2.js';
-import WalletMoneyCounterRC from './WalletMoneyCounterRC.js';
+import WalletMoneyValueRC from './WalletMoneyValueRC.js';
 import WalletRC from './WalletRC.js';
 import ProductionListRC from "./ProductionListRC";
 import {ConstructionRC} from './ConstructionRC';
@@ -91,7 +91,7 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                         HEROES MANAGER
                     </div>
                     <div className={'header__wallet-money-counter'}>
-                        <WalletMoneyCounterRC
+                        WalletMoneyValueRC: <WalletMoneyValueRC
                             container={this.props.container}
                             wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
                         />

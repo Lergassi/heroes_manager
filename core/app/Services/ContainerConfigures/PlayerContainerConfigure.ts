@@ -42,7 +42,7 @@ import EnemyCharacterAttributeGenerator from '../BalanceTools/EnemyCharacterAttr
 import HeroCharacterAttributeGenerator from '../BalanceTools/HeroCharacterAttributeGenerator.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
 import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
-import LocationDatabaseConfigurator from '../LocationDatabaseConfigurator';
+import LocationConfiguratorByDB from '../LocationConfiguratorByDB.js';
 import StubFactory from '../StubFactory.js';
 import {MineFactory} from '../../Factories/MineFactory';
 import {Construction} from '../../Components/Construction';
@@ -185,7 +185,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<EnemyCharacterAttributeFactory>(ServiceID.EnemyCharacterAttributeFactory),
             );
         });
-        container.set<LocationDatabaseConfigurator>(ServiceID.LocationConfigurator, new LocationDatabaseConfigurator(
+        container.set<LocationConfiguratorByDB>(ServiceID.LocationConfigurator, new LocationConfiguratorByDB(
             container.get<EnemyFactory>(ServiceID.EnemyFactory),
         ));
         container.set<LocationFactory>(ServiceID.LocationFactory, (container) => {
@@ -197,15 +197,12 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<ItemStorageFactory>(ServiceID.ItemStorageFactory),
                 container.get<WalletFactory>(ServiceID.WalletFactory),
                 container.get<EnemyFactory>(ServiceID.EnemyFactory),
-                container.get<LocationDatabaseConfigurator>(ServiceID.LocationConfigurator),
+                container.get<LocationConfiguratorByDB>(ServiceID.LocationConfigurator),
             );
         });
         container.set<VeinFactory>(ServiceID.VeinFactory, new VeinFactory());
-        // container.set<Production>(ServiceID.Production, (container) => {
-        //     return new Production(
-        //         container.get<EntityManagerInterface>(ServiceID.EntityManager),
-        //     );
-        // });
+
+
         container.set<Production>(ServiceID.Blacksmith, (container) => {
             return new Production();
         });
@@ -225,6 +222,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         container.set<MineFactory>(ServiceID.MineFactory, (container) => {
             return new MineFactory();
         });
+
         container.set<Construction>(ServiceID.Construction, (container) => {
             return new Construction(
                 container.get<MineFactory>(ServiceID.MineFactory)

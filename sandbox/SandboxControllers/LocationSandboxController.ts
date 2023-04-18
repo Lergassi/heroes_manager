@@ -4,7 +4,7 @@ import Location from '../../core/app/Components/Location.js';
 import MainLocationList from '../../core/app/Components/MainLocationList.js';
 import EnemyFactory from '../../core/app/Factories/EnemyFactory.js';
 import LocationFactory from '../../core/app/Factories/LocationFactory.js';
-import LocationDatabaseConfigurator from '../../core/app/Services/LocationDatabaseConfigurator';
+import LocationConfiguratorByDB from '../../core/app/Services/LocationConfiguratorByDB.js';
 import {database} from '../../core/data/ts/database.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
@@ -96,7 +96,7 @@ export default class LocationSandboxController extends AbstractSandboxController
         //     location.addEnemy(enemyFactory.create(enemyTypeID, enemyLevel));
         // });
 
-        let locationConfigurator = new LocationDatabaseConfigurator(enemyFactory);
+        let locationConfigurator = new LocationConfiguratorByDB(enemyFactory);
         locationConfigurator.configure(location);
 
         console.log(location);

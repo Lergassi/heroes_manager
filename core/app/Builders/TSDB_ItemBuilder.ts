@@ -24,6 +24,7 @@ export default class TSDB_ItemBuilder {
     Equipable: boolean;
     TwoHandWeapon: boolean;
     IconId: string;
+    ProductionId?: string;
 
     constructor(values: {
         ID: ItemID,
@@ -46,6 +47,7 @@ export default class TSDB_ItemBuilder {
         this.Equipable = false;
         this.TwoHandWeapon = false;
         this.IconId = IconID.Question02;
+        this.ProductionId = null;
     }
 
     build(): TSDB_Item {
@@ -66,6 +68,7 @@ export default class TSDB_ItemBuilder {
             TwoHandWeapon: this.TwoHandWeapon,
             AttackPower: this.AttackPower,
             IconID: this.IconId,
+            ProductionId: this.ProductionId,
         };
     }
 }

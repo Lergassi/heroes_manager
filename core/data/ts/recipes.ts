@@ -99,6 +99,15 @@ let recipes_db: TSDB_RecipeDB = {
         ],
         productionCost: 0,
     },
+    [ItemID.GoldIngot]: {
+        ID: ItemID.GoldIngot,
+        resultItemCount: 1,
+        requireItems: [
+            {itemID: ItemID.GoldOre, count: 2},
+            {itemID: ItemID.Coal, count: 1},
+        ],
+        productionCost: 0,
+    },
     [ItemID.Leather01]: {
         ID: ItemID.Leather01,
         resultItemCount: 1,

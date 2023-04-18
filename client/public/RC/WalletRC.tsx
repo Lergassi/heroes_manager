@@ -8,7 +8,7 @@ import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
-import WalletMoneyCounterRC from './WalletMoneyCounterRC.js';
+import WalletMoneyValueRC from './WalletMoneyValueRC.js';
 
 export interface WalletRCProps {
     container: ContainerInterface;
@@ -60,7 +60,7 @@ export default class WalletRC extends React.Component<WalletRCProps, WalletRCSta
                     <div className={'widget__title'}>Золото</div>
                     <div className={'widget__content'}>
                         {/*{this.state.money}*/}
-                        <WalletMoneyCounterRC
+                        <WalletMoneyValueRC
                             container={this.props.container}
                             wallet={this.props.wallet}
                         />

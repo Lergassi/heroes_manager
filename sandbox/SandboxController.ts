@@ -83,6 +83,7 @@ import {ToolsSandboxController} from './SandboxControllers/ToolsSandboxControlle
 import mysql, {createConnection} from 'mysql';
 import * as net from 'net';
 import {sprintf} from 'sprintf-js';
+import {database} from '../core/data/ts/database.js';
 // import cookie from 'cookie';
 
 // let p = './core/data/json/auto_generated_equip_24.02.2023_06_02_55.json';
@@ -136,7 +137,7 @@ export default class SandboxController {
         // (new ItemStorageSandboxController(this._container)).run();
         // (new RecipesSandboxController(this._container)).run();
         // (new ShopSandboxController(this._container)).run();
-        (new ProductionSandboxController(this._container)).run();
+        // (new ProductionSandboxController(this._container)).run();
         // (new ToolsSandboxController(this._container)).run();
         // (new HeroSandboxController(this._container)).run();
         // (new EnemySandboxController(this._container)).run();
@@ -174,6 +175,7 @@ export default class SandboxController {
         // this._devEventSystemWithoutStatic();
         // this._devEventSystemWithoutTarget();
         // this._devNewRender();
+        this._devAutoConfigProduction();
 
         // this._devItemStackController();
         // this._devItemStorageV2();
@@ -1090,7 +1092,10 @@ export default class SandboxController {
         console.log(winIterations);
     }
 
-    // private main123() {
-    //
-    // }
+    private _devAutoConfigProduction() {
+        let items = database.items.data.findAll();
+        for (let i = 0; i < items.length; i++) {
+            console.log(items[i].ProductionId);
+        }
+    }
 }

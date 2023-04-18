@@ -24,14 +24,16 @@ import {EnemyTypeID} from "../../../types/enums/EnemyTypeID";
 import GameObject from "../../../source/GameObject";
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface';
 import {Farming} from '../../Components/Farming';
+import {database} from '../../../data/ts/database.js';
 
+//todo: Сделать класс для настройки игры.
 export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     get name(): string {
         return CommandID.create_default_start_player_objects;
     }
 
     async execute(input: Input) {
-        // await this._createItemStorages();
+        // await this._createItemStorages();    //1 сумка уже есть у каждого игрока.
         await this._configTavern();
         await this._configFarming();
         await this._configProduction();
@@ -49,15 +51,19 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         // // tavern.add(HeroClassID.Barbarian, 1);
         // tavern.add(HeroClassID.Warrior, 1);
 
+        //todo: Можно сделать отдельную бд именно на таверну, а не общее cost.
+
         let tavern = this.container.get<Tavern_v2>(ServiceID.Tavern_v2);
 
-        tavern.add(HeroClassID.Warrior, 1, 350);
+        tavern.add(HeroClassID.Warrior, 1, database.hero_classes.cost.find(HeroClassID.Warrior).cost);
 
         // tavern.add(HeroClassID.Rogue, 1, 80);
-        tavern.add(HeroClassID.Gunslinger, 1, 200);
-        tavern.add(HeroClassID.FireMage, 1, 450);
+        tavern.add(HeroClassID.Gunslinger, 1, database.hero_classes.cost.find(HeroClassID.Gunslinger).cost);
+        tavern.add(HeroClassID.FireMage, 1, database.hero_classes.cost.find(HeroClassID.FireMage).cost);
 
-        tavern.add(HeroClassID.Support1, 1, 1000);
+        tavern.add(HeroClassID.Support1, 1, database.hero_classes.cost.find(HeroClassID.Support1).cost);
+
+        // database.hero_classes.cost.find(HeroClassID.Warrior).cost;
     }
 
     private async _createItemStorages() {

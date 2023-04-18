@@ -179,7 +179,6 @@ export const metadata = {
             return items_metadata[itemCategoryID]?.twoHandWeapon ?? false;
         },
         iconId: function (itemCategoryID: ItemCategoryID): string {
-            // return items_metadata[itemCategoryID]?.iconId ?? IconID.Question02;
             return items_metadata[itemCategoryID]?.iconId;
         },
     },

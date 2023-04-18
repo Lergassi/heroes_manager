@@ -19,290 +19,290 @@ type TSDB_HeroClass = {
     //todo: Временно, до переноса логики в слоты.
     rightHandItemCategoryIDs: ItemCategoryID[];
     leftHandItemCategoryIDs: ItemCategoryID[];
-};
+}
 
-type TSDB_HeroClassDB = {[ID in HeroClassID]?: TSDB_HeroClass};
+type TSDB_HeroClassDB = {[ID in HeroClassID]?: TSDB_HeroClass}
 
 let hero_classes_data: TSDB_HeroClassDB = {
     [HeroClassID.Tank1]: {
-        ID                       : HeroClassID.Tank1,
+        ID: HeroClassID.Tank1,
         iconId: IconID.Shield01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Tank,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.Shields]
     },
     [HeroClassID.Warrior]: {
-        ID                       : HeroClassID.Warrior,
+        ID: HeroClassID.Warrior,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Tank,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 1}
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.Shields]
     },
     [HeroClassID.Paladin]: {
-        ID                       : HeroClassID.Paladin,
+        ID: HeroClassID.Paladin,
         iconId: IconID.Shield01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Tank,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 0.5},
             {ID: CharacterAttributeID.Intelligence, ratio: 0.5},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.Shields]
     },
     [HeroClassID.Tank2]: {
-        ID                       : HeroClassID.Tank2,
+        ID: HeroClassID.Tank2,
         iconId: IconID.Shield01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Tank,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.Shields]
     },
     [HeroClassID.Tank3]: {
-        ID                       : HeroClassID.Tank3,
+        ID: HeroClassID.Tank3,
         iconId: IconID.Shield01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Tank,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Tank,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.Shields]
     },
     [HeroClassID.Gladiator]: {
-        ID                       : HeroClassID.Gladiator,
+        ID: HeroClassID.Gladiator,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.OneHandedSwords]
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords]
     },
     [HeroClassID.Barbarian]: {
-        ID                       : HeroClassID.Barbarian,
+        ID: HeroClassID.Barbarian,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.TwoHandedSwords],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.TwoHandedSwords],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.PlateDamageDealer1]: {
-        ID                       : HeroClassID.PlateDamageDealer1,
+        ID: HeroClassID.PlateDamageDealer1,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.TwoHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.TwoHandedSwords]
+        rightHandItemCategoryIDs: [ItemCategoryID.TwoHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.TwoHandedSwords]
     },
     [HeroClassID.PlateDamageDealer2]: {
-        ID                       : HeroClassID.PlateDamageDealer2,
+        ID: HeroClassID.PlateDamageDealer2,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 0.5},
             {ID: CharacterAttributeID.Intelligence, ratio: 0.5},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.OneHandedSwords]
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords]
     },
     [HeroClassID.PlateDamageDealer3]: {
-        ID                       : HeroClassID.PlateDamageDealer3,
+        ID: HeroClassID.PlateDamageDealer3,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Strength, ratio: 0.5},
             {ID: CharacterAttributeID.Intelligence, ratio: 0.5},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : [ItemCategoryID.Shields]
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [ItemCategoryID.Shields]
     },
     [HeroClassID.LeatherDamageDealer1]: {
-        ID                       : HeroClassID.LeatherDamageDealer1,
+        ID: HeroClassID.LeatherDamageDealer1,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Leather],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Leather],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Agility, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.OneHandedSwords],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.OneHandedSwords],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Rogue]: {
-        ID                       : HeroClassID.Rogue,
+        ID: HeroClassID.Rogue,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Leather],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Leather],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Agility, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Daggers],
-        leftHandItemCategoryIDs  : [ItemCategoryID.Daggers]
+        rightHandItemCategoryIDs: [ItemCategoryID.Daggers],
+        leftHandItemCategoryIDs: [ItemCategoryID.Daggers]
     },
     [HeroClassID.Archer]: {
-        ID                       : HeroClassID.Archer,
+        ID: HeroClassID.Archer,
         iconId: IconID.Bow01,
-        armorMaterialIDs         : [ArmorMaterialID.Leather],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Leather],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Agility, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Boots],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Boots],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.LeatherDamageDealer2]: {
-        ID                       : HeroClassID.LeatherDamageDealer2,
+        ID: HeroClassID.LeatherDamageDealer2,
         iconId: IconID.Sword01,
-        armorMaterialIDs         : [ArmorMaterialID.Leather],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Leather],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Agility, ratio: 0.5},
             {ID: CharacterAttributeID.Intelligence, ratio: 0.5},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Daggers],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Daggers],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Gunslinger]: {
-        ID                       : HeroClassID.Gunslinger,
+        ID: HeroClassID.Gunslinger,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Leather],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Leather],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Agility, ratio: 0.5},
             {ID: CharacterAttributeID.Intelligence, ratio: 0.5},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Revolvers],
-        leftHandItemCategoryIDs  : [ItemCategoryID.Revolvers]
+        rightHandItemCategoryIDs: [ItemCategoryID.Revolvers],
+        leftHandItemCategoryIDs: [ItemCategoryID.Revolvers]
     },
     [HeroClassID.Necromancer]: {
-        ID                       : HeroClassID.Necromancer,
+        ID: HeroClassID.Necromancer,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Cloth],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Cloth],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Mage1]: {
-        ID                       : HeroClassID.Mage1,
+        ID: HeroClassID.Mage1,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Cloth],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Cloth],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Mage2]: {
-        ID                       : HeroClassID.Mage2,
+        ID: HeroClassID.Mage2,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Cloth],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Cloth],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Warlock]: {
-        ID                       : HeroClassID.Warlock,
+        ID: HeroClassID.Warlock,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Cloth],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Cloth],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.FireMage]: {
-        ID                       : HeroClassID.FireMage,
+        ID: HeroClassID.FireMage,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Cloth],
-        heroRoleID               : HeroRoleID.DamageDealer,
+        armorMaterialIDs: [ArmorMaterialID.Cloth],
+        heroRoleID: HeroRoleID.DamageDealer,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Support1]: {
-        ID                       : HeroClassID.Support1,
+        ID: HeroClassID.Support1,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Support,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Support,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Support2]: {
-        ID                       : HeroClassID.Support2,
+        ID: HeroClassID.Support2,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Support,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Support,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Support3]: {
-        ID                       : HeroClassID.Support3,
+        ID: HeroClassID.Support3,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Support,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Support,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Support4]: {
-        ID                       : HeroClassID.Support4,
+        ID: HeroClassID.Support4,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Support,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Support,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
     [HeroClassID.Support5]: {
-        ID                       : HeroClassID.Support5,
+        ID: HeroClassID.Support5,
         iconId: IconID.Question02,
-        armorMaterialIDs         : [ArmorMaterialID.Plate],
-        heroRoleID               : HeroRoleID.Support,
+        armorMaterialIDs: [ArmorMaterialID.Plate],
+        heroRoleID: HeroRoleID.Support,
         mainCharacterAttributeIDs: [
             {ID: CharacterAttributeID.Intelligence, ratio: 1},
         ],
-        rightHandItemCategoryIDs : [ItemCategoryID.Staffs],
-        leftHandItemCategoryIDs  : []
+        rightHandItemCategoryIDs: [ItemCategoryID.Staffs],
+        leftHandItemCategoryIDs: [],
     },
 };
 

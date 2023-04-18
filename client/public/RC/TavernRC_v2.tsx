@@ -86,10 +86,10 @@ export default class TavernRC_v2 extends React.Component<TavernRCProps_v2, Taver
                         <table className={'basic-table'}>
                             <tbody>
                                 <tr>
-                                    <th>HeroClassID</th>
+                                    <th>HeroClassID (index)</th>
                                     <th>HeroRoleID</th>
                                     <th>level</th>
-                                    <th>AvailableWeapons</th>
+                                    {/*<th>AvailableWeapons</th>*/}
                                     <th>Cost</th>
                                     <th>Ctrl</th>
                                 </tr>
@@ -97,21 +97,22 @@ export default class TavernRC_v2 extends React.Component<TavernRCProps_v2, Taver
                                     return <tr key={index}>
                                         <td>
                                             <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.hero_classes.data.find(hero.heroClassID).iconId)}></span>
-                                            <span className={'first-table-column-padding-for-icon'}>{hero.heroClassID} {index}</span>
+                                            <span className={'first-table-column-padding-for-icon'}>{hero.heroClassID} ({index})</span>
                                         </td>
                                         <td>{database.hero_classes.data.heroRole(hero.heroClassID)}</td>
                                         <td>{hero.level}</td>
-                                        <td>
-                                            {
-                                                database.hero_classes.data.availableWeapons(hero.heroClassID, (ID) => {
-                                                    return <span>{ID}</span>
-                                                }).reduce((prev, curr) => {
-                                                    return <>{prev}, {curr}</>;
-                                                })
-                                            }
-                                        </td>
+                                        {/*<td>*/}
+                                        {/*    {*/}
+                                        {/*        database.hero_classes.data.availableWeapons(hero.heroClassID, (ID) => {*/}
+                                        {/*            return <span>{ID}</span>*/}
+                                        {/*        }).reduce((prev, curr) => {*/}
+                                        {/*            return <>{prev}, {curr}</>;*/}
+                                        {/*        })*/}
+                                        {/*    }*/}
+                                        {/*</td>*/}
                                         <td>{hero.cost}</td>
                                         <td><button className={'btn btn_default'} onClick={(event) => {
+                                            event.preventDefault();
                                             this.props.tavern.hire(
                                                 index,
                                                 // this.props.container.get<MainHeroList>(ServiceID.MainHeroList),
@@ -119,7 +120,6 @@ export default class TavernRC_v2 extends React.Component<TavernRCProps_v2, Taver
                                                 this.props.mainHeroList,
                                                 this.props.wallet,
                                             );
-                                            event.preventDefault();
                                         }}>HIRE</button></td>
                                     </tr>
                                 })}

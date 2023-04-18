@@ -15,6 +15,7 @@ type CSV_Item = {
     ItemCategoryID: string;
     ArmorMaterialID: string;
     QualityID: string;
+    ProductionID: string;
     StackSize: number;
     ItemLevel: number;
     Strength: number;
@@ -58,6 +59,7 @@ export default class ConventItems {
                 Strength        : Number(csv_json[i].Strength ?? 0),
                 TwoHandWeapon   : Boolean(csv_json[i].TwoHandWeapon),
                 IconID          : String(csv_json[i].IconID),
+                ProductionId    : String(csv_json[i].ProductionID),
             };
         }
         //todo: Генерация ID для enum.

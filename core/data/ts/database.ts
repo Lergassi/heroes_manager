@@ -12,6 +12,7 @@ import {test} from './test.js';
 import {buildings} from './buildings';
 import {seeds} from './seeds';
 import {mines} from './mines';
+import {hero_classes_cost} from './hero_classes_cost.js';
 
 export const database = {
     metadata: metadata,
@@ -32,6 +33,7 @@ export const database = {
         data: hero_classes,
         character_attributes: hero_class_character_attributes,
         equip_sets: hero_equip_sets,
+        cost: hero_classes_cost,
     },
 
     locations: {

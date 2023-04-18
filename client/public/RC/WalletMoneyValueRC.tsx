@@ -9,24 +9,24 @@ import UIUpdater from '../../app/UIUpdater.js';
 import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
 import {WalletRCState} from './WalletRC.js';
 
-export interface WalletMoneyCounterRCProps {
+export interface WalletMoneyValueRCProps {
     container: ContainerInterface;
     wallet: WalletInterface;
 }
 
-interface WalletMoneyCounterRCState {
+interface WalletMoneyValueRCState {
     money: number;
 }
 
-export default class WalletMoneyCounterRC extends React.Component<WalletMoneyCounterRCProps, WalletMoneyCounterRCState> implements RCUpdateInterface, WalletInterfaceRender {
-    constructor(props: WalletMoneyCounterRCProps) {
+export default class WalletMoneyValueRC extends React.Component<WalletMoneyValueRCProps, WalletMoneyValueRCState> implements RCUpdateInterface, WalletInterfaceRender {
+    constructor(props: WalletMoneyValueRCProps) {
         super(props);
 
         this.state = {
             money: 0,
         };
 
-        this.props.container.set<WalletMoneyCounterRC>(ServiceID.UI_Wallet, this);
+        this.props.container.set<WalletMoneyValueRC>(ServiceID.UI_Wallet, this);
         this.props.container.get<UIUpdater>(ServiceID.UI_Updater).add(this);
     }
 
@@ -38,15 +38,15 @@ export default class WalletMoneyCounterRC extends React.Component<WalletMoneyCou
         this.setState((state) => {
             return {
                 money: value,
-            } as WalletMoneyCounterRCState;
+            } as WalletMoneyValueRCState;
         });
     }
 
     render() {
         return (
-            <div>
-                WalletMoneyCounterRC: {this.state.money}
-            </div>
+            <span>
+                {this.state.money}
+            </span>
         );
     }
 }

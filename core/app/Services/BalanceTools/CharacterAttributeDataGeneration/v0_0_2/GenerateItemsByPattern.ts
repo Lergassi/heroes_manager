@@ -189,12 +189,9 @@ export default class GenerateItemsByPattern {
                                                 itemID: ItemID.IronIngot,
                                                 count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.IronIngot, this._patterns[i].itemCategories[j].itemCategoryID),
                                             },
-                                            // {
-                                            //     itemID: ItemID.CopperIngot,
-                                            //     count: this._productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, this._patterns[i].itemCategories[j].itemCategoryID),
-                                            // },
                                         );
                                         tsdb_itemBuilder.Strength = characterAttributeValue;
+                                        tsdb_itemBuilder.ProductionId = ProductionID.Blacksmith;
                                         break;
                                     case ArmorMaterialID.Leather:
                                         requireItems.push(
@@ -204,6 +201,7 @@ export default class GenerateItemsByPattern {
                                             },
                                         );
                                         tsdb_itemBuilder.Agility = characterAttributeValue;
+                                        tsdb_itemBuilder.ProductionId = ProductionID.LeatherWorking;
                                         break;
                                     case ArmorMaterialID.Cloth:
                                         requireItems.push(
@@ -213,6 +211,7 @@ export default class GenerateItemsByPattern {
                                             },
                                         );
                                         tsdb_itemBuilder.Intelligence = characterAttributeValue;
+                                        tsdb_itemBuilder.ProductionId = ProductionID.Tailoring;
                                         break;
                                 }
 
@@ -251,6 +250,7 @@ export default class GenerateItemsByPattern {
                             tsdb_itemBuilder.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             tsdb_itemBuilder.Strength = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             tsdb_itemBuilder.IconId = database.metadata.items.iconId(this._patterns[i].itemCategories[j].itemCategoryID);
+                            tsdb_itemBuilder.ProductionId = ProductionID.Blacksmith;
 
                             let recipe: TSDB_Recipe = {
                                 ID: ID as ItemID,
@@ -295,6 +295,7 @@ export default class GenerateItemsByPattern {
                             tsdb_itemBuilder.AttackPower = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                             if (database.metadata.items.twoHandWeapon(this._patterns[i].itemCategories[j].itemCategoryID)) tsdb_itemBuilder.TwoHandWeapon = true;
                             tsdb_itemBuilder.IconId = database.metadata.items.iconId(this._patterns[i].itemCategories[j].itemCategoryID);
+                            tsdb_itemBuilder.ProductionId = ProductionID.Blacksmith;
 
                             let recipe: TSDB_Recipe = {
                                 ID: ID as ItemID,
@@ -337,6 +338,7 @@ export default class GenerateItemsByPattern {
                                 tsdb_itemBuilder.Equipable = true;
                                 tsdb_itemBuilder.HealthPoints = this._itemAttributeGenerator.healthPoints(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                                 tsdb_itemBuilder.IconId = database.metadata.items.iconId(this._patterns[i].itemCategories[j].itemCategoryID);
+                                tsdb_itemBuilder.ProductionId = ProductionID.Jewelry;
 
                                 let characterAttributeValue = this._itemAttributeGenerator.characterAttributeFromAttackPower_reverse(itemLevel, this._patterns[i].itemCategories[j].itemCategoryID);
                                 for (let k = 0; k < this._jewelryStrategies[jewelryStrategiesKey].mainCharacterAttributeIDs.length; k++) {

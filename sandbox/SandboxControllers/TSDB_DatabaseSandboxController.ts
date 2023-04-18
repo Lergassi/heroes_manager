@@ -5,6 +5,7 @@ import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
+import HeroClass from '../../core/app/Entities/HeroClass.js';
 
 export default class TSDB_DatabaseSandboxController extends AbstractSandboxController {
     run(): void {
@@ -12,7 +13,8 @@ export default class TSDB_DatabaseSandboxController extends AbstractSandboxContr
         // this._devTestThis();
         // this._devHeroClasses();
         // this._devLocations();
-        this._devItems();
+        // this._devItems();
+        this._devHeroClassesCost();
     }
 
     private _getStarted() {
@@ -50,7 +52,7 @@ export default class TSDB_DatabaseSandboxController extends AbstractSandboxContr
         database.locations.resources.find(LocationTypeID.Forrest, (itemID, count) => {
             console.log(LocationTypeID.Forrest, itemID, count);
         });
-        database.locations.enemies.find(LocationTypeID.Forrest, (enemyTypeID, count) => {
+        database.locations.enemies._find(LocationTypeID.Forrest, (enemyTypeID, count) => {
             console.log(LocationTypeID.Forrest, enemyTypeID, count);
         });
     }
@@ -63,5 +65,14 @@ export default class TSDB_DatabaseSandboxController extends AbstractSandboxContr
         console.log(items.armorMaterial(itemID));
         console.log(items.itemCategory(itemID));
         console.log(items.qualityID(itemID));
+    }
+
+    private _devHeroClassesCost() {
+        console.log(database.hero_classes.cost.find(HeroClassID.Warrior));
+        console.log(database.hero_classes.cost.find(HeroClassID.FireMage));
+        console.log(database.hero_classes.cost.find(HeroClassID.Tank1));
+        console.log(database.hero_classes.cost.find(''));
+        console.log(database.hero_classes.cost.find('42'));
+        console.log(database.hero_classes.cost.findAll());
     }
 }

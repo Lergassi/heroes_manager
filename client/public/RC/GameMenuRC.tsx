@@ -17,9 +17,8 @@ interface GameMenuRCState {
 export default class GameMenuRC extends React.Component<GameMenuRCProps, GameMenuRCState> {
     private _buttonCommands = [
         CommandID.new_game,
-        CommandID.new_game + ' ' + 'empty',
         CommandID.new_game + ' ' + 'basic',
-        // CommandID.create_location,
+        CommandID.new_game + ' ' + 'empty',
     ];
 
     constructor(props: GameMenuRCProps) {

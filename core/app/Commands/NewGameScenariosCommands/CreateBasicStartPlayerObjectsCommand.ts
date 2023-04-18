@@ -8,7 +8,6 @@ import {CommandID} from '../../../types/enums/CommandID.js';
 import {ComponentID} from '../../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
-import {EntityID} from '../../../types/enums/EntityID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../../types/enums/HeroClassID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
@@ -19,12 +18,14 @@ import Location from '../../Components/Location.js';
 import MainHeroList from '../../Components/MainHeroList.js';
 import MainLocationList from '../../Components/MainLocationList.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../../consts.js';
-import Item from '../../Entities/Item.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
-import HeroFactory from '../../Factories/HeroFactory.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
-import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import Tavern_v2 from '../../Components/Tavern_v2.js';
+import {database} from '../../../data/ts/database.js';
+import GameObject from '../../../source/GameObject.js';
+import LocationConfiguratorByDB from '../../Services/LocationConfiguratorByDB.js';
+import Production from '../../Components/Production.js';
 
 export default class CreateBasicStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -32,11 +33,13 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
     }
 
     async execute(input: Input) {
-        await this._createItemStorages();
-        await this._createItems();
-        await this._addMoney();
-        await this._createHeroes();
+        await this._createItemStorages();   //1 сумка уже есть у каждого игрока.
+        await this._configTavern();
         await this._createLocations();
+        await this._configProduction();
+        await this._createItems();
+        await this._configMoney();
+        await this._createHeroes();
     }
 
     private async _createItemStorages() {
@@ -197,31 +200,31 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
         }
     }
 
-    private async _createLocations() {
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
-
-        this._manualCreateLocations();
-    }
-
-    private async _manualCreateLocations() {
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
-    }
+    // private async _createLocations() {
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location);
+    //
+    //     this._manualCreateLocations();
+    // }
+    //
+    // private async _manualCreateLocations() {
+    //     await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['1']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['2']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['3']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['4']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+    //     // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_location, ['5']);
+    // }
 
     private _createFullRangeLocations() {
         let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
@@ -239,7 +242,46 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
         }
     }
 
-    private async _addMoney() {
-        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['1000']);
+    private async _configMoney() {
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.add_money, ['10000']);
+    }
+
+    private async _configTavern() {
+        let tavern = this.container.get<Tavern_v2>(ServiceID.Tavern_v2);
+
+        let data = database.hero_classes.cost.findAll();
+        for (let i = 0; i < data.length; i++) {
+            tavern.add(<HeroClassID>data[i].heroClassId, 1, data[i].cost);
+            tavern.add(<HeroClassID>data[i].heroClassId, 1, data[i].cost);
+        }
+    }
+
+    private async _createLocations() {
+        let locationFactory = this.container.get<LocationFactory>(ServiceID.LocationFactory);
+
+        let locationTypes = {
+            [LocationTypeID.Barrens]: 5,
+            [LocationTypeID.Forrest]: 5,
+        };
+        let level = 1;
+        for (const locationTypesID in locationTypes) {
+            for (let i = 0; i < locationTypes[locationTypesID]; i++) {
+                let location = locationFactory.create(<LocationTypeID>locationTypesID, level);
+
+                this.container.get<LocationConfiguratorByDB>(ServiceID.LocationConfigurator).configure(location.get<Location>(ComponentID.Location));
+
+                this.container.get<MainLocationList>(ServiceID.MainLocationList).add(location);
+            }
+        }
+    }
+
+    private async _configProduction() {
+        let items = database.items.data.findAll();
+        for (let i = 0; i < items.length; i++) {
+            if (!items[i].ProductionId) continue;
+
+            //todo: Сделать доступ к производству из контейнера более удобным, без 'player.' + ProductionId.
+            this.container.get<Production>('player.' + items[i].ProductionId)?.addItem(items[i].ID);
+        }
     }
 }

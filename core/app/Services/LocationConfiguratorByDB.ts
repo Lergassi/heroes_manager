@@ -7,7 +7,7 @@ import Location from '../Components/Location.js';
 import EnemyFactory from '../Factories/EnemyFactory.js';
 
 //@indev Далее будет разделение. Пока просто добавляет всех врагов из бд в локацию.
-export default class LocationDatabaseConfigurator {
+export default class LocationConfiguratorByDB {
     private readonly _enemyFactory: EnemyFactory;
 
     constructor(enemyFactory: EnemyFactory) {
@@ -21,8 +21,9 @@ export default class LocationDatabaseConfigurator {
         });
 
         //enemies
-        database.locations.enemies.find(location.type, (enemyTypeID, count) => {
-            location.addEnemy(this._enemyFactory.createSquad(enemyTypeID, location.level, _.random(count.min, count.max)));
-        });
+        let enemies = database.locations.enemies.find(location.type);
+        for (let i = 0; i < enemies.length; i++) {
+            location.addEnemy(this._enemyFactory.createSquad(enemies[i].enemyTypeID, location.level, _.random(enemies[i].count.min, enemies[i].count.max)));
+        }
     }
 }
