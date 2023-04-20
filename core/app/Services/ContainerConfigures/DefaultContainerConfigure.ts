@@ -42,6 +42,10 @@ import {ServiceID} from '../../../types/enums/ServiceID.js';
 import AddMoneyCommand from '../../Commands/AddMoneyCommand.js';
 import DebugItemsCommand from '../../Commands/DebugCommands/DebugItemsCommand.js';
 import CreateStubObjectsCommand from '../../Commands/CreateStubObjectsCommand.js';
+import CreateDemoStartPlayerObjectsCommand
+    from '../../Commands/NewGameScenariosCommands/CreateDemoStartPlayerObjectsCommand.js';
+import CreateBasicStartPlayerObjectsCommand
+    from '../../Commands/NewGameScenariosCommands/CreateBasicStartPlayerObjectsCommand.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -89,6 +93,8 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
         gameConsole.register(new CreatePlayerEnvironmentCommand(container));
         gameConsole.register(new CreateAllContentStartPlayerObjectsCommand(container));
         gameConsole.register(new CreateDefaultStartPlayerObjectsCommand(container));
+        gameConsole.register(new CreateDemoStartPlayerObjectsCommand(container));
+        gameConsole.register(new CreateBasicStartPlayerObjectsCommand(container));
 
         gameConsole.register(new AddMoneyCommand(container));
 

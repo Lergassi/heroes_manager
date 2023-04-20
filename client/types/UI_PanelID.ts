@@ -1,5 +1,6 @@
 export enum UI_PanelID {
-    Homepage = 'Homepage',
+    Dashboard = 'Dashboard',
+    Feed = 'Feed',
     Tavern = 'Tavern',
     ItemStorages = 'ItemStorages',
     Heroes = 'Heroes',
@@ -11,4 +12,7 @@ export enum UI_PanelID {
     Research = 'Research',
     PvP = 'PvP',
     Auction = 'Auction',
+    Inbox = 'Inbox',
+    Calendar = 'Calendar',
+    Guild = 'Guild',
 }

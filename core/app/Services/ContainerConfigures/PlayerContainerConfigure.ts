@@ -166,7 +166,8 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
         //     return itemStorageCollectionComponent;
         // });
         container.set<ItemStorageInterface>(ServiceID.ItemStorageController, (container) => {
-            let max = 4;
+            // let max = 4;
+            let max = 10;   //demo
 
             return new ItemStorageController(max);
         });
@@ -244,11 +245,11 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
                 container.get<GameObjectStorage>(ServiceID.GameObjectStorage),
                 container.get<HeroFactory>(ServiceID.HeroFactory),
                 // 10,
-                100,    //todo: В настройки.
-                // 1000,    //todo: В настройки.
-                // 10_000,    //todo: В настройки.
-                // 100_000,    //todo: В настройки.
-                // 1_000_000,    //todo: В настройки.
+                1000,   //todo: Убрать.
+                // 1000,
+                // 10_000,
+                // 100_000,
+                // 1_000_000,
             ));
 
             return mainHeroListComponent;

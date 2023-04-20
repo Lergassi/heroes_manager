@@ -15,7 +15,8 @@ import {FarmingRCInterface, FarmingRenderInterface, UI_GardenBed} from '../../..
 export class Farming implements FarmingRenderInterface {
     private readonly _gardenBeds: GardenBed[];
     private _options = {
-        max: 2,
+        // max: 2,
+        max: 20,    //@demo
     };
 
     get count(): number {

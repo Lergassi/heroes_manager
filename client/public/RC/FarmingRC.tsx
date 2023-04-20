@@ -112,7 +112,7 @@ export class FarmingRC extends React.Component<FarmingRCProps, FarmingRCState> i
                                             {gardenBed.gardenBed.isFree() ?
                                                 'Free' :
                                                 (<span>
-                                                    {gardenBed.seedID}:
+                                                    {gardenBed.seedID}
                                                 </span>)
                                             }
                                         </td>

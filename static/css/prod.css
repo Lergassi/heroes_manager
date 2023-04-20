@@ -1,3 +1,7 @@
 .debug-block {
     display: none;
 }
+
+.only-dev {
+    display: none;
+}

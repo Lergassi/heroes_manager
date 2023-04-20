@@ -42,6 +42,7 @@ import ItemStorageRC_Legacy from './RC/ItemStorageRC_Legacy.js';
 import LeftSidebarRC from './RC/LeftSidebarRC.js';
 import ProductionRC from './RC/ProductionRC';
 import TavernRC from './RC/TavernRC.js';
+import SliderRC from './RC/SliderRC.js';
 
 function Hello(props) {
     console.log('Hello.this', this);
@@ -121,7 +122,8 @@ export default class SandboxUI {
         // this._devMainLocationList();
 
         // this._devTavern();
-        this._devProduction();
+        // this._devProduction();
+        this._devSlider();
 
         this._container.get<UIUpdater>(ServiceID.UI_Updater).run();
     }
@@ -610,6 +612,14 @@ export default class SandboxUI {
                     wallet={new Wallet()}
                     window={{show: true}}
                 />
+            </div>
+        );
+    }
+
+    private _devSlider() {
+        this._root.render(
+            <div>
+                <SliderRC/>
             </div>
         );
     }

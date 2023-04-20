@@ -212,27 +212,6 @@ export default class ItemStorage implements ItemStorageInterface {
         return this._itemStackControllers[index].moveToEquipSlotByEquipController(equipSlotID, equipController);
     }
 
-    renderByRequest(ui: ItemStorageInterfaceRender): void {
-        let items: UI_ItemStorageSlot[] = [];
-        for (let i = 0; i < this._itemStackControllers.length; i++) {
-            this._itemStackControllers[i].renderByRequest({
-                updateItem(itemID: ItemID, count: number): void {
-                    // items.push({index: i, item: {itemID: itemID, count: count >= 0 ? count : null}});
-                    items.push({index: i, item: {itemID: itemID, count: count}});
-                },
-            });
-        }
-
-        ui.updateItems?.(items);
-    }
-
-    debug(): void {
-        // debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, );
-        for (let i = 0; i < this._itemStackControllers.length; i++) {
-            this._itemStackControllers[i].debug();
-        }
-    }
-
     isEmpty(): boolean {
         return _.every(_.map(this._itemStackControllers, (value) => {
             return value.isFree();
@@ -249,5 +228,28 @@ export default class ItemStorage implements ItemStorageInterface {
         if (!this._itemStackControllers[index]) return 0;
 
         return this._itemStackControllers[index].removeItemByIndexTo(count, itemStorage);
+    }
+
+    /**
+     * По умолчанию рендер по слотам.
+     * @param ui
+     */
+    renderByRequest(ui: ItemStorageInterfaceRender): void {
+        let items: UI_ItemStorageSlot[] = [];
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            this._itemStackControllers[i].renderByRequest({
+                updateItem(itemID: ItemID, count: number): void {
+                    items.push({index: i, item: {itemID: itemID, count: count}});
+                },
+            });
+        }
+
+        ui.updateItems?.(items);
+    }
+
+    debug(): void {
+        for (let i = 0; i < this._itemStackControllers.length; i++) {
+            this._itemStackControllers[i].debug();
+        }
     }
 }

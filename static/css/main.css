@@ -20,6 +20,15 @@
 /****************************************************************/
 
 /****************************************************************/
+/* selectors */
+/****************************************************************/
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+/****************************************************************/
 /* site */
 /****************************************************************/
 * {
@@ -417,6 +426,8 @@
     line-height: 46px;
     position: relative;
     z-index: 200;
+    position: fixed;
+    width: 100%;
 }
 
 .header__site-title {
@@ -444,10 +455,12 @@
 .left-sidebar {
     background-color: orange;
     width: 220px;
-    position: absolute;
+    /*position: absolute;*/
     display: block;
     margin-left: 4px;
     margin-top: 5px;
+    position: fixed;
+    top: 46px;
 }
 
 .left-sidebar:before {
@@ -527,16 +540,22 @@
     left: 8px;
 }
 
+.left-sidebar__item_active {
+    background-color: #f5f5f5;
+}
+
 /****************************************************************/
 /* content */
 /****************************************************************/
 .content {
     margin-left: 220px;
     /*padding-left: 15px;*/
-    padding: 15px;
+    /*padding: 15px;*/
 
     /*todo: Для консоли, которая пока внизу, чтобы не мешала контенту. */
     margin-bottom: 100px;
+
+    padding: 61px 15px 15px;
 }
 
 .container {
@@ -785,9 +804,21 @@
 /****************************************************************/
 /* locations */
 /****************************************************************/
-.scrolled-list-select {
+.location-heroes-selector {
     height: 300px;
     overflow-y: scroll;
+    padding-right: 8px;
+}
+
+.location-hero-group {
+    height: 300px;
+    /*overflow-y: scroll;*/
+}
+
+.location-items-selector {
+    height: 300px;
+    overflow-y: scroll;
+    padding-right: 8px;
 }
 
 /****************************************************************/

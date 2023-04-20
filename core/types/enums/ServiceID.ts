@@ -92,7 +92,7 @@ export enum ServiceID {
     UI_DetailLocation = 'player.ui.DetailLocation',
 
     //data
-    Data_ItemCategoryPowerRatio = 'Data_ItemCategoryPowerRatio',
+    // Data_ItemCategoryPowerRatio = 'Data_ItemCategoryPowerRatio',
 
     //...
     // Data_CommonArmorSet = 'Data_CommonArmorSet',

@@ -2,7 +2,7 @@ import {formatDuration, intervalToDuration} from 'date-fns';
 import _ from 'lodash';
 import React from 'react';
 import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
-import Location, {LocationHuntingState, LocationRender} from '../../../core/app/Components/Location.js';
+import Location, {LocationHuntingState, LocationRenderInterface} from '../../../core/app/Components/Location.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
@@ -92,7 +92,7 @@ export interface DetailLocationRCLootElement {
     count: string;
 }
 
-export default class DetailLocationRC extends React.Component<DetailLocationRCProps, DetailLocationRCState> implements LocationRender {
+export default class DetailLocationRC extends React.Component<DetailLocationRCProps, DetailLocationRCState> implements LocationRenderInterface {
     constructor(props: DetailLocationRCProps) {
         super(props);
 
@@ -319,6 +319,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
     }
 
     updateLoot(items: UI_ItemCount[]): void {
+        console.log('updateLoot items', items);
         this.setState((state) => {
             return {
                 lootItems: items,
@@ -430,25 +431,26 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                     </div>{/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
-                            <div className={'widget__title'}>Герои, : {heroes.length}/5</div>
+                            <div className={'widget__title'}>Герои: {heroes.length}/5</div>
                             <div className={'widget__content'}>
-                                <table className={'basic-table'}>
-                                    <tbody>
+                                <div className={'location-hero-group'}>
+                                    <table className={'basic-table'}>
+                                        <tbody>
                                         <tr>
                                             <th>Hero</th>
                                             {/*<th>Endurance</th>*/}
                                             {/*<th>ВЫН/ВНС/ВНС/STM</th>*/}
                                             <th>END</th>
-                                            <th>Level</th>
+                                            {/*<th>Level</th>*/}
                                             <th>HP</th>
                                             <th>AP</th>
                                             <th>Ctrl</th>
                                         </tr>
                                         {_.map(heroes, (hero, index) => {
                                             return <tr key={index}>
-                                                <td>{hero.heroClassName} {hero.isDead ? '(X)' : ''}</td>
+                                                <td>{hero.heroClassName} {hero.isDead ? '(DEAD)' : ''}</td>
                                                 <td>{hero.endurance}/{hero.maxEndurance}</td>
-                                                <td>{hero.level}</td>
+                                                {/*<td>{hero.level}</td>*/}
                                                 <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
                                                 <td>{hero.attackPower}</td>
                                                 <td>
@@ -458,48 +460,51 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                                 </td>
                                             </tr>
                                         })}
-                                    </tbody>
-                                </table>
-                                <div>
-                                    {/*<HeroListSelectRC*/}
-                                    {/*    container={this.props.container}*/}
-                                    {/*    mainHeroList={this.props.mainHeroList}*/}
-                                    {/*    handleAddHeroChange={this.addHero}*/}
-                                    {/*/>*/}
+                                        </tbody>
+                                    </table>
+                                    <div>
+                                        {/*<HeroListSelectRC*/}
+                                        {/*    container={this.props.container}*/}
+                                        {/*    mainHeroList={this.props.mainHeroList}*/}
+                                        {/*    handleAddHeroChange={this.addHero}*/}
+                                        {/*/>*/}
+                                    </div>
                                 </div>
                             </div>
                         </div>{/* end widget hero */}
                         <div className={'widget'}>
                             <div className={'widget__title'}>Player items</div>
                             <div className={'widget__content'}>
-                                <table className={'basic-table'}>
-                                    <tbody>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Count</th>
-                                        <th>Ctrl</th>
-                                    </tr>
-                                    {_.map(this.state.items, (data, itemID: ItemID) => {
-                                        return <tr key={itemID}>
-                                            {/*<td>{item.index}</td>*/}
-                                            <td>{itemID}</td>
-                                            <td>{data.count}</td>
-                                            <td><button className={'btn btn_default'} onClick={(event) => {
-                                                event.preventDefault();
+                                <div className={'location-items-selector'}>
+                                    <table className={'basic-table'}>
+                                        <tbody>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Count</th>
+                                            <th>Ctrl</th>
+                                        </tr>
+                                        {_.map(this.state.items, (data, itemID: ItemID) => {
+                                            return <tr key={itemID}>
+                                                {/*<td>{item.index}</td>*/}
+                                                <td>{itemID}</td>
+                                                <td>{data.count}</td>
+                                                <td><button className={'btn btn_default'} onClick={(event) => {
+                                                    event.preventDefault();
 
-                                                // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndex(itemStorage.ID, slot.index, 1);
-                                                // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndexTo(itemStorage.ID, slot.index, 1, this.state.location.get<Location>(ComponentID.Location).heroesItems);
-                                                // if (this.state.location.get<Location>(ComponentID.Location))
-                                                this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController).removeItem(
-                                                    itemID,
-                                                    this.state.location.get<Location>(ComponentID.Location).heroesItems.addItem(itemID, 1),
-                                                );
+                                                    // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndex(itemStorage.ID, slot.index, 1);
+                                                    // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndexTo(itemStorage.ID, slot.index, 1, this.state.location.get<Location>(ComponentID.Location).heroesItems);
+                                                    // if (this.state.location.get<Location>(ComponentID.Location))
+                                                    this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController).removeItem(
+                                                        itemID,
+                                                        this.state.location.get<Location>(ComponentID.Location).heroesItems.addItem(itemID, 1),
+                                                    );
 
-                                            }}>ADD</button></td>
-                                        </tr>;
-                                    })}
-                                    </tbody>
-                                </table>
+                                                }}>ADD</button></td>
+                                            </tr>;
+                                        })}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>{/*end widget__content*/}
                         </div>{/*end widget Player items*/}
                     </div>{/*end col*/}
@@ -518,7 +523,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                         </tr>
                                         {_.map(enemies, (enemy, index) => {
                                             return <tr key={index}>
-                                                <td>{enemy.enemyTypeName} {enemy.isDead ? '(X)' : ''}</td>
+                                                <td>{enemy.enemyTypeName} {enemy.isDead ? '(DEAD)' : ''}</td>
                                                 <td>{enemy.count}</td>
                                                 <td>{enemy.level}</td>
                                                 <td>{enemy.attackPower}</td>
@@ -544,22 +549,24 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                         return <tr key={index}>
                                             <td>{item.item?.itemID ?? ''}</td>
                                             <td>{item.item?.count ?? ''}</td>
-                                            <td><button className={'btn btn_default'} onClick={(event) => {
-                                                event.preventDefault();
+                                            <td>
+                                                {item.item?.itemID ? <button className={'btn btn_default'} onClick={(event) => {
+                                                    event.preventDefault();
 
-                                                if (!item.item?.itemID) return;
+                                                    if (!item.item?.itemID) return;
 
-                                                //todo: Отдельный класс для логики с отменой перемещения.
-                                                if (
-                                                    this.state.location.get<Location>(ComponentID.Location).heroesItems.hasItem(item.item.itemID, 1) &&
-                                                    this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).canAddItem(item.item.itemID, 1)
-                                                ) {
-                                                    if (this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item.item.itemID, 1) === 1) {
-                                                        this.state.location.get<Location>(ComponentID.Location).heroesItems.removeItem(item.item.itemID, 1);
+                                                    //todo: Отдельный класс для логики с отменой перемещения.
+                                                    if (
+                                                        this.state.location.get<Location>(ComponentID.Location).heroesItems.hasItem(item.item.itemID, 1) &&
+                                                        this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).canAddItem(item.item.itemID, 1)
+                                                    ) {
+                                                        if (this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item.item.itemID, 1) === 1) {
+                                                            this.state.location.get<Location>(ComponentID.Location).heroesItems.removeItem(item.item.itemID, 1);
+                                                        }
                                                     }
-                                                }
-                                                // this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).removeByIndexTo();
-                                            }}>REMOVE</button></td>
+                                                    // this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).removeByIndexTo();
+                                                }}>REMOVE</button> : ''}
+                                            </td>
                                         </tr>
                                     })}
                                     </tbody>

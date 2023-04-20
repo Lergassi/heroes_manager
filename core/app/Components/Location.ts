@@ -78,8 +78,7 @@ export type GatheringItemPoint = {
 //     Update = 'Location.Update',
 // }
 
-export interface LocationRender {
-    updateID?(ID: string): void;
+export interface LocationRenderInterface {    updateID?(ID: string): void;
     updateName?(name: string): void;
     updateState?(state: string): void;
     updateLevel?(level: number): void;   //todo: Тут наверное нужно все данные которые не изменяются передать и метод назвать set/init.
@@ -364,7 +363,7 @@ export default class Location {
      * todo: Сборку данных перенести в отдельный класс.
      * @param ui
      */
-    renderByRequest(ui: LocationRender): void {
+    renderByRequest(ui: LocationRenderInterface): void {
         let heroes: DetailLocationRCHeroElement[] = [];
         for (let i = 0; i < this._heroes.length; i++) {
             let hero: DetailLocationRCHeroElement = {
@@ -503,6 +502,7 @@ export default class Location {
         this._itemStorage.renderByRequest({
             updateItems(slots: UI_ItemStorageSlot[]) {
                 ui.updateLoot?.(_.map(slots, (slot) => {
+                    // console.log('slot.item', slot.item);
                     return slot.item;
                 }));
             }

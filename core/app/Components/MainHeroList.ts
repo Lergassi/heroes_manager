@@ -149,7 +149,7 @@ export default class MainHeroList {
                 ID                 : '',
                 agility            : 0,
                 attackPower        : 0,
-                currentHealthPoints: 0, state: '',
+                currentHealthPoints: 0, activityState: '',
                 exp                : 0,
                 heroClassName      : '',
                 heroRoleName       : '',
@@ -170,7 +170,7 @@ export default class MainHeroList {
 
             this._heroes[i].get<HeroActivityStateController>(ComponentID.HeroActivityStateController).renderByRequest({
                 updateState(state: string) {
-                    hero.state = state;
+                    hero.activityState = state;
                 },
             });
             this._heroes[i].get<HeroComponent>(ComponentID.Hero).renderByRequest({

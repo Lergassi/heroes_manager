@@ -40,7 +40,7 @@ export class MainHeroListRCElement {
     heroClassId: string;
     heroClassName: string;
     heroRoleName: string;
-    state: string;
+    activityState: string;
     averageItemLevel: number;
 
     endurance: number;
@@ -63,7 +63,8 @@ export class MainHeroListRCElement {
 
 export default class MainHeroListRC extends React.Component<MainHeroListRCProps, MainHeroListRCState> implements MainHeroListRenderInterface {
     private _options = {
-        rows: 10,
+        // rows: 10,
+        rows: 18,
     };
 
     constructor(props: MainHeroListRCProps) {
@@ -161,7 +162,8 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                 {/*<tr className={'hero-list-table-row'}>*/}
                                 <tr className={''}>
                                     {/*<th></th>*/}
-                                    <th>HeroClassID (ID)</th>
+                                    {/*<th>HeroClass (ID)</th>*/}
+                                    <th>HeroClass (ID)</th>
                                     {/*<th style={{width: '220px'}}>Level (xp)</th>*/}
                                     <th>Level (xp)</th>
                                     <th>HP</th>
@@ -182,14 +184,14 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                                     <a href="" onClick={(event) => {
                                                         event.preventDefault();
                                                         this.props.container.get<DetailHeroRC>(ServiceID.UI_DetailHero).updateHero(hero.hero, {show: true});
-                                                    }}>{hero.heroClassName} ({hero.ID}) {hero.isDead ? 'X' : ''}</a>
+                                                    }}>{hero.heroClassName} ({hero.ID}) {hero.isDead ? '(DEAD)' : ''}</a>
                                                 </span>
                                             </td>
                                             <td>{hero.level} ({hero.exp}/{hero.totalExpToLevelUp})</td>
                                             <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
                                             <td>{hero.endurance}/{hero.maxEndurance}</td>
                                             <td>{hero.heroRoleName}</td>
-                                            <td>{hero.state}</td>
+                                            <td>{hero.activityState}</td>
                                             <td>{hero.averageItemLevel}</td>
                                             <td>{hero.attackPower}</td>
                                             <td>{hero.strength}/{hero.agility}/{hero.intelligence}</td>
@@ -200,7 +202,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                                 <button className={'btn btn_default'} onClick={() => {
                                                     hero.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
                                                 }}>RESURRECT</button>
-                                                <button className={'btn btn_default'} onClick={() => {
+                                                <button className={'btn btn_default only-dev'} onClick={() => {
                                                     hero.hero.get<Endurance>(ComponentID.Endurance).reset();
                                                 }}>RESET_ENDURANCE</button>
                                                 {/*<button className={'btn btn_danger'} onClick={() => {*/}
@@ -220,7 +222,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                         }}>{page}</span>
                                     })}
                                 </span>
-                                <span>pages: {this.state.activePage}/{this.state.totalPages}, totalHeroes: {this.state.totalHeroes}</span>
+                                <span>pages: {this.state.activePage}/{this.state.totalPages}, items: {this.state.totalHeroes}</span>
                             </div>
                         </div>
                     </div>

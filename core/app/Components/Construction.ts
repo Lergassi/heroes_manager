@@ -22,10 +22,15 @@ export class Construction implements ConstructionRenderInterface {
     private readonly _mineFactory: MineFactory;
 
     private _maxBuildings = {
-        [BuildingID.Sawmill]: 1,
-        [BuildingID.CoalMine]: 1,
-        [BuildingID.IronOreMine]: 1,
-        [BuildingID.CopperOreMine]: 1,
+        // [BuildingID.Sawmill]: 1,
+        // [BuildingID.CoalMine]: 1,
+        // [BuildingID.IronOreMine]: 1,
+        // [BuildingID.CopperOreMine]: 1,
+        //@demo:
+        [BuildingID.Sawmill]: 10,
+        [BuildingID.CoalMine]: 10,
+        [BuildingID.IronOreMine]: 10,
+        [BuildingID.CopperOreMine]: 10,
     };
 
     constructor(mineFactory: MineFactory) {

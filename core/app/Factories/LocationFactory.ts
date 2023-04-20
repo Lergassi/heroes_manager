@@ -70,6 +70,7 @@ export default class LocationFactory {
         this._locationConfigurator = locationConfigurator;
     }
 
+    //todo: Не удобно. Лучше через фабрику и правила.
     create(
         locationTypeID: LocationTypeID,
         level: number,

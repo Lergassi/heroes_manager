@@ -10,6 +10,10 @@ import {ItemID} from '../../types/enums/ItemID.js';
 type TSDB_ItemLoot = {
     ID: ItemID,
     count: number,
+    /**
+     * Шанс 0..1
+     * @indev Пока не работает.
+     */
     chance: number,
 }
 
@@ -27,7 +31,14 @@ let enemy_loot_data: TSDB_EnemyLootDB = {
     [EnemyTypeID.Goblin]: {
         exp  : 60,
         items: [
-
+            {ID: ItemID.CottonCloth, count: 5, chance: 1},
+        ],
+        money: 20,
+    },
+    [EnemyTypeID.Bandit]: {
+        exp  : 60,
+        items: [
+            {ID: ItemID.CottonCloth, count: 5, chance: 1},
         ],
         money: 20,
     },
@@ -41,7 +52,7 @@ let enemy_loot_data: TSDB_EnemyLootDB = {
     [EnemyTypeID.Skeleton]: {
         exp  : 40,
         items: [
-
+            {ID: ItemID.MagicResource01, count: 1, chance: 1},
         ],
         money: 20,
     },
@@ -69,7 +80,7 @@ let enemy_loot_data: TSDB_EnemyLootDB = {
     [EnemyTypeID.FireElemental]: {
         exp  : 60,
         items: [
-            {ID: ItemID.MagicResource01, count: 1, chance: 2},
+            {ID: ItemID.MagicResource01, count: 2, chance: 2},
         ],
         money: 50,
     },

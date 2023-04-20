@@ -120,7 +120,7 @@ export default class EquipItemListRC extends React.Component<EquipItemListRCProp
                         });
                     })}
                 </select>
-                <button className={'btn btn_default'} onClick={this.move}>MOVE</button>
+                <button className={'btn btn_default'} onClick={this.move}>EQUIP</button>
             </div>
         );
     }

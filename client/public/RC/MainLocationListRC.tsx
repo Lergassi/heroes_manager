@@ -43,7 +43,8 @@ export interface MainLocationListRCElement {
 
 export default class MainLocationListRC extends React.Component<MainLocationListRCProps, MainLocationListRCState> implements MainLocationListRender {
     private _options = {
-        rows: 10,
+        // rows: 10,
+        rows: 18,
     };
 
     constructor(props: MainLocationListRCProps) {
@@ -120,10 +121,10 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                     <th>HuntingState</th>
                                     <th>Heroes (L/T)</th>
                                     <th>Enemies (L/T)</th>
-                                    <th>Veins</th>
+                                    {/*<th>Veins</th>*/}
                                     <th>Loot</th>
                                     <th>Money</th>
-                                    <th>Ctrl, ID</th>
+                                    <th>Ctrl</th>
                                 </tr>
                                 {_.map(this.state.locations, (location, index) => {
                                     return <tr key={index}>
@@ -137,21 +138,22 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                         <td>{location.state}</td>
                                         <td>{location.lifeHeroesCount}/{location.totalHeroesCount}</td>
                                         <td>{location.lifeEnemiesCount}/{location.totalEnemiesCount}</td>
+                                        {/*<td>*/}
+                                        {/*    <ul>*/}
+                                        {/*        /!*{_.map(location.veins, (vein, index) => {*!/*/}
+                                        {/*        /!*    return <li key={index}>{vein.itemID}: {vein.count}/{vein.startCount}</li>*!/*/}
+                                        {/*        /!*})}*!/*/}
+                                        {/*    </ul>*/}
+                                        {/*</td>*/}
+                                        {/* todo: Временно скрыто. Надо сделать компонент для считывания списка предметов из ItemStorage без стеков. */}
                                         <td>
-                                            <ul>
-                                                {/*{_.map(location.veins, (vein, index) => {*/}
-                                                {/*    return <li key={index}>{vein.itemID}: {vein.count}/{vein.startCount}</li>*/}
-                                                {/*})}*/}
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <ul>
-                                                {/*{_.map(location.loot, (item, index) => {*/}
-                                                {/*    if (!item.itemID) return;*/}
-
-                                                {/*    return <li key={index}>{item.itemID}: {item.count}</li>*/}
-                                                {/*})}*/}
-                                            </ul>
+                                            {/*<ul>*/}
+                                            {/*    {_.map(location.loot, (item, index) => {*/}
+                                            {/*        if (!item.itemID) return;*/}
+                                            
+                                            {/*        return <li key={index}>{item.itemID}: {item.count}</li>*/}
+                                            {/*    })}*/}
+                                            {/*</ul>*/}
                                         </td>
                                         <td>{location.money}</td>
                                         <td>
@@ -172,7 +174,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                                     }}>{page}</span>
                                 })}
                             </span>
-                            <span>pages: {this.state.activePage}/{this.state.totalPages}, totalLocations: {this.state.totalLocations}</span>
+                            <span>pages: {this.state.activePage}/{this.state.totalPages}, items: {this.state.totalLocations}</span>
                         </div>
                     </div>{/*end widget__content*/}
                 </div>{/*end widget*/}

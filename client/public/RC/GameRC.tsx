@@ -47,7 +47,7 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
 
         this.state = {
             panels: {
-                [UI_PanelID.Homepage]: {ID: UI_PanelID.Homepage, show: false,},
+                // [UI_PanelID.Dashboard]: {ID: UI_PanelID.Dashboard, show: false,},
                 [UI_PanelID.Tavern]: {ID: UI_PanelID.Tavern, show: false,},
                 [UI_PanelID.ItemStorages]: {ID: UI_PanelID.ItemStorages, show: false,},
                 [UI_PanelID.Heroes]: {ID: UI_PanelID.Heroes, show: false,},
@@ -56,7 +56,8 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                 [UI_PanelID.Farming]: {ID: UI_PanelID.Farming, show: false,},
                 [UI_PanelID.Construction]: {ID: UI_PanelID.Construction, show: false,},
             },
-            activePanel: UI_PanelID.Homepage,
+            // activePanel: UI_PanelID.Heroes,
+            activePanel: null,
         };
 
         window['app']['sandbox']['showPanel'] = (ID) => {
@@ -70,6 +71,8 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
 
     showPanel(ID: UI_PanelID): void {
         assertNotNil(ID);
+
+        if (!this.state.panels.hasOwnProperty(ID)) return;
 
         let panels = this.state.panels;
         _.map(panels, (panel) => {
@@ -91,7 +94,8 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                         HEROES MANAGER
                     </div>
                     <div className={'header__wallet-money-counter'}>
-                        WalletMoneyValueRC: <WalletMoneyValueRC
+                        {/*WalletMoneyValueRC: <WalletMoneyValueRC*/}
+                        Money: <WalletMoneyValueRC
                             container={this.props.container}
                             wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
                         />

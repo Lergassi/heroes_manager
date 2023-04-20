@@ -59,7 +59,7 @@ export default class HeroScrolledListSelectRC extends React.Component<HeroScroll
 
     render() {
         return (
-            <div className={'scrolled-list-select'}>
+            <div className={'location-heroes-selector'}>
                 <table className={'basic-table'}>
                     <tbody>
                         {_.map(this.state.heroes, (hero , index) => {

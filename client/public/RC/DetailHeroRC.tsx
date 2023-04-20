@@ -340,53 +340,60 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                                     <button className={'btn btn_default'} onClick={() => {
                                         this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
                                     }}>RESURRECT</button>
-                                    <button className={'btn btn_default'} onClick={() => {
+                                    <button className={'btn btn_default only-dev'} onClick={() => {
                                         this.state.hero.get<Endurance>(ComponentID.Endurance).reset();
                                     }}>RESET_ENDURANCE</button>
                                     {/*<button className={'btn btn_danger'} onClick={() => {*/}
                                     {/*    this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).kill();*/}
                                     {/*}}>KILL</button>*/}
                                 </div>
-                                <div>{this.state.heroClassName}</div>
-                                <div>Уровень: {this.state.level}</div>
-                                <div>Опыт: ({this.state.exp}/{this.state.totalExpToLevelUp})</div>
-                                <div>Здоровье: {this.state.currentHealthPoints}/{this.state.maxHealthPoints}</div>
-                                <div>LifeState: {!this.state.isDead ? 'Живой' : 'Мертвый'}</div>
+                                <div className={'block'}>
+                                    <div className={'block'}><h3>Характеристики</h3></div>
+                                    <div>HeroClass: {this.state.heroClassName}</div>
+                                    <div>Уровень: {this.state.level}</div>
+                                    <div>Опыт: ({this.state.exp}/{this.state.totalExpToLevelUp})</div>
+                                    <div>Здоровье: {this.state.currentHealthPoints}/{this.state.maxHealthPoints}</div>
+                                    <div>LifeState: {!this.state.isDead ? 'Живой' : 'Мертвый'}</div>
+                                </div>
                                 <div>
-                                    <h4>Аттрибуты:</h4>
-                                    <table className={'basic-table'}>
-                                        <tr>
-                                            <td>{CharacterAttributeID.Strength}</td>
-                                            <td>{this.state.Strength}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{CharacterAttributeID.Agility}</td>
-                                            <td>{this.state.Agility}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{CharacterAttributeID.Intelligence}</td>
-                                            <td>{this.state.Intelligence}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{CharacterAttributeID.AttackPower}</td>
-                                            <td>{this.state.AttackPower}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{CharacterAttributeID.Protection}</td>
-                                            <td>{this.state.Protection}</td>
-                                        </tr>
-                                    </table>
+                                    <div className={'block'}><h3>Аттрибуты</h3></div>
+                                    <div className={'block'}>
+                                        <table className={'basic-table'}>
+                                            <tr>
+                                                <td>{CharacterAttributeID.Strength}</td>
+                                                <td>{this.state.Strength}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{CharacterAttributeID.Agility}</td>
+                                                <td>{this.state.Agility}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{CharacterAttributeID.Intelligence}</td>
+                                                <td>{this.state.Intelligence}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{CharacterAttributeID.AttackPower}</td>
+                                                <td>{this.state.AttackPower}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{CharacterAttributeID.Protection}</td>
+                                                <td>{this.state.Protection}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div className={'detail-hero-equip'}>
                                 <div>
-                                    <h4>Экипировка:</h4>
-                                    <EquipItemListRC
-                                        container={this.props.container}
-                                        equipSlotIDs={this._equipSlotIDs}
-                                        itemStorageController={this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)}
-                                        equipController={this.state.hero.get<EquipController>(ComponentID.EquipController)}
-                                    />
+                                    <h3>Экипировка:</h3>
+                                    <div className={'block'}>
+                                        <EquipItemListRC
+                                            container={this.props.container}
+                                            equipSlotIDs={this._equipSlotIDs}
+                                            itemStorageController={this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)}
+                                            equipController={this.state.hero.get<EquipController>(ComponentID.EquipController)}
+                                        />
+                                    </div>
                                     <table className={'basic-table'}>
                                         <tbody>
                                         <tr>

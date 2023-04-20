@@ -2,9 +2,12 @@ export enum CommandID {
     //user/player
     new_game = 'new_game',
     create_player_env = 'create_player_env',
+    create_start_player_items = 'create_start_player_items',
+
     create_default_start_player_objects = 'create_default_start_player_objects',
     create_all_content_start_player_objects = 'create_all_content_start_player_objects',
-    create_start_player_items = 'create_start_player_items',
+    create_basic_start_player_objects = 'create_basic_start_player_objects',
+    create_demo_start_player_objects = 'create_demo_start_player_objects',
 
     //player
     add_money = 'add_money',

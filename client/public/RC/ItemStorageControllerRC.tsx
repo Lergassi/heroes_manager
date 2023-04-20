@@ -57,18 +57,45 @@ export default class ItemStorageControllerRC extends React.Component<ItemStorage
         if (!(this.state.window.show && this.props.window.show)) return;
 
         let itemStorages = this.state.itemStorages;
+        let itemStoragesRC = [];
+        let itemsForRow = 2;
+        for (let itemIndex = 0; itemIndex < itemStorages.length; itemIndex++) {
+            let rowIndex = itemStoragesRC.push([]) - 1;
+            for (let columnIndex = 0; columnIndex < itemsForRow; columnIndex++, itemIndex++) {
+                if (!itemStorages[itemIndex]) continue;
+
+                itemStoragesRC[rowIndex].push(<ItemStorageRC
+                    key={itemIndex}
+                    container={this.props.container}
+                    itemStorage={itemStorages[itemIndex].get<ItemStorageInterface>(ComponentID.ItemStorage)}
+                    itemStorageID={String(itemStorages[itemIndex].ID)}
+                    size={20}
+                    ID={ServiceID.UI_ItemStorage + '.' + String(itemIndex)}
+                />);
+            }
+        }
+        console.log(itemStoragesRC);
 
         return (
+            // <div>
+            //     {_.map(itemStorages, (itemStorage, index) => {
+            //         return <ItemStorageRC
+            //             key={index}
+            //             container={this.props.container}
+            //             itemStorage={itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorage)}
+            //             itemStorageID={String(itemStorage.ID)}
+            //             size={20}
+            //             ID={ServiceID.UI_ItemStorage + '.' + String(index)}
+            //         />
+            //     })}
+            // </div>
             <div>
-                {_.map(itemStorages, (itemStorage, index) => {
-                    return <ItemStorageRC
-                        key={index}
-                        container={this.props.container}
-                        itemStorage={itemStorage.get<ItemStorageInterface>(ComponentID.ItemStorage)}
-                        itemStorageID={String(itemStorage.ID)}
-                        size={20}
-                        ID={ServiceID.UI_ItemStorage + '.' + String(index)}
-                    />
+                {_.map(itemStoragesRC, (itemStorages) => {
+                    return <div className={'row'}>
+                        {_.map(itemStorages, (itemStorage) => {
+                            return <div className={'col col-50'}>{itemStorage}</div>;
+                        })}
+                    </div>
                 })}
             </div>
         );
