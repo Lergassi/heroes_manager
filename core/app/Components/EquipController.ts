@@ -1,13 +1,8 @@
-import _ from 'lodash';
-import debug from 'debug';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import Item from '../Entities/Item.js';
 import GameObject from '../../source/GameObject.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import ItemStorage from './ItemStorages/ItemStorage.js';
-import ItemStorageController from './ItemStorages/ItemStorageController.js';
 
 export default class EquipController {
     private readonly _hero: GameObject;

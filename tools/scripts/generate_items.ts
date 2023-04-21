@@ -1,11 +1,12 @@
 import {format} from 'date-fns';
-import debug from 'debug';
 import fs from 'fs';
 import path from 'path';
 import {sprintf} from 'sprintf-js';
-import GenerateItems from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
+import GenerateItems
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
+import DebugApp from '../../core/app/Services/DebugApp.js';
 
 export const generate_items = (container: ContainerInterface) => {
     let items = [];
@@ -24,8 +25,8 @@ export const generate_items = (container: ContainerInterface) => {
             return;
         }
 
-        debug(DebugNamespaceID.Log)(sprintf('Алгоритм v%s.', '0.0.2'));
-        debug(DebugNamespaceID.Log)(sprintf('Данные записаны в файл %s.', pathname));
-        debug(DebugNamespaceID.Log)(sprintf('Предметов создано: %s.', items.length));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Алгоритм v%s.', '0.0.2'));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Данные записаны в файл %s.', pathname));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Предметов создано: %s.', items.length));
     });
 }

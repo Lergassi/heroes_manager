@@ -31,20 +31,62 @@ export default class ItemCharacterAttributeGenerator {
         this._config.enemyAttackSpeed = 3;
 
         this._config.itemCategoryRatios = {
-            [ItemCategoryID.Helmets]: {[CharacterAttributeID.MaxHealthPoints]: 0.5, [CharacterAttributeID.AttackPower]: 0.5},  //todo: Добавить другие атрибуты.
-            [ItemCategoryID.ShoulderPads]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-            [ItemCategoryID.Breastplates]: {[CharacterAttributeID.MaxHealthPoints]: 1, [CharacterAttributeID.AttackPower]: 1},
-            [ItemCategoryID.Bracers]: {[CharacterAttributeID.MaxHealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
-            [ItemCategoryID.Gloves]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-            [ItemCategoryID.Belts]: {[CharacterAttributeID.MaxHealthPoints]: 0.2, [CharacterAttributeID.AttackPower]: 0.2},
-            [ItemCategoryID.Pants]: {[CharacterAttributeID.MaxHealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
-            [ItemCategoryID.Boots]: {[CharacterAttributeID.MaxHealthPoints]: 0.4, [CharacterAttributeID.AttackPower]: 0.4},
-            [ItemCategoryID.Amulets]: {[CharacterAttributeID.MaxHealthPoints]: 0.6, [CharacterAttributeID.AttackPower]: 0.6},
-            [ItemCategoryID.Rings]: {[CharacterAttributeID.MaxHealthPoints]: 0.3, [CharacterAttributeID.AttackPower]: 0.3},
-            [ItemCategoryID.OneHandedSwords]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
-            [ItemCategoryID.TwoHandedSwords]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
-            [ItemCategoryID.Daggers]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 4},
-            [ItemCategoryID.Shields]: {[CharacterAttributeID.MaxHealthPoints]: 0, [CharacterAttributeID.AttackPower]: 2},
+            [ItemCategoryID.Helmets]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.5,
+                [CharacterAttributeID.AttackPower]: 0.5
+            },  //todo: Добавить другие атрибуты.
+            [ItemCategoryID.ShoulderPads]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.3,
+                [CharacterAttributeID.AttackPower]: 0.3
+            },
+            [ItemCategoryID.Breastplates]: {
+                [CharacterAttributeID.MaxHealthPoints]: 1,
+                [CharacterAttributeID.AttackPower]: 1
+            },
+            [ItemCategoryID.Bracers]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.2,
+                [CharacterAttributeID.AttackPower]: 0.2
+            },
+            [ItemCategoryID.Gloves]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.3,
+                [CharacterAttributeID.AttackPower]: 0.3
+            },
+            [ItemCategoryID.Belts]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.2,
+                [CharacterAttributeID.AttackPower]: 0.2
+            },
+            [ItemCategoryID.Pants]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.6,
+                [CharacterAttributeID.AttackPower]: 0.6
+            },
+            [ItemCategoryID.Boots]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.4,
+                [CharacterAttributeID.AttackPower]: 0.4
+            },
+            [ItemCategoryID.Amulets]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.6,
+                [CharacterAttributeID.AttackPower]: 0.6
+            },
+            [ItemCategoryID.Rings]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0.3,
+                [CharacterAttributeID.AttackPower]: 0.3
+            },
+            [ItemCategoryID.OneHandedSwords]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0,
+                [CharacterAttributeID.AttackPower]: 2
+            },
+            [ItemCategoryID.TwoHandedSwords]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0,
+                [CharacterAttributeID.AttackPower]: 4
+            },
+            [ItemCategoryID.Daggers]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0,
+                [CharacterAttributeID.AttackPower]: 4
+            },
+            [ItemCategoryID.Shields]: {
+                [CharacterAttributeID.MaxHealthPoints]: 0,
+                [CharacterAttributeID.AttackPower]: 2
+            },
         };
         this._config.healthPointsCommonEquipSets = {
             [ItemCategoryID.Helmets]: {count: 1},

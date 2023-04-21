@@ -25,7 +25,6 @@ export default class LocationBuilder {
         let locationGO = this._locationFactory.create(LocationTypeID.Forrest, this._level);
         let location = locationGO.get<Location>(ComponentID.Location);
 
-        
 
         return locationGO;
     }

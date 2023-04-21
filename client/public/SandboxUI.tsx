@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM, {Root} from 'react-dom/client';
 import Production from '../../core/app/Components/Production';
-import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import ItemStorageController from '../../core/app/Components/ItemStorages/ItemStorageController.js';
 import Location from '../../core/app/Components/Location.js';
 import MainHeroList from '../../core/app/Components/MainHeroList.js';
@@ -26,7 +25,6 @@ import ContainerInterface from '../../core/source/ContainerInterface.js';
 import AppError from '../../core/source/Errors/AppError.js';
 import GameObject from '../../core/source/GameObject.js';
 import GameObjectStorage from '../../core/source/GameObjectStorage.js';
-import ItemDatabase from '../../core/source/ItemDatabase.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {EnemyTypeID} from '../../core/types/enums/EnemyTypeID.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
@@ -282,8 +280,10 @@ export default class SandboxUI {
                         {/*        />*/}
                         {/*    </div>*/}
                         {/*</div>*/}
-                    </div>{/*content*/}
-                </div>{/*container*/}
+                    </div>
+                    {/*content*/}
+                </div>
+                {/*container*/}
             </div>
         );
     }

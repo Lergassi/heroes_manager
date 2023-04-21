@@ -1,10 +1,9 @@
 import AppError from './Errors/AppError.js';
-import {sprintf} from 'sprintf-js';
 import ContainerInterface from './ContainerInterface.js';
 import _ from 'lodash';
 import {assert} from './assert.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
+import DebugApp from '../app/Services/DebugApp.js';
 
 //todo: Заменить any на Template.
 export default class Container implements ContainerInterface {
@@ -25,7 +24,7 @@ export default class Container implements ContainerInterface {
             this._services[key] = value;
         }
 
-        debug(DebugNamespaceID.Load)('[OK]: Container: ' + key);
+        // DebugApp.debug(DebugNamespaceID.Load)('[OK]: Container: ' + key);
 
         // this._services[key] = value(this);
 

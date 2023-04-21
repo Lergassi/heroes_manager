@@ -8,7 +8,9 @@ export interface ItemStackPlaceInterface {
      * @deprecated
      */
     get itemStack(): ItemStack;
+
     placeItemStack(itemStack: ItemStack): void;
+
     // clear(): void;
 }
 
@@ -83,7 +85,7 @@ export default class ItemStack {
      * @return Остаток.
      */
     add(count: unsigned, item?: Item): unsigned {
-    //todo: add(item:Item, count: number): number {
+        //todo: add(item:Item, count: number): number {
         assertIsGreaterThanOrEqual(count, 1);
         if (item && this._item !== item) {
             return count;
@@ -101,7 +103,7 @@ export default class ItemStack {
         return count;
     }
 
-    addWithItem(item:Item, count: unsigned): unsigned {
+    addWithItem(item: Item, count: unsigned): unsigned {
         assertIsGreaterThanOrEqual(count, 1);
 
         if (this._item !== item) {

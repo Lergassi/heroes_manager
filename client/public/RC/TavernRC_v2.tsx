@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import Tavern_v2 from '../../../core/app/Components/Tavern_v2.js';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
@@ -85,33 +83,36 @@ export default class TavernRC_v2 extends React.Component<TavernRCProps_v2, Taver
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
-                                <tr>
-                                    <th>HeroClassID (index)</th>
-                                    <th>HeroRoleID</th>
-                                    <th>level</th>
-                                    {/*<th>AvailableWeapons</th>*/}
-                                    <th>Cost</th>
-                                    <th>Ctrl</th>
-                                </tr>
-                                {_.map(this.state.heroes, (hero, index) => {
-                                    return <tr key={index}>
-                                        <td>
-                                            <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.hero_classes.data.find(hero.heroClassID).iconId)}></span>
-                                            <span className={'first-table-column-padding-for-icon'}>{hero.heroClassID} ({index})</span>
-                                        </td>
-                                        <td>{database.hero_classes.data.heroRole(hero.heroClassID)}</td>
-                                        <td>{hero.level}</td>
-                                        {/*<td>*/}
-                                        {/*    {*/}
-                                        {/*        database.hero_classes.data.availableWeapons(hero.heroClassID, (ID) => {*/}
-                                        {/*            return <span>{ID}</span>*/}
-                                        {/*        }).reduce((prev, curr) => {*/}
-                                        {/*            return <>{prev}, {curr}</>;*/}
-                                        {/*        })*/}
-                                        {/*    }*/}
-                                        {/*</td>*/}
-                                        <td>{hero.cost}</td>
-                                        <td><button className={'btn btn_default'} onClick={(event) => {
+                            <tr>
+                                <th>HeroClassID (index)</th>
+                                <th>HeroRoleID</th>
+                                <th>level</th>
+                                {/*<th>AvailableWeapons</th>*/}
+                                <th>Cost</th>
+                                <th>Ctrl</th>
+                            </tr>
+                            {_.map(this.state.heroes, (hero, index) => {
+                                return <tr key={index}>
+                                    <td>
+                                        <span
+                                            className={sprintf('icon icon_%s icon_32 icon_first-column-column-padding', database.hero_classes.data.find(hero.heroClassID).iconId)}></span>
+                                        <span
+                                            className={'first-table-column-padding-for-icon'}>{hero.heroClassID} ({index})</span>
+                                    </td>
+                                    <td>{database.hero_classes.data.heroRole(hero.heroClassID)}</td>
+                                    <td>{hero.level}</td>
+                                    {/*<td>*/}
+                                    {/*    {*/}
+                                    {/*        database.hero_classes.data.availableWeapons(hero.heroClassID, (ID) => {*/}
+                                    {/*            return <span>{ID}</span>*/}
+                                    {/*        }).reduce((prev, curr) => {*/}
+                                    {/*            return <>{prev}, {curr}</>;*/}
+                                    {/*        })*/}
+                                    {/*    }*/}
+                                    {/*</td>*/}
+                                    <td>{hero.cost}</td>
+                                    <td>
+                                        <button className={'btn btn_default'} onClick={(event) => {
                                             event.preventDefault();
                                             this.props.tavern.hire(
                                                 index,
@@ -120,13 +121,17 @@ export default class TavernRC_v2 extends React.Component<TavernRCProps_v2, Taver
                                                 this.props.mainHeroList,
                                                 this.props.wallet,
                                             );
-                                        }}>HIRE</button></td>
-                                    </tr>
-                                })}
+                                        }}>HIRE
+                                        </button>
+                                    </td>
+                                </tr>
+                            })}
                             </tbody>
                         </table>
-                    </div>{/*end widget__content*/}
-                </div>{/*end widget*/}
+                    </div>
+                    {/*end widget__content*/}
+                </div>
+                {/*end widget*/}
             </div>
         );
     }

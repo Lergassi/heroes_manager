@@ -13,11 +13,11 @@ import GameObject from '../../../core/source/GameObject.js';
 import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import {UI_ItemCount, UI_ItemStorage, UI_ItemStorageSlot, UI_VeinItemCount} from '../../../core/types/main.js';
+import {UI_ItemCount, UI_ItemStorage, UI_ItemStorageSlot} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import HeroScrolledListSelectRC from './HeroScrolledListSelectRC.js';
-import {ItemID} from "../../../core/types/enums/ItemID";
+import {ItemID} from '../../../core/types/enums/ItemID';
 import HelpTooltipRC from './HelpTooltipRC.js';
 
 export interface DetailLocationRCProps {
@@ -40,7 +40,7 @@ interface DetailLocationRCState {
 
     // items: UI_ItemStorageSlot[];
     // items: UI_ItemStorage[];
-    items: {[itemID in ItemID]?: {count: number}};
+    items: { [itemID in ItemID]?: { count: number } };
 
     heroes: DetailLocationRCHeroElement[];
     maxHeroes: number;
@@ -111,17 +111,17 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
             timeToClose: 0,
             // timeToClose: 8 * 60 * 60 * 24 + 1 + 60 * 60,
 
-            items   : {},
+            items: {},
 
-            heroes   : [],
-            maxHeroes   : 5,    //Короче 5. Долго лезть в группу.
-            enemies  : [],
+            heroes: [],
+            maxHeroes: 5,    //Короче 5. Долго лезть в группу.
+            enemies: [],
             heroGroupItems: [],
 
             veinItems: [],
 
             lootItems: [],
-            money    : 0,
+            money: 0,
 
             // selectedHeroID: props.heroes[0] ? props.heroes[0].ID : undefined,
             selectedHeroID: '', //todo: Отдельный компонент выбора. Только для ui.
@@ -177,7 +177,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         // this.props.mainHeroList.renderByRequest(this);
     }
 
-    updateLocation(location: GameObject, options?: {show?: boolean}): void {
+    updateLocation(location: GameObject, options?: { show?: boolean }): void {
         assertNotNil(location);
 
         // if (!location) return;
@@ -268,7 +268,7 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         this.setState((state) => {
             return {
                 location: undefined,
-            }  as DetailLocationRCState;
+            } as DetailLocationRCState;
         });
 
         //todo: Удаление привязок.
@@ -403,7 +403,10 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>Локация ({this.state.ID})<button className={'btn btn_default btn_right btn_close-table'} onClick={this.hide}>CLOSE</button></div>
+                    <div className={'widget__title'}>Локация ({this.state.ID})
+                        <button className={'btn btn_default btn_right btn_close-table'} onClick={this.hide}>CLOSE
+                        </button>
+                    </div>
                 </div>
                 <div className={'row'} key={0}>
                     <div className={'col col-25'}>
@@ -416,19 +419,24 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     handleAddHeroChange={this.addHero}
                                 />
                             </div>
-                        </div>{/* end widget Выбор героев */}
+                        </div>
+                        {/* end widget Выбор героев */}
                         <div className={'widget'}>
                             <div className={'widget__title'}>Управление</div>
                             <div className={'widget__content'}>
                                 {this.state.state === LocationHuntingState.Waiting ?
-                                    <button className={'btn btn_primary'} onClick={this.startHunting}>START_HUNTING</button> :
-                                    <button className={'btn btn_primary'} onClick={this.stopHunting}>STOP_HUNTING</button>
+                                    <button className={'btn btn_primary'}
+                                            onClick={this.startHunting}>START_HUNTING</button> :
+                                    <button className={'btn btn_primary'}
+                                            onClick={this.stopHunting}>STOP_HUNTING</button>
                                 }
                                 <button className={'btn btn_primary'} onClick={this.getRewards}>GET_REWARDS</button>
                                 {/*<button className={'btn btn_danger'}>Удалить локацию</button>*/}
                             </div>
-                        </div>{/* end widget Control */}
-                    </div>{/*end col*/}
+                        </div>
+                        {/* end widget Control */}
+                    </div>
+                    {/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
                             <div className={'widget__title'}>Герои: {heroes.length}/5</div>
@@ -456,7 +464,8 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                                 <td>
                                                     <button className={'btn btn_default'} onClick={() => {
                                                         this.removeHero(hero.ID);
-                                                    }}>REMOVE</button>
+                                                    }}>REMOVE
+                                                    </button>
                                                 </td>
                                             </tr>
                                         })}
@@ -471,7 +480,8 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     </div>
                                 </div>
                             </div>
-                        </div>{/* end widget hero */}
+                        </div>
+                        {/* end widget hero */}
                         <div className={'widget'}>
                             <div className={'widget__title'}>Player items</div>
                             <div className={'widget__content'}>
@@ -488,55 +498,63 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                                 {/*<td>{item.index}</td>*/}
                                                 <td>{itemID}</td>
                                                 <td>{data.count}</td>
-                                                <td><button className={'btn btn_default'} onClick={(event) => {
-                                                    event.preventDefault();
+                                                <td>
+                                                    <button className={'btn btn_default'} onClick={(event) => {
+                                                        event.preventDefault();
 
-                                                    // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndex(itemStorage.ID, slot.index, 1);
-                                                    // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndexTo(itemStorage.ID, slot.index, 1, this.state.location.get<Location>(ComponentID.Location).heroesItems);
-                                                    // if (this.state.location.get<Location>(ComponentID.Location))
-                                                    this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController).removeItem(
-                                                        itemID,
-                                                        this.state.location.get<Location>(ComponentID.Location).heroesItems.addItem(itemID, 1),
-                                                    );
+                                                        // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndex(itemStorage.ID, slot.index, 1);
+                                                        // this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController)._removeByIndexTo(itemStorage.ID, slot.index, 1, this.state.location.get<Location>(ComponentID.Location).heroesItems);
+                                                        // if (this.state.location.get<Location>(ComponentID.Location))
+                                                        this.props.container.get<ItemStorageController>(ServiceID.ItemStorageController).removeItem(
+                                                            itemID,
+                                                            this.state.location.get<Location>(ComponentID.Location).heroesItems.addItem(itemID, 1),
+                                                        );
 
-                                                }}>ADD</button></td>
+                                                    }}>ADD
+                                                    </button>
+                                                </td>
                                             </tr>;
                                         })}
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>{/*end widget__content*/}
-                        </div>{/*end widget Player items*/}
-                    </div>{/*end col*/}
+                            </div>
+                            {/*end widget__content*/}
+                        </div>
+                        {/*end widget Player items*/}
+                    </div>
+                    {/*end col*/}
                     <div className={'col col-25'}>
                         <div className={'widget'}>
                             <div className={'widget__title'}>Враги</div>
                             <div className={'widget__content'}>
                                 <table className={'basic-table'}>
                                     <tbody>
-                                        <tr>
-                                            <th>EnemyTypeID</th>
-                                            <th>Count</th>
-                                            <th>Level</th>
-                                            <th>AP</th>
-                                            <th>HP</th>
+                                    <tr>
+                                        <th>EnemyTypeID</th>
+                                        <th>Count</th>
+                                        <th>Level</th>
+                                        <th>AP</th>
+                                        <th>HP</th>
+                                    </tr>
+                                    {_.map(enemies, (enemy, index) => {
+                                        return <tr key={index}>
+                                            <td>{enemy.enemyTypeName} {enemy.isDead ? '(DEAD)' : ''}</td>
+                                            <td>{enemy.count}</td>
+                                            <td>{enemy.level}</td>
+                                            <td>{enemy.attackPower}</td>
+                                            <td>{enemy.currentHealthPoints}/{enemy.maxHealthPoints}</td>
                                         </tr>
-                                        {_.map(enemies, (enemy, index) => {
-                                            return <tr key={index}>
-                                                <td>{enemy.enemyTypeName} {enemy.isDead ? '(DEAD)' : ''}</td>
-                                                <td>{enemy.count}</td>
-                                                <td>{enemy.level}</td>
-                                                <td>{enemy.attackPower}</td>
-                                                <td>{enemy.currentHealthPoints}/{enemy.maxHealthPoints}</td>
-                                            </tr>
-                                        })}
+                                    })}
                                     </tbody>
                                 </table>
                             </div>
-                        </div>{/*end enemies*/}
+                        </div>
+                        {/*end enemies*/}
                         <div className={'widget'}>
                             {/*<div className={'widget__title'}><span className={'widget__title-text'}>Hero group items</span> <HelpTooltip text={'Доступные предметы: HealthPotion01'}/></div>*/}
-                            <div className={'widget__title'}>Hero group items <HelpTooltipRC text={'Доступные предметы: HealthPotion01'}/></div>
+                            <div className={'widget__title'}>Hero group items <HelpTooltipRC
+                                text={'Доступные предметы: HealthPotion01'}/></div>
                             <div className={'widget__content'}>
                                 <table className={'basic-table'}>
                                     <tbody>
@@ -550,30 +568,34 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                             <td>{item.item?.itemID ?? ''}</td>
                                             <td>{item.item?.count ?? ''}</td>
                                             <td>
-                                                {item.item?.itemID ? <button className={'btn btn_default'} onClick={(event) => {
-                                                    event.preventDefault();
+                                                {item.item?.itemID ?
+                                                    <button className={'btn btn_default'} onClick={(event) => {
+                                                        event.preventDefault();
 
-                                                    if (!item.item?.itemID) return;
+                                                        if (!item.item?.itemID) return;
 
-                                                    //todo: Отдельный класс для логики с отменой перемещения.
-                                                    if (
-                                                        this.state.location.get<Location>(ComponentID.Location).heroesItems.hasItem(item.item.itemID, 1) &&
-                                                        this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).canAddItem(item.item.itemID, 1)
-                                                    ) {
-                                                        if (this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item.item.itemID, 1) === 1) {
-                                                            this.state.location.get<Location>(ComponentID.Location).heroesItems.removeItem(item.item.itemID, 1);
+                                                        //todo: Отдельный класс для логики с отменой перемещения.
+                                                        if (
+                                                            this.state.location.get<Location>(ComponentID.Location).heroesItems.hasItem(item.item.itemID, 1) &&
+                                                            this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).canAddItem(item.item.itemID, 1)
+                                                        ) {
+                                                            if (this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).addItem(item.item.itemID, 1) === 1) {
+                                                                this.state.location.get<Location>(ComponentID.Location).heroesItems.removeItem(item.item.itemID, 1);
+                                                            }
                                                         }
-                                                    }
-                                                    // this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).removeByIndexTo();
-                                                }}>REMOVE</button> : ''}
+                                                        // this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).removeByIndexTo();
+                                                    }}>REMOVE</button> : ''}
                                             </td>
                                         </tr>
                                     })}
                                     </tbody>
                                 </table>
-                            </div>{/*end widget__content*/}
-                        </div>{/*end widget Hero group items*/}
-                    </div>{/*end col*/}
+                            </div>
+                            {/*end widget__content*/}
+                        </div>
+                        {/*end widget Hero group items*/}
+                    </div>
+                    {/*end col*/}
                     <div className={'col col-25'}>
                         {/*<div className={'widget'}>*/}
                         {/*    <div className={'widget__title'}>Ресурсы для сбора</div>*/}
@@ -604,11 +626,16 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                 <ul>
                                     <li>Уровень: {this.state.level}</li>
                                     {/*<li>Эффективность сбора: {this.state.gatheringPerformance}</li>*/}
-                                    <li>Время до закрытия: {formatDuration(intervalToDuration({start: 0, end: this.state.timeToClose * 1000}))} часов</li>
+                                    <li>Время до закрытия: {formatDuration(intervalToDuration({
+                                        start: 0,
+                                        end: this.state.timeToClose * 1000
+                                    }))} часов
+                                    </li>
                                     <li>Золото: {this.state.money}</li>
                                 </ul>
                             </div>
-                        </div>{/* end widget info */}
+                        </div>
+                        {/* end widget info */}
                         <div className={'widget'}>
                             <div className={'widget__title'}>Добыча</div>
                             <div className={'widget__content'}>
@@ -627,9 +654,12 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
                                     </tbody>
                                 </table>
                             </div>
-                        </div>{/* end loot */}
-                    </div>{/*end col*/}
-                </div>{/*end row*/}
+                        </div>
+                        {/* end loot */}
+                    </div>
+                    {/*end col*/}
+                </div>
+                {/*end row*/}
             </div>
         );
     }

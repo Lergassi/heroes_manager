@@ -1,15 +1,7 @@
-import Item, {
-    CharacterAttributeRecord,
-    ItemGetType,
-    ItemOptions,
-    ItemProperties
-} from '../Entities/Item.js';
+import Item, {CharacterAttributeRecord, ItemGetType, ItemOptions, ItemProperties} from '../Entities/Item.js';
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
-import CharacterAttributeEntity from '../Entities/CharacterAttributeEntity.js';
 import ItemCategory from '../Entities/ItemCategory.js';
 import Quality from '../Entities/Quality.js';
-import EntityManager from '../../source/EntityManager.js';
 import {QualityID} from '../../types/enums/QualityID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
@@ -18,9 +10,8 @@ import {IconID} from '../../types/enums/IconID.js';
 import Icon from '../Entities/Icon.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {sprintf} from 'sprintf-js';
-import debug from 'debug';
-import _ from 'lodash';
 import AppError from '../../source/Errors/AppError.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export interface ItemBuilderOptions {
     description: string;
@@ -109,14 +100,14 @@ export default class ItemBuilder {
         this._name = id;
         this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryID);
         if (!this._itemCategory) {
-            debug(DebugNamespaceID.Replace)(sprintf('Категория %s для %s не найдена и будет заменена на %s.', itemCategoryID, id,  this._default.itemCategoryID));
+            DebugApp.debug(DebugNamespaceID.Replace)(sprintf('Категория %s для %s не найдена и будет заменена на %s.', itemCategoryID, id, this._default.itemCategoryID));
             this._itemCategory = this._entityManager.get<ItemCategory>(EntityID.ItemCategory, this._default.itemCategoryID);
         }
         this._description = options.description ?? this._default.description;
         this._icon = options.iconID ?
             (this._entityManager.get<Icon>(EntityID.Icon, options.iconID) ??
                 this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)) :
-                this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)
+            this._entityManager.get<Icon>(EntityID.Icon, this._default.iconID)
         ;
         this._itemLevel = options.itemLevel ?? this._default.itemLevel;
         this._sort = options.sort ?? this._default.sort;

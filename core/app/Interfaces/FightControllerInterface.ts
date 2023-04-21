@@ -1,5 +1,3 @@
-import AttackControllerInterface from './AttackControllerInterface.js';
-import DamageControllerInterface from './DamageControllerInterface.js';
 import ExperienceDistributorInterface from './ExperienceDistributorInterface.js';
 import WalletInterface from './WalletInterface.js';
 import ItemStorageInterface from './ItemStorageInterface.js';

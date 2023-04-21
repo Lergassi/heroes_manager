@@ -1,14 +1,11 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import ItemStorageController from '../Components/ItemStorages/ItemStorageController.js';
-import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
 import {unsigned} from '../../types/main.js';
 import {DEFAULT_ITEM_STORAGE_SIZE} from '../consts.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
-import ItemStorageControllerInterface from '../Interfaces/ItemStorageControllerInterface.js';
 
 export default class CreateItemStorageCommand extends Command {
     get name(): string {

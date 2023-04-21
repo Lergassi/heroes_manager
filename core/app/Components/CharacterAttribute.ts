@@ -1,16 +1,11 @@
-import Component from '../../source/Component.js';
-import {unsigned} from '../../types/main.js';
-import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
-import CharacterAttributeCollector from './CharacterAttributeCollector.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface, {
     CharacterAttributeInterfaceRender
 } from '../Decorators/CharacterAttributeInterface.js';
-import {assert, assertIsNumber, assertNotNil, assertIsPositive} from '../../source/assert.js';
-import debug from 'debug';
+import {assertIsPositive, assertNotNil} from '../../source/assert.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
-import _ from 'lodash';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class CharacterAttribute implements CharacterAttributeInterface {
     private readonly _ID: CharacterAttributeID;    //todo: Убрать. Сделать с доступом по индексу. Во всех подобных местах.
@@ -72,7 +67,7 @@ export default class CharacterAttribute implements CharacterAttributeInterface {
     }
 
     debug(): void {
-        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+        DebugApp.debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             ID: this._ID,
             value: this.value,
         });

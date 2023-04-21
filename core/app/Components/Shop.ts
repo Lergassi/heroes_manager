@@ -1,21 +1,7 @@
-import _ from 'lodash';
-import debug from 'debug';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import Item from '../Entities/Item.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import ShopBuilder from '../Builders/ShopBuilder.js';
-import ShopInterface from '../Interfaces/ShopInterface.js';
-import ShopConfigInterface from '../Interfaces/ShopConfigInterface.js';
-import ItemPack from './ItemPack.js';
-import {
-    assert,
-    assertIsGreaterThanOrEqual,
-    assertIsNumber,
-    assertIsPositive,
-    assertNotNil
-} from '../../source/assert.js';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
+import {assertIsPositive, assertNotNil} from '../../source/assert.js';
 
 // type ShopPosition = {
 //     item: Item;
@@ -35,7 +21,7 @@ import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
  */
 // export default class Shop implements ShopInterface, ShopConfigInterface {
 export default class Shop {
-    private readonly _positions: {item: Item, price: number}[];
+    private readonly _positions: { item: Item, price: number }[];
 
     constructor() {
         this._positions = [];

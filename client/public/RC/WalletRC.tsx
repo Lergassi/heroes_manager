@@ -1,13 +1,7 @@
-import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import WalletInterface, {WalletInterfaceRender} from '../../../core/app/Interfaces/WalletInterface.js';
+import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
-import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
 import WalletMoneyValueRC from './WalletMoneyValueRC.js';
 
 export interface WalletRCProps {

@@ -4,20 +4,18 @@ import yargs from 'yargs/yargs';
 import {hideBin} from 'yargs/helpers';
 import CoreContainerConfigure from '../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
-import PlayerContainerConfigure from '../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
 import GenerateItems from '../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
 import Container from '../core/source/Container.js';
 import AppError from '../core/source/Errors/AppError.js';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
-import SandboxController from './SandboxController.js';
 import dotenv from 'dotenv';
 import debug from 'debug';
-import csvToJson from 'convert-csv-to-json';
 import fs from 'fs';
 import {sprintf} from 'sprintf-js';
 import ConventItems from '../core/app/Services/Server/ConventItems.js';
 import ConventItemCategories from '../core/app/Services/Server/ConventItemCategories.js';
 import ConventCSVDataToJson from '../core/app/Services/Server/ConventCSVDataToJson.js';
+import DebugApp from '../core/app/Services/DebugApp.js';
 
 dotenv.config();
 debug.enable(process.env['DEBUG']);
@@ -42,10 +40,10 @@ yargs(hideBin(process.argv))
 yargs(hideBin(process.argv))
     .command('test_path', '', (yargs) => {
         return yargs
-            // .positional('foo', {
-            //     describe: '',
-            //     default: 42
-            // })
+        // .positional('foo', {
+        //     describe: '',
+        //     default: 42
+        // })
     }, (argv) => {
         console.log('process.cwd()', process.cwd());
         console.log('__dirname', __dirname);
@@ -158,7 +156,7 @@ yargs(hideBin(process.argv))
                 return;
             }
 
-            debug(DebugNamespaceID.Log)(sprintf('Данные записаны в файл %s.', pathname));
+            DebugApp.debug(DebugNamespaceID.Log)(sprintf('Данные записаны в файл %s.', pathname));
         });
     })
     .parse()

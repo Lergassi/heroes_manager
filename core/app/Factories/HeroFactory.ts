@@ -34,7 +34,7 @@ import EquipSlotFactory from './EquipSlotFactory.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import GameObjectFactory from './GameObjectFactory.js';
 import HeroCharacterAttributeFactory from './HeroCharacterAttributeFactory.js';
-import EnduranceController from "../Components/EnduranceController";
+import EnduranceController from '../Components/EnduranceController';
 
 export default class HeroFactory {
     private readonly _entityManager: EntityManagerInterface;
@@ -64,7 +64,7 @@ export default class HeroFactory {
         level: number,
         //todo: Нужнен доступ к смене начальных атрибутов.
         options?: {
-            baseCharacterAttributeValues?: {[id in CharacterAttributeID]?: number}, //todo: Через строитель.
+            baseCharacterAttributeValues?: { [id in CharacterAttributeID]?: number }, //todo: Через строитель.
         },
     ): GameObject {
         heroClass = !(heroClass instanceof HeroClass) ? this._entityManager.get<HeroClass>(EntityID.HeroClass, heroClass) : heroClass;
@@ -145,7 +145,7 @@ export default class HeroFactory {
             characterAttributeManager,
             averageItemLevel,
         );
-        let rightHand : EquipSlotInterface = equipSlotFactory.createRightHand(
+        let rightHand: EquipSlotInterface = equipSlotFactory.createRightHand(
             leftHand as LeftHand,
             this._entityManager.get<EquipSlot>(EntityID.EquipSlot, EquipSlotID.RightHand),
             heroClass,

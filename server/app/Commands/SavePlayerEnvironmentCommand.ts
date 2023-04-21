@@ -4,7 +4,6 @@ import Serializer from '../../../core/source/Serializer.js';
 import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
 import _ from 'lodash';
 import fs from 'fs';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import Security from '../../source/Security.js';
 import MetadataManager from '../../../core/source/MetadataManager.js';
@@ -12,6 +11,7 @@ import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
+import DebugApp from '../../../core/app/Services/DebugApp.js';
 
 export default class SavePlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -59,6 +59,6 @@ export default class SavePlayerEnvironmentCommand extends Command {
         fs.writeFileSync(saveFilePath, saveObjectString);
         fs.chownSync(saveFilePath, 1001, 1001);
 
-        debug(DebugNamespaceID.Info)(sprintf('Данные сохранены в %s.', saveFilePath));
+        DebugApp.debug(DebugNamespaceID.Info)(sprintf('Данные сохранены в %s.', saveFilePath));
     }
 }

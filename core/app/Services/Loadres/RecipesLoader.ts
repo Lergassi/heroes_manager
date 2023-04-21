@@ -1,8 +1,4 @@
-import _ from 'lodash';
-import debug from 'debug';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
-import ItemFactory from '../../Factories/ItemFactory.js';
-import ItemBuilder from '../../Builders/ItemBuilder.js';
 import data from '../../../data/items.json';
 import RecipeFactory from '../../Factories/EntityFactories/RecipeFactory.js';
 import ItemStackBlankInterface from '../../Interfaces/ItemStackBlankInterface.js';
@@ -17,10 +13,22 @@ export default class RecipesLoader {
             if (!data[i].ResultCount) continue;
 
             let requireItems: ItemStackBlankInterface[] = [];
-            if (data[i].RequireItem01) requireItems.push({itemID: data[i].RequireItem01, count: Number(data[i].Count01)});
-            if (data[i].RequireItem02) requireItems.push({itemID: data[i].RequireItem02, count: Number(data[i].Count02)});
-            if (data[i].RequireItem03) requireItems.push({itemID: data[i].RequireItem03, count: Number(data[i].Count03)});
-            if (data[i].RequireItem04) requireItems.push({itemID: data[i].RequireItem04, count: Number(data[i].Count04)});
+            if (data[i].RequireItem01) requireItems.push({
+                itemID: data[i].RequireItem01,
+                count: Number(data[i].Count01)
+            });
+            if (data[i].RequireItem02) requireItems.push({
+                itemID: data[i].RequireItem02,
+                count: Number(data[i].Count02)
+            });
+            if (data[i].RequireItem03) requireItems.push({
+                itemID: data[i].RequireItem03,
+                count: Number(data[i].Count03)
+            });
+            if (data[i].RequireItem04) requireItems.push({
+                itemID: data[i].RequireItem04,
+                count: Number(data[i].Count04)
+            });
 
             recipeFactory.create(
                 data[i].ID,

@@ -1,11 +1,10 @@
 import {ItemID} from '../../types/enums/ItemID';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface';
-import debug, {log} from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID';
 import {database} from '../../data/ts/database';
 import {assertNotNil} from '../../source/assert';
 import * as fns from 'date-fns';
-import {now} from 'lodash';
+import DebugApp from '../Services/DebugApp.js';
 
 export interface GardenRCInterface {
     updateGardenBed?(seedID: ItemID, startGrow: Date): void;
@@ -29,38 +28,38 @@ export class GardenBed implements GardenBedRenderInterface {
         assertNotNil(data);
 
         if (!this.isFree()) {
-            debug(DebugNamespaceID.Throw)('Грядка занята.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Грядка занята.');
             return false;
         }
 
         if (!itemStorage.hasItem(seedID, 1)) {
-            debug(DebugNamespaceID.Throw)('Не достаточно семян.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Не достаточно семян.');
             return false;
         }
 
         this._startGrowth = new Date();
         this._seedID = seedID;
         itemStorage.removeItem(seedID, 1);
-        debug(DebugNamespaceID.Log)('Растение посажено.');
+        DebugApp.debug(DebugNamespaceID.Log)('Растение посажено.');
     }
 
     harvest(itemStorage: ItemStorageInterface): boolean {
         if (this.isFree()) {
-            debug(DebugNamespaceID.Throw)('Растение не посажено.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Растение не посажено.');
 
             return false;
         }
 
         if (!this.isReadyToHarvest()) {
 
-            debug(DebugNamespaceID.Throw)('Растение еще не выросло.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Растение еще не выросло.');
             return false;
         }
 
         itemStorage.addItem(database.seeds.find(this._seedID).resultItemID, database.seeds.find(this._seedID).resultItemsCount);
         //todo: Проверка на добавление всех предметов - иначе сохранить во внутреннем хранилище.
         this.clear();
-        debug(DebugNamespaceID.Log)('Урожай собран.');
+        DebugApp.debug(DebugNamespaceID.Log)('Урожай собран.');
 
         return true;
     }

@@ -1,4 +1,3 @@
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {database} from '../../data/ts/database.js';
 import MaxIterationsReachedError from '../../source/Errors/MaxIterationsReachedError.js';
@@ -14,6 +13,7 @@ import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorI
 import HeroCharacterAttributeGenerator from '../Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import CharacterAttributeManager from './CharacterAttributeManager.js';
 import HealthPoints from './HealthPoints.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export enum ExperienceComponentEventCode {
     AddExp = 'ExperienceComponent.AddExp',
@@ -22,7 +22,9 @@ export enum ExperienceComponentEventCode {
 
 export interface ExperienceRender {
     updateLevel?(value: number): void;
+
     updateExp?(value: number): void,
+
     updateTotalExpToLevelUp?(value: number): void,
 }
 
@@ -83,7 +85,7 @@ export default class Experience implements ExperienceDistributorInterface {
         }
 
         this._exp += value;
-        debug(DebugNamespaceID.Log)(sprintf('Получено опыта: %d.', this._exp));   //todo: Не надо выводить у героев. Только у игрока. Сделать отдельный компоненты.
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Получено опыта: %d.', this._exp));   //todo: Не надо выводить у героев. Только у игрока. Сделать отдельный компоненты.
         EventSystem.event(ExperienceComponentEventCode.AddExp, this);    //todo: Это на каждую переменную придется делать, которая отображается в ui. Надо по другому.
         //todo: Повышение нескольких уровней объединить в одно действие. И через события передавать в дополнительной переменной.
         if (this._exp >= this.totalExpForNextLevel) {
@@ -116,7 +118,7 @@ export default class Experience implements ExperienceDistributorInterface {
     }
 
     debug(): void {
-        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+        DebugApp.debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             exp: this._exp,
             level: this._level,
             maxLevel: this._maxLevel,
@@ -129,7 +131,7 @@ export default class Experience implements ExperienceDistributorInterface {
         }
 
         ++this._level;
-        debug(DebugNamespaceID.Log)(sprintf('Уровень повышен: %s.', this._level));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Уровень повышен: %s.', this._level));
 
         let heroClassID = this._hero.get<HeroClassID>(ComponentID.HeroClassID);
 

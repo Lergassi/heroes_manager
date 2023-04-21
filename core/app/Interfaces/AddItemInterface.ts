@@ -10,5 +10,6 @@ export default interface AddItemInterface {
      * @param count Остаток.
      */
     addItem(item: Item, count: unsigned): unsigned;
+
     moveItemsTo(target: AddItemInterface): void;
 }

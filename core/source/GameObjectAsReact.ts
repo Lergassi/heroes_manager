@@ -8,6 +8,7 @@ export interface LocationProps {
 enum LocationEnum {
 
 }
+
 // type LocationType = keyof LocationProps;
 
 export type LocationType = {

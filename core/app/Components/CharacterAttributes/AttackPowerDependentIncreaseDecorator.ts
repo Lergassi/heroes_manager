@@ -1,4 +1,3 @@
-import debug from 'debug';
 import _ from 'lodash'
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 import {DebugFormatterID} from '../../../types/enums/DebugFormatterID.js';
@@ -7,6 +6,7 @@ import {unsigned} from '../../../types/main.js';
 import CharacterAttributeInterface, {
     CharacterAttributeInterfaceRender
 } from '../../Decorators/CharacterAttributeInterface.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 /**
  * @deprecated Не удобно. Переделать.
@@ -55,7 +55,7 @@ export default class AttackPowerDependentIncreaseDecorator implements CharacterA
     }
 
     debug(): void {
-        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+        DebugApp.debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             ID: CharacterAttributeID.AttackPower,
             baseValue: this.value,
             finalValue: this.finalValue,

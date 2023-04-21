@@ -1,19 +1,4 @@
 import GameObject from '../../source/GameObject.js';
-import HeroComponent from '../Components/HeroComponent.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
-import Experience from '../Components/Experience.js';
-import HeroActivityStateController from '../Components/HeroActivityStateController.js';
-import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
-import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
-import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
-import HealthPoints from '../Components/HealthPoints.js';
-import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
-import debug from 'debug';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
-import DefaultViewer from './DefaultViewer.js';
-import _ from 'lodash';
 
 export default class DetailHeroViewer {
     view(hero: GameObject) {

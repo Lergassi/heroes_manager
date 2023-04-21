@@ -1,8 +1,7 @@
 import Input from '../../source/GameConsole/Input.js';
 import Command from '../../source/GameConsole/Command.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
-import {assert, assertNotNil} from '../../source/assert.js';
-import _ from 'lodash';
+import {assertNotNil} from '../../source/assert.js';
 import Location from '../Components/Location.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';

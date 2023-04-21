@@ -1,11 +1,6 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import Item from '../../../core/app/Entities/Item.js';
-import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import ItemDatabase from '../../../core/source/ItemDatabase.js';
-import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {IconID} from '../../../core/types/enums/IconID.js';
 
 export interface ItemSlotRCProps {
@@ -40,7 +35,8 @@ export default class ItemSlotRC extends React.Component<ItemSlotRCProps, ItemSlo
     render() {
         return (
             <div className={'item-slot icon_' + this._blockSize}>
-                <div className={_.join(['icon', 'icon_' + this._blockSize, 'icon_' + this._backgroundIconID], ' ')}></div>
+                <div
+                    className={_.join(['icon', 'icon_' + this._blockSize, 'icon_' + this._backgroundIconID], ' ')}></div>
                 {this._renderItem()}
             </div>
         );

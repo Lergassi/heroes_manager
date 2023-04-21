@@ -7,7 +7,7 @@ import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
  * @indev
  */
 export default class ItemKit {
-    private readonly _items: {itemID: ItemID, count: unsigned}[];
+    private readonly _items: { itemID: ItemID, count: unsigned }[];
 
     //Удобно создать массив, но не удобно то, что сущностей может не быть, так как поиск их происходит в методе create(). todo: Может без сущностей? Слотов уже нету.
     constructor(items: { itemID: ItemID; count: unsigned }[]) {

@@ -1,12 +1,6 @@
 import React from 'react';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemStorageComponent from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
-import PlayerItemStorageSlot from './PlayerItemStorageSlot.js';
-import EntityManagerInterface from '../../../core/app/Interfaces/EntityManagerInterface.js';
-import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import Icon from '../../../core/app/Entities/Icon.js';
-import {EntityID} from '../../../core/types/enums/EntityID.js';
-import {IconID} from '../../../core/types/enums/IconID.js';
 
 export interface PlayerItemStorageProps {
     container: ContainerInterface;
@@ -19,6 +13,7 @@ export interface PlayerItemStorageState {
 
 export default class PlayerItemStorage extends React.Component<PlayerItemStorageProps, PlayerItemStorageState> {
     private readonly _cols = 5;
+
     // private readonly _rows = 5;
 
     constructor(props: PlayerItemStorageProps) {

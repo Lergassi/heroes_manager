@@ -1,6 +1,5 @@
 import GameObject from '../../source/GameObject.js';
 import Experience from '../Components/Experience.js';
-import {unsigned} from '../../types/main.js';
 import HeroCharacterAttributeGenerator from '../Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 
 export type ExperienceComponentFactoryCreateOptions = {

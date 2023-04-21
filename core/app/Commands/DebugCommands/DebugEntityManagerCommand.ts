@@ -1,7 +1,5 @@
 import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
-import EntityManager from '../../../source/EntityManager.js';
-import {debugEntityManager, debugRepository} from '../../../debug/debug_functions.js';
 import {CommandID} from '../../../types/enums/CommandID.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';

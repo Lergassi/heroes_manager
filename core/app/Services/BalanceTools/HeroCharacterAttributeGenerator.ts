@@ -63,7 +63,7 @@ export default class ProductionValueGeneratorHeroCharacterAttributeGenerator {
         let itemLevel = this.itemLevelsCount(level);
 
         let value = _.round(
-            ( config.start_item_level_health_points + config.item_level_increase_health_points * ( itemLevel - 1) ) * summaryRatio
+            (config.start_item_level_health_points + config.item_level_increase_health_points * (itemLevel - 1)) * summaryRatio
         );
 
         //@hack Снижение силы атаки от экипировка, тк полный сет собирается не с 1ого уровня (особенность расчетов).
@@ -128,7 +128,7 @@ export default class ProductionValueGeneratorHeroCharacterAttributeGenerator {
         values.summaryRatio = this._summaryRatio(heroClassID, ItemAttributeID.AttackPower);
 
         let value = _.round(
-            ( config.start_item_level_attack_power + config.item_level_increase_attack_power * ( values.itemLevel - 1 ) ) *
+            (config.start_item_level_attack_power + config.item_level_increase_attack_power * (values.itemLevel - 1)) *
             values.summaryRatio
         );
 

@@ -1,6 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
-import {item_category_ratios} from '../../../../../data/ts/item_category_ratios.js';
 import {item_attributes_formulas} from '../../formulas/item_attributes_formulas.js';
 
 export default class CharacterAttributeTransfer {

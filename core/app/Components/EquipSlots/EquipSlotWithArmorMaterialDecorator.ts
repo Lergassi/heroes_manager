@@ -1,15 +1,3 @@
-import ArmorMaterial from '../../Entities/ArmorMaterial.js';
-import Item from '../../Entities/Item.js';
-import {unsigned} from '../../../types/main.js';
-import ItemStackFactory from '../../Factories/ItemStackFactory.js';
-import _ from 'lodash';
-import AppError from '../../../source/Errors/AppError.js';
-import ItemStack from '../../RuntimeObjects/ItemStack.js';
-import debug from 'debug';
-import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {sprintf} from 'sprintf-js';
-import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-
 // export default class EquipSlotWithArmorMaterialDecorator implements EquipSlotInterface {
 /**
  * @deprecated

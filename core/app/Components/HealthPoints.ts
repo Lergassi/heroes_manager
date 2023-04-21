@@ -1,14 +1,13 @@
-import debug from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
-import {assertAction, assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../source/assert.js';
+import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
-import {HeroActivityStateCode} from './HeroActivityStateController.js';
 import ActionStateController, {CharacterActionStateCode} from './ActionStateController.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export enum HealthPointsComponentEventCode {
     Damage = 'HealthPointsComponent.Damage',
@@ -18,6 +17,7 @@ export enum HealthPointsComponentEventCode {
 
 export interface HealthPointsRender {
     updateHealthPoints?(currentHealthPoints: number, maxHealthPoints: number): void;
+
     updateDeadState?(isDead: boolean): void;
 }
 
@@ -75,7 +75,7 @@ export default class HealthPoints implements DamageControllerInterface {
 
         // if (!this._actionStateController.canAction()) {
         if (!this.canDamage()) {
-            debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Персонаж не может получить урон.');
             return 0;   //todo: @ts_bug Было return при объявлении возвращаемого значения у функции как number. ts не выдавал ошибку и была ошибка в логике NaN при подсчете урона.
         }
 
@@ -84,7 +84,7 @@ export default class HealthPoints implements DamageControllerInterface {
         let resultDamage = this._currentHealthPoints >= damage ? damage : this._currentHealthPoints;
 
         this._currentHealthPoints -= resultDamage;
-        debug(DebugNamespaceID.Log)(sprintf('Получено урона (остаток/макс): %s (%s/%s)', resultDamage, this._currentHealthPoints, this._maxHealthPoints.finalValue));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Получено урона (остаток/макс): %s (%s/%s)', resultDamage, this._currentHealthPoints, this._maxHealthPoints.finalValue));
         if (this._currentHealthPoints <= 0) {
             this.dead(enemyRewardOptions);
         }
@@ -100,13 +100,13 @@ export default class HealthPoints implements DamageControllerInterface {
 
     kill(enemyRewardOptions?: RewardOptions): void {
         if (!this.canKill()) {
-            debug(DebugNamespaceID.Throw)('Персонаж не может умереть.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Персонаж не может умереть.');
             return;
         }
 
         this._currentHealthPoints = 0;
         this._isDead = true;
-        debug(DebugNamespaceID.Log)('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
+        DebugApp.debug(DebugNamespaceID.Log)('Персонаж умер.'); //todo: Не персонаж, а тот кому принадлежит объект.
         // this._actionStateController.state('Dead', 'State message: Персонаж мертвый.');
         this._actionStateController.addState(CharacterActionStateCode.Dead);
         if (this._afterDiedCallback && enemyRewardOptions) {
@@ -130,7 +130,7 @@ export default class HealthPoints implements DamageControllerInterface {
      */
     heal(value: number): number {
         if (!this.canHeal()) {
-            debug(DebugNamespaceID.Throw)('Персонаж не может получить лечение.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Персонаж не может получить лечение.');
             return 0;
         }
 
@@ -143,7 +143,7 @@ export default class HealthPoints implements DamageControllerInterface {
             this._currentHealthPoints = this._maxHealthPoints.finalValue;
             recoveryHealthPoints = flawHealthPoints
         }
-        debug(DebugNamespaceID.Log)(sprintf('Персонаж получил лечение %s.', recoveryHealthPoints));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Персонаж получил лечение %s.', recoveryHealthPoints));
 
         return recoveryHealthPoints;
     }
@@ -151,14 +151,14 @@ export default class HealthPoints implements DamageControllerInterface {
     resurrect(): boolean {
         // if (this._actionStateController.canAction()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
         if (!this.canResurrect()) {//todo: Явно так нельзя делать. Внутри сейчас, в том числе, выдается сообщение что персонаж мерт.
-            debug(DebugNamespaceID.Throw)('Персонаж не может быть воскрешен.');   //todo: Или универсальное сообщение, например "Нельзя совершить подобное действие."
+            DebugApp.debug(DebugNamespaceID.Throw)('Персонаж не может быть воскрешен.');   //todo: Или универсальное сообщение, например "Нельзя совершить подобное действие."
             return false;
         }
 
         this._currentHealthPoints = this._maxHealthPoints.value;
         this._isDead = false;
         this._actionStateController.removeState(CharacterActionStateCode.Dead);
-        debug(DebugNamespaceID.Log)('Персонаж воскрешен.');
+        DebugApp.debug(DebugNamespaceID.Log)('Персонаж воскрешен.');
 
         return true;
     }
@@ -192,7 +192,7 @@ export default class HealthPoints implements DamageControllerInterface {
     }
 
     debug(): void {
-        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+        DebugApp.debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             healthPoints: this._currentHealthPoints,
             maxHealthPoints: this._maxHealthPoints.finalValue,
             isDead: this._isDead,

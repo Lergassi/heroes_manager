@@ -1,6 +1,4 @@
-import {database} from '../../data/ts/database.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import Item from '../Entities/Item.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 

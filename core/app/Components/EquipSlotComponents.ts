@@ -8,7 +8,7 @@ import {sprintf} from 'sprintf-js';
  * Отработка варианта контейнера.
  */
 export default class EquipSlotComponents extends Component {
-    private _equipSlotComponents: {[key: string]: EquipSlotComponent};
+    private _equipSlotComponents: { [key: string]: EquipSlotComponent };
 
     set(name: string, equipSlotComponent: EquipSlotComponent): EquipSlotComponent {
         if (this._equipSlotComponents.hasOwnProperty(name)) {

@@ -1,7 +1,5 @@
 import CharacterAttributeEntity from '../../Entities/CharacterAttributeEntity.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
-import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
-import EntityManager from '../../../source/EntityManager.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 
 export default class CharacterAttributeEntityFactory {

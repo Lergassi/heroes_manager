@@ -1,9 +1,8 @@
-import _ from 'lodash';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import fs from 'fs';
 import csvToJson from 'convert-csv-to-json';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
+import DebugApp from '../DebugApp.js';
 
 export default class ConventItemCategories {
     run() {
@@ -18,7 +17,7 @@ export default class ConventItemCategories {
                 return;
             }
 
-            debug(DebugNamespaceID.Log)(sprintf('Данные из %s преобразованы и записаны в файл %s.', input, output));
+            DebugApp.debug(DebugNamespaceID.Log)(sprintf('Данные из %s преобразованы и записаны в файл %s.', input, output));
         });
     }
 }

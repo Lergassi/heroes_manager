@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
 import Experience from './Experience.js';
+import DebugApp from '../Services/DebugApp.js';
 
 //todo: Подобные объекты стоит выделить в отдельный компонент у группы и получать через .get<ExperienceInterface>(ComponentID.GroupExperienceDistributor)
 export default class ExperienceGroupDistributor implements ExperienceDistributorInterface {
@@ -28,6 +28,6 @@ export default class ExperienceGroupDistributor implements ExperienceDistributor
         for (let i = 0; i < this._experiences.length; i++) {
             this._experiences[i].addExp(expForTarget);
         }
-        debug(DebugNamespaceID.Debug)(sprintf('Распределение опыта (целей) на_цель/всего_опыта:  (%s) %s/%s.', this._experiences.length, expForTarget, value));
+        DebugApp.debug(DebugNamespaceID.Debug)(sprintf('Распределение опыта (целей) на_цель/всего_опыта:  (%s) %s/%s.', this._experiences.length, expForTarget, value));
     }
 }

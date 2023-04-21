@@ -1,20 +1,9 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import Item from '../Entities/Item.js';
-import ItemStorageManager from '../Services/ItemStorageManager.js';
-import EntityManager from '../../source/EntityManager.js';
-import IDGeneratorInterface from '../../source/IDGeneratorInterface.js';
-import ItemStackFactory from '../Factories/ItemStackFactory.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
-import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
-import ItemStorageComponent from '../Components/ItemStorages/ItemStorageComponent.js';
-import ItemDatabase from '../../source/ItemDatabase.js';
-import {assertNotEmpty, assertNotNil} from '../../source/assert.js';
-import {sprintf} from 'sprintf-js';
-import debug from 'debug';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import {assertNotEmpty} from '../../source/assert.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export default class CreateItemCommand extends Command {

@@ -7,5 +7,6 @@ export interface LevelRenderInterface {
  */
 export default interface LevelInterface {
     get level(): number;
+
     renderByRequest(ui: LevelRenderInterface): void;
 }

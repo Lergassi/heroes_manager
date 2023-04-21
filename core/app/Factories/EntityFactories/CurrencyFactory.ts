@@ -1,4 +1,3 @@
-import EntityManager from '../../../source/EntityManager.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import Currency from '../../Entities/Currency.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';

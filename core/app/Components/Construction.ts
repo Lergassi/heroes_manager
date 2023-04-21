@@ -2,23 +2,20 @@ import {ItemID} from '../../types/enums/ItemID';
 import {Mine} from './Mine';
 import {BuildingID} from '../../types/enums/BuildingID';
 import {MineFactory} from '../Factories/MineFactory';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface';
 import {database} from '../../data/ts/database';
-import {assert, assertIsGreaterThan, assertNotNil} from '../../source/assert';
-import AppError from '../../source/Errors/AppError';
-import {map} from 'lodash';
-import {buildings} from '../../data/ts/buildings';
+import {assert, assertNotNil} from '../../source/assert';
 import {
     ConstructionRCInterface,
     ConstructionRenderInterface,
     UI_Building
 } from '../../../client/public/RC/ConstructionRC';
 import WalletInterface from '../Interfaces/WalletInterface';
+import DebugApp from '../Services/DebugApp.js';
 
 export class Construction implements ConstructionRenderInterface {
-    private readonly _buildings: {ID: BuildingID, building: Mine}[];
+    private readonly _buildings: { ID: BuildingID, building: Mine }[];
     private readonly _mineFactory: MineFactory;
 
     private _maxBuildings = {
@@ -50,13 +47,13 @@ export class Construction implements ConstructionRenderInterface {
         for (let i = 0; i < data.requireItems.length; i++) {
             // if (!itemStorage.hasItem(data.requireItems[i].itemID, data.requireItems[i].count)) throw new AppError('Не достаточно ресурсов для постройки здания.');
             if (!itemStorage.hasItem(data.requireItems[i].itemID, data.requireItems[i].count)) {
-                debug(DebugNamespaceID.Throw)('Не достаточно ресурсов для постройки здания.');
+                DebugApp.debug(DebugNamespaceID.Throw)('Не достаточно ресурсов для постройки здания.');
                 return false;
             }
         }
 
         if (!wallet.has(data.cost)) {
-            debug(DebugNamespaceID.Throw)('Не достаточно денег.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Не достаточно денег.');
             return false;
         }
 
@@ -68,7 +65,7 @@ export class Construction implements ConstructionRenderInterface {
             ID: buildingID, //meta?
             building: this._mineFactory.createMine(buildingID, itemStorage),
         });
-        debug(DebugNamespaceID.Log)('Здание построено.');
+        DebugApp.debug(DebugNamespaceID.Log)('Здание построено.');
 
         return true;
     }

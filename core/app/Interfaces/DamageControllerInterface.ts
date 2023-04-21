@@ -1,4 +1,3 @@
-import {unsigned} from '../../types/main.js';
 import {RewardOptions} from './FightControllerInterface.js';
 
 export default interface DamageControllerInterface {
@@ -9,5 +8,6 @@ export default interface DamageControllerInterface {
      * @return Полученное кол-во урона.
      */
     damage(damage: number, rewardOptions?: RewardOptions): number;
+
     canDamage(): boolean;
 }

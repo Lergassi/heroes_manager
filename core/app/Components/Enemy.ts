@@ -1,7 +1,4 @@
-import Component from '../../source/Component.js';
 import EnemyEntity from '../Entities/EnemyEntity.js';
-import {unsigned} from '../../types/main.js';
-import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 
 export interface EnemyComponentRender {
     updateType?(name: string): void;

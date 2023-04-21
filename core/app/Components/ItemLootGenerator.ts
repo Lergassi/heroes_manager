@@ -1,10 +1,8 @@
 import {ItemID} from '../../types/enums/ItemID.js';
-import {ItemLoot, RangeType, unsigned} from '../../types/main.js';
+import {ItemLoot} from '../../types/main.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import ItemStorageComponent from './ItemStorages/ItemStorageComponent.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import _ from 'lodash';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class ItemLootGenerator {
     private readonly _items: ItemLoot[];
@@ -23,7 +21,7 @@ export default class ItemLootGenerator {
     }
 
     generate(itemStorage: ItemStorageInterface): void {
-        debug(DebugNamespaceID.Indev)('Генерация лута без шанса выпадения.');
+        DebugApp.debug(DebugNamespaceID.Indev)('Генерация лута без шанса выпадения.');
         for (let i = 0; i < this._items.length; i++) {
             itemStorage.addItem(this._items[i].ID, this._items[i].count);
         }

@@ -1,9 +1,7 @@
 import HeroGroupInterface from '../Interfaces/HeroGroupInterface.js';
-import HeroGroup from '../Components/HeroGroup.js';
 import {assert} from '../../source/assert.js';
 import _ from 'lodash';
 import GameObject from '../../source/GameObject.js';
-import CharacterAttributeCollector from '../Components/CharacterAttributeCollector.js';
 import TotalCharacterAttributeValueCollectorComponent
     from '../Components/TotalCharacterAttributeValueCollectorComponent.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';

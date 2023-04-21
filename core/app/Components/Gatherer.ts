@@ -1,10 +1,8 @@
-import {ItemID} from '../../types/enums/ItemID.js';
-import HeroActivityStateController, {HeroActivityStateCode} from './HeroActivityStateController.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import Vein from './Vein.js';
 import ActionStateController from './ActionStateController.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class Gatherer {
     private readonly _actionStateController: ActionStateController;
@@ -27,7 +25,7 @@ export default class Gatherer {
 
     canGather(): boolean {
         if (!this._actionStateController.canAction()) {
-            debug(DebugNamespaceID.Throw)('Сбор не возможен.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Сбор не возможен.');
             return false;
         }
 

@@ -1,8 +1,7 @@
 import _ from 'lodash';
-import debug from 'debug';
-import {assertNotEmpty} from '../../source/assert.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export enum CharacterActionStateCode {
     // Life = 'Life',
@@ -33,13 +32,13 @@ export default class ActionStateController {
         _.pull(this._codes, code);
     }
 
-    hasState(code: CharacterActionStateCode) : boolean {
+    hasState(code: CharacterActionStateCode): boolean {
         return _.includes(this._codes, code);
     }
 
     canAction(): boolean {
         if (this._codes.length) {
-            debug(DebugNamespaceID.Throw)('Персонаж не может совершить действие.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Персонаж не может совершить действие.');
             return false;
         }
 
@@ -47,7 +46,7 @@ export default class ActionStateController {
     }
 
     debug(): void {
-        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+        DebugApp.debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             code: this._codes,
         });
     }

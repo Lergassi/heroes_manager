@@ -4,9 +4,6 @@ import GameObjectStorage from '../../source/GameObjectStorage.js';
 import Location from '../Components/Location.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import {CommandID} from '../../types/enums/CommandID.js';
-import {CurrencyID} from '../../types/enums/CurrencyID.js';
-import WalletInterface from '../Interfaces/WalletInterface.js';
-import Wallet from '../Components/Wallet.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class ToggleLocationCommand extends Command {

@@ -1,4 +1,3 @@
-import debug from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import GameObject from '../../source/GameObject.js';
@@ -11,6 +10,7 @@ import {FightGroupControllerInterface} from '../Interfaces/FightGroupControllerI
 import Experience from './Experience.js';
 import ExperienceGroupDistributor from './ExperienceGroupDistributor.js';
 import HealthPoints from './HealthPoints.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export interface FightGroupControllerOptions {
     deleteDeadCharacter?: boolean;
@@ -56,7 +56,7 @@ export default class FightGroupController implements FightGroupControllerInterfa
      */
     damageByPosition(from: AttackControllerInterface, position: number, rewardOptions?: RewardOptions): number {
         if (!this._characters[position]) {
-            debug(DebugNamespaceID.Debug)(sprintf('Персонаж на позиции %s не найден.', position));
+            DebugApp.debug(DebugNamespaceID.Debug)(sprintf('Персонаж на позиции %s не найден.', position));
             return 0;
         }
 
@@ -93,7 +93,7 @@ export default class FightGroupController implements FightGroupControllerInterfa
             resultDamage += target.damageFirstLife(this._characters[i].get<AttackControllerInterface>(ComponentID.AttackController), rewardOptions);
         }
 
-        debug(DebugNamespaceID.Debug)(sprintf('Общий исходящий урон группы: %s.', resultDamage));
+        DebugApp.debug(DebugNamespaceID.Debug)(sprintf('Общий исходящий урон группы: %s.', resultDamage));
 
         if (rewardOptions) rewardOptions.experienceDistributor = undefined;
 

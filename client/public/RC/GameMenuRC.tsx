@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {UI_WindowOptions} from '../../types/main.js';
@@ -53,7 +51,8 @@ export default class GameMenuRC extends React.Component<GameMenuRCProps, GameMen
                 <div>
                     {_.map(this._buttonCommands, (command, index) => {
                         return <div key={index}>
-                            <button className={'btn btn_default btn_width-200px'} onClick={this.run.bind(this, command)}>{command}</button>
+                            <button className={'btn btn_default btn_width-200px'}
+                                    onClick={this.run.bind(this, command)}>{command}</button>
                         </div>
                     })}
                 </div>

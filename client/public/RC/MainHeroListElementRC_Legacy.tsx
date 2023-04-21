@@ -1,21 +1,7 @@
-import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import HeroComponent from '../../../core/app/Components/HeroComponent.js';
 import ProgressBarRC from './ProgressBarRC.js';
-import HeroClass from '../../../core/app/Entities/HeroClass.js';
 import GameObject from '../../../core/source/GameObject.js';
-import {IconID} from '../../../core/types/enums/IconID.js';
-import {HeroClassID} from '../../../core/types/enums/HeroClassID.js';
-import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
-import ItemSlotRC from './ItemSlotRC.js';
-import Experience from '../../../core/app/Components/Experience.js';
-import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
-import CharacterAttributeInterface from '../../../core/app/Decorators/CharacterAttributeInterface.js';
-import {DetailHeroRCState} from './DetailHeroRC.js';
-import AverageItemLevel from '../../../core/app/Components/AverageItemLevel.js';
 
 export interface MainHeroListElementRCProps {
     hero?: GameObject;
@@ -190,7 +176,8 @@ export default class MainHeroListElementRC_Legacy extends React.Component<MainHe
                     {/*<span className={'hero-list-table-row__icon-wrapper'}>*/}
                     {/*    <span className={'icon icon_34 icon_' + this.props.hero.heroClassIcon}></span>*/}
                     {/*</span>*/}
-                    <span className={'hero-list-table-row__name'}>{this.state.heroClassName} ({this.state.hero.ID})</span>
+                    <span
+                        className={'hero-list-table-row__name'}>{this.state.heroClassName} ({this.state.hero.ID})</span>
                 </td>
                 <td>Танк</td>
                 <td>

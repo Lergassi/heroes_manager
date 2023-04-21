@@ -3,10 +3,10 @@ import Input from '../../../core/source/GameConsole/Input.js';
 import _ from 'lodash';
 import UserDBObjectRepository from '../Repositories/UserDBObjectRepository.js';
 import UserDBObject from '../DBObjects/UserDBObject.js';
-import debug from 'debug';
 import Security from '../../source/Security.js';
 import {sprintf} from 'sprintf-js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
+import DebugApp from '../../../core/app/Services/DebugApp.js';
 
 export default class LoadUserEnvironmentCommand extends Command {
     get name(): string {
@@ -70,6 +70,6 @@ export default class LoadUserEnvironmentCommand extends Command {
         // this.container.set('server.userDBObject', () => {
         //     return userDBObject;
         // });
-        debug(DebugNamespaceID.Info)(sprintf('окружение пользователя загружено, %s(%s).', userDBObject['_id'], userDBObject['_email']));
+        DebugApp.debug(DebugNamespaceID.Info)(sprintf('окружение пользователя загружено, %s(%s).', userDBObject['_id'], userDBObject['_email']));
     }
 }

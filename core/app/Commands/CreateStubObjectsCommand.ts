@@ -1,16 +1,6 @@
-import _ from 'lodash';
-import debug from 'debug';
 import Command from '../../source/GameConsole/Command.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import Input from '../../source/GameConsole/Input.js';
-import {ServiceID} from '../../types/enums/ServiceID.js';
-import ItemDatabase from '../../source/ItemDatabase.js';
-import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
-import ItemStorage from '../Components/ItemStorages/ItemStorage.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
-import {ItemID} from '../../types/enums/ItemID.js';
-import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export default class CreateStubObjectsCommand extends Command {
     get name(): string {

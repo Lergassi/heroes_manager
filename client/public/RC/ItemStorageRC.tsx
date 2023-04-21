@@ -1,14 +1,10 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import Item from '../../../core/app/Entities/Item.js';
 import ItemStorageInterface, {ItemStorageInterfaceRender} from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import {assertIsGreaterThanOrEqual} from '../../../core/source/assert.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import GameObject from '../../../core/source/GameObject.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import {UI_ItemCount, UI_ItemStorageSlot} from '../../../core/types/main.js';
+import {UI_ItemStorageSlot} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {sprintf} from 'sprintf-js';
 import {database} from '../../../core/data/ts/database.js';
@@ -39,9 +35,9 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
             slots: _.map(_.range(0, this._size), (index) => {
                 return {
                     index: index,
-                    item : {
+                    item: {
                         itemID: undefined,
-                        count : undefined,
+                        count: undefined,
                     },
                 };
             }),
@@ -79,33 +75,41 @@ export default class ItemStorageRC extends React.Component<PlayerTableItemStorag
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
-                                <tr>
-                                    <th style={{width: '300px'}}>Item</th>
-                                    <th style={{width: '300px'}}>Count</th>
-                                    <th>Ctrl</th>
-                                </tr>
-                                {_.map(this.state.slots, (slot, index) => {
-                                    if (slot.item.count) {
-                                        return <tr key={index}>
-                                            <td>
-                                                <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.items.data.iconId(slot.item.itemID))}></span>
-                                                <span className={'first-table-column-padding-for-icon'}>{slot.item.itemID}</span>
-                                            </td>
-                                            <td>{slot.item.count}</td>
-                                            <td><button className={'btn btn_danger'} onClick={this.clear.bind(this, index)}>DELETE</button></td>
-                                        </tr>
-                                    } else {
-                                        return <tr key={index}>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    }
-                                })}
+                            <tr>
+                                <th style={{width: '300px'}}>Item</th>
+                                <th style={{width: '300px'}}>Count</th>
+                                <th>Ctrl</th>
+                            </tr>
+                            {_.map(this.state.slots, (slot, index) => {
+                                if (slot.item.count) {
+                                    return <tr key={index}>
+                                        <td>
+                                            <span
+                                                className={sprintf('icon icon_%s icon_32 icon_first-column-column-padding', database.items.data.iconId(slot.item.itemID))}></span>
+                                            <span
+                                                className={'first-table-column-padding-for-icon'}>{slot.item.itemID}</span>
+                                        </td>
+                                        <td>{slot.item.count}</td>
+                                        <td>
+                                            <button className={'btn btn_danger'}
+                                                    onClick={this.clear.bind(this, index)}>DELETE
+                                            </button>
+                                        </td>
+                                    </tr>
+                                } else {
+                                    return <tr key={index}>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            })}
                             </tbody>
                         </table>
-                    </div>{/*end widget__content*/}
-                </div>{/*end widget*/}
+                    </div>
+                    {/*end widget__content*/}
+                </div>
+                {/*end widget*/}
             </div>
         );
     }

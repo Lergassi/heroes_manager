@@ -1,20 +1,3 @@
-import EquipSlotInterface, {
-    EquipSlotInterfaceRender,
-} from '../../Interfaces/EquipSlotInterface.js';
-import Item from '../../Entities/Item.js';
-import {unsigned} from '../../../types/main.js';
-import ItemStackFactory from '../../Factories/ItemStackFactory.js';
-import ItemStack from '../../RuntimeObjects/ItemStack.js';
-import ItemCategory from '../../Entities/ItemCategory.js';
-import _ from 'lodash';
-import AppError from '../../../source/Errors/AppError.js';
-import {assertIsArray, assertIsMinLength, assertNotNil} from '../../../source/assert.js';
-import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {sprintf} from 'sprintf-js';
-import {resolveObjectURL} from 'buffer';
-import debug from 'debug';
-import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-
 //todo: Далее внутри, без зависимостей, может быть компонент вообще без правил, просто для размещения предмета.
 // export default class EquipSlotWithItemCategoryDecorator implements EquipSlotInterface {
 /**

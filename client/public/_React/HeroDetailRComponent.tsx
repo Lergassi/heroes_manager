@@ -1,4 +1,3 @@
-import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
 import React from 'react';
 import Experience from '../../../core/app/Components/Experience.js';
@@ -9,7 +8,6 @@ import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.
 import {CharacterAttributeID} from '../../../core/types/enums/CharacterAttributeID.js';
 import HealthPoints from '../../../core/app/Components/HealthPoints.js';
 import MagicPointsComponent from '../../../core/app/Components/MagicPointsComponent.js';
-import AttackController from '../../../core/app/Components/AttackController.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 
 export interface HeroDetailRComponentProps {

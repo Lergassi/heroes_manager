@@ -1,18 +1,14 @@
-import {CommandID} from '../types/enums/CommandID.js';
 import {DebugFormatterID} from '../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
-import Repository from './Repository.js';
-import {assert, assertIsString, assertNotEmpty, assertNotNil} from './assert.js';
+import {assertIsString, assertNotEmpty, assertNotNil} from './assert.js';
 import _ from 'lodash';
 import AppError from './Errors/AppError.js';
 import {EntityID} from '../types/enums/EntityID.js';
 import {sprintf} from 'sprintf-js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
-import {clearLine} from 'readline';
 import {ItemID} from '../types/enums/ItemID.js';
-import Item from '../app/Entities/Item.js';
 import Recipe from '../app/Entities/Recipe.js';
-import debug from 'debug';
+import DebugApp from '../app/Services/DebugApp.js';
 
 export default class EntityManager implements EntityManagerInterface {
     private readonly _entities;
@@ -83,7 +79,7 @@ export default class EntityManager implements EntityManagerInterface {
         items: () => {
             let count = 0;
             for (const key in this._entities[EntityID.Item]) {
-                debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+                DebugApp.debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
                     ID: this._entities[EntityID.Item][key].id,
                     itemCategory: this._entities[EntityID.Item][key].itemCategory.id,
                     itemLevel: this._entities[EntityID.Item][key].itemLevel,
@@ -98,9 +94,9 @@ export default class EntityManager implements EntityManagerInterface {
                 count++;
             }
 
-            debug(DebugNamespaceID.Debug)(this._entities[EntityID.Item]);
+            DebugApp.debug(DebugNamespaceID.Debug)(this._entities[EntityID.Item]);
 
-            debug(DebugNamespaceID.Debug)(sprintf('Всего предметов: %s.', count));
+            DebugApp.debug(DebugNamespaceID.Debug)(sprintf('Всего предметов: %s.', count));
         },
     };
 }

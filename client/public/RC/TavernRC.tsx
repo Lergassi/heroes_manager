@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import Tavern from '../../../core/app/Components/Tavern.js';
 import {database} from '../../../core/data/ts/database.js';
@@ -11,7 +9,6 @@ import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import RCUpdateInterface from '../Interfaces/RCUpdateInterface.js';
-import TavernRC_v2 from './TavernRC_v2.js';
 
 export type UI_TavernHero = {
     heroClassID: HeroClassID;
@@ -81,37 +78,42 @@ export default class TavernRC extends React.Component<TavernRCProps, TavernRCSta
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
-                                <tr>
-                                    <th>HeroClassID</th>
-                                    <th>HeroRoleID</th>
-                                    <th>AvailableWeapons</th>
-                                    <th>Count</th>
-                                    <th>Ctrl</th>
-                                </tr>
-                                {_.map(this.state.heroes, (hero, index) => {
-                                    return <tr key={index}>
-                                        <td>{hero.heroClassID}</td>
-                                        <td>{database.hero_classes.data.heroRole(hero.heroClassID)}</td>
-                                        <td>
-                                            {
-                                                database.hero_classes.data.availableWeapons(hero.heroClassID, (ID) => {
-                                                    return <span>{ID}</span>
-                                                }).reduce((prev, curr) => {
-                                                    return <>{prev}, {curr}</>;
-                                                })
-                                            }
-                                        </td>
-                                        <td>{hero.count}</td>
-                                        <td><button className={'btn btn_default'} onClick={(event) => {
+                            <tr>
+                                <th>HeroClassID</th>
+                                <th>HeroRoleID</th>
+                                <th>AvailableWeapons</th>
+                                <th>Count</th>
+                                <th>Ctrl</th>
+                            </tr>
+                            {_.map(this.state.heroes, (hero, index) => {
+                                return <tr key={index}>
+                                    <td>{hero.heroClassID}</td>
+                                    <td>{database.hero_classes.data.heroRole(hero.heroClassID)}</td>
+                                    <td>
+                                        {
+                                            database.hero_classes.data.availableWeapons(hero.heroClassID, (ID) => {
+                                                return <span>{ID}</span>
+                                            }).reduce((prev, curr) => {
+                                                return <>{prev}, {curr}</>;
+                                            })
+                                        }
+                                    </td>
+                                    <td>{hero.count}</td>
+                                    <td>
+                                        <button className={'btn btn_default'} onClick={(event) => {
                                             this.props.tavern.hire(hero.heroClassID, this.props.container.get<MainHeroList>(ServiceID.MainHeroList));
                                             event.preventDefault();
-                                        }}>HIRE</button></td>
-                                    </tr>
-                                })}
+                                        }}>HIRE
+                                        </button>
+                                    </td>
+                                </tr>
+                            })}
                             </tbody>
                         </table>
-                    </div>{/*end widget__content*/}
-                </div>{/*end widget*/}
+                    </div>
+                    {/*end widget__content*/}
+                </div>
+                {/*end widget*/}
             </div>
         );
     }

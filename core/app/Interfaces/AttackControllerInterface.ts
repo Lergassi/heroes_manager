@@ -7,5 +7,6 @@ export default interface AttackControllerInterface {
     //  */
     // generateAttack?(): number;
     attackTo(target: DamageControllerInterface, rewardOptions?: RewardOptions): number;
+
     canAttack(): boolean;
 }

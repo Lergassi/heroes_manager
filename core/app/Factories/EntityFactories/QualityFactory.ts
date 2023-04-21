@@ -1,6 +1,4 @@
-import CharacterAttributeEntity from '../../Entities/CharacterAttributeEntity.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
-import EntityManager from '../../../source/EntityManager.js';
 import Quality from '../../Entities/Quality.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 
@@ -10,6 +8,7 @@ export default class QualityFactory {
     constructor(entityManager: EntityManagerInterface) {
         this._entityManager = entityManager;
     }
+
     create(
         id: string,
         name: string,

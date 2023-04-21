@@ -1,15 +1,10 @@
 import _ from 'lodash';
-import debug from 'debug';
-import React, {BaseSyntheticEvent, ReactEventHandler, SyntheticEvent} from 'react';
-import ReactDOM from 'react-dom/client';
+import React from 'react';
 import EquipController from '../../../core/app/Components/EquipController.js';
 import ItemStorageController, {
     ItemStorageControllerRender
 } from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
-import {ItemStorageInterfaceRender} from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_ItemStorage, UI_ItemStorageSlot} from '../../../core/types/main.js';
@@ -116,7 +111,8 @@ export default class EquipItemListRC extends React.Component<EquipItemListRCProp
                         return _.map(itemStorage.slots, (slot, itemStorageSlotIndex) => {
                             if (!slot.item.itemID) return;
 
-                            return <option key={itemStorageSlotIndex} value={[String(itemStorage.ID), String(slot.index)]}>{slot.item.itemID}</option>
+                            return <option key={itemStorageSlotIndex}
+                                           value={[String(itemStorage.ID), String(slot.index)]}>{slot.item.itemID}</option>
                         });
                     })}
                 </select>

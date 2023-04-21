@@ -1,15 +1,8 @@
 import React from 'react';
 import GameObject from '../../../core/source/GameObject.js';
-import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorages/ItemStorageSlotComponent.js';
 import ItemStorageComponent, {
     ItemStorageComponentEventCode
 } from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
-import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
-import MainItemStorageListComponent from '../../../core/app/Components/MainItemStorageListComponent.js';
-import ItemStackTextRComponent from './ItemStackTextRComponent.js';
-import ItemStorageSlotRComponent from './ItemStorageSlotRComponent.js';
-import _ from 'lodash';
-import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 
 export interface ItemStorageRComponentProps {

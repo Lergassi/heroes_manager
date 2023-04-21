@@ -1,10 +1,6 @@
 import _ from 'lodash';
 import AppError from './Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
-import RComponentBridge, {
-    AssignRComponentInterface,
-    RComponentUpdateInterface
-} from '../../client/source/RComponentBridge.js';
 import {assert} from './assert.js';
 import {ComponentID} from '../types/enums/ComponentID.js';
 
@@ -13,7 +9,7 @@ export default class GameObject {
     private _name: string;
     private readonly _tags: string[];
     private readonly _components;
-    private readonly _componentNames: {[key: string]: any};
+    private readonly _componentNames: { [key: string]: any };
 
     get ID(): number {
         return this._ID;
@@ -174,7 +170,7 @@ export default class GameObject {
      * @param component
      */
     set<T>(key: string | ComponentID, component: T): T {
-    // set<T>(key: GameObjectKey, component: T): T {
+        // set<T>(key: GameObjectKey, component: T): T {
         assert(typeof key === 'string');
         // assert(key.length > 0);
 

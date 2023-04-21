@@ -1,17 +1,7 @@
 import React from 'react';
-import {IconID} from '../../../core/types/enums/IconID.js';
-import MainHeroListElementRC_Legacy from './MainHeroListElementRC_Legacy.js';
-import {HeroClassID} from '../../../core/types/enums/HeroClassID.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
-import _ from 'lodash';
-import {EquipSlotID} from '../../../core/types/enums/EquipSlotID.js';
-import ItemSlotRC from './ItemSlotRC.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import GameObject from '../../../core/source/GameObject.js';
-import HeroComponent from '../../../core/app/Components/HeroComponent.js';
-import {ComponentID} from '../../../core/types/enums/ComponentID.js';
-import Experience from '../../../core/app/Components/Experience.js';
 
 export class MainHeroListRCElement_Legacy {
     heroClassName: string;

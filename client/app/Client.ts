@@ -4,9 +4,8 @@ import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import ClientContainerConfigure from './ClientContainerConfigure.js';
 import CoreContainerConfigure from '../../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import GameUI from '../public/GameUI.js';
-import debug from 'debug';
-import _ from 'lodash';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
+import DebugApp from '../../core/app/Services/DebugApp.js';
 
 export default class Client {
     async run() {
@@ -16,7 +15,7 @@ export default class Client {
         (new ClientContainerConfigure()).configure(container);
         (new CoreContainerConfigure()).configure(container);
 
-        debug(DebugNamespaceID.Log)('Создание клиенте завершено (index.js).');
+        DebugApp.debug(DebugNamespaceID.Log)('Создание клиента завершено (index.js).');
 
         let gameUI = new GameUI(container);
         container.set<GameUI>(ServiceID.UI_ClientBuilder, gameUI);

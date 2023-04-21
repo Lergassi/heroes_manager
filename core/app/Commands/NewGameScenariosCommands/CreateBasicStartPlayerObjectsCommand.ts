@@ -1,4 +1,3 @@
-import debug from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import Command from '../../../source/GameConsole/Command.js';
@@ -7,7 +6,6 @@ import Input from '../../../source/GameConsole/Input.js';
 import {CommandID} from '../../../types/enums/CommandID.js';
 import {ComponentID} from '../../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../../types/enums/HeroClassID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
@@ -17,15 +15,13 @@ import {unsigned} from '../../../types/main.js';
 import Location from '../../Components/Location.js';
 import MainHeroList from '../../Components/MainHeroList.js';
 import MainLocationList from '../../Components/MainLocationList.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../../consts.js';
-import EnemyFactory from '../../Factories/EnemyFactory.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
 import Tavern_v2 from '../../Components/Tavern_v2.js';
 import {database} from '../../../data/ts/database.js';
-import GameObject from '../../../source/GameObject.js';
 import LocationConfiguratorByDB from '../../Services/LocationConfiguratorByDB.js';
 import Production from '../../Components/Production.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 export default class CreateBasicStartPlayerObjectsCommand extends Command {
     get name(): string {
@@ -71,7 +67,7 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
         let heroPatterns: {
             heroClassID: HeroClassID,
             level: unsigned,
-            equip: Partial<{[ID in EquipSlotID]: ItemID}>,
+            equip: Partial<{ [ID in EquipSlotID]: ItemID }>,
         }[] = [
             {
                 heroClassID: HeroClassID.Warrior,
@@ -115,7 +111,7 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
                     [EquipSlotID.RightHand]: ItemID.Dagger01,
                     [EquipSlotID.LeftHand]: ItemID.Dagger01,
                 },
-            },{
+            }, {
                 heroClassID: HeroClassID.Gladiator,
                 level: 1,
                 equip: {
@@ -200,7 +196,7 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
         // console.log(patterns);
 
         for (let i = 0; i < heroPatterns.length; i++) {
-        // for (let i = 0; i < patterns.length; i++) {
+            // for (let i = 0; i < patterns.length; i++) {
             let hero = this.container.get<MainHeroList>(ServiceID.MainHeroList).createHero(
                 heroPatterns[i].heroClassID,
                 1,
@@ -210,7 +206,7 @@ export default class CreateBasicStartPlayerObjectsCommand extends Command {
             for (const equipSlotID in heroPatterns[i].equip) {
                 let itemID = heroPatterns[i].equip[equipSlotID] as ItemID;
                 if (!itemID) {
-                    debug(DebugNamespaceID.Warning)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
+                    DebugApp.debug(DebugNamespaceID.Warning)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
                     continue;
                 }
 

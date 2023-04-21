@@ -1,15 +1,13 @@
 import ItemCategory from './ItemCategory.js';
 import Quality from './Quality.js';
 import ArmorMaterial from './ArmorMaterial.js';
-import {CharacterAttributeIncrease} from '../../source/IncreaseList.js';
 import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
-import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import Icon from './Icon.js';
 import {
     assertIsGreaterThanOrEqual,
     assertIsInstanceOf,
-    assertIsNumber, assertIsPositive,
+    assertIsNumber,
     assertIsString,
     assertNotNil
 } from '../../source/assert.js';
@@ -50,7 +48,7 @@ export type ItemProperties = {
     defaultSellPrice?: number;
 }
 
-export type CharacterAttributeRecord = {[ID in CharacterAttributeID]: number};
+export type CharacterAttributeRecord = { [ID in CharacterAttributeID]: number };
 
 export interface ItemOptions {
     getTypes: ItemGetType[];
@@ -122,7 +120,7 @@ export default class Item {                             //private or public? Ð¤Ð
         return this._characterAttributes;
     }
 
-    constructor (
+    constructor(
         id: string,
         name: string,
         description: string,
@@ -195,9 +193,9 @@ export default class Item {                             //private or public? Ð¤Ð
     }
 
     getProperty<T>(key: string): T {
-    // getProperty<T extends keyof ItemProperties>(key: keyof ItemProperties): T {
-    // getProperty(key: keyof ItemProperties) {
-    // getProperty<T>(key: keyof ItemProperties): T {
+        // getProperty<T extends keyof ItemProperties>(key: keyof ItemProperties): T {
+        // getProperty(key: keyof ItemProperties) {
+        // getProperty<T>(key: keyof ItemProperties): T {
         return this._properties[key];
     }
 }

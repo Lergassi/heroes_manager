@@ -1,17 +1,14 @@
 import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import Item from '../Entities/Item.js';
 import ContainerInterface from '../../source/ContainerInterface.js';
 import ItemDatabaseBuilder from './ItemDatabaseBuilder.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
 import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {QualityID} from '../../types/enums/QualityID.js';
 import {HeroRoleID} from '../../types/enums/HeroRoleID.js';
-import {ItemID} from '../../types/enums/ItemID.js';
 import {EntityID} from '../../types/enums/EntityID.js';
 import CharacterAttributeEntityFactory from '../Factories/EntityFactories/CharacterAttributeEntityFactory.js';
 import CurrencyFactory from '../Factories/EntityFactories/CurrencyFactory.js';
@@ -21,21 +18,17 @@ import ItemCategoryFactory from '../Factories/EntityFactories/ItemCategoryFactor
 import HeroClassFactory from '../Factories/EntityFactories/HeroClassFactory.js';
 import {assertNotNil} from '../../source/assert.js';
 import EquipSlotEntityFactory from '../Factories/EntityFactories/EquipSlotEntityFactory.js';
-import EnemyEntityFactory from '../Factories/EntityFactories/EnemyEntityFactory.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import Icon from '../Entities/Icon.js';
 import {IconID} from '../../types/enums/IconID.js';
-import {sprintf} from 'sprintf-js';
-import {env} from 'yargs';
-import dotenv from 'dotenv';
 import ItemsLoader from './Loadres/ItemsLoader.js';
 import ItemCategoriesLoader from './Loadres/ItemCategoriesLoader.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import ItemFactory from '../Factories/ItemFactory.js';
 import RecipesLoader from './Loadres/RecipesLoader.js';
 import RecipeFactory from '../Factories/EntityFactories/RecipeFactory.js';
+import DebugApp from './DebugApp.js';
 
 export default class EntityManagerBuilder {
     private readonly _container: ContainerInterface;
@@ -53,7 +46,7 @@ export default class EntityManagerBuilder {
     }
 
     build(): EntityManagerInterface {
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Start');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Start');
 
         this._createIcons();
 
@@ -77,7 +70,7 @@ export default class EntityManagerBuilder {
         // this._calcHeroConfig();
         this._initHeroConfig();
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.End');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.End');
 
         return this._entityManager;
     }
@@ -115,7 +108,7 @@ export default class EntityManagerBuilder {
             520,
         ));
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.ArmorMaterial');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.ArmorMaterial');
     }
 
     private _createCharacterAttributes() {
@@ -176,7 +169,7 @@ export default class EntityManagerBuilder {
             570,
         );
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.CharacterAttribute');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.CharacterAttribute');
 
     }
 
@@ -193,7 +186,7 @@ export default class EntityManagerBuilder {
             510,
         );
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Currency');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Currency');
 
     }
 
@@ -230,7 +223,7 @@ export default class EntityManagerBuilder {
             550,
         );
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Quality');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.Quality');
     }
 
     private _createHeroRoles() {
@@ -254,7 +247,7 @@ export default class EntityManagerBuilder {
             IconID.Plus01,
         );
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.HeroRole');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.HeroRole');
     }
 
     private _createItemCategories() {
@@ -423,7 +416,7 @@ export default class EntityManagerBuilder {
             null,
         );
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.ItemCategory');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.ItemCategory');
     }
 
     private _createHeroClasses() {
@@ -696,9 +689,7 @@ export default class EntityManagerBuilder {
             [
                 ItemCategoryID.OneHandedSwords,
             ],
-            [
-
-            ],
+            [],
         );
         heroClassFactory.create(
             HeroClassID.LeatherDamageDealer2,
@@ -815,9 +806,7 @@ export default class EntityManagerBuilder {
             [
                 ItemCategoryID.Staffs,
             ],
-            [
-
-            ],
+            [],
         );
         //support
         heroClassFactory.create(
@@ -835,8 +824,7 @@ export default class EntityManagerBuilder {
             [
                 ItemCategoryID.Staffs,
             ],
-            [
-            ],
+            [],
         );
         heroClassFactory.create(
             HeroClassID.Support5,
@@ -853,8 +841,7 @@ export default class EntityManagerBuilder {
             [
                 ItemCategoryID.Staffs,
             ],
-            [
-            ],
+            [],
         );
         heroClassFactory.create(
             HeroClassID.Support1,
@@ -871,9 +858,7 @@ export default class EntityManagerBuilder {
             [
                 ItemCategoryID.Staffs,
             ],
-            [
-
-            ],
+            [],
         );
         heroClassFactory.create(
             HeroClassID.Support2,
@@ -890,9 +875,7 @@ export default class EntityManagerBuilder {
             [
                 ItemCategoryID.Staffs,
             ],
-            [
-
-            ],
+            [],
         );
         heroClassFactory.create(
             HeroClassID.Support3,
@@ -909,13 +892,11 @@ export default class EntityManagerBuilder {
             [
                 ItemCategoryID.Staffs,
             ],
-            [
-
-            ],
+            [],
         );
 
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.HeroClass');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.HeroClass');
     }
 
     private _createEquipSlots() {
@@ -1077,9 +1058,7 @@ export default class EntityManagerBuilder {
                 [HeroClassID.Gladiator]: [
                     ItemCategoryID.OneHandedSwords,
                 ],
-                [HeroClassID.Archer]: [
-
-                ],
+                [HeroClassID.Archer]: [],
                 [HeroClassID.Gunslinger]: [
                     ItemCategoryID.Revolvers,
                 ],
@@ -1098,7 +1077,7 @@ export default class EntityManagerBuilder {
             },
         );
 
-        debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.EquipSlot');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: EntityManagerBuilder.EquipSlot');
     }
 
     // private _createRecipes() {

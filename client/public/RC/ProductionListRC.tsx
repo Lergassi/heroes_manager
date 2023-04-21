@@ -1,11 +1,11 @@
-import React from "react";
-import ProductionRC from "./ProductionRC";
-import ContainerInterface from "../../../core/source/ContainerInterface";
-import {UI_WindowOptions} from "../../types/main";
-import Production from "../../../core/app/Components/Production";
-import {ServiceID} from "../../../core/types/enums/ServiceID";
-import ItemStorageInterface from "../../../core/app/Interfaces/ItemStorageInterface";
-import WalletInterface from "../../../core/app/Interfaces/WalletInterface";
+import React from 'react';
+import ProductionRC from './ProductionRC';
+import ContainerInterface from '../../../core/source/ContainerInterface';
+import {UI_WindowOptions} from '../../types/main';
+import Production from '../../../core/app/Components/Production';
+import {ServiceID} from '../../../core/types/enums/ServiceID';
+import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface';
+import WalletInterface from '../../../core/app/Interfaces/WalletInterface';
 
 export interface ProductionListRCProps {
     container: ContainerInterface;

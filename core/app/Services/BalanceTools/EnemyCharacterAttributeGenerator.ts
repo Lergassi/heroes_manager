@@ -1,7 +1,4 @@
-import _ from 'lodash';
-import debug from 'debug';
 import config from '../../../config/config.js';
-import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
 import {enemy_character_attributes_formulas} from './formulas/enemy_character_attributes_formulas.js';
 import HeroCharacterAttributeGenerator from './HeroCharacterAttributeGenerator.js';
 
@@ -24,7 +21,6 @@ export default class EnemyCharacterAttributeGenerator {
     }
 
     maxHealthPoints(level: number /* todo: enemyTypeID ratio */): number {
-        console.log(this._heroCharacterAttributeGenerator.defaultFinalHeroAttackPower(level));
         return enemy_character_attributes_formulas.maxHealthPoints({
             defaultFinalHeroAttackPower: this._heroCharacterAttributeGenerator.defaultFinalHeroAttackPower(level),
             heroHitRatioToEnemy: config.default_hero_hit_ratio_to_enemy,

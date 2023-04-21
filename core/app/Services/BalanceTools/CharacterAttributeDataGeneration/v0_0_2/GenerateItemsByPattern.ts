@@ -231,7 +231,7 @@ export default class GenerateItemsByPattern {
 
                             break;
                         case 'shields':
-                        // console.log('SHIELDS', this._patterns[i].itemCategories[j].itemCategoryID, heroLevel, itemLevel);
+                            // console.log('SHIELDS', this._patterns[i].itemCategories[j].itemCategoryID, heroLevel, itemLevel);
                         {//А так можно было?
                             let ID = this._itemIDGenerator.generate(
                                 this._patterns[i].itemCategories[j].itemCategoryID,
@@ -367,7 +367,7 @@ export default class GenerateItemsByPattern {
                     }//end switch
                 }//end for itemCategories
             }//end this._patterns
-            
+
             rangeIndex++;
         }//end range
     }//end run

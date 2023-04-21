@@ -1,6 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
-import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import GenerateItemsByPattern
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItemsByPattern.js';
 import ItemAttributeGenerator
@@ -8,8 +5,7 @@ import ItemAttributeGenerator
 import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';
 import {database} from '../../core/data/ts/database.js';
 import {TSDB_ItemDB} from '../../core/data/ts/items.js';
-import {TSDB_Recipe, TSDB_RecipeDB} from '../../core/data/ts/recipes.js';
-import EntityManager from '../../core/source/EntityManager.js';
+import {TSDB_RecipeDB} from '../../core/data/ts/recipes.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';

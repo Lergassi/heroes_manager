@@ -1,7 +1,5 @@
 import {BuildingID} from '../../types/enums/BuildingID';
-import AppError from '../../source/Errors/AppError';
 import {Mine} from '../Components/Mine';
-import {ItemID} from '../../types/enums/ItemID';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface';
 import {database} from '../../data/ts/database';
 import {assertNotNil} from '../../source/assert';

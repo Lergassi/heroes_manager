@@ -1,5 +1,3 @@
-import HeroCharacterAttributeFactory from '../../app/Factories/HeroCharacterAttributeFactory.js';
-
 export enum ServiceID {
     //core
 
@@ -79,6 +77,7 @@ export enum ServiceID {
     //ui
     UI_ClientBuilder = 'core.ui.ClientBuilder',
     UI_Updater = 'core.ui.Updater',
+    UI_MessageHistory = 'core.ui.MessageHistory',
 
     //React components
     UI_Game = 'core.ui.Game',

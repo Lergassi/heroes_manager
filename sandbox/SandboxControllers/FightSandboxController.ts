@@ -2,8 +2,7 @@ import FightGroupController from '../../core/app/Components/FightGroupController
 import EnemyFactory from '../../core/app/Factories/EnemyFactory.js';
 import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 import LocationFactory from '../../core/app/Factories/LocationFactory.js';
-import {separator} from '../../core/app/indev.js';
-import {debug_header, separate} from '../../core/debug_functions.js';
+import {separate} from '../../core/debug_functions.js';
 import {EnemyTypeID} from '../../core/types/enums/EnemyTypeID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';

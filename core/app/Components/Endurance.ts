@@ -1,7 +1,6 @@
-import {UI_TavernHero_v2} from '../../../client/public/RC/TavernRC_v2.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import ActionStateController, {CharacterActionStateCode} from './ActionStateController.js';
-import _ from "lodash";
+import _ from 'lodash';
 
 export interface EnduranceRCInterface {
     update?(endurance: number, max: number): void;

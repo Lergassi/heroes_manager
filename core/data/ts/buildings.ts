@@ -1,6 +1,5 @@
 import {BuildingID} from '../../types/enums/BuildingID';
 import {ItemCount} from '../../types/main';
-import {ItemID} from '../../types/enums/ItemID';
 
 type TSDB_Building = {
     ID: BuildingID;

@@ -1,7 +1,6 @@
-import debug from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
-import {assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../../source/assert.js';
+import {assertIsPositive, assertNotNil} from '../../../source/assert.js';
 import AppError from '../../../source/Errors/AppError.js';
 import EventSystem from '../../../source/EventSystem.js';
 import GameObject from '../../../source/GameObject.js';
@@ -15,9 +14,11 @@ import {ItemStorageControllerInterfaceRender} from '../../Interfaces/ItemStorage
 import ItemStorageInterface, {ItemStorageInterfaceRender} from '../../Interfaces/ItemStorageInterface.js';
 import EquipController from '../EquipController.js';
 import ItemStorage from './ItemStorage.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 export interface ItemStorageControllerRender {
     updateSlots?(itemStorageID: number, slots: UI_ItemStorageSlot[]): void;
+
     updateItemStorages?(itemStorages: UI_ItemStorage[]): void;
 }
 
@@ -44,12 +45,12 @@ export default class ItemStorageController implements ItemStorageInterface {
     addItemStorage(itemStorage: GameObject): number {
         if (_.includes(this._itemStorages, itemStorage)) return -1;
         if (this._itemStorages.length >= this._max) {
-            debug(DebugNamespaceID.Throw)('У игрока максимальное кол-во сумок.');
+            DebugApp.debug(DebugNamespaceID.Throw)('У игрока максимальное кол-во сумок.');
             return -1;
         }
 
         this._itemStorages.push(itemStorage);
-        debug(DebugNamespaceID.Log)('Добавлен ItemStorage.');
+        DebugApp.debug(DebugNamespaceID.Log)('Добавлен ItemStorage.');
         EventSystem.event(EventCode.ItemStorageController_AddItemStorage, this);
 
         return this._itemStorages.length;
@@ -59,7 +60,7 @@ export default class ItemStorageController implements ItemStorageInterface {
         if (!_.includes(this._itemStorages, itemStorage)) return -1;
 
         _.pull(this._itemStorages, itemStorage);
-        debug(DebugNamespaceID.Log)('Удален ItemStorage.');
+        DebugApp.debug(DebugNamespaceID.Log)('Удален ItemStorage.');
         EventSystem.event(EventCode.ItemStorageController_RemoveItemStorage, this);
 
         return this._itemStorages.length;
@@ -88,7 +89,7 @@ export default class ItemStorageController implements ItemStorageInterface {
 
     addItem(itemID: ItemID, count: number): number {
         if (!this._itemStorages.length) {
-            debug(DebugNamespaceID.Throw)('Не найдено ни одного ItemStorage.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Не найдено ни одного ItemStorage.');
             return 0;
         }
 
@@ -256,7 +257,7 @@ export default class ItemStorageController implements ItemStorageInterface {
     }
 
     _removeByIndexTo(itemStorageIndex: number, slotIndex: number, count: number, itemStorage: ItemStorageInterface): number {
-    // _removeByIndexTo(itemStorageIndex: number, slotIndex: number, count: number, target: {addItem: (itemID: ItemID, count: number) => number}): number {
+        // _removeByIndexTo(itemStorageIndex: number, slotIndex: number, count: number, target: {addItem: (itemID: ItemID, count: number) => number}): number {
         let _itemStorage = _.find(this._itemStorages, (itemStorage) => {
             return itemStorage.ID === itemStorageIndex;
         });

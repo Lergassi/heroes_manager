@@ -1,21 +1,14 @@
-import CharacterAttribute from './CharacterAttribute.js';
 import ActionStateController from './ActionStateController.js';
 import Endurance from './Endurance.js';
-import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
-import _, {curryRight, round} from 'lodash';
-import {assert, assertAction} from '../../source/assert.js';
-import CharacterAttributeCollector from './CharacterAttributeCollector.js';
-import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
+import _ from 'lodash';
+import {assert} from '../../source/assert.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
-import HeroActivityStateController, {HeroActivityStateCode} from './HeroActivityStateController.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import debug from 'debug';
-import AppError from '../../source/Errors/AppError.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
-import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
-import EquipSlotInterface from "../Interfaces/EquipSlotInterface";
+import EquipSlotInterface from '../Interfaces/EquipSlotInterface';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class AttackController implements AttackControllerInterface {
     private readonly _attackPower: CharacterAttributeInterface;
@@ -54,13 +47,13 @@ export default class AttackController implements AttackControllerInterface {
 
     attackTo(target: DamageControllerInterface, afterDiedTargetCallback?: RewardOptions): number {
         if (!this.canAttack()) {
-            debug(DebugNamespaceID.Throw)('Персонаж не может атаковать.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Персонаж не может атаковать.');
             return 0;
         }
 
         //todo: Нет проверки возможности атаковать цель.
         let damage = this._attackPower.value;
-        debug(DebugNamespaceID.Log)('Атака: ' + damage);
+        DebugApp.debug(DebugNamespaceID.Log)('Атака: ' + damage);
         let resultDamage = target.damage(damage, afterDiedTargetCallback);
 
         //todo: Перенести в другое место.
@@ -73,7 +66,7 @@ export default class AttackController implements AttackControllerInterface {
         if (!this._actionStateController.canAction()) return false;
 
         if (this._rightHand?.isFree()) {
-            debug(DebugNamespaceID.Throw)('У героя нет оружия.');
+            DebugApp.debug(DebugNamespaceID.Throw)('У героя нет оружия.');
             return false;
         }
 

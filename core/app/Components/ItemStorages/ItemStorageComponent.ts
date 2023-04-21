@@ -2,15 +2,9 @@ import ItemStorageSlotComponent from './ItemStorageSlotComponent.js';
 import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import Item from '../../Entities/Item.js';
 import ItemStackFactory from '../../Factories/ItemStackFactory.js';
-import GameObject from '../../../source/GameObject.js';
 import {unsigned} from '../../../types/main.js';
-import {ComponentID} from '../../../types/enums/ComponentID.js';
-import AppError from '../../../source/Errors/AppError.js';
 import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../../source/assert.js';
 import EventSystem from '../../../source/EventSystem.js';
-import debug from 'debug';
-import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {sprintf} from 'sprintf-js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
 
@@ -29,7 +23,7 @@ export enum ItemStorageComponentEventCode {
 export default class ItemStorageComponent {
 // export default class ItemStorageComponent implements ItemStorageInterface, RenderInterface {
     private readonly _size: number;
-    private readonly _slots: {[key: string]: ItemStorageSlotComponent};
+    private readonly _slots: { [key: string]: ItemStorageSlotComponent };
     private readonly _itemStackFactory: ItemStackFactory;
 
     constructor(

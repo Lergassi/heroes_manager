@@ -1,6 +1,4 @@
 import _ from 'lodash';
-import debug from 'debug';
-import Shop from '../Components/Shop.js';
 import Item from '../Entities/Item.js';
 
 type ShopBuilderPosition = {

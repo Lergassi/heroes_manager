@@ -1,4 +1,3 @@
-import EntityManager from '../../../source/EntityManager.js';
 import EquipSlot from '../../Entities/EquipSlot.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import EquipSlotAvailableItemCategory from '../../Entities/EquipSlotAvailableItemCategory.js';
@@ -38,9 +37,9 @@ export default class EquipSlotEntityFactory {
         id: string,
         name: string,
         sort: number,
-        availableItemCategories: Partial<{[heroClassID in HeroClassID]: ItemCategoryID[]}>, //todo: При простом добавлении id в enum без Partial ошибка.
+        availableItemCategories: Partial<{ [heroClassID in HeroClassID]: ItemCategoryID[] }>, //todo: При простом добавлении id в enum без Partial ошибка.
     ) {
-        let _itemCategories: Partial<{[heroClassID in HeroClassID]?: ItemCategory[]}> = {};
+        let _itemCategories: Partial<{ [heroClassID in HeroClassID]?: ItemCategory[] }> = {};
         for (const heroClassID in availableItemCategories) {
             _itemCategories[heroClassID] = _.map(availableItemCategories[heroClassID], (itemCategoryIDs) => {
                 return this._entityManager.get<ItemCategory>(EntityID.ItemCategory, itemCategoryIDs as string);

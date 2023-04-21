@@ -1,10 +1,7 @@
-import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 
-export default class LoremRC extends React.Component<{}, {text: string}> {
-    constructor(props: {text?: string}) {
+export default class LoremRC extends React.Component<{}, { text: string }> {
+    constructor(props: { text?: string }) {
         super(props);
 
         // let defaultText = {

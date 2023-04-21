@@ -1,5 +1,5 @@
 import Item from '../Entities/Item.js';
-import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
+import {assertIsGreaterThanOrEqual, assertIsInstanceOf} from '../../source/assert.js';
 
 export default class ItemPack {
     private readonly _item: Item;

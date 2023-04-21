@@ -1,4 +1,3 @@
-import {unsigned} from '../../types/main.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 export interface CharacterAttributeInterfaceRender {
@@ -12,6 +11,7 @@ export default interface CharacterAttributeInterface {
      * @deprecated
      */
     get finalValue(): number;
+
     /**
      * Значение, которое есть у игрока всегда без экипировки и усилений.
      * @param value
@@ -19,5 +19,6 @@ export default interface CharacterAttributeInterface {
     increase(value: number): number;   //todo: Возможно стоит оставить только value(), а increaseBaseValue только там где хранится атрибут.
     decrease(value: number): number;   //todo: Возможно стоит оставить только value(), а increaseBaseValue только там где хранится атрибут.
     renderByRequest(ui: CharacterAttributeInterfaceRender): void;
+
     debug(): void;
 }

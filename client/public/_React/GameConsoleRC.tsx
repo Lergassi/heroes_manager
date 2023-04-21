@@ -1,14 +1,11 @@
 import React from 'react';
-import {sprintf} from 'sprintf-js';
 import {assertNotEmpty} from '../../../core/source/assert.js';
-import AppError from '../../../core/source/Errors/AppError.js';
-import debug from 'debug';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import _ from 'lodash';
+import DebugApp from '../../../core/app/Services/DebugApp.js';
+import MessageHistoryRC from '../RC/MessageHistoryRC.js';
 
 export interface GameConsoleProps {
     container: ContainerInterface;
@@ -16,7 +13,12 @@ export interface GameConsoleProps {
     commandNames: string[] | undefined;
 }
 
-export default class GameConsoleRC extends React.Component<any, any>{
+interface GameConsoleState {
+    value: any,
+    focus: boolean;
+}
+
+export default class GameConsoleRC extends React.Component<GameConsoleProps, GameConsoleState> {
     // private _buttonCommands = [
     //     CommandID.new_game,
     //     CommandID.new_game + ' ' + 'empty',
@@ -49,6 +51,7 @@ export default class GameConsoleRC extends React.Component<any, any>{
 
         this.state = {
             value: '',
+            focus: false,
         };
 
         this._container = props.container;
@@ -167,12 +170,19 @@ export default class GameConsoleRC extends React.Component<any, any>{
 
     render() {
         return (
-            <div className={'game-console game-console_bottom'} >
-                <div className={'game-console-autocomplete-list-wrapper'} >
+            <div className={'game-console game-console_bottom'}>
+                <div>
+                    <MessageHistoryRC
+                        container={this.props.container}
+                        focus={this.state.focus}
+                    />
+                </div>
+                <div className={'game-console-autocomplete-list-wrapper'}>
                     {/*todo: Сделать в виде отдельного компонента. Только рендер.*/}
                     <ul className={'game-console-autocomplete-list list-without-types'}>
                         {this._autoCompleteList.map(command => (
-                            <li className={this._isAutoCompleteHandling && (command === this.state.value) ? 'game-console-autocomplete-list__selected' : ''} key={command}>{command}</li>
+                            <li className={this._isAutoCompleteHandling && (command === this.state.value) ? 'game-console-autocomplete-list__selected' : ''}
+                                key={command}>{command}</li>
                         ))}
                     </ul>
                 </div>
@@ -185,6 +195,23 @@ export default class GameConsoleRC extends React.Component<any, any>{
                     onChange={this.handleChange}
                     onKeyDown={this.keyDownHandler}
                     value={this.state.value}
+                    onFocus={(event) => {
+                    // onfocusin={(event) => {
+                        console.log('onFocus', event.target.value);
+                        this.setState((state) => {
+                            return {
+                                focus: true,
+                            } as GameConsoleState;
+                        });
+                    }}
+                    onBlur={(event) => {
+                        console.log('onfocusout', event.target.value);
+                        this.setState((state) => {
+                            return {
+                                focus: false,
+                            } as GameConsoleState;
+                        });
+                    }}
                 />
                 {/*<div>*/}
                 {/*    {_.map(this._buttonCommands, (command, index) => {*/}
@@ -216,7 +243,7 @@ export default class GameConsoleRC extends React.Component<any, any>{
         }
         this.resetHistoryPosition();
 
-        debug(DebugNamespaceID.GameConsole)(resultUrl);
+        DebugApp.debug(DebugNamespaceID.GameConsole)(resultUrl);
 
         await this._container.get<GameConsole>(ServiceID.GameConsole).runByQuery(commandString);
     }
@@ -226,7 +253,7 @@ export default class GameConsoleRC extends React.Component<any, any>{
      * @param e
      */
     private async keyPressHandler(e) {
-        switch(e.code) {
+        switch (e.code) {
             case 'Enter':
             case 'NumpadEnter':
                 this._queryHandler(e.target.value);

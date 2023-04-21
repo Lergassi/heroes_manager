@@ -2,7 +2,6 @@ import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/
 import Container from '../core/source/Container.js';
 import CoreContainerConfigure from '../core/app/Services/ContainerConfigures/CoreContainerConfigure.js';
 import HeroFactory from '../core/app/Factories/HeroFactory.js';
-import EntityManager from '../core/source/EntityManager.js';
 import HeroClass from '../core/app/Entities/HeroClass.js';
 import EquipSlot from '../core/app/Entities/EquipSlot.js';
 import EquipSlotComponent from '../core/app/Components/EquipSlotComponent.js';

@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {database} from '../../data/ts/database.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
@@ -13,7 +12,7 @@ export default class ItemIDGenerator {
         withArmorMaterial: '%s_%s_%s_%s',
         withoutArmorMaterial: '%s_%s_%s',
     }
-    
+
     constructor() {
         this._IDs = {};
     }

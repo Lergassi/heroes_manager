@@ -2,7 +2,6 @@ import ItemStorageSlotComponent, {
     ItemStorageSlotComponentEventCode
 } from '../../../core/app/Components/ItemStorages/ItemStorageSlotComponent.js';
 import React from 'react';
-import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
 import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import {EventCode} from '../../../core/types/enums/EventCode.js';
@@ -76,7 +75,9 @@ export default class ItemStorageSlotRComponent extends React.Component<ItemStora
                         itemStack={itemStorageSlot.itemStack}
                     />
                 </td>
-                <td><button onClick={this.clearHandler}>Очистить</button></td>
+                <td>
+                    <button onClick={this.clearHandler}>Очистить</button>
+                </td>
             </tr>
         );
     }

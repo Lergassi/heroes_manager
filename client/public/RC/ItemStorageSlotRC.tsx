@@ -1,13 +1,8 @@
-import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
 import Item from '../../../core/app/Entities/Item.js';
-import {sprintf} from 'sprintf-js';
-import {ICON_BACKGROUND_SLOT, ICON_QUESTION01} from '../../../core/app/consts.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import ItemDatabase from '../../../core/source/ItemDatabase.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import {ItemID} from '../../../core/types/enums/ItemID.js';
 
 export interface ItemStorageSlotUIProps {
 

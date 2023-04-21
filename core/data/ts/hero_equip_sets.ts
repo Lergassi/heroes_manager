@@ -1,13 +1,9 @@
-import HeroClass from '../../app/Entities/HeroClass.js';
-import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
-import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import _ from 'lodash';
-import {database} from './database.js';
 
 type TSDB_EquipSet = {
-    [ID in ItemCategoryID]?: {count: number};
+    [ID in ItemCategoryID]?: { count: number };
 };
 
 type TSDB_WeaponSet = {

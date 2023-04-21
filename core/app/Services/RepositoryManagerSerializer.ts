@@ -1,5 +1,4 @@
 import Serializer from '../../source/Serializer.js';
-import EntityManager from '../../source/EntityManager.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 
 export default class RepositoryManagerSerializer {

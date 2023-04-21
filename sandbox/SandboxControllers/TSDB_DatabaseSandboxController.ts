@@ -5,7 +5,6 @@ import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
 import {ItemID} from '../../core/types/enums/ItemID.js';
 import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
-import HeroClass from '../../core/app/Entities/HeroClass.js';
 
 export default class TSDB_DatabaseSandboxController extends AbstractSandboxController {
     run(): void {

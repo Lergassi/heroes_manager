@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
 import ConventItems from './ConventItems.js';
 import ConventItemCategories from './ConventItemCategories.js';
 

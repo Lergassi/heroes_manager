@@ -1,13 +1,13 @@
 import _ from 'lodash';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {database} from '../../../data/ts/database.js';
-import {assert, assertNotNil} from '../../../source/assert.js';
+import {assertNotNil} from '../../../source/assert.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
 import EquipSlotRuleInterface from '../../Interfaces/EquipSlotRuleInterface.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 export default class EquipSlotItemCategoryRule implements EquipSlotRuleInterface {
     private readonly _itemCategoryIDs: ItemCategoryID[];
@@ -22,8 +22,8 @@ export default class EquipSlotItemCategoryRule implements EquipSlotRuleInterface
         let itemCategoryID = database.items.data.itemCategory(itemID);
 
         //todo: Будет ошибка если в массиве будут null/undefined и не будет категории.
-        if (! _.includes(this._itemCategoryIDs, itemCategoryID)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Предмет категории "%s" нельзя экипировать в слот "%s".', itemCategoryID, ID));
+        if (!_.includes(this._itemCategoryIDs, itemCategoryID)) {
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Предмет категории "%s" нельзя экипировать в слот "%s".', itemCategoryID, ID));
             return false;
         }
 

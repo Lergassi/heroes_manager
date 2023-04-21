@@ -3,11 +3,9 @@
  */
 import GameObject from '../../source/GameObject.js';
 import PlayerComponent from '../Components/PlayerComponent.js';
-import Experience from '../Components/Experience.js';
 import ExperienceComponentFactory from './ExperienceComponentFactory.js';
 import {unsigned} from '../../types/main.js';
 import GameObjectFactory from './GameObjectFactory.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export type PlayerFactoryConfig = {
     maxLevel: number;

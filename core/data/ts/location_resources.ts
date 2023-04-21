@@ -28,7 +28,7 @@ let resources: TSDB_LocationResourceBD = {
 };
 
 export const location_resources = {
-    find: function<T> (locationTypeID: LocationTypeID, callback: (itemID: ItemID, count: RangeType) => T): T[] {
+    find: function <T>(locationTypeID: LocationTypeID, callback: (itemID: ItemID, count: RangeType) => T): T[] {
         return _.map(resources[locationTypeID], (value, index, collection) => {
             return callback(value.itemID, value.count);
         });

@@ -10,10 +10,8 @@ import {HeroClassID} from '../../../../../types/enums/HeroClassID.js';
 import {ItemCategoryID} from '../../../../../types/enums/ItemCategoryID.js';
 import {ItemID} from '../../../../../types/enums/ItemID.js';
 import {QualityID} from '../../../../../types/enums/QualityID.js';
-import item_character_attribute_generation_functions from '../v0_0_1/item_character_attribute_generation_functions.js';
 import {item_attributes_formulas} from '../../formulas/item_attributes_formulas.js';
 import ItemAttributeGenerator from './ItemAttributeGenerator.js';
-import {IconID} from '../../../../../types/enums/IconID.js';
 
 export default class GenerateItems {
     private readonly _itemCharacterAttributeGenerator: ItemAttributeGenerator;
@@ -43,7 +41,7 @@ export default class GenerateItems {
         ];
 
         let armorItemCategories = [];
-        database.hero_classes.equip_sets.armorSet(undefined,(itemCategoryID, count) => {
+        database.hero_classes.equip_sets.armorSet(undefined, (itemCategoryID, count) => {
             armorItemCategories.push({
                 itemCategoryID: itemCategoryID,
                 count: count,
@@ -85,7 +83,7 @@ export default class GenerateItems {
     private _generate(options: {
         armorMaterialID: ArmorMaterialID,
         items: TSDB_Item[],
-        itemCategories: {itemCategoryID: ItemCategoryID, count: number}[],
+        itemCategories: { itemCategoryID: ItemCategoryID, count: number }[],
     }): void {
         let constValues = {
             slotsCount: 11,
@@ -131,22 +129,22 @@ export default class GenerateItems {
                         ratio: config.hero_level_corresponds_to_item_level_ratio,
                     });
                     let itemAttributes: TSDB_Item = {
-                        Agility         : 0,
-                        ArmorMaterialID : undefined,
-                        AttackPower     : 0,
-                        DefaultBuyPrice : 0,
+                        Agility: 0,
+                        ArmorMaterialID: undefined,
+                        AttackPower: 0,
+                        DefaultBuyPrice: 0,
                         DefaultSellPrice: 0,
-                        Equipable       : false,
-                        HealthPoints    : 0,
-                        ID              : undefined,
-                        Intelligence    : 0,
-                        ItemCategoryID  : undefined,
-                        ItemLevel       : 0,
-                        QualityID       : undefined,
-                        StackSize       : 0,
-                        Strength        : 0,
-                        TwoHandWeapon   : false,
-                        IconID          : database.metadata.items.iconId(itemCategories[i]),
+                        Equipable: false,
+                        HealthPoints: 0,
+                        ID: undefined,
+                        Intelligence: 0,
+                        ItemCategoryID: undefined,
+                        ItemLevel: 0,
+                        QualityID: undefined,
+                        StackSize: 0,
+                        Strength: 0,
+                        TwoHandWeapon: false,
+                        IconID: database.metadata.items.iconId(itemCategories[i]),
                     };
 
                     if (database.metadata.items.requireArmorMaterial(itemCategories[i])) itemAttributes.ArmorMaterialID = options.armorMaterialID;

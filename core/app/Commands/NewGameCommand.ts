@@ -1,4 +1,3 @@
-import {assertNotNil} from '../../source/assert.js';
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import PlayerContainerConfigure from '../Services/ContainerConfigures/PlayerContainerConfigure.js';
@@ -8,7 +7,6 @@ import AppError from '../../source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
-import _ from 'lodash';
 
 export default class NewGameCommand extends Command {
     private readonly _scenarios = {

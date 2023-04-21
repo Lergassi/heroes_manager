@@ -1,9 +1,3 @@
-import Item from './Item.js';
-import AppError from '../../source/Errors/AppError.js';
-import HeroComponent from '../Components/HeroComponent.js';
-import ItemCategory from './ItemCategory.js';
-import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import EquipSlotAvailableItemCategoryInterface from '../Interfaces/EquipSlotAvailableItemCategoryInterface.js';
 
 export default class EquipSlot {

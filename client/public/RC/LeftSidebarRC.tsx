@@ -4,7 +4,6 @@ import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_PanelID} from '../../types/UI_PanelID.js';
 import GameRC from './GameRC.js';
 import {sprintf} from 'sprintf-js';
-import {database} from '../../../core/data/ts/database.js';
 import {IconID} from '../../../core/types/enums/IconID.js';
 
 type LeftSidebarMenuItem = {
@@ -60,7 +59,8 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
         let elements = [];
         for (let i = 0; i < items.length; i++) {
             elements.push(
-                <div key={i} className={'left-sidebar__item ' + (items[i].panelID === this.state.activePanel ? 'left-sidebar__item_active ' : '') + (!items[i].enable ? 'left-sidebar__item_disabled' : '')}>
+                <div key={i}
+                     className={'left-sidebar__item ' + (items[i].panelID === this.state.activePanel ? 'left-sidebar__item_active ' : '') + (!items[i].enable ? 'left-sidebar__item_disabled' : '')}>
                     <a href="" onClick={(event) => {
                         event.preventDefault();
 
@@ -73,7 +73,7 @@ export default class LeftSidebarRC extends React.Component<LeftSidebarProps, Lef
                             } as LeftSidebarState;
                         });
                     }}>
-                        <span className={sprintf("icon icon_%s icon_32 left-sidebar__icon", items[i].iconId)}></span>
+                        <span className={sprintf('icon icon_%s icon_32 left-sidebar__icon', items[i].iconId)}></span>
                         <span className={'left-sidebar__menu-text'}>{items[i].panelID}</span>
                     </a>
                 </div>);

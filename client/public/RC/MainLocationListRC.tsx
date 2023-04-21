@@ -1,8 +1,5 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {LocationHuntingState} from '../../../core/app/Components/Location.js';
 import MainLocationList, {MainLocationListRender} from '../../../core/app/Components/MainLocationList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
@@ -44,7 +41,7 @@ export interface MainLocationListRCElement {
 export default class MainLocationListRC extends React.Component<MainLocationListRCProps, MainLocationListRCState> implements MainLocationListRender {
     private _options = {
         // rows: 10,
-        rows: 18,
+        rows: 17,
     };
 
     constructor(props: MainLocationListRCProps) {
@@ -69,7 +66,10 @@ export default class MainLocationListRC extends React.Component<MainLocationList
     updateByRequest(): void {
         if (!(this.state.window.show && this.props.window.show)) return;
 
-        this.props.mainLocationList?.renderByRequest(this, {offset: ((this.state.activePage > 0 ? this.state.activePage - 1 : 0)) * this._options.rows, count: this._options.rows});
+        this.props.mainLocationList?.renderByRequest(this, {
+            offset: ((this.state.activePage > 0 ? this.state.activePage - 1 : 0)) * this._options.rows,
+            count: this._options.rows
+        });
     }
 
     updateLocations(locations: MainLocationListRCElement[]): void {
@@ -88,7 +88,7 @@ export default class MainLocationListRC extends React.Component<MainLocationList
         });
     }
 
-    updatePagination(totalPages:number, totalLocations:number): void {
+    updatePagination(totalPages: number, totalLocations: number): void {
         this.setState((state) => {
             return {
                 totalPages: totalPages,
@@ -115,54 +115,55 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                     <div className={'widget__content'}>
                         <table className={'basic-table'}>
                             <tbody>
-                                <tr>
-                                    <th>Type (ID)</th>
-                                    <th>Level</th>
-                                    <th>HuntingState</th>
-                                    <th>Heroes (L/T)</th>
-                                    <th>Enemies (L/T)</th>
-                                    {/*<th>Veins</th>*/}
-                                    <th>Loot</th>
-                                    <th>Money</th>
-                                    <th>Ctrl</th>
+                            <tr>
+                                <th>Type (ID)</th>
+                                <th>Level</th>
+                                <th>HuntingState</th>
+                                <th>Heroes (L/T)</th>
+                                <th>Enemies (L/T)</th>
+                                {/*<th>Veins</th>*/}
+                                <th>Loot</th>
+                                <th>Money</th>
+                                <th>Ctrl</th>
+                            </tr>
+                            {_.map(this.state.locations, (location, index) => {
+                                return <tr key={index}>
+                                    <td>
+                                        <a href="" onClick={(event) => {
+                                            event.preventDefault();
+                                            this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
+                                        }}>{location.name} ({location.ID})</a>
+                                    </td>
+                                    <td>{location.level}</td>
+                                    <td>{location.state}</td>
+                                    <td>{location.lifeHeroesCount}/{location.totalHeroesCount}</td>
+                                    <td>{location.lifeEnemiesCount}/{location.totalEnemiesCount}</td>
+                                    {/*<td>*/}
+                                    {/*    <ul>*/}
+                                    {/*        /!*{_.map(location.veins, (vein, index) => {*!/*/}
+                                    {/*        /!*    return <li key={index}>{vein.itemID}: {vein.count}/{vein.startCount}</li>*!/*/}
+                                    {/*        /!*})}*!/*/}
+                                    {/*    </ul>*/}
+                                    {/*</td>*/}
+                                    {/* todo: Временно скрыто. Надо сделать компонент для считывания списка предметов из ItemStorage без стеков. */}
+                                    <td>
+                                        {/*<ul>*/}
+                                        {/*    {_.map(location.loot, (item, index) => {*/}
+                                        {/*        if (!item.itemID) return;*/}
+
+                                        {/*        return <li key={index}>{item.itemID}: {item.count}</li>*/}
+                                        {/*    })}*/}
+                                        {/*</ul>*/}
+                                    </td>
+                                    <td>{location.money}</td>
+                                    <td>
+                                        <button className={'btn btn_default'} onClick={() => {
+                                            this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
+                                        }}>DETAIL
+                                        </button>
+                                    </td>
                                 </tr>
-                                {_.map(this.state.locations, (location, index) => {
-                                    return <tr key={index}>
-                                        <td>
-                                            <a href="" onClick={(event) => {
-                                                event.preventDefault();
-                                                this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
-                                            }}>{location.name} ({location.ID})</a>
-                                        </td>
-                                        <td>{location.level}</td>
-                                        <td>{location.state}</td>
-                                        <td>{location.lifeHeroesCount}/{location.totalHeroesCount}</td>
-                                        <td>{location.lifeEnemiesCount}/{location.totalEnemiesCount}</td>
-                                        {/*<td>*/}
-                                        {/*    <ul>*/}
-                                        {/*        /!*{_.map(location.veins, (vein, index) => {*!/*/}
-                                        {/*        /!*    return <li key={index}>{vein.itemID}: {vein.count}/{vein.startCount}</li>*!/*/}
-                                        {/*        /!*})}*!/*/}
-                                        {/*    </ul>*/}
-                                        {/*</td>*/}
-                                        {/* todo: Временно скрыто. Надо сделать компонент для считывания списка предметов из ItemStorage без стеков. */}
-                                        <td>
-                                            {/*<ul>*/}
-                                            {/*    {_.map(location.loot, (item, index) => {*/}
-                                            {/*        if (!item.itemID) return;*/}
-                                            
-                                            {/*        return <li key={index}>{item.itemID}: {item.count}</li>*/}
-                                            {/*    })}*/}
-                                            {/*</ul>*/}
-                                        </td>
-                                        <td>{location.money}</td>
-                                        <td>
-                                            <button className={'btn btn_default'} onClick={() => {
-                                                this.props.container.get<DetailLocationRC>(ServiceID.UI_DetailLocation).updateLocation(location.location, {show: true});
-                                            }}>DETAIL</button>
-                                        </td>
-                                    </tr>
-                                })}
+                            })}
                             </tbody>
                         </table>
                         <div>
@@ -176,8 +177,10 @@ export default class MainLocationListRC extends React.Component<MainLocationList
                             </span>
                             <span>pages: {this.state.activePage}/{this.state.totalPages}, items: {this.state.totalLocations}</span>
                         </div>
-                    </div>{/*end widget__content*/}
-                </div>{/*end widget*/}
+                    </div>
+                    {/*end widget__content*/}
+                </div>
+                {/*end widget*/}
             </div>
         );
     }//render

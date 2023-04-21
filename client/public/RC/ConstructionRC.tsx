@@ -91,23 +91,29 @@ export class ConstructionRC extends React.Component<ConstructionRCProps, Constru
                                 return <tr key={availableBuildingID}>
                                     <td>{availableBuildingID}</td>
                                     <td>{_.map(database.buildings.find(availableBuildingID).requireItems, (value, index, collection) => {
-                                        return <div key={index}>{value.itemID}: {value.count}/{this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).containItem(value.itemID)}</div>
+                                        return <div
+                                            key={index}>{value.itemID}: {value.count}/{this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController).containItem(value.itemID)}</div>
                                     })}</td>
                                     <td>{database.buildings.find(availableBuildingID).cost}/{this.props.container.get<WalletInterface>(ServiceID.Wallet).value}</td>
-                                    <td><button className={'btn btn_default'} onClick={(event) => {
-                                        event.preventDefault();
-                                        this.props.construction.build(
-                                            availableBuildingID,
-                                            this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
-                                            this.props.container.get<WalletInterface>(ServiceID.Wallet),
-                                        );
-                                    }}>BUILD</button></td>
+                                    <td>
+                                        <button className={'btn btn_default'} onClick={(event) => {
+                                            event.preventDefault();
+                                            this.props.construction.build(
+                                                availableBuildingID,
+                                                this.props.container.get<ItemStorageInterface>(ServiceID.ItemStorageController),
+                                                this.props.container.get<WalletInterface>(ServiceID.Wallet),
+                                            );
+                                        }}>BUILD
+                                        </button>
+                                    </td>
                                 </tr>
                             })}
                             </tbody>
                         </table>
-                    </div>{/*end widget__content*/}
-                </div>{/*end widget*/}
+                    </div>
+                    {/*end widget__content*/}
+                </div>
+                {/*end widget*/}
                 <div className={'widget'}>
                     <div className={'widget__title'}>Mines (ConstructionRC)</div>
                     <div className={'widget__content'}>
@@ -134,8 +140,10 @@ export class ConstructionRC extends React.Component<ConstructionRCProps, Constru
                             })}
                             </tbody>
                         </table>
-                    </div>{/*end widget__content*/}
-                </div>{/*end widget*/}
+                    </div>
+                    {/*end widget__content*/}
+                </div>
+                {/*end widget*/}
             </div>
         );
     }

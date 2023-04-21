@@ -13,7 +13,6 @@ import {HeroClassID} from '../core/types/enums/HeroClassID.js';
 import EntityManagerBuilder from '../core/app/Services/EntityManagerBuilder.js';
 import {LocationTypeID} from '../core/types/enums/LocationTypeID.js';
 import {ServiceID} from '../core/types/enums/ServiceID.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
 import AddItemInterface from '../core/app/Interfaces/AddItemInterface.js';
 import {unsigned} from '../core/types/main.js';
@@ -30,60 +29,26 @@ import AttackControllerInterface from '../core/app/Interfaces/AttackControllerIn
 import {ComponentID} from '../core/types/enums/ComponentID.js';
 import DamageControllerInterface from '../core/app/Interfaces/DamageControllerInterface.js';
 import LocationFactory from '../core/app/Factories/LocationFactory.js';
-import Location, {GatheringPointTypeID} from '../core/app/Components/Location.js';
+import Location from '../core/app/Components/Location.js';
 import AttackGroupController from '../core/app/Components/AttackGroupController.js';
 import DamageGroupController from '../core/app/Components/DamageGroupController.js';
 import HealthPoints from '../core/app/Components/HealthPoints.js';
 import {extractHealthPoints, separator} from '../core/app/indev.js';
 import CharacterAttribute from '../core/app/Components/CharacterAttribute.js';
-import ItemCharacterAttributeCollector from '../core/app/Components/ItemCharacterAttributeCollector.js';
-import HeroActivityStateController, {HeroActivityStateCode} from '../core/app/Components/HeroActivityStateController.js';
 import _CharacterFightGroup from '../core/app/Components/FightLegacy/_CharacterFightGroup.js';
-import {CurrencyID} from '../core/types/enums/CurrencyID.js';
 import WalletFactory from '../core/app/Factories/WalletFactory.js';
-import Wallet from '../core/app/Components/Wallet.js';
-import Experience from '../core/app/Components/Experience.js';
 import Vein from '../core/app/Components/Vein.js';
 import EntityManagerInterface from '../core/app/Interfaces/EntityManagerInterface.js';
 import Gatherer from '../core/app/Components/Gatherer.js';
 import ItemStorageFactory from '../core/app/Factories/ItemStorageFactory.js';
 import ItemStorageControllerWithLimit from '../core/app/Components/ItemStorages/ItemStorageControllerWithLimit.js';
 import ItemStorageInterface from '../core/app/Interfaces/ItemStorageInterface.js';
-import {EntityID} from '../core/types/enums/EntityID.js';
-import Currency from '../core/app/Entities/Currency.js';
-import {EventCode} from '../core/types/enums/EventCode.js';
 import TestGenerics from '../test/TestGenerics.js';
-import EventSystem2 from '../core/source/EventSystem2.js';
 import ItemStorage from '../core/app/Components/ItemStorages/ItemStorage.js';
-import ItemStackController from '../core/app/Components/ItemStorages/ItemStackController.js';
-import AttributeGeneratorSandboxController from './SandboxControllers/AttributeGeneratorSandboxController.js';
-import TSDB_DatabaseSandboxController from './SandboxControllers/TSDB_DatabaseSandboxController.js';
-import EnemySandboxController from './SandboxControllers/EnemySandboxController.js';
-import GenerateEnemySandboxController from './SandboxControllers/GenerateEnemySandboxController.js';
-import GenerateItemsSandboxController from './SandboxControllers/GenerateItemsSandboxController.js';
-import GenerateItemsV002SandboxController from './SandboxControllers/GenerateItemsV002SandboxController.js';
-import LocationSandboxController from './SandboxControllers/LocationSandboxController.js';
-import InversifyJSGetStartedController from './SandboxControllers/InversifyJSGetStartedController.js';
-import DevUISystemController from './SandboxControllers/DevUISystemController.js';
-import LoadItemDatabaseController from './SandboxControllers/LoadItemDatabaseController.js';
-import FightSandboxController from './SandboxControllers/FightSandboxController.js';
-import ItemStorageSandboxController from './SandboxControllers/ItemStorageSandboxController.js';
-import ProductionSandboxController from './SandboxControllers/ProductionSandboxController';
-import RecipeSandboxController from './SandboxControllers/RecipeSandboxController.js';
-import RecipesSandboxController from './SandboxControllers/RecipesSandboxController.js';
-import ShopSandboxController from './SandboxControllers/ShopSandboxController.js';
 import WalletInterface from '../core/app/Interfaces/WalletInterface.js';
-import EntityManagerSandboxController from './SandboxControllers/EntityManagerSandboxController.js';
-import _TavernSandboxController from './SandboxControllers/TavernSandboxController.js';
-import AverageItemLevel from '../core/app/Components/AverageItemLevel.js';
-import HeroSandboxController from './SandboxControllers/HeroSandboxController.js';
-import TavernSandboxController from './SandboxControllers/BlankGameplaySandboxController.js';
-import TypescriptSandboxController from './SandboxControllers/TypescriptSandboxController.js';
-import {ToolsSandboxController} from './SandboxControllers/ToolsSandboxController';
-import mysql, {createConnection} from 'mysql';
-import * as net from 'net';
-import {sprintf} from 'sprintf-js';
 import {database} from '../core/data/ts/database.js';
+import DebugApp from '../core/app/Services/DebugApp.js';
+import {DebugFormatterID} from '../core/types/enums/DebugFormatterID.js';
 // import cookie from 'cookie';
 
 // let p = './core/data/json/auto_generated_equip_24.02.2023_06_02_55.json';
@@ -175,7 +140,8 @@ export default class SandboxController {
         // this._devEventSystemWithoutStatic();
         // this._devEventSystemWithoutTarget();
         // this._devNewRender();
-        this._devAutoConfigProduction();
+        // this._devAutoConfigProduction();
+        this._devDebugWrapper();
 
         // this._devItemStackController();
         // this._devItemStorageV2();
@@ -243,11 +209,11 @@ export default class SandboxController {
     }
 
     private _testDebugNamespace() {
-        debug(DebugNamespaceID.Debug)('this is ' + DebugNamespaceID.Debug);
-        debug(DebugNamespaceID.Log)('this is ' + DebugNamespaceID.Log);
-        debug(DebugNamespaceID.Info)('this is ' + DebugNamespaceID.Info);
-        debug(DebugNamespaceID.Warning)('this is ' + DebugNamespaceID.Warning);
-        debug(DebugNamespaceID.Error)('this is ' + DebugNamespaceID.Error);
+        DebugApp.debug(DebugNamespaceID.Debug)('this is ' + DebugNamespaceID.Debug);
+        DebugApp.debug(DebugNamespaceID.Log)('this is ' + DebugNamespaceID.Log);
+        DebugApp.debug(DebugNamespaceID.Info)('this is ' + DebugNamespaceID.Info);
+        DebugApp.debug(DebugNamespaceID.Warning)('this is ' + DebugNamespaceID.Warning);
+        DebugApp.debug(DebugNamespaceID.Error)('this is ' + DebugNamespaceID.Error);
     }
 
     private _devInstanceofInterface() {
@@ -470,7 +436,7 @@ export default class SandboxController {
         while (currentHit < maxHits) {
             // if (!heroFightController.canAttack() || !enemyFightController.canAttack()) {
             if (checkEndFightCallback(heroFightController) || checkEndFightCallback(enemyFightController)) {
-                debug(DebugNamespaceID.Log)('Сражение завершено.');
+                DebugApp.debug(DebugNamespaceID.Log)('Сражение завершено.');
                 break;
             }
             // console.log('Обмен ударами: ' + currentHit);
@@ -504,7 +470,7 @@ export default class SandboxController {
             // heroFightController.exchangeHits(enemyFightController);
 
             if (checkEndFightCallback(heroFightController) || checkEndFightCallback(enemyFightController)) {
-                debug(DebugNamespaceID.Log)(separator('Сражение завершено.'));
+                DebugApp.debug(DebugNamespaceID.Log)(separator('Сражение завершено.'));
                 break;
             }
 
@@ -1097,5 +1063,19 @@ export default class SandboxController {
         for (let i = 0; i < items.length; i++) {
             console.log(items[i].ProductionId);
         }
+    }
+
+    private _devDebugWrapper() {
+        // DebugApp.debug(DebugNamespaceID.GameConsole)('');
+        //
+        // DebugApp.debug(DebugNamespaceID.Log)('Hello, World!');
+        //
+        // // let debugApp = new DebugApp();
+        // // debugApp.debug(DebugNamespaceID.Log)(42);
+        //
+        // DebugApp.debug(DebugNamespaceID.Log)(42);
+        // DebugApp.debug(DebugNamespaceID.Log)(DebugFormatterID.Json, {a: 42});
+
+        // DebugApp.log(DebugNamespaceID.Log, '42');
     }
 }

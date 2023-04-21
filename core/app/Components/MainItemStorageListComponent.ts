@@ -1,20 +1,11 @@
-import Component from '../../source/Component.js';
 import GameObject from '../../source/GameObject.js';
 import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import {unsigned} from '../../types/main.js';
-import ItemStorageFactoryInterface from '../Factories/ItemStorageFactoryInterface.js';
-import {
-    assertIsArray, assertIsGreaterThanOrEqual,
-    assertIsMaxLength,
-    assertIsMinLength,
-    assertIsNumber,
-    assertIsPositive, assertNotNil
-} from '../../source/assert.js';
+import {assertIsArray, assertIsMaxLength, assertIsPositive, assertNotNil} from '../../source/assert.js';
 import {sprintf} from 'sprintf-js';
 import EventSystem from '../../source/EventSystem.js';
 import ItemStorageFactory from '../Factories/ItemStorageFactory.js';
-import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 
 export enum MainItemStorageListComponentEventCode {
     Update = 'MainItemStorageListComponent.Update',

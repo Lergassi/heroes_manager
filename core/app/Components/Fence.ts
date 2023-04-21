@@ -1,14 +1,13 @@
-import _ from 'lodash';
-import debug from 'debug';
 import Item from '../Entities/Item.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {assertIsGreaterThanOrEqual, assertIsInteger, assertNotNil} from '../../source/assert.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class Fence {
-    private readonly _items: Partial<{[ID in ItemID]: {price: number}}>;
+    private readonly _items: Partial<{ [ID in ItemID]: { price: number } }>;
     // private readonly _buyBackItems: {item: Item, count: number, totalPrice: number}[];
     // private readonly _maxBuyBackItems: number;
 
@@ -39,19 +38,19 @@ export default class Fence {
         assertNotNil(itemStorage);
 
         if (!this._items.hasOwnProperty(item.id)) {
-            debug(DebugNamespaceID.Log)('Данный предмет нельзя продать скупщику.');
+            DebugApp.debug(DebugNamespaceID.Log)('Данный предмет нельзя продать скупщику.');
             return;
         }
 
         if (itemStorage.containItem(<ItemID>item.id) < count) {
-            debug(DebugNamespaceID.Log)('Недостаточно предметов.');
+            DebugApp.debug(DebugNamespaceID.Log)('Недостаточно предметов.');
             return;
         }
 
         let totalPrice = count * this._items[item.id].price;
         itemStorage.removeItem(<ItemID>item.id, count);
         wallet.add(totalPrice);
-        debug(DebugNamespaceID.Log)('Предмет продан.');
+        DebugApp.debug(DebugNamespaceID.Log)('Предмет продан.');
         // this._addToBuyBack(item, count, totalPrice);
     }
 

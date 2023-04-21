@@ -3,14 +3,10 @@ import {database} from '../../../data/ts/database.js';
 import ContainerConfigureInterface from '../../../source/ContainerConfigureInterface.js';
 import ContainerInterface from '../../../source/ContainerInterface.js';
 import EntityManager from '../../../source/EntityManager.js';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import Serializer from '../../../source/Serializer.js';
 import JsonSerializer from '../../../source/JsonSerializer.js';
 import MetadataManager from '../../../source/MetadataManager.js';
-import {HeroClassID} from '../../../types/enums/HeroClassID.js';
-import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
-import {ItemCategoryPowerRatio} from '../../../types/main.js';
 import ItemAttributeGenerator from '../BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
 import EnemyCharacterAttributeGenerator from '../BalanceTools/EnemyCharacterAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../BalanceTools/HeroCharacterAttributeGenerator.js';
@@ -21,15 +17,13 @@ import ItemDatabase from '../../../source/ItemDatabase.js';
 import {extractItems_dev} from '../../indev.js';
 import EventSystem from '../../../source/EventSystem.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
-import Item from '../../Entities/Item.js';
-import {ItemID} from '../../../types/enums/ItemID.js';
-import _ from 'lodash';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import EventSystemFactory from '../EventSystemFactory.js';
 import ItemCategoryFactory from '../../Factories/EntityFactories/ItemCategoryFactory.js';
 import RecipeFactory from '../../Factories/EntityFactories/RecipeFactory.js';
 import {ProductionValueGenerator} from '../BalanceTools/ProductionValueGenerator';
+import DebugApp from '../DebugApp.js';
 
 export default class CoreContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -132,10 +126,10 @@ export default class CoreContainerConfigure implements ContainerConfigureInterfa
 
         //endregion game
 
-        debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', 'CoreContainerConfigure'));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', 'CoreContainerConfigure'));
 
-        debug(DebugNamespaceID.Dump)(container.get<EntityManagerInterface>(ServiceID.EntityManager));
-        debug(DebugNamespaceID.Dump)(database);
+        DebugApp.debug(DebugNamespaceID.Dump)(container.get<EntityManagerInterface>(ServiceID.EntityManager));
+        DebugApp.debug(DebugNamespaceID.Dump)(database);
 
         return container;
     }

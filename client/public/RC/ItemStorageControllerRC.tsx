@@ -6,7 +6,6 @@ import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameObject from '../../../core/source/GameObject.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import {UI_ItemCount} from '../../../core/types/main.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import ItemStorageRC from './ItemStorageRC.js';

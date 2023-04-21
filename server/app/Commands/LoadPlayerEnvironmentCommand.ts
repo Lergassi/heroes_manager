@@ -6,7 +6,6 @@ import AppError from '../../../core/source/Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import Serializer from '../../../core/source/Serializer.js';
 import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
-import debug from 'debug';
 import PlayerDBObjectRepository from '../Repositories/PlayerDBObjectRepository.js';
 import PlayerDBObject from '../DBObjects/PlayerDBObject.js';
 import _ from 'lodash';
@@ -15,6 +14,7 @@ import PathResolver from '../../source/PathResolver.js';
 import JsonSerializer from '../../../core/source/JsonSerializer.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
+import DebugApp from '../../../core/app/Services/DebugApp.js';
 
 export default class LoadPlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -64,6 +64,6 @@ export default class LoadPlayerEnvironmentCommand extends Command {
 
         serializer.finish();
 
-        debug(DebugNamespaceID.Info)(sprintf('Окружение игрока загружено, %s(%s) загружено.', playerDBObject['_id'], playerDBObject['_name']));
+        DebugApp.debug(DebugNamespaceID.Info)(sprintf('Окружение игрока загружено, %s(%s) загружено.', playerDBObject['_id'], playerDBObject['_name']));
     }
 }

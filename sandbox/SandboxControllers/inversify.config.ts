@@ -1,8 +1,7 @@
-import {Container, interfaces} from "inversify";
-import { TYPES } from "./types";
-import { Warrior, Weapon, ThrowableWeapon } from "./interfaces";
-import { Ninja, Katana, Shuriken } from "./entities";
-import _ from 'lodash';
+import {Container, interfaces} from 'inversify';
+import {TYPES} from './types';
+import {ThrowableWeapon, Warrior, Weapon} from './interfaces';
+import {Katana, Ninja, Shuriken} from './entities';
 
 const container = new Container();
 

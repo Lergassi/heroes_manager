@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import debug from 'debug';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import Tavern from './Tavern.js';
 

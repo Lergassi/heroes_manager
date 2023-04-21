@@ -1,5 +1,4 @@
 import {ItemID} from '../types/enums/ItemID';
-import Production from '../app/Components/Production';
 import {ProductionID} from '../types/enums/ProductionID';
 
 export default {

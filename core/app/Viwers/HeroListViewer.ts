@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
 import GameObject from '../../source/GameObject.js';
 import ShortHeroViewer from './ShortHeroViewer.js';
 

@@ -1,6 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
-
 export default class Icon {
     private readonly _id: string;
 

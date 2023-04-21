@@ -42,7 +42,7 @@ export const location_enemies = {
      * @param locationTypeID
      * @param callback
      */
-    _find: function<T> (locationTypeID: LocationTypeID, callback: (enemyTypeID: EnemyTypeID, count: RangeType) => T): T[] {
+    _find: function <T>(locationTypeID: LocationTypeID, callback: (enemyTypeID: EnemyTypeID, count: RangeType) => T): T[] {
         return _.map(enemies_db[locationTypeID], (data) => {
             return callback(data.enemyTypeID, data.count);
         });

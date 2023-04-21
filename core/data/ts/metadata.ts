@@ -1,4 +1,3 @@
-import ItemCategory from '../../app/Entities/ItemCategory.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
 import {IconID} from '../../types/enums/IconID.js';
 

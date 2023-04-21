@@ -1,4 +1,3 @@
-import debug from 'debug';
 import _ from 'lodash';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import GameObject from '../../source/GameObject.js';
@@ -10,6 +9,7 @@ import EnemyFactory from '../Factories/EnemyFactory.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
+import DebugApp from './DebugApp.js';
 
 /**
  * GameObject
@@ -17,7 +17,7 @@ import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
  */
 export default class EnemySquad implements DamageControllerInterface, AttackControllerInterface {
     private readonly _enemyFactory: EnemyFactory;
-    private readonly _squad: {enemyTypeID: EnemyTypeID, level: number, count: number, enemy: GameObject};
+    private readonly _squad: { enemyTypeID: EnemyTypeID, level: number, count: number, enemy: GameObject };
 
     get isDead(): boolean {
         return this._squad.count <= 0;
@@ -40,7 +40,7 @@ export default class EnemySquad implements DamageControllerInterface, AttackCont
 
     canDamage(): boolean {
         if (this._squad.count <= 0 || this._squad.count > 0 && _.isNil(this._squad.enemy)) {
-            debug(DebugNamespaceID.Throw)('Отряд пустой.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Отряд пустой.');
             return false;
         }
 
@@ -49,7 +49,7 @@ export default class EnemySquad implements DamageControllerInterface, AttackCont
 
     damage(damage: number, rewardOptions?: RewardOptions): number {
         if (!this.canDamage()) {
-            debug(DebugNamespaceID.Throw)('Объект не может получить урон.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Объект не может получить урон.');
             return 0;
         }
 
@@ -60,9 +60,9 @@ export default class EnemySquad implements DamageControllerInterface, AttackCont
 
             if (this._squad.count > 0) {
                 this._squad.enemy = this._enemyFactory.createSquad(this._squad.enemyTypeID, this._squad.level);
-                debug(DebugNamespaceID.Debug)('Создан новый враг в отряде. Врагов: ' + this._squad.count);
+                DebugApp.debug(DebugNamespaceID.Debug)('Создан новый враг в отряде. Врагов: ' + this._squad.count);
             } else {
-                debug(DebugNamespaceID.Log)('Отряд умер.');
+                DebugApp.debug(DebugNamespaceID.Log)('Отряд умер.');
             }
         }
 
@@ -74,6 +74,7 @@ export default class EnemySquad implements DamageControllerInterface, AttackCont
 
         return 0;
     }
+
     canAttack(): boolean {
         return false;
     }

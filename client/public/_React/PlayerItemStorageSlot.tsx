@@ -1,8 +1,5 @@
-import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
 import ItemStorageSlotComponent from '../../../core/app/Components/ItemStorages/ItemStorageSlotComponent.js';
-import {sprintf} from 'sprintf-js';
 import Icon from '../../../core/app/Entities/Icon.js';
 
 export interface PlayerItemStorageSlotProps {
@@ -21,9 +18,7 @@ export default class PlayerItemStorageSlot extends React.Component<PlayerItemSto
     constructor(props: PlayerItemStorageSlotProps) {
         super(props);
 
-        this._style = {
-
-        };
+        this._style = {};
 
         this.clearHandler = this.clearHandler.bind(this);
     }

@@ -3,7 +3,6 @@ import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
 import {HeroRoleID} from '../../types/enums/HeroRoleID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
-import Icon from '../../app/Entities/Icon.js';
 import {IconID} from '../../types/enums/IconID.js';
 
 type TSDB_HeroClass = {
@@ -15,13 +14,13 @@ type TSDB_HeroClass = {
      * ratio в сумме должно быть 1.
      * todo: Перенести в атрибуты.
      */
-    mainCharacterAttributeIDs: {ID: CharacterAttributeID, ratio: number}[];
+    mainCharacterAttributeIDs: { ID: CharacterAttributeID, ratio: number }[];
     //todo: Временно, до переноса логики в слоты.
     rightHandItemCategoryIDs: ItemCategoryID[];
     leftHandItemCategoryIDs: ItemCategoryID[];
 }
 
-type TSDB_HeroClassDB = {[ID in HeroClassID]?: TSDB_HeroClass}
+type TSDB_HeroClassDB = { [ID in HeroClassID]?: TSDB_HeroClass }
 
 let hero_classes_data: TSDB_HeroClassDB = {
     [HeroClassID.Tank1]: {
@@ -312,7 +311,7 @@ export const hero_classes = {
     find: function (id: string): TSDB_HeroClass {
         return hero_classes_data[id] ?? null;
     },
-    armorMaterials: function<T> (ID: HeroClassID, callback: (ID: ArmorMaterialID) => T): T[] {
+    armorMaterials: function <T>(ID: HeroClassID, callback: (ID: ArmorMaterialID) => T): T[] {
         return _.map(hero_classes_data[ID]?.armorMaterialIDs ?? [], (value, index, collection) => {
             return callback(value);
         });
@@ -320,12 +319,12 @@ export const hero_classes = {
     heroRole: function (ID: HeroClassID): HeroRoleID {
         return hero_classes_data[ID]?.heroRoleID;
     },
-    mainCharacterAttributes: function<T> (ID: HeroClassID, callback: (ID: CharacterAttributeID, ratio: number) => T): T[] {
+    mainCharacterAttributes: function <T>(ID: HeroClassID, callback: (ID: CharacterAttributeID, ratio: number) => T): T[] {
         return _.map(hero_classes_data[ID]?.mainCharacterAttributeIDs ?? [], (data) => {
             return callback(data.ID, data.ratio);
         });
     },
-    availableWeapons: function<T> (ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
+    availableWeapons: function <T>(ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
         return this.rightHandItemCategories(ID, callback);
     },
     /**
@@ -333,7 +332,7 @@ export const hero_classes = {
      * @param ID
      * @param callback
      */
-    rightHandItemCategories: function<T> (ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
+    rightHandItemCategories: function <T>(ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
         return _.map(hero_classes_data[ID]?.rightHandItemCategoryIDs ?? [], (value, index, collection) => {
             return callback(value);
         });
@@ -343,7 +342,7 @@ export const hero_classes = {
      * @param ID
      * @param callback
      */
-    leftHandItemCategories: function<T> (ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
+    leftHandItemCategories: function <T>(ID: HeroClassID, callback: (ID: ItemCategoryID) => T): T[] {
         return _.map(hero_classes_data[ID]?.leftHandItemCategoryIDs ?? [], (value, index, collection) => {
             return callback(value);
         });

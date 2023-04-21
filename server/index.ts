@@ -6,7 +6,6 @@ import http from 'http';
 /**
  * external modules
  */
-import debug from 'debug';
 import finalhandler from 'finalhandler';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
@@ -22,8 +21,9 @@ import CoreContainerConfigure from '../core/app/Services/ContainerConfigures/Cor
 import url from 'url';
 import DefaultContainerConfigure from '../core/app/Services/ContainerConfigures/DefaultContainerConfigure.js';
 import {DebugNamespaceID} from '../core/types/enums/DebugNamespaceID.js';
+import DebugApp from '../core/app/Services/DebugApp.js';
 
-debug(DebugNamespaceID.Log)('Запуск инициализации сервера.');
+DebugApp.debug(DebugNamespaceID.Log)('Запуск инициализации сервера.');
 
 let container = new Container();
 
@@ -43,14 +43,14 @@ const server = http.createServer(async (req, res) => {
     try {
         await router.run(req, res);
     } catch (error) {
-        debug(DebugNamespaceID.Error)('requestListener', error);
+        DebugApp.debug(DebugNamespaceID.Error)('requestListener', error);
         done(error);
     }
 })//end http.createServer
 
 server.listen(config.port, () => {
-    debug(DebugNamespaceID.Log)(sprintf('Сервер запущен на порте %s.', config.port));
-    debug(DebugNamespaceID.Log)(_.repeat('-', 32));
+    DebugApp.debug(DebugNamespaceID.Log)(sprintf('Сервер запущен на порте %s.', config.port));
+    DebugApp.debug(DebugNamespaceID.Log)(_.repeat('-', 32));
 });//end listen
 
-debug(DebugNamespaceID.Log)('Завершение инициализации сервера.');
+DebugApp.debug(DebugNamespaceID.Log)('Завершение инициализации сервера.');

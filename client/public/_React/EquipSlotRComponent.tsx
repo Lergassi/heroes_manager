@@ -1,7 +1,5 @@
-import EquipSlotComponent from '../../../core/app/Components/EquipSlotComponent.js';
 import React from 'react';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
-import ItemStackTextRComponent from './ItemStackTextRComponent.js';
 import EquipSlotInterface from '../../../core/app/Interfaces/EquipSlotInterface.js';
 
 export interface EquipSlotRComponentProps {
@@ -77,7 +75,9 @@ export default class EquipSlotRComponent extends React.Component<EquipSlotRCompo
                     {/*/>*/}
                     {r}
                 </td>
-                <td><button onClick={this.clearHandler}>Очистить</button></td>
+                <td>
+                    <button onClick={this.clearHandler}>Очистить</button>
+                </td>
             </tr>
         );
     }

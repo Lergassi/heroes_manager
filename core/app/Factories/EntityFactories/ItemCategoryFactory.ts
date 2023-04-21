@@ -1,4 +1,3 @@
-import EntityManager from '../../../source/EntityManager.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import ItemCategory from '../../Entities/ItemCategory.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';

@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
 import {TSDB_Item} from '../../data/ts/items.js';
 import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
 import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';

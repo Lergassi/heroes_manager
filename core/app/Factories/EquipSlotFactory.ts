@@ -5,14 +5,10 @@ import EquipSlotArmorMaterialRule from '../Components/EquipSlots/EquipSlotArmorM
 import EquipSlotItemCategoryRule from '../Components/EquipSlots/EquipSlotItemCategoryRule.js';
 import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
 import DefaultEquipSlot from '../Components/EquipSlots/DefaultEquipSlot.js';
-import EquipSlotWithItemCollectorDecorator from '../Components/EquipSlots/EquipSlotWithItemCollectorDecorator.js';
-import EquipSlotWithItemCategoryDecorator from '../Components/EquipSlots/EquipSlotWithItemCategoryDecorator.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import EquipSlotWithArmorMaterialDecorator from '../Components/EquipSlots/EquipSlotWithArmorMaterialDecorator.js';
 import HeroClass from '../Entities/HeroClass.js';
 import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import LeftHand from '../Components/EquipSlots/LeftHand.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import AverageItemLevel from '../Components/AverageItemLevel.js';
@@ -81,7 +77,7 @@ export default class EquipSlotFactory {
         characterAttributeManager: CharacterAttributeManager,
         averageItemLevel: AverageItemLevel,
     ): EquipSlotInterface {
-        let rightHand : EquipSlotInterface = new DefaultEquipSlot(
+        let rightHand: EquipSlotInterface = new DefaultEquipSlot(
             <EquipSlotID>equipSlotData.id,
             averageItemLevel,
             characterAttributeManager,

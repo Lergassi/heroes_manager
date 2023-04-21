@@ -2,10 +2,10 @@ import ContainerConfigureInterface from '../../core/source/ContainerConfigureInt
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import config from '../config/main.js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import UIUpdater from './UIUpdater.js';
+import DebugApp from '../../core/app/Services/DebugApp.js';
 
 export default class ClientContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -20,7 +20,7 @@ export default class ClientContainerConfigure implements ContainerConfigureInter
 
         container.set(ServiceID.UI_Updater, new UIUpdater(container));
 
-        debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
     }

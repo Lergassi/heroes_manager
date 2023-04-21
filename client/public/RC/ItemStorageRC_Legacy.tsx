@@ -1,18 +1,8 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import Icon from '../../../core/app/Entities/Icon.js';
-import {assert, assertIsGreaterThanOrEqual, assertIsNumber, assertNotNil} from '../../../core/source/assert.js';
-import ItemStorageSlotRC from './ItemStorageSlotRC.js';
-import ItemStorageComponent from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
-import ItemStorage from '../../../core/app/Components/ItemStorages/ItemStorage.js';
+import {assertIsGreaterThanOrEqual, assertNotNil} from '../../../core/source/assert.js';
 import Item from '../../../core/app/Entities/Item.js';
-import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 import ItemSlotRC from './ItemSlotRC.js';
-import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import ItemDatabase from '../../../core/source/ItemDatabase.js';
-import {ItemID} from '../../../core/types/enums/ItemID.js';
-import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 
 export interface ItemStorageUIProps_Legacy {
@@ -23,7 +13,7 @@ export interface ItemStorageUIProps_Legacy {
 }
 
 export interface ItemStorageUIState_Legacy {
-    slots: {item: Item, count: number}[];
+    slots: { item: Item, count: number }[];
     // itemStorage: ItemStorageV2;
 }
 

@@ -1,6 +1,4 @@
-import {level} from 'chalk';
-import _, {defaultTo} from 'lodash';
-import {assert} from '../../../../source/assert.js';
+import _ from 'lodash';
 import AppError from '../../../../source/Errors/AppError.js';
 
 function defaultAttackPower(values: {
@@ -8,7 +6,7 @@ function defaultAttackPower(values: {
     startAttackPower: number,
     attackPowerItemLevel: number,
 }): number {
-    return _.round(values.startAttackPower + values.attackPowerItemLevel * ( values.itemLevel - 1 ) );
+    return _.round(values.startAttackPower + values.attackPowerItemLevel * (values.itemLevel - 1));
 }
 
 /**
@@ -27,7 +25,7 @@ function defaultHealthPoints(values: {
     startHealthPoints: number,
     healthPointsItemLevel: number,
 }): number {
-    return _.round(values.startHealthPoints + values.healthPointsItemLevel * ( values.itemLevel - 1 ) );
+    return _.round(values.startHealthPoints + values.healthPointsItemLevel * (values.itemLevel - 1));
 }
 
 function healthPoints(values: {

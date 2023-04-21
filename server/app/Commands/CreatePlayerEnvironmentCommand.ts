@@ -1,37 +1,4 @@
 import Command from '../../../core/source/GameConsole/Command.js';
-import Input from '../../../core/source/GameConsole/Input.js';
-import debug from 'debug';
-import fs from 'fs';
-import Currency from '../../../core/app/Entities/Currency.js';
-import Item from '../../../core/app/Entities/Item.js';
-import PlayerFactory from '../../../core/app/Factories/PlayerFactory.js';
-import GameObjectStorage from '../../../core/source/GameObjectStorage.js';
-import EntityManager from '../../../core/source/EntityManager.js';
-import ItemStorageManager from '../../../core/app/Services/ItemStorageManager.js';
-import WalletFactory from '../../../core/app/Factories/WalletFactory.js';
-import Security from '../../source/Security.js';
-import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import PlayerDBObjectFactory from '../Factories/PlayerDBObjectFactory.js';
-import PlayerDBObjectRepository from '../Repositories/PlayerDBObjectRepository.js';
-import PlayerDBObject from '../DBObjects/PlayerDBObject.js';
-import {Pool} from 'mysql';
-import _ from 'lodash';
-import PlayerContainerConfigure from '../../../core/app/Services/ContainerConfigures/PlayerContainerConfigure.js';
-import PathResolver from '../../source/PathResolver.js';
-import ItemStorageFactoryInterface from '../../../core/app/Factories/ItemStorageFactoryInterface.js';
-import IDGeneratorInterface from '../../../core/source/IDGeneratorInterface.js';
-import {DEFAULT_ITEM_STORAGE_SIZE} from '../../../core/app/consts.js';
-import MainHeroList from '../../../core/app/Components/MainHeroList.js';
-import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import {HeroClassID} from '../../../core/types/enums/HeroClassID.js';
-import {CurrencyID} from '../../../core/types/enums/CurrencyID.js';
-import {ItemID} from '../../../core/types/enums/ItemID.js';
-import HeroFactory from '../../../core/app/Factories/HeroFactory.js';
-import ItemStackFactory from '../../../core/app/Factories/ItemStackFactory.js';
-import EntityManagerInterface from '../../../core/app/Interfaces/EntityManagerInterface.js';
-import {EntityID} from '../../../core/types/enums/EntityID.js';
-import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
-import ItemStorageFactory from '../../../core/app/Factories/ItemStorageFactory.js';
 
 /**
  * TODO: Не актуально пока нет сервера.

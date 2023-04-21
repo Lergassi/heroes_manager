@@ -59,7 +59,7 @@ export default class Serializer {
     private readonly _metadataManager: MetadataManager;
     private readonly _container: ContainerInterface;
     private readonly _links: {};
-    private readonly _objects: {[key: string]: any};
+    private readonly _objects: { [key: string]: any };
     private readonly _linkRequests: any[];
 
     constructor(container: ContainerInterface, metadataManager: MetadataManager) {

@@ -1,15 +1,11 @@
 import {assertNotNil} from '../../source/assert.js';
-import Component from '../../source/Component.js';
 import HeroClass from '../Entities/HeroClass.js';
-import debug from 'debug';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
-import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import _ from 'lodash';
 
 export interface HeroComponentRender {
     updateHeroClassName?(value: string): void;
+
     updateHeroRoleName?(value: string): void;
+
     updateHeroClassId?(id: string): void;
 }
 

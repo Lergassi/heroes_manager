@@ -1,11 +1,7 @@
 import React from 'react';
-import MainLocationList, {
-    MainLocationListComponentEventCode
-} from '../../../core/app/Components/MainLocationList.js';
+import MainLocationList, {MainLocationListComponentEventCode} from '../../../core/app/Components/MainLocationList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import EventSystem from '../../../core/source/EventSystem.js';
-import {LocationRComponent} from './LocationRComponent.js';
-import _ from 'lodash';
 
 export type MainLocationListRComponentProps = {
     container: ContainerInterface;

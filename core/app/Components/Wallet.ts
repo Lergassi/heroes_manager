@@ -1,16 +1,9 @@
-import Component from '../../source/Component.js';
 import Currency from '../Entities/Currency.js';
-import {unsigned} from '../../types/main.js';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
-import {assertIsGreaterThanOrEqual, assertIsPositive, assertNotNil} from '../../source/assert.js';
+import {assertIsPositive} from '../../source/assert.js';
 import WalletInterface, {WalletInterfaceRender} from '../Interfaces/WalletInterface.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import EventSystem from '../../source/EventSystem.js';
-import {EventCode} from '../../types/enums/EventCode.js';
-import EventSystem2 from '../../source/EventSystem2.js';
-import useCustomHook from '../../../client/public/_React/Test/test.js';
-import Func = jest.Func;
+import DebugApp from '../Services/DebugApp.js';
 
 export interface WalletComponentRenderOptions {
     value: number,
@@ -36,7 +29,7 @@ export default class Wallet implements WalletInterface {
         if (value <= 0) return 0;
 
         this._value += value;
-        debug(DebugNamespaceID.Log)(sprintf('Добавлена валюта: %s. Остаток: %s', value, this._value));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Добавлена валюта: %s. Остаток: %s', value, this._value));
 
         return value;
     }
@@ -59,7 +52,7 @@ export default class Wallet implements WalletInterface {
             removedValue = this._value;
             this._value = 0;
         }
-        debug(DebugNamespaceID.Log)(sprintf('Удалена валюта: %s. Остаток: %s.', value, this._value));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Удалена валюта: %s. Остаток: %s.', value, this._value));
 
         return removedValue;
     }

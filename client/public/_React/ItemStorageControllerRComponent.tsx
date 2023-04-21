@@ -1,20 +1,9 @@
-import MainItemStorageListComponent, {
-    MainItemStorageListComponentEventCode
-} from '../../../core/app/Components/MainItemStorageListComponent.js';
 import React from 'react';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
-import ItemStorageRComponent from './ItemStorageRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import ItemStorageControllerInterface from '../../../core/app/Interfaces/ItemStorageControllerInterface.js';
-import _ from 'lodash';
 import {EventCode} from '../../../core/types/enums/EventCode.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import EventSystemFactory from '../../../core/app/Services/EventSystemFactory.js';
-import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import PlayerItemStorage from './PlayerItemStorage.js';
-import ItemStorageComponent from '../../../core/app/Components/ItemStorages/ItemStorageComponent.js';
-import {ComponentID} from '../../../core/types/enums/ComponentID.js';
-import ItemStorageRC_Legacy from '../RC/ItemStorageRC_Legacy.js';
 
 export interface ItemStorageControllerRComponentProps {
     container: ContainerInterface;

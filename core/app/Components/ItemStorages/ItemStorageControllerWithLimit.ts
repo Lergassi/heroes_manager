@@ -2,15 +2,13 @@ import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 import {unsigned} from '../../../types/main.js';
 import Item from '../../Entities/Item.js';
 import GameObject from '../../../source/GameObject.js';
-import ItemStorageControllerInterface from '../../Interfaces/ItemStorageControllerInterface.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {assertIsPositive, assertNotNil} from '../../../source/assert.js';
+import {assertIsPositive} from '../../../source/assert.js';
 import ItemStorageController from './ItemStorageController.js';
 import _ from 'lodash';
-import EventSystem from '../../../source/EventSystem.js';
 import AppError from '../../../source/Errors/AppError.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 /**
  * @deprecated
@@ -69,7 +67,7 @@ export default class ItemStorageControllerWithLimit {
 
     private _canAddItemStorage(): boolean {
         if (this._itemStorages.length >= this._maxItemStorages) {
-            debug(DebugNamespaceID.Throw)('Нельзя добавить больше itemStorage больше .');
+            DebugApp.debug(DebugNamespaceID.Throw)('Нельзя добавить больше itemStorage больше .');
             return false;
         }
 

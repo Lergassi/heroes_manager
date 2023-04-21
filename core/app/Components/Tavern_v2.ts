@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
-import {TavernRCInterface, TavernRenderInterface, UI_TavernHero} from '../../../client/public/RC/TavernRC.js';
 import {
     TavernRCInterface_v2,
     TavernRenderInterface_v2,
@@ -9,14 +7,12 @@ import {
 } from '../../../client/public/RC/TavernRC_v2.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import HeroClass from '../Entities/HeroClass.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
 import MainHeroList from './MainHeroList.js';
-import EquipSlotInterface from "../Interfaces/EquipSlotInterface";
-import {EquipSlotID} from "../../types/enums/EquipSlotID";
+import DebugApp from '../Services/DebugApp.js';
 
 export default class Tavern_v2 implements TavernRenderInterface_v2 {
-    private readonly _heroes: {heroClassID: HeroClassID, level: number, cost: number}[];
+    private readonly _heroes: { heroClassID: HeroClassID, level: number, cost: number }[];
 
     constructor() {
         this._heroes = [];
@@ -46,12 +42,12 @@ export default class Tavern_v2 implements TavernRenderInterface_v2 {
 
     hire(index: number, mainHeroList: MainHeroList, wallet: WalletInterface): boolean {
         if (!this.has(index)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Герой "%s" не доступен в таверне.', index));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Герой "%s" не доступен в таверне.', index));
             return false;
         }
 
         if (wallet.value < this._heroes[index].cost) {
-            debug(DebugNamespaceID.Throw)(sprintf('Не достаточно денег.'));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Не достаточно денег.'));
             return false;
         }
 
@@ -59,9 +55,9 @@ export default class Tavern_v2 implements TavernRenderInterface_v2 {
             wallet.remove(this._heroes[index].cost) === this._heroes[index].cost
             //todo: проверка на возможность создания героя.
         ) {
-            let hero =  mainHeroList.createHero(this._heroes[index].heroClassID, this._heroes[index].level);
+            let hero = mainHeroList.createHero(this._heroes[index].heroClassID, this._heroes[index].level);
             if (hero) {
-                debug(DebugNamespaceID.Log)(sprintf('Герой "%s" нанят.', this._heroes[index].heroClassID));
+                DebugApp.debug(DebugNamespaceID.Log)(sprintf('Герой "%s" нанят.', this._heroes[index].heroClassID));
                 _.pullAt(this._heroes, index);
                 // hero.get<EquipSlotInterface>(EquipSlotID.RightHand).equip(ItemID.);
             }

@@ -1,16 +1,9 @@
-import _ from 'lodash';
-import debug from 'debug';
 import {assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
-import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
-import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
-import {FightGroupControllerInterface} from '../Interfaces/FightGroupControllerInterface.js';
-import CharacterAttribute from './CharacterAttribute.js';
 import HealthPoints from './HealthPoints.js';
-import ActionStateController from './ActionStateController.js';
+import DebugApp from '../Services/DebugApp.js';
 
 //todo: Перенести в отряд.
 export interface SquadDamageControllerRenderInterface {
@@ -37,7 +30,7 @@ export default class SquadDamageController implements DamageControllerInterface 
 
         if (this._healthPoints.isDead) {
             this._count--;
-            debug(DebugNamespaceID.Log)('Умер враг в отряде, остаток: ' + this._count);
+            DebugApp.debug(DebugNamespaceID.Log)('Умер враг в отряде, остаток: ' + this._count);
             if (this._count > 0) {
                 this._healthPoints.resurrect();
             }
@@ -48,12 +41,12 @@ export default class SquadDamageController implements DamageControllerInterface 
 
     canDamage(): boolean {
         if (this._count <= 0) {
-            debug(DebugNamespaceID.Log)('Отряд мёрт.');
+            DebugApp.debug(DebugNamespaceID.Log)('Отряд мёрт.');
             return false;
         }
 
         if (this._healthPoints.isDead) {
-            debug(DebugNamespaceID.Error)('Враг в отряде мертвый.');
+            DebugApp.debug(DebugNamespaceID.Error)('Враг в отряде мертвый.');
             return false;
         }
 

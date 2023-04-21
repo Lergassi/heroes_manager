@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import AppError from '../../source/Errors/AppError.js';
 
 export default class Random {
-    private constructor() {}
+    private constructor() {
+    }
 
     static one<T>(items: T[]): T {
         return items[_.random(0, items.length - 1)];

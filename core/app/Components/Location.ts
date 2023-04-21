@@ -1,10 +1,7 @@
-import debug from 'debug';
 import _ from 'lodash';
 import {DetailLocationRCEnemyElement, DetailLocationRCHeroElement} from '../../../client/public/RC/DetailLocationRC.js';
 import {separate} from '../../debug_functions.js';
 import {assertNotNil} from '../../source/assert.js';
-import AppError from '../../source/Errors/AppError.js';
-import EventSystem from '../../source/EventSystem.js';
 import GameObject from '../../source/GameObject.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
@@ -35,7 +32,7 @@ import HeroComponent from './HeroComponent.js';
 import ActionStateController from './ActionStateController.js';
 import SquadDamageController from './SquadDamageController.js';
 import Vein from './Vein.js';
-import EnduranceController from "./EnduranceController";
+import DebugApp from '../Services/DebugApp.js';
 
 export enum LocationHuntingState {
     Waiting = 'Waiting',
@@ -78,23 +75,33 @@ export type GatheringItemPoint = {
 //     Update = 'Location.Update',
 // }
 
-export interface LocationRenderInterface {    updateID?(ID: string): void;
+export interface LocationRenderInterface {
+    updateID?(ID: string): void;
+
     updateName?(name: string): void;
+
     updateState?(state: string): void;
+
     updateLevel?(level: number): void;   //todo: Тут наверное нужно все данные которые не изменяются передать и метод назвать set/init.
     updateHeroes?(heroes: DetailLocationRCHeroElement[]): void;
+
     updateEnemies?(enemies: DetailLocationRCEnemyElement[]): void;
+
     updateVeins?(veins: UI_VeinItemCount[]): void;
+
     updateSelectedResource?(itemID: ItemID): void;
+
     updateLoot?(loot: UI_ItemCount[]): void;
+
     updateMoney?(value: number): void;
+
     updateHeroGroupItems?(items: UI_ItemStorageSlot[]): void;
 }
 
 export default class Location {
     private readonly _type: LocationTypeID;
     private readonly _level: number;
-    private readonly _veins: {[ID in ItemID]?: Vein};
+    private readonly _veins: { [ID in ItemID]?: Vein };
     private readonly _itemStackFactory: ItemStackFactory;
 
     private readonly _heroes: GameObject[];
@@ -178,12 +185,12 @@ export default class Location {
         assertNotNil(hero);
 
         if (this._heroes.length >= this._options.maxHeroes) {
-            debug(DebugNamespaceID.Throw)('Кол-во героев в локации достигло максимума.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Кол-во героев в локации достигло максимума.');
             return false;
         }
 
         if (!this._canAddHero(hero)) {
-            debug(DebugNamespaceID.Throw)('Нельзя добавить данного героя.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Нельзя добавить данного героя.');
             return false;
         }
 
@@ -227,12 +234,12 @@ export default class Location {
 
     startHunting(): boolean {
         if (this._huntingState !== LocationHuntingState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Охота уже запущена.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Охота уже запущена.');
             return false;
         }
 
         if (this._heroes.length === 0) {
-            debug(DebugNamespaceID.Throw)('В группе должен быть хотя бы 1 герой.');
+            DebugApp.debug(DebugNamespaceID.Throw)('В группе должен быть хотя бы 1 герой.');
             return false;
         }
 
@@ -259,21 +266,21 @@ export default class Location {
 
             //И другие действия...
         }, this._options.intervalPeriod * ONE_SECOND_IN_MILLISECONDS);
-        debug(DebugNamespaceID.Log)('Охота запущена.');
+        DebugApp.debug(DebugNamespaceID.Log)('Охота запущена.');
 
         return true;
     }
 
     stopHunting(): boolean {//todo: Тут тоже stateOwner? Игрок или другая часть программы от которой зависит состояние объекта.
         if (this._huntingState !== LocationHuntingState.Hunting) {
-            debug(DebugNamespaceID.Log)('Охота не запущена.');
+            DebugApp.debug(DebugNamespaceID.Log)('Охота не запущена.');
             return false;
         }
 
         this._huntingState = LocationHuntingState.Waiting;
         // this._heroGroupComponent.unblock(this);
         clearInterval(this._intervalID);
-        debug(DebugNamespaceID.Log)('Охота остановлена.');
+        DebugApp.debug(DebugNamespaceID.Log)('Охота остановлена.');
 
         return true;
     }
@@ -299,7 +306,7 @@ export default class Location {
 
     canModify(): boolean {
         if (this._huntingState !== LocationHuntingState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Нельзя редактировать локацию во время охоты.');
             return false;
         }
 
@@ -308,7 +315,7 @@ export default class Location {
 
     canGetRewards(): boolean {
         if (!this.canModify()) {
-            debug(DebugNamespaceID.Throw)('Нельзя забрать награду.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Нельзя забрать награду.');
             return false;
         }
 
@@ -317,7 +324,7 @@ export default class Location {
 
     canDelete(): boolean {
         if (this._huntingState !== LocationHuntingState.Waiting) {
-            debug(DebugNamespaceID.Throw)('Нельзя удалить локацию во время охоты.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Нельзя удалить локацию во время охоты.');
             return false;
         }
 
@@ -352,7 +359,7 @@ export default class Location {
         // if (!this.canModify()) return;
 
         if (!this._veins.hasOwnProperty(itemID)) {
-            debug(DebugNamespaceID.Throw)('Ресурс не найден.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Ресурс не найден.');
             return;
         }
 
@@ -367,15 +374,15 @@ export default class Location {
         let heroes: DetailLocationRCHeroElement[] = [];
         for (let i = 0; i < this._heroes.length; i++) {
             let hero: DetailLocationRCHeroElement = {
-                ID                 : String(this._heroes[i].ID),
-                attackPower        : 0,
+                ID: String(this._heroes[i].ID),
+                attackPower: 0,
                 currentHealthPoints: 0,
-                heroClassName      : '',
-                isDead             : false,
-                level              : 0,
-                maxHealthPoints    : 0,
-                endurance          : 0,
-                maxEndurance       : 0,
+                heroClassName: '',
+                isDead: false,
+                level: 0,
+                maxHealthPoints: 0,
+                endurance: 0,
+                maxEndurance: 0,
             };
 
             //todo: На каждого героя нужно сделать свою функцию в переменной.
@@ -513,7 +520,7 @@ export default class Location {
         if (!this.canModify()) return false;
 
         if (_.includes(this._heroes, hero)) {
-            debug(DebugNamespaceID.Throw)('Герой уже в локации.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Герой уже в локации.');
             return false;
         }
 
@@ -524,7 +531,7 @@ export default class Location {
         // }
 
         if (!hero.get<HeroActivityStateController>(ComponentID.HeroActivityStateController).isFree()) {
-            debug(DebugNamespaceID.Throw)('Персонаж занят.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Персонаж занят.');
             return false;
         }
 
@@ -563,7 +570,7 @@ export default class Location {
      */
     private _gather(): void {
         if (!this._veins[this._selectedResourceID]) {
-            debug(DebugNamespaceID.Throw)('Ресурс не найден.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Ресурс не найден.');
             return;
         }
 

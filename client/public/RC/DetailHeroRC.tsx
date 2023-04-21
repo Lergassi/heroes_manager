@@ -191,7 +191,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         });
     }
 
-    updateHero(hero: GameObject, options: {show?: boolean} = {show: false}): void {
+    updateHero(hero: GameObject, options: { show?: boolean } = {show: false}): void {
         assertNotNil(hero);
         // if (this.state.hero && this.state.hero === hero) return; //За обновление отвечает updateByRequest.
         // if (this.state.hero) {
@@ -268,6 +268,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
             } as DetailHeroRCState;
         });
     }
+
     updateExp(value: number): void {
         this.setState((state) => {
             return {
@@ -275,6 +276,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
             } as DetailHeroRCState;
         });
     }
+
     updateTotalExpToLevelUp(value: number): void {
         this.setState((state) => {
             return {
@@ -318,6 +320,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
             return newState;
         });
     }
+
     // clearEquipSlot(ID: EquipSlotID): void {}
 
     clearEquipSlot(equipSlotID: EquipSlotID) {
@@ -332,17 +335,22 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         return (
             <div>
                 <div className={'widget'}>
-                    <div className={'widget__title'}>DetailHeroRC<button className={'btn btn_default btn_right btn_close-table'} onClick={this.hide}>CLOSE</button></div>
+                    <div className={'widget__title'}>DetailHeroRC
+                        <button className={'btn btn_default btn_right btn_close-table'} onClick={this.hide}>CLOSE
+                        </button>
+                    </div>
                     <div className={'widget__content'}>
                         <div className={'detail-hero'}>
                             <div className={'detail-hero-summary'}>
                                 <div className={'block'}>
                                     <button className={'btn btn_default'} onClick={() => {
                                         this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
-                                    }}>RESURRECT</button>
+                                    }}>RESURRECT
+                                    </button>
                                     <button className={'btn btn_default only-dev'} onClick={() => {
                                         this.state.hero.get<Endurance>(ComponentID.Endurance).reset();
-                                    }}>RESET_ENDURANCE</button>
+                                    }}>RESET_ENDURANCE
+                                    </button>
                                     {/*<button className={'btn btn_danger'} onClick={() => {*/}
                                     {/*    this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).kill();*/}
                                     {/*}}>KILL</button>*/}
@@ -419,9 +427,12 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                                     </table>
                                 </div>
                             </div>
-                        </div>{/*end detail-hero*/}
-                    </div>{/*end content*/}
-                </div>{/*end widget*/}
+                        </div>
+                        {/*end detail-hero*/}
+                    </div>
+                    {/*end content*/}
+                </div>
+                {/*end widget*/}
             </div>
         );
     }//end render
@@ -430,7 +441,9 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
         return <tr key={ID}>
             <td>{ID}</td>
             <td>{this.state[ID] ? this.state[ID] : 'free'}</td>
-            <td><button className={'btn btn_default'} onClick={this.clearEquipSlot.bind(this, ID)}>CLEAR</button></td>
+            <td>
+                <button className={'btn btn_default'} onClick={this.clearEquipSlot.bind(this, ID)}>CLEAR</button>
+            </td>
         </tr>
     }
 }

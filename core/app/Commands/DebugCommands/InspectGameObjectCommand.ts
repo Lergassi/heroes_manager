@@ -12,7 +12,7 @@ export default class InspectGameObjectCommand extends Command {
     configure() {
         super.configure();
         this.addArgument('id', '', true);
-        this.addArgument('depth',  '', false, 1);
+        this.addArgument('depth', '', false, 1);
         this.addArgument('showHidden', '1/0', false, 0);
     }
 

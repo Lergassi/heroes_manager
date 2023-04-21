@@ -1,14 +1,10 @@
 import {ItemID} from '../../../types/enums/ItemID.js';
-import EquipSlotInterface, {
-    EquipSlotInterfaceRender,
-} from '../../Interfaces/EquipSlotInterface.js';
-import Item from '../../Entities/Item.js';
+import EquipSlotInterface, {EquipSlotInterfaceRender,} from '../../Interfaces/EquipSlotInterface.js';
 import CharacterAttributeManager from '../CharacterAttributeManager.js';
 import DefaultEquipSlot from './DefaultEquipSlot.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import AverageItemLevel from '../AverageItemLevel.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
 
 export default class LeftHand implements EquipSlotInterface {
     private _equipSlot: EquipSlotInterface

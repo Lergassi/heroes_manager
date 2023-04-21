@@ -1,25 +1,16 @@
-import _ from 'lodash';
-import {sprintf} from 'sprintf-js';
 import {database} from '../../data/ts/database.js';
-import {assert, assertIsGreaterThanOrEqual, assertNotNil} from '../../source/assert.js';
-import GameObject from '../../source/GameObject.js';
+import {assertNotNil} from '../../source/assert.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
 import {EnemyTypeID} from '../../types/enums/EnemyTypeID.js';
-import {EntityID} from '../../types/enums/EntityID.js';
-import {unsigned} from '../../types/main.js';
 import AttackController from '../Components/AttackController.js';
-import ArmorDecorator from '../Components/CharacterAttributes/ArmorDecorator.js';
-import Endurance from '../Components/Endurance.js';
 import ExperienceLootGenerator from '../Components/ExperienceLootGenerator.js';
 import GoldLootGenerator from '../Components/GoldLootGenerator.js';
 import HealthPoints from '../Components/HealthPoints.js';
-import ItemCharacterAttributeCollector from '../Components/ItemCharacterAttributeCollector.js';
 import ItemLootGenerator from '../Components/ItemLootGenerator.js';
 import Level from '../Components/Level.js';
 import ActionStateController from '../Components/ActionStateController.js';
 import SquadDamageController from '../Components/SquadDamageController.js';
-import EnemyEntity from '../Entities/EnemyEntity.js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
 import ExperienceDistributorInterface from '../Interfaces/ExperienceDistributorInterface.js';
@@ -49,7 +40,7 @@ export default class EnemyFactory {
         level: number,
         count: number = 1,
         options?: {
-            baseCharacterAttributeValues?: {[ID in CharacterAttributeID]?: number};
+            baseCharacterAttributeValues?: { [ID in CharacterAttributeID]?: number };
         }
     ) {
         assertNotNil(enemyTypeID);

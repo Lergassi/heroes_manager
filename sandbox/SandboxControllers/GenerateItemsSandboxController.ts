@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import {Simulate} from 'react-dom/test-utils';
-import {sprintf} from 'sprintf-js';
-import HeroClass from '../../core/app/Entities/HeroClass.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
 import item_character_attribute_generation_functions
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
-import balance from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
-import ItemCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/ItemCharacterAttributeGenerator.js';
-import config from '../../core/config/config.js';
-import GenerateItems from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
+import balance
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/item_character_attribute_generation_functions.js';
+import ItemCharacterAttributeGenerator
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/ItemCharacterAttributeGenerator.js';
+import GenerateItems
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_1/GenerateItems.js';
 import {TSDB_Item} from '../../core/data/ts/items.js';
 import {ArmorMaterialID} from '../../core/types/enums/ArmorMaterialID.js';
 import {CharacterAttributeID} from '../../core/types/enums/CharacterAttributeID.js';
@@ -18,7 +18,6 @@ import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
 import {QualityID} from '../../core/types/enums/QualityID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
-import copy = Simulate.copy;
 import {IconID} from '../../core/types/enums/IconID.js';
 
 export default class GenerateItemsSandboxController extends AbstractSandboxController {

@@ -1,20 +1,13 @@
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
-import {assertIsGreaterThanOrEqual, assertIsNumber, assertNotNil} from '../../../source/assert.js';
-import Viewer from '../../../source/Viewer.js';
-import {DebugFormatterID} from '../../../types/enums/DebugFormatterID.js';
+import {assertIsGreaterThanOrEqual, assertNotNil} from '../../../source/assert.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {EntityID} from '../../../types/enums/EntityID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
-import {ItemCount, UI_ItemCount, UI_ItemStorageSlot, unsigned} from '../../../types/main.js';
-import HeroClass from '../../Entities/HeroClass.js';
-import Item from '../../Entities/Item.js';
-import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
-import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
+import {ItemCount, UI_ItemStorageSlot} from '../../../types/main.js';
 import ItemStorageInterface, {ItemStorageInterfaceRender} from '../../Interfaces/ItemStorageInterface.js';
 import EquipController from '../EquipController.js';
 import ItemStackController from './ItemStackController.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 export default class ItemStorage implements ItemStorageInterface {
     private readonly _size: number;
@@ -100,7 +93,7 @@ export default class ItemStorage implements ItemStorageInterface {
         let addedItemsCount = originCount - count;
 
         if (originCount !== count) {
-            debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', itemID, addedItemsCount, originCount));
+            DebugApp.debug(DebugNamespaceID.Log)(sprintf('Добавлено предметов "%s" %s из %s.', itemID, addedItemsCount, originCount));
         }
 
         return addedItemsCount;
@@ -136,7 +129,7 @@ export default class ItemStorage implements ItemStorageInterface {
         let removedItemsCount = originCount - count;
 
         if (removedItemsCount !== 0) {
-            debug(DebugNamespaceID.Log)(sprintf('Удалено предметов "%s": %s из %s.', ID, removedItemsCount, originCount));
+            DebugApp.debug(DebugNamespaceID.Log)(sprintf('Удалено предметов "%s": %s из %s.', ID, removedItemsCount, originCount));
         }
 
         return removedItemsCount;

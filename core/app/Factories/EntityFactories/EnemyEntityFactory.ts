@@ -1,8 +1,5 @@
-import EntityManager from '../../../source/EntityManager.js';
-import Currency from '../../Entities/Currency.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import EnemyEntity from '../../Entities/EnemyEntity.js';
-import {EnemyTypeID} from '../../../types/enums/EnemyTypeID.js';
 import {ItemLoot, unsigned} from '../../../types/main.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 

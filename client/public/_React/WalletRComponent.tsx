@@ -1,10 +1,4 @@
 import React from 'react';
-import Wallet from '../../../core/app/Components/Wallet.js';
-import {EventCode} from '../../../core/types/enums/EventCode.js';
-import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import EventSystemFactory from '../../../core/app/Services/EventSystemFactory.js';
-import {ServiceID} from '../../../core/types/enums/ServiceID.js';
-import EventSystem from '../../../core/source/EventSystem.js';
 import {unsigned} from '../../../core/types/main.js';
 import _ from 'lodash';
 

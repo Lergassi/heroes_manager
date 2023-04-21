@@ -1,8 +1,5 @@
-import {Debugger} from 'inspector';
 import _ from 'lodash';
-import debug from 'debug';
 import {database} from '../../data/ts/database.js';
-import {LocationTypeID} from '../../types/enums/LocationTypeID.js';
 import Location from '../Components/Location.js';
 import EnemyFactory from '../Factories/EnemyFactory.js';
 

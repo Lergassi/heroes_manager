@@ -1,8 +1,8 @@
 import {HeroClassID} from '../types/enums/HeroClassID.js';
 import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
 
-export type CharacterAttributeConfig = {[id in CharacterAttributeID]?: number[]};
-export type StartCharacterAttributeConfig = {[id in HeroClassID]?: CharacterAttributeConfig};
+export type CharacterAttributeConfig = { [id in CharacterAttributeID]?: number[] };
+export type StartCharacterAttributeConfig = { [id in HeroClassID]?: CharacterAttributeConfig };
 
 let defaultValues = {
     [CharacterAttributeID.Strength]: [6, 9],

@@ -34,11 +34,11 @@ import LoadFullEnvironmentCommand from './Commands/LoadFullEnvironmentCommand.js
 import DebugContainerCommand from './Commands/DebugCommands/DebugContainerCommand.js';
 import SecurityStatusCommand from './Commands/SecurityStatusCommand.js';
 import UnloadFullEnvironmentCommand from './Commands/UnloadFullEnvironmentCommand.js';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import PathResolver from '../source/PathResolver.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
+import DebugApp from '../../core/app/Services/DebugApp.js';
 
 export default class ServerContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
@@ -76,11 +76,11 @@ export default class ServerContainerConfigure implements ContainerConfigureInter
             let config = container.get<object>('server.config');
 
             return mysql.createPool({
-                connectionLimit : config['services'].database.connectionLimit,
-                host            : config['services'].database.host,
-                user            : config['services'].database.user,
-                password        : config['services'].database.password,
-                database        : config['services'].database.name,
+                connectionLimit: config['services'].database.connectionLimit,
+                host: config['services'].database.host,
+                user: config['services'].database.user,
+                password: config['services'].database.password,
+                database: config['services'].database.name,
             })
         });
         container.set<PasswordHasher>('server.passwordHasher', (container) => {
@@ -108,7 +108,7 @@ export default class ServerContainerConfigure implements ContainerConfigureInter
 
         this._gameConsoleConfigure(container);
 
-        debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
     }

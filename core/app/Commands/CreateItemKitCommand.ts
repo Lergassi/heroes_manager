@@ -1,27 +1,17 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import ItemPackInterface from '../Interfaces/ItemPackInterface.js';
 import {DEFAULT_STACK_SIZE} from '../consts.js';
 import {CommandID} from '../../types/enums/CommandID.js';
-import {assertIsGreaterThanOrEqual, assertIsNumber, assertNotEmpty, assertNotNil} from '../../source/assert.js';
-import ItemStorageManager from '../Services/ItemStorageManager.js';
+import {assertIsGreaterThanOrEqual, assertNotEmpty, assertNotNil} from '../../source/assert.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
-import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-import Item from '../Entities/Item.js';
-import {EntityID} from '../../types/enums/EntityID.js';
-import debug from 'debug';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import ItemStorageComponent from '../Components/ItemStorages/ItemStorageComponent.js';
-import MainItemStorageListComponent from '../Components/MainItemStorageListComponent.js';
 import {parseInt} from 'lodash';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import ItemDatabase from '../../source/ItemDatabase.js';
 import ItemStackBlankInterface from '../Interfaces/ItemStackBlankInterface.js';
 
 export default class CreateItemKitCommand extends Command {
     //todo: Для ID вместо сущности использовать отдельный класс или фабрику.
-    private readonly _kits: {[key: string]: ItemStackBlankInterface[]} = {
+    private readonly _kits: { [key: string]: ItemStackBlankInterface[] } = {
         // start_items: [
         //     {item: ItemID.Wood, count: DEFAULT_STACK_SIZE},
         //     {item: ItemID.IronOre, count: DEFAULT_STACK_SIZE},

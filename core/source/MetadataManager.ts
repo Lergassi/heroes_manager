@@ -2,7 +2,6 @@
 import AppError from './Errors/AppError.js';
 import {SerializeType} from './Serializer.js';
 import ContainerInterface from './ContainerInterface.js';
-import EntityManager from './EntityManager.js';
 import {EntityID} from '../types/enums/EntityID.js';
 import {ServiceID} from '../types/enums/ServiceID.js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';

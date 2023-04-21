@@ -1,7 +1,7 @@
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import _ from 'lodash';
 import Experience from '../app/Components/Experience.js';
+import LevelRange from '../app/Components/Experience.js';
 import ActionStateController from '../app/Components/ActionStateController.js';
 import CharacterAttributeInterface from '../app/Decorators/CharacterAttributeInterface.js';
 import EquipSlotInterface from '../app/Interfaces/EquipSlotInterface.js';
@@ -19,7 +19,6 @@ import Wallet from '../app/Components/Wallet.js';
 import ItemStorageComponent from '../app/Components/ItemStorages/ItemStorageComponent.js';
 import GameObjectStorage from '../source/GameObjectStorage.js';
 import ContainerInterface from '../source/ContainerInterface.js';
-import LevelRange from '../app/Components/Experience.js';
 import EntityManager from '../source/EntityManager.js';
 import Item from '../app/Entities/Item.js';
 import {CharacterAttributeID} from '../types/enums/CharacterAttributeID.js';
@@ -28,11 +27,11 @@ import {ServiceID} from '../types/enums/ServiceID.js';
 import EntityManagerInterface from '../app/Interfaces/EntityManagerInterface.js';
 import {DebugNamespaceID} from '../types/enums/DebugNamespaceID.js';
 import {ComponentID} from '../types/enums/ComponentID.js';
-import Icon from '../app/Entities/Icon.js';
-import {assert, assertNotNil} from '../source/assert.js';
+import {assertNotNil} from '../source/assert.js';
+import DebugApp from '../app/Services/DebugApp.js';
 
 export function debugEntity(entity) {
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         classname: entity.constructor.name,
         _id: entity['_id'],
         _name: entity['_name'],
@@ -42,7 +41,7 @@ export function debugEntity(entity) {
 
 export function debugItem(item: Item) {
     assertNotNil(item);
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         id: item['_id'],
         itemCategoryId: item['_itemCategory']?.['_id'],
         stackSize: item['_stackSize'],
@@ -53,7 +52,7 @@ export function debugItem(item: Item) {
 }
 
 export function debugItemCategory(itemCategory) {
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         classname: itemCategory.constructor.name,
         _id: itemCategory['_id'],
         _name: itemCategory['_name'],
@@ -66,8 +65,8 @@ export function debugItemCategory(itemCategory) {
 }
 
 export function debugEquipSlot(equipSlot) {
-    debug(DebugNamespaceID.Debug)(_.repeat('-', 64));
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)(_.repeat('-', 64));
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         classname: equipSlot.constructor.name,
         _id: equipSlot['_id'],
         _name: equipSlot['_name'],
@@ -75,7 +74,7 @@ export function debugEquipSlot(equipSlot) {
     });
 
     equipSlot['_rules'].forEach((equipSlotRule) => {
-        debug(DebugNamespaceID.Debug)('%j', {
+        DebugApp.debug(DebugNamespaceID.Debug)('%j', {
             classname: equipSlotRule.constructor.name,
             _heroClass: {
                 id: equipSlotRule['_heroClass']['_id'],
@@ -98,9 +97,9 @@ export function debugRepository(repository) {
 }
 
 export function debugEntityManager(entityManager: EntityManagerInterface) {
-    debug(DebugNamespaceID.Debug)(EntityManager.name);
+    DebugApp.debug(DebugNamespaceID.Debug)(EntityManager.name);
     for (const repositoryKey in entityManager['_repositories']) {
-        debug(DebugNamespaceID.Debug)(sprintf('%sRepository.length: %s',
+        DebugApp.debug(DebugNamespaceID.Debug)(sprintf('%sRepository.length: %s',
             repositoryKey,
             entityManager['_repositories'][repositoryKey]['_items'].length,
         ));
@@ -109,7 +108,7 @@ export function debugEntityManager(entityManager: EntityManagerInterface) {
 }
 
 export function debugGameObject(gameObject: GameObject) {
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         gameObject: GameObject.name,
         _id: gameObject['_id'],
         _tags: _.join(gameObject['_tags'], ', '),
@@ -117,7 +116,7 @@ export function debugGameObject(gameObject: GameObject) {
 }
 
 export function debugLevelComponent(levelComponent: LevelRange) {
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         component: LevelRange.name,
         _id: levelComponent['_id'],
         _level: levelComponent['_level'],
@@ -130,7 +129,7 @@ export function debugHero(hero: GameObject) {
     let heroComponent: HeroComponent = <HeroComponent>hero.getComponentByName(HeroComponent.name);
     debugGameObject(hero);
 
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         component: HeroComponent.name,
         _id: heroComponent['_id'],
         _heroClass: heroComponent['_heroClass']['_name'],
@@ -139,7 +138,7 @@ export function debugHero(hero: GameObject) {
     debugLevelComponent(hero.getComponentByName<LevelRange>(LevelRange.name));
 
     let healthPointsComponent: HealthPoints = <HealthPoints>hero.getComponentByName(ComponentID.HealthPoints);
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         component: ComponentID.HealthPoints,
         _id: healthPointsComponent['_id'],
         _currentHealthPoints: healthPointsComponent['_currentHealthPoints'],
@@ -148,7 +147,7 @@ export function debugHero(hero: GameObject) {
     });
 
     let magicPointsComponent: MagicPointsComponent = <MagicPointsComponent>hero.getComponentByName(MagicPointsComponent.name);
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         component: MagicPointsComponent.name,
         _id: magicPointsComponent['_id'],
         _currentMagicPoints: magicPointsComponent['_currentMagicPoints'],
@@ -156,16 +155,16 @@ export function debugHero(hero: GameObject) {
     });
 
     let attackPowerComponent: AttackController = <AttackController>hero.getComponentByName(AttackController.name);
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         component: AttackController.name,
         _id: attackPowerComponent['_id'],
         _baseMinAttackPower: attackPowerComponent['_baseMinAttackPower'],
         _baseMaxAttackPower: attackPowerComponent['_baseMaxAttackPower'],
     });
 
-    debug(DebugNamespaceID.Debug)('# characterAttribute: finalValue (_baseValue)');
+    DebugApp.debug(DebugNamespaceID.Debug)('# characterAttribute: finalValue (_baseValue)');
     hero.findComponentsByName(CharacterAttribute.name).map((characterAttributeComponent) => {
-        debug(DebugNamespaceID.Debug)('%j', {
+        DebugApp.debug(DebugNamespaceID.Debug)('%j', {
             component: CharacterAttribute.name,
             _id: characterAttributeComponent['_id'],
             _characterAttribute: characterAttributeComponent['_characterAttribute']['_name'],
@@ -174,9 +173,9 @@ export function debugHero(hero: GameObject) {
         });
     });
 
-    debug(DebugNamespaceID.Debug)('# equip');
+    DebugApp.debug(DebugNamespaceID.Debug)('# equip');
     hero.findComponentsByName<EquipSlotComponent>(EquipSlotComponent.name).map((equipSlotComponent) => {
-        debug(DebugNamespaceID.Debug)('%j', {
+        DebugApp.debug(DebugNamespaceID.Debug)('%j', {
             component: EquipSlotComponent.name,
             _id: equipSlotComponent['_id'],
             _equipSlot: equipSlotComponent['_equipSlot']['_name'],
@@ -189,7 +188,7 @@ export function debugHero(hero: GameObject) {
 }
 
 export function debugHeroes(container: ContainerInterface) {
-    debug(DebugNamespaceID.Debug)('# heroes');
+    DebugApp.debug(DebugNamespaceID.Debug)('# heroes');
     container.get<GameObjectStorage>(ServiceID.GameObjectStorage)
         .findByTag('#hero')
         .map((wallet) => {
@@ -199,7 +198,7 @@ export function debugHeroes(container: ContainerInterface) {
 
 export function debugItemStack(itemStack: ItemStack) {
     if (itemStack !== undefined) {
-        debug(DebugNamespaceID.Debug)(sprintf(
+        DebugApp.debug(DebugNamespaceID.Debug)(sprintf(
             '%s(%s): %s',
             itemStack['_item']['_name'],
             itemStack['_item']['_name'],
@@ -207,7 +206,7 @@ export function debugItemStack(itemStack: ItemStack) {
             itemStack['_count'],
         ));
     } else {
-        debug(DebugNamespaceID.Debug)(undefined);
+        DebugApp.debug(DebugNamespaceID.Debug)(undefined);
     }
 }
 
@@ -250,7 +249,7 @@ export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent)
     }
 
     // debugGameObject(itemStorage);
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         component: ItemStorageComponent.name,
         _id: itemStorageComponent['_id'],
         busy: itemStorageComponent['busyItemStorageSlotCount'],
@@ -260,7 +259,7 @@ export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent)
     // let itemStorageSlotComponents = itemStorage.findComponentsByName(ItemStorageSlotComponent.name);
 
     itemStorageSlotComponents.map((itemStorageSlotComponent: ItemStorageSlotComponent) => {
-        debug(DebugNamespaceID.Debug)('%j', {
+        DebugApp.debug(DebugNamespaceID.Debug)('%j', {
             component: ItemStorageSlotComponent.name,
             _id: itemStorageSlotComponent['_id'],
             itemStack: itemStorageSlotComponent.isFree() ? 'free' : {
@@ -275,7 +274,7 @@ export function debugItemStorage(itemStorage: GameObject | ItemStorageComponent)
 }
 
 export function debugItemStorages(itemStorages: GameObject[]) {
-    debug(DebugNamespaceID.Debug)('# item storages');
+    DebugApp.debug(DebugNamespaceID.Debug)('# item storages');
     itemStorages
         .map((itemStorage) => {
             debugItemStorage(itemStorage);
@@ -285,7 +284,7 @@ export function debugItemStorages(itemStorages: GameObject[]) {
 export function debugWallet(wallet: GameObject) {
     debugGameObject(wallet);
     let walletComponent = wallet.getComponentByName(ComponentID.Wallet);
-    debug(DebugNamespaceID.Debug)('%j', {
+    DebugApp.debug(DebugNamespaceID.Debug)('%j', {
         component: Wallet.name,
         _id: walletComponent['_id'],
         name: walletComponent['_currency']['_name'],
@@ -294,7 +293,7 @@ export function debugWallet(wallet: GameObject) {
 }
 
 export function debugWallets(container: ContainerInterface) {
-    debug(DebugNamespaceID.Debug)('# wallets');
+    DebugApp.debug(DebugNamespaceID.Debug)('# wallets');
     container.get<GameObjectStorage>(ServiceID.GameObjectStorage)
         .findByTag('#wallet')
         .map((wallet) => {
@@ -311,33 +310,33 @@ export function debugPlayerEnv(container: ContainerInterface) {
 export function debugContainer(container: ContainerInterface) {
     if (Object.keys(container['_services']).length) {
         for (const serviceKey in container['_services']) {
-            debug(DebugNamespaceID.Debug)(sprintf(
+            DebugApp.debug(DebugNamespaceID.Debug)(sprintf(
                 '%s',
                 serviceKey,
             ));
         }
     } else {
-        debug(DebugNamespaceID.Debug)('Контейнер пустой.');
+        DebugApp.debug(DebugNamespaceID.Debug)('Контейнер пустой.');
     }
 }
 
 export function debugPlayerGameObject(container: ContainerInterface) {
     let playerGameObject = container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByTag('#player');
-    debug(DebugNamespaceID.Debug)('# player');
+    DebugApp.debug(DebugNamespaceID.Debug)('# player');
     debugGameObject(playerGameObject);
     debugLevelComponent(playerGameObject.getComponentByName(LevelRange.name));
 }
 
 export function debugGameObjectStorage(gameObjectStorage: GameObjectStorage) {
-    debug(DebugNamespaceID.Debug)('GameObjectStorage.length: ' + gameObjectStorage['_gameObjects'].length);
+    DebugApp.debug(DebugNamespaceID.Debug)('GameObjectStorage.length: ' + gameObjectStorage['_gameObjects'].length);
     for (let i = 0; i < gameObjectStorage['_gameObjects'].length; i++) {
-        debug(DebugNamespaceID.Debug)(sprintf('_id: %s, _name: %s', gameObjectStorage['_gameObjects'][i]['_id'], gameObjectStorage['_gameObjects'][i]['_name']));
+        DebugApp.debug(DebugNamespaceID.Debug)(sprintf('_id: %s, _name: %s', gameObjectStorage['_gameObjects'][i]['_id'], gameObjectStorage['_gameObjects'][i]['_name']));
     }
 }
 
 export function debugItemList(items: Item[]) {
     for (let i = 0; i < items.length; i++) {
-        debug(DebugNamespaceID.Debug)('%j', {
+        DebugApp.debug(DebugNamespaceID.Debug)('%j', {
             name: items[i]['name'] || items[i]['_name'],
             alias: items[i].id,
         });

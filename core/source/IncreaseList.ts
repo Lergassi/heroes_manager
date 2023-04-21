@@ -37,9 +37,9 @@ export class CharacterAttributeIncrease {
 // }
 
 export default class IncreaseList {
-    _increase: {[alias: string]: CharacterAttributeIncrease};
+    _increase: { [alias: string]: CharacterAttributeIncrease };
 
-    constructor(increase: {[alias: string]: CharacterAttributeIncrease}) {
+    constructor(increase: { [alias: string]: CharacterAttributeIncrease }) {
         this._increase = increase;
         //todo: Нужна проверка, чтобы не было повторяющихся значений. done: За уникальность отвечают ключи объекта.
     }

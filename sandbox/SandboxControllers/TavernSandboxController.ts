@@ -1,15 +1,4 @@
-import _ from 'lodash';
-import debug from 'debug';
-import GameObjectStorage from '../../core/source/GameObjectStorage.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
-import _Tavern from '../../core/app/Components/_Tavern.js';
-import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import {ServiceID} from '../../core/types/enums/ServiceID.js';
-import HeroClass from '../../core/app/Entities/HeroClass.js';
-import {EntityID} from '../../core/types/enums/EntityID.js';
-import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
-import MainHeroList from '../../core/app/Components/MainHeroList.js';
-import HeroFactory from '../../core/app/Factories/HeroFactory.js';
 
 export default class TavernSandboxController extends AbstractSandboxController {
     run(): void {

@@ -4,7 +4,7 @@ export type EnemyDatabaseRow = {
     ID: EnemyTypeID;
 };
 
-let data: {[ID in EnemyTypeID]?: EnemyDatabaseRow} = {};
+let data: { [ID in EnemyTypeID]?: EnemyDatabaseRow } = {};
 
 export let enemy_types = {
     find: (ID: EnemyTypeID): EnemyDatabaseRow => {

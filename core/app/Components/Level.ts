@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
 import {assertIsGreaterThanOrEqual} from '../../source/assert.js';
 import LevelInterface, {LevelRenderInterface} from '../Interfaces/LevelInterface.js';
 

@@ -1,4 +1,3 @@
-import debug from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import {
@@ -9,10 +8,10 @@ import {
 import {database} from '../../data/ts/database';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID';
 import {ItemID} from '../../types/enums/ItemID';
-import EntityManagerInterface from '../Interfaces/EntityManagerInterface';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface';
 import WalletInterface from '../Interfaces/WalletInterface';
 import ItemStorage from './ItemStorages/ItemStorage';
+import DebugApp from '../Services/DebugApp.js';
 
 /**
  * Мгновенный крафт.
@@ -21,9 +20,11 @@ import ItemStorage from './ItemStorages/ItemStorage';
 export default class Production implements ProductionRenderInterface {
     private readonly _resourcesItemStorage: ItemStorageInterface;
     private readonly _resultItemStorage: ItemStorageInterface;
-    private readonly _items: {[ID in ItemID]?: {
-        // available: boolean,
-    }};
+    private readonly _items: {
+        [ID in ItemID]?: {
+            // available: boolean,
+        }
+    };
 
     //todo: Далее тут будет бд вместо сущностей.
     constructor() {
@@ -36,7 +37,7 @@ export default class Production implements ProductionRenderInterface {
         if (this.available(itemID)) return false;
 
         if (!database.recipes.data.hasRecipe(itemID)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Рецепт для предмета "%s" не найден.', itemID));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Рецепт для предмета "%s" не найден.', itemID));
             return false;
         }
 
@@ -52,22 +53,22 @@ export default class Production implements ProductionRenderInterface {
 
     createItem(itemID: ItemID, itemStorage: ItemStorageInterface, wallet: WalletInterface): boolean {
         if (!this.available(itemID)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Предмет "%s" не доступен для производства.', itemID));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Предмет "%s" не доступен для производства.', itemID));
             return false;
         }
 
         if (!this._hasRequireItems(itemID, itemStorage)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Не достаточно ресурсов для производства "%s".', itemID));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Не достаточно ресурсов для производства "%s".', itemID));
             return false;
         }
 
         if (wallet.value < database.recipes.data.cost(itemID)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Не достаточно денег.'));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Не достаточно денег.'));
             return false;
         }
 
         if (!this._resultItemStorage.isEmpty()) {
-            debug(DebugNamespaceID.Throw)(sprintf('Нужно забрать результат предыдущего производства.', itemID));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Нужно забрать результат предыдущего производства.', itemID));
             return false;
         }
 
@@ -98,7 +99,7 @@ export default class Production implements ProductionRenderInterface {
         // this._resourcesItemStorage.clearAllItems();
         if (flow !== 0) {
             this._resultItemStorage.addItem(itemID, flow);
-            debug(DebugNamespaceID.Throw)('Не достаточно места для результата производства. Предмет помещены во временное хранилище.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Не достаточно места для результата производства. Предмет помещены во временное хранилище.');
         }
 
         return true;    //todo: Тут явно не правильная логика. Метод не гарантирует правильность выполнения. Например если не хватит места под результат, то предметы добавятся в временное хранилище/на землю/на почту.

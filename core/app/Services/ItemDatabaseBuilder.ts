@@ -1,17 +1,7 @@
-import EntityManager from '../../source/EntityManager.js';
-import Item, {ItemGetType} from '../Entities/Item.js';
-import ItemBuilder from '../Builders/ItemBuilder.js';
 import ItemFactory from '../Factories/ItemFactory.js';
-import {DEFAULT_STACK_SIZE} from '../consts.js';
-import {ItemCategoryID} from '../../types/enums/ItemCategoryID.js';
-import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
-import {ArmorMaterialID} from '../../types/enums/ArmorMaterialID.js';
-import {ItemID} from '../../types/enums/ItemID.js';
 import EntityManagerInterface from '../Interfaces/EntityManagerInterface.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {IconID} from '../../types/enums/IconID.js';
-import itemsData from '../../data/items.json';
+import DebugApp from './DebugApp.js';
 
 interface ItemData {
 
@@ -29,14 +19,14 @@ export default class ItemDatabaseBuilder {
     }
 
     build(): EntityManagerInterface {
-        debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.Start');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.Start');
 
         // this._createStubItems();
         // this._createResources();
         // this._createArmor();
         // this._createWeapons();
 
-        debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.End');
+        DebugApp.debug(DebugNamespaceID.Load)('[OK]: ItemDatabaseBuilder.End');
 
         return this._entityManager;
     }

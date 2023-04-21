@@ -1,6 +1,3 @@
-import GameObject from './GameObject.js';
-import {AssignRComponentInterface, RComponentUpdateInterface} from '../../client/source/RComponentBridge.js';
-
 /**
  * @deprecated В текущем виде класс бесполезен: gameObject и id больше нету, рендер через события.
  */

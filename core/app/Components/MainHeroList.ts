@@ -1,4 +1,3 @@
-import debug from 'debug';
 import _ from 'lodash';
 import {MainHeroListRCElement} from '../../../client/public/RC/MainHeroListRC.js';
 import {assertIsInstanceOf, assertIsPositive, assertNotNil} from '../../source/assert.js';
@@ -19,6 +18,7 @@ import Experience from './Experience.js';
 import HealthPoints from './HealthPoints.js';
 import HeroActivityStateController from './HeroActivityStateController.js';
 import HeroComponent from './HeroComponent.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export enum MainHeroListComponentEventCode {
     CreateHero = 'MainHeroListComponent.CreateHero',
@@ -30,6 +30,7 @@ export enum MainHeroListComponentEventCode {
  */
 export interface MainHeroListRenderInterface {
     updateHeroes?(heroes: MainHeroListRCElement[]): void;
+
     updatePagination?(totalPages: number, totalHeroes: number): void;
 }
 
@@ -106,7 +107,7 @@ export default class MainHeroList {
 
     canCreateHero(): boolean {
         if (this._heroes.length + 1 > this._max) {
-            debug(DebugNamespaceID.Throw)('У игрока максимальное кол-во героев.');
+            DebugApp.debug(DebugNamespaceID.Throw)('У игрока максимальное кол-во героев.');
             return false;
         }
 
@@ -131,7 +132,7 @@ export default class MainHeroList {
 
     //todo: Убрать страницы - мешают. Нужно чтобы
     // renderByRequest(ui: MainHeroListRender, options?: {page: number, elementForPage: number}): void {
-    renderByRequest(ui: MainHeroListRenderInterface, options?: {offset: number, count: number}): void {
+    renderByRequest(ui: MainHeroListRenderInterface, options?: { offset: number, count: number }): void {
         let offset = options?.offset ?? 0;
         let count = options?.count ?? this._heroes.length;
         let heroesForPage = offset + count;
@@ -143,25 +144,25 @@ export default class MainHeroList {
         let heroes: MainHeroListRCElement[] = [];
         for (let i = offset; i < heroesForPage && i < this._heroes.length; i++) {
             let hero: MainHeroListRCElement = {
-                endurance          : 0,
+                endurance: 0,
                 maxEndurance: 0,
-                hero               : this._heroes[i],
-                ID                 : '',
-                agility            : 0,
-                attackPower        : 0,
+                hero: this._heroes[i],
+                ID: '',
+                agility: 0,
+                attackPower: 0,
                 currentHealthPoints: 0, activityState: '',
-                exp                : 0,
-                heroClassName      : '',
-                heroRoleName       : '',
-                intelligence       : 0,
-                averageItemLevel   : 0,
+                exp: 0,
+                heroClassName: '',
+                heroRoleName: '',
+                intelligence: 0,
+                averageItemLevel: 0,
                 level: 0,
                 maxHealthPoints: 0,
                 strength: 0,
                 totalExpToLevelUp: 0,
                 isDead: false,
                 heroClassId: '',
-                deleteHandler      : (): void => {
+                deleteHandler: (): void => {
                     this.deleteHero(this._heroes[i]);
                 }
             };

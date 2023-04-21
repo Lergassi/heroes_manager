@@ -1,20 +1,15 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import Endurance from '../../../core/app/Components/Endurance.js';
 import HealthPoints from '../../../core/app/Components/HealthPoints.js';
 import MainHeroList, {MainHeroListRenderInterface} from '../../../core/app/Components/MainHeroList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
 import GameObject from '../../../core/source/GameObject.js';
-import {CommandID} from '../../../core/types/enums/CommandID.js';
 import {ComponentID} from '../../../core/types/enums/ComponentID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import UIUpdater from '../../app/UIUpdater.js';
 import {UI_WindowOptions} from '../../types/main.js';
 import DetailHeroRC from './DetailHeroRC.js';
-import {MainLocationListRCState} from './MainLocationListRC.js';
 import {sprintf} from 'sprintf-js';
 import {database} from '../../../core/data/ts/database.js';
 
@@ -64,7 +59,7 @@ export class MainHeroListRCElement {
 export default class MainHeroListRC extends React.Component<MainHeroListRCProps, MainHeroListRCState> implements MainHeroListRenderInterface {
     private _options = {
         // rows: 10,
-        rows: 18,
+        rows: 17,
     };
 
     constructor(props: MainHeroListRCProps) {
@@ -103,7 +98,10 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
         if (!(this.props.window.show && this.state.window.show)) return;
 
         // this.state.mainHeroList.renderByRequest(this, {page: this.state.activePage, elementForPage: this._options.rows});
-        this.state.mainHeroList.renderByRequest(this, {offset: ((this.state.activePage > 0 ? this.state.activePage - 1 : 0)) * this._options.rows, count: this._options.rows});
+        this.state.mainHeroList.renderByRequest(this, {
+            offset: ((this.state.activePage > 0 ? this.state.activePage - 1 : 0)) * this._options.rows,
+            count: this._options.rows
+        });
     }
 
     showPage(page: number): void {
@@ -122,7 +120,7 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
         });
     }
 
-    updatePagination(totalPages:number, totalHeroes:number): void {
+    updatePagination(totalPages: number, totalHeroes: number): void {
         this.setState((state) => {
             return {
                 totalPages: totalPages,
@@ -176,41 +174,45 @@ export default class MainHeroListRC extends React.Component<MainHeroListRCProps,
                                     <th>Ctrl</th>
                                     {/*<th>to location</th>*/}
                                 </tr>
-                                    {_.map(this.state.heroes, (hero, index) => {
-                                        return <tr key={index}>
-                                            <td>
-                                                <span className={sprintf("icon icon_%s icon_32 icon_first-column-column-padding", database.hero_classes.data.find(hero.heroClassId).iconId)}></span>
-                                                <span className={'first-table-column-padding-for-icon'}>
+                                {_.map(this.state.heroes, (hero, index) => {
+                                    return <tr key={index}>
+                                        <td>
+                                            <span
+                                                className={sprintf('icon icon_%s icon_32 icon_first-column-column-padding', database.hero_classes.data.find(hero.heroClassId).iconId)}></span>
+                                            <span className={'first-table-column-padding-for-icon'}>
                                                     <a href="" onClick={(event) => {
                                                         event.preventDefault();
                                                         this.props.container.get<DetailHeroRC>(ServiceID.UI_DetailHero).updateHero(hero.hero, {show: true});
                                                     }}>{hero.heroClassName} ({hero.ID}) {hero.isDead ? '(DEAD)' : ''}</a>
                                                 </span>
-                                            </td>
-                                            <td>{hero.level} ({hero.exp}/{hero.totalExpToLevelUp})</td>
-                                            <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
-                                            <td>{hero.endurance}/{hero.maxEndurance}</td>
-                                            <td>{hero.heroRoleName}</td>
-                                            <td>{hero.activityState}</td>
-                                            <td>{hero.averageItemLevel}</td>
-                                            <td>{hero.attackPower}</td>
-                                            <td>{hero.strength}/{hero.agility}/{hero.intelligence}</td>
-                                            <td>
-                                                <button className={'btn btn_default'} onClick={() => {
-                                                    this.props.container.get<DetailHeroRC>(ServiceID.UI_DetailHero).updateHero(hero.hero, {show: true});
-                                                }}>DETAIL</button>
-                                                <button className={'btn btn_default'} onClick={() => {
-                                                    hero.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
-                                                }}>RESURRECT</button>
-                                                <button className={'btn btn_default only-dev'} onClick={() => {
-                                                    hero.hero.get<Endurance>(ComponentID.Endurance).reset();
-                                                }}>RESET_ENDURANCE</button>
-                                                {/*<button className={'btn btn_danger'} onClick={() => {*/}
-                                                {/*    hero.deleteHandler();*/}
-                                                {/*}}>DELETE</button>*/}
-                                            </td>
-                                        </tr>
-                                    })}
+                                        </td>
+                                        <td>{hero.level} ({hero.exp}/{hero.totalExpToLevelUp})</td>
+                                        <td>{hero.currentHealthPoints}/{hero.maxHealthPoints}</td>
+                                        <td>{hero.endurance}/{hero.maxEndurance}</td>
+                                        <td>{hero.heroRoleName}</td>
+                                        <td>{hero.activityState}</td>
+                                        <td>{hero.averageItemLevel}</td>
+                                        <td>{hero.attackPower}</td>
+                                        <td>{hero.strength}/{hero.agility}/{hero.intelligence}</td>
+                                        <td>
+                                            <button className={'btn btn_default'} onClick={() => {
+                                                this.props.container.get<DetailHeroRC>(ServiceID.UI_DetailHero).updateHero(hero.hero, {show: true});
+                                            }}>DETAIL
+                                            </button>
+                                            <button className={'btn btn_default'} onClick={() => {
+                                                hero.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
+                                            }}>RESURRECT
+                                            </button>
+                                            <button className={'btn btn_default only-dev'} onClick={() => {
+                                                hero.hero.get<Endurance>(ComponentID.Endurance).reset();
+                                            }}>RESET_ENDURANCE
+                                            </button>
+                                            {/*<button className={'btn btn_danger'} onClick={() => {*/}
+                                            {/*    hero.deleteHandler();*/}
+                                            {/*}}>DELETE</button>*/}
+                                        </td>
+                                    </tr>
+                                })}
                                 </tbody>
                             </table>
                             <div className={'pagination'}>

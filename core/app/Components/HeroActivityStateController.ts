@@ -1,11 +1,4 @@
-import {assertNotEmpty, assertNotNil} from '../../source/assert.js';
-import AppError from '../../source/Errors/AppError.js';
-import StateError from '../../source/Errors/StateError.js';
-import _ from 'lodash';
-import debug from 'debug';
-import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
-import CharacterStateInterface from '../Interfaces/CharacterStateInterface.js';
+import {assertNotNil} from '../../source/assert.js';
 
 export enum HeroActivityStateCode {
     Free = 'Free',

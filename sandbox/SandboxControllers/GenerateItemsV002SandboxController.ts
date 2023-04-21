@@ -3,8 +3,8 @@ import CharacterAttributeTransfer
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/CharacterAttributeTransfer.js';
 import GenerateItemsByPattern
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItemsByPattern.js';
-import {item_attributes_formulas} from '../../core/app/Services/BalanceTools/formulas/item_attributes_formulas.js';
-import GenerateItems from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
+import GenerateItems
+    from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/GenerateItems.js';
 import ItemAttributeGenerator
     from '../../core/app/Services/BalanceTools/CharacterAttributeDataGeneration/v0_0_2/ItemAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator.js';

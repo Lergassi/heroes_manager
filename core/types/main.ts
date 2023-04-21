@@ -1,11 +1,5 @@
-import Item from '../app/Entities/Item.js';
-import EnemyEntity from '../app/Entities/EnemyEntity.js';
-import {EquipSlotID} from './enums/EquipSlotID.js';
 import {CharacterAttributeID} from './enums/CharacterAttributeID.js';
-import CharacterAttribute from '../app/Components/CharacterAttribute.js';
 import CharacterAttributeInterface from '../app/Decorators/CharacterAttributeInterface.js';
-import {EnemyTypeID} from './enums/EnemyTypeID.js';
-import {HeroClassID} from './enums/HeroClassID.js';
 import {ItemCategoryID} from './enums/ItemCategoryID.js';
 import {ItemID} from './enums/ItemID.js';
 
@@ -22,7 +16,7 @@ export type Seconds = number;
 export type Hours = number;
 export type Days = number;
 
-export type CharacterAttributes = Partial<{[ID in CharacterAttributeID]: CharacterAttributeInterface}>;
+export type CharacterAttributes = Partial<{ [ID in CharacterAttributeID]: CharacterAttributeInterface }>;
 
 export type RangeType = {
     min: number,
@@ -85,7 +79,7 @@ export type UI_ShortHero = {
 //     ResearchPoints = 'Wallet.ResearchPoints',
 // }
 
-export type ItemCategoryPowerRatio = {[ID in ItemCategoryID]?: {ratio: number}};
+export type ItemCategoryPowerRatio = { [ID in ItemCategoryID]?: { ratio: number } };
 // export type EquipSet = {[ID in HeroClassID]?: {[ID in ItemCategoryID]?: {count: number}}}[];
 
-export type LevelRange = {min: number, max: number};
+export type LevelRange = { min: number, max: number };

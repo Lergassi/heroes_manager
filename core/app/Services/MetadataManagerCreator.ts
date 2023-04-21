@@ -1,29 +1,5 @@
-import MetadataManager, {repositoryManagerFinderCallback} from '../../source/MetadataManager.js';
-import ArmorMaterial from '../Entities/ArmorMaterial.js';
-import {SerializeType} from '../../source/Serializer.js';
-import CharacterAttributeEntity from '../Entities/CharacterAttributeEntity.js';
-import Currency from '../Entities/Currency.js';
-import Quality from '../Entities/Quality.js';
-import HeroRole from '../Entities/HeroRole.js';
-import ItemCategory from '../Entities/ItemCategory.js';
-import Item from '../Entities/Item.js';
-import HeroClass from '../Entities/HeroClass.js';
-import EquipSlot from '../Entities/EquipSlot.js';
+import MetadataManager from '../../source/MetadataManager.js';
 // import EquipSlotRule from '../Entities/EquipSlotRule.js';
-import GameObject from '../../source/GameObject.js';
-import ItemStorageComponent from '../Components/ItemStorages/ItemStorageComponent.js';
-import ItemStorageSlotComponent from '../Components/ItemStorages/ItemStorageSlotComponent.js';
-import ItemStack from '../RuntimeObjects/ItemStack.js';
-import HeroComponent from '../Components/HeroComponent.js';
-import LevelRange from '../Components/Experience.js';
-import EquipSlotComponent from '../Components/EquipSlotComponent.js';
-import CharacterAttribute from '../Components/CharacterAttribute.js';
-import HealthPoints from '../Components/HealthPoints.js';
-import MagicPointsComponent from '../Components/MagicPointsComponent.js';
-import AttackController from '../Components/AttackController.js';
-import PlayerComponent from '../Components/PlayerComponent.js';
-import Wallet from '../Components/Wallet.js';
-import AutoIncrementIDGenerator from '../../source/AutoIncrementIDGenerator.js';
 
 export default class MetadataManagerCreator {
     create(): MetadataManager {

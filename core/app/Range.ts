@@ -12,6 +12,7 @@ export default class Range {
             throw new AppError('Значение left не может быть больше значения right.');
         }
     }
+
     //
     // inRange(n: number): boolean {
     //     return _.inRange(n, this._left, this._right + 1);

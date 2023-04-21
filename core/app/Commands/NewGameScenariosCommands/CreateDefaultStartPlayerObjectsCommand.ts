@@ -1,4 +1,3 @@
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import Command from '../../../source/GameConsole/Command.js';
 import GameConsole from '../../../source/GameConsole/GameConsole.js';
@@ -19,12 +18,11 @@ import Tavern_v2 from '../../Components/Tavern_v2.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
 import LocationFactory from '../../Factories/LocationFactory.js';
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
-import _ from "lodash";
-import {EnemyTypeID} from "../../../types/enums/EnemyTypeID";
-import GameObject from "../../../source/GameObject";
+import {EnemyTypeID} from '../../../types/enums/EnemyTypeID';
+import GameObject from '../../../source/GameObject';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface';
-import {Farming} from '../../Components/Farming';
 import {database} from '../../../data/ts/database.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 //todo: Сделать класс для настройки игры.
 export default class CreateDefaultStartPlayerObjectsCommand extends Command {
@@ -81,7 +79,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
         let heroPatterns: {
             heroClassID: HeroClassID,
             level: number,
-            equip: Partial<{[ID in EquipSlotID]: ItemID}>,
+            equip: Partial<{ [ID in EquipSlotID]: ItemID }>,
         }[] = [
             // {
             //     heroClassID: HeroClassID.Warrior,
@@ -149,7 +147,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
             for (const equipSlotID in heroPatterns[i].equip) {
                 let itemID = heroPatterns[i].equip[equipSlotID] as ItemID;
                 if (!itemID) {
-                    debug(DebugNamespaceID.Replace)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
+                    DebugApp.debug(DebugNamespaceID.Replace)(sprintf('Предмет ID(%s) начальной экипировки не найден. Слот останется пустым.', heroPatterns[i].equip[equipSlotID]));
                     continue;
                 }
 

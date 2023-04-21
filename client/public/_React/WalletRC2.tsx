@@ -1,9 +1,5 @@
-import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
 import Wallet from '../../../core/app/Components/Wallet.js';
-import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
-import {assert, assertNotNil} from '../../../core/source/assert.js';
 
 export interface WalletRC2Props {
     // currency: number;
@@ -52,7 +48,7 @@ export default class WalletRC2 extends React.Component<WalletRC2Props, WalletRC2
 
 
     attach(target: Wallet) {
-    // attach(target: AttachInterface) {
+        // attach(target: AttachInterface) {
         if (this._target && this._target !== target) {
             // this._target.detach();
             // this.detach();

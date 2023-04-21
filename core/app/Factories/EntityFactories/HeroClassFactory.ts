@@ -1,4 +1,3 @@
-import EntityManager from '../../../source/EntityManager.js';
 import {EntityID} from '../../../types/enums/EntityID.js';
 import HeroClass from '../../Entities/HeroClass.js';
 import HeroRole from '../../Entities/HeroRole.js';

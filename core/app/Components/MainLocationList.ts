@@ -1,12 +1,7 @@
-import debug from 'debug';
 import _ from 'lodash';
-import {
-    DetailLocationRCEnemyElement,
-    DetailLocationRCHeroElement, DetailLocationRCVeinElement
-} from '../../../client/public/RC/DetailLocationRC.js';
+import {DetailLocationRCEnemyElement, DetailLocationRCHeroElement} from '../../../client/public/RC/DetailLocationRC.js';
 import {MainLocationListRCElement} from '../../../client/public/RC/MainLocationListRC.js';
 import {assert, assertIsInstanceOf} from '../../source/assert.js';
-import EventSystem from '../../source/EventSystem.js';
 import GameObject from '../../source/GameObject.js';
 import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {ComponentID} from '../../types/enums/ComponentID.js';
@@ -15,6 +10,7 @@ import {LocationTypeID} from '../../types/enums/LocationTypeID.js';
 import {UI_ItemCount, UI_VeinItemCount, unsigned} from '../../types/main.js';
 import LocationFactory from '../Factories/LocationFactory.js';
 import Location from './Location.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export enum MainLocationListComponentEventCode {
     AddLocation = 'MainLocationListComponent.AddLocation',
@@ -23,6 +19,7 @@ export enum MainLocationListComponentEventCode {
 
 export interface MainLocationListRender {
     updateLocations?(locations: MainLocationListRCElement[]): void;
+
     updatePagination?(totalPages: number, totalLocations: number): void;
 }
 
@@ -52,7 +49,7 @@ export default class MainLocationList {
     ): GameObject {
         if (!this.canAddLocation()) return;
 
-        let location = locationFactory.create(LocationTypeID.Forrest, 
+        let location = locationFactory.create(LocationTypeID.Forrest,
             level,
         );
 
@@ -92,7 +89,7 @@ export default class MainLocationList {
                 'Ошибка создании локации. У игрока максимальное кол-во локаций.'
                 'Ошибка/игрока ошибка. У игрока максимальное кол-во локаций.' - без сообщения оо ошибке создания.
              */
-            debug(DebugNamespaceID.Throw)('Нельзя добавить новую локацию. У игрока максимальное кол-во локаций.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Нельзя добавить новую локацию. У игрока максимальное кол-во локаций.');
             return false;
         }
 
@@ -106,7 +103,7 @@ export default class MainLocationList {
     }
 
     //todo: Рендер списков с навигацией в отдельный класс.
-    renderByRequest(ui: MainLocationListRender, options?: {offset: number, count: number}): void {
+    renderByRequest(ui: MainLocationListRender, options?: { offset: number, count: number }): void {
         let offset = options?.offset ?? 0;
         let count = options?.count ?? this._locations.length;
         let locationsForPage = offset + count;

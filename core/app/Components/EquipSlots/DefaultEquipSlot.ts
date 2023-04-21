@@ -2,23 +2,16 @@ import {sprintf} from 'sprintf-js';
 import {database} from '../../../data/ts/database.js';
 import {CharacterAttributeID} from '../../../types/enums/CharacterAttributeID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
-import EquipSlotInterface, {
-    EquipSlotInterfaceRender,
-} from '../../Interfaces/EquipSlotInterface.js';
-import ItemStackFactory from '../../Factories/ItemStackFactory.js';
+import EquipSlotInterface, {EquipSlotInterfaceRender,} from '../../Interfaces/EquipSlotInterface.js';
 import EquipSlotRuleInterface from '../../Interfaces/EquipSlotRuleInterface.js';
-import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import _ from 'lodash';
 import CharacterAttributeManager from '../CharacterAttributeManager.js';
-import {EquipSlotComponentEventCode} from '../EquipSlotComponent.js';
-import AppError from '../../../source/Errors/AppError.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
 import {DebugFormatterID} from '../../../types/enums/DebugFormatterID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import AverageItemLevel from '../AverageItemLevel.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 export default class DefaultEquipSlot implements EquipSlotInterface {
     private readonly _ID: EquipSlotID;
@@ -42,13 +35,13 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
     equip(itemID: ItemID): boolean {
         if (!this.canEquip(itemID)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Ошибка экипировки.'));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Ошибка экипировки.'));
             return false;
         }
 
         this._itemID = itemID;
         this._averageItemLevel.addItem(itemID);
-        debug(DebugNamespaceID.Log)(sprintf('В слот "%s" экипирован предмет "%s".', this._ID, itemID));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('В слот "%s" экипирован предмет "%s".', this._ID, itemID));
 
         /**
          * todo: Варианты оптмизации:
@@ -68,7 +61,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         if (!this.canEquip(itemID)) return false;
 
         if (itemStorage.removeItem(itemID, 1) !== 1) {
-            debug(DebugNamespaceID.Log)(sprintf('Предмет "%s" не найден в ItemStorage.', itemID));
+            DebugApp.debug(DebugNamespaceID.Log)(sprintf('Предмет "%s" не найден в ItemStorage.', itemID));
             return false;
         }
 
@@ -77,7 +70,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
     clear(): boolean {
         if (!this.canRemoveEquip()) {
-            debug(DebugNamespaceID.Throw)(sprintf('Ошибка удаления экипировки из слота.'));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Ошибка удаления экипировки из слота.'));
             return false;
         }
 
@@ -85,7 +78,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
         this._averageItemLevel.removeItem(_itemID);
         this._itemID = null;
-        debug(DebugNamespaceID.Log)(sprintf('Слот экипировки "%s" очищен.', this._ID));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Слот экипировки "%s" очищен.', this._ID));
 
         this._characterAttributeManager.decrease(CharacterAttributeID.Strength, database.items.data.strength(_itemID));
         this._characterAttributeManager.decrease(CharacterAttributeID.Agility, database.items.data.agility(_itemID));
@@ -98,12 +91,12 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
     removeEquipTo(itemStorage: ItemStorageInterface): boolean {
         if (!this.canRemoveEquip()) {
-            debug(DebugNamespaceID.Throw)(sprintf('Ошибка удаления экипировки из слота.'));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Ошибка удаления экипировки из слота.'));
             return false;
         }
 
         if (itemStorage.addItem(this._itemID, 1) === 0) {
-            debug(DebugNamespaceID.Throw)(sprintf('Нет места в ItemStorage.'));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Нет места в ItemStorage.'));
             return false;
         }
 
@@ -118,7 +111,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
     canEquip(itemID: ItemID): boolean {
         if (!database.items.data.equipable(itemID)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Предмет "%s" нельзя экипировать в слот "%s".', itemID, this._ID));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Предмет "%s" нельзя экипировать в слот "%s".', itemID, this._ID));
             return false;
         }
 
@@ -131,7 +124,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
 
     canRemoveEquip(): boolean {
         if (this.isFree()) {
-            debug(DebugNamespaceID.Throw)(sprintf('Слот экипировки пустой.'));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Слот экипировки пустой.'));
             return false;
         }
 
@@ -143,7 +136,7 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
     }
 
     debug(): void {
-        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+        DebugApp.debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             ID: this._ID,
             itemID: this.isFree() ? null : this._itemID,
         });

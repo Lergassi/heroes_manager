@@ -7,9 +7,7 @@ import ItemAttributeGenerator
 import {item_attributes_formulas} from '../../core/app/Services/BalanceTools/formulas/item_attributes_formulas.js';
 import config from '../../core/config/config.js';
 import {database} from '../../core/data/ts/database.js';
-import {EnemyTypeID} from '../../core/types/enums/EnemyTypeID.js';
 import {HeroClassID} from '../../core/types/enums/HeroClassID.js';
-import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
 

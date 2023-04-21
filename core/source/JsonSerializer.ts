@@ -7,7 +7,9 @@ export const replacer = (key, value) => {
 export const reviver = (key, value) => {
     // console.log('value', key, value);
     // console.log('value', value === 'undefined');
-    if (key === '') { return value; }
+    if (key === '') {
+        return value;
+    }
 
     // return value === 'undefined' ? undefined : value;
     // return value === 'undefined' ? undefined : value;

@@ -27,7 +27,7 @@ function itemHealthPointsByBreastplate(breastplateHealthPoints: number, ratio: n
 }
 
 function breastplateAttackPower(heroAttackPower: number, equipSlotsRatioSum: number): number {
-    return _.round(heroAttackPower / equipSlotsRatioSum,2);
+    return _.round(heroAttackPower / equipSlotsRatioSum, 2);
 }
 
 function itemAttackPowerByBreastplate(breastplateAttackPower: number, ratio: number): number {
@@ -55,7 +55,6 @@ function attackPowerByCharacterAttribute(characterAttribute: number, ratio: numb
 function heroHealthPointsByLevel(level: number, healthPointsStep: number): number {
     return _.round(level * healthPointsStep, 2);
 }
-
 
 
 function heroHealthPoints(heroLevel: number, healthPointsStep: number): number {

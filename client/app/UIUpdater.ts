@@ -1,17 +1,10 @@
 import _ from 'lodash';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import ContainerInterface from '../../core/source/ContainerInterface.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import RCUpdateInterface from '../public/Interfaces/RCUpdateInterface.js';
-import DetailHeroRC from '../public/RC/DetailHeroRC.js';
-import DetailLocationRC from '../public/RC/DetailLocationRC.js';
-import ItemStorageControllerRC from '../public/RC/ItemStorageControllerRC.js';
-import ItemStorageRC from '../public/RC/ItemStorageRC.js';
-import MainHeroListRC from '../public/RC/MainHeroListRC.js';
-import MainLocationListRC from '../public/RC/MainLocationListRC.js';
-import WalletRC from '../public/RC/WalletRC.js';
+import DebugApp from '../../core/app/Services/DebugApp.js';
 
 enum UIState {
     Stop = 'Stop',
@@ -54,14 +47,14 @@ export default class UIUpdater {
         }, this._updateIntervalDelay);
 
         this._state = UIState.Run;
-        debug(DebugNamespaceID.Log)(sprintf('%s started.', ServiceID.UI_Updater));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('%s started.', ServiceID.UI_Updater));
     }
 
     stop(): void {
         if (this._state !== UIState.Run) return;
 
         clearInterval(this._updateUIIntervalID);
-        debug(DebugNamespaceID.Log)(sprintf('%s stopped.', ServiceID.UI_Updater));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('%s stopped.', ServiceID.UI_Updater));
 
         this._state = UIState.Run;
     }

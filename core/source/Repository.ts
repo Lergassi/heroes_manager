@@ -1,6 +1,3 @@
-import AppError from './Errors/AppError.js';
-import {sprintf} from 'sprintf-js';
-
 export default class Repository<Entity> {
     private readonly _entityClassname: string;
     private readonly _items;

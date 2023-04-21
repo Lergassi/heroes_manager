@@ -1,6 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
-import GameObject from '../../source/GameObject.js';
 import {RewardOptions} from '../Interfaces/FightControllerInterface.js';
 import FightGroupController from './FightGroupController.js';
 

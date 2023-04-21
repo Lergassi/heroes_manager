@@ -1,17 +1,9 @@
 import React from 'react';
-import MainHeroList, {
-    MainHeroListComponentEventCode
-} from '../../../core/app/Components/MainHeroList.js';
-import EquipSlotComponent from '../../../core/app/Components/EquipSlotComponent.js';
-import HeroComponent from '../../../core/app/Components/HeroComponent.js';
-import Experience from '../../../core/app/Components/Experience.js';
+import MainHeroList, {MainHeroListComponentEventCode} from '../../../core/app/Components/MainHeroList.js';
 import {RComponentUpdateInterface} from '../../source/RComponentBridge.js';
-import CharacterAttribute from '../../../core/app/Components/CharacterAttribute.js';
 import GameObject from '../../../core/source/GameObject.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import GameConsole from '../../../core/source/GameConsole/GameConsole.js';
-import ItemStackTextRComponent from './ItemStackTextRComponent.js';
-import MainHeroTableRowRComponent from './MainHeroTableRowRComponent.js';
 import EventSystem from '../../../core/source/EventSystem.js';
 import HeroDetailRComponent from './HeroDetailRComponent.js';
 import {CommandID} from '../../../core/types/enums/CommandID.js';
@@ -53,7 +45,7 @@ export default class MainHeroListRComponent extends React.Component<HeroListRCom
                         };
                     });
                 },
-            // target:
+                // target:
             },
         });
 

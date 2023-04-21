@@ -1,17 +1,15 @@
-import Item, {ItemFilterCondition} from '../app/Entities/Item.js';
+import Item from '../app/Entities/Item.js';
 import _ from 'lodash';
 import ItemCategory from '../app/Entities/ItemCategory.js';
 import {assertIsString, assertNotEmpty} from './assert.js';
-import Random from '../app/Services/Random.js';
-import {number} from 'yargs';
 
 /**
  * todo: В будущем это будет полноценная бд.
  */
 export default class ItemDatabase {
-    private readonly _items: {[ID: string]: Item};
+    private readonly _items: { [ID: string]: Item };
 
-    constructor(items: {[ID: string]: Item} = {}) {
+    constructor(items: { [ID: string]: Item } = {}) {
         this._items = items;
     }
 
@@ -32,7 +30,7 @@ export default class ItemDatabase {
 
     //todo: А зачем такой метод?
     // all(): Item[] {
-    all(): {[ID: string]: Item} {
+    all(): { [ID: string]: Item } {
         return this._items;
     }
 

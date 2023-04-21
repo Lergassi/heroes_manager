@@ -1,4 +1,3 @@
-import debug from 'debug';
 import ItemStorage from '../../core/app/Components/ItemStorages/ItemStorage.js';
 import Location from '../../core/app/Components/Location.js';
 import Wallet from '../../core/app/Components/Wallet.js';
@@ -9,7 +8,6 @@ import WalletFactory from '../../core/app/Factories/WalletFactory.js';
 import DetailHeroViewer from '../../core/app/Viwers/DetailHeroViewer.js';
 import DetailLocationViewer from '../../core/app/Viwers/DetailLocationViewer.js';
 import ShortHeroViewer from '../../core/app/Viwers/ShortHeroViewer.js';
-import ItemDatabase from '../../core/source/ItemDatabase.js';
 import Viewer from '../../core/source/Viewer.js';
 import {ComponentID} from '../../core/types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID.js';
@@ -18,6 +16,7 @@ import {ItemID} from '../../core/types/enums/ItemID.js';
 import {LocationTypeID} from '../../core/types/enums/LocationTypeID.js';
 import {ServiceID} from '../../core/types/enums/ServiceID.js';
 import AbstractSandboxController from './AbstractSandboxController.js';
+import DebugApp from '../../core/app/Services/DebugApp.js';
 
 export default class DevUISystemController extends AbstractSandboxController {
     run() {
@@ -68,7 +67,7 @@ export default class DevUISystemController extends AbstractSandboxController {
 
         let heroViewer = new DetailHeroViewer();
         heroViewer.view(hero);
-        debug(DebugNamespaceID.Info)('-'.repeat(64));
+        DebugApp.debug(DebugNamespaceID.Info)('-'.repeat(64));
     }
 
     private _heroes() {

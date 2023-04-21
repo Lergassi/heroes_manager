@@ -1,12 +1,9 @@
 import {assertNotNil} from '../../source/assert.js';
 import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
 import _ from 'lodash';
-import StateError from '../../source/Errors/StateError.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import {sprintf} from 'sprintf-js';
 import DamageControllerInterface from '../Interfaces/DamageControllerInterface.js';
-import AppError from '../../source/Errors/AppError.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class AttackGroupController implements AttackControllerInterface {
     private readonly _attackControllers: AttackControllerInterface[];
@@ -45,7 +42,7 @@ export default class AttackGroupController implements AttackControllerInterface 
 
     attackTo(target: DamageControllerInterface, afterDiedTargetCallback?): number {
         if (!this.canAttack()) {
-            debug(DebugNamespaceID.Throw)('Группа не может атаковать.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Группа не может атаковать.');
             return 0;
         }
 
@@ -63,7 +60,7 @@ export default class AttackGroupController implements AttackControllerInterface 
         if (!_.every(_.map(this._attackControllers, (attackController) => {
             return !attackController.canAttack();
         }))) {
-            debug(DebugNamespaceID.Throw)('Все участники группы мертвы.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Все участники группы мертвы.');
             return false;
         }
 

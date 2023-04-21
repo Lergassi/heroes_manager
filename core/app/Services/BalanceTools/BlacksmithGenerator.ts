@@ -1,5 +1,4 @@
 import {ItemID} from '../../../types/enums/ItemID';
-import {ItemCategoryID} from '../../../types/enums/ItemCategoryID';
 
 export class BlacksmithGenerator {
     constructor() {

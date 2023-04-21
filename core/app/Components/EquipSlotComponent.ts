@@ -1,4 +1,3 @@
-import Component from '../../source/Component.js';
 import EquipSlot from '../Entities/EquipSlot.js';
 import ItemStack, {ItemStackPlaceInterface} from '../RuntimeObjects/ItemStack.js';
 import Item from '../Entities/Item.js';

@@ -1,6 +1,5 @@
 import config from '../../config/config.js';
 import {startCharacterAttributeConfig} from '../../config/start_character_values.js';
-import {database} from '../../data/ts/database.js';
 import {hero_classes} from '../../data/ts/hero_classes.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';

@@ -1,14 +1,3 @@
-import CharacterAttribute from '../CharacterAttribute.js';
-import {float, integer, unsigned} from '../../../types/main.js';
-import _ from 'lodash';
-import {assert, assertNotNil, assertIsPositive} from '../../../source/assert.js';
-import HealthPoints from '../HealthPoints.js';
-import DamageControllerInterface from '../../Interfaces/DamageControllerInterface.js';
-import debug from 'debug';
-import {sprintf} from 'sprintf-js';
-import CharacterAttributeInterface from '../../Decorators/CharacterAttributeInterface.js';
-import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-
 // export default class ArmorDecorator implements DamageControllerInterface {
 /**
  * @deprecated

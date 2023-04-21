@@ -1,5 +1,3 @@
-import {unsigned} from '../../types/main.js';
-
 export interface WalletInterfaceRender {
     updateValue(value: number): void;
 }
@@ -19,13 +17,16 @@ export default interface WalletInterface {
      * @return Кол-во удаленных денег.
      */
     remove(value: number): number;
+
     /**
      *
      * @param target
      * @return Остаток в кошельке.
      */
     moveAllTo(target: WalletInterface): number;
+
     has(value: number): boolean;
+
     // render(callb);
     // addListener();
     renderByRequest(ui: WalletInterfaceRender): void;

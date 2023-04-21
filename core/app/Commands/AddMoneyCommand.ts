@@ -1,11 +1,8 @@
 import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {CommandID} from '../../types/enums/CommandID.js';
-import GameObjectStorage from '../../source/GameObjectStorage.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
-import {CurrencyID} from '../../types/enums/CurrencyID.js';
 import WalletInterface from '../Interfaces/WalletInterface.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
 
 export default class AddMoneyCommand extends Command {
     get name(): string {

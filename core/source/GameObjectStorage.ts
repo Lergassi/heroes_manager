@@ -1,7 +1,7 @@
 import GameObject from './GameObject.js';
 import _ from 'lodash';
 import AppError from './Errors/AppError.js';
-import {assertIsArray, assertIsInstanceOf, assertIsNumber, assertNotNil} from './assert.js';
+import {assertIsInstanceOf, assertIsNumber, assertNotNil} from './assert.js';
 
 export default class GameObjectStorage {
     private readonly _gameObjects: GameObject[];

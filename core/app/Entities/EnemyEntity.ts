@@ -1,7 +1,4 @@
 import {ItemLoot, unsigned} from '../../types/main.js';
-import ItemLootGenerator from '../Components/ItemLootGenerator.js';
-import GoldLootGenerator from '../Components/GoldLootGenerator.js';
-import ExperienceLootGenerator from '../Components/ExperienceLootGenerator.js';
 
 /**
  * @deprecated Данные лута, силы и тд теперь храняться в бд в виде простых значений и передаются сразу в нужные компоненты. Отображение для игрока делается через отдельный компонент.

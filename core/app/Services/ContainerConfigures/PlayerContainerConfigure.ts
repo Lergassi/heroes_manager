@@ -1,5 +1,4 @@
 // import config from '../config/main.js';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import config from '../../../config/config.js';
 import AutoIncrementIDGenerator from '../../../source/AutoIncrementIDGenerator.js';
@@ -8,21 +7,15 @@ import ContainerInterface from '../../../source/ContainerInterface.js';
 import GameObjectStorage from '../../../source/GameObjectStorage.js';
 import IDGeneratorInterface from '../../../source/IDGeneratorInterface.js';
 import ItemDatabase from '../../../source/ItemDatabase.js';
-import {ComponentID} from '../../../types/enums/ComponentID.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {EntityID} from '../../../types/enums/EntityID.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
 import Production from '../../Components/Production';
-import Fence from '../../Components/Fence.js';
 import ItemStorageController from '../../Components/ItemStorages/ItemStorageController.js';
 import MainHeroList from '../../Components/MainHeroList.js';
 import MainLocationList from '../../Components/MainLocationList.js';
-import ProductionConfigurator from '../../Components/ProductionConfigurator.js';
-import Shop from '../../Components/Shop.js';
 import Tavern from '../../Components/Tavern.js';
 import Tavern_v2 from '../../Components/Tavern_v2.js';
 import TavernController from '../../Components/TavernController.js';
-import Item from '../../Entities/Item.js';
 import EnemyCharacterAttributeFactory from '../../Factories/EnemyCharacterAttributeFactory.js';
 import EnemyFactory from '../../Factories/EnemyFactory.js';
 import ExperienceComponentFactory from '../../Factories/ExperienceComponentFactory.js';
@@ -37,16 +30,15 @@ import VeinFactory from '../../Factories/VeinFactory.js';
 import WalletFactory from '../../Factories/WalletFactory.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-import WalletInterface from '../../Interfaces/WalletInterface.js';
 import EnemyCharacterAttributeGenerator from '../BalanceTools/EnemyCharacterAttributeGenerator.js';
 import HeroCharacterAttributeGenerator from '../BalanceTools/HeroCharacterAttributeGenerator.js';
 import CharacterAttributeValueGenerator from '../CharacterAttributeValueGenerator.js';
-import EnemyCharacterAttributeStartValueGenerator from '../EnemyCharacterAttributeStartValueGenerator.js';
 import LocationConfiguratorByDB from '../LocationConfiguratorByDB.js';
 import StubFactory from '../StubFactory.js';
 import {MineFactory} from '../../Factories/MineFactory';
 import {Construction} from '../../Components/Construction';
 import {Farming} from '../../Components/Farming';
+import DebugApp from '../DebugApp.js';
 
 /**
  * todo: Временно не актуально.
@@ -286,7 +278,7 @@ export default class PlayerContainerConfigure implements ContainerConfigureInter
             return new StubFactory(container);
         });
 
-        debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
+        DebugApp.debug(DebugNamespaceID.Log)(sprintf('Конфигурация %s завершена.', this.constructor.name));
 
         return container;
     }

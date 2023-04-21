@@ -1,10 +1,8 @@
 import {unsigned} from '../../types/main.js';
-import ItemCharacterAttributeCollector from './ItemCharacterAttributeCollector.js';
-import _ from 'lodash';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 
 export default class CharacterAttributeCollector {
-    private readonly _characterAttributeValues: Partial<{[characterAttributeID in CharacterAttributeID]: number}>;
+    private readonly _characterAttributeValues: Partial<{ [characterAttributeID in CharacterAttributeID]: number }>;
 
     constructor() {
         this._characterAttributeValues = {};

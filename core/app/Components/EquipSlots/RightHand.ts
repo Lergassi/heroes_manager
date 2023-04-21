@@ -1,8 +1,5 @@
 import {ItemID} from '../../../types/enums/ItemID.js';
-import EquipSlotInterface, {
-    EquipSlotInterfaceRender,
-} from '../../Interfaces/EquipSlotInterface.js';
-import Item from '../../Entities/Item.js';
+import EquipSlotInterface, {EquipSlotInterfaceRender,} from '../../Interfaces/EquipSlotInterface.js';
 import CharacterAttributeManager from '../CharacterAttributeManager.js';
 import LeftHand from './LeftHand.js';
 import DefaultEquipSlot from './DefaultEquipSlot.js';
@@ -10,7 +7,6 @@ import {assertNotNil} from '../../../source/assert.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import AverageItemLevel from '../AverageItemLevel.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
 
 export default class RightHand implements EquipSlotInterface {
     private readonly _equipSlot: EquipSlotInterface;

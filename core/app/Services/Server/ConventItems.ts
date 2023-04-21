@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
 import fs from 'fs';
 import csvToJson from 'convert-csv-to-json';
 import {TSDB_ItemDB} from '../../../data/ts/items.js';
@@ -9,6 +7,7 @@ import {sprintf} from 'sprintf-js';
 import {ItemCategoryID} from '../../../types/enums/ItemCategoryID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
 import {QualityID} from '../../../types/enums/QualityID.js';
+import DebugApp from '../DebugApp.js';
 
 type CSV_Item = {
     ID: string;
@@ -43,23 +42,23 @@ export default class ConventItems {
         let tsdbItemDB: TSDB_ItemDB = {};
         for (let i = 0; i < csv_json.length; i++) {
             tsdbItemDB[csv_json[i].ID as ItemID] = {
-                Agility         : Number(csv_json[i].Agility ?? 0),
-                ArmorMaterialID : csv_json[i].ArmorMaterialID ? String(csv_json[i].ArmorMaterialID) as ArmorMaterialID : null,
-                AttackPower     : Number(csv_json[i].AttackPower ?? 0),
-                DefaultBuyPrice : Number(csv_json[i].DefaultBuyPrice ?? 0),
+                Agility: Number(csv_json[i].Agility ?? 0),
+                ArmorMaterialID: csv_json[i].ArmorMaterialID ? String(csv_json[i].ArmorMaterialID) as ArmorMaterialID : null,
+                AttackPower: Number(csv_json[i].AttackPower ?? 0),
+                DefaultBuyPrice: Number(csv_json[i].DefaultBuyPrice ?? 0),
                 DefaultSellPrice: Number(csv_json[i].DefaultSellPrice ?? 0),
-                Equipable       : Boolean(csv_json[i].Equipable ?? 0),
-                HealthPoints    : Number(csv_json[i].HealthPoints ?? 0),
-                ID              : String(csv_json[i].ID) as ItemID,
-                Intelligence    : Number(csv_json[i].Intelligence ?? 0),
-                ItemCategoryID  : String(csv_json[i].ItemCategoryID) as ItemCategoryID,
-                ItemLevel       : Number(csv_json[i].ItemLevel ?? 0),
-                QualityID       : String(csv_json[i].QualityID) as QualityID,
-                StackSize       : Number(csv_json[i].StackSize ?? 0),
-                Strength        : Number(csv_json[i].Strength ?? 0),
-                TwoHandWeapon   : Boolean(csv_json[i].TwoHandWeapon),
-                IconID          : String(csv_json[i].IconID),
-                ProductionId    : String(csv_json[i].ProductionID),
+                Equipable: Boolean(csv_json[i].Equipable ?? 0),
+                HealthPoints: Number(csv_json[i].HealthPoints ?? 0),
+                ID: String(csv_json[i].ID) as ItemID,
+                Intelligence: Number(csv_json[i].Intelligence ?? 0),
+                ItemCategoryID: String(csv_json[i].ItemCategoryID) as ItemCategoryID,
+                ItemLevel: Number(csv_json[i].ItemLevel ?? 0),
+                QualityID: String(csv_json[i].QualityID) as QualityID,
+                StackSize: Number(csv_json[i].StackSize ?? 0),
+                Strength: Number(csv_json[i].Strength ?? 0),
+                TwoHandWeapon: Boolean(csv_json[i].TwoHandWeapon),
+                IconID: String(csv_json[i].IconID),
+                ProductionId: String(csv_json[i].ProductionID),
             };
         }
         //todo: Генерация ID для enum.
@@ -71,7 +70,7 @@ export default class ConventItems {
                 return;
             }
 
-            debug(DebugNamespaceID.Log)(sprintf('Данные из %s преобразованы и записаны в файл %s. ', input, output));
+            DebugApp.debug(DebugNamespaceID.Log)(sprintf('Данные из %s преобразованы и записаны в файл %s. ', input, output));
         });
     }
 }

@@ -24,7 +24,6 @@ export default class DeleteHeroCommand extends Command {
             .get<MainHeroList>(ServiceID.MainHeroList)
             .deleteHero(
                 this.container.get<GameObjectStorage>(ServiceID.GameObjectStorage).getOneByID(heroId),
-
             );
     }
 }

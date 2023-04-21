@@ -3,11 +3,13 @@ import ContainerInterface from '../../../source/ContainerInterface.js';
 import GameConsole from '../../../source/GameConsole/GameConsole.js';
 import HelpCommand from '../../../../server/app/Commands/HelpCommand.js';
 import ListCommand from '../../../../server/app/Commands/ListCommand.js';
-import CreateDefaultStartPlayerObjectsCommand from '../../Commands/NewGameScenariosCommands/CreateDefaultStartPlayerObjectsCommand.js';
+import CreateDefaultStartPlayerObjectsCommand
+    from '../../Commands/NewGameScenariosCommands/CreateDefaultStartPlayerObjectsCommand.js';
 import DetailHeroCommand from '../../Commands/DetailHeroCommand.js';
 import DetailLocationCommand from '../../Commands/DetailLocationCommand.js';
 import NewGameCommand from '../../Commands/NewGameCommand.js';
-import CreateAllContentStartPlayerObjectsCommand from '../../Commands/NewGameScenariosCommands/CreateAllContentStartPlayerObjectsCommand.js';
+import CreateAllContentStartPlayerObjectsCommand
+    from '../../Commands/NewGameScenariosCommands/CreateAllContentStartPlayerObjectsCommand.js';
 import CreateItemCommand from '../../Commands/CreateItemCommand.js';
 import CreateHeroCommand from '../../Commands/CreateHeroCommand.js';
 import CreateItemStorageCommand from '../../Commands/CreateItemStorageCommand.js';
@@ -31,7 +33,6 @@ import ClearItemStorageSlotCommand from '../../Commands/ClearItemStorageSlotComm
 import CreateAllHeroClassesCommand from '../../Commands/CreateAllHeroClassesCommand.js';
 import FightCommand from '../../Commands/FightCommand.js';
 import ResurrectHeroCommand from '../../Commands/ResurrectHeroCommand.js';
-import {CommandID} from '../../../types/enums/CommandID.js';
 import KillHeroCommand from '../../Commands/KillHeroCommand.js';
 import CreateRandomHeroClassCommand from '../../Commands/CreateRandomHeroClassCommand.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
@@ -46,9 +47,19 @@ import CreateDemoStartPlayerObjectsCommand
     from '../../Commands/NewGameScenariosCommands/CreateDemoStartPlayerObjectsCommand.js';
 import CreateBasicStartPlayerObjectsCommand
     from '../../Commands/NewGameScenariosCommands/CreateBasicStartPlayerObjectsCommand.js';
+import DebugApp from '../DebugApp.js';
 
 export default class DefaultContainerConfigure implements ContainerConfigureInterface {
     configure(container: ContainerInterface): ContainerInterface {
+        // let _console = console;
+        // console.log = console.log.bind(console);
+        // console.log = (...data: any[]) => {
+        //     _console.log(...data);
+        // }
+
+        //@indev
+        DebugApp.container = container;
+
         //todo: Сделать разный источник для клиента и сервера. Вынести за пределы контейнера.
         let debugNamespaces = [
             DebugNamespaceID.Log,
@@ -71,6 +82,7 @@ export default class DefaultContainerConfigure implements ContainerConfigureInte
             // DebugNamespaceID.EventSystem,
         ];
         debug.enable(_.join(debugNamespaces, ','));
+        // debug(DebugNamespaceID)();
 
         container.set<GameConsole>(ServiceID.GameConsole, (container) => {
             return new GameConsole();

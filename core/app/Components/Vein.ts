@@ -1,11 +1,8 @@
 import {ItemID} from '../../types/enums/ItemID.js';
-import Item from '../Entities/Item.js';
-import {assertIsGreaterThanOrEqual, assertIsInstanceOf, assertNotNil} from '../../source/assert.js';
-import _ from 'lodash';
-import {UI_ItemCount, UI_VeinItemCount} from '../../types/main.js';
-import debug from 'debug';
+import {UI_VeinItemCount} from '../../types/main.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export interface VeinRender {
     update?(item: UI_VeinItemCount);
@@ -52,7 +49,7 @@ export default class Vein {
 
     canGather(): boolean {
         if (this.isEmpty()) {
-            debug(DebugNamespaceID.Throw)('Жила истощена.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Жила истощена.');
             return false;
         }
 
@@ -61,9 +58,9 @@ export default class Vein {
 
     renderByRequest(ui: VeinRender): void {
         ui.update?.({
-            itemID    : this._itemID,
+            itemID: this._itemID,
             startCount: this._startCount,
-            count     : this._count,
+            count: this._count,
         });
     }
 }

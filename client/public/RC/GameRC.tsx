@@ -1,15 +1,12 @@
 import React from 'react';
-import Production from '../../../core/app/Components/Production';
 import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController.js';
 import MainHeroList from '../../../core/app/Components/MainHeroList.js';
 import MainLocationList from '../../../core/app/Components/MainLocationList.js';
-import Tavern from '../../../core/app/Components/Tavern.js';
 import Tavern_v2 from '../../../core/app/Components/Tavern_v2.js';
 import ItemStorageInterface from '../../../core/app/Interfaces/ItemStorageInterface.js';
 import WalletInterface from '../../../core/app/Interfaces/WalletInterface.js';
 import {assertNotNil} from '../../../core/source/assert.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
-import {HeroClassID} from '../../../core/types/enums/HeroClassID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import {UI_PanelID} from '../../types/UI_PanelID.js';
 import DetailHeroRC from './DetailHeroRC.js';
@@ -18,12 +15,9 @@ import ItemStorageControllerRC from './ItemStorageControllerRC.js';
 import LeftSidebarRC from './LeftSidebarRC.js';
 import MainHeroListRC from './MainHeroListRC.js';
 import MainLocationListRC from './MainLocationListRC.js';
-import ProductionRC from './ProductionRC';
-import TavernRC from './TavernRC.js';
 import TavernRC_v2 from './TavernRC_v2.js';
 import WalletMoneyValueRC from './WalletMoneyValueRC.js';
-import WalletRC from './WalletRC.js';
-import ProductionListRC from "./ProductionListRC";
+import ProductionListRC from './ProductionListRC';
 import {ConstructionRC} from './ConstructionRC';
 import {Construction} from '../../../core/app/Components/Construction';
 import {FarmingRC} from './FarmingRC';
@@ -34,10 +28,12 @@ export type GameRCProps = {
 };
 
 type GameRCState = {
-    panels: {[ID in UI_PanelID]?: {
-        ID: UI_PanelID;
-        show: boolean;
-    }};
+    panels: {
+        [ID in UI_PanelID]?: {
+            ID: UI_PanelID;
+            show: boolean;
+        }
+    };
     activePanel: UI_PanelID;
 };
 
@@ -96,9 +92,9 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                     <div className={'header__wallet-money-counter'}>
                         {/*WalletMoneyValueRC: <WalletMoneyValueRC*/}
                         Money: <WalletMoneyValueRC
-                            container={this.props.container}
-                            wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
-                        />
+                        container={this.props.container}
+                        wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
+                    />
                     </div>
                 </div>
                 <div className={'container'}>
@@ -200,8 +196,10 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                         {/*        show: this.state.panels.Production.show,*/}
                         {/*    }}*/}
                         {/*/>*/}
-                    </div>{/*content*/}
-                </div>{/*container*/}
+                    </div>
+                    {/*content*/}
+                </div>
+                {/*container*/}
             </div>
         );
     }

@@ -1,14 +1,12 @@
-import _ from 'lodash';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 import {TavernRCInterface, TavernRenderInterface, UI_TavernHero} from '../../../client/public/RC/TavernRC.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import HeroClass from '../Entities/HeroClass.js';
 import MainHeroList from './MainHeroList.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class Tavern implements TavernRenderInterface {
-    private readonly _heroes: {[ID in HeroClassID]?: {heroClassID: HeroClassID, count: number}};
+    private readonly _heroes: { [ID in HeroClassID]?: { heroClassID: HeroClassID, count: number } };
 
     constructor() {
         this._heroes = {};
@@ -45,13 +43,13 @@ export default class Tavern implements TavernRenderInterface {
 
     hire(ID: HeroClassID, mainHeroList: MainHeroList): boolean {
         if (!this.has(ID)) {
-            debug(DebugNamespaceID.Throw)(sprintf('Герой %s не доступен в таверне.', ID));
+            DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Герой %s не доступен в таверне.', ID));
             return false;
         }
 
         if (mainHeroList.createHero(ID, 1)) {
             this._heroes[ID].count--;
-            debug(DebugNamespaceID.Log)(sprintf('Герой %s нанят.', ID));
+            DebugApp.debug(DebugNamespaceID.Log)(sprintf('Герой %s нанят.', ID));
         }
 
         return true;

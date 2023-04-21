@@ -4,6 +4,7 @@
 export interface RComponentUpdateInterface {
     // update(target): void;
     update(): void;
+
     // assignRComponent(rComponent): void;
 }
 
@@ -12,7 +13,9 @@ export interface RComponentUpdateInterface {
  */
 export interface AssignRComponentInterface {
     assignRComponent(rComponent): void;
+
     removeRComponent(rComponent): void;
+
     update(): void;
 }
 

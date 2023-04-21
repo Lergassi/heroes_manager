@@ -1,7 +1,7 @@
 import React from 'react';
 import {ItemID} from '../../../core/types/enums/ItemID';
 import ItemStorageController from '../../../core/app/Components/ItemStorages/ItemStorageController';
-import {UI_ItemCount, UI_ItemCountObject, UI_ItemStorage, UI_ItemStorageSlot} from '../../../core/types/main';
+import {UI_ItemCountObject, UI_ItemStorage} from '../../../core/types/main';
 import RCUpdateInterface from '../Interfaces/RCUpdateInterface';
 import UIUpdater from '../../app/UIUpdater';
 import {ServiceID} from '../../../core/types/enums/ServiceID';
@@ -78,7 +78,8 @@ export class ItemStorageItemSelectRC extends React.Component<ItemStorageItemSele
                 <button className={'btn btn_default'} onClick={(event) => {
                     event.preventDefault();
                     this.props.handler?.(this.state.selectedItemID, this.props.itemStorageController);
-                }}>PLANT</button>
+                }}>PLANT
+                </button>
             </div>
         );
     }

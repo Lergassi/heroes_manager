@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 const useCustomHook = () => {
     const [value, setValue] = useState('');
@@ -8,11 +8,11 @@ const useCustomHook = () => {
     };
     //... some 100-liner initializations/business logic, states, api calls.
 
-        return {
-            value,
-            handleClick,
-            //... // Other exports you need.
-        }
+    return {
+        value,
+        handleClick,
+        //... // Other exports you need.
+    }
 }
 
 // function aaa() {

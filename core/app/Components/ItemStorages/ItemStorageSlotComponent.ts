@@ -1,10 +1,7 @@
-import Component from '../../../source/Component.js';
-import ItemStack, {ItemStackPlaceInterface} from '../../RuntimeObjects/ItemStack.js';
-import GameObject from '../../../source/GameObject.js';
+import ItemStack from '../../RuntimeObjects/ItemStack.js';
 import Item from '../../Entities/Item.js';
 import _ from 'lodash';
 import AppError from '../../../source/Errors/AppError.js';
-import {AssignRComponentInterface} from '../../../../client/source/RComponentBridge.js';
 import {unsigned} from '../../../types/main.js';
 import ItemStackFactory from '../../Factories/ItemStackFactory.js';
 import EventSystem from '../../../source/EventSystem.js';

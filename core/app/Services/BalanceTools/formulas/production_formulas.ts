@@ -7,7 +7,7 @@ function requireItemsCount(values: {
     itemCategoryCraftRatio: number,
 }) {
     return _.round(
-        (values.startValue + values.itemLevelIncreaseValue * ( values.itemLevel - 1 ) ) * values.itemCategoryCraftRatio
+        (values.startValue + values.itemLevelIncreaseValue * (values.itemLevel - 1)) * values.itemCategoryCraftRatio
     );
 }
 
@@ -18,7 +18,7 @@ function productionCost(values: {
     itemCategoryCraftRatio: number,
 }) {
     return _.round(
-        ( values.startValue + values.valueForItemLevel * ( values.itemLevel - 1 ) ) * values.itemCategoryCraftRatio
+        (values.startValue + values.valueForItemLevel * (values.itemLevel - 1)) * values.itemCategoryCraftRatio
     );
 }
 

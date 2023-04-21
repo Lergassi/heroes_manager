@@ -2,11 +2,11 @@ import Command from './Command.js';
 import AppError from '../Errors/AppError.js';
 import {sprintf} from 'sprintf-js';
 import chalk from 'chalk';
-import debug from 'debug';
 import _ from 'lodash';
 import ValidationError from '../Errors/ValidationError.js';
 import {assertNotEmpty, assertNotNil} from '../assert.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import DebugApp from '../../app/Services/DebugApp.js';
 
 export interface CommandOptions {
     name: string;
@@ -14,7 +14,7 @@ export interface CommandOptions {
 }
 
 export default class GameConsole {
-    private readonly _commands: {[name: string]: Command};
+    private readonly _commands: { [name: string]: Command };
 
     /**
      * @deprecated Сделать метод configUI(gameConsoleRC) в котором будет происходить настройка ui компонента.
@@ -47,7 +47,7 @@ export default class GameConsole {
 
         let command = this._getCommand(name);
 
-        debug(DebugNamespaceID.GameConsole)(sprintf('Command: %s', chalk.yellow(name)));
+        DebugApp.debug(DebugNamespaceID.GameConsole)(sprintf('Command: %s', chalk.yellow(name)));
 
         await command.run(commandArguments);
     }

@@ -1,8 +1,8 @@
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
 import {ItemID} from '../../types/enums/ItemID.js';
 import ItemStorageInterface from '../Interfaces/ItemStorageInterface.js';
-import debug from 'debug';
-import Endurance from "./Endurance";
+import Endurance from './Endurance';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class EnduranceController {
     private readonly _endurance: Endurance;
@@ -31,6 +31,6 @@ export default class EnduranceController {
         if (itemStorage.removeItem(this._potionID, 1) !== 1) return;
 
         this._endurance.add(this._options.recoverEnduranceByEndurancePotion01);
-        debug(DebugNamespaceID.Log)('EnduranceController. Endurance восстановлено при помощи зелья.');
+        DebugApp.debug(DebugNamespaceID.Log)('EnduranceController. Endurance восстановлено при помощи зелья.');
     }
 }

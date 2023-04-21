@@ -1,6 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
-import {sprintf} from 'sprintf-js';
 import GameObject from '../../source/GameObject.js';
 import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';

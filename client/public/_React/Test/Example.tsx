@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useCustomHook from './test.js';
 
 export function Example() {

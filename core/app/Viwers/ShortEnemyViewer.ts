@@ -1,19 +1,7 @@
-import _ from 'lodash';
-import debug from 'debug';
 import GameObject from '../../source/GameObject.js';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
-import HeroComponent from '../Components/HeroComponent.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
-import Experience from '../Components/Experience.js';
-import HeroActivityStateController from '../Components/HeroActivityStateController.js';
-import {EquipSlotID} from '../../types/enums/EquipSlotID.js';
-import EquipSlotInterface from '../Interfaces/EquipSlotInterface.js';
-import {CharacterAttributeID} from '../../types/enums/CharacterAttributeID.js';
-import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
-import HealthPoints from '../Components/HealthPoints.js';
-import AttackControllerInterface from '../Interfaces/AttackControllerInterface.js';
 import {DebugFormatterID} from '../../types/enums/DebugFormatterID.js';
-import {sprintf} from 'sprintf-js';
+import DebugApp from '../Services/DebugApp.js';
 
 export default class ShortEnemyViewer {
     view(enemy: GameObject) {
@@ -56,6 +44,6 @@ export default class ShortEnemyViewer {
         // enemy.get<AttackControllerInterface>(ComponentID.AttackController).view((data) => {
         //     row.push(sprintf('%s-%s', data.value.left, data.value.right));
         // });
-        debug(DebugNamespaceID.Info)(DebugFormatterID.Json, row);
+        DebugApp.debug(DebugNamespaceID.Info)(DebugFormatterID.Json, row);
     }
 }

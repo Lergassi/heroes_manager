@@ -2,7 +2,7 @@ import Command from '../../source/GameConsole/Command.js';
 import Input from '../../source/GameConsole/Input.js';
 import {CommandID} from '../../types/enums/CommandID.js';
 import {HeroClassID} from '../../types/enums/HeroClassID.js';
-import {assertIsGreaterThan, assertIsGreaterThanOrEqual, assertIsPositive} from '../../source/assert.js';
+import {assertIsGreaterThanOrEqual} from '../../source/assert.js';
 import HeroFactory from '../Factories/HeroFactory.js';
 import {ServiceID} from '../../types/enums/ServiceID.js';
 import MainHeroList from '../Components/MainHeroList.js';

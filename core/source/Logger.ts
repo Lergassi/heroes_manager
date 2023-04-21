@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
 import {sprintf} from 'sprintf-js';
 
 export default class Logger {
@@ -19,7 +17,7 @@ export default class Logger {
     }
 
     head(str: string) {
-        this._data +=  sprintf('%s %s %s\n', this._headPattern(), this._headPattern(), str);
+        this._data += sprintf('%s %s %s\n', this._headPattern(), this._headPattern(), str);
     }
 
     _headPattern() {

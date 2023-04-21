@@ -6,7 +6,6 @@ import Recipe from '../../core/app/Entities/Recipe.js';
 import {RecipeID} from '../../core/types/enums/RecipeID.js';
 import RecipeFactory from '../../core/app/Factories/EntityFactories/RecipeFactory.js';
 import EntityManagerInterface from '../../core/app/Interfaces/EntityManagerInterface.js';
-import Item from '../../core/app/Entities/Item.js';
 import {EntityID} from '../../core/types/enums/EntityID.js';
 import EntityManager from '../../core/source/EntityManager.js';
 import RecipesLoader from '../../core/app/Services/Loadres/RecipesLoader.js';

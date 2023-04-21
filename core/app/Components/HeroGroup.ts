@@ -3,14 +3,10 @@ import AppError from '../../source/Errors/AppError.js';
 import _ from 'lodash';
 import {unsigned} from '../../types/main.js';
 import {assert, assertIsPositive} from '../../source/assert.js';
-import TakeComponent from './TakeComponent.js';
 import EventSystem from '../../source/EventSystem.js';
 import HeroGroupInterface from '../Interfaces/HeroGroupInterface.js';
-import {ComponentID} from '../../types/enums/ComponentID.js';
-import HealthPoints from './HealthPoints.js';
-import HeroListViewer from '../Viwers/HeroListViewer.js';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../types/enums/DebugNamespaceID.js';
+import DebugApp from '../Services/DebugApp.js';
 
 export enum HeroGroupComponentEventCode {
     AddHero = 'HeroGroupComponent.AddHero',
@@ -103,7 +99,7 @@ export default class HeroGroup implements HeroGroupInterface {
         assert(hero instanceof GameObject);
 
         if (this._hasHero(hero)) {
-            debug(DebugNamespaceID.Throw)('Герой уже в группе.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Герой уже в группе.');
             return false;
         }
 
@@ -124,7 +120,7 @@ export default class HeroGroup implements HeroGroupInterface {
         let position = this._getHeroSlot(hero);
         if (!position) {
             // throw new AppError('Герой не найден в группе.');
-            debug(DebugNamespaceID.Throw)('Герой не найден в группе.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Герой не найден в группе.');
             return;
         }
 

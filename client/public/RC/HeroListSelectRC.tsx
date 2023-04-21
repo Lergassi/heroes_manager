@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import MainHeroList, {MainHeroListRenderInterface} from '../../../core/app/Components/MainHeroList.js';
 import ContainerInterface from '../../../core/source/ContainerInterface.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
@@ -75,10 +73,13 @@ export default class HeroListSelectRC extends React.Component<HeroListSelectRCPr
             <div>
                 <select value={this.state.selectedHeroID} name="" id="" onChange={this.handleAddHeroChange}>
                     {_.map(this.state.heroes, (hero, index) => {
-                        return <option key={index} value={hero.ID}>{hero.heroClassName} ({hero.ID}), {hero.level} lvl</option>
+                        return <option key={index}
+                                       value={hero.ID}>{hero.heroClassName} ({hero.ID}), {hero.level} lvl</option>
                     })}
                 </select>
-                <button className={'btn btn_default'} onClick={this.props.handleAddHeroChange.bind(this, this.state.selectedHeroID)}>ADD_HERO</button>
+                <button className={'btn btn_default'}
+                        onClick={this.props.handleAddHeroChange.bind(this, this.state.selectedHeroID)}>ADD_HERO
+                </button>
             </div>
         );
     }

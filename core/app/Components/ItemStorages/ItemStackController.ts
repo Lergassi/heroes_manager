@@ -1,20 +1,11 @@
-import debug, {log} from 'debug';
 import _ from 'lodash';
 import {sprintf} from 'sprintf-js';
 import {database} from '../../../data/ts/database.js';
-import {
-    assert,
-    assertIsGreaterThanOrEqual,
-    assertIsInteger,
-    assertIsNumber,
-    assertNotNil
-} from '../../../source/assert.js';
+import {assert, assertIsInteger} from '../../../source/assert.js';
 import {DebugFormatterID} from '../../../types/enums/DebugFormatterID.js';
 import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import {EntityID} from '../../../types/enums/EntityID.js';
 import {EquipSlotID} from '../../../types/enums/EquipSlotID.js';
 import {ItemID} from '../../../types/enums/ItemID.js';
-import Item from '../../Entities/Item.js';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 import EquipSlotInterface from '../../Interfaces/EquipSlotInterface.js';
 import ItemStackControllerInterface, {
@@ -22,6 +13,7 @@ import ItemStackControllerInterface, {
 } from '../../Interfaces/ItemStackControllerInterface.js';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
 import EquipController from '../EquipController.js';
+import DebugApp from '../../Services/DebugApp.js';
 
 export default class ItemStackController implements ItemStackControllerInterface {
     private _itemID: ItemID;
@@ -243,12 +235,12 @@ export default class ItemStackController implements ItemStackControllerInterface
 
     moveToEquipSlot(equipSlot: EquipSlotInterface): boolean {
         if (this.isFree()) {
-            debug(DebugNamespaceID.Throw)('Слот сумки пустой.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Слот сумки пустой.');
             return false;
         }
 
         if (!equipSlot.equip(this._itemID)) {
-            debug(DebugNamespaceID.Throw)('Ошибка экипировки.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Ошибка экипировки.');
             return false;
         }
 
@@ -259,12 +251,12 @@ export default class ItemStackController implements ItemStackControllerInterface
 
     moveToEquipSlotByEquipController(equipSlotID: EquipSlotID, equipController: EquipController): boolean {
         if (this.isFree()) {
-            debug(DebugNamespaceID.Throw)('Слот сумки пустой.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Слот сумки пустой.');
             return false;
         }
 
         if (!equipController.equip(equipSlotID, this._itemID)) {
-            debug(DebugNamespaceID.Throw)('Ошибка экипировки.');
+            DebugApp.debug(DebugNamespaceID.Throw)('Ошибка экипировки.');
             return false;
         }
 
@@ -280,7 +272,7 @@ export default class ItemStackController implements ItemStackControllerInterface
     }
 
     debug(): void {
-        debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
+        DebugApp.debug(DebugNamespaceID.Debug)(DebugFormatterID.Json, {
             itemID: this.isFree() ? null : this._itemID,
             count: this.isFree() ? null : this._count,
         });

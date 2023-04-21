@@ -1,9 +1,8 @@
 import {unsigned} from '../../../types/main.js';
-import _ from 'lodash';
 import {assertIsGreaterThanOrEqual} from '../../../source/assert.js';
 import CharacterAttributeValueGeneratorInterface from '../../Interfaces/CharacterAttributeValueGeneratorInterface.js';
 
-export default class DefaultCharacterAttributeValueGenerator implements CharacterAttributeValueGeneratorInterface{
+export default class DefaultCharacterAttributeValueGenerator implements CharacterAttributeValueGeneratorInterface {
     /**
      * @param level Со 2ого уровня.
      * @param modifier

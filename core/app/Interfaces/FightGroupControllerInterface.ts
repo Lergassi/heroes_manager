@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import debug from 'debug';
 import AttackControllerInterface from './AttackControllerInterface.js';
 import {RewardOptions} from './FightControllerInterface.js';
 
@@ -15,6 +13,7 @@ export interface FightGroupControllerInterface {
      * @param rewardOptions
      */
     damageByPosition(from: AttackControllerInterface, position: number, rewardOptions?: RewardOptions): number;
+
     damageFirstLife(from: AttackControllerInterface, rewardOptions?: RewardOptions): number;
 
     /**

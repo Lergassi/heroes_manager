@@ -1,8 +1,8 @@
 import Command from '../../../core/source/GameConsole/Command.js';
 import Input from '../../../core/source/GameConsole/Input.js';
-import debug from 'debug';
 import Security from '../../source/Security.js';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
+import DebugApp from '../../../core/app/Services/DebugApp.js';
 
 export default class UnloadPlayerEnvironmentCommand extends Command {
     get name(): string {
@@ -19,6 +19,6 @@ export default class UnloadPlayerEnvironmentCommand extends Command {
         this.container.get<Security>('server.security').logoutPlayer();
         this.container.remove('player.*');
 
-        debug(DebugNamespaceID.Info)('Окружение игрока выгружено.');
+        DebugApp.debug(DebugNamespaceID.Info)('Окружение игрока выгружено.');
     }
 }

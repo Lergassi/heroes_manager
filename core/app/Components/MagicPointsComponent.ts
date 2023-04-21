@@ -1,4 +1,3 @@
-import Component from '../../source/Component.js';
 import CharacterAttributeInterface from '../Decorators/CharacterAttributeInterface.js';
 import {unsigned} from '../../types/main.js';
 import {assertNotNil} from '../../source/assert.js';

@@ -5,7 +5,6 @@ import {ServiceID} from '../../core/types/enums/ServiceID';
 import HeroCharacterAttributeGenerator from '../../core/app/Services/BalanceTools/HeroCharacterAttributeGenerator';
 import {ItemCount} from '../../core/types/main';
 import {ItemID} from '../../core/types/enums/ItemID';
-import debug from 'debug';
 import {DebugNamespaceID} from '../../core/types/enums/DebugNamespaceID';
 import {DebugFormatterID} from '../../core/types/enums/DebugFormatterID';
 import {ProductionValueGenerator} from '../../core/app/Services/BalanceTools/ProductionValueGenerator';
@@ -15,6 +14,7 @@ import {TSDB_ItemDB} from '../../core/data/ts/items';
 import {TSDB_RecipeDB} from '../../core/data/ts/recipes';
 import {ItemCategoryID} from '../../core/types/enums/ItemCategoryID';
 import {ProductionID} from '../../core/types/enums/ProductionID';
+import DebugApp from '../../core/app/Services/DebugApp.js';
 
 export class ToolsSandboxController extends AbstractSandboxController {
     run(): void {
@@ -60,7 +60,7 @@ export class ToolsSandboxController extends AbstractSandboxController {
                 // count: startBlacksmithCopperIngot + itemLevelBlacksmithIncreaseCopperIngot * ( itemLevel - 1 ),
                 count: productionValueGenerator.requireItemsCount(ProductionID.Blacksmith, itemLevel, ItemID.CopperIngot, ItemCategoryID.Breastplates),
             });
-            debug(DebugNamespaceID.Log)(DebugFormatterID.Json, [itemLevel, requiresItems]);
+            DebugApp.debug(DebugNamespaceID.Log)(DebugFormatterID.Json, [itemLevel, requiresItems]);
         }
     }
 

@@ -1,15 +1,3 @@
-import EquipSlotInterface, {
-    EquipSlotInterfaceRender,
-} from '../../Interfaces/EquipSlotInterface.js';
-import ItemCharacterAttributeCollector from '../ItemCharacterAttributeCollector.js';
-import Item from '../../Entities/Item.js';
-import {unsigned} from '../../../types/main.js';
-import ItemStackFactory from '../../Factories/ItemStackFactory.js';
-import ItemStack from '../../RuntimeObjects/ItemStack.js';
-import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import debug from 'debug';
-import ItemStorageInterface from '../../Interfaces/ItemStorageInterface.js';
-
 // export default class EquipSlotWithItemCollectorDecorator implements EquipSlotInterface {
 /**
  * @deprecated

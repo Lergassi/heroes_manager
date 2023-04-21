@@ -1,8 +1,6 @@
 import _ from 'lodash';
-import debug from 'debug';
 import {database} from '../../data/ts/database.js';
 import {ItemID} from '../../types/enums/ItemID.js';
-import Item from '../Entities/Item.js';
 
 export interface AverageItemLevelRender {
     updateAverageItemLevel?(value: number): void;

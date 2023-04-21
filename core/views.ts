@@ -1,17 +1,4 @@
 import GameObject from './source/GameObject.js';
-import debug from 'debug';
-import {DebugNamespaceID} from './types/enums/DebugNamespaceID.js';
-import {DebugFormatterID} from './types/enums/DebugFormatterID.js';
-import HeroComponent from './app/Components/HeroComponent.js';
-import {ComponentID} from './types/enums/ComponentID.js';
-import Experience from './app/Components/Experience.js';
-import HeroActivityStateController from './app/Components/HeroActivityStateController.js';
-import {EquipSlotID} from './types/enums/EquipSlotID.js';
-import {CharacterAttributeID} from './types/enums/CharacterAttributeID.js';
-import CharacterAttributeInterface from './app/Decorators/CharacterAttributeInterface.js';
-import HealthPoints from './app/Components/HealthPoints.js';
-import AttackControllerInterface from './app/Interfaces/AttackControllerInterface.js';
-import EquipSlotInterface from './app/Interfaces/EquipSlotInterface.js';
 
 export function detailHeroView(hero: GameObject) {
     // let defaultViewer = new DefaultViewer();

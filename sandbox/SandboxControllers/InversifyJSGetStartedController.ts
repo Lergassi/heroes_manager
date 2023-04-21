@@ -1,9 +1,6 @@
-import _ from 'lodash';
-import debug from 'debug';
 import {TYPES} from './types.js';
-import {Katana, Ninja, Shuriken} from './entities.js';
-import { container } from "./inversify.config";
-import { Warrior } from "./interfaces";
+import {Katana} from './entities.js';
+import {container} from './inversify.config';
 
 export default class InversifyJSGetStartedController {
     run() {

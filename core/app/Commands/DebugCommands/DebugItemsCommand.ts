@@ -3,14 +3,7 @@ import EntityManager from '../../../source/EntityManager.js';
 import Command from '../../../source/GameConsole/Command.js';
 import Input from '../../../source/GameConsole/Input.js';
 import {CommandID} from '../../../types/enums/CommandID.js';
-import ItemDatabase from '../../../source/ItemDatabase.js';
 import {ServiceID} from '../../../types/enums/ServiceID.js';
-import Item from '../../Entities/Item.js';
-import {assert, assertNotNil} from '../../../source/assert.js';
-import {debugItem} from '../../../debug/debug_functions.js';
-import {separator} from '../../indev.js';
-import {DebugNamespaceID} from '../../../types/enums/DebugNamespaceID.js';
-import debug from 'debug';
 import EntityManagerInterface from '../../Interfaces/EntityManagerInterface.js';
 
 export default class DebugItemsCommand extends Command {

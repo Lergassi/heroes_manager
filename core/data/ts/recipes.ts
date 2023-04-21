@@ -144,7 +144,7 @@ export const recipes = {
     resultCount: function (ID: ItemID): number {
         return recipes_db[ID]?.resultItemCount ?? 0;
     },
-    requireItems: function<T> (ID: ItemID, callback: (itemID: ItemID, count: number) => T): T[] {
+    requireItems: function <T>(ID: ItemID, callback: (itemID: ItemID, count: number) => T): T[] {
         return _.map(recipes_db[ID]?.requireItems ?? [], (value) => {
             return callback(value.itemID as ItemID, value.count);
         });

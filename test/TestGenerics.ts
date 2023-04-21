@@ -1,17 +1,16 @@
 import _ from 'lodash';
-import debug from 'debug';
 
 export default class TestGenerics {
     test(): void;
     // static test(foo: string): void
     // static test(foo?: string): void
-    test(options: {codes: string | string[], listener: (target) => void}): void;
+    test(options: { codes: string | string[], listener: (target) => void }): void;
     // static test(options: {
     //     codes: string | string[],
     //     listener: ListenerType,
     // }): void;
     test(codes: string | string[], callback: (target) => void): void;
-    test(codesOrOptions?: string | string[] | {codes: string | string[], listener: (target) => void}, callback?: (target) => void): void
+    test(codesOrOptions?: string | string[] | { codes: string | string[], listener: (target) => void }, callback?: (target) => void): void
     // static test(codes: string | string[], callback?: (target) => void): void
     // static test(options?: {
     //     codes: string | string[],

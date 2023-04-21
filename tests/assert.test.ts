@@ -56,13 +56,13 @@ describe.each([
 });
 
 describe.each([
-    [0,0,0],
-    [0,1,1],
-    [0,0,1],
-    [1,1,1],
-    [1,2,3],
-    [1,1,3],
-    [1,3,3],
+    [0, 0, 0],
+    [0, 1, 1],
+    [0, 0, 1],
+    [1, 1, 1],
+    [1, 2, 3],
+    [1, 1, 3],
+    [1, 3, 3],
 ])('assertInRange valid', (min, value, max) => {
     test('assertInRange not.toThrow', () => {
         expect(() => {
@@ -72,8 +72,8 @@ describe.each([
 });
 
 describe.each([
-    [1,0,3],
-    [1,4,3],
+    [1, 0, 3],
+    [1, 4, 3],
 ])('assertInRange invalid', (min, value, max) => {
     test('assertInRange toThrow', () => {
         expect(() => {
