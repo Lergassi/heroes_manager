@@ -199,10 +199,10 @@ export default class ItemStorage implements ItemStorageInterface {
     //     return this._itemStackControllers[itemStorageSlotID].moveToEquipSlot(equipSlot);
     // }
 
-    moveToEquipSlotByEquipController(index: number, equipController: EquipController, equipSlotID: EquipSlotID): boolean {
+    moveToEquipSlotByEquipController(index: number, equipController: EquipController, equipSlotID: EquipSlotID, itemStorage?: ItemStorageInterface): boolean {
         assertNotNil(this._itemStackControllers[index], 'Слот не найден.');
 
-        return this._itemStackControllers[index].moveToEquipSlotByEquipController(equipSlotID, equipController);
+        return this._itemStackControllers[index].moveToEquipSlotByEquipController(equipSlotID, equipController, itemStorage);
     }
 
     isEmpty(): boolean {

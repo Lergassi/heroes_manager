@@ -231,7 +231,7 @@ export default class ItemStorageController implements ItemStorageInterface {
         });
         assertNotNil(itemStorage, sprintf('Сумка c ID: "%s" не найдена.', itemStorageID));
 
-        return itemStorage.get<ItemStorage>(ComponentID.ItemStorage).moveToEquipSlotByEquipController(itemStorageSlotID, equipController, equipSlotID);
+        return itemStorage.get<ItemStorage>(ComponentID.ItemStorage).moveToEquipSlotByEquipController(itemStorageSlotID, equipController, equipSlotID, itemStorage.get<ItemStorage>(ComponentID.ItemStorage));
         // return equipController.equipFrom(equipSlotID, );
     }
 

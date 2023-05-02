@@ -8,7 +8,7 @@ export interface EquipSlotInterfaceRender {
 }
 
 export default interface EquipSlotInterface {
-    equip(item: ItemID): boolean;
+    equip(item: ItemID, itemStorage?: ItemStorageInterface): boolean;
 
     // equipFrom(item: ItemID, itemStorage: ItemStorageInterface): boolean;
     // equipFrom(item: Item): boolean;

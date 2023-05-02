@@ -19,8 +19,8 @@ export default class RightHand implements EquipSlotInterface {
         this._equipSlot = new DefaultEquipSlot(EquipSlotID.RightHand, averageItemLevel, characterAttributeManager);
     }
 
-    equip(itemID: ItemID): boolean {
-        return this._equipSlot.equip(itemID);
+    equip(itemID: ItemID, itemStorage?: ItemStorageInterface): boolean {
+        return this._equipSlot.equip(itemID, itemStorage);
     }
 
     clear(): void {

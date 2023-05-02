@@ -11,8 +11,8 @@ export default class EquipController {
         this._hero = hero;
     }
 
-    equip(ID: EquipSlotID, itemID: ItemID): boolean {
-        return this._hero.get<EquipSlotInterface>(ID)?.equip(itemID);
+    equip(ID: EquipSlotID, itemID: ItemID, itemStorage?: ItemStorageInterface): boolean {
+        return this._hero.get<EquipSlotInterface>(ID)?.equip(itemID, itemStorage);
     }
 
     // equipFrom(equipSlotID: EquipSlotID, itemID: ItemID, itemStorage: ItemStorageInterface): boolean {

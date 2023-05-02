@@ -249,13 +249,13 @@ export default class ItemStackController implements ItemStackControllerInterface
         return true;
     }
 
-    moveToEquipSlotByEquipController(equipSlotID: EquipSlotID, equipController: EquipController): boolean {
+    moveToEquipSlotByEquipController(equipSlotID: EquipSlotID, equipController: EquipController, itemStorage?: ItemStorageInterface): boolean {
         if (this.isFree()) {
             DebugApp.debug(DebugNamespaceID.Throw)('Слот сумки пустой.');
             return false;
         }
 
-        if (!equipController.equip(equipSlotID, this._itemID)) {
+        if (!equipController.equip(equipSlotID, this._itemID, itemStorage)) {
             DebugApp.debug(DebugNamespaceID.Throw)('Ошибка экипировки.');
             return false;
         }

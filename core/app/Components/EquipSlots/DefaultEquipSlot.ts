@@ -33,10 +33,22 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         this._rules = rules;
     }
 
-    equip(itemID: ItemID): boolean {
+    equip(itemID: ItemID, itemStorage?: ItemStorageInterface): boolean {
+        //todo: Нужно разделение: никогда нельзя экипировать (нарушается вся логика программы), в данный момент нельзя экипировать.
         if (!this.canEquip(itemID)) {
             DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Ошибка экипировки.'));
             return false;
+        }
+
+        if (!this.isFree()) {
+            if (itemStorage) {
+                if (itemStorage.addItem(this._itemID, 1) !== 1) {
+                    DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Ошибка замены эипировки.'));
+                    return false;
+                }
+
+                this.clear();
+            }
         }
 
         this._itemID = itemID;
@@ -105,11 +117,20 @@ export default class DefaultEquipSlot implements EquipSlotInterface {
         return true;
     }
 
+    replace() {
+
+    }
+
     isFree(): boolean {
         return _.isNil(this._itemID);
     }
 
     canEquip(itemID: ItemID): boolean {
+        // if (!this.isFree()) {
+        //     DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Слот экипировки занят.'));
+        //     return false;
+        // }
+
         if (!database.items.data.equipable(itemID)) {
             DebugApp.debug(DebugNamespaceID.Throw)(sprintf('Предмет "%s" нельзя экипировать в слот "%s".', itemID, this._ID));
             return false;

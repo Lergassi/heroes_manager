@@ -336,8 +336,7 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
             <div>
                 <div className={'widget'}>
                     <div className={'widget__title'}>DetailHeroRC
-                        <button className={'btn btn_default btn_right btn_close-table'} onClick={this.hide}>CLOSE
-                        </button>
+                        <button className={'btn btn_default btn_right btn_close-table'} onClick={this.hide}>CLOSE</button>
                     </div>
                     <div className={'widget__content'}>
                         <div className={'detail-hero'}>
@@ -345,12 +344,10 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                                 <div className={'block'}>
                                     <button className={'btn btn_default'} onClick={() => {
                                         this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).resurrect();
-                                    }}>RESURRECT
-                                    </button>
+                                    }}>RESURRECT</button>
                                     <button className={'btn btn_default only-dev'} onClick={() => {
                                         this.state.hero.get<Endurance>(ComponentID.Endurance).reset();
-                                    }}>RESET_ENDURANCE
-                                    </button>
+                                    }}>RESET_ENDURANCE</button>
                                     {/*<button className={'btn btn_danger'} onClick={() => {*/}
                                     {/*    this.state.hero.get<HealthPoints>(ComponentID.HealthPoints).kill();*/}
                                     {/*}}>KILL</button>*/}
@@ -367,26 +364,28 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                                     <div className={'block'}><h3>Аттрибуты</h3></div>
                                     <div className={'block'}>
                                         <table className={'basic-table'}>
-                                            <tr>
-                                                <td>{CharacterAttributeID.Strength}</td>
-                                                <td>{this.state.Strength}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{CharacterAttributeID.Agility}</td>
-                                                <td>{this.state.Agility}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{CharacterAttributeID.Intelligence}</td>
-                                                <td>{this.state.Intelligence}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{CharacterAttributeID.AttackPower}</td>
-                                                <td>{this.state.AttackPower}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{CharacterAttributeID.Protection}</td>
-                                                <td>{this.state.Protection}</td>
-                                            </tr>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{CharacterAttributeID.Strength}</td>
+                                                    <td>{this.state.Strength}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{CharacterAttributeID.Agility}</td>
+                                                    <td>{this.state.Agility}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{CharacterAttributeID.Intelligence}</td>
+                                                    <td>{this.state.Intelligence}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{CharacterAttributeID.AttackPower}</td>
+                                                    <td>{this.state.AttackPower}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{CharacterAttributeID.Protection}</td>
+                                                    <td>{this.state.Protection}</td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -404,25 +403,25 @@ export default class DetailHeroRC extends React.Component<DetailHeroRCProps, Det
                                     </div>
                                     <table className={'basic-table'}>
                                         <tbody>
-                                        <tr>
-                                            <th style={{width: '300px'}}>EquipSlotID</th>
-                                            <th style={{width: '300px'}}>Item</th>
-                                            <th style={{}}>Ctrl</th>
-                                        </tr>
-                                        {this._renderEquipSlot(EquipSlotID.Head)}
-                                        {this._renderEquipSlot(EquipSlotID.Shoulders)}
-                                        {this._renderEquipSlot(EquipSlotID.Chest)}
-                                        {this._renderEquipSlot(EquipSlotID.Wrist)}
-                                        {this._renderEquipSlot(EquipSlotID.Hands)}
-                                        {this._renderEquipSlot(EquipSlotID.Waist)}
-                                        {this._renderEquipSlot(EquipSlotID.Legs)}
-                                        {this._renderEquipSlot(EquipSlotID.Foots)}
-                                        {this._renderEquipSlot(EquipSlotID.RightHand)}
-                                        {this._renderEquipSlot(EquipSlotID.LeftHand)}
-                                        {this._renderEquipSlot(EquipSlotID.Neck)}
-                                        {this._renderEquipSlot(EquipSlotID.Finger01)}
-                                        {this._renderEquipSlot(EquipSlotID.Finger02)}
-                                        {this._renderEquipSlot(EquipSlotID.Trinket)}
+                                            <tr>
+                                                <th style={{width: '300px'}}>EquipSlotID</th>
+                                                <th style={{width: '300px'}}>Item</th>
+                                                <th style={{}}>Ctrl</th>
+                                            </tr>
+                                            {this._renderEquipSlot(EquipSlotID.Head)}
+                                            {this._renderEquipSlot(EquipSlotID.Shoulders)}
+                                            {this._renderEquipSlot(EquipSlotID.Chest)}
+                                            {this._renderEquipSlot(EquipSlotID.Wrist)}
+                                            {this._renderEquipSlot(EquipSlotID.Hands)}
+                                            {this._renderEquipSlot(EquipSlotID.Waist)}
+                                            {this._renderEquipSlot(EquipSlotID.Legs)}
+                                            {this._renderEquipSlot(EquipSlotID.Foots)}
+                                            {this._renderEquipSlot(EquipSlotID.RightHand)}
+                                            {this._renderEquipSlot(EquipSlotID.LeftHand)}
+                                            {this._renderEquipSlot(EquipSlotID.Neck)}
+                                            {this._renderEquipSlot(EquipSlotID.Finger01)}
+                                            {this._renderEquipSlot(EquipSlotID.Finger02)}
+                                            {this._renderEquipSlot(EquipSlotID.Trinket)}
                                         </tbody>
                                     </table>
                                 </div>

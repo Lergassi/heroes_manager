@@ -15,8 +15,8 @@ export default class LeftHand implements EquipSlotInterface {
         this._isBlock = false;
     }
 
-    equip(itemID: ItemID): boolean {
-        return this._equipSlot.equip(itemID);
+    equip(itemID: ItemID, itemStorage?: ItemStorageInterface): boolean {
+        return this._equipSlot.equip(itemID, itemStorage);
     }
 
     clear(): void {
