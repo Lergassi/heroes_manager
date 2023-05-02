@@ -23,6 +23,7 @@ import GameObject from '../../../source/GameObject';
 import ItemStorageInterface from '../../Interfaces/ItemStorageInterface';
 import {database} from '../../../data/ts/database.js';
 import DebugApp from '../../Services/DebugApp.js';
+import {DEFAULT_ITEM_STORAGE_SIZE} from '../../consts.js';
 
 //todo: Сделать класс для настройки игры.
 export default class CreateDefaultStartPlayerObjectsCommand extends Command {
@@ -31,7 +32,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     }
 
     async execute(input: Input) {
-        // await this._createItemStorages();    //1 сумка уже есть у каждого игрока.
+        await this._createItemStorages();    //1 сумка уже есть у каждого игрока.
         await this._configTavern();
         await this._configFarming();
         await this._configProduction();
@@ -65,7 +66,7 @@ export default class CreateDefaultStartPlayerObjectsCommand extends Command {
     }
 
     private async _createItemStorages() {
-        // await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_storage, [String(DEFAULT_ITEM_STORAGE_SIZE)]);
+        await this.container.get<GameConsole>(ServiceID.GameConsole).run(CommandID.create_item_storage, [String(DEFAULT_ITEM_STORAGE_SIZE)]);
     }
 
     private async _createItems() {

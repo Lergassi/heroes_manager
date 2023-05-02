@@ -5,10 +5,11 @@ import chalk from 'chalk';
 import {DebugNamespaceID} from '../../../core/types/enums/DebugNamespaceID.js';
 import {ServiceID} from '../../../core/types/enums/ServiceID.js';
 import DebugApp from '../../../core/app/Services/DebugApp.js';
+import {CommandID} from '../../../core/types/enums/CommandID.js';
 
 export default class ListCommand extends Command {
     get name(): string {
-        return 'list';
+        return CommandID.list;
     }
 
     get description(): string {

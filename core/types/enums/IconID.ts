@@ -8,6 +8,7 @@ export enum IconID {
     Bow01 = 'Bow01',
     Brain01 = 'Brain01',
     Coins01 = 'Coins01',
+    Coins02 = 'Coins02',
     CowboyHat01 = 'CowboyHat01',
     Dagger01 = 'Dagger01',
     Fabric01 = 'Fabric01',
@@ -73,4 +74,7 @@ export enum IconID {
     TwoSword01 = 'TwoSword01',
     Location01 = 'Location01',
     Research01 = 'Research01',
+    Mail01 = 'Mail01',
+    Notification01 = 'Notification01',
+    Stars01 = 'Stars01',
 }

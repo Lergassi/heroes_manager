@@ -319,7 +319,6 @@ export default class DetailLocationRC extends React.Component<DetailLocationRCPr
     }
 
     updateLoot(items: UI_ItemCount[]): void {
-        console.log('updateLoot items', items);
         this.setState((state) => {
             return {
                 lootItems: items,

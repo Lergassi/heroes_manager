@@ -1,4 +1,7 @@
 export enum CommandID {
+    help = 'help',
+    list = 'list',
+
     //user/player
     new_game = 'new_game',
     create_player_env = 'create_player_env',

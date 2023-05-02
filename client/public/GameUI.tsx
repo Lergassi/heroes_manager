@@ -8,6 +8,7 @@ import UIUpdater from '../app/UIUpdater.js';
 import GameConsoleRC from './_React/GameConsoleRC.js';
 import GameMenuRC from './RC/GameMenuRC.js';
 import GameRC from './RC/GameRC.js';
+import ScreenshotsMainSliderRC from './RC/ScreenshotsMainSliderRC.js';
 
 export default class GameUI {
     private readonly _container: ContainerInterface;
@@ -61,32 +62,6 @@ export default class GameUI {
 
     private _renderGameUI(root) {
         root.render(
-            // <div>
-            //     <MainHeroListRC
-            //         container={this._container}
-            //         mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
-            //     />
-            //     <DetailHeroRC
-            //         container={this._container}
-            //         itemStorage={this._container.get<ItemStorageInterface>(ServiceID.ItemStorageController)}
-            //     />
-            //     <MainLocationListRC
-            //         container={this._container}
-            //         mainLocationList={this._container.get<MainLocationList>(ServiceID.MainLocationList)}
-            //     />
-            //     <DetailLocationRC
-            //         container={this._container}
-            //         mainHeroList={this._container.get<MainHeroList>(ServiceID.MainHeroList)}
-            //     />
-            //     <WalletRC
-            //         container={this._container}
-            //         wallet={this._container.get<WalletInterface>(ServiceID.Wallet)}
-            //     />
-            //     <ItemStorageControllerRC
-            //         container={this._container}
-            //         itemStorageController={this._container.get<ItemStorageController>(ServiceID.ItemStorageController)}
-            //     />
-            // </div>
             <GameRC
                 container={this._container}
             />

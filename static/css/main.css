@@ -449,6 +449,46 @@ a {
     padding-right: 25px;
 }
 
+.header-right-element {
+    float: right;
+    padding-left: 70px;
+    /*padding-right: 25px;*/
+    position: relative;
+}
+
+.header-right-element__icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    z-index: 100000;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    /*right: 63px;*/
+    left: 30px;
+    top: 7px;
+}
+
+.header-right-element__icon_mail {
+    background-image: url('/images/icons/white/Mail01.png');
+}
+
+.header-right-element__icon_notification {
+    background-image: url('/images/icons/white/Notification01.png');
+}
+
+.header-right-element__icon_level {
+    background-image: url('/images/icons/white/Stars01.png');
+}
+
+.header-right-element__icon_money {
+    background-image: url('/images/icons/white/Coins02.png');
+}
+
+.header-right-element_money {
+    padding-right: 15px;
+}
+
 /****************************************************************/
 /* left sidebar */
 /****************************************************************/
@@ -890,8 +930,6 @@ a {
 }
 
 .help-tooltip__text {
-    /*background-color: orange;*/
-
     line-height: normal;    /*todo: До изменения верстки.*/
 
     display: none;
@@ -899,13 +937,32 @@ a {
     background-color: white;
     padding: 8px;
     width: 300px;
-    bottom: 40px;
-    left: -80px;
     border: 1px solid #ddd;
+    z-index: 1000;
 }
 
+.help-tooltip__text_top {
+    bottom: 40px;
+    left: -80px;
+}
+
+.help-tooltip__text_right {
+    bottom: 0px;
+    left: 40px;
+}
+
+/*.help-tooltip__text_bottom {*/
+/*    bottom: 40px;*/
+/*    left: 40px;*/
+/*}*/
+
+/*.help-tooltip__text_left {*/
+/*    bottom: 40px;*/
+/*    left: 40px;*/
+/*}*/
+
 .help-tooltip__icon {
-    line-height: 36px;
+    /*line-height: 36px;*/
 }
 
 .help-tooltip__icon:hover ~ .help-tooltip__text {
@@ -975,6 +1032,38 @@ a {
 
 .game-console__input:focus.message-history {
     background-color: red;
+}
+
+/****************************************************************/
+/* dev */
+/****************************************************************/
+.slider {
+    /*width: 800px;*/
+    width: 1100px;
+    /*width: 1600px;*/
+}
+
+.slider-image {
+    width: 100%;
+}
+
+.menu-wrapper {
+    margin-left: 230px;
+    margin-top: 40px;
+}
+.menu {
+    /*float: left;*/
+    margin-bottom: 30px;
+}
+
+.menu__item-tooltip {
+    float: right;
+}
+
+.slider-wrapper {
+    /*float: left;*/
+    /*margin-left: 200px;*/
+    /*margin-left: 200px;*/
 }
 
 /****************************************************************/

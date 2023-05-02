@@ -40,7 +40,7 @@ import ItemStorageRC_Legacy from './RC/ItemStorageRC_Legacy.js';
 import LeftSidebarRC from './RC/LeftSidebarRC.js';
 import ProductionRC from './RC/ProductionRC';
 import TavernRC from './RC/TavernRC.js';
-import SliderRC from './RC/SliderRC.js';
+import ScreenshotsMainSliderRC from './RC/ScreenshotsMainSliderRC.js';
 
 function Hello(props) {
     console.log('Hello.this', this);
@@ -619,7 +619,10 @@ export default class SandboxUI {
     private _devSlider() {
         this._root.render(
             <div>
-                <SliderRC/>
+                {/* todo: Надо подумать над фабрикой. */}
+                <ScreenshotsMainSliderRC
+                    files={[]}
+                />
             </div>
         );
     }

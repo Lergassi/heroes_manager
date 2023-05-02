@@ -188,7 +188,7 @@ export default class GameConsoleRC extends React.Component<GameConsoleProps, Gam
                 </div>
                 <input
                     className={'game-console__input'}
-                    autoFocus
+                    // autoFocus
                     type="text"
                     placeholder="Enter command..."
                     onKeyPress={this.keyPressHandler}

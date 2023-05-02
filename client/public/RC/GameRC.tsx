@@ -89,12 +89,26 @@ export default class GameRC extends React.Component<GameRCProps, GameRCState> {
                     <div className={'header__site-title'}>
                         HEROES MANAGER
                     </div>
-                    <div className={'header__wallet-money-counter'}>
+                    {/*<div className={'header__wallet-money-counter'}>*/}
+                    <div className={'header-right-element header-right-element_money'}>
                         {/*WalletMoneyValueRC: <WalletMoneyValueRC*/}
+                        <span className={'header-right-element__icon header-right-element__icon_money'}></span>
                         Money: <WalletMoneyValueRC
-                        container={this.props.container}
-                        wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
-                    />
+                            container={this.props.container}
+                            wallet={this.props.container.get<WalletInterface>(ServiceID.Wallet)}
+                        />
+                    </div>
+                    <div className={'header-right-element'}>
+                        <span className={'header-right-element__icon header-right-element__icon_level'}></span>
+                        Level: 1 (0/1000)
+                    </div>
+                    <div className={'header-right-element'}>
+                        <span className={'header-right-element__icon header-right-element__icon_notification'}></span>
+                        Notification
+                    </div>
+                    <div className={'header-right-element'}>
+                        <span className={'header-right-element__icon header-right-element__icon_mail'}></span>
+                        Mail
                     </div>
                 </div>
                 <div className={'container'}>
