@@ -1,6 +1,6 @@
 #ide
 /.idea
-#/coverage
+/coverage
 
 #source
 /node_modules
@@ -9,6 +9,7 @@
 .env
 #*.js
 **.js
+/dist
 
 #client
 /client/**/*.js
