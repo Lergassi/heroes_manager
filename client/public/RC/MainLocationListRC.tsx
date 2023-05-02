@@ -40,8 +40,7 @@ export interface MainLocationListRCElement {
 
 export default class MainLocationListRC extends React.Component<MainLocationListRCProps, MainLocationListRCState> implements MainLocationListRender {
     private _options = {
-        // rows: 10,
-        rows: 17,
+        rows: 14,
     };
 
     constructor(props: MainLocationListRCProps) {

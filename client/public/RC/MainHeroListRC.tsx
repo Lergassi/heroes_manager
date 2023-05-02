@@ -59,7 +59,7 @@ export class MainHeroListRCElement {
 export default class MainHeroListRC extends React.Component<MainHeroListRCProps, MainHeroListRCState> implements MainHeroListRenderInterface {
     private _options = {
         // rows: 10,
-        rows: 17,
+        rows: 14,
     };
 
     constructor(props: MainHeroListRCProps) {
